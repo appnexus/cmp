@@ -1,0 +1,27 @@
+@import '../../style/variables';
+
+.overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 99999;
+	justify-content: center;
+	align-items: center;
+}
+
+.content {
+	width: 700px;
+	height: 500px;
+	background: white;
+	display: flex;
+	align-items: center;
+
+	@media @smartphone {
+		width: 98%;
+		height: 98%;
+	}
+}
