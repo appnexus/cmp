@@ -5,7 +5,8 @@ const defaultConfig = {
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: true,
 	storePublisherData: true,
-	logging: false
+	logging: false,
+	localization: {}
 };
 
 class Config {

@@ -40,7 +40,7 @@ const commands = {
 		return readCookie(COOKIE_NAME);
 	},
 
-	writeVendorConsent: ({encodedValue, vendorConsentData, cmpVersion }) => {
+	writeVendorConsent: ({encodedValue }) => {
 		return writeCookie({name: COOKIE_NAME, value: encodedValue});
 	}
 };

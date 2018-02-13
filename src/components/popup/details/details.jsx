@@ -4,9 +4,16 @@ import Button from '../../button/button';
 import Purposes from './purposes/purposes';
 import Vendors from './vendors/vendors';
 import Panel from '../../panel/panel';
+import Label from "../../label/label";
 
 const SECTION_PURPOSES = 0;
 const SECTION_VENDORS = 1;
+
+class LocalLabel extends Label {
+	static defaultProps = {
+		prefix: 'details'
+	};
+}
 
 export default class Details extends Component {
 	state = {
@@ -46,7 +53,7 @@ export default class Details extends Component {
 		return (
 			<div class={style.details}>
 				<div class={style.header}>
-					Privacy Settings
+					<LocalLabel localizeKey='title'>Privacy Settings</LocalLabel>
 				</div>
 				<div class={style.body}>
 					<Panel selectedIndex={selectedPanelIndex}>
@@ -68,8 +75,8 @@ export default class Details extends Component {
 					</Panel>
 				</div>
 				<div class={style.footer}>
-					<a class={style.cancel} onClick={onCancel}>Cancel</a>
-					<Button class={style.save} onClick={onSave}>Save and Exit</Button>
+					<a class={style.cancel} onClick={onCancel}><LocalLabel localizeKey='cancel'>Cancel</LocalLabel></a>
+					<Button class={style.save} onClick={onSave}><LocalLabel localizeKey='save'>Save and Exit</LocalLabel></Button>
 				</div>
 			</div>
 		);
