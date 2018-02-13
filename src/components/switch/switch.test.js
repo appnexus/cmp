@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import { h, render } from 'preact';
 import { expect } from 'chai';
 import style from './switch.less';
@@ -23,7 +24,9 @@ describe('Switch', () => {
 	});
 
 	it('should handle a click event', (done) => {
-		const switchComponent = (<Switch isSelected onClick={done} />);
+		const switchComponent = (<Switch isSelected onClick={() => {
+			done();
+		}} />);
 		const rendered = render(switchComponent, scratch);
 		rendered.click();
 	});

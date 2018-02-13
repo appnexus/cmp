@@ -35,7 +35,8 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 					// globalConsentLocation: './portal.html',
 					// storeConsentGlobally: true,
 					// storePublisherData: true,
-					// logging: 'debug'
+					// logging: 'debug',
+					// localization: {}
 				}`}
 				return cmp;
 			}());

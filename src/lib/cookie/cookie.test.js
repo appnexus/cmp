@@ -38,8 +38,6 @@ describe('cookie', () => {
 	});
 
 	it('encodes and decodes the vendor cookie object back to original value', () => {
-
-
 		const vendorConsentData = {
 			cookieVersion: 1,
 			cmpId: 1,

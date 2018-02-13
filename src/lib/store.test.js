@@ -56,7 +56,7 @@ describe('store', () => {
 		const store = new Store({
 			vendorList,
 			vendorConsentData: {
-				selectedVendorIds: new Set([4, 5, 6]),
+				selectedVendorIds: new Set([4, 5]),
 				selectedPurposeIds: new Set([1, 4])
 			}
 		});
@@ -65,10 +65,9 @@ describe('store', () => {
 		const noConsentVendorCount = Object.keys(vendorObject.vendorConsents).filter(key => !vendorObject.vendorConsents[key]).length;
 
 
-		expect(noConsentVendorCount).to.equal(vendorList.vendors.length - 3);
+		expect(noConsentVendorCount).to.equal(vendorList.vendors.length - 2);
 		expect(vendorObject.vendorConsents['4']).to.be.true;
 		expect(vendorObject.vendorConsents['5']).to.be.true;
-		expect(vendorObject.vendorConsents['6']).to.be.true;
 
 		expect(vendorObject.purposes['1']).to.be.true;
 		expect(vendorObject.purposes['4']).to.be.true;
@@ -78,17 +77,17 @@ describe('store', () => {
 		const store = new Store({
 			vendorList,
 			vendorConsentData: {
-				selectedVendorIds: new Set([8, 10]),
+				selectedVendorIds: new Set([2, 4]),
 			}
 		});
 
-		store.selectVendor(10, false);
-		store.selectVendor(12, true);
+		store.selectVendor(2, false);
+		store.selectVendor(3, true);
 
 		const vendorObject = store.getVendorConsentsObject();
 		const selectedVendorIds = Object.keys(vendorObject.vendorConsents).filter(key => vendorObject.vendorConsents[key]);
 
-		expect(selectedVendorIds).to.deep.equal(['8', '12']);
+		expect(selectedVendorIds).to.deep.equal(['3', '4']);
 	});
 
 	it('selects ALL vendor IDs', () => {

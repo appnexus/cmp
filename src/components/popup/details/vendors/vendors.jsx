@@ -2,6 +2,13 @@ import { h, Component } from 'preact';
 import style from './vendors.less';
 import Button from '../../../button/button';
 import Switch from '../../../switch/switch';
+import Label from "../../../label/label";
+
+class LocalLabel extends Label {
+	static defaultProps = {
+		prefix: 'vendors'
+	};
+}
 
 export default class Vendors extends Component {
 
@@ -34,7 +41,7 @@ export default class Vendors extends Component {
 			<div class={style.vendors}>
 				<div class={style.header}>
 					<div class={style.title}>
-						Our partners
+						<LocalLabel localizeKey='title'>Our partners</LocalLabel>
 					</div>
 					<div class={style.options}>
 						<Button
@@ -42,25 +49,27 @@ export default class Vendors extends Component {
 							invert={true}
 							onClick={this.handleRejectAll}
 						>
-							Reject All
+							<LocalLabel localizeKey='rejectAll'>Reject All</LocalLabel>
 						</Button>
 						<Button
 							class={style.button}
 							onClick={this.handleAcceptAll}
 						>
-							Accept All
+							<LocalLabel localizeKey='acceptAll'>Accept All</LocalLabel>
 						</Button>
 					</div>
 				</div>
 				<div class={style.description}>
-					Help us provide you with a better online experience! Our partners set cookies and collect information from your browser across the web to provide you with website content, deliver relevant advertising and understand web audiences.
+					<LocalLabel localizeKey='description'>
+						Help us provide you with a better online experience! Our partners set cookies and collect information from your browser across the web to provide you with website content, deliver relevant advertising and understand web audiences.
+					</LocalLabel>
 				</div>
 				<div class={style.vendorHeader}>
 					<table class={style.vendorList}>
 						<thead>
 						<tr>
-							<th>Company</th>
-							<th>Off/On</th>
+							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
+							<th><LocalLabel localizeKey='offOn'>Off/On</LocalLabel></th>
 						</tr>
 						</thead>
 					</table>

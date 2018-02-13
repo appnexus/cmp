@@ -1,7 +1,13 @@
 import { h, Component } from 'preact';
 import style from './purposes.less';
-import Button from '../../../button/button';
 import Switch from '../../../switch/switch';
+import Label from "../../../label/label";
+
+class LocalLabel extends Label {
+	static defaultProps = {
+		prefix: 'purposes'
+	};
+}
 
 export default class Purposes extends Component {
 	state = {
@@ -63,6 +69,7 @@ export default class Purposes extends Component {
 		const purposeIsActive = selectedPurposeIndex < purposes.length ?
 			selectedPurposeIds.has(selectedPurposeId) :
 			selectedCustomPurposeIds.has(selectedPurposeId);
+		const currentPurposeLocalizePrefix = `${selectedPurposeIndex >= purposes.length ? 'customPurpose' : 'purpose'}${selectedPurposeId}`;
 
 		return (
 			<div class={style.purposes}>
@@ -70,13 +77,13 @@ export default class Purposes extends Component {
 					<div class={[style.purposeItem, selectedPurposeIndex === -1 ? style.selectedPurpose : ''].join(' ')}
 					onClick={this.handleSelectPurposeDetail(-1)}
 					>
-						How we use cookies
+						<LocalLabel localizeKey='cookies.menu'>How we use cookies</LocalLabel>
 					</div>
 					{allPurposes.map((purpose, index) => (
 						<div class={[style.purposeItem, selectedPurposeIndex === index ? style.selectedPurpose : ''].join(' ')}
 							 onClick={this.handleSelectPurposeDetail(index)}
 						 >
-							{purpose.name}
+							<LocalLabel localizeKey={`${index >= purposes.length ? 'customPurpose' : 'purpose'}${purpose.id}.menu`}>{purpose.name}</LocalLabel>
 						</div>
 					))}
 				</div>
@@ -84,21 +91,23 @@ export default class Purposes extends Component {
 					{selectedPurposeIndex < 0 &&
 					<div class={style.purposeDetail}>
 						<div class={style.title}>
-							This website uses cookies
+							<LocalLabel localizeKey='cookies.title'>This website uses cookies</LocalLabel>
 						</div>
 						<div class={style.body}>
-							Our partners set cookies and collect information from your browser across the web to provide you with website content, deliver relevant advertising and understand web audiences.
-							<a class={style.vendorLink} onClick={onShowVendors}>Show full vendor list</a>
+							<LocalLabel localizeKey='cookies.description'>
+								Our partners set cookies and collect information from your browser across the web to provide you with website content, deliver relevant advertising and understand web audiences.
+							</LocalLabel>
+							<a class={style.vendorLink} onClick={onShowVendors}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
 						</div>
 					</div>}
 					{selectedPurposeIndex > -1 &&
 					<div class={style.purposeDetail}>
 						<div class={style.detailHeader}>
 							<div class={style.title}>
-								{allPurposes[selectedPurposeIndex].name}
+								<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.title`}>{allPurposes[selectedPurposeIndex].name}</LocalLabel>
 							</div>
 							<div class={style.active}>
-								Active
+								<LocalLabel localizeKey='active'>Active</LocalLabel>
 								<Switch
 									isSelected={purposeIsActive}
 									onClick={this.handleSelectPurpose}
@@ -106,7 +115,9 @@ export default class Purposes extends Component {
 							</div>
 						</div>
 						<div class={style.body}>
-							{allPurposes[selectedPurposeIndex].name} help make websites usable by enabling basic functions like page navigation and acess to secure areas of the website. The website cannot function properly without these cookies.
+							<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`}>
+								{allPurposes[selectedPurposeIndex].name} help make websites usable by enabling basic functions like page navigation and acess to secure areas of the website. The website cannot function properly without these cookies.
+							</LocalLabel>
 						</div>
 					</div>}
 				</div>
