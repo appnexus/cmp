@@ -6,7 +6,8 @@ const defaultConfig = {
 	storeConsentGlobally: true,
 	storePublisherData: false,
 	logging: false,
-	localization: {}
+	localization: {},
+	forceLocale: null
 };
 
 class Config {
