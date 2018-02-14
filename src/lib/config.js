@@ -4,7 +4,7 @@ const defaultConfig = {
 	customPurposeListLocation: './purposes.json',
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: true,
-	storePublisherData: true,
+	storePublisherData: false,
 	logging: false,
 	localization: {}
 };

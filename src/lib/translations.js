@@ -26,9 +26,7 @@ export default {
 				description: ''
 			},
 			purpose1: {
-				menu: '',
-				title: '',
-				description: ''
+				description: 'Allow storing or accessing information on a user’s device.'
 			},
 			customPurpose1: {
 				menu: '',

@@ -4,7 +4,10 @@ import './style';
 
 
 function init() {
-	eval(buildScript({ logging: 'debug' })); // eslint-disable-line no-eval
+	eval(buildScript({
+		logging: 'debug',
+		storePublisherData: true
+	})); // eslint-disable-line no-eval
 
 	let App = require('./components/app').default;
 	render(<App />, document.body);
