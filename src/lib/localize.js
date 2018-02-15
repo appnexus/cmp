@@ -2,14 +2,14 @@ import translations from './translations';
 import config from './config';
 
 function findLocale() {
-	const locale = navigator &&
-		(
+	const locale = config.forceLocale ||
+		(navigator && (
 			navigator.language ||
 			navigator.browserLanguage ||
 			navigator.userLanguage ||
 			(navigator.languages && navigator.languages[0]) ||
 			'en-us'
-		);
+		));
 	return locale.toLowerCase();
 }
 

@@ -36,7 +36,8 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 					// storeConsentGlobally: true,
 					// storePublisherData: true,
 					// logging: 'debug',
-					// localization: {}
+					// localization: {},
+					// forceLocale: 'en-us'
 				}`}
 				return cmp;
 			}());
