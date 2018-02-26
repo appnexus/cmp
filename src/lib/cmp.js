@@ -35,9 +35,15 @@ export default class Cmp {
 		 * Get the encoded vendor consent data value.
 		 */
 		getConsentData: (_, callback=() => {}) => {
-			callback(encodeVendorConsentData({
-				...this.store.vendorConsentData,
-				vendorList: this.store.vendorList
+			const {
+				persistedVendorConsentData,
+				vendorList
+			} = this.store;
+
+			// Encode the persisted data
+			callback(persistedVendorConsentData && encodeVendorConsentData({
+				...persistedVendorConsentData,
+				vendorList
 			}));
 		},
 

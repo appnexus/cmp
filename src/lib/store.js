@@ -3,6 +3,10 @@ import config from './config';
 
 export default class Store {
 	constructor({ vendorConsentData, publisherConsentData, vendorList, customPurposeList }={}) {
+		// Keep track of data that has already been persisted
+		this.persistedVendorConsentData = vendorConsentData;
+		this.persistedPublisherConsentData = publisherConsentData;
+
 		const {
 			vendors = [],
 			purposes: vendorPurposes = [],
@@ -34,10 +38,13 @@ export default class Store {
 		this.isConsentToolShowing = false;
 	}
 
+	/**
+	 * Build vendor consent object from data that has already been persisted.
+	 */
 	getVendorConsentsObject = (vendorIds) => {
 		const {
 			vendorList = {},
-			vendorConsentData
+			persistedVendorConsentData = {}
 		} = this;
 
 		const {
@@ -47,9 +54,9 @@ export default class Store {
 			cmpId,
 			vendorListVersion,
 			maxVendorId,
-			selectedVendorIds,
-			selectedPurposeIds
-		} = vendorConsentData;
+			selectedVendorIds = new Set(),
+			selectedPurposeIds = new Set()
+		} = persistedVendorConsentData;
 
 		const { purposes = [], vendors = []} = vendorList;
 
@@ -76,12 +83,15 @@ export default class Store {
 		};
 	};
 
+	/**
+	 * Build publisher consent object from data that has already been persisted
+	 */
 	getPublisherConsentsObject = () => {
 		const {
 			vendorList = {},
 			customPurposeList = {},
-			publisherConsentData,
-			vendorConsentData
+			persistedPublisherConsentData = {},
+			persistedVendorConsentData = {}
 		} = this;
 
 		const {
@@ -91,10 +101,10 @@ export default class Store {
 			cmpId,
 			vendorListVersion,
 			publisherPurposeVersion,
-			selectedCustomPurposeIds
-		} = publisherConsentData;
+			selectedCustomPurposeIds = new Set()
+		} = persistedPublisherConsentData;
 
-		const { selectedPurposeIds } = vendorConsentData;
+		const { selectedPurposeIds = new Set() } = persistedVendorConsentData;
 		const { purposes = [] } = vendorList;
 		const { purposes: customPurposes = []} = customPurposeList;
 
@@ -143,6 +153,10 @@ export default class Store {
 				customPurposeList
 			});
 		}
+
+		// Store the persisted data
+		this.persistedVendorConsentData = {...vendorConsentData};
+		this.persistedPublisherConsentData = {...publisherConsentData};
 
 		// Notify of date changes
 		this.storeUpdate();
