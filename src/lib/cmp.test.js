@@ -34,6 +34,19 @@ describe('cmp', () => {
 			});
 		});
 
+		it('getPublisherConsents returns only persisted data', (done) => {
+			cmp.store.selectPurpose(1, true);
+			cmp.processCommand('getPublisherConsents', null, data => {
+				expect(data.standardPurposes['1']).to.be.false;
+				cmp.store.persist();
+
+				cmp.processCommand('getPublisherConsents', null, data => {
+					expect(data.standardPurposes['1']).to.be.true;
+					done();
+				});
+			});
+		});
+
 		it('getVendorConsents executes', (done) => {
 			cmp.processCommand('getVendorConsents', null, data => {
 				expect(Object.keys(data.purposes).length).to.equal(vendorList.purposes.length);
@@ -42,7 +55,28 @@ describe('cmp', () => {
 			});
 		});
 
+		it('getVendorConsents returns only persisted data', (done) => {
+			cmp.store.selectVendor(1, true);
+			cmp.processCommand('getVendorConsents', null, data => {
+				expect(data.vendorConsents['1']).to.be.false;
+				cmp.store.persist();
+
+				cmp.processCommand('getVendorConsents', null, data => {
+					expect(data.vendorConsents['1']).to.be.true;
+					done();
+				});
+			});
+		});
+
 		it('getConsentData executes', (done) => {
+			cmp.processCommand('getConsentData', null, data => {
+				expect(data).to.be.undefined;
+				done();
+			});
+		});
+
+		it('getConsentData returns persisted data', (done) => {
+			cmp.store.persist();
 			cmp.processCommand('getConsentData', null, data => {
 				expect(typeof data).to.equal('string');
 				expect(data).to.not.be.empty;

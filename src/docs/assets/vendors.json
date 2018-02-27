@@ -4,23 +4,19 @@
   "purposes": [
 	{
 	  "id": 1,
-	  "name": "Social Media"
+	  "name": "Accessing a Device"
 	},
 	{
 	  "id": 2,
-	  "name": "Analytics"
+	  "name": "Advertising Personalisation"
 	},
 	{
 	  "id": 3,
-	  "name": "Audience Measurement"
+	  "name": "Analytics"
 	},
 	{
 	  "id": 4,
-	  "name": "Online behavioral advertising"
-	},
-	{
-	  "id": 5,
-	  "name": "Ad delivery and reporting"
+	  "name": "Content Personalisation"
 	}
   ],
   "vendors": [

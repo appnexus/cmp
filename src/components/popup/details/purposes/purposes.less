@@ -2,6 +2,7 @@
 
 .purposes {
 	display: flex;
+	flex: 1;
 
 	.purposeList {
 		font-size: 12px;
@@ -49,6 +50,8 @@
 		.active {
 			color: @color-primary;
 			font-weight: bold;
+			display: flex;
+			align-items: center;
 			@media @smartphone {
 				flex: 1 1 auto;
 			}
