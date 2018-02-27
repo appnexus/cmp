@@ -27,7 +27,7 @@ export default class Intro extends Component {
 					<LocalLabel localizeKey='title'>This site uses cookies</LocalLabel>
 				</div>
 				<div class={style.description}>
-					<LocalLabel localizeKey='description'>Our partners set cookies and collect information from your browser across the web to provide you with website content, deliver relevant advertising and understand web audiences.</LocalLabel>
+					<LocalLabel localizeKey='description'>Our partners set cookies and collect information from your browser across the web to provide you with website content, deliver relevant advertising and understand web audiences. In the future we may need your approval to accept cookies for advertising, through choices such as the below example.</LocalLabel>
 				</div>
 				<div class={style.options}>
 					<Button
