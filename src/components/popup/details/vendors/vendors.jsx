@@ -11,6 +11,12 @@ class LocalLabel extends Label {
 }
 
 export default class Vendors extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			editingConsents: false
+		};
+	}
 
 	static defaultProps = {
 		vendors: [],
@@ -26,8 +32,14 @@ export default class Vendors extends Component {
 		this.props.selectAllVendors(false);
 	};
 
-	handleSelectVendor = ({dataId, isSelected}) => {
+	handleSelectVendor = ({ dataId, isSelected }) => {
 		this.props.selectVendor(dataId, isSelected);
+	};
+
+	handleMoreChoices = () => {
+		this.setState({
+			editingConsents: true
+		});
 	};
 
 	render(props, state) {
@@ -36,6 +48,7 @@ export default class Vendors extends Component {
 			vendors,
 			selectedVendorIds,
 		} = props;
+		const { editingConsents } = this.state;
 
 		return (
 			<div class={style.vendors}>
@@ -44,19 +57,14 @@ export default class Vendors extends Component {
 						<LocalLabel localizeKey='title'>Our partners</LocalLabel>
 					</div>
 					<div class={style.options}>
+						{!editingConsents &&
 						<Button
 							class={style.button}
-							invert={true}
-							onClick={this.handleRejectAll}
+							onClick={this.handleMoreChoices}
 						>
-							<LocalLabel localizeKey='rejectAll'>Reject All</LocalLabel>
+							<LocalLabel localizeKey='moreChoices'>Make More Choices</LocalLabel>
 						</Button>
-						<Button
-							class={style.button}
-							onClick={this.handleAcceptAll}
-						>
-							<LocalLabel localizeKey='acceptAll'>Accept All</LocalLabel>
-						</Button>
+						}
 					</div>
 				</div>
 				<div class={style.description}>
@@ -69,7 +77,9 @@ export default class Vendors extends Component {
 						<thead>
 						<tr>
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
-							<th><LocalLabel localizeKey='offOn'>Off/On</LocalLabel></th>
+							{editingConsents &&
+							<th><LocalLabel localizeKey='offOn'>Allow</LocalLabel></th>
+							}
 						</tr>
 						</thead>
 					</table>
@@ -79,7 +89,8 @@ export default class Vendors extends Component {
 						<tbody>
 						{vendors.map(({ id, name }, index) => (
 							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
-								<td>{name}</td>
+								<td><div class={style.vendorName}>{name}</div></td>
+								{editingConsents &&
 								<td>
 									<Switch
 										dataId={id}
@@ -87,6 +98,7 @@ export default class Vendors extends Component {
 										onClick={this.handleSelectVendor}
 									/>
 								</td>
+								}
 							</tr>
 						))}
 						</tbody>
