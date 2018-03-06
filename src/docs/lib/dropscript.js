@@ -33,8 +33,8 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 					//
 					// customPurposeListLocation: './purposes.json',
 					// globalConsentLocation: './portal.html',
-					// storeConsentGlobally: true,
-					// storePublisherData: true,
+					// storeConsentGlobally: false,
+					// storePublisherData: false,
 					// logging: 'debug',
 					// localization: {},
 					// forceLocale: 'en-us'
