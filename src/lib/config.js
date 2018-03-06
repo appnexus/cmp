@@ -3,7 +3,7 @@ import log from './log';
 const defaultConfig = {
 	customPurposeListLocation: './purposes.json',
 	globalConsentLocation: './portal.html',
-	storeConsentGlobally: true,
+	storeConsentGlobally: false,
 	storePublisherData: false,
 	logging: false,
 	localization: {},
