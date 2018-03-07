@@ -20,6 +20,7 @@ import VendorCookieDecoder from '../tools/vendorCookieDecoder';
 import PublisherCookieDecoder from '../tools/publisherCookieDecoder';
 import Intro from '../intro/intro';
 import Configration from '../docs/configuration';
+import QuickStart from '../docs/quickstart';
 
 export const navItems = [
 	{
@@ -31,6 +32,7 @@ export const navItems = [
 	{
 		title: 'Docs',
 		items: [
+			{ to: '/quickstart', title: 'Quick Start', component: QuickStart },
 			{ to: '/setup', title: 'Setup Script', component: Setup },
 			{ to: '/config', title: 'Configuration', component: Configration },
 			{ to: '/cmp-api', title: 'CMP API', component: CmpApi },

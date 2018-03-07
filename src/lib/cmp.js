@@ -1,4 +1,5 @@
 import log from './log';
+import Promise from 'promise-polyfill';
 import pack from '../../package.json';
 import {
 	encodeVendorConsentData
@@ -9,6 +10,8 @@ export const CMP_GLOBAL_NAME = '__cmp';
 
 export default class Cmp {
 	constructor(store) {
+		this.isLoaded = false;
+		this.cmpReady = false;
 		this.eventListeners = {};
 		this.store = store;
 		this.processCommand.receiveMessage = this.receiveMessage;
@@ -20,7 +23,9 @@ export default class Cmp {
 		 * Get all publisher consent data from the data store.
 		 */
 		getPublisherConsents: (purposeIds, callback=() => {}) => {
-			callback(this.store.getPublisherConsentsObject());
+			const consent = this.store.getPublisherConsentsObject();
+			callback(consent);
+			return consent;
 		},
 
 		/**
@@ -28,7 +33,9 @@ export default class Cmp {
 		 * @param {Array} vendorIds Array of vendor IDs to retrieve.  If empty return all vendors.
 		 */
 		getVendorConsents: (vendorIds, callback=() => {}) => {
-			callback(this.store.getVendorConsentsObject(vendorIds));
+			const consent = this.store.getVendorConsentsObject(vendorIds);
+			callback(consent);
+			return consent;
 		},
 
 		/**
@@ -41,17 +48,21 @@ export default class Cmp {
 			} = this.store;
 
 			// Encode the persisted data
-			callback(persistedVendorConsentData && encodeVendorConsentData({
+			const consentData = persistedVendorConsentData && encodeVendorConsentData({
 				...persistedVendorConsentData,
 				vendorList
-			}));
+			});
+			callback(consentData);
+			return consentData;
 		},
 
 		/**
 		 * Get the entire vendor list
 		 */
 		getVendorList: (vendorListVersion, callback=() => {}) => {
-			callback(this.store.vendorList);
+			const list = this.store.vendorList;
+			callback(list);
+			return list;
 		},
 
 		/**
@@ -62,6 +73,14 @@ export default class Cmp {
 			const eventSet = this.eventListeners[event] || new Set();
 			eventSet.add(callback);
 			this.eventListeners[event] = eventSet;
+
+			// Trigger load events immediately if they have already occurred
+			if (event === 'isLoaded' && this.isLoaded) {
+				callback({event});
+			}
+			if (event === 'cmpReady' && this.cmpReady) {
+				callback({event});
+			}
 		},
 
 		/**
@@ -94,6 +113,7 @@ export default class Cmp {
 		showConsentTool: (_, callback=() => {}) => {
 			this.store.toggleConsentToolShowing(true);
 			callback(true);
+			return true;
 		}
 	};
 
@@ -121,7 +141,7 @@ export default class Cmp {
 		}
 		else {
 			log.info(`Proccess command: ${command}, parameter: ${parameter}`);
-			this.commands[command](parameter, callback);
+			return Promise.resolve(this.commands[command](parameter, callback));
 		}
 	};
 

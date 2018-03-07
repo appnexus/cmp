@@ -1,5 +1,5 @@
 import { h, render } from 'preact';
-import { buildScript } from '../docs/lib/dropscript';
+import { buildScript } from '../docs/lib/stub';
 import './style';
 
 

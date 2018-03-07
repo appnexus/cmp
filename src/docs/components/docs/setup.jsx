@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import {buildScript} from '../../../docs/lib/dropscript';
+import {buildScript} from '../../../docs/lib/stub';
 import style from './docs.less';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import JSCode from 'codemirror/mode/htmlmixed/htmlmixed'; // eslint-disable-line no-unused-vars

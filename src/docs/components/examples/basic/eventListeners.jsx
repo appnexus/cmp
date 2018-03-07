@@ -6,6 +6,11 @@ window.__cmp('addEventListener', 'isLoaded', function(result){
 	myLogger('Event "isLoaded" called: ' + JSON.stringify(result));
 });
 
+myLogger('Add eventListener "cmpReady"');
+window.__cmp('addEventListener', 'cmpReady', function(result){
+	myLogger('Event "cmpReady" called: ' + JSON.stringify(result));
+});
+
 myLogger('Add eventListener "onSubmit"');
 window.__cmp('addEventListener', 'onSubmit', function(result){
 	myLogger('Event "onSubmit" called' + JSON.stringify(result));
