@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import style from './vendorListBuilder.less';
 import Switch from '../../../../components/switch/switch';
-import Button from '../../../../components/button/button';
 import vendorList from '../../../assets/vendors.json';
 
 const PRIMARY_COLOR = '#2abbb0';
@@ -108,7 +107,7 @@ export default class VendorListBuilder extends Component {
 						<span>{version}</span>
 					</div>
 					<div class={style.generate}>
-						<Button class={style.button} onClick={this.generateList}>Generate List</Button>
+						<button class={style.button} onClick={this.generateList}>Generate List</button>
 					</div>
 				</div>
 				<div class={style.purposes}>
@@ -170,7 +169,7 @@ export default class VendorListBuilder extends Component {
 					</table>
 				</div>
 				<div class={style.generate}>
-					<Button class={style.button} onClick={this.generateList}>Generate List</Button>
+					<button class={style.button} onClick={this.generateList}>Generate List</button>
 				</div>
 			</div>
 		);

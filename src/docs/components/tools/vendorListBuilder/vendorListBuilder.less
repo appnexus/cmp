@@ -1,7 +1,5 @@
 @import '../../../style/variables';
 
-@value colorPrimary: @color-primary;
-
 .vendorListBuilder {
 	width: 100%;
 
@@ -13,13 +11,6 @@
 		padding: 10px 10px 10px 0;
 	}
 
-	.button {
-		background: @color-primary;
-		padding: 8px;
-		&:hover {
-			color: white;
-		}
-	}
 	.generate {
 		display: flex;
 		justify-content: flex-end;
@@ -51,6 +42,7 @@
 
 			.include {
 				width: 100px;
+				color: @color-primary;
 				text-align: center;
 			}
 		}

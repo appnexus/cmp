@@ -77,6 +77,16 @@ export default class Setup extends Component {
 					</p>
 				</section>
 				<section>
+					<span className={style.header}>Vendors and Purposes</span>
+					<p>
+						The consent tool presents the user with lists of purposes and vendors that they
+						can individually consent to.  These lists are controlled by a vendors.json file.
+						If you would like to customize this list to only include a subset of the master
+						list you can add a vendors.json file to your domain at <span class={style.highlight}>/cmp/vendors.json</span>.
+						You can generate a file using this <Link to='/tools/vendor-list-builder'>tool</Link>.
+					</p>
+				</section>
+				<section>
 					<span className={style.header}>Manually Trigger the Consent Tool</span>
 					<p>
 						If you need to manually show the consent tool you could add a click event to an element:

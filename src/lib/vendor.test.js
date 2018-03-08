@@ -16,7 +16,15 @@ describe('vendor', () => {
 		window.fetch = jest.fn().mockImplementation(() => Promise.resolve({json: () => {}}));
 	});
 
+	it('fetchVendorList sends requests local vendors.json', (done) => {
+		fetchVendorList()
+			.then(() => {
+				expect(window.fetch.mock.calls.length).to.equal(1);
+				done();
+			});
+	});
 	it('fetchVendorList sends a portal command', (done) => {
+		window.fetch = jest.fn().mockImplementation(() => Promise.reject());
 		fetchVendorList()
 			.then(() => {
 				expect(mockPortal.sendPortalCommand.mock.calls[0][0]).to.deep.equal({ command: 'readVendorList' });

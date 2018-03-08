@@ -84,6 +84,24 @@ const commands = [
 	}
 ];
 
+const events = [
+	{
+		name: 'isLoaded',
+		description: 'Fired when the full CMP implementation has been loaded and assigned to window.__cmp.  The vendors list from vendors.json is not guaranteed to be loaded. If the CMP is loaded before an event listener is added the listener will be fired immediately after being added.',
+		result: '{"event":"isLoaded"}'
+	},
+	{
+		name: 'cmpReady',
+		description: 'Fired when the full CMP implementation has been loaded AND all vendor list information has been retrieved. If the CMP is ready before an event listener is added the listener will be fired immediately after being added.',
+		result: '{"event":"cmpReady"}'
+	},
+	{
+		name: 'onSubmit',
+		description: 'Fired when the user submits consent data via the consent tool UI',
+		result: '{"event":"onSubmit"}'
+	}
+];
+
 export default class CmpApi extends Component {
 	render() {
 
@@ -107,7 +125,7 @@ export default class CmpApi extends Component {
 				<div className={style.commands}>
 					{commands.map(({command, parameter, callback}) => (
 						<div className={style.functionSection}>
-							<div className={style.function}>{command}</div>
+							<div className={style.option}>{command}</div>
 							<span className={style.argument}>
 								<span className={style.argumentType}>command</span>: <span>"{command}"</span>
 							</span>
@@ -125,6 +143,21 @@ export default class CmpApi extends Component {
 							</div>
 						</div>
 					))}
+				</div>
+
+				<div className={style.function}>Events</div>
+				<div className={style.functionSection}>
+					<div className={style.commands}>
+						{events.map(({name, description, result}) => (
+							<div class={style.event}>
+								<div className={style.option}>{name}</div>
+								<span className={style.argument}>{description}</span>
+								<span className={style.argument}>
+									<span className={style.argumentType}>callback result</span>: <span>{result}</span>
+								</span>
+							</div>
+						))}
+					</div>
 				</div>
 			</div>
 		);
