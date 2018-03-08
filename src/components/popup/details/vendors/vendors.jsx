@@ -56,21 +56,18 @@ export default class Vendors extends Component {
 					<div class={style.title}>
 						<LocalLabel localizeKey='title'>Our partners</LocalLabel>
 					</div>
-					<div class={style.options}>
-						{!editingConsents &&
-						<Button
-							class={style.button}
-							onClick={this.handleMoreChoices}
-						>
-							<LocalLabel localizeKey='moreChoices'>Make More Choices</LocalLabel>
-						</Button>
-						}
-					</div>
 				</div>
 				<div class={style.description}>
 					<LocalLabel localizeKey='description'>
 						Help us provide you with a better online experience! Our partners set cookies and collect information from your browser across the web to provide you with website content, deliver relevant advertising and understand web audiences.
 					</LocalLabel>
+						{!editingConsents &&
+						<div>
+							<a onClick={this.handleMoreChoices}>
+								<LocalLabel localizeKey='moreChoices'>Make More Choices</LocalLabel>
+							</a>
+						</div>
+						}
 				</div>
 				<div class={style.vendorHeader}>
 					<table class={style.vendorList}>
