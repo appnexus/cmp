@@ -3,6 +3,7 @@ import style from './app.less';
 import { readVendorConsentCookie, readPublisherConsentCookie } from '../lib/cookie/cookie';
 import { sendPortalCommand } from '../lib/portal';
 import Popup from './popup/popup';
+const SMAATO_URL = 'consent://';
 
 export default class App extends Component {
 	state = {
@@ -17,21 +18,10 @@ export default class App extends Component {
 			command: 'readVendorConsent',
 		}).then(result => {
 			console.log('Read consent data from global cookie', result);
-			// if (result) {
-			// 	return decodeVendorConsentData(result);
-			// }
-			// Sends Base64 code to custom native URL
-			var xhr = new XMLHttpRequest();
-			xhr.open('GET', 'consent://' + result, true);
-			xhr.onload = function () {
-				console.log('finish!');
-				// Request finished. Do processing here.
-			};
-			xhr.send(null);
+			window.location = SMAATO_URL + result;
 		}).catch(err => {
 			log.error('Failed reading global vendor consent cookie', err);
 		});
-
 		notify('onSubmit');
 		store.toggleConsentToolShowing(false);
 	};
