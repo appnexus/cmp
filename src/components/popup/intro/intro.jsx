@@ -17,7 +17,6 @@ export default class Intro extends Component {
 
 		const {
 			onAcceptAll,
-			onRejectAll,
 			onShowPurposes,
 		} = props;
 
@@ -31,20 +30,19 @@ export default class Intro extends Component {
 				</div>
 				<div class={style.options}>
 					<Button
-						class={style.rejectAll}
+						class={style.manageYourChoices}
 						invert={true}
-						onClick={onRejectAll}
+						onClick={onShowPurposes}
 					>
-						<LocalLabel localizeKey='rejectAll'>Reject All Cookies</LocalLabel>
+						<LocalLabel localizeKey='manageYourChoices'>Manage Your Choices</LocalLabel>
 					</Button>
 					<Button
 						class={style.acceptAll}
 						onClick={onAcceptAll}
 					>
-						<LocalLabel localizeKey='acceptAll'>Accept All Cookies</LocalLabel>
+						<LocalLabel localizeKey='acceptAll'>Accept</LocalLabel>
 					</Button>
 				</div>
-				<a class={style.purposes} onClick={onShowPurposes}><LocalLabel localizeKey='showPurposes'>Show purposes</LocalLabel></a>
 			</div>
 		);
 	}
