@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import style from './app.less';
-import { readVendorConsentCookie, readPublisherConsentCookie } from '../lib/cookie/cookie';
 import { sendPortalCommand } from '../lib/portal';
 import Popup from './popup/popup';
 const SMAATO_URL = 'consent://';
