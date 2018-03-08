@@ -21,14 +21,6 @@ export default class Popup extends Component {
 		onSave();
 	};
 
-	onRejectAll = () => {
-		const { store, onSave } = this.props;
-		store.selectAllVendors(false);
-		store.selectAllPurposes(false);
-		store.selectAllCustomPurposes(false);
-		onSave();
-	};
-
 	onCancel = () => {
 		this.setState({
 			selectedPanelIndex: SECTION_INTRO
@@ -41,24 +33,38 @@ export default class Popup extends Component {
 		});
 	};
 
+	handleClose = () => {
+		const { store, onSave } = this.props;
+		onSave();
+		store.toggleFooterShowing(true);
+	};
+
 	render(props, state) {
 		const { store } = props;
-		const {selectedPanelIndex} = state;
+		const { selectedPanelIndex } = state;
 		const { isConsentToolShowing } = store;
 
 		return (
-			<div class={style.overlay} style={{ display: isConsentToolShowing ? 'flex' : 'none' }}>
+			<div
+				class={style.popup}
+				style={{ display: isConsentToolShowing ? 'flex' : 'none' }}
+			>
+				<div
+					class={style.overlay}
+					onClick={this.handleClose}
+				/>
 				<div class={style.content}>
 					<Panel selectedIndex={selectedPanelIndex}>
 						<Intro
 							onAcceptAll={this.onAcceptAll}
-							onRejectAll={this.onRejectAll}
 							onShowPurposes={this.handleShowDetails}
+							onClose={this.handleClose}
 						/>
 						<Details
 							onSave={this.props.onSave}
 							onCancel={this.onCancel}
-							store={this.props.store} />
+							store={this.props.store}
+							onClose={this.handleClose} />
 					</Panel>
 				</div>
 			</div>

@@ -12,11 +12,6 @@ describe('Purposes', () => {
 		scratch = document.createElement('div');
 	});
 
-	it('should render description section initially', () => {
-		const purposes = <Purposes />;
-		expect(purposes).to.contain(style.vendorLink);
-	});
-
 	it('should render links for vendors and all standard and custom purposes', () => {
 		const purposes = render(<Purposes
 			purposes={[
@@ -29,22 +24,7 @@ describe('Purposes', () => {
 		/>, scratch);
 
 		const purposeLinks = purposes.querySelectorAll(`.${style.purposeItem}`);
-		expect(purposeLinks.length).to.equal(4);
-	});
-
-	it('should switch the purpose detail description', () => {
-		let purposes;
-		render(<Purposes
-			ref={ref => purposes = ref}
-			purposes={[
-				{ id: 1, name: 'Purpose 1' },
-				{ id: 2, name: 'Purpose 2' }
-			]}
-		/>, scratch);
-
-		expect(purposes.state.selectedPurposeIndex).to.equal(-1);
-		purposes.handleSelectPurposeDetail(1)();
-		expect(purposes.state.selectedPurposeIndex).to.equal(1);
+		expect(purposeLinks.length).to.equal(3);
 	});
 
 	it('should select a standard purpose', () => {
