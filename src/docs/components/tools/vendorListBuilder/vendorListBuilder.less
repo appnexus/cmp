@@ -1,5 +1,7 @@
 @import '../../../style/variables';
 
+@value colorPrimary: @color-primary;
+
 .vendorListBuilder {
 	width: 100%;
 
@@ -10,19 +12,21 @@
 		font-weight: bold;
 		padding: 10px 10px 10px 0;
 	}
+
+	.button {
+		background: @color-primary;
+		padding: 8px;
+		&:hover {
+			color: white;
+		}
+	}
+	.generate {
+		display: flex;
+		justify-content: flex-end;
+		flex: 1;
+	}
 	.controls {
 		display: flex;
-		padding: 5px;
-		.buttons {
-			display: flex;
-			flex: 1;
-			justify-content: flex-end;
-
-			button {
-				margin-left: 10px;
-				background: @color-primary;
-			}
-		}
 	}
 	.purposes, .vendors {
 		padding-bottom: 20px;

@@ -20,7 +20,7 @@ export default class Switch extends Component {
 		const {
 			isSelected,
 			isDisabled,
-			backgroundColor
+			color
 		} = props;
 
 		return (
@@ -34,8 +34,8 @@ export default class Switch extends Component {
 					disabled={isDisabled}
 					type='checkbox'
 				/>
-				<span class={style.visualizationContainer} />
-				<span class={style.visualizationGlow} />
+				<span class={style.visualizationContainer} style={{backgroundColor: isSelected ? color : null}} />
+				<span class={style.visualizationGlow} style={{backgroundColor: color}} />
 				<span class={style.visualizationHandle} />
 			</span>
 		);

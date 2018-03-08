@@ -1,8 +1,10 @@
 import { h, Component } from 'preact';
 import style from './vendorListBuilder.less';
 import Switch from '../../../../components/switch/switch';
+import Button from '../../../../components/button/button';
 import vendorList from '../../../assets/vendors.json';
 
+const PRIMARY_COLOR = '#2abbb0';
 
 export default class VendorListBuilder extends Component {
 	constructor(props) {
@@ -65,6 +67,28 @@ export default class VendorListBuilder extends Component {
 		};
 	};
 
+	generateList = () => {
+		const {
+			version,
+			purposes,
+			vendors,
+			selectedPurposeIds,
+			selectedVendorIds
+		} = this.state;
+
+		const json = JSON.stringify({
+			version,
+			purposes: purposes.filter(({id}) => selectedPurposeIds.has(id)),
+			vendors: vendors.filter(({id}) => selectedVendorIds.has(id))
+		}, null, 2);
+
+		const dataUrl = `data:text/csv;charset=utf-8,${encodeURIComponent(json)}`;
+
+		const downloadLink = document.createElement('a');
+		downloadLink.download = 'vendors.json';
+		downloadLink.href = dataUrl;
+		downloadLink.click();
+	};
 
 	render(props, state) {
 
@@ -78,14 +102,17 @@ export default class VendorListBuilder extends Component {
 
 		return (
 			<div class={style.vendorListBuilder}>
-				<div class={style.version}>
-					<span class={style.field}>Vendor List Version:</span>
-					<span>{version}</span>
+				<div class={style.controls}>
+					<div class={style.version}>
+						<span class={style.field}>Vendor List Version:</span>
+						<span>{version}</span>
+					</div>
+					<div class={style.generate}>
+						<Button class={style.button} onClick={this.generateList}>Generate List</Button>
+					</div>
 				</div>
 				<div class={style.purposes}>
-					<div class={style.controls}>
-						<span class={style.field}>Purposes:</span>
-					</div>
+					<span class={style.field}>Purposes:</span>
 					<table>
 						<thead>
 						<tr>
@@ -103,6 +130,7 @@ export default class VendorListBuilder extends Component {
 								<td>{name}</td>
 								<td class={style.include}>
 									<Switch
+										color={PRIMARY_COLOR}
 										isSelected={selectedPurposeIds.has(id)}
 										onClick={this.handleSelectPurpose(id)}
 									/>
@@ -113,9 +141,7 @@ export default class VendorListBuilder extends Component {
 					</table>
 				</div>
 				<div class={style.vendors}>
-					<div class={style.controls}>
-						<span class={style.field}>Vendors:</span>
-					</div>
+					<span class={style.field}>Vendors:</span>
 					<table>
 						<thead>
 						<tr>
@@ -133,6 +159,7 @@ export default class VendorListBuilder extends Component {
 								<td>{name}</td>
 								<td class={style.include}>
 									<Switch
+										color={PRIMARY_COLOR}
 										isSelected={selectedVendorIds.has(id)}
 										onClick={this.handleSelectVendor(id)}
 									/>
@@ -141,6 +168,9 @@ export default class VendorListBuilder extends Component {
 						))}
 						</tbody>
 					</table>
+				</div>
+				<div class={style.generate}>
+					<Button class={style.button} onClick={this.generateList}>Generate List</Button>
 				</div>
 			</div>
 		);
