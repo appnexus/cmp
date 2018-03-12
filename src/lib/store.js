@@ -36,6 +36,7 @@ export default class Store {
 		this.vendorList = vendorList;
 		this.customPurposeList = customPurposeList;
 		this.isConsentToolShowing = false;
+		this.isFooterShowing = false;
 	}
 
 	/**
@@ -263,6 +264,13 @@ export default class Store {
 
 	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		this.isFooterShowing = false;
+		this.storeUpdate();
+	};
+
+	toggleFooterShowing = (isShown) => {
+		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
+		this.isConsentToolShowing = false;
 		this.storeUpdate();
 	};
 
