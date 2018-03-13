@@ -240,18 +240,17 @@ function readGlobalVendorConsentCookie() {
  *
  * @returns Promise resolved after cookie is written
  */
-function writeGlobalVendorConsentCookie(vendorConsentData) {
+function writeGlobalVendorConsentCookie(vendorConsentData, encoded) {
 	log.debug('Write consent data to global cookie', vendorConsentData);
 	return sendPortalCommand({
 		command: 'writeVendorConsent',
-		encodedValue: encodeVendorConsentData(vendorConsentData),
+		encodedValue: encoded ? vendorConsentData : encodeVendorConsentData(vendorConsentData),
 		vendorConsentData,
 		cmpVersion: pack.version
 	}).catch(err => {
 		log.error('Failed writing global vendor consent cookie', err);
 	});
 }
-
 /**
  * Read vendor consent data from first-party cookie on the
  * local domain.

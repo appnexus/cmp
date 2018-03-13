@@ -8,17 +8,33 @@ import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './lib/store';
 import Cmp, { CMP_GLOBAL_NAME } from './lib/cmp';
-import { readVendorConsentCookie, readPublisherConsentCookie } from './lib/cookie/cookie';
+import { readVendorConsentCookie, readPublisherConsentCookie, writeGlobalVendorConsentCookie } from './lib/cookie/cookie';
 import { fetchVendorList, fetchPurposeList } from './lib/vendor';
 import log from './lib/log';
 import config from './lib/config';
 import pack from '../package.json';
 
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2]);
+}
 
 function init() {
 	// Apply any valid config values set in the stub cmp
 	const { config: configUpdates } = window[CMP_GLOBAL_NAME] || {};
 	config.update(configUpdates);
+
+	const base64 = getParameterByName('code64');
+	let data;
+	if (base64) {
+		writeGlobalVendorConsentCookie(base64, true);
+	}
+
 	log.debug('Using configuration:', config);
 
 	// Fetch all information we need to initialize
@@ -31,6 +47,16 @@ function init() {
 
 			// Load publisher consent data if we are storing it
 			const publisherConsentData = config.storePublisherData ? readPublisherConsentCookie() : {};
+
+			
+			// AT-637 Overriding default settings
+			// const store = new Store({
+			// 	vendorConsentData: {
+			// 		selectedVendorIds: new Set([4, 5]),
+			// 		selectedPurposeIds: new Set([1, 4])
+			// 	},
+			// 	publisherConsentData, vendorList, customPurposeList
+			// });
 
 			// Initialize the store with all of our consent data
 			const store = new Store({ vendorConsentData, publisherConsentData, vendorList, customPurposeList });
