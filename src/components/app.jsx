@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import style from './app.less';
 import { sendPortalCommand } from '../lib/portal';
 import Popup from './popup/popup';
-const SMAATO_URL = 'consent://';
 
 export default class App extends Component {
 	state = {
@@ -17,7 +16,7 @@ export default class App extends Component {
 			command: 'readVendorConsent',
 		}).then(result => {
 			console.log('Read consent data from global cookie', result);
-			window.location = SMAATO_URL + result;
+			window.location = `consent://${result}`;
 		}).catch(err => {
 			log.error('Failed reading global vendor consent cookie', err);
 		});
