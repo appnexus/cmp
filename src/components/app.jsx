@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import style from './app.less';
-
+import { sendPortalCommand } from '../lib/portal';
 import Popup from './popup/popup';
 
 export default class App extends Component {
@@ -11,6 +11,15 @@ export default class App extends Component {
 	onSave = () => {
 		const { store, notify } = this.props;
 		store.persist();
+		// Fetch all information we need from the cookie
+		sendPortalCommand({
+			command: 'readVendorConsent',
+		}).then(result => {
+			console.log('Read consent data from global cookie', result);
+			window.location = `consent://${result}`;
+		}).catch(err => {
+			log.error('Failed reading global vendor consent cookie', err);
+		});
 		notify('onSubmit');
 		store.toggleConsentToolShowing(false);
 	};
