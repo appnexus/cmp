@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import style from './details.less';
 import Button from '../../button/button';
+import CloseButton from '../../closebutton/closebutton';
 import Purposes from './purposes/purposes';
 import Vendors from './vendors/vendors';
 import Panel from '../../panel/panel';
@@ -26,10 +27,22 @@ export default class Details extends Component {
 		});
 	};
 
+	handleBack = () => {
+		const { onCancel } = this.props;
+		const { selectedPanelIndex } = this.state;
+		this.setState({
+			selectedPanelIndex: Math.max(0, selectedPanelIndex - 1)
+		});
+		if (selectedPanelIndex === SECTION_PURPOSES) {
+			onCancel();
+		}
+	};
+
 	render(props, state) {
 		const {
 			onCancel,
 			onSave,
+			onClose,
 			store
 		} = props;
 		const { selectedPanelIndex } = state;
@@ -52,8 +65,12 @@ export default class Details extends Component {
 
 		return (
 			<div class={style.details}>
+				<CloseButton
+					class={style.close}
+					onClick={onClose}
+				/>
 				<div class={style.header}>
-					<LocalLabel localizeKey='title'>Privacy Settings</LocalLabel>
+					<LocalLabel localizeKey='title'>User Privacy Preferences</LocalLabel>
 				</div>
 				<div class={style.body}>
 					<Panel selectedIndex={selectedPanelIndex}>
@@ -75,7 +92,7 @@ export default class Details extends Component {
 					</Panel>
 				</div>
 				<div class={style.footer}>
-					<a class={style.cancel} onClick={onCancel}><LocalLabel localizeKey='cancel'>Cancel</LocalLabel></a>
+					<a class={style.cancel} onClick={this.handleBack}><LocalLabel localizeKey='back'>Back</LocalLabel></a>
 					<Button class={style.save} onClick={onSave}><LocalLabel localizeKey='save'>Save and Exit</LocalLabel></Button>
 				</div>
 			</div>

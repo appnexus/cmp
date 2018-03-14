@@ -1,6 +1,6 @@
 @import '../../style/variables';
 
-.overlay {
+.popup {
 	display: none;
 	top: 0;
 	bottom: 0;
@@ -10,6 +10,14 @@
 	justify-content: center;
 	align-items: center;
 }
+.overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+}
 
 .content {
 	width: 700px;
@@ -17,6 +25,7 @@
 	background: white;
 	display: flex;
 	align-items: center;
+	position: relative;
 
 	@media @smartphone {
 		width: 98%;

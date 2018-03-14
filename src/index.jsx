@@ -37,13 +37,10 @@ function init() {
 
 	log.debug('Using configuration:', config);
 
-	// Fetch all information we need to initialize
-	Promise.all([
-		readVendorConsentCookie(),
-		fetchVendorList(),
-		fetchPurposeList()
-	])
-		.then(([vendorConsentData, vendorList, customPurposeList]) => {
+
+	// Fetch the current vendor consent before initializing
+	readVendorConsentCookie()
+		.then(vendorConsentData => {
 
 			// Load publisher consent data if we are storing it
 			const publisherConsentData = config.storePublisherData ? readPublisherConsentCookie() : {};
@@ -59,7 +56,11 @@ function init() {
 			// });
 
 			// Initialize the store with all of our consent data
-			const store = new Store({ vendorConsentData, publisherConsentData, vendorList, customPurposeList });
+			const store = new Store({ vendorConsentData, publisherConsentData });
+
+			// Request lists
+			fetchVendorList().then(store.updateVendorList);
+			fetchPurposeList().then(store.updateCustomPurposeList);
 
 			// Pull queued command from __cmp stub
 			const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
@@ -95,7 +96,6 @@ function init() {
 			// Notify listeners that the CMP is loaded
 			log.debug(`Successfully loaded CMP version: ${pack.version}`);
 			cmp.notify('isLoaded');
-
 		})
 		.catch(err => {
 			log.error('Failed to load vendors.json', err);

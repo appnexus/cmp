@@ -39,7 +39,6 @@ div.vendors {
 	}
 	.options {
 		display: flex;
-		flex: 1;
 		@media @smartphone {
 			width: 100%;
 		}
@@ -59,6 +58,11 @@ div.vendors {
 	.vendorList {
 		border: 1px solid @color-border;
 	}
+	.vendorName {
+		min-height: 30px;
+		display: flex;
+		align-items: center;
+	}
 	table {
 		width: 100%;
 		border-collapse: collapse;
@@ -70,6 +74,7 @@ div.vendors {
 		}
 
 		tr {
+			min-height: 40px;
 			th {
 				font-weight: bold;
 			}
