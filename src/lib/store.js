@@ -2,7 +2,7 @@ import { writePublisherConsentCookie, writeVendorConsentCookie } from "./cookie/
 import config from './config';
 
 export default class Store {
-	constructor({ vendorConsentData, publisherConsentData, vendorList, customPurposeList }={}) {
+	constructor({vendorConsentData, publisherConsentData, vendorList, customPurposeList} = {}) {
 		// Keep track of data that has already been persisted
 		this.persistedVendorConsentData = vendorConsentData;
 		this.persistedPublisherConsentData = publisherConsentData;
@@ -36,6 +36,7 @@ export default class Store {
 		this.vendorList = vendorList;
 		this.customPurposeList = customPurposeList;
 		this.isConsentToolShowing = false;
+		this.isFooterShowing = false;
 	}
 
 	/**
@@ -53,17 +54,41 @@ export default class Store {
 			lastUpdated,
 			cmpId,
 			vendorListVersion,
-			maxVendorId,
+			maxVendorId = 0,
 			selectedVendorIds = new Set(),
 			selectedPurposeIds = new Set()
 		} = persistedVendorConsentData;
 
-		const { purposes = [], vendors = []} = vendorList;
+		const {purposes = [], vendors = []} = vendorList;
 
-		// If no vendor ID list is supplied return all vendors
-		const vendorIdList = vendors
-			.map(({ id }) => id)
-			.filter(id => !vendorIds || vendorIds.indexOf(id) > -1);
+
+		// Map requested vendorIds
+		const vendorMap = {};
+		if (vendorIds && vendorIds.length) {
+			vendorIds.forEach(id => vendorMap[id] = selectedVendorIds.has(id));
+		}
+		else {
+			// In case the vendor list has not been loaded yet find the highest
+			// vendor ID to map any consent data we already have
+			const lastVendorId = Math.max(maxVendorId,
+				...vendors.map(({id}) => id),
+				...Array.from(selectedVendorIds));
+
+			// Map all IDs up to the highest vendor ID found
+			for (let i = 1; i <= lastVendorId; i++) {
+				vendorMap[i] = selectedVendorIds.has(i);
+			}
+		}
+
+		// Map all purpose IDs
+		const lastPurposeId = Math.max(
+			...purposes.map(({id}) => id),
+			...Array.from(selectedPurposeIds));
+
+		const purposeMap = {};
+		for (let i = 1; i <= lastPurposeId; i++) {
+			purposeMap[i] = selectedPurposeIds.has(i);
+		}
 
 		return {
 			cookieVersion,
@@ -72,14 +97,8 @@ export default class Store {
 			cmpId,
 			vendorListVersion,
 			maxVendorId,
-			purposes: purposes.reduce((acc, { id }) => ({
-				...acc,
-				[id]: selectedPurposeIds.has(id)
-			}), {}),
-			vendorConsents: vendorIdList.reduce((acc, vendorId) => ({
-				...acc,
-				[vendorId]: selectedVendorIds.has(vendorId)
-			}), {})
+			purposes: purposeMap,
+			vendorConsents: vendorMap
 		};
 	};
 
@@ -104,9 +123,28 @@ export default class Store {
 			selectedCustomPurposeIds = new Set()
 		} = persistedPublisherConsentData;
 
-		const { selectedPurposeIds = new Set() } = persistedVendorConsentData;
-		const { purposes = [] } = vendorList;
-		const { purposes: customPurposes = []} = customPurposeList;
+		const {selectedPurposeIds = new Set()} = persistedVendorConsentData;
+		const {purposes = []} = vendorList;
+		const {purposes: customPurposes = []} = customPurposeList;
+
+
+		const lastStandardPurposeId = Math.max(
+			...purposes.map(({id}) => id),
+			...Array.from(selectedPurposeIds));
+
+		const lastCustomPurposeId = Math.max(
+			...customPurposes.map(({id}) => id),
+			...Array.from(selectedPurposeIds));
+
+		// Map all purpose IDs
+		const standardPurposeMap = {};
+		for (let i = 1; i <= lastStandardPurposeId; i++) {
+			standardPurposeMap[i] = selectedPurposeIds.has(i);
+		}
+		const customPurposeMap = {};
+		for (let i = 1; i <= lastCustomPurposeId; i++) {
+			customPurposeMap[i] = selectedCustomPurposeIds.has(i);
+		}
 
 		return {
 			cookieVersion,
@@ -115,14 +153,8 @@ export default class Store {
 			cmpId,
 			vendorListVersion,
 			publisherPurposeVersion,
-			standardPurposes: purposes.reduce((acc, { id }) => ({
-				...acc,
-				[id]: selectedPurposeIds.has(id)
-			}), {}),
-			customPurposes: customPurposes.reduce((acc, { id }) => ({
-				...acc,
-				[id]: selectedCustomPurposeIds.has(id)
-			}), {})
+			standardPurposes: standardPurposeMap,
+			customPurposes: customPurposeMap
 		};
 	};
 
@@ -143,7 +175,7 @@ export default class Store {
 		publisherConsentData.lastUpdated = now;
 
 		// Write vendor cookie to appropriate domain
-		writeVendorConsentCookie({ ...vendorConsentData, vendorList });
+		writeVendorConsentCookie({...vendorConsentData, vendorList});
 
 		// Write publisher cookie if enabled
 		if (config.storePublisherData) {
@@ -177,7 +209,7 @@ export default class Store {
 	};
 
 	selectVendor = (vendorId, isSelected) => {
-		const { selectedVendorIds } = this.vendorConsentData;
+		const {selectedVendorIds} = this.vendorConsentData;
 		if (isSelected) {
 			selectedVendorIds.add(vendorId);
 		}
@@ -195,7 +227,7 @@ export default class Store {
 	};
 
 	selectPurpose = (purposeId, isSelected) => {
-		const { selectedPurposeIds } = this.vendorConsentData;
+		const {selectedPurposeIds} = this.vendorConsentData;
 		if (isSelected) {
 			selectedPurposeIds.add(purposeId);
 		}
@@ -213,7 +245,7 @@ export default class Store {
 	};
 
 	selectCustomPurpose = (purposeId, isSelected) => {
-		const { selectedCustomPurposeIds } = this.publisherConsentData;
+		const {selectedCustomPurposeIds} = this.publisherConsentData;
 		if (isSelected) {
 			selectedCustomPurposeIds.add(purposeId);
 		}
@@ -232,7 +264,23 @@ export default class Store {
 
 	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
 
+	toggleFooterShowing = (isShown) => {
+		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
+		this.isConsentToolShowing = false;
+		this.storeUpdate();
+	};
+
+	updateVendorList = vendorList => {
+		this.vendorList = vendorList;
+		this.storeUpdate();
+	};
+
+	updateCustomPurposeList = customPurposeList => {
+		this.customPurposeList = customPurposeList;
+		this.storeUpdate();
+	};
 }

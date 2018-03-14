@@ -11,7 +11,7 @@ class LocalLabel extends Label {
 
 export default class Purposes extends Component {
 	state = {
-		selectedPurposeIndex: -1
+		selectedPurposeIndex: 0
 	};
 
 	static defaultProps = {
@@ -43,7 +43,7 @@ export default class Purposes extends Component {
 		const id = allPurposes[selectedPurposeIndex].id;
 
 		if (selectedPurposeIndex < purposes.length) {
-				selectPurpose(id, isSelected);
+			selectPurpose(id, isSelected);
 		}
 		else {
 			selectCustomPurpose(id, isSelected);
@@ -74,51 +74,36 @@ export default class Purposes extends Component {
 		return (
 			<div class={style.purposes}>
 				<div class={style.purposeList}>
-					<div class={[style.purposeItem, selectedPurposeIndex === -1 ? style.selectedPurpose : ''].join(' ')}
-					onClick={this.handleSelectPurposeDetail(-1)}
-					>
-						<LocalLabel localizeKey='cookies.menu'>How we use cookies</LocalLabel>
-					</div>
 					{allPurposes.map((purpose, index) => (
 						<div class={[style.purposeItem, selectedPurposeIndex === index ? style.selectedPurpose : ''].join(' ')}
 							 onClick={this.handleSelectPurposeDetail(index)}
-						 >
+						>
 							<LocalLabel localizeKey={`${index >= purposes.length ? 'customPurpose' : 'purpose'}${purpose.id}.menu`}>{purpose.name}</LocalLabel>
 						</div>
 					))}
 				</div>
+				{selectedPurpose &&
 				<div class={style.purposeDescription}>
-					{selectedPurposeIndex < 0 &&
-					<div class={style.purposeDetail}>
-						<div class={style.title}>
-							<LocalLabel localizeKey='cookies.title'>This website uses cookies</LocalLabel>
-						</div>
-						<div class={style.body}>
-							<LocalLabel localizeKey='cookies.description'>
-								Our partners set cookies and collect information from your browser across the web to provide you with website content, deliver relevant advertising and understand web audiences.
-							</LocalLabel>
-							<a class={style.vendorLink} onClick={onShowVendors}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
-						</div>
-					</div>}
-					{selectedPurposeIndex > -1 &&
 					<div class={style.purposeDetail}>
 						<div class={style.detailHeader}>
 							<div class={style.title}>
-								<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.title`}>{allPurposes[selectedPurposeIndex].name}</LocalLabel>
+								<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.title`}>{selectedPurpose.name}</LocalLabel>
 							</div>
 							<div class={style.active}>
 								<LocalLabel localizeKey='active'>Active</LocalLabel>
 								<Switch
 									isSelected={purposeIsActive}
 									onClick={this.handleSelectPurpose}
-									/>
+								/>
 							</div>
 						</div>
 						<div class={style.body}>
 							<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />
+							<a class={style.vendorLink} onClick={onShowVendors}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
 						</div>
-					</div>}
+					</div>
 				</div>
+				}
 			</div>
 		);
 	}

@@ -94,7 +94,7 @@ describe('store', () => {
 		const store = new Store({
 			vendorList,
 			vendorConsentData: {
-				selectedVendorIds: new Set([8, 10]),
+				selectedVendorIds: new Set([2, 4]),
 			}
 		});
 
