@@ -30,7 +30,6 @@ function init() {
 	config.update(configUpdates);
 
 	const base64 = getParameterByName('code64');
-	let data;
 	if (base64) {
 		writeGlobalVendorConsentCookie(base64, true);
 	}
