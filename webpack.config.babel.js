@@ -168,7 +168,8 @@ module.exports = [
 	// CMP config
 	{
 		entry: {
-			cmp: './index.jsx',
+			cmp: './index.js',
+			'cmp.complete': './complete.js'
 		},
 
 		output: {
