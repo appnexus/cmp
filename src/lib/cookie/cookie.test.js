@@ -145,7 +145,8 @@ describe('cookie', () => {
 
 	it('writes and reads the publisher consent cookie', () => {
 		config.update({
-			storeConsentGlobally: false
+			storeConsentGlobally: false,
+			storePublisherData: true
 		});
 
 		const publisherConsentData = {
