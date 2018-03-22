@@ -44,16 +44,6 @@ function init() {
 			// Load publisher consent data if we are storing it
 			const publisherConsentData = config.storePublisherData ? readPublisherConsentCookie() : {};
 
-			
-			// AT-637 Overriding default settings
-			// const store = new Store({
-			// 	vendorConsentData: {
-			// 		selectedVendorIds: new Set([4, 5]),
-			// 		selectedPurposeIds: new Set([1, 4])
-			// 	},
-			// 	publisherConsentData, vendorList, customPurposeList
-			// });
-
 			// Initialize the store with all of our consent data
 			const store = new Store({ vendorConsentData, publisherConsentData });
 
