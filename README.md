@@ -20,7 +20,7 @@ The App can read a query parameter to init the application with a given Code64:
 ```
 
 ## Override stored given consent and/or initialize with custom values
-path: src/index.jsx
+[src/index.jsx]
 ```sh
 const store = new Store({
 	vendorConsentData: {
