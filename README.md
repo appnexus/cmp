@@ -5,6 +5,28 @@ CMP is a tool for publishers to engage users of their properties and gather & st
 
 This is a fork of https://github.com/smaato/cmp
 
+## Output
+The App generates a cookie with a Base64 code that will be sent to the SDK via window.location to:
+
+    `consent://{CODE64}`
+
+## Override stored given consent and/or initialize with custom values
+path: src/index.jsx
+```sh
+const store = new Store({
+	vendorConsentData: {
+		selectedVendorIds: new Set([4, 5]),
+		selectedPurposeIds: new Set([1, 4])
+	},
+	publisherConsentData, vendorList, customPurposeList
+});
+```
+
+## Given Code via query parameter
+The App can read a query parameter to init the application with a given Code64:
+
+    `{URL}?code64={CODE64}`
+
 ### Installation
 
 ```sh
@@ -26,26 +48,6 @@ yarn build
 This produces a production build of the `cmp` script and the docs application:
 + `./build/cmp.bundle.js` - CMP script to include on your site
 + `./build/docs/` - Application hosting the documentation
-
-## Override stored given consent and/or initialize
-path: src/index.jsx
-`const store = new Store({
-	vendorConsentData: {
-		selectedVendorIds: new Set([4, 5]),
-		selectedPurposeIds: new Set([1, 4])
-	},
-	publisherConsentData, vendorList, customPurposeList
-});`
-
-# Base64Code Output
-The App generates a cookie with a Base64 code that will be sent to the SDK via window.location to:
-
-    `consent://{CODE64}`
-
-# Base64Code Input
-The App can read a query parameter to init the application with a given Code64:
-
-    `{URL}?code64={CODE64}`
 
 ## Documentation
 
