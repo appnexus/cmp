@@ -8,7 +8,16 @@ This is a fork of https://github.com/smaato/cmp
 ## Output
 The App generates a cookie with a Base64 code that will be sent to the SDK via window.location to:
 
-    `consent://{CODE64}`
+```
+consent://{CODE64}
+```
+
+## Given Code via query parameter
+The App can read a query parameter to init the application with a given Code64:
+
+```
+{URL}?code64={CODE64}
+```
 
 ## Override stored given consent and/or initialize with custom values
 path: src/index.jsx
@@ -21,11 +30,6 @@ const store = new Store({
 	publisherConsentData, vendorList, customPurposeList
 });
 ```
-
-## Given Code via query parameter
-The App can read a query parameter to init the application with a given Code64:
-
-    `{URL}?code64={CODE64}`
 
 ### Installation
 
