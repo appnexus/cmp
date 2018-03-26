@@ -27,7 +27,7 @@ This produces a production build of the `cmp` script and the docs application:
 + `./build/cmp.bundle.js` - CMP script to include on your site
 + `./build/docs/` - Application hosting the documentation
 
-## Overriding Default settings
+## Override stored given consent and/or initialize
 path: src/index.jsx
 `const store = new Store({
 	vendorConsentData: {
