@@ -7,36 +7,21 @@ export default class Store {
 		this.persistedVendorConsentData = vendorConsentData;
 		this.persistedPublisherConsentData = publisherConsentData;
 
-		const {
-			vendors = [],
-			purposes: vendorPurposes = [],
-			version: vendorListVersion = 1
-		} = vendorList || {};
-		const {
-			purposes: customPurposes = [],
-			version: publisherPurposeVersion = 1,
-		} = customPurposeList || {};
-
 		this.vendorConsentData = Object.assign({
 			cookieVersion: 1,
 			cmpId: 1,
-			vendorListVersion,
-			publisherPurposeVersion,
-			selectedPurposeIds: new Set(vendorPurposes.map(p => p.id)),
-			selectedVendorIds: new Set(vendors.map(v => v.id)),
 		}, vendorConsentData);
 
 		this.publisherConsentData = Object.assign({
 			cookieVersion: 1,
 			cmpId: 1,
-			publisherPurposeVersion,
-			selectedCustomPurposeIds: new Set(customPurposes.map(p => p.id))
 		}, publisherConsentData);
 
-		this.vendorList = vendorList;
-		this.customPurposeList = customPurposeList;
 		this.isConsentToolShowing = false;
 		this.isFooterShowing = false;
+
+		this.updateVendorList(vendorList);
+		this.updateCustomPurposeList(customPurposeList);
 	}
 
 	/**
@@ -275,11 +260,38 @@ export default class Store {
 	};
 
 	updateVendorList = vendorList => {
+
+		const { created } = this.vendorConsentData;
+
+		// If vendor consent data has never been persisted set default selected status
+		if (!created) {
+			const {
+				vendors = [],
+				purposes = [],
+			} = vendorList || {};
+			this.vendorConsentData.selectedPurposeIds = new Set(purposes.map(p => p.id));
+			this.vendorConsentData.selectedVendorIds = new Set(vendors.map(v => v.id));
+		}
+
+		const {version = 1} = vendorList || {};
+
+		this.vendorConsentData.vendorListVersion = version;
 		this.vendorList = vendorList;
 		this.storeUpdate();
 	};
 
 	updateCustomPurposeList = customPurposeList => {
+		const { created } = this.publisherConsentData;
+
+		// If publisher consent has never been persisted set the default selected status
+		if (!created) {
+			const {purposes = [],} = customPurposeList || {};
+			this.publisherConsentData.selectedCustomPurposeIds = new Set(purposes.map(p => p.id));
+		}
+
+		const {version = 1} = customPurposeList || {};
+		this.publisherConsentData.publisherPurposeVersion = version;
+
 		this.customPurposeList = customPurposeList;
 		this.storeUpdate();
 	};
