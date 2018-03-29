@@ -10,11 +10,14 @@ export default class Store {
 		this.vendorConsentData = Object.assign({
 			cookieVersion: 1,
 			cmpId: 1,
+			selectedPurposeIds: new Set(),
+			selectedVendorIds: new Set()
 		}, vendorConsentData);
 
 		this.publisherConsentData = Object.assign({
 			cookieVersion: 1,
 			cmpId: 1,
+			selectedCustomPurposeIds: new Set()
 		}, publisherConsentData);
 
 		this.isConsentToolShowing = false;
@@ -261,27 +264,36 @@ export default class Store {
 
 	updateVendorList = vendorList => {
 
-		const { created } = this.vendorConsentData;
+		const {
+			created,
+			maxVendorId = 0
+		} = this.vendorConsentData;
+
+		const {
+			vendors = [],
+			purposes = [],
+		} = vendorList || {};
 
 		// If vendor consent data has never been persisted set default selected status
 		if (!created) {
-			const {
-				vendors = [],
-				purposes = [],
-			} = vendorList || {};
 			this.vendorConsentData.selectedPurposeIds = new Set(purposes.map(p => p.id));
 			this.vendorConsentData.selectedVendorIds = new Set(vendors.map(v => v.id));
 		}
 
+		const {selectedVendorIds = new Set()} = this.vendorConsentData;
 		const {version = 1} = vendorList || {};
 
+		// Find the maxVendorId out of the vendor list and selectedVendorIds
+		this.vendorConsentData.maxVendorId = Math.max(maxVendorId,
+			...vendors.map(({id}) => id),
+			...Array.from(selectedVendorIds));
 		this.vendorConsentData.vendorListVersion = version;
 		this.vendorList = vendorList;
 		this.storeUpdate();
 	};
 
 	updateCustomPurposeList = customPurposeList => {
-		const { created } = this.publisherConsentData;
+		const {created} = this.publisherConsentData;
 
 		// If publisher consent has never been persisted set the default selected status
 		if (!created) {
