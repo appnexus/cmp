@@ -28,7 +28,9 @@ export default class Store {
 	}
 
 	/**
-	 * Build vendor consent object from data that has already been persisted.
+	 * Build vendor consent object from data that has already been persisted. This
+	 * list will only return consent=true for vendors that exist in the current
+	 * vendorList.
 	 */
 	getVendorConsentsObject = (vendorIds) => {
 		const {
@@ -49,11 +51,14 @@ export default class Store {
 
 		const {purposes = [], vendors = []} = vendorList;
 
+		// No consent will be allowed for vendors or purposes not on the list
+		const allowedVendorIds = new Set(vendors.map(({id}) => id));
+		const allowedPurposeIds = new Set(purposes.map(({id}) => id));
 
 		// Map requested vendorIds
 		const vendorMap = {};
 		if (vendorIds && vendorIds.length) {
-			vendorIds.forEach(id => vendorMap[id] = selectedVendorIds.has(id));
+			vendorIds.forEach(id => vendorMap[id] = selectedVendorIds.has(id) && allowedVendorIds.has(id));
 		}
 		else {
 			// In case the vendor list has not been loaded yet find the highest
@@ -64,7 +69,7 @@ export default class Store {
 
 			// Map all IDs up to the highest vendor ID found
 			for (let i = 1; i <= lastVendorId; i++) {
-				vendorMap[i] = selectedVendorIds.has(i);
+				vendorMap[i] = selectedVendorIds.has(i) && allowedVendorIds.has(i);
 			}
 		}
 
@@ -75,7 +80,7 @@ export default class Store {
 
 		const purposeMap = {};
 		for (let i = 1; i <= lastPurposeId; i++) {
-			purposeMap[i] = selectedPurposeIds.has(i);
+			purposeMap[i] = selectedPurposeIds.has(i) && allowedPurposeIds.has(i);
 		}
 
 		return {
@@ -91,7 +96,8 @@ export default class Store {
 	};
 
 	/**
-	 * Build publisher consent object from data that has already been persisted
+	 * Build publisher consent object from data that has already been persisted.
+	 * Purposes will only have consent=true if they exist in the current vendorList.
 	 */
 	getPublisherConsentsObject = () => {
 		const {
@@ -115,6 +121,8 @@ export default class Store {
 		const {purposes = []} = vendorList;
 		const {purposes: customPurposes = []} = customPurposeList;
 
+		// No consent will be allowed for purposes not on the list
+		const allowedPurposeIds = new Set(purposes.map(({id}) => id));
 
 		const lastStandardPurposeId = Math.max(
 			...purposes.map(({id}) => id),
@@ -127,7 +135,7 @@ export default class Store {
 		// Map all purpose IDs
 		const standardPurposeMap = {};
 		for (let i = 1; i <= lastStandardPurposeId; i++) {
-			standardPurposeMap[i] = selectedPurposeIds.has(i);
+			standardPurposeMap[i] = selectedPurposeIds.has(i) && allowedPurposeIds.has(i);
 		}
 		const customPurposeMap = {};
 		for (let i = 1; i <= lastCustomPurposeId; i++) {
@@ -146,6 +154,11 @@ export default class Store {
 		};
 	};
 
+	/**
+	 * Persist all consent data to the cookie.  This data will NOT be filtered
+	 * by the vendorList and will include global consents set no matter what
+	 * was allowed by the list.
+	 */
 	persist = () => {
 		const {
 			vendorConsentData,
