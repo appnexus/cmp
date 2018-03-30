@@ -19,17 +19,23 @@ const VENDOR_CONSENT_COOKIE_NAME = 'euconsent';
 const VENDOR_CONSENT_COOKIE_MAX_AGE = 33696000;
 
 
-function encodeVendorIdsToBits(vendors, selectedVendorIds) {
-	const vendorString = vendors.reduce((acc, vendor) => {
-		return acc + (selectedVendorIds.has(vendor.id) ? '1' : '0');
-	}, '');
-	return padRight(vendorString, Math.max(0, vendors.length - vendorString.length));
+function encodeVendorIdsToBits(maxVendorId, selectedVendorIds = new Set()) {
+	let vendorString = '';
+	for (let id = 1; id <= maxVendorId; id++) {
+		vendorString += (selectedVendorIds.has(id) ? '1' : '0');
+	}
+	return padRight(vendorString, Math.max(0, maxVendorId - vendorString.length));
 }
 
-function encodePurposeIdsToBits(purposes, selectedPurposeIds) {
-	return purposes.reduce((acc, purpose) => {
-		return acc + (selectedPurposeIds.has(purpose.id) ? '1' : '0');
-	}, '');
+function encodePurposeIdsToBits(purposes, selectedPurposeIds = new Set()) {
+	const maxPurposeId = Math.max(0,
+		...purposes.map(({id}) => id),
+		...Array.from(selectedPurposeIds));
+	let purposeString = '';
+	for (let id = 1; id <= maxPurposeId; id++) {
+		purposeString += (selectedPurposeIds.has(id) ? '1' : '0');
+	}
+	return purposeString;
 }
 
 function decodeBitsToIds(bitString) {
@@ -43,7 +49,7 @@ function decodeBitsToIds(bitString) {
 
 function convertVendorsToRanges(vendors, selectedIds) {
 	let range = [];
-	return vendors.reduce((acc, { id }, index) => {
+	return vendors.reduce((acc, {id}, index) => {
 		if (selectedIds.has(id)) {
 			range.push(id);
 		}
@@ -64,9 +70,8 @@ function convertVendorsToRanges(vendors, selectedIds) {
 }
 
 function encodeVendorConsentData(vendorData) {
-	const { vendorList = {}, selectedPurposeIds, selectedVendorIds } = vendorData;
-	const { vendors = [], purposes = [] } = vendorList;
-	const maxVendorId = vendors.length ? vendors[vendors.length - 1].id : 0;
+	const {vendorList = {}, selectedPurposeIds, selectedVendorIds, maxVendorId} = vendorData;
+	const {vendors = [], purposes = []} = vendorList;
 
 	// Encode the data with and without ranges and return the smallest encoded payload
 	const noRangesData = encodeVendorCookieValue({
@@ -74,7 +79,7 @@ function encodeVendorConsentData(vendorData) {
 		maxVendorId,
 		purposeIdBitString: encodePurposeIdsToBits(purposes, selectedPurposeIds),
 		isRange: false,
-		vendorIdBitString: encodeVendorIdsToBits(vendors, selectedVendorIds)
+		vendorIdBitString: encodeVendorIdsToBits(maxVendorId, selectedVendorIds)
 	});
 
 	const vendorRangeList = convertVendorsToRanges(vendors, selectedVendorIds);
@@ -117,7 +122,7 @@ function decodeVendorConsentData(cookieValue) {
 	};
 
 	if (isRange) {
-		const idMap = vendorRangeList.reduce((acc, { isRange, startVendorId, endVendorId }) => {
+		const idMap = vendorRangeList.reduce((acc, {isRange, startVendorId, endVendorId}) => {
 			const lastVendorId = isRange ? endVendorId : startVendorId;
 			for (let i = startVendorId; i <= lastVendorId; i++) {
 				acc[i] = true;
@@ -147,8 +152,8 @@ function encodePublisherConsentData(publisherData) {
 		selectedPurposeIds,
 		selectedCustomPurposeIds
 	} = publisherData;
-	const { purposes: customPurposes = [] } = customPurposeList;
-	const { purposes = [] } = vendorList;
+	const {purposes: customPurposes = []} = customPurposeList;
+	const {purposes = []} = vendorList;
 
 	return encodePublisherCookieValue({
 		...publisherData,

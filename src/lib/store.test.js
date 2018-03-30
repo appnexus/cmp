@@ -43,6 +43,7 @@ describe('store', () => {
 		const store = new Store({
 			vendorList,
 			vendorConsentData: {
+				created: new Date(),
 				selectedVendorIds,
 				selectedPurposeIds
 			}
@@ -77,6 +78,7 @@ describe('store', () => {
 		const store = new Store({
 			vendorList,
 			vendorConsentData: {
+				created: new Date(),
 				selectedVendorIds: new Set([2, 4]),
 			}
 		});
@@ -94,6 +96,7 @@ describe('store', () => {
 		const store = new Store({
 			vendorList,
 			vendorConsentData: {
+				created: new Date(),
 				selectedVendorIds: new Set([2, 4]),
 			}
 		});
@@ -110,6 +113,7 @@ describe('store', () => {
 		const store = new Store({
 			vendorList,
 			vendorConsentData: {
+				created: new Date(),
 				selectedPurposeIds: new Set([0, 1, 2]),
 			}
 		});
@@ -128,6 +132,7 @@ describe('store', () => {
 		const store = new Store({
 			vendorList,
 			vendorConsentData: {
+				created: new Date(),
 				selectedPurposeIds: new Set([0, 1, 2]),
 			}
 		});
@@ -145,6 +150,7 @@ describe('store', () => {
 		const store = new Store({
 			customPurposeList,
 			publisherConsentData: {
+				created: new Date(),
 				selectedCustomPurposeIds: new Set([0, 2]),
 			}
 		});
@@ -162,6 +168,7 @@ describe('store', () => {
 		const store = new Store({
 			customPurposeList,
 			publisherConsentData: {
+				created: new Date(),
 				selectedCustomPurposeIds: new Set([0, 2]),
 			}
 		});
