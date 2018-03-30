@@ -1,8 +1,57 @@
 import { expect } from 'chai';
-import vendorList from '../docs/assets/vendors.json';
 import customPurposeList from '../docs/assets/purposes.json';
 
 import Store from './store';
+
+
+const vendorList = {
+	"version": 1,
+	"origin": "http://ib.adnxs.com/vendors.json",
+	"purposes": [
+		{
+			"id": 1,
+			"name": "Accessing a Device or Browser"
+		},
+		{
+			"id": 2,
+			"name": "Advertising Personalisation"
+		},
+		{
+			"id": 3,
+			"name": "Analytics"
+		},
+		{
+			"id": 4,
+			"name": "Content Personalisation"
+		}
+	],
+	"vendors": [
+		{
+			"id": 1,
+			"name": "Globex"
+		},
+		{
+			"id": 2,
+			"name": "Initech"
+		},
+		{
+			"id": 3,
+			"name": "CRS"
+		},
+		{
+			"id": 4,
+			"name": "Umbrella"
+		},
+		{
+			"id": 5,
+			"name": "Aperture"
+		},
+		{
+			"id": 6,
+			"name": "Pierce and Pierce"
+		}
+	]
+};
 
 describe('store', () => {
 
@@ -72,6 +121,41 @@ describe('store', () => {
 
 		expect(vendorObject.purposes['1']).to.be.true;
 		expect(vendorObject.purposes['4']).to.be.true;
+	});
+
+	it('returns consent=false for vendors that are not in the vendorList', () => {
+		const store = new Store({
+			vendorList,
+			vendorConsentData: {
+				selectedVendorIds: new Set([4, 5, 7, 8]),
+				selectedPurposeIds: new Set([1, 4])
+			}
+		});
+
+		const vendorObject = store.getVendorConsentsObject();
+
+
+		expect(vendorObject.vendorConsents['4']).to.be.true;
+		expect(vendorObject.vendorConsents['5']).to.be.true;
+
+		expect(vendorObject.vendorConsents['7']).to.be.false;
+		expect(vendorObject.vendorConsents['8']).to.be.false;
+	});
+
+	it('returns consent=false for purposes that are not in the vendorList', () => {
+		const store = new Store({
+			vendorList,
+			vendorConsentData: {
+				selectedPurposeIds: new Set([1, 4, 9, 10])
+			}
+		});
+
+		const vendorObject = store.getVendorConsentsObject();
+
+		expect(vendorObject.purposes['1']).to.be.true;
+		expect(vendorObject.purposes['4']).to.be.true;
+		expect(vendorObject.purposes['9']).to.be.false;
+		expect(vendorObject.purposes['10']).to.be.false;
 	});
 
 	it('selects vendor IDs', () => {

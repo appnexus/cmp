@@ -22,7 +22,7 @@ export default class Cmp {
 		/**
 		 * Get all publisher consent data from the data store.
 		 */
-		getPublisherConsents: (purposeIds, callback=() => {}) => {
+		getPublisherConsents: (purposeIds, callback = () => {}) => {
 			const consent = this.store.getPublisherConsentsObject();
 			callback(consent);
 			return consent;
@@ -32,7 +32,7 @@ export default class Cmp {
 		 * Get all vendor consent data from the data store.
 		 * @param {Array} vendorIds Array of vendor IDs to retrieve.  If empty return all vendors.
 		 */
-		getVendorConsents: (vendorIds, callback=() => {}) => {
+		getVendorConsents: (vendorIds, callback = () => {}) => {
 			const consent = this.store.getVendorConsentsObject(vendorIds);
 			callback(consent);
 			return consent;
@@ -41,15 +41,31 @@ export default class Cmp {
 		/**
 		 * Get the encoded vendor consent data value.
 		 */
-		getConsentData: (_, callback=() => {}) => {
+		getConsentData: (_, callback = () => {}) => {
 			const {
 				persistedVendorConsentData,
 				vendorList
 			} = this.store;
 
+			const {
+				vendors = [],
+				purposes = []
+			} = vendorList || {};
+
+			const {
+				selectedVendorIds = new Set(),
+				selectedPurposeIds = new Set()
+			} = persistedVendorConsentData || {};
+
+			// Filter consents by values that exist in the current vendorList
+			const allowedVendorIds = new Set(vendors.map(({id}) => id));
+			const allowedPurposeIds = new Set(purposes.map(({id}) => id));
+
 			// Encode the persisted data
 			const consentData = persistedVendorConsentData && encodeVendorConsentData({
 				...persistedVendorConsentData,
+				selectedVendorIds: new Set(Array.from(selectedVendorIds).filter(id => allowedVendorIds.has(id))),
+				selectedPurposeIds: new Set(Array.from(selectedPurposeIds).filter(id => allowedPurposeIds.has(id))),
 				vendorList
 			});
 			callback(consentData);
@@ -59,7 +75,7 @@ export default class Cmp {
 		/**
 		 * Get the entire vendor list
 		 */
-		getVendorList: (vendorListVersion, callback=() => {}) => {
+		getVendorList: (vendorListVersion, callback = () => {}) => {
 			const list = this.store.vendorList;
 			callback(list);
 			return list;
@@ -110,7 +126,7 @@ export default class Cmp {
 		/**
 		 * Trigger the consent tool UI to be shown
 		 */
-		showConsentTool: (_, callback=() => {}) => {
+		showConsentTool: (_, callback = () => {}) => {
 			this.store.toggleConsentToolShowing(true);
 			callback(true);
 			return true;
@@ -121,12 +137,12 @@ export default class Cmp {
 	 * Handle a message event sent via postMessage to
 	 * call `processCommand`
 	 */
-	receiveMessage = ({ data, origin, source }) => {
-		const { [CMP_GLOBAL_NAME]: cmp } = data;
+	receiveMessage = ({data, origin, source}) => {
+		const {[CMP_GLOBAL_NAME]: cmp} = data;
 		if (cmp) {
-			const { callId, command, parameter } = cmp;
+			const {callId, command, parameter} = cmp;
 			this.processCommand(command, parameter, result =>
-				source.postMessage({ [CMP_GLOBAL_NAME]: { callId, command, result } }, origin));
+				source.postMessage({[CMP_GLOBAL_NAME]: {callId, command, result}}, origin));
 		}
 	};
 
