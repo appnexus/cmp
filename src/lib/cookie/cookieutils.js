@@ -198,8 +198,8 @@ function encodeDataToBits(data, definitionMap) {
 }
 
 /**
- * Take all fields required to encode the cookie and produce the Base64 encoded
- * value.
+ * Take all fields required to encode the cookie and produce the
+ * URL safe Base64 encoded value.
  */
 function encodeCookieValue(data, definitionMap) {
 	const binaryValue = encodeDataToBits(data, definitionMap);
@@ -214,7 +214,11 @@ function encodeCookieValue(data, definitionMap) {
 			bytes += String.fromCharCode(parseInt(paddedBinaryValue.substr(i, 8), 2));
 		}
 
-		return btoa(bytes);
+		// Make base64 string URL friendly
+		return btoa(bytes)
+			.replace(/\+/g, '-')
+			.replace(/\//g, '_')
+			.replace(/=+$/, '');
 	}
 }
 
@@ -228,10 +232,22 @@ function encodePublisherCookieValue(publisherData) {
 
 
 /**
- * Decode the (Base64) value of a cookie into an object.
+ * Decode the (URL safe Base64) value of a cookie into an object.
  */
 function decodeCookieValue(cookieValue, definitionMap) {
-	const bytes = atob(cookieValue);
+
+	// Add padding
+	let unsafe = cookieValue;
+	while (unsafe.length % 4 !== 0) {
+		unsafe += '=';
+	}
+
+	// Replace safe characters
+	unsafe = unsafe
+		.replace(/-/g, '+')
+		.replace(/_/g, '/');
+
+	const bytes = atob(unsafe);
 
 	let inputBits = '';
 	for (let i = 0; i < bytes.length; i++) {
