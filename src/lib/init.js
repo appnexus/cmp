@@ -34,13 +34,13 @@ export function init(configUpdates) {
 				// If command is queued with an event we will relay its result via postMessage
 				if (event) {
 					cmp.processCommand(command, parameter, result =>
-						event.source.postMessage(JSON.stringify({
+						event.source.postMessage({
 							[CMP_GLOBAL_NAME]: {
 								callId,
 								command,
 								result
 							}
-						}), event.origin));
+						}, event.origin));
 				}
 				else {
 					cmp.processCommand(command, parameter, callback);
