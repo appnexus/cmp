@@ -36,9 +36,41 @@ function checkConsent() {
 	}
 }
 
+// Preserve any config options already set
 const {config} = window[CMP_GLOBAL_NAME] || {};
 const configUpdates = {
 	globalConsentLocation: '//acdn.adnxs.com/cmp/docs/portal.html',
 	...config
 };
+
+// Add stub
+window.__cmp = (() => {
+	const commandQueue = [];
+	const cmp = function(command, parameter, callback) {
+		commandQueue.push({
+			command,
+			parameter,
+			callback
+		});
+	};
+	cmp.commandQueue = commandQueue;
+	cmp.receiveMessage = function(event) {
+		const data = event && event.data && event.data.__cmp;
+		if (data) {
+			commandQueue.push({
+				callId: data.callId,
+				command: data.command,
+				parameter: data.parameter,
+				event: event
+			});
+		}
+	};
+});
+
+// Listen for postMessage events
+window.addEventListener('message', event => {
+	window.__cmp.receiveMessage(event);
+});
+
+// Initialize CMP and then check if we need to ask for consent
 init(configUpdates).then(checkConsent);
