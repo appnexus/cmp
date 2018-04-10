@@ -236,16 +236,10 @@ function encodePublisherCookieValue(publisherData) {
  */
 function decodeCookieValue(cookieValue, definitionMap) {
 
-	// Add padding
-	let unsafe = cookieValue;
-	while (unsafe.length % 4 !== 0) {
-		unsafe += '=';
-	}
-
 	// Replace safe characters
-	unsafe = unsafe
+	const unsafe = cookieValue
 		.replace(/-/g, '+')
-		.replace(/_/g, '/');
+		.replace(/_/g, '/') + '=='.substring(0, (3 * cookieValue.length) % 4);
 
 	const bytes = atob(unsafe);
 
