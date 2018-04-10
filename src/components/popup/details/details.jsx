@@ -1,51 +1,54 @@
 import { h, Component } from 'preact';
 import style from './details.less';
 import Button from '../../button/button';
-import CloseButton from '../../closebutton/closebutton';
-import Purposes from './purposes/purposes';
 import Vendors from './vendors/vendors';
+import VendorList from './vendorList/vendorList';
+import Summary from './summary/summary';
 import Panel from '../../panel/panel';
-import Label from "../../label/label";
+import PurposeList from './purposeList/purposeList';
 
 const SECTION_PURPOSES = 0;
-const SECTION_VENDORS = 1;
-
-class LocalLabel extends Label {
-	static defaultProps = {
-		prefix: 'details'
-	};
-}
+const SECTION_VENDOR_LIST = 1;
+const SECTION_PURPOSE_LIST = 2;
+const SECTION_VENDORS = 3;
 
 export default class Details extends Component {
 	state = {
 		selectedPanelIndex: SECTION_PURPOSES
 	};
 
-	handleShowVendors = () => {
+	handlePanelClick = panelIndex => {
+		return () => {
+			this.setState({
+				selectedPanelIndex: Math.max(0, panelIndex)
+			});
+		};
+	};
+
+	handleBack = () => {
 		this.setState({
+			selectedPanelIndex: SECTION_PURPOSES
+		});
+	};
+
+	handlePurposeClick = purposeItem => {
+		this.setState({
+			selectedPurpose: purposeItem,
 			selectedPanelIndex: SECTION_VENDORS
 		});
 	};
 
-	handleBack = () => {
-		const { onCancel } = this.props;
-		const { selectedPanelIndex } = this.state;
-		this.setState({
-			selectedPanelIndex: Math.max(0, selectedPanelIndex - 1)
-		});
-		if (selectedPanelIndex === SECTION_PURPOSES) {
-			onCancel();
-		}
-	};
 
 	render(props, state) {
 		const {
-			onCancel,
 			onSave,
 			onClose,
-			store
+			store,
 		} = props;
-		const { selectedPanelIndex } = state;
+		const {
+			selectedPanelIndex,
+			selectedPurpose
+		} = state;
 
 		const {
 			vendorList = {},
@@ -57,43 +60,50 @@ export default class Details extends Component {
 			selectAllVendors,
 			selectVendor
 		} = store;
-		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
-		const { selectedCustomPurposeIds } = publisherConsentData;
-		const { purposes = [], vendors = [] } = vendorList;
-		const { purposes: customPurposes = [] } = customPurposeList;
+		const {selectedPurposeIds, selectedVendorIds} = vendorConsentData;
+		const {selectedCustomPurposeIds} = publisherConsentData;
+		const {purposes = [], vendors = []} = vendorList;
+		const {purposes: customPurposes = []} = customPurposeList;
 
+		const formattedVendors = vendors
+			.map(vendor => ({
+				...vendor,
+				policyUrl: vendor.policyUrl.indexOf('://') > -1 ? vendor.policyUrl : `http://${vendor.policyUrl}`
+			}))
+			.sort(({name: n1}, {name: n2}) => n1.toLowerCase() === n2.toLowerCase() ? 0 : n1.toLowerCase() > n2.toLowerCase() ? 1 : -1);
 
 		return (
 			<div class={style.details}>
-				<CloseButton
-					class={style.close}
-					onClick={onClose}
-				/>
-				<div class={style.header}>
-					<LocalLabel localizeKey='title'>User Privacy Preferences</LocalLabel>
-				</div>
 				<div class={style.body}>
 					<Panel selectedIndex={selectedPanelIndex}>
-						<Purposes
+						<Summary
 							purposes={purposes}
-							customPurposes={customPurposes}
-							selectedPurposeIds={selectedPurposeIds}
-							selectedCustomPurposeIds={selectedCustomPurposeIds}
-							selectPurpose={selectPurpose}
-							selectCustomPurpose={selectCustomPurpose}
-							onShowVendors={this.handleShowVendors}
+							onPurposeClick={this.handlePurposeClick}
+							onVendorListClick={this.handlePanelClick(SECTION_VENDOR_LIST)}
+							onPurposeListClick={this.handlePanelClick(SECTION_PURPOSE_LIST)}
+						/>
+						<VendorList
+							vendors={formattedVendors}
+							onBack={this.handleBack}
+						/>
+						<PurposeList
+							onBack={this.handleBack}
 						/>
 						<Vendors
-							selectedVendorIds={selectedVendorIds}
-							selectAllVendors={selectAllVendors}
+							vendors={formattedVendors}
+							purposes={purposes}
 							selectVendor={selectVendor}
-							vendors={vendors}
+							selectAllVendors={selectAllVendors}
+							selectedVendorIds={selectedVendorIds}
+							selectedPurpose={selectedPurpose}
 						/>
 					</Panel>
 				</div>
 				<div class={style.footer}>
-					<a class={style.cancel} onClick={this.handleBack}><LocalLabel localizeKey='back'>Back</LocalLabel></a>
-					<Button class={style.save} onClick={onSave}><LocalLabel localizeKey='save'>Save and Exit</LocalLabel></Button>
+					{selectedPanelIndex > 0 &&
+					<Button class={style.back} onClick={this.handleBack}>&lt; Back</Button>
+					}
+					<Button class={style.save} onClick={onSave}>Continue Using Site</Button>
 				</div>
 			</div>
 		);

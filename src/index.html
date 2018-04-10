@@ -8,7 +8,8 @@
 	<script>
 		(function(window) {
 			window.__cmp = (function() {
-				window.addEventListener('message', function(event) {
+				var listen = window.attachEvent || window.addEventListener;
+				listen('message', function(event) {
 					window.__cmp.receiveMessage(event);
 				});
 

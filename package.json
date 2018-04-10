@@ -12,7 +12,8 @@
     "test:watch": "npm run -s test -- --watch",
     "lint": "eslint src test",
     "preversion": "npm test",
-    "version": "npm run build"
+    "version": "npm run build",
+    "forever": "forever start node_modules/.bin/serve build -s -c 1 -p 5004"
   },
   "repository": {
     "type": "git",

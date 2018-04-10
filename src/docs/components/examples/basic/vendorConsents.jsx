@@ -1,7 +1,7 @@
 import Example from "../example";
 
 const execute =
-	`window.__cmp('getVendorConsents', [1,2,3,4], function(result){
+	`window.__cmp('getVendorConsents', null, function(result){
 	myLogger('getVendorConsents callback result:\\n' + JSON.stringify(result, null, 2));
 });`;
 

@@ -59,7 +59,7 @@ describe('store', () => {
 
 		const store = new Store();
 
-		expect(store.isConsentToolShowing).to.equal(false);
+		expect(store.isBannerShowing).to.equal(false);
 
 		expect(store.vendorList).to.be.undefined;
 		expect(store.customPurposeList).to.be.undefined;
@@ -273,9 +273,9 @@ describe('store', () => {
 	it('toggle the consent modal', () => {
 		const store = new Store();
 
-		expect(store.isConsentToolShowing).to.be.false;
+		expect(store.isBannerShowing).to.be.false;
 		store.toggleConsentToolShowing();
-		expect(store.isConsentToolShowing).to.be.true;
+		expect(store.isBannerShowing).to.be.true;
 	});
 
 	it('calls event listeners on update', (done) => {
