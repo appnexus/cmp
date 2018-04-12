@@ -1,5 +1,6 @@
 import { writePublisherConsentCookie, writeVendorConsentCookie } from "./cookie/cookie";
 import config from './config';
+import {findLocale} from './localize';
 
 export default class Store {
 	constructor({vendorConsentData, publisherConsentData, vendorList, customPurposeList} = {}) {
@@ -10,6 +11,8 @@ export default class Store {
 		this.vendorConsentData = Object.assign({
 			cookieVersion: 1,
 			cmpId: 1,
+			cmpVersion: 1,
+			consentLanguage: findLocale().substr(0,2).toUpperCase(),
 			selectedPurposeIds: new Set(),
 			selectedVendorIds: new Set()
 		}, vendorConsentData);
@@ -43,6 +46,9 @@ export default class Store {
 			created,
 			lastUpdated,
 			cmpId,
+			cmpVersion,
+			consentScreen,
+			consentLanguage,
 			vendorListVersion,
 			maxVendorId = 0,
 			selectedVendorIds = new Set(),
@@ -88,6 +94,9 @@ export default class Store {
 			created,
 			lastUpdated,
 			cmpId,
+			cmpVersion,
+			consentScreen,
+			consentLanguage,
 			vendorListVersion,
 			maxVendorId,
 			purposes: purposeMap,
