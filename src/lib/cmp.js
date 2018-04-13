@@ -138,11 +138,11 @@ export default class Cmp {
 	 * call `processCommand`
 	 */
 	receiveMessage = ({data, origin, source}) => {
-		const {[CMP_GLOBAL_NAME]: cmp} = data;
+		const {__cmpCall: cmp} = data;
 		if (cmp) {
 			const {callId, command, parameter} = cmp;
 			this.processCommand(command, parameter, result =>
-				source.postMessage({[CMP_GLOBAL_NAME]: {callId, command, result}}, origin));
+				source.postMessage({__cmpReturn: {callId, command, result}}, origin));
 		}
 	};
 

@@ -35,7 +35,7 @@ export function init(configUpdates) {
 				if (event) {
 					cmp.processCommand(command, parameter, result =>
 						event.source.postMessage({
-							[CMP_GLOBAL_NAME]: {
+							__cmpReturn: {
 								callId,
 								command,
 								result
