@@ -55,7 +55,7 @@ window.__cmp = (() => {
 	};
 	cmp.commandQueue = commandQueue;
 	cmp.receiveMessage = function(event) {
-		const data = event && event.data && event.data.__cmp;
+		const data = event && event.data && event.data.__cmpCall;
 		if (data) {
 			commandQueue.push({
 				callId: data.callId,
