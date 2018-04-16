@@ -100,6 +100,9 @@ function decodeVendorConsentData(cookieValue) {
 	const {
 		cookieVersion,
 		cmpId,
+		cmpVersion,
+		consentScreen,
+		consentLanguage,
 		vendorListVersion,
 		purposeIdBitString,
 		maxVendorId,
@@ -114,6 +117,9 @@ function decodeVendorConsentData(cookieValue) {
 	const cookieData = {
 		cookieVersion,
 		cmpId,
+		cmpVersion,
+		consentScreen,
+		consentLanguage,
 		vendorListVersion,
 		selectedPurposeIds: decodeBitsToIds(purposeIdBitString),
 		maxVendorId,
