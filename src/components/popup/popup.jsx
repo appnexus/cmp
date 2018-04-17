@@ -51,7 +51,6 @@ export default class Popup extends Component {
 			>
 				<div
 					class={style.overlay}
-					onClick={this.handleClose}
 				/>
 				<div class={style.content}>
 					<Panel selectedIndex={selectedPanelIndex}>
