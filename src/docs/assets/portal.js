@@ -8,12 +8,7 @@ const COOKIE_DOMAIN = parts.length > 1 ? `;domain=.${parts.slice(-2).join('.')}`
 const COOKIE_MAX_AGE = 33696000;
 const COOKIE_NAME = 'euconsent';
 
-const readVendorListPromise = fetch('./vendors.json', {
-	headers: {
-		'Accept': 'application/json',
-		'Content-Type': 'application/json'
-	}
-})
+const readVendorListPromise = fetch('./vendors.json')
 	.then(res => res.json())
 	.catch(err => {
 		log.error(`Failed to load vendor list from vendors.json`, err);

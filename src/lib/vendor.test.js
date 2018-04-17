@@ -24,6 +24,9 @@ describe('vendor', () => {
 			});
 	});
 	it('fetchVendorList sends a portal command', (done) => {
+		config.update({
+			storeConsentGlobally: true
+		});
 		window.fetch = jest.fn().mockImplementation(() => Promise.reject());
 		fetchVendorList()
 			.then(() => {
