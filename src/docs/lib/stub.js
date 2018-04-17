@@ -45,7 +45,7 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 			t.async = false;
 			t.src = '${cmpLocation}';
 			var tag = document.getElementsByTagName('head')[0];
-			tag.appendChild(t);
+			tag.append(t);
 		}
 	})(window, document);`;
 }
