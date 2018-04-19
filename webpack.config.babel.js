@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackInlineSourcePlugin from 'html-webpack-inline-source-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import path from 'path';
@@ -228,8 +229,10 @@ module.exports = [
 			new HtmlWebpackPlugin({
 				filename: 'portal.html',
 				template: './docs/assets/portal.html',
-				chunks: ['portal']
+				chunks: ['portal'],
+				inlineSource: '\\.(js|css)$'
 			}),
+			new HtmlWebpackInlineSourcePlugin(),
 			new CopyWebpackPlugin([
 				{ from: 'docs/assets', to: '.' },
 			])
