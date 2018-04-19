@@ -10,9 +10,6 @@ class LocalLabel extends Label {
 	};
 }
 
-const HOST_PARTS = ((window && window.location && window.location.hostname) || '').split('.');
-const DOMAIN = HOST_PARTS.length > 0 ? HOST_PARTS.slice(-2).join('.') : '';
-
 export default class Intro extends Component {
 
 	static defaultProps = {};
@@ -32,7 +29,7 @@ export default class Intro extends Component {
 					onClick={onClose}
 				/>
 				<div class={style.title}>
-					<LocalLabel localizeKey='title'>Thanks for visiting</LocalLabel> {DOMAIN}
+					<LocalLabel localizeKey='title'>Thanks for visiting</LocalLabel>
 				</div>
 				<div class={style.description}>
 					<LocalLabel localizeKey='description'>In order to run a successful website, we and certain third parties are setting cookies and accessing and storing information on your device for various purposes. Various third parties are also collecting data to show you personalized content and ads. Some third parties require your consent to collect data to serve you personalized content and ads.</LocalLabel>
