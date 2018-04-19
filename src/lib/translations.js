@@ -125,11 +125,11 @@ export default {
 			company: 'Unternehmen',
 			offOn: 'Aus/An',
 			description: 'Helfen Sie uns, Ihnen einen besseren Service zu bieten! Unsere Partner verwenden Cookies Ihres Browsers, um quer durch das Web zu verstehen, was Sie interessiert und Ihnen entsprechend relevante Inhalte und Werbung anzubieten.',
-			moreChoices: ''
+			moreChoices: 'Weitere Auswahlmöglichkeiten'
 		},
 		footer: {
-			message: '',
-			consentLink: ''
+			message: 'Du kannst deine Datenschutz-Einstellungen bearbeiten',
+			consentLink: 'hier'
 		}
 	}
 };
