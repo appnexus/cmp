@@ -13,10 +13,10 @@ import pack from '../../../package.json';
 import config from '../config';
 
 const PUBLISHER_CONSENT_COOKIE_NAME = 'pubconsent';
-const PUBLISHER_CONSENT_COOKIE_MAX_AGE = 33696000;
+const PUBLISHER_CONSENT_COOKIE_MAX_AGE = 1209600;//33696000;
 
 const VENDOR_CONSENT_COOKIE_NAME = 'euconsent';
-const VENDOR_CONSENT_COOKIE_MAX_AGE = 33696000;
+const VENDOR_CONSENT_COOKIE_MAX_AGE = 1209600;//33696000;
 
 
 function encodeVendorIdsToBits(maxVendorId, selectedVendorIds = new Set()) {
