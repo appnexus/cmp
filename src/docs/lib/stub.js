@@ -3,17 +3,43 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 	return `(function(window, document) {
 		if (!window.__cmp) {
 			window.__cmp = (function() {
-				window.addEventListener('message', function(event) {
+				var listen = window.attacheEvent || window.addEventListener;
+				listen('message', function(event) {
 					window.__cmp.receiveMessage(event);
-				});
-		
+				}, false);
+				
+				function addLocatorFrame() {
+					if (!window.frames['__cmpLocator']) {
+						if (document.body) {
+							var frame = document.createElement('iframe');
+							frame.style.display = 'none';
+							frame.name = '__cmpLocator';
+							document.body.appendChild(frame);
+						}
+						else {
+							setTimeout(addLocatorFrame, 5);
+						}
+					}
+				}
+				addLocatorFrame();
+				
 				var commandQueue = [];
 				var cmp = function(command, parameter, callback) {
-					commandQueue.push({
-						command: command,
-						parameter: parameter,
-						callback: callback
-					});
+					if (command === 'ping') {
+						if (callback) {
+							callback({
+								gdprAppliesGlobally: !!(window.__cmp && window.__cmp.config && window.__cmp.config.storeConsentGlobally),
+								cmpLoaded: false
+							}); 
+						}
+					}
+					else {
+						commandQueue.push({
+							command: command,
+							parameter: parameter,
+							callback: callback
+						});
+					}
 				}
 				cmp.commandQueue = commandQueue;
 				cmp.receiveMessage = function(event) {

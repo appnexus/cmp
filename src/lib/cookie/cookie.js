@@ -209,14 +209,13 @@ function writeCookie(name, value, maxAgeSeconds, path = '/') {
 }
 
 function readPublisherConsentCookie() {
-	// If not configured to store publisher data return an empty object
-	if (!config.storePublisherData) {
-		return {};
-	}
-	const cookie = readCookie(PUBLISHER_CONSENT_COOKIE_NAME);
-	log.debug('Read publisher consent data from local cookie', cookie);
-	if (cookie) {
-		return decodePublisherConsentData(cookie);
+	// If configured try to read publisher cookie
+	if (config.storePublisherData) {
+		const cookie = readCookie(PUBLISHER_CONSENT_COOKIE_NAME);
+		log.debug('Read publisher consent data from local cookie', cookie);
+		if (cookie) {
+			return decodePublisherConsentData(cookie);
+		}
 	}
 }
 

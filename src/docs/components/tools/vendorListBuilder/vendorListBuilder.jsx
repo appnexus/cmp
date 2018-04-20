@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import style from './vendorListBuilder.less';
 import Switch from '../../../../components/switch/switch';
-import vendorList from '../../../assets/vendors.json';
+import vendorList from '../../../assets/vendorlist.json';
 
 const PRIMARY_COLOR = '#2abbb0';
 
