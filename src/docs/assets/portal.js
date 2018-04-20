@@ -8,7 +8,7 @@ const COOKIE_DOMAIN = parts.length > 1 ? `;domain=.${parts.slice(-2).join('.')}`
 const COOKIE_MAX_AGE = 33696000;
 const COOKIE_NAME = 'euconsent';
 
-const readVendorListPromise = fetch('./vendors.json', {
+const readVendorListPromise = fetch('./vendorlist.json', {
 	headers: {
 		'Accept': 'application/json',
 		'Content-Type': 'application/json'
