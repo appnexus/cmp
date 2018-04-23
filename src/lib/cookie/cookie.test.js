@@ -89,6 +89,9 @@ describe('cookie', () => {
 		const vendorConsentData = {
 			cookieVersion: 1,
 			cmpId: 1,
+			cmpVersion: 1,
+			consentScreen: 2,
+			consentLanguage: 'DE',
 			vendorListVersion: 1,
 			maxVendorId: vendorList.vendors[vendorList.vendors.length - 1].id,
 			created: aDate,

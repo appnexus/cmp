@@ -1,7 +1,7 @@
 import translations from './translations';
 import config from './config';
 
-function findLocale() {
+export function findLocale() {
 	const locale = config.forceLocale ||
 		(navigator && (
 			navigator.language ||
