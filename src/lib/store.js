@@ -1,15 +1,35 @@
 import { writePublisherConsentCookie, writeVendorConsentCookie } from "./cookie/cookie";
 import config from './config';
+import {findLocale} from './localize';
+
+/**
+ * Copy a data object and make sure to replace references
+ * of Set objects with new ones.
+ */
+function copyData(dataObject) {
+	if (typeof dataObject !== 'object') {
+		return dataObject;
+	}
+	const copy = {...dataObject};
+	for (let key in copy) {
+		if (copy.hasOwnProperty(key) && copy[key] instanceof Set) {
+			copy[key] = new Set(copy[key]);
+		}
+	}
+	return copy;
+}
 
 export default class Store {
 	constructor({vendorConsentData, publisherConsentData, vendorList, customPurposeList} = {}) {
 		// Keep track of data that has already been persisted
-		this.persistedVendorConsentData = vendorConsentData;
-		this.persistedPublisherConsentData = publisherConsentData;
+		this.persistedVendorConsentData = copyData(vendorConsentData);
+		this.persistedPublisherConsentData = copyData(publisherConsentData);
 
 		this.vendorConsentData = Object.assign({
 			cookieVersion: 1,
 			cmpId: 1,
+			cmpVersion: 1,
+			consentLanguage: findLocale().substr(0,2).toUpperCase(),
 			selectedPurposeIds: new Set(),
 			selectedVendorIds: new Set()
 		}, vendorConsentData);
@@ -43,6 +63,9 @@ export default class Store {
 			created,
 			lastUpdated,
 			cmpId,
+			cmpVersion,
+			consentScreen,
+			consentLanguage,
 			vendorListVersion,
 			maxVendorId = 0,
 			selectedVendorIds = new Set(),
@@ -88,9 +111,12 @@ export default class Store {
 			created,
 			lastUpdated,
 			cmpId,
+			cmpVersion,
+			consentScreen,
+			consentLanguage,
 			vendorListVersion,
 			maxVendorId,
-			purposes: purposeMap,
+			purposeConsents: purposeMap,
 			vendorConsents: vendorMap
 		};
 	};
@@ -167,10 +193,17 @@ export default class Store {
 			customPurposeList
 		} = this;
 
+		const {
+			vendorListVersion = 1
+		} = vendorList || {};
+
 		// Update modification dates and write the cookies
 		const now = new Date();
 		vendorConsentData.created = vendorConsentData.created || now;
 		vendorConsentData.lastUpdated = now;
+
+		// Update version of list to one we are using
+		vendorConsentData.vendorListVersion = vendorListVersion;
 
 		publisherConsentData.created = publisherConsentData.created || now;
 		publisherConsentData.lastUpdated = now;
@@ -188,8 +221,8 @@ export default class Store {
 		}
 
 		// Store the persisted data
-		this.persistedVendorConsentData = {...vendorConsentData};
-		this.persistedPublisherConsentData = {...publisherConsentData};
+		this.persistedVendorConsentData = copyData(vendorConsentData);
+		this.persistedPublisherConsentData = copyData(publisherConsentData);
 
 		// Notify of date changes
 		this.storeUpdate();
@@ -294,13 +327,11 @@ export default class Store {
 		}
 
 		const {selectedVendorIds = new Set()} = this.vendorConsentData;
-		const {version = 1} = vendorList || {};
 
 		// Find the maxVendorId out of the vendor list and selectedVendorIds
 		this.vendorConsentData.maxVendorId = Math.max(maxVendorId,
 			...vendors.map(({id}) => id),
 			...Array.from(selectedVendorIds));
-		this.vendorConsentData.vendorListVersion = version;
 		this.vendorList = vendorList;
 		this.storeUpdate();
 	};

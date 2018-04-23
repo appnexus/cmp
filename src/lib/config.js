@@ -7,7 +7,8 @@ const defaultConfig = {
 	storePublisherData: false,
 	logging: false,
 	localization: {},
-	forceLocale: null
+	forceLocale: null,
+	gdprApplies: true
 };
 
 class Config {

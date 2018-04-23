@@ -8,7 +8,7 @@ const COOKIE_DOMAIN = parts.length > 1 ? `;domain=.${parts.slice(-2).join('.')}`
 const COOKIE_MAX_AGE = 33696000;
 const COOKIE_NAME = 'euconsent';
 
-const readVendorListPromise = fetch('./vendors.json', {
+const readVendorListPromise = fetch('./vendorlist.json', {
 	headers: {
 		'Accept': 'application/json',
 		'Content-Type': 'application/json'
@@ -18,6 +18,41 @@ const readVendorListPromise = fetch('./vendors.json', {
 	.catch(err => {
 		log.error(`Failed to load vendor list from vendors.json`, err);
 	});
+
+function consentSubmitted({vendorConsentData = {}, cookieValue, cmpVersion}) {
+	const {
+		cmpId,
+		cookieVersion,
+		created,
+		lastUpdated,
+		publisherPurposeVersion,
+		selectedPurposeIds = new Set(),
+		selectedVendorIds = new Set(),
+		vendorList = {}
+	} = vendorConsentData;
+
+	const {
+		purposes = [],
+		vendors = [],
+		version,
+	} = vendorList;
+
+	window.heap && window.heap.track('Consent Submitted', {
+		cmpId,
+		cookieVersion,
+		created: created && created.getTime(),
+		lastUpdated: lastUpdated && lastUpdated.getTime(),
+		publisherPurposeVersion,
+		vendorListVersion: version,
+		totalPurposeCount: purposes.length,
+		consentedPurposeCount: selectedPurposeIds.size,
+		totalVendorCount: vendors.length,
+		consentedVendorCount: selectedVendorIds.size,
+		acceptAll: purposes.length === selectedPurposeIds.size && vendors.length === selectedVendorIds.size,
+		cookieValue,
+		cmpVersion
+	});
+}
 
 function readCookie(name) {
 	const value = '; ' + document.cookie;
@@ -40,7 +75,8 @@ const commands = {
 		return readCookie(COOKIE_NAME);
 	},
 
-	writeVendorConsent: ({encodedValue }) => {
+	writeVendorConsent: ({encodedValue, vendorConsentData, cmpVersion  }) => {
+		consentSubmitted({vendorConsentData, cookieValue: encodedValue, cmpVersion});
 		return writeCookie({name: COOKIE_NAME, value: encodedValue});
 	}
 };
