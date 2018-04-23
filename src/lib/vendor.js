@@ -5,14 +5,18 @@ import log from './log';
 import { sendPortalCommand } from './portal';
 
 // Official global vendor list location:
-// https://vendorlist.consensu.org/vendorlist.json
+const GLOBAL_VENDOR_LIST_LOCATION = 'https://vendorlist.consensu.org/vendorlist.json';
 
 /**
- * Load the global vendor list using the "portal" for
- * cross domain communication.
+ * Attempt to load the vendors list from the global location and
+ * fallback to portal location.
  */
 function fetchVendorList() {
-	return sendPortalCommand({command: 'readVendorList'});
+	return fetch(GLOBAL_VENDOR_LIST_LOCATION)
+		.then(res => res.json())
+		.catch(() => {
+			return sendPortalCommand({command: 'readVendorList'});
+		});
 }
 
 function fetchPurposeList() {
