@@ -3,7 +3,7 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 	return `(function(window, document) {
 		if (!window.__cmp) {
 			window.__cmp = (function() {
-				var listen = window.attacheEvent || window.addEventListener;
+				var listen = window.attachEvent || window.addEventListener;
 				listen('message', function(event) {
 					window.__cmp.receiveMessage(event);
 				}, false);
@@ -57,6 +57,7 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 					//
 					// Modify config values here
 					//
+					// globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
 					// customPurposeListLocation: './purposes.json',
 					// globalConsentLocation: './portal.html',
 					// storeConsentGlobally: false,
