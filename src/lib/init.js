@@ -8,6 +8,9 @@ import log from './log';
 import pack from '../../package.json';
 import config from './config';
 
+const CMP_VERSION = 1;
+const CMP_ID = 1;
+const COOKIE_VERSION = 1;
 
 export function init(configUpdates) {
 	config.update(configUpdates);
@@ -18,7 +21,13 @@ export function init(configUpdates) {
 		.then(vendorConsentData => {
 
 			// Initialize the store with all of our consent data
-			const store = new Store({vendorConsentData, publisherConsentData: readPublisherConsentCookie()});
+			const store = new Store({
+				cmpVersion: CMP_VERSION,
+				cmpId: CMP_ID,
+				cookieVersion: COOKIE_VERSION,
+				vendorConsentData,
+				publisherConsentData: readPublisherConsentCookie()
+			});
 
 			// Pull queued command from __cmp stub
 			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};

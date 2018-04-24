@@ -1,6 +1,6 @@
 import { writePublisherConsentCookie, writeVendorConsentCookie } from "./cookie/cookie";
 import config from './config';
-import {findLocale} from './localize';
+import { findLocale } from './localize';
 
 /**
  * Copy a data object and make sure to replace references
@@ -20,25 +20,41 @@ function copyData(dataObject) {
 }
 
 export default class Store {
-	constructor({vendorConsentData, publisherConsentData, vendorList, customPurposeList} = {}) {
+	constructor({
+		cmpId = 1,
+		cmpVersion = 1,
+		cookieVersion = 1,
+		vendorConsentData,
+		publisherConsentData,
+		vendorList,
+		customPurposeList
+	} = {}) {
 		// Keep track of data that has already been persisted
 		this.persistedVendorConsentData = copyData(vendorConsentData);
 		this.persistedPublisherConsentData = copyData(publisherConsentData);
 
-		this.vendorConsentData = Object.assign({
-			cookieVersion: 1,
-			cmpId: 1,
-			cmpVersion: 1,
-			consentLanguage: findLocale().substr(0,2).toUpperCase(),
-			selectedPurposeIds: new Set(),
-			selectedVendorIds: new Set()
-		}, vendorConsentData);
+		this.vendorConsentData = Object.assign(
+			{
+				selectedPurposeIds: new Set(),
+				selectedVendorIds: new Set()
+			},
+			vendorConsentData,
+			{
+				cookieVersion,
+				cmpId,
+				cmpVersion,
+				consentLanguage: findLocale().substr(0, 2).toUpperCase()
+			});
 
-		this.publisherConsentData = Object.assign({
-			cookieVersion: 1,
-			cmpId: 1,
-			selectedCustomPurposeIds: new Set()
-		}, publisherConsentData);
+		this.publisherConsentData = Object.assign(
+			{
+				selectedCustomPurposeIds: new Set()
+			},
+			publisherConsentData,
+			{
+				cookieVersion,
+				cmpId
+			});
 
 		this.isConsentToolShowing = false;
 		this.isFooterShowing = false;
