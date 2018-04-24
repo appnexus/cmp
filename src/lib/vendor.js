@@ -4,15 +4,15 @@ import config from './config';
 import log from './log';
 import { sendPortalCommand } from './portal';
 
-// Official global vendor list location:
-const GLOBAL_VENDOR_LIST_LOCATION = 'https://vendorlist.consensu.org/vendorlist.json';
-
 /**
  * Attempt to load the vendors list from the global location and
  * fallback to portal location.
  */
 function fetchVendorList() {
-	return fetch(GLOBAL_VENDOR_LIST_LOCATION)
+	const {globalVendorListLocation} = config;
+	return (globalVendorListLocation ?
+		fetch(globalVendorListLocation) :
+		Promise.reject('Missing globalVendorListLocation'))
 		.then(res => res.json())
 		.catch(() => {
 			return sendPortalCommand({command: 'readVendorList'});
