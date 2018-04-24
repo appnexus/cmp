@@ -49,24 +49,26 @@ function decodeBitsToIds(bitString) {
 
 function convertVendorsToRanges(vendors, selectedIds) {
 	let range = [];
-	return vendors.reduce((acc, {id}, index) => {
-		if (selectedIds.has(id)) {
-			range.push(id);
-		}
+	return vendors
+		.sort((vendor1, vendor2) => vendor1.id === vendor2.id ? 0 : vendor1.id < vendor2.id ? -1 : 1)
+		.reduce((acc, {id}, index) => {
+			if (selectedIds.has(id)) {
+				range.push(id);
+			}
 
-		// If the range has ended or at the end of vendors add entry to the list
-		if ((!selectedIds.has(id) || index === vendors.length - 1) && range.length) {
-			const startVendorId = range.shift();
-			const endVendorId = range.pop();
-			range = [];
-			return [...acc, {
-				isRange: typeof endVendorId === 'number',
-				startVendorId,
-				endVendorId
-			}];
-		}
-		return acc;
-	}, []);
+			// If the range has ended or at the end of vendors add entry to the list
+			if ((!selectedIds.has(id) || index === vendors.length - 1) && range.length) {
+				const startVendorId = range.shift();
+				const endVendorId = range.pop();
+				range = [];
+				return [...acc, {
+					isRange: typeof endVendorId === 'number',
+					startVendorId,
+					endVendorId
+				}];
+			}
+			return acc;
+		}, []);
 }
 
 function encodeVendorConsentData(vendorData) {
@@ -306,6 +308,8 @@ export {
 	writeCookie,
 	encodeVendorConsentData,
 	decodeVendorConsentData,
+
+	convertVendorsToRanges,
 
 	encodePublisherConsentData,
 	decodePublisherConsentData,
