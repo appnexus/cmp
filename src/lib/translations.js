@@ -20,6 +20,7 @@ export default {
 		},
 		purposes: {
 			active: '',
+			inactive: '',
 			showVendors: '',
 			cookies: {
 				menu: '',
@@ -91,6 +92,7 @@ export default {
 		},
 		purposes: {
 			active: 'Aktiv',
+			inactive: 'Inaktiv',
 			showVendors: '',
 			cookies: {
 				menu: 'Wie wir Cookies einsetzen',
