@@ -5,7 +5,7 @@ import log from "../../lib/log";
 const host = (window && window.location && window.location.hostname) || '';
 const parts = host.split('.');
 const COOKIE_DOMAIN = parts.length > 1 ? `;domain=.${parts.slice(-2).join('.')}` : '';
-const COOKIE_MAX_AGE = 1209600;//33696000;
+const COOKIE_MAX_AGE = 33696000;
 const COOKIE_NAME = 'euconsent';
 
 const readVendorListPromise = fetch('./vendorlist.json', {
