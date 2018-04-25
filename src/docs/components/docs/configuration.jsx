@@ -3,10 +3,10 @@ import style from './docs.less';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import {js_beautify as beautify} from 'js-beautify';
 
-const LOCAL_VENDOR_LIST_LOCATION = `//${window.location.host}/cmp/vendors.json`;
 
 const script = beautify(`
 window.__cmp.config = {
+	globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
 	globalConsentLocation: './portal.html',
 	customPurposeListLocation: './purposes.json',
 	storeConsentGlobally: true,
@@ -39,6 +39,11 @@ export default class CmpApi extends Component {
 
 					<div class={style.functionSection}>
 						<span class={style.functionSectionTitle}>Options</span>
+						<span className={style.argument}>
+							<span className={style.argumentType}>globalVendorListLocation (String)</span>:
+							<span className={style.argumentDescription}>Location to request the global vendor list from. Default
+							location is: <span class={style.highlight}>https://vendorlist.consensu.org/vendorlist.json</span></span>
+						</span>
 						<span class={style.argument}>
 							<span class={style.argumentType}>globalConsentLocation (String)</span>:
 							<span class={style.argumentDescription}>Location of the HTML file that is required to communicate global vendor consent data to a third-party
@@ -52,9 +57,8 @@ export default class CmpApi extends Component {
 						</span>
 						<span class={style.argument}>
 							<span class={style.argumentType}>storeConsentGlobally (Boolean)</span>:
-							<span class={style.argumentDescription}>If true then the vendors will be loaded from the global list location using the <span class={style.highlight}>globalConsentLocation</span> for cross domain communication
-								and the consent data is written to a cookie on the <span class={style.highlight}>globalConsentLocation</span> domain.
-							If false then the vendors will be loaded from <span class={style.highlight}>{LOCAL_VENDOR_LIST_LOCATION}</span> and the consent data will be written to a cookie on the domain that the CMP is loaded from.</span>
+							<span class={style.argumentDescription}>If true then the the consent data is written to a cookie on the <span class={style.highlight}>globalConsentLocation</span> domain.
+							If false then the consent data will be written to a cookie on the domain that the CMP is loaded from.</span>
 						</span>
 						<span class={style.argument}>
 							<span class={style.argumentType}>storePublisherData (Boolean)</span>:

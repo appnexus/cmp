@@ -4,16 +4,18 @@ import config from './config';
 import log from './log';
 import { sendPortalCommand } from './portal';
 
-const LOCAL_VENDOR_LIST_LOCATION = `//${window.location.host}/cmp/vendors.json`;
-
+/**
+ * Attempt to load the vendors list from the global location and
+ * fallback to portal location.
+ */
 function fetchVendorList() {
-	if (config.storeConsentGlobally && config.globalConsentLocation) {
-		return sendPortalCommand({command: 'readVendorList'});
-	}
-
-	return fetch(LOCAL_VENDOR_LIST_LOCATION).then(res => res.json())
-		.catch(err => {
-			log.error(`Failed to load vendors list from ${LOCAL_VENDOR_LIST_LOCATION}`, err);
+	const {globalVendorListLocation} = config;
+	return (globalVendorListLocation ?
+		fetch(globalVendorListLocation) :
+		Promise.reject('Missing globalVendorListLocation'))
+		.then(res => res.json())
+		.catch(() => {
+			return sendPortalCommand({command: 'readVendorList'});
 		});
 }
 
