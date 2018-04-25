@@ -8,6 +8,8 @@ const defaultConfig = {
 	storePublisherData: false,
 	getPublisherConsentData: null,
 	setPublisherConsentData: null,
+	getVendorConsentData: null,
+	setVendorConsentData: null,
 	logging: false,
 	localization: {},
 	forceLocale: null,

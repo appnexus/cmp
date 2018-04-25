@@ -224,7 +224,7 @@ function readExternalPublisherConsentCookie() {
 				}
 			});
 		} catch (err) {
-			log.error('Failed reading extenral publisher consent data', err);
+			log.error('Failed reading external publisher consent data', err);
 			reject(err);
 		}
 	});
@@ -280,6 +280,26 @@ function writePublisherConsentCookie(publisherConsentData) {
 }
 
 
+function readExternalVendorConsentCookie() {
+	log.debug('Request consent data from external source');
+	return new Promise((resolve, reject) => {
+		try {
+			config.getVendorConsentData((err, cookie) => {
+				if (err) {
+					log.error('Failed reading external vendor consent data', err);
+					reject(err);
+				} else {
+					log.debug('Read consent data from external source', cookie);
+					resolve(cookie && decodeVendorConsentData(cookie));
+				}
+			});
+		} catch (err) {
+			log.error('Failed reading external vendor consent data', err);
+			reject(err);
+		}
+	});
+}
+
 /**
  * Read vendor consent data from third-party cookie on the
  * global vendor list domain.
@@ -297,6 +317,25 @@ function readGlobalVendorConsentCookie() {
 		}
 	}).catch(err => {
 		log.error('Failed reading global vendor consent cookie', err);
+	});
+}
+
+function writeExternalVendorConsentCookie(vendorConsentData) {
+	log.debug('Write consent data to external source', vendorConsentData);
+	return new Promise((resolve, reject) => {
+		try {
+			config.setVendorConsentData(encodeVendorConsentData(vendorConsentData), err => {
+				if (err) {
+					log.error('Failed writing external vendor consent data', err);
+					reject(err);
+				} else {
+					resolve();
+				}
+			});
+		} catch (err) {
+			log.error('Failed writing external vendor consent data', err);
+			reject(err);
+		}
 	});
 }
 
@@ -345,11 +384,17 @@ function writeLocalVendorConsentCookie(vendorConsentData) {
 }
 
 function readVendorConsentCookie() {
+	if (config.getVendorConsentData) {
+		return readExternalVendorConsentCookie();
+	}
 	return config.storeConsentGlobally ?
 		readGlobalVendorConsentCookie() : readLocalVendorConsentCookie();
 }
 
 function writeVendorConsentCookie(vendorConsentData) {
+	if (config.setVendorConsentData) {
+		return writeExternalVendorConsentCookie(vendorConsentData);
+	}
 	return config.storeConsentGlobally ?
 		writeGlobalVendorConsentCookie(vendorConsentData) : writeLocalVendorConsentCookie(vendorConsentData);
 }

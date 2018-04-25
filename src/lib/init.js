@@ -18,7 +18,7 @@ export function init(configUpdates) {
 
 	// Fetch the current vendor consent before initializing
 	return Promise.all([readVendorConsentCookie(), readPublisherConsentCookie()])
-		.then(([vendorConsentData, publisherConsentData]) => {console.info('!!', vendorConsentData, publisherConsentData)
+		.then(([vendorConsentData, publisherConsentData]) => {
 
 			// Initialize the store with all of our consent data
 			const store = new Store({
