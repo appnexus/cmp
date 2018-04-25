@@ -7,7 +7,7 @@ import log from './lib/log';
 import { init } from './lib/init';
 import { CMP_GLOBAL_NAME } from "./lib/cmp";
 
-function handleConsentResult(cmp, {vendorListVersion: listVersion}={}, {created, vendorListVersion}={}) {
+function handleConsentResult(cmp, {vendorListVersion: listVersion} = {}, {created, vendorListVersion} = {}) {
 	if (!created) {
 		log.debug('No consent data found. Showing consent tool');
 		cmp('showConsentTool');
@@ -66,35 +66,36 @@ function addLocatorFrame() {
 		}
 	}
 }
+
 addLocatorFrame();
 
 // Add stub
-window.__cmp = (() => {
-	const commandQueue = [];
-	const cmp = function(command, parameter, callback) {
+const commandQueue = [];
+const cmp = function (command, parameter, callback) {
+	commandQueue.push({
+		command,
+		parameter,
+		callback
+	});
+};
+cmp.commandQueue = commandQueue;
+cmp.receiveMessage = function (event) {
+	const data = event && event.data && event.data.__cmpCall;
+	if (data) {
+		const {callId, command, parameter} = data;
 		commandQueue.push({
+			callId,
 			command,
 			parameter,
-			callback
+			event
 		});
-	};
-	cmp.commandQueue = commandQueue;
-	cmp.receiveMessage = function(event) {
-		const data = event && event.data && event.data.__cmpCall;
-		if (data) {
-			const {callId, command, parameter} = data;
-			commandQueue.push({
-				callId,
-				command,
-				parameter,
-				event
-			});
-		}
-	};
-});
+	}
+};
+
+window.__cmp = cmp;
 
 // Listen for postMessage events
-const listen = window.attacheEvent || window.addEventListener;
+const listen = window.attachEvent || window.addEventListener;
 listen('message', event => {
 	window.__cmp.receiveMessage(event);
 }, false);

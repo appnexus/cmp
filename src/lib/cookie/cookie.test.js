@@ -13,6 +13,7 @@ import {
 	writePublisherConsentCookie,
 	readPublisherConsentCookie,
 	readVendorConsentCookie,
+	convertVendorsToRanges,
 	PUBLISHER_CONSENT_COOKIE_NAME,
 	VENDOR_CONSENT_COOKIE_NAME
 } from './cookie';
@@ -59,12 +60,12 @@ const vendorList = {
 			"name": "Umbrella"
 		},
 		{
-			"id": 5,
-			"name": "Aperture"
-		},
-		{
 			"id": 6,
 			"name": "Pierce and Pierce"
+		},
+		{
+			"id": 5,
+			"name": "Aperture"
 		}
 	]
 };
@@ -100,7 +101,7 @@ describe('cookie', () => {
 			selectedVendorIds: new Set([1, 2, 4])
 		};
 
-		const encodedString = encodeVendorConsentData({ ...vendorConsentData, vendorList });
+		const encodedString = encodeVendorConsentData({...vendorConsentData, vendorList});
 		const decoded = decodeVendorConsentData(encodedString);
 
 		expect(decoded).to.deep.equal(vendorConsentData);
@@ -133,7 +134,7 @@ describe('cookie', () => {
 		});
 		const decoded = decodePublisherConsentData(encodedString);
 
-		expect(decoded).to.deep.equal({ ...vendorConsentData, ...publisherConsentData });
+		expect(decoded).to.deep.equal({...vendorConsentData, ...publisherConsentData});
 	});
 
 	it('writes and reads the local cookie when globalConsent = false', () => {
@@ -214,5 +215,15 @@ describe('cookie', () => {
 
 		expect(document.cookie).to.contain(PUBLISHER_CONSENT_COOKIE_NAME);
 		expect(fromCookie).to.deep.include(publisherConsentData);
+	});
+
+	it('converts selected vendor list to a range', () => {
+		const ranges = convertVendorsToRanges(vendorList.vendors, new Set([2, 3, 4, 5]));
+
+		expect(ranges).to.deep.equal([{
+			isRange: true,
+			startVendorId: 2,
+			endVendorId: 5
+		}]);
 	});
 });

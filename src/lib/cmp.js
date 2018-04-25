@@ -1,11 +1,9 @@
 import log from './log';
-import pack from '../../package.json';
 import config from './config';
 import {
 	encodeVendorConsentData
 } from './cookie/cookie';
 
-const CMP_VERSION = pack.version;
 export const CMP_GLOBAL_NAME = '__cmp';
 
 export default class Cmp {
@@ -15,7 +13,6 @@ export default class Cmp {
 		this.eventListeners = {};
 		this.store = store;
 		this.processCommand.receiveMessage = this.receiveMessage;
-		this.processCommand.VERSION = CMP_VERSION;
 		this.commandQueue = [];
 	}
 
