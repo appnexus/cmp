@@ -17,8 +17,8 @@ export function init(configUpdates) {
 	log.debug('Using configuration:', config);
 
 	// Fetch the current vendor consent before initializing
-	return readVendorConsentCookie()
-		.then(vendorConsentData => {
+	return Promise.all([readVendorConsentCookie(), readPublisherConsentCookie()])
+		.then(([vendorConsentData, publisherConsentData]) => {console.info('!!', vendorConsentData, publisherConsentData)
 
 			// Initialize the store with all of our consent data
 			const store = new Store({
@@ -26,7 +26,7 @@ export function init(configUpdates) {
 				cmpId: CMP_ID,
 				cookieVersion: COOKIE_VERSION,
 				vendorConsentData,
-				publisherConsentData: readPublisherConsentCookie()
+				publisherConsentData
 			});
 
 			// Pull queued command from __cmp stub
