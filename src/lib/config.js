@@ -13,7 +13,7 @@ const defaultConfig = {
 	getConsentData: null,
 	setConsentData: null,
 	technicalPurposes: [],
-	groupPurposes: []
+	purposeGroups: []
 };
 
 class Config {

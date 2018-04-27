@@ -60,7 +60,7 @@ export default class Purposes extends Component {
 		let allPurposes = [];
 
 		let purposeIdToGroupIndex = {};
-		(config.groupPurposes || []).forEach((ids, i) => {
+		(config.purposeGroups || []).forEach((ids, i) => {
 			ids.forEach(id => {
 				purposeIdToGroupIndex[id] = i;
 			});

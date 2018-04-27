@@ -102,6 +102,12 @@ export default class CmpApi extends Component {
 								List of purpose identifiers that should be always active
 							</span>
 						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>purposeGroups (Array)</span>:
+							<span class={style.argumentDescription}>
+								Array of arrays with purpose identifiers that should be organized in groups - each one with single switch which activates/deactivates all purposes in given group. For example: <span class={style.highlight}>[[1, 4], [2, 3, 5]]</span>. Purposes which are not included in any group will be displayed separatelly
+							</span>
+						</span>
 					</div>
 			</div>
 		);
