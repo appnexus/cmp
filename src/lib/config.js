@@ -12,7 +12,8 @@ const defaultConfig = {
 	gdprApplies: true,
 	getConsentData: null,
 	setConsentData: null,
-	technicalPurposes: []
+	technicalPurposes: [],
+	groupPurposes: []
 };
 
 class Config {

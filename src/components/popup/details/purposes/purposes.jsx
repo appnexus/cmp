@@ -35,20 +35,62 @@ export default class Purposes extends Component {
 	handleSelectPurpose = ({isSelected}) => {
 		const {selectedPurposeIndex} = this.state;
 		const {
-			purposes,
-			customPurposes,
 			selectPurpose,
 			selectCustomPurpose
 		} = this.props;
-		const allPurposes = [...purposes, ...customPurposes];
-		const id = allPurposes[selectedPurposeIndex].id;
+		const allPurposes = this.getAllPurposes();
+		const selectedPurpose = allPurposes[selectedPurposeIndex];
+		const ids = selectedPurpose.ids;
 
-		if (selectedPurposeIndex < purposes.length) {
-			selectPurpose(id, isSelected);
-		}
-		else {
-			selectCustomPurpose(id, isSelected);
-		}
+		selectedPurpose.ids.forEach(id => {
+			if (selectedPurpose.custom) {
+				selectCustomPurpose(id, isSelected);
+			}
+			else {
+				selectPurpose(id, isSelected);
+			}
+		});
+	};
+
+	getAllPurposes = () => {
+		const {
+			purposes,
+			customPurposes
+		} = this.props;
+		let allPurposes = [];
+
+		let purposeIdToGroupIndex = {};
+		(config.groupPurposes || []).forEach((ids, i) => {
+			ids.forEach(id => {
+				purposeIdToGroupIndex[id] = i;
+			});
+		});
+		let groupIndexToPurposeIndex = {};
+		(purposes || []).forEach(purpose => {
+			if (purposeIdToGroupIndex.hasOwnProperty(purpose.id)) {
+				const groupIndex = purposeIdToGroupIndex[purpose.id];
+				if (groupIndexToPurposeIndex.hasOwnProperty(groupIndex)) {
+					allPurposes[groupIndexToPurposeIndex[groupIndex]].ids.push(purpose.id);
+					return;
+				}
+				groupIndexToPurposeIndex[groupIndex] = allPurposes.length;
+			}
+			allPurposes.push({
+				ids: [purpose.id],
+				name: purpose.name,
+				custom: false
+			});
+		});
+
+		(customPurposes || []).forEach(purpose => {
+			allPurposes.push({
+				ids: [purpose.id],
+				name: purpose.name,
+				custom: true
+			});
+		});
+
+		return allPurposes;
 	};
 
 
@@ -56,22 +98,21 @@ export default class Purposes extends Component {
 
 		const {
 			onShowVendors,
-			purposes,
-			customPurposes,
 			selectedPurposeIds,
 			selectedCustomPurposeIds
 		} = props;
 
 		const {selectedPurposeIndex} = state;
 
-		const allPurposes = [...purposes, ...customPurposes];
+		const allPurposes = this.getAllPurposes();
 		const selectedPurpose = allPurposes[selectedPurposeIndex];
-		const selectedPurposeId = selectedPurpose && selectedPurpose.id;
-		const purposeIsActive = selectedPurposeIndex < purposes.length ?
-			selectedPurposeIds.has(selectedPurposeId) :
-			selectedCustomPurposeIds.has(selectedPurposeId);
-			const purposeIsTechnical = selectedPurposeIndex < purposes.length && config.technicalPurposes && config.technicalPurposes.indexOf(selectedPurpose.id) >= 0;
-		const currentPurposeLocalizePrefix = `${selectedPurposeIndex >= purposes.length ? 'customPurpose' : 'purpose'}${selectedPurposeId}`;
+		const purposeIsActive = selectedPurpose && selectedPurpose.ids.some(id =>
+			selectedPurpose.custom ? selectedCustomPurposeIds.has(id) : selectedPurposeIds.has(id)
+		);
+		const purposeIsTechnical = config.technicalPurposes && selectedPurpose && !selectedPurpose.custom && selectedPurpose.ids.some(id =>
+			config.technicalPurposes.indexOf(id) >= 0
+		);
+		const currentPurposeLocalizePrefix = `${selectedPurpose && selectedPurpose.custom ? 'customPurpose' : 'purpose'}${selectedPurpose && selectedPurpose.ids}`;
 
 		return (
 			<div class={style.purposes}>
@@ -80,7 +121,7 @@ export default class Purposes extends Component {
 						<div class={[style.purposeItem, selectedPurposeIndex === index ? style.selectedPurpose : ''].join(' ')}
 							 onClick={this.handleSelectPurposeDetail(index)}
 						>
-							<LocalLabel localizeKey={`${index >= purposes.length ? 'customPurpose' : 'purpose'}${purpose.id}.menu`}>{purpose.name}</LocalLabel>
+							<LocalLabel localizeKey={`${purpose.custom ? 'customPurpose' : 'purpose'}${purpose.ids}.menu`}>{purpose.name}</LocalLabel>
 						</div>
 					))}
 				</div>
