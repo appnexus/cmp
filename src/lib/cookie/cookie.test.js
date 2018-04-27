@@ -210,12 +210,11 @@ describe('cookie', () => {
 			lastUpdated: aDate,
 		};
 
-		return writePublisherConsentCookie(publisherConsentData).then(() => {
-			readPublisherConsentCookie().then((fromCookie) => {
-				expect(document.cookie).to.contain(PUBLISHER_CONSENT_COOKIE_NAME);
-				expect(fromCookie).to.deep.include(publisherConsentData);
-			});
-		});
+		writePublisherConsentCookie(publisherConsentData);
+		const fromCookie = readPublisherConsentCookie();
+
+		expect(document.cookie).to.contain(PUBLISHER_CONSENT_COOKIE_NAME);
+		expect(fromCookie).to.deep.include(publisherConsentData);
 	});
 
 	it('converts selected vendor list to a range', () => {

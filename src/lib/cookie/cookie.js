@@ -210,95 +210,25 @@ function writeCookie(name, value, maxAgeSeconds, path = '/') {
 	document.cookie = `${name}=${value};path=${path}${maxAge}`;
 }
 
-function readExternalPublisherConsentCookie() {
-	log.debug('Request publisher consent data from external source');
-	return new Promise((resolve, reject) => {
-		try {
-			config.getPublisherConsentData((err, cookie) => {
-				if (err) {
-					log.error('Failed reading external publisher consent data', err);
-					reject(err);
-				} else {
-					log.debug('Read publisher consent data from external source', cookie);
-					resolve(cookie && decodePublisherConsentData(cookie));
-				}
-			});
-		} catch (err) {
-			log.error('Failed reading external publisher consent data', err);
-			reject(err);
-		}
-	});
-}
-
-function readLocalPublisherConsentCookie() {
-	const cookie = readCookie(PUBLISHER_CONSENT_COOKIE_NAME);
-	log.debug('Read publisher consent data from local cookie', cookie);
-	return Promise.resolve(cookie && decodePublisherConsentData(cookie));
-}
-
 function readPublisherConsentCookie() {
 	// If configured try to read publisher cookie
 	if (config.storePublisherData) {
-		return config.setPublisherConsentData ?
-			readExternalPublisherConsentCookie() :
-			readLocalPublisherConsentCookie();
-	}
-	return Promise.resolve();
-}
-
-function writeExternalPublisherConsentCookie(publisherConsentData) {
-	log.debug('Write publisher consent data to external source', publisherConsentData);
-	return new Promise((resolve, reject) => {
-		try {
-			config.setPublisherConsentData(encodePublisherConsentData(publisherConsentData), err => {
-				if (err) {
-					log.error('Failed writing external publisher consent data', err);
-					reject(err);
-				} else {
-					resolve();
-				}
-			});
-		} catch (err) {
-			log.error('Failed writing external publisher consent data', err);
-			reject(err);
+		const cookie = readCookie(PUBLISHER_CONSENT_COOKIE_NAME);
+		log.debug('Read publisher consent data from local cookie', cookie);
+		if (cookie) {
+			return decodePublisherConsentData(cookie);
 		}
-	});
-}
-
-function writeLocalPublisherConsentCookie(publisherConsentData) {
-	log.debug('Write publisher consent data to local cookie', publisherConsentData);
-	return Promise.resolve(writeCookie(PUBLISHER_CONSENT_COOKIE_NAME,
-		encodePublisherConsentData(publisherConsentData),
-		PUBLISHER_CONSENT_COOKIE_MAX_AGE,
-		'/'));
+	}
 }
 
 function writePublisherConsentCookie(publisherConsentData) {
-	return config.setPublisherConsentData ?
-		writeExternalPublisherConsentCookie(publisherConsentData) :
-		writeLocalPublisherConsentCookie(publisherConsentData);
+	log.debug('Write publisher consent data to local cookie', publisherConsentData);
+	writeCookie(PUBLISHER_CONSENT_COOKIE_NAME,
+		encodePublisherConsentData(publisherConsentData),
+		PUBLISHER_CONSENT_COOKIE_MAX_AGE,
+		'/');
 }
 
-
-function readExternalVendorConsentCookie() {
-	log.debug('Request consent data from external source');
-	return new Promise((resolve, reject) => {
-		try {
-			config.getVendorConsentData((err, cookie) => {
-				if (err) {
-					log.error('Failed reading external vendor consent data', err);
-					reject(err);
-				} else {
-					log.debug('Read consent data from external source', cookie);
-					resolve(cookie && decodeVendorConsentData(cookie));
-				}
-			});
-		} catch (err) {
-			log.error('Failed reading external vendor consent data', err);
-			reject(err);
-		}
-	});
-}
 
 /**
  * Read vendor consent data from third-party cookie on the
@@ -317,25 +247,6 @@ function readGlobalVendorConsentCookie() {
 		}
 	}).catch(err => {
 		log.error('Failed reading global vendor consent cookie', err);
-	});
-}
-
-function writeExternalVendorConsentCookie(vendorConsentData) {
-	log.debug('Write consent data to external source', vendorConsentData);
-	return new Promise((resolve, reject) => {
-		try {
-			config.setVendorConsentData(encodeVendorConsentData(vendorConsentData), err => {
-				if (err) {
-					log.error('Failed writing external vendor consent data', err);
-					reject(err);
-				} else {
-					resolve();
-				}
-			});
-		} catch (err) {
-			log.error('Failed writing external vendor consent data', err);
-			reject(err);
-		}
 	});
 }
 
@@ -384,17 +295,11 @@ function writeLocalVendorConsentCookie(vendorConsentData) {
 }
 
 function readVendorConsentCookie() {
-	if (config.getVendorConsentData) {
-		return readExternalVendorConsentCookie();
-	}
 	return config.storeConsentGlobally ?
 		readGlobalVendorConsentCookie() : readLocalVendorConsentCookie();
 }
 
 function writeVendorConsentCookie(vendorConsentData) {
-	if (config.setVendorConsentData) {
-		return writeExternalVendorConsentCookie(vendorConsentData);
-	}
 	return config.storeConsentGlobally ?
 		writeGlobalVendorConsentCookie(vendorConsentData) : writeLocalVendorConsentCookie(vendorConsentData);
 }

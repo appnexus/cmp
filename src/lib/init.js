@@ -2,7 +2,7 @@ import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
 import Cmp, { CMP_GLOBAL_NAME } from './cmp';
-import { readVendorConsentCookie, readPublisherConsentCookie } from './cookie/cookie';
+import { readVendorConsentCookie, readPublisherConsentCookie, decodeVendorConsentData, decodePublisherConsentData } from './cookie/cookie';
 import { fetchVendorList, fetchPurposeList } from './vendor';
 import log from './log';
 import pack from '../../package.json';
@@ -12,12 +12,41 @@ const CMP_VERSION = 1;
 const CMP_ID = 1;
 const COOKIE_VERSION = 1;
 
+function readExternalConsentData(config) {
+	return new Promise((resolve, reject) => {
+		try {
+			config.getConsentData((err, data) => {
+				if (err) {
+					reject(err);
+				} else {
+					try {
+						resolve([
+							decodeVendorConsentData(data.vendor),
+							decodePublisherConsentData(data.publisher)
+						]);
+					} catch (err) {
+						reject(err);
+					}
+				}
+			});
+		} catch (err) {
+			reject(err);
+		}
+	});
+}
+
+function readInternalConsentData() {
+	return readVendorConsentCookie().then(vendorConsentData => {
+		return [vendorConsentData, readPublisherConsentCookie()];
+	});
+}
+
 export function init(configUpdates) {
 	config.update(configUpdates);
 	log.debug('Using configuration:', config);
 
 	// Fetch the current vendor consent before initializing
-	return Promise.all([readVendorConsentCookie(), readPublisherConsentCookie()])
+	return (config.getConsentData ? readExternalConsentData(config) : readInternalConsentData())
 		.then(([vendorConsentData, publisherConsentData]) => {
 
 			// Initialize the store with all of our consent data

@@ -1,6 +1,7 @@
-import { writePublisherConsentCookie, writeVendorConsentCookie } from "./cookie/cookie";
+import { writePublisherConsentCookie, writeVendorConsentCookie, encodePublisherConsentData, encodeVendorConsentData } from "./cookie/cookie";
 import config from './config';
 import { findLocale } from './localize';
+import log from './log';
 
 /**
  * Copy a data object and make sure to replace references
@@ -224,16 +225,36 @@ export default class Store {
 		publisherConsentData.created = publisherConsentData.created || now;
 		publisherConsentData.lastUpdated = now;
 
-		// Write vendor cookie to appropriate domain
-		writeVendorConsentCookie({...vendorConsentData, vendorList});
+		const vendorConsents = {...vendorConsentData, vendorList};
+		const publisherConsents = {
+			...vendorConsentData, ...publisherConsentData,
+			vendorList,
+			customPurposeList
+		};
+		if (config.setConsentData) {
+			let consentData = {
+				vendor: encodeVendorConsentData(vendorConsents)
+			};
+			if (config.storePublisherData) {
+				consentData.publisher = encodePublisherConsentData(publisherConsents);
+			}
+			try {
+				config.setConsentData(consentData, err => {
+					if (err) {
+						log.error('Failed writing external consent data', err);
+					}
+				});
+			} catch (err) {
+				log.error('Failed writing external consent data', err);
+			}
+		} else {
+			// Write vendor cookie to appropriate domain
+			writeVendorConsentCookie(vendorConsents);
 
-		// Write publisher cookie if enabled
-		if (config.storePublisherData) {
-			writePublisherConsentCookie({
-				...vendorConsentData, ...publisherConsentData,
-				vendorList,
-				customPurposeList
-			});
+			// Write publisher cookie if enabled
+			if (config.storePublisherData) {
+				writePublisherConsentCookie(publisherConsents);
+			}
 		}
 
 		// Store the persisted data
