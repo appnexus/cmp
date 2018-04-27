@@ -73,6 +73,35 @@ export default class CmpApi extends Component {
 								to <span class={style.highlight}>debug</span>.  A boolean value of false disables logging.
 							</span>
 						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>getConsentData(callback) (Function)</span>:
+							<span class={style.argumentDescription}>
+								Custom function to read vendor and publisher consent cookies
+								<span className={style.functionSectionTitle}>Arguments</span>
+								<span className={style.argument}>
+									<span className={style.argumentType}>callback(err, consentData) (Function)</span>: <span>Function to be executed with consent data object consisted with required <span class={style.highlight}>vendor</span> and optional <span class={style.highlight}>publisher</span> attributes</span>
+								</span>
+							</span>
+						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>setConsentData(consentData, callback) (Function)</span>:
+							<span class={style.argumentDescription}>
+								Custom function to write vendor and publisher consent cookies
+								<span className={style.functionSectionTitle}>Arguments</span>
+								<span className={style.argument}>
+									<span className={style.argumentType}>consentData (Object)</span>: <span>Consent data object consisted with required <span class={style.highlight}>vendor</span> and optional <span class={style.highlight}>publisher</span> attributes</span>
+								</span>
+								<span className={style.argument}>
+									<span className={style.argumentType}>callback(err) (Function)</span>: <span>Function to be executed on consent data write</span>
+								</span>
+							</span>
+						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>technicalPurposes (Array)</span>:
+							<span class={style.argumentDescription}>
+								List of purpose identifiers that should be always active
+							</span>
+						</span>
 					</div>
 			</div>
 		);

@@ -6,12 +6,13 @@ const defaultConfig = {
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: false,
 	storePublisherData: false,
-	getConsentData: null,
-	setConsentData: null,
 	logging: false,
 	localization: {},
 	forceLocale: null,
-	gdprApplies: true
+	gdprApplies: true,
+	getConsentData: null,
+	setConsentData: null,
+	technicalPurposes: []
 };
 
 class Config {

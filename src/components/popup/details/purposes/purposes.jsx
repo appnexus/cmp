@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import style from './purposes.less';
 import Switch from '../../../switch/switch';
 import Label from "../../../label/label";
+import config from '../../../../lib/config';
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -69,6 +70,7 @@ export default class Purposes extends Component {
 		const purposeIsActive = selectedPurposeIndex < purposes.length ?
 			selectedPurposeIds.has(selectedPurposeId) :
 			selectedCustomPurposeIds.has(selectedPurposeId);
+			const purposeIsTechnical = selectedPurposeIndex < purposes.length && config.technicalPurposes && config.technicalPurposes.indexOf(selectedPurpose.id) >= 0;
 		const currentPurposeLocalizePrefix = `${selectedPurposeIndex >= purposes.length ? 'customPurpose' : 'purpose'}${selectedPurposeId}`;
 
 		return (
@@ -89,6 +91,7 @@ export default class Purposes extends Component {
 							<div class={style.title}>
 								<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.title`}>{selectedPurpose.name}</LocalLabel>
 							</div>
+							{!purposeIsTechnical &&
 							<div class={style.active}>
 								<LocalLabel localizeKey={purposeIsActive ? 'active' : 'inactive'}>{purposeIsActive ? 'Active' : 'Inactive'}</LocalLabel>
 								<Switch
@@ -96,10 +99,13 @@ export default class Purposes extends Component {
 									onClick={this.handleSelectPurpose}
 								/>
 							</div>
+							}
 						</div>
 						<div class={style.body}>
 							<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />
+							{!purposeIsTechnical &&
 							<a class={style.vendorLink} onClick={onShowVendors}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
+							}
 						</div>
 					</div>
 				</div>
