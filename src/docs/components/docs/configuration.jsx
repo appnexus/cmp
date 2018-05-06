@@ -97,9 +97,9 @@ export default class CmpApi extends Component {
 							</span>
 						</span>
 						<span class={style.argument}>
-							<span class={style.argumentType}>technicalPurposes (Array)</span>:
+							<span class={style.argumentType}>legIntPurposeIds (Array)</span>:
 							<span class={style.argumentDescription}>
-								List of purpose identifiers that should be always active
+								List of (non-consentable) data purposes that will be used under legitimate interest
 							</span>
 						</span>
 						<span class={style.argument}>

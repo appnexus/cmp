@@ -109,8 +109,8 @@ export default class Purposes extends Component {
 		const purposeIsActive = selectedPurpose && selectedPurpose.ids.some(id =>
 			selectedPurpose.custom ? selectedCustomPurposeIds.has(id) : selectedPurposeIds.has(id)
 		);
-		const purposeIsTechnical = config.technicalPurposes && selectedPurpose && !selectedPurpose.custom && selectedPurpose.ids.some(id =>
-			config.technicalPurposes.indexOf(id) >= 0
+		const purposeIsTechnical = config.legIntPurposeIds && selectedPurpose && !selectedPurpose.custom && selectedPurpose.ids.some(id =>
+			config.legIntPurposeIds.indexOf(id) >= 0
 		);
 		const currentPurposeLocalizePrefix = `${selectedPurpose && selectedPurpose.custom ? 'customPurpose' : 'purpose'}${selectedPurpose && selectedPurpose.ids}`;
 

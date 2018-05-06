@@ -12,7 +12,7 @@ const defaultConfig = {
 	gdprApplies: true,
 	getConsentData: null,
 	setConsentData: null,
-	technicalPurposes: [],
+	legIntPurposeIds: [],
 	purposeGroups: []
 };
 
