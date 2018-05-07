@@ -47,33 +47,32 @@ function decodeBitsToIds(bitString) {
 	}, new Set());
 }
 
-function convertVendorsToRanges(vendors, selectedIds) {
+function convertVendorsToRanges(maxVendorId, selectedIds) {
 	let range = [];
-	return vendors
-		.sort((vendor1, vendor2) => vendor1.id === vendor2.id ? 0 : vendor1.id < vendor2.id ? -1 : 1)
-		.reduce((acc, {id}, index) => {
-			if (selectedIds.has(id)) {
-				range.push(id);
-			}
+	const ranges = [];
+	for (let id = 1; id <= maxVendorId; id++) {
+		if (selectedIds.has(id)) {
+			range.push(id);
+		}
 
-			// If the range has ended or at the end of vendors add entry to the list
-			if ((!selectedIds.has(id) || index === vendors.length - 1) && range.length) {
-				const startVendorId = range.shift();
-				const endVendorId = range.pop();
-				range = [];
-				return [...acc, {
-					isRange: typeof endVendorId === 'number',
-					startVendorId,
-					endVendorId
-				}];
-			}
-			return acc;
-		}, []);
+		// If the range has ended or at the end of vendors add entry to the list
+		if ((!selectedIds.has(id) || id === maxVendorId) && range.length) {
+			const startVendorId = range.shift();
+			const endVendorId = range.pop();
+			range = [];
+			ranges.push({
+				isRange: typeof endVendorId === 'number',
+				startVendorId,
+				endVendorId
+			});
+		}
+	}
+	return ranges;
 }
 
 function encodeVendorConsentData(vendorData) {
 	const {vendorList = {}, selectedPurposeIds, selectedVendorIds, maxVendorId} = vendorData;
-	const {vendors = [], purposes = []} = vendorList;
+	const {purposes = []} = vendorList;
 
 	// Encode the data with and without ranges and return the smallest encoded payload
 	const noRangesData = encodeVendorCookieValue({
@@ -84,7 +83,7 @@ function encodeVendorConsentData(vendorData) {
 		vendorIdBitString: encodeVendorIdsToBits(maxVendorId, selectedVendorIds)
 	});
 
-	const vendorRangeList = convertVendorsToRanges(vendors, selectedVendorIds);
+	const vendorRangeList = convertVendorsToRanges(maxVendorId, selectedVendorIds);
 	const rangesData = encodeVendorCookieValue({
 		...vendorData,
 		maxVendorId,

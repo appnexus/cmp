@@ -60,11 +60,11 @@ const vendorList = {
 			"name": "Umbrella"
 		},
 		{
-			"id": 6,
+			"id": 10,
 			"name": "Pierce and Pierce"
 		},
 		{
-			"id": 5,
+			"id": 8,
 			"name": "Aperture"
 		}
 	]
@@ -218,12 +218,38 @@ describe('cookie', () => {
 	});
 
 	it('converts selected vendor list to a range', () => {
-		const ranges = convertVendorsToRanges(vendorList.vendors, new Set([2, 3, 4, 5]));
+		const maxVendorId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
+		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 4]));
 
 		expect(ranges).to.deep.equal([{
 			isRange: true,
 			startVendorId: 2,
-			endVendorId: 5
+			endVendorId: 4
 		}]);
+	});
+
+
+	it('converts selected vendor list to multiple ranges', () => {
+		const maxVendorId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
+		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 5, 6, 10]));
+
+		console.log(ranges);
+		expect(ranges).to.deep.equal([
+			{
+				isRange: true,
+				startVendorId: 2,
+				endVendorId: 3
+			},
+			{
+				isRange: true,
+				startVendorId: 5,
+				endVendorId: 6
+			},
+			{
+				isRange: false,
+				startVendorId: 10,
+				endVendorId: undefined
+			}
+		]);
 	});
 });
