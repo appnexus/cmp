@@ -61,9 +61,6 @@ describe('store', () => {
 
 		expect(store.isConsentToolShowing).to.equal(false);
 
-		expect(store.vendorList).to.be.undefined;
-		expect(store.customPurposeList).to.be.undefined;
-
 		expect(store.vendorConsentData.cookieVersion).to.equal(1);
 		expect(store.vendorConsentData.cmpId).to.equal(1);
 

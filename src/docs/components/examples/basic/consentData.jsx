@@ -1,7 +1,7 @@
 import Example from '../example';
 
 const execute =
-`window.__cmp('getConsentData', 'vendorConsents', function(result){
+`window.__cmp('getConsentData', null, function(result){
 	myLogger('getConsentData callback result: ' + JSON.stringify(result,null,2));
 });`;
 

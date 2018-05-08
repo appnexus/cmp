@@ -3,7 +3,7 @@ import Promise from 'promise-polyfill';
 import Store from './store';
 import Cmp, { CMP_GLOBAL_NAME } from './cmp';
 import { readVendorConsentCookie, readPublisherConsentCookie } from './cookie/cookie';
-import { fetchVendorList, fetchPurposeList } from './vendor';
+import { fetchPubVendorList, fetchGlobalVendorList, fetchPurposeList } from './vendor';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
@@ -15,10 +15,15 @@ const COOKIE_VERSION = 1;
 export function init(configUpdates) {
 	config.update(configUpdates);
 	log.debug('Using configuration:', config);
+	const start = Date.now();
 
 	// Fetch the current vendor consent before initializing
-	return readVendorConsentCookie()
-		.then(vendorConsentData => {
+	return Promise.all([
+		readVendorConsentCookie(),
+		fetchPubVendorList()
+	])
+		.then(([vendorConsentData, pubVendorList]) => {
+			log.debug(`INIT in ${Date.now() - start}ms`);
 
 			// Initialize the store with all of our consent data
 			const store = new Store({
@@ -26,6 +31,7 @@ export function init(configUpdates) {
 				cmpId: CMP_ID,
 				cookieVersion: COOKIE_VERSION,
 				vendorConsentData,
+				vendorList: pubVendorList,
 				publisherConsentData: readPublisherConsentCookie()
 			});
 
@@ -53,7 +59,7 @@ export function init(configUpdates) {
 
 			// Request lists
 			return Promise.all([
-				fetchVendorList().then(store.updateVendorList),
+				fetchGlobalVendorList().then(store.updateVendorList),
 				fetchPurposeList().then(store.updateCustomPurposeList)
 			]).then(() => {
 				cmp.cmpReady = true;
