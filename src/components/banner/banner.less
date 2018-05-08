@@ -1,0 +1,56 @@
+@import '../../style/variables.less';
+
+.banner {
+	position: fixed;
+	right: 0;
+	left: 0;
+	bottom: -1000px;
+	z-index: 99999;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: @color-textLight;
+	background: white;
+	font-size: 18px;
+	max-height: 100%;
+	transition: bottom 0.5s ease-in-out;
+
+	box-shadow: 0px 0px 5px @color-primary;
+	padding: 0 20px;
+
+	a {
+		text-decoration: underline;
+		padding: 0 4px;
+	}
+
+	.title {
+		font-size: 24px;
+		color: @color-text;
+		padding: 20px 0;
+	}
+	.message {
+		padding: 20px 0;
+	}
+
+	.expand {
+		padding: 0;
+		height: 20px;
+		fill: @color-primary;
+		transform: rotate(-90deg);
+		transition: 0.5s ease;
+
+		&.expanded {
+			transform: rotate(0deg);
+		}
+	}
+	.info {
+		display: flex;
+	}
+	.infoExpanded {
+		padding: 0 10px 10px 10px;
+		ul {
+			margin: 0;
+		}
+	}
+}

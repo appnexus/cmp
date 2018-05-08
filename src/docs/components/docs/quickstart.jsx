@@ -42,8 +42,13 @@ export default class Setup extends Component {
 				<section>
 					<span className={style.header}>Install the CMP Script</span>
 					<p>
-						If you only want to ask for consent to comply with the GDPR regulation you can include a single
-						script:
+						This single script demonstrates how the CMP can check for and conditionally ask
+						for user consent.  You can include this on a site to see how it functions.
+					</p>
+					<p>
+						<span class={style.action}>NOTE:</span> This is an example of how a CMP can function wrapped
+						up into a single script.  This should NOT be used on an actual site.  Please refer to the <a href='/#setup'>setup</a> page
+						to see how to configure and install this CMP.
 					</p>
 					<CodeMirror
 						value={basicInclude}
@@ -72,9 +77,6 @@ export default class Setup extends Component {
 							</li>
 						</ol>
 					</p>
-					<p>
-						If you need more control over how and when the consent tool is shown include the script as described <Link to='/setup'>here</Link>.
-					</p>
 				</section>
 				<section>
 					<span className={style.header}>Vendors and Purposes</span>
@@ -87,6 +89,15 @@ export default class Setup extends Component {
 						CORS headers).
 
 						You can generate a file using this <Link to='/tools/vendor-list-builder'>tool</Link>.
+					</p>
+					<p>
+						To declare a subset of vendors that you want to work with you can define your own pubvendors.json
+						file and place it on your domain at <span className={style.highlight}>/.well-known/pubvendors.json</span>.
+						This file has similar format to <span className={style.highlight}>vendorlist.json</span>. If it
+						is present the CMP will limit information that is presented and persisted in the CMP to vendors
+						of this file's <span className={style.highlight}>vendors</span> list.  For more information refer to the
+						IAB specification: <a href='https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework'>
+						https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework</a>.
 					</p>
 				</section>
 				<section>

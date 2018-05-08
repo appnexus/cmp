@@ -56,8 +56,9 @@ export default class Store {
 				cmpId
 			});
 
-		this.isConsentToolShowing = false;
+		this.isModalShowing = false;
 		this.isFooterShowing = false;
+		this.isBannerShowing = false;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);
@@ -313,14 +314,20 @@ export default class Store {
 	};
 
 	toggleConsentToolShowing = (isShown) => {
-		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		this.isBannerShowing = typeof isShown === 'boolean' ? isShown : !this.isBannerShowing;
+		this.isModalShowing = false;
 		this.isFooterShowing = false;
+		this.storeUpdate();
+	};
+
+	toggleModalShowing = (isShown) => {
+		this.isModalShowing = typeof isShown === 'boolean' ? isShown : !this.isModalShowing;
 		this.storeUpdate();
 	};
 
 	toggleFooterShowing = (isShown) => {
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
-		this.isConsentToolShowing = false;
+		this.isModalShowing = false;
 		this.storeUpdate();
 	};
 
@@ -331,10 +338,20 @@ export default class Store {
 			maxVendorId = 0
 		} = this.vendorConsentData;
 
+
 		const {
-			vendors = [],
-			purposes = [],
+			vendors: newVendors = [],
+			purposes: newPurposes = [],
 		} = vendorList || {};
+
+		const {
+			vendors: existingVendors = [],
+			purposes: existingPurposes = []
+		} = this.vendorList || {};
+
+		// Only apply new vendor and purpose lists if they are empty
+		const vendors = existingVendors.length ? existingVendors : newVendors;
+		const purposes = existingPurposes.length ? existingPurposes : newPurposes;
 
 		// If vendor consent data has never been persisted set default selected status
 		if (!created) {
@@ -348,7 +365,18 @@ export default class Store {
 		this.vendorConsentData.maxVendorId = Math.max(maxVendorId,
 			...vendors.map(({id}) => id),
 			...Array.from(selectedVendorIds));
-		this.vendorList = vendorList;
+
+		this.vendorList = {
+			...this.vendorList,
+			...vendorList,
+			vendors,
+			purposes
+		};
+
+		// Make `vendorListVersion` = 0 if using a publisher vendor list
+		if (typeof this.vendorList.publisherVendorsVersion === 'number') {
+			this.vendorList.vendorListVersion = 0;
+		}
 		this.storeUpdate();
 	};
 

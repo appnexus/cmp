@@ -91,6 +91,12 @@ export default class CookieEncoder extends Component {
 					}
 					break;
 				}
+				case '6bitchar': {
+					if (text.match(/^[A-z]+$/)) {
+						_.set(decodedObject, propertyPath, text);
+					}
+					break;
+				}
 			}
 
 			this.setState({

@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import style from './app.less';
 
 import Popup from './popup/popup';
-import Footer from './footer/footer';
+import Banner from './banner/banner';
 
 export default class App extends Component {
 	state = {
@@ -32,12 +32,22 @@ export default class App extends Component {
 			store,
 		} = state;
 
+		const {
+			isModalShowing,
+			isBannerShowing,
+			toggleModalShowing
+		} = store;
+
 		return (
 			<div class={style.gdpr}>
+				<Banner isShowing={isBannerShowing}
+						isModalShowing={isModalShowing}
+						onSave={this.onSave}
+						onShowModal={toggleModalShowing}
+				/>
 				<Popup store={store}
 					   onSave={this.onSave}
 				/>
-				<Footer store={store} />
 			</div>
 		);
 	}

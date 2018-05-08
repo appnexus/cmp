@@ -9,6 +9,29 @@ class LocalLabel extends Label {
 	};
 }
 
+const purposeItems = [
+	{
+		title: 'Storage and access of information',
+		description: 'The storage of information, or access to information that is already stored, on user device such as accessing advertising identifiers and/or other device identifiers, and/or using cookies or similar technologies.'
+	},
+	{
+		title: 'Ad selection and delivery',
+		description: 'The collection of information and combination with previously collected information, to select and deliver advertisements and to measure the delivery and effectiveness of such advertisements. This includes using previously collected information about user interests to select ads, processing data about what advertisements were shown, how often they were shown, when and where they were shown, and whether they took any action related to the advertisement, including for example clicking an ad or making a purchase.'
+	},
+	{
+		title: 'Content selection and delivery',
+		description: 'The collection of information, and combination with previously collected information, to select and deliver content and to measure the delivery and effectiveness of such content. This includes using previously collected information about user interests to select content, processing data about what content was shown, how often or how long it was shown, when and where it was shown, and whether they took any action related to the content, including for example clicking on content.'
+	},
+	{
+		title: 'Personalization',
+		description: 'The collection and processing of information about user of a site to subsequently personalize advertising for them in other contexts, i.e. on other sites or apps, over time. Typically, the content of the site or app is used to make inferences about user interests, which inform future selections.'
+	},
+	{
+		title: 'Measurement',
+		description: 'The collection of information about user use of content, and combination with previously collected information, used to measure, understand, and report on user usage of content.'
+	}
+];
+
 export default class Purposes extends Component {
 	state = {
 		selectedPurposeIndex: 0
@@ -73,37 +96,33 @@ export default class Purposes extends Component {
 
 		return (
 			<div class={style.purposes}>
-				<div class={style.purposeList}>
-					{allPurposes.map((purpose, index) => (
-						<div class={[style.purposeItem, selectedPurposeIndex === index ? style.selectedPurpose : ''].join(' ')}
-							 onClick={this.handleSelectPurposeDetail(index)}
-						>
-							<LocalLabel localizeKey={`${index >= purposes.length ? 'customPurpose' : 'purpose'}${purpose.id}.menu`}>{purpose.name}</LocalLabel>
+				<div class={style.title}>
+					How is this information being used?
+				</div>
+				<div class={style.description}>
+					We and select companies may access and use your information for the below purposes. You may
+					customize your choices below or continue using our site if you're OK with the purposes.
+				</div>
+				<div class={style.purposeItems}>
+					{purposeItems.map(({title, description}) => (
+						<div class={style.purposeItem}>
+							<span class={style.purposeTitle}>{title}</span>
+							<a class={style.learnMore}>Learn More & Set Preferences</a>
 						</div>
 					))}
 				</div>
-				{selectedPurpose &&
-				<div class={style.purposeDescription}>
-					<div class={style.purposeDetail}>
-						<div class={style.detailHeader}>
-							<div class={style.title}>
-								<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.title`}>{selectedPurpose.name}</LocalLabel>
-							</div>
-							<div class={style.active}>
-								<LocalLabel localizeKey={purposeIsActive ? 'active' : 'inactive'}>{purposeIsActive ? 'Active' : 'Inactive'}</LocalLabel>
-								<Switch
-									isSelected={purposeIsActive}
-									onClick={this.handleSelectPurpose}
-								/>
-							</div>
-						</div>
-						<div class={style.body}>
-							<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />
-							<a class={style.vendorLink} onClick={onShowVendors}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
-						</div>
-					</div>
+				<div className={style.title}>
+					Who is using this information?
 				</div>
-				}
+				<div className={style.description}>
+					We and pre-selected companies will use your information. You can see each company in the links above or <a>see the complete list here.</a>
+				</div>
+				<div className={style.title}>
+					What information is being used?
+				</div>
+				<div className={style.description}>
+					Different companies use different information, <a>see the complete list here.</a>
+				</div>
 			</div>
 		);
 	}

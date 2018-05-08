@@ -98,7 +98,7 @@ export default class VendorListBuilder extends Component {
 		} = this.state;
 
 		const json = JSON.stringify(Object.assign({}, vendorList, {
-			version,
+			vendorListVersion,
 			purposes: purposes.filter(({id}) => selectedPurposeIds.has(id)),
 			vendors: vendors.filter(({id}) => selectedVendorIds.has(id))
 		}), null, 2);
