@@ -28,6 +28,7 @@ export default class Store {
 		publisherConsentData,
 		vendorList,
 		customPurposeList,
+		pubVendorsList,
 		allowedVendorIds
 	} = {}) {
 		// Keep track of data that has already been persisted
@@ -57,6 +58,7 @@ export default class Store {
 				cmpId
 			});
 
+		this.pubVendorsList = pubVendorsList;
 		this.allowedVendorIds = new Set(allowedVendorIds);
 		this.isConsentToolShowing = false;
 		this.isFooterShowing = false;
@@ -74,8 +76,14 @@ export default class Store {
 		const {
 			vendorList = {},
 			persistedVendorConsentData = {},
-			allowedVendorIds
+			pubVendorsList = {},
+			allowedVendorIds,
 		} = this;
+
+		const {
+			publisherVendorsVersion,
+			globalVendorListVersion
+		} = pubVendorsList;
 
 		const {
 			cookieVersion,
@@ -129,6 +137,8 @@ export default class Store {
 			cmpVersion,
 			consentScreen,
 			consentLanguage,
+			publisherVendorsVersion,
+			globalVendorListVersion,
 			vendorListVersion,
 			maxVendorId,
 			purposeConsents: purposeMap,
@@ -322,23 +332,31 @@ export default class Store {
 
 	updateVendorList = vendorList => {
 
-		const { allowedVendorIds } = this;
+		const {
+			pubVendorsList = {},
+			allowedVendorIds
+		} = this;
 
 		const {
 			created,
 			maxVendorId = 0
 		} = this.vendorConsentData;
 
-		// Filter vendors in vendorList by allowedVendorIds
-		const filteredVendorList = vendorList;
-		if (filteredVendorList && vendorList.vendors && allowedVendorIds.size) {
-			filteredVendorList.vendors = vendorList.vendors.filter(({id}) => allowedVendorIds.has(id));
+		if (vendorList) {
+			// Filter vendors in vendorList by allowedVendorIds
+			if (vendorList.vendors && allowedVendorIds.size) {
+				vendorList.vendors = vendorList.vendors.filter(({id}) => allowedVendorIds.has(id));
+			}
+
+			// If a pubVendorList is applied make the vendor list version = 0
+			const { publisherVendorsVersion } = pubVendorsList;
+			vendorList.vendorListVersion = publisherVendorsVersion ? 0 : vendorList.vendorListVersion;
 		}
 
 		const {
 			vendors = [],
 			purposes = [],
-		} = filteredVendorList || {};
+		} = vendorList || {};
 
 		// If vendor consent data has never been persisted set default selected status
 		if (!created) {
@@ -352,7 +370,7 @@ export default class Store {
 		this.vendorConsentData.maxVendorId = Math.max(maxVendorId,
 			...vendors.map(({id}) => id),
 			...Array.from(selectedVendorIds));
-		this.vendorList = filteredVendorList;
+		this.vendorList = vendorList;
 		this.storeUpdate();
 	};
 

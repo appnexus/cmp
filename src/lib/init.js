@@ -22,8 +22,13 @@ export function init(configUpdates) {
 		readVendorConsentCookie(),
 		fetchPubVendorList()
 	])
-		.then(([vendorConsentData, pubVendorList]) => {
-			const {vendors} = pubVendorList || {};
+		.then(([vendorConsentData, pubVendorsList]) => {
+			const {vendors} = pubVendorsList || {};
+
+			// Check config for allowedVendorIds then the pubVendorList
+			const {allowedVendorIds: configVendorIds} = config;
+			const allowedVendorIds = configVendorIds instanceof Array && configVendorIds.length ? configVendorIds :
+				vendors && vendors.map(vendor => vendor.id);
 
 			// Initialize the store with all of our consent data
 			const store = new Store({
@@ -32,7 +37,8 @@ export function init(configUpdates) {
 				cookieVersion: COOKIE_VERSION,
 				vendorConsentData,
 				publisherConsentData: readPublisherConsentCookie(),
-				allowedVendorIds: vendors && vendors.map(vendor => vendor.id)
+				pubVendorsList,
+				allowedVendorIds
 			});
 
 			// Pull queued command from __cmp stub
