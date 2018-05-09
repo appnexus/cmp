@@ -46,12 +46,12 @@ export default {
 			active: 'Aktywna',
 			inactive: 'Nieaktywna',
 			showVendors: 'Pokaż listę naszych zaufanych partnerów',
-			purpose5: {
+			purpose1: {
 				menu: 'Instalowanie plików cookies',
 				title: 'Instalowanie plików cookies itp. na Twoich urządzeniach i dostęp do tych plików.',
 				description: 'Na naszych stronach internetowych i w aplikacjach używamy technologii, takich jak pliki cookie, local storage i podobnych służących do zbierania i przetwarzania danych osobowych oraz danych eksploatacyjnych w celu personalizowania udostępnianych treści i reklam oraz analizowania ruchu na naszych stronach. Te pliki cookie pomagają poprawić jakość treści reklamowych na stronach i w aplikacjach. Dzięki tym technologiom możemy zapewnić Ci lepszą obsługę poprzez serwowanie reklam lepiej dopasowanych do Twoich preferencji i serwowanie treści, które mogą Cię bardziej zainteresować. Pliki te pozwalają nam również lepiej badać i analizować zainteresowanie naszymi stronami i treściami, które Ci serwujemy. Dzięki tym analizom możemy zadbać o jakość serwowanych przez nas treści.'
 			},
-			purpose3: {
+			'purpose2,3,4,5': {
 				menu: 'Przetwarzanie danych osobowych',
 				title: 'Przetwarzanie danych osobowych w celach marketingowych przez Zaufanych Partnerów.',
 				description: 'Zgoda dotyczy przetwarzania Twoich danych osobowych przez Zaufanych Partnerów w celach marketingowych, które obejmują  także niezbędne działania analityczne i zestawianie w profile marketingowe na podstawie Twojej aktywności na stronach internetowych. Na podstawie tej zgody, Twoje dane, w tym zebrane informacje o Twojej aktywności na stronach internetowych, będą wykorzystywane do prezentowania Ci reklam produktów i usług naszych Partnerów biznesowych, dopasowanych do Twoich zainteresowań.'
