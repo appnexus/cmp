@@ -24,8 +24,7 @@ const iframeMap =
 				`var message = {
 	__cmpCall: {
 		callId: 'iframe:' + (++this.callId),
-		command: 'getVendorConsents',
-		parameter: [0,1,2]
+		command: 'getVendorConsents'
 	}
 };`
 		},
