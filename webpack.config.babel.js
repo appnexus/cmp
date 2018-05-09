@@ -231,8 +231,7 @@ module.exports = [
 				chunks: ['portal']
 			}),
 			new CopyWebpackPlugin([
-				{ from: 'docs/assets', to: '.' },
-				{ from: 'docs/assets/pubvendors.json', to: '../.well-known/pubvendors.json' },
+				{ from: 'docs/assets', to: '.' }
 			])
 		]).concat(ENV === 'production' ? uglifyPlugin : []),
 	}
