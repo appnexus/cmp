@@ -119,9 +119,10 @@ describe('store', () => {
 		expect(vendorObject.purposeConsents['4']).to.be.true;
 	});
 
-	it('returns consent=false for vendors that are not in the vendorList', () => {
+	it('returns consent=false for vendors that are not in the allowedVendors', () => {
 		const store = new Store({
 			vendorList,
+			allowedVendorIds: [1,2,3,4,5,6],
 			vendorConsentData: {
 				selectedVendorIds: new Set([4, 5, 7, 8]),
 				selectedPurposeIds: new Set([1, 4])
@@ -136,22 +137,6 @@ describe('store', () => {
 
 		expect(vendorObject.vendorConsents['7']).to.be.false;
 		expect(vendorObject.vendorConsents['8']).to.be.false;
-	});
-
-	it('returns consent=false for purposes that are not in the vendorList', () => {
-		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				selectedPurposeIds: new Set([1, 4, 9, 10])
-			}
-		});
-
-		const vendorObject = store.getVendorConsentsObject();
-
-		expect(vendorObject.purposeConsents['1']).to.be.true;
-		expect(vendorObject.purposeConsents['4']).to.be.true;
-		expect(vendorObject.purposeConsents['9']).to.be.false;
-		expect(vendorObject.purposeConsents['10']).to.be.false;
 	});
 
 	it('selects vendor IDs', () => {

@@ -233,7 +233,6 @@ describe('cookie', () => {
 		const maxVendorId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
 		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 5, 6, 10]));
 
-		console.log(ranges);
 		expect(ranges).to.deep.equal([
 			{
 				isRange: true,

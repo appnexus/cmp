@@ -27,7 +27,8 @@ export default class Store {
 		vendorConsentData,
 		publisherConsentData,
 		vendorList,
-		customPurposeList
+		customPurposeList,
+		allowedVendorIds
 	} = {}) {
 		// Keep track of data that has already been persisted
 		this.persistedVendorConsentData = copyData(vendorConsentData);
@@ -56,8 +57,8 @@ export default class Store {
 				cmpId
 			});
 
-		this.isModalShowing = false;
-		this.isFooterShowing = false;
+		this.allowedVendorIds = new Set(allowedVendorIds);
+		this.isConsentToolShowing = false;
 		this.isBannerShowing = false;
 
 		this.updateVendorList(vendorList);
@@ -72,7 +73,8 @@ export default class Store {
 	getVendorConsentsObject = (vendorIds) => {
 		const {
 			vendorList = {},
-			persistedVendorConsentData = {}
+			persistedVendorConsentData = {},
+			allowedVendorIds
 		} = this;
 
 		const {
@@ -91,14 +93,10 @@ export default class Store {
 
 		const {purposes = [], vendors = []} = vendorList;
 
-		// No consent will be allowed for vendors or purposes not on the list
-		const allowedVendorIds = new Set(vendors.map(({id}) => id));
-		const allowedPurposeIds = new Set(purposes.map(({id}) => id));
-
 		// Map requested vendorIds
 		const vendorMap = {};
 		if (vendorIds && vendorIds.length) {
-			vendorIds.forEach(id => vendorMap[id] = selectedVendorIds.has(id) && allowedVendorIds.has(id));
+			vendorIds.forEach(id => vendorMap[id] = selectedVendorIds.has(id) && (!allowedVendorIds.size || allowedVendorIds.has(id)));
 		}
 		else {
 			// In case the vendor list has not been loaded yet find the highest
@@ -109,7 +107,7 @@ export default class Store {
 
 			// Map all IDs up to the highest vendor ID found
 			for (let i = 1; i <= lastVendorId; i++) {
-				vendorMap[i] = selectedVendorIds.has(i) && allowedVendorIds.has(i);
+				vendorMap[i] = selectedVendorIds.has(i) && (!allowedVendorIds.size || allowedVendorIds.has(i));
 			}
 		}
 
@@ -120,7 +118,7 @@ export default class Store {
 
 		const purposeMap = {};
 		for (let i = 1; i <= lastPurposeId; i++) {
-			purposeMap[i] = selectedPurposeIds.has(i) && allowedPurposeIds.has(i);
+			purposeMap[i] = selectedPurposeIds.has(i);
 		}
 
 		return {
@@ -164,9 +162,6 @@ export default class Store {
 		const {purposes = []} = vendorList;
 		const {purposes: customPurposes = []} = customPurposeList;
 
-		// No consent will be allowed for purposes not on the list
-		const allowedPurposeIds = new Set(purposes.map(({id}) => id));
-
 		const lastStandardPurposeId = Math.max(
 			...purposes.map(({id}) => id),
 			...Array.from(selectedPurposeIds));
@@ -178,7 +173,7 @@ export default class Store {
 		// Map all purpose IDs
 		const standardPurposeMap = {};
 		for (let i = 1; i <= lastStandardPurposeId; i++) {
-			standardPurposeMap[i] = selectedPurposeIds.has(i) && allowedPurposeIds.has(i);
+			standardPurposeMap[i] = selectedPurposeIds.has(i);
 		}
 		const customPurposeMap = {};
 		for (let i = 1; i <= lastCustomPurposeId; i++) {
@@ -333,25 +328,23 @@ export default class Store {
 
 	updateVendorList = vendorList => {
 
+		const { allowedVendorIds } = this;
+
 		const {
 			created,
 			maxVendorId = 0
 		} = this.vendorConsentData;
 
+		// Filter vendors in vendorList by allowedVendorIds
+		const filteredVendorList = vendorList;
+		if (filteredVendorList && vendorList.vendors && allowedVendorIds.size) {
+			filteredVendorList.vendors = vendorList.vendors.filter(({id}) => allowedVendorIds.has(id));
+		}
 
 		const {
-			vendors: newVendors = [],
-			purposes: newPurposes = [],
-		} = vendorList || {};
-
-		const {
-			vendors: existingVendors = [],
-			purposes: existingPurposes = []
-		} = this.vendorList || {};
-
-		// Only apply new vendor and purpose lists if they are empty
-		const vendors = existingVendors.length ? existingVendors : newVendors;
-		const purposes = existingPurposes.length ? existingPurposes : newPurposes;
+			vendors = [],
+			purposes = [],
+		} = filteredVendorList || {};
 
 		// If vendor consent data has never been persisted set default selected status
 		if (!created) {
@@ -365,18 +358,7 @@ export default class Store {
 		this.vendorConsentData.maxVendorId = Math.max(maxVendorId,
 			...vendors.map(({id}) => id),
 			...Array.from(selectedVendorIds));
-
-		this.vendorList = {
-			...this.vendorList,
-			...vendorList,
-			vendors,
-			purposes
-		};
-
-		// Make `vendorListVersion` = 0 if using a publisher vendor list
-		if (typeof this.vendorList.publisherVendorsVersion === 'number') {
-			this.vendorList.vendorListVersion = 0;
-		}
+		this.vendorList = filteredVendorList;
 		this.storeUpdate();
 	};
 

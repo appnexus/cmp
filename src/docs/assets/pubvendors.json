@@ -4,206 +4,40 @@
   "lastUpdated": "2018-05-07T15:59:08Z",
   "vendors": [
     {
-      "id": 6,
-      "name": "AdSpirit GmbH",
-      "policyUrl": "http://www.adspirit.de/privacy",
-      "purposeIds": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "legIntPurposeIds": [],
-      "featureIds": []
+      "id": 6
     },
     {
-      "id": 30,
-      "name": "BidTheatre AB",
-      "policyUrl": "https://www.bidtheatre.com/privacy-policy",
-      "purposeIds": [
-        1,
-        2,
-        3
-      ],
-      "legIntPurposeIds": [],
-      "featureIds": [
-        2,
-        3
-      ]
+      "id": 30
     },
     {
-      "id": 24,
-      "name": "Conversant Europe Ltd.",
-      "policyUrl": "https://www.conversantmedia.eu/legal/privacy-policy",
-      "purposeIds": [
-        1
-      ],
-      "legIntPurposeIds": [
-        2,
-        3,
-        4,
-        5
-      ],
-      "featureIds": [
-        1,
-        2,
-        3
-      ]
+      "id": 24
     },
     {
-      "id": 29,
-      "name": "Etarget SE",
-      "policyUrl": "https://www.etarget.sk/privacy.php",
-      "purposeIds": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "legIntPurposeIds": [],
-      "featureIds": [
-        1
-      ]
+      "id": 29
     },
     {
-      "id": 39,
-      "name": "ADITION technologies AG",
-      "policyUrl": "adition.com/datenschutz",
-      "purposeIds": [],
-      "legIntPurposeIds": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "featureIds": [
-        1,
-        2,
-        3
-      ]
+      "id": 39
     },
     {
-      "id": 11,
-      "name": "Quantcast International Limited",
-      "policyUrl": "https://www.quantcast.com/privacy/",
-      "purposeIds": [
-        1
-      ],
-      "legIntPurposeIds": [
-        2,
-        3,
-        4,
-        5
-      ],
-      "featureIds": [
-        1
-      ]
+      "id": 11
     },
     {
-      "id": 15,
-      "name": "Adikteev",
-      "policyUrl": "https://www.adikteev.com/eu/privacy/",
-      "purposeIds": [
-        1,
-        2
-      ],
-      "legIntPurposeIds": [],
-      "featureIds": []
+      "id": 15
     },
     {
-      "id": 4,
-      "name": "Roq.ad GmbH",
-      "policyUrl": "https://www.roq.ad/privacy-policy",
-      "purposeIds": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "legIntPurposeIds": [],
-      "featureIds": [
-        2,
-        3
-      ]
+      "id": 13
     },
     {
-      "id": 13,
-      "name": "Sovrn Holdings Inc",
-      "policyUrl": "https://www.sovrn.com/sovrn-privacy/",
-      "purposeIds": [
-        1,
-        2,
-        3
-      ],
-      "legIntPurposeIds": [],
-      "featureIds": [
-        2,
-        3
-      ]
+      "id": 34
     },
     {
-      "id": 34,
-      "name": "NEORY GmbH",
-      "policyUrl": "https://www.neory.com/privacy.html",
-      "purposeIds": [
-        1,
-        2,
-        4,
-        5
-      ],
-      "legIntPurposeIds": [
-        3
-      ],
-      "featureIds": []
+      "id": 32
     },
     {
-      "id": 32,
-      "name": "AppNexus Inc.",
-      "policyUrl": "https://www.appnexus.com/en/company/platform-privacy-policy",
-      "purposeIds": [
-        1
-      ],
-      "legIntPurposeIds": [
-        3
-      ],
-      "featureIds": [
-        2,
-        3
-      ]
+      "id": 10
     },
     {
-      "id": 10,
-      "name": "Index Exchange, Inc. ",
-      "policyUrl": "www.indexexchange.com/privacy",
-      "purposeIds": [
-        1
-      ],
-      "legIntPurposeIds": [],
-      "featureIds": [
-        2,
-        3
-      ]
-    },
-    {
-      "id": 57,
-      "name": "ADARA MEDIA UNLIMITED",
-      "policyUrl": "https://adara.com/2018/04/10/adara-gdpr-faq/",
-      "purposeIds": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "legIntPurposeIds": [],
-      "featureIds": [
-        1,
-        2
-      ]
+      "id": 57
     }
   ]
 }

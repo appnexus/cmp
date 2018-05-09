@@ -232,6 +232,7 @@ module.exports = [
 			}),
 			new CopyWebpackPlugin([
 				{ from: 'docs/assets', to: '.' },
+				{ from: 'docs/assets/pubvendors.json', to: '../.well-known/pubvendors.json' },
 			])
 		]).concat(ENV === 'production' ? uglifyPlugin : []),
 	}
