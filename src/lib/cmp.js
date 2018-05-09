@@ -133,28 +133,20 @@ export default class Cmp {
 	generateConsentString = () => {
 		const {
 			persistedVendorConsentData,
-			vendorList
+			vendorList,
+			allowedVendorIds
 		} = this.store;
-
-		const {
-			vendors = [],
-			purposes = []
-		} = vendorList || {};
 
 		const {
 			selectedVendorIds = new Set(),
 			selectedPurposeIds = new Set()
 		} = persistedVendorConsentData || {};
 
-		// Filter consents by values that exist in the current vendorList
-		const allowedVendorIds = new Set(vendors.map(({id}) => id));
-		const allowedPurposeIds = new Set(purposes.map(({id}) => id));
-
 		// Encode the persisted data
 		return persistedVendorConsentData && encodeVendorConsentData({
 			...persistedVendorConsentData,
-			selectedVendorIds: new Set(Array.from(selectedVendorIds).filter(id => allowedVendorIds.has(id))),
-			selectedPurposeIds: new Set(Array.from(selectedPurposeIds).filter(id => allowedPurposeIds.has(id))),
+			selectedVendorIds: new Set(Array.from(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))),
+			selectedPurposeIds: new Set(Array.from(selectedPurposeIds)),
 			vendorList
 		});
 	};
