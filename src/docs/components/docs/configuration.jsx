@@ -11,7 +11,8 @@ window.__cmp.config = {
 	customPurposeListLocation: './purposes.json',
 	storeConsentGlobally: true,
 	storePublisherData: true,
-	logging: 'debug'
+	logging: 'debug',
+	allowedVendorIds: [1,2,3]
 }
 `);
 
@@ -71,6 +72,13 @@ export default class CmpApi extends Component {
 							<span class={style.argumentDescription}>
 								Can be a string defining the level of logging (debug, info, warn, error) or a boolean.  A boolean value of true is equivalent
 								to <span class={style.highlight}>debug</span>.  A boolean value of false disables logging.
+							</span>
+						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>allowedVendorIds (Array[number])</span>:
+							<span class={style.argumentDescription}>
+								White list of vendor IDs to display and persist data for in the CMP.  This will override a list provided
+								by pubvendors.json.
 							</span>
 						</span>
 					</div>

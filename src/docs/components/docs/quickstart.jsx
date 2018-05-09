@@ -99,6 +99,9 @@ export default class Setup extends Component {
 						IAB specification: <a href='https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework'>
 						https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework</a>.
 					</p>
+					<p>
+						<span class={style.action}>NOTE:</span> IDs listed in the <a href='#/config'>config</a> under <span className={style.highlight}>allowedVendorIds</span>will override this list.
+					</p>
 				</section>
 				<section>
 					<span className={style.header}>Manually Trigger the Consent Tool</span>
