@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>System1 CMP</title>
+</head>
+<body>
+
+	<script>{{{ htmlWebpackPlugin.options.inline }}}</script>
+	<script>
+			// 1. can i initialize from outside?
+			// how do i add init as a command or handle init pre-load and post-load
+			/*
+			cmp('init', {
+				type: 'html',
+				logging: true
+			}, (result) => {
+				console.log("init complete", result)
+				// cmp('showConsentTool');
+			});
+			*/
+
+			cmp('addEventListener', 'isLoaded', function(result) {
+			    console.log("isLoaded", result);
+			});
+
+
+			// 1.
+
+	</script>
+</body>
+</html>

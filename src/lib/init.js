@@ -12,7 +12,7 @@ const CMP_VERSION = 1;
 const CMP_ID = 1;
 const COOKIE_VERSION = 1;
 
-export function init(configUpdates) {
+export function init(configUpdates, __cmp) {
 	config.update(configUpdates);
 	log.debug('Using configuration:', config);
 
@@ -36,7 +36,10 @@ export function init(configUpdates) {
 			const cmp = new Cmp(store);
 
 			// Expose `processCommand` as the CMP implementation
-			window[CMP_GLOBAL_NAME] = cmp.processCommand;
+			console.log("init 1", CMP_GLOBAL_NAME, window.cmp === window.__cmp);
+			// window[CMP_GLOBAL_NAME] = cmp.processCommand;
+			__cmp.processCommand = cmp.processCommand;
+			console.log("init 2", CMP_GLOBAL_NAME, window.cmp === window.__cmp);
 
 			// Render the UI
 			const App = require('../components/app').default;
@@ -48,6 +51,7 @@ export function init(configUpdates) {
 			cmp.notify('isLoaded');
 
 			// Execute any previously queued command
+			console.log("init:readVendorConsentCookie", commandQueue);
 			cmp.commandQueue = commandQueue;
 			cmp.processCommandQueue();
 
@@ -66,5 +70,3 @@ export function init(configUpdates) {
 			log.error('Failed to load CMP', err);
 		});
 }
-
-

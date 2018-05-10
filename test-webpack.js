@@ -1,44 +1,44 @@
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackInlineSourcePlugin from 'html-webpack-inline-source-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import path from 'path';
 import fs from "fs";
-import UglifyJS from 'uglify-es';
 
 const ENV = process.env.NODE_ENV || 'development';
 
 const CSS_MAPS = ENV !== 'production';
 
 const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
-		output: {
-			comments: false
-		},
-		compress: {
-			unsafe_comps: true,
-			properties: true,
-			keep_fargs: false,
-			pure_getters: true,
-			collapse_vars: true,
-			unsafe: true,
-			warnings: false,
-			screw_ie8: true,
-			sequences: true,
-			dead_code: true,
-			drop_debugger: true,
-			comparisons: true,
-			conditionals: true,
-			evaluate: true,
-			booleans: true,
-			loops: true,
-			unused: true,
-			hoist_funs: true,
-			if_return: true,
-			join_vars: true,
-			cascade: true,
-			drop_console: false
-		}
-	});
+	output: {
+		comments: false
+	},
+	compress: {
+		unsafe_comps: true,
+		properties: true,
+		keep_fargs: false,
+		pure_getters: true,
+		collapse_vars: true,
+		unsafe: true,
+		warnings: false,
+		screw_ie8: true,
+		sequences: true,
+		dead_code: true,
+		drop_debugger: true,
+		comparisons: true,
+		conditionals: true,
+		evaluate: true,
+		booleans: true,
+		loops: true,
+		unused: true,
+		hoist_funs: true,
+		if_return: true,
+		join_vars: true,
+		cascade: true,
+		drop_console: false
+	}
+});
 
 const commonConfig = {
 	context: path.resolve(__dirname, 'src'),
@@ -50,9 +50,9 @@ const commonConfig = {
 			'node_modules'
 		],
 		alias: {
-			components: path.resolve(__dirname, 'src/components'),    // used for tests
+			components: path.resolve(__dirname, 'src/components'), // used for tests
 			style: path.resolve(__dirname, 'src/style'),
-			'react': 'preact-compat',
+			react: 'preact-compat',
 			'react-dom': 'preact-compat'
 		}
 	},
@@ -80,7 +80,7 @@ const commonConfig = {
 				test: /\.(less|css)$/,
 				include: [
 					path.resolve(__dirname, 'src/components'),
-					path.resolve(__dirname, 'src/docs/components'),
+					path.resolve(__dirname, 'src/docs/components')
 				],
 				use: [
 					{
@@ -115,7 +115,7 @@ const commonConfig = {
 				test: /\.(less|css)$/,
 				include: [
 					path.resolve(__dirname, 'src/docs/style'),
-					path.resolve(__dirname, 'node_modules/codemirror/lib/codemirror.css'),
+					path.resolve(__dirname, 'node_modules/codemirror/lib/codemirror.css')
 				],
 				use: [
 					{
@@ -170,10 +170,41 @@ const commonConfig = {
 		https: false
 	}
 };
+/*
+module.exports = {
+// 	context: path.resolve(__dirname, 'src'),
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['env']
+					}
+				}
+			}
+		]
+	},
+	entry: {
+		s1cmp: './s1cmp.js'
+	},
+	output: {
+		path: path.resolve(__dirname, 'build'),
+		publicPath: './',
+		filename: '[name].bundle.js'
+	},
+	plugins: [new HtmlWebpackPlugin()]
+};
+*/
+
 
 module.exports = [
+	// S1 CMP config
 	{
 		entry: {
+			embed: './s1/embed',
 			cmp: './s1/cmp.js'
 		},
 		...commonConfig,
@@ -186,16 +217,29 @@ module.exports = [
 			new webpack.DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(ENV)
 			}),
+			new webpack.optimize.CommonsChunkPlugin({
+		    name: "vendor",
+		    // filename: "vendor.js"
+		    // (Give the chunk a different name)
+
+		    minChunks: Infinity,
+		    // (with more entries, this ensures that no other module
+		    //  goes into the vendor chunk)
+		  }),
 			new HtmlWebpackPlugin({
+				title: 'poop',
 				filename: 's1cmp.html',
 				template: 's1cmp.hbs',
-				inject: false,
-				inline: UglifyJS.minify(fs.readFileSync('./src/s1/embed.js', 'utf8')).code,
+				// inline: fs.readFileSync('./src/s1cmp.js', 'utf8'),
+				// inject: true,
+				chunks: ['embed', 'cmp'],
 				inlineSource: '(embed)',
-			})
-		]).concat(ENV === 'production' ? uglifyPlugin : []),
+			}),
+			new HtmlWebpackInlineSourcePlugin()
+		]).concat(ENV === 'production' ? uglifyPlugin : [uglifyPlugin]),
 	},
 	// CMP config
+	/*
 	{
 		entry: {
 			cmp: './index.js',
@@ -265,4 +309,5 @@ module.exports = [
 			])
 		]).concat(ENV === 'production' ? uglifyPlugin : []),
 	}
+	*/
 ];
