@@ -178,6 +178,7 @@ function decodePublisherConsentData(cookieValue) {
 		publisherPurposeVersion,
 		created,
 		lastUpdated,
+		standardPurposeIdBitString,
 		customPurposeIdBitString
 	} = decodePublisherCookieValue(cookieValue);
 
@@ -188,6 +189,7 @@ function decodePublisherConsentData(cookieValue) {
 		publisherPurposeVersion,
 		created,
 		lastUpdated,
+		selectedPurposeIds: decodeBitsToIds(standardPurposeIdBitString),
 		selectedCustomPurposeIds: decodeBitsToIds(customPurposeIdBitString)
 	};
 
