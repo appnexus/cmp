@@ -35,7 +35,6 @@ export default class Cmp {
 		 * @param {Array} vendorIds Array of vendor IDs to retrieve.  If empty return all vendors.
 		 */
 		getVendorConsents: (vendorIds, callback = () => {}) => {
-			console.log("cmp:getVendorConsents", vendorIds);
 			const consent = {
 				metadata: this.generateConsentString(),
 				gdprApplies: config.gdprApplies,
@@ -62,7 +61,6 @@ export default class Cmp {
 		 * Get the entire vendor list
 		 */
 		getVendorList: (vendorListVersion, callback = () => {}) => {
-			console.log("cmp:getVendorList", vendorListVersion);
 			const {vendorList} = this.store;
 			const {vendorListVersion: listVersion} = vendorList || {};
 			if (!vendorListVersion || vendorListVersion === listVersion) {
@@ -162,7 +160,6 @@ export default class Cmp {
 	};
 
 	processCommandQueue = () => {
-		console.log("cmp: processCommandQueue");
 		const queue = [...this.commandQueue];
 		if (queue.length) {
 			log.info(`Process ${queue.length} queued commands`);
@@ -205,26 +202,23 @@ export default class Cmp {
 	 * @param {*} parameter Expected parameter for command
 	 */
 	processCommand = (command, parameter, callback) => {
-		console.log("cmp:processCommand 1", command, parameter);
 		if (typeof this.commands[command] !== 'function') {
 			log.error(`Invalid CMP command "${command}"`);
 		}
 		// Special case where we have the full CMP implementation loaded but
 		// we still queue these commands until there is data available. This
 		// behavior should be removed in future versions of the CMP spec
-		else if (
-			(!this.store.persistedVendorConsentData && (command === 'getVendorConsents' || command === 'getConsentData')) ||
-			(!this.store.persistedPublisherConsentData && command === 'getPublisherConsents')) {
-			log.info(`Queuing command: ${command} until consent data is available`);
-			console.log("cmp:processCommand 2");
-			this.commandQueue.push({
-				command,
-				parameter,
-				callback
-			});
-		}
+		// else if (
+		// 	(!this.store.persistedVendorConsentData && (command === 'getVendorConsents' || command === 'getConsentData')) ||
+		// 	(!this.store.persistedPublisherConsentData && command === 'getPublisherConsents')) {
+		// 	log.info(`Queuing command: ${command} until consent data is available`);
+		// 	this.commandQueue.push({
+		// 		command,
+		// 		parameter,
+		// 		callback
+		// 	});
+		// }
 		else {
-			console.log("cmp:processCommand 3");
 			log.info(`Proccess command: ${command}, parameter: ${parameter}`);
 			this.commands[command](parameter, callback);
 		}

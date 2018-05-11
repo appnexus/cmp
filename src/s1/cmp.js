@@ -1,94 +1,96 @@
 // __cmp('setConsentUiCallback', callback) QUANTCAST
-import cmpShim from "./embed";
+import cmp from './embed';
 import log from '../lib/log';
-import {init} from '../lib/init';
+import { init } from '../lib/init';
 
-let cmp = cmpShim;
-
-const handleConsentResult = ({vendorListVersion: listVersion} = {}, {created, vendorListVersion} = {}) => {
-	console.log("handleConsentResult", listVersion, created, vendorListVersion);
-	/*
-	if (!created) {
-		log.debug('No consent data found. Showing consent tool');
-		// cmp('showConsentTool');
-	}
-	else if (!listVersion) {
-		log.debug('Could not determine vendor list version. Not showing consent tool');
-	}
-	else if (vendorListVersion !== listVersion) {
-		log.debug(`Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`);
-		// cmp('showConsentTool');
-	}
-	else {
-		log.debug('Consent found. Not showing consent tool');
-	}
-	*/
+const config = {
+	logging: true
+};
+const checkConsentAll = ({ purposeConsents } = {}) => {
+	console.log('checkConsentAll', purposeConsents);
+	const hasPurposeDisabled = Object.keys(purposeConsents).find(key => {
+		return purposeConsents[key] === false;
+	});
+	console.log("hasPurposeDisabled", hasPurposeDisabled);
+	return !hasPurposeDisabled;
 };
 
-const checkConsent = () => {
-	console.log("checkConsent", cmp.loaded);
+const handleConsentResult = (
+	vendorList = {},
+	vendorConsents = {},
+	callback
+) => {
+	const { vendorListVersion: listVersion } = vendorList;
+	const { created, vendorListVersion } = vendorConsents;
+
+	let errorMsg = '';
+	if (!created) {
+		errorMsg = 'No consent data found. Showing consent tool';
+	} else if (!listVersion) {
+		errorMsg =
+			'Could not determine vendor list version. Not showing consent tool';
+	} else if (vendorListVersion !== listVersion) {
+		errorMsg = `Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`;
+	}
+	if (errorMsg) {
+		log.debug(errorMsg);
+	}
+	callback({
+		hasConsented: checkConsentAll(vendorConsents),
+		vendorList,
+		vendorConsents,
+		errorMsg
+	});
+};
+
+const checkConsent = (callback = () => {}) => {
 	if (!cmp.loaded) {
 		log.error('CMP failed to load');
-		// @TODO need to resolve no consent
+		handleConsentResult(null, null, 'CMP failed to load');
 	} else if (!window.navigator.cookieEnabled) {
-		log.warn('Cookies are disabled. Ignoring CMP consent check');
-		// @TODO need to resolve no consent
+		handleConsentResult(
+			null,
+			null,
+			'Cookies are disabled. Ignoring CMP consent check'
+		);
 	} else {
-		console.log(1, cmp === window.cmp, window.cmp === window.__cmp);
-		cmp('getVendorConsents', null, vendorConsents => {
-			console.log("getVendorConsents", vendorConsents);
+		cmp('getVendorList', null, vendorList => {
+			console.log("getVendorList", vendorList);
+			cmp('getVendorConsents', null, vendorConsents => {
+				handleConsentResult(vendorList, vendorConsents, callback);
+			});
 		});
-
-
-		setTimeout(() => {
-			console.log(2, cmp === window.cmp, window.cmp === window.__cmp);
-			cmp('showConsentTool', null, vendorList => {
-				console.log("showConsentTool", vendorList);
-
-			});
-		}, 2000);
-
-		setTimeout(() => {
-			console.log(3, cmp === window.cmp, window.cmp === window.__cmp);
-			cmp('showConsentTool', null, vendorList => {
-				console.log("showConsentTool", vendorList);
-
-			});
-		}, 4000);
 	}
 };
 
 const initialize = (config, callback) => {
-	console.log("initialize 1", cmp === window.__cmp, window.__cmp === window.cmp);
 	init(config, cmp).then(() => {
-		console.log("initialize 2", cmp === window.__cmp, window.__cmp === window.cmp, window.__cmp.loaded, window.cmp.loaded);
-		cmp("ping");
-		// cmp = window.__cmp; //
-		checkConsent(); //
-
-		if (callback && typeof callback === "function") {
-			callback();
-		}
-		/// out of sync
+		checkConsent(callback); //
 	});
 };
 
 // initialize CMP
 (() => {
-	const initIndex = cmp.commandQueue.findIndex(({command}) => {
+	const initIndex = cmp.commandQueue.findIndex(({ command }) => {
 		return command === 'init';
 	});
 
 	// 1. initialize call was queued from global scope
 	if (initIndex >= 0 && cmp.commandQueue[initIndex]) {
-		const [{
-			parameter: config,
-			callback
-		}] = cmp.commandQueue.splice(initIndex, 1); // remove "init" from command list
+		const [{ parameter: config, callback }] = cmp.commandQueue.splice(
+			initIndex,
+			1
+		); // remove "init" from command list
 		initialize(config, callback);
 
-	// 2. initialize call never queued, so initialize with default Config
+		// 2. initialize call never queued, so initialize with default Config
 	} else {
-		initialize();
+		initialize(config, result => {
+			const { errorMsg } = result;
+			if (errorMsg) {
+				log.debug(errorMsg);
+				cmp('showConsentTool');
+			}
+		});
 	}
 })();

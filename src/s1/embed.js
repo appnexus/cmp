@@ -1,8 +1,12 @@
+/**
+ * creates and manages global cmp and __cmp objects on window
+ * cmp queues incoming requests
+ * once loaded, cmp invokes cmp.processCommand()
+ */
 (function(cmp, __cmp) {
 	let cmpShim = function(scriptSrc) {
 		// 1. already exists, start queueing requests
 		if (window[cmp] && window[__cmp]) {
-			console.log("embed:  2");
 			window[cmp].loaded = true;
 			window[cmp] = window[__cmp];
 			return window[cmp];
@@ -40,7 +44,6 @@
 			}
 
 			// 4. return temporay cmp command queue
-			console.log("embed: 4");
 			return window[cmp];
 		})(window, document, 'script', 'commandQueue');
 	};

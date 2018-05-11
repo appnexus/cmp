@@ -10,23 +10,22 @@
 	<script>
 			// 1. can i initialize from outside?
 			// how do i add init as a command or handle init pre-load and post-load
-			/*
 			cmp('init', {
-				type: 'html',
 				logging: true
-			}, (result) => {
-				console.log("init complete", result)
-				// cmp('showConsentTool');
-			});
-			*/
-
-			cmp('addEventListener', 'isLoaded', function(result) {
-			    console.log("isLoaded", result);
+			}, function(result) {
+				console.log("init complete", result);
+				if (!result.hasConsented) { // consent not set
+					cmp('showConsentTool');
+				}
 			});
 
+			cmp('addEventListener', 'onSubmit', function(result) {
+			    console.log("onSubmit", result);
+			});
 
-			// 1.
-
+			cmp('addEventListener', 'cmpReady', function(result) {
+			    console.log("cmpReady", result);
+			});
 	</script>
 </body>
 </html>
