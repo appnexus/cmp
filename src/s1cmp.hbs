@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>System1 CMP</title>
+</head>
+<body>
+
+	<script>{{{ htmlWebpackPlugin.options.inline }}}</script>
+	<script>
+			cmp('init', {
+				logging: true
+			}, function(result) {
+				if (!result.hasConsented || result.errorMsg) { // consent not set
+					cmp('showConsentTool');
+				}
+				console.log("init complete", result);
+			});
+
+			cmp('addEventListener', 'onSubmit', function(result) {
+			    console.log("onSubmit", result);
+			});
+
+			cmp('addEventListener', 'cmpReady', function(result) {
+			    console.log("cmpReady", result);
+			});
+	</script>
+</body>
+</html>

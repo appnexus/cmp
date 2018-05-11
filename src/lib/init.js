@@ -12,7 +12,7 @@ const CMP_VERSION = 1;
 const CMP_ID = 1;
 const COOKIE_VERSION = 1;
 
-export function init(configUpdates) {
+export function init(configUpdates, __cmp) {
 	config.update(configUpdates);
 	log.debug('Using configuration:', config);
 	const startTime = Date.now();
@@ -48,7 +48,8 @@ export function init(configUpdates) {
 			const cmp = new Cmp(store);
 
 			// Expose `processCommand` as the CMP implementation
-			window[CMP_GLOBAL_NAME] = cmp.processCommand;
+			// window[CMP_GLOBAL_NAME] = cmp.processCommand;
+			__cmp.processCommand = cmp.processCommand;
 
 			// Notify listeners that the CMP is loaded
 			log.debug(`Successfully loaded CMP version: ${pack.version} in ${Date.now() - startTime}ms`);
@@ -79,5 +80,3 @@ export function init(configUpdates) {
 			log.error('Failed to load CMP', err);
 		});
 }
-
-

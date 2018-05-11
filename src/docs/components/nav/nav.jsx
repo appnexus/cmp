@@ -23,8 +23,15 @@ import VendorListBuilder from '../tools/vendorListBuilder/vendorListBuilder';
 import Intro from '../intro/intro';
 import Configration from '../docs/configuration';
 import QuickStart from '../docs/quickstart';
+import System1CMP from "../system1/system1";
 
 export const navItems = [
+	{
+		title: 'System1',
+		items: [
+			{ to: '/cmpjs', title: 'System1 CMP Loader', component: System1CMP },
+		]
+	},
 	{
 		title: 'Intro',
 		items: [
