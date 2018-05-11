@@ -231,9 +231,6 @@ export default class Store {
 			vendorList,
 			customPurposeList
 		};
-		// publisherConsentData.selectedPurposeIds is never updated
-		publisherConsents.selectedPurposeIds = vendorConsentData.selectedPurposeIds;
-
 		if (config.setConsentData) {
 			let consentData = {
 				vendor: encodeVendorConsentData(vendorConsents)
