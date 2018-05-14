@@ -1,4 +1,4 @@
- import 'core-js/fn/array/reduce';
+import 'core-js/fn/array/reduce';
 import 'core-js/fn/array/fill';
 import 'core-js/fn/array/map';
 import 'core-js/fn/array/for-each';

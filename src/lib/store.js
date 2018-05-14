@@ -345,11 +345,11 @@ export default class Store {
 	toggleFooterShowing = (isShown) => {
 		const vendorConsents = this.getVendorConsentsObject();
 		const publisherConsents = this.getPublisherConsentsObject();
-		if( this.isAllSetTrue(vendorConsents.purposeConsents) &&
+		if (this.isAllSetTrue(vendorConsents.purposeConsents) &&
 				this.isAllSetTrue(vendorConsents.vendorConsents) &&
 				this.isAllSetTrue(publisherConsents.standardPurposes)) {
-					isShown = false;
-		};
+			isShown = false;
+		}
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
 		this.isConsentToolShowing = false;
 		this.storeUpdate();
