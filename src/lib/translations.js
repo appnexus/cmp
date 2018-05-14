@@ -133,5 +133,67 @@ export default {
 			message: 'Du kannst deine Datenschutz-Einstellungen bearbeiten',
 			consentLink: 'hier'
 		}
+	},
+	fr: {
+		intro: {
+			title: 'Ce site utilise des cookies',
+			description: 'Nos partenaires et nous-mêmes utilisons les cookies (petits fichiers texte) du navigateur afin de comprendre les centres d’intérêt de nos visiteurs et ainsi leur proposer du contenu et de la publicité pertinents. Désormais, nous avons besoin de votre consentement. Pour obtenir plus d’informations, cliquez sur le bouton "Afficher les finalités".',
+			acceptAll: 'Accepter tous les cookies',
+			rejectAll: 'Refuser tous les cookies',
+			showPurposes: 'Afficher les finalités'
+		},
+		details: {
+			title: 'Paramètres de confidentialité',
+			back: 'Annuler',
+			save: 'Sauver et quitter'
+		},
+		purposes: {
+			active: 'Oui',
+			inactive: 'Non',
+			showVendors: 'Afficher les vendeurs',
+			cookies: {
+				menu: 'Comment nous utilisons les cookies',
+				title: 'Ce site utilise des cookies',
+				description: 'Nos partenaires et nous-mêmes utilisons les cookies (petits fichiers texte) du navigateur afin de comprendre les centres d’intérêts de nos visiteurs et ainsi leur proposer du contenu et de la publicité pertinents.'
+			},
+			purpose1: {
+				menu: 'Stockage d’informations et accès',
+				title: 'Stockage d’informations et accès',
+				description: 'Autoriser le stockage d’informations ou l’accès à des informations déjà stockées sur votre appareil, telles que des identifiants publicitaires, des identifiants de dispositif, des cookies et des technologies similaires.'
+			},
+			purpose2: {
+				menu: 'Personnalisation',
+				title: 'Personnalisation',
+				description: 'Autoriser la collecte et le traitement d’informations sur votre utilisation de ce service pour ensuite personnaliser la publicité et/ou le contenu qui vous sont proposés dans d’autres contextes, tels que sur d’autres sites ou applications, au fil du temps. En règle générale, le contenu du site ou de l’application est utilisé pour déterminer vos centres d’intérêt et permettent de déterminer le choix de la publicité et/ou du contenu.'
+			},
+			purpose3: {
+				menu: 'Sélection d’annonces, livraison, rapports',
+				title: 'Sélection d’annonces, livraison, rapports',
+				description: 'Autoriser la collecte d’informations et la combinaison avec des informations précédemment collectées pour sélectionner et livrer des publicités pour vous et pour mesurer la livraison et l’efficacité de ces publicités. Cela inclut l’utilisation d’informations précédemment collectées sur vos centres d’intérêt pour sélectionner des publicités, le traitement des données d’affichage, la fréquence à laquelle elles ont été diffusées, le moment et l’endroit où elles ont été diffusées et si vous avez ou pas effectué une action en relation avec la publicité, par exemple cliqué sur l’annonce ou réalisé un achat. Cela n’inclut pas la Personnalisation, qui consiste à collecter et à traiter des informations sur votre utilisation de ce service pour ensuite personnaliser la publicité et/ou le contenu pour vous dans d’autres contextes, tels que des sites ou des applications, au fil du temps.'
+			},
+			purpose4: {
+				menu: 'Sélection de contenu, livraison, rapports',
+				title: 'Sélection de contenu, livraison, rapports',
+				description: 'Autoriser la collecte d’informations et la combinaison avec des informations précédemment collectées pour sélectionner et livrer du contenu pour vous et pour mesurer la livraison et l’efficacité de ce contenu. Cela inclut l’utilisation d’informations précédemment collectées sur vos centres d’intérêt pour sélectionner du contenu, le traitement des données d’affichage, combien de fois ou combien de temps il a été diffusé, le moment et l’endroit où il a été diffusé et si vous avez ou pas effectué une action en relation avec le contenu, par exemple en cliquant sur celui-ci. Cela n’inclut pas la Personnalisation, qui consiste à collecter et à traiter des informations sur votre utilisation de ce service pour ensuite personnaliser le contenu et/ou la publicité pour vous dans d’autres contextes, tels que des sites ou des applications, au fil du temps.'
+			},
+			purpose5: {
+				menu: 'Mesures',
+				title: 'Mesures',
+				description: 'Autoriser la collecte d’informations sur votre utilisation du contenu et la combinaison avec des informations précédemment collectées, utilisées pour mesurer, comprendre et rendre compte de votre utilisation du service. Cela n’inclut pas la personnalisation, la collecte d’informations sur votre utilisation de ce service pour personnaliser ultérieurement le contenu et/ou la publicité dans d’autres contextes, par exemple sur d’autres services, tels que des sites ou des applications.'
+			}
+		},
+		vendors: {
+			title: 'Nos partenaires',
+			rejectAll: 'Tout rejeter',
+			acceptAll: 'Tout accepter',
+			company: 'Société',
+			offOn: 'Non/Oui',
+			description: 'Aidez-nous à vous offrir un meilleur service ! Nos partenaires utilisent les cookies de votre navigateur pour comprendre, sur le web, ce qui vous intéresse et pour vous proposer du contenu et de la publicité pertinents.',
+			moreChoices: 'Autres options'
+		},
+		footer: {
+			message: 'Vous pouvez modifier vos paramètres de confidentialité',
+			consentLink: 'ici'
+		}
 	}
 };
