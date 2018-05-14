@@ -114,7 +114,6 @@ describe('cookie', () => {
 			vendorListVersion: 1,
 			created: aDate,
 			lastUpdated: aDate,
-			selectedPurposeIds: new Set([1, 2]),
 		};
 
 		const publisherConsentData = {
