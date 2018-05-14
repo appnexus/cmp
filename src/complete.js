@@ -71,7 +71,7 @@ function addLocatorFrame() {
 addLocatorFrame();
 
 // Add stub
-const commandQueue = [];
+const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};
 const cmp = function (command, parameter, callback) {
 	commandQueue.push({
 		command,
