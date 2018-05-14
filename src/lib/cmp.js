@@ -127,6 +127,14 @@ export default class Cmp {
 		showConsentTool: (_, callback = () => {}) => {
 			this.store.toggleConsentToolShowing(true);
 			callback(true);
+		},
+
+		/**
+		 * Trigger the footer UI to be shown
+		 */
+		showFooter: (_, callback = () => {}) => {
+			this.store.toggleFooterShowing(true);
+			callback(true);
 		}
 	};
 

@@ -14,6 +14,7 @@ export default class App extends Component {
 		store.persist();
 		notify('onSubmit');
 		store.toggleConsentToolShowing(false);
+		store.toggleFooterShowing(true);
 	};
 
 

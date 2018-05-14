@@ -1,4 +1,4 @@
-import 'core-js/fn/array/reduce';
+ import 'core-js/fn/array/reduce';
 import 'core-js/fn/array/fill';
 import 'core-js/fn/array/map';
 import 'core-js/fn/array/for-each';
@@ -21,7 +21,8 @@ function handleConsentResult(cmp, {vendorListVersion: listVersion} = {}, {create
 		cmp('showConsentTool');
 	}
 	else {
-		log.debug('Consent found. Not showing consent tool');
+		log.debug('Consent found. Not showing consent tool. Show footer when not all consents set to true');
+		cmp('showFooter');
 	}
 }
 
