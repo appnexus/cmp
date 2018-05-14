@@ -8,7 +8,7 @@ window.__cmp('addEventListener', 'onSubmit', function(result){
 	adFrame.src = 'http://ib.adnxs.com/tt?id=1959558';
 	var contentArea = document.getElementById('MyContentArea');
 	contentArea.innerHTML = '';
-	contentArea.append(adFrame);
+	contentArea.appendChild(adFrame);
 });
 `;
 

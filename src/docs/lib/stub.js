@@ -72,7 +72,7 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 			t.async = false;
 			t.src = '${cmpLocation}';
 			var tag = document.getElementsByTagName('head')[0];
-			tag.append(t);
+			tag.appendChild(t);
 		}
 	})(window, document);`;
 }
