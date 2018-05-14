@@ -11,7 +11,7 @@ import { sendPortalCommand } from './portal';
 function fetchVendorList() {
 	const {globalVendorListLocation, storeConsentGlobally, globalConsentLocation} = config;
 	return (globalVendorListLocation ?
-		fetch(globalVendorListLocation) :
+		fetch(globalVendorListLocation + ((globalVendorListLocation + '').indexOf('?') < 0 ? '?' : '&') + 'host=' + encodeURIComponent(window.location.hostname)) :
 		Promise.reject('Missing globalVendorListLocation'))
 		.then(res => res.json())
 		.catch(err => {
