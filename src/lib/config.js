@@ -3,6 +3,7 @@ import log from './log';
 const defaultConfig = {
 	customPurposeListLocation: './purposes.json',
 	globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
+	pubVendorListLocation: '/.well-known/pubvendors.json',
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: false,
 	storePublisherData: false,

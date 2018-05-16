@@ -9,6 +9,7 @@ window.__cmp.config = {
 	globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
 	globalConsentLocation: './portal.html',
 	customPurposeListLocation: './purposes.json',
+	pubVendorListLocation: '/.well-known/pubvendors.json',
 	storeConsentGlobally: true,
 	storePublisherData: true,
 	logging: 'debug',
@@ -55,6 +56,12 @@ export default class CmpApi extends Component {
 							<span class={style.argumentDescription}>Location of the JSON file that holds a list of custom purposes a user can select. This file
 								must be able to be requested from the domain that the CMP is loaded on.
 								See: <span class={style.highlight}>/src/docs/assets/purposes.json</span></span>
+						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>pubVendorListLocation (String)</span>:
+							<span class={style.argumentDescription}>Location of the JSON file that holds a list of public vendors . This file
+								must be able to be requested from the domain that the CMP is loaded on.
+								See: <span class={style.highlight}>/src/docs/assets/.well-known/pubvendors.json</span></span>
 						</span>
 						<span class={style.argument}>
 							<span class={style.argumentType}>storeConsentGlobally (Boolean)</span>:
