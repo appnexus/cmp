@@ -96,7 +96,7 @@ export default class Vendors extends Component {
 								</td>
 								<td class={style.allowColumn}>
 									{purposeIds.indexOf(selectedPurpose.id) > -1 ?
-										<span>
+										<span class={style.allowSwitch}>
 										Allow <Switch
 											dataId={id}
 											isSelected={selectedVendorIds.has(id)}
