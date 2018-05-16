@@ -15,8 +15,7 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 							frame.style.display = 'none';
 							frame.name = '__cmpLocator';
 							document.body.appendChild(frame);
-						}
-						else {
+						} else {
 							setTimeout(addLocatorFrame, 5);
 						}
 					}
@@ -32,8 +31,7 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 								cmpLoaded: false
 							}); 
 						}
-					}
-					else {
+					} else {
 						commandQueue.push({
 							command: command,
 							parameter: parameter,

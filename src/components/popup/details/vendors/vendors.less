@@ -4,8 +4,6 @@ div.vendors {
 	display: flex;
 	flex-direction: column;
 	padding: 2%;
-	overflow: scroll;
-	-webkit-overflow-scrolling: touch;
 
 	.header {
 		display: flex;
@@ -44,7 +42,7 @@ div.vendors {
 		}
 	}
 	.description {
-		margin: 20px 0;
+		margin: 10px 0;
 		flex-shrink: 0;
 	}
 
@@ -56,12 +54,13 @@ div.vendors {
 		display: flex;
 	}
 	.vendorList {
-		border: 1px solid @color-border;
+		margin-top: 10px;
 	}
 	.vendorName {
 		min-height: 30px;
 		display: flex;
 		align-items: center;
+		font-size: 14px;
 	}
 	table {
 		width: 100%;
@@ -70,19 +69,22 @@ div.vendors {
 		thead tr {
 			background-color: @color-table-background;
 			border: 1px solid @color-border;
-			text-transform: uppercase;
+			font-size: 12px;
 		}
 
 		tr {
 			min-height: 40px;
 			th {
 				font-weight: bold;
+				white-space: nowrap;
 			}
 			td, th {
-				text-align: left;
 				padding: 5px;
+				font-size: 12px;
+				white-space: nowrap;
 				&:first-child {
 					width: 100%;
+					text-align: left;
 				}
 				&:last-child {
 					padding-right: 25px;
@@ -93,5 +95,17 @@ div.vendors {
 		tr.even {
 			background-color: @color-table-background;
 		}
+	}
+	.allowColumn {
+		text-align: center;
+	}
+	.allowSwitch {
+		display: flex;
+		align-items: center;
+	}
+	.policy {
+		margin: 0 5px;
+		display: flex;
+		fill: @color-primary;
 	}
 }

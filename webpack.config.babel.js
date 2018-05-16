@@ -231,7 +231,7 @@ module.exports = [
 				chunks: ['portal']
 			}),
 			new CopyWebpackPlugin([
-				{ from: 'docs/assets', to: '.' },
+				{ from: 'docs/assets', to: '.' }
 			])
 		]).concat(ENV === 'production' ? uglifyPlugin : []),
 	}

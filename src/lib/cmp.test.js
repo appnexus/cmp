@@ -143,7 +143,7 @@ describe('cmp', () => {
 		it('showConsentTool executes', (done) => {
 			cmp.processCommand('showConsentTool', null, data => {
 				expect(data).to.be.true;
-				expect(cmp.store.isConsentToolShowing).to.be.true;
+				expect(cmp.store.isBannerShowing).to.be.true;
 				done();
 			});
 		});

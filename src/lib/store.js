@@ -61,7 +61,7 @@ export default class Store {
 		this.pubVendorsList = pubVendorsList;
 		this.allowedVendorIds = new Set(allowedVendorIds);
 		this.isConsentToolShowing = false;
-		this.isFooterShowing = false;
+		this.isBannerShowing = false;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);
@@ -319,14 +319,20 @@ export default class Store {
 	};
 
 	toggleConsentToolShowing = (isShown) => {
-		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		this.isBannerShowing = typeof isShown === 'boolean' ? isShown : !this.isBannerShowing;
+		this.isModalShowing = false;
 		this.isFooterShowing = false;
+		this.storeUpdate();
+	};
+
+	toggleModalShowing = (isShown) => {
+		this.isModalShowing = typeof isShown === 'boolean' ? isShown : !this.isModalShowing;
 		this.storeUpdate();
 	};
 
 	toggleFooterShowing = (isShown) => {
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
-		this.isConsentToolShowing = false;
+		this.isModalShowing = false;
 		this.storeUpdate();
 	};
 
