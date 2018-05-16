@@ -349,6 +349,19 @@ export default class Store {
 		} = this.vendorConsentData;
 
 		if (vendorList) {
+			// Sort vendors by name
+			vendorList.vendors.sort((a, b) => {
+				if (a.name.toLowerCase() > b.name.toLowerCase()) {
+					return 1;
+				}
+
+				if (a.name.toLowerCase() < b.name.toLowerCase()) {
+					return -1;
+				}
+
+				return 0;
+			});
+
 			// Filter vendors in vendorList by allowedVendorIds
 			if (vendorList.vendors && allowedVendorIds.size) {
 				vendorList.vendors = vendorList.vendors.filter(({id}) => allowedVendorIds.has(id));
