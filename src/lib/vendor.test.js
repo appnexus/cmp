@@ -18,9 +18,9 @@ describe('vendor', () => {
 
 
 	it('fetchPubVendorList fetches from `.well-known` URL', (done) => {
-
+		const {pubVendorListLocation} = config;
 		fetchPubVendorList().then(() => {
-			expect(window.fetch.mock.calls[0][0]).to.equal('/.well-known/pubvendors.json');
+			expect(window.fetch.mock.calls[0][0]).to.equal(pubVendorListLocation);
 			done();
 		});
 	});
