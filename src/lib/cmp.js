@@ -125,6 +125,16 @@ export default class Cmp {
 		 * Trigger the consent tool UI to be shown
 		 */
 		showConsentTool: (_, callback = () => {}) => {
+			this.store.toogleDetailViewAsDefault(false);
+			this.store.toggleConsentToolShowing(true);
+			callback(true);
+		},
+
+		/**
+		 * Trigger the consent tool UI to be shown on Detail View
+		 */
+		showConsentDetailView: (_, callback = () => {}) => {
+			this.store.toogleDetailViewAsDefault(true);
 			this.store.toggleConsentToolShowing(true);
 			callback(true);
 		}

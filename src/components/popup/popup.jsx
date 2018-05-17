@@ -10,8 +10,18 @@ const SECTION_DETAILS = 1;
 
 export default class Popup extends Component {
 	state = {
-		selectedPanelIndex: SECTION_INTRO
+		selectedPanelIndex: SECTION_INTRO,
+		isDetailViewAsDefault: false
 	};
+
+	componentWillReceiveProps(newProps) {
+		if (newProps.store.isDetailViewAsDefault !== this.state.isDetailViewAsDefault) {
+			this.setState({
+				selectedPanelIndex: newProps.store.isDetailViewAsDefault ? SECTION_DETAILS : SECTION_INTRO,
+				isDetailViewAsDefault: newProps.store.isDetailViewAsDefault
+			});
+		}
+	}
 
 	onAcceptAll = () => {
 		const { store, onSave } = this.props;
