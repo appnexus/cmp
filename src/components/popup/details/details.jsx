@@ -6,6 +6,13 @@ import VendorList from './vendorList/vendorList';
 import Summary from './summary/summary';
 import Panel from '../../panel/panel';
 import PurposeList from './purposeList/purposeList';
+import Label from "../../label/label";
+
+class LocalLabel extends Label {
+	static defaultProps = {
+		prefix: 'details'
+	};
+}
 
 const SECTION_PURPOSES = 0;
 const SECTION_VENDOR_LIST = 1;
@@ -101,9 +108,9 @@ export default class Details extends Component {
 				</div>
 				<div class={style.footer}>
 					{selectedPanelIndex > 0 &&
-					<Button class={style.back} onClick={this.handleBack}>&lt; Back</Button>
+					<Button class={style.back} onClick={this.handleBack}>&lt; <LocalLabel localizeKey='back'>Back</LocalLabel></Button>
 					}
-					<Button class={style.save} onClick={onSave}>Continue Using Site</Button>
+					<Button class={style.save} onClick={onSave}><LocalLabel localizeKey='save'>Continue Using Site</LocalLabel></Button>
 				</div>
 			</div>
 		);
