@@ -35,7 +35,6 @@ export default {
 			}
 		},
 		details: {
-			title: '',
 			back: '',
 			save: ''
 		},
@@ -136,6 +135,10 @@ export default {
 				description: 'Chaque partenaire utilise différemment vos données.',
 				link: 'Voir la liste complète des données utilisées'
 			}
+		},
+		details: {
+			back: 'Retour',
+			save: 'Acceter et continuer sur le site'
 		},
 		purposes: {
 			title: 'Données collectées',
