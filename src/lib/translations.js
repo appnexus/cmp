@@ -25,9 +25,6 @@ export default {
 		summary: {
 			title: '',
 			description: '',
-			purposes: {
-				link: ''
-			},
 			who: {
 				title: '',
 				description: ''
@@ -43,14 +40,10 @@ export default {
 			save: ''
 		},
 		purposes: {
-			active: '',
-			inactive: '',
-			showVendors: '',
-			cookies: {
-				menu: '',
-				title: '',
-				description: ''
-			},
+			title: '',
+			description: '',
+			back: '',
+			optoutdDescription: '',
 			purpose1: {
 				description: 'Allow storing or accessing information on a user\'s device.'
 			},
@@ -89,16 +82,11 @@ export default {
 		},
 		vendors: {
 			title: '',
-			rejectAll: '',
-			acceptAll: '',
-			company: '',
-			offOn: '',
 			description: '',
-			moreChoices: ''
-		},
-		footer: {
-			message: '',
-			consentLink: ''
+			accept: '',
+			acceptAll: '',
+			optOut: '',
+			back : ''
 		}
 	},
 	fr: {
@@ -152,12 +140,7 @@ export default {
 			title: 'Données collectées',
 			description: 'Ci-dessous la liste des données pouvant être collectées :',
 			back: 'Configurer comment ces données sont utilisées',
-			// showVendors: 'Voir la liste complète des fournisseurs.',
-			// cookies: {
-			// 	menu: 'Comment utilisons-nous les cookies',
-			// 	title: 'Ce site utilise des cookies',
-			// 	description: 'Nos partenaires et nous-mêmes utilisons les cookies (petits fichiers texte) du navigateur afin de comprendre les centres d\'intérêts de nos visiteurs et ainsi leur proposer du contenu et de la publicité pertinents.'
-			// },
+			optoutdDescription: '',
 			purpose1: {
 				menu: 'Stockage d\'informations et accès',
 				title: 'Stockage d\'informations et accès',
@@ -183,7 +166,11 @@ export default {
 				title: 'Mesures',
 				description: 'Autoriser la collecte d’informations sur votre utilisation du contenu et la combinaison avec des informations précédemment collectées, utilisées pour mesurer, comprendre et rendre compte de votre utilisation du service. Cela n’inclut pas la personnalisation, la collecte d’informations sur votre utilisation de ce service pour personnaliser ultérieurement le contenu et/ou la publicité dans d’autres contextes, par exemple sur d’autres services, tels que des sites ou des applications.'
 			},
-			optoutdDescription: ''
+			customPurpose1: {
+				menu: '',
+				title: '',
+				description: ''
+			}
 		},
 		vendors: {
 			title: 'Nos partenaires',
