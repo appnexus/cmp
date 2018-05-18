@@ -58,9 +58,7 @@ export default class VendorList extends Component {
 						We and pre-selected companies will use your information. You can see each company in
 						the links above or
 					</LocalLabel>&nbsp;
-					<LocalLabel localizeKey='summary.who.link'>
-						 <a onClick={onVendorListClick}>see the complete list here.</a>
-					</LocalLabel>
+					<a onClick={onVendorListClick}><LocalLabel localizeKey='summary.who.link'>see the complete list here.</LocalLabel></a>
 				</div>
 				<div class={detailsStyle.title}>
 					<LocalLabel localizeKey='summary.what.title'>What information is being used?</LocalLabel>
@@ -69,9 +67,7 @@ export default class VendorList extends Component {
 					<LocalLabel localizeKey='summary.what.description'>
 						Different companies use different information,
 					</LocalLabel>&nbsp;
-					<LocalLabel localizeKey='summary.what.link'>
-						<a onClick={onPurposeListClick}>see the complete list here.</a>
-					</LocalLabel>
+					<a onClick={onPurposeListClick}><LocalLabel localizeKey='summary.what.link'>see the complete list here.</LocalLabel></a>
 				</div>
 			</div>
 		);

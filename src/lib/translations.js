@@ -126,14 +126,15 @@ export default {
 			description: 'Nos partenaires et nous-mêmes utilisons les cookies (petits fichiers texte) du navigateur afin de comprendre les centres d\'intérêt de nos visiteurs et ainsi leur proposer du contenu et de la publicité pertinents. Désormais, nous avons besoin de votre consentement.',
 			detailLink: 'Informations et préférences',
 			who: {
-				title: '',
-				description: '',
-				link: ''
+				title: 'Qui utilise mes données ?',
+				description: `Nous et seulement quelques partenaires sélectionnées peuvent utiliser vos données. 
+					Vous pouvez personnaliser vos choix ci-dessus ou continuer à utiliser notre site si vous êtes d'accord.`,
+				link: 'Voir la liste complète de nos partenaires'
 			},
 			what: {
-				title: '',
-				description: '',
-				link: ''
+				title: 'Quelles données sont utilisées ?',
+				description: 'Chaque partenaire utilise différemment vos données.',
+				link: 'Voir la liste complète des données utilisées'
 			}
 		},
 		purposes: {
