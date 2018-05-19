@@ -121,7 +121,7 @@ export default {
 			detailLink: 'Informations et configuration',
 			who: {
 				title: 'Qui utilise mes données ?',
-				description: `Seulement nos partenaires et nous-même peuvent utiliser vos données. 
+				description: `Seulement nos partenaires et nous-même pouvons utiliser vos données. 
 					Vous pouvez personnaliser vos choix ci-dessus ou continuer à utiliser notre site si vous êtes d'accord.`,
 				link: 'Voir la liste complète de nos partenaires'
 			},
@@ -133,7 +133,7 @@ export default {
 		},
 		details: {
 			back: 'Retour',
-			save: 'Acceter et continuer sur le site'
+			save: 'Valider et continuer sur le site'
 		},
 		purposes: {
 			title: 'Données collectées',
