@@ -1,10 +1,18 @@
 import { h, Component } from 'preact';
 import style from './summary.less';
 import detailsStyle from '../details.less';
-import Button from '../../../button/button';
 import Label from "../../../label/label";
 
-class LocalLabel extends Label {}
+class SummaryLabel extends Label {
+	static defaultProps = {
+		prefix: 'summary'
+	};
+}
+class PurposesLabel extends Label {
+	static defaultProps = {
+		prefix: 'purposes'
+	};
+}
 
 export default class VendorList extends Component {
 	constructor(props) {
@@ -32,42 +40,42 @@ export default class VendorList extends Component {
 		return (
 			<div class={style.summary}>
 				<div class={detailsStyle.title}>
-					<LocalLabel localizeKey='summary.title'>Learn more about how information is being used?</LocalLabel>
+					<SummaryLabel localizeKey='title'>Learn more about how information is being used?</SummaryLabel>
 				</div>
 				<div class={detailsStyle.description}>
-					<LocalLabel localizeKey='summary.description'>
+					<SummaryLabel localizeKey='description'>
 					We and select companies may access and use your information for the below purposes. You may
 					customize your choices below or continue using our site if you're OK with the purposes.
-					</LocalLabel>
+					</SummaryLabel>
 				</div>
 				<div class={style.purposeItems}>
 					{purposes.map((purposeItem, index) => (
 						<div class={style.purposeItem}>
-							<span class={style.purposeTitle}><LocalLabel localizeKey={`purposes.${index >= purposes.length ? 'customPurpose' : 'purpose'}${purposeItem.id}.menu`}>{purposeItem.name}</LocalLabel></span>
+							<span class={style.purposeTitle}><PurposesLabel localizeKey={`purpose${purposeItem.id}.menu`}>{purposeItem.name}</PurposesLabel></span>
 							<a class={style.learnMore} onClick={this.handlePurposeItemClick(purposeItem)}>
-								<LocalLabel localizeKey='summary.detailLink'>Learn More & Set Preferences</LocalLabel>
+								<SummaryLabel localizeKey='detailLink'>Learn More & Set Preferences</SummaryLabel>
 							</a>
 						</div>
 					))}
 				</div>
 				<div class={detailsStyle.title}>
-					<LocalLabel localizeKey='summary.who.title'>Who is using this information?</LocalLabel>
+					<SummaryLabel localizeKey='who.title'>Who is using this information?</SummaryLabel>
 				</div>
 				<div class={detailsStyle.description}>
-					<LocalLabel localizeKey='summary.who.description'>
+					<SummaryLabel localizeKey='who.description'>
 						We and pre-selected companies will use your information. You can see each company in
 						the links above or
-					</LocalLabel>&nbsp;
-					<a onClick={onVendorListClick}><LocalLabel localizeKey='summary.who.link'>see the complete list here.</LocalLabel></a>
+					</SummaryLabel>&nbsp;
+					<a onClick={onVendorListClick}><SummaryLabel localizeKey='who.link'>see the complete list here.</SummaryLabel></a>
 				</div>
 				<div class={detailsStyle.title}>
-					<LocalLabel localizeKey='summary.what.title'>What information is being used?</LocalLabel>
+					<SummaryLabel localizeKey='what.title'>What information is being used?</SummaryLabel>
 				</div>
 				<div class={detailsStyle.description}>
-					<LocalLabel localizeKey='summary.what.description'>
+					<SummaryLabel localizeKey='what.description'>
 						Different companies use different information,
-					</LocalLabel>&nbsp;
-					<a onClick={onPurposeListClick}><LocalLabel localizeKey='summary.what.link'>see the complete list here.</LocalLabel></a>
+					</SummaryLabel>&nbsp;
+					<a onClick={onPurposeListClick}><SummaryLabel localizeKey='what.link'>see the complete list here.</SummaryLabel></a>
 				</div>
 			</div>
 		);

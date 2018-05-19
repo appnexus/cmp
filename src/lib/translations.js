@@ -42,9 +42,9 @@ export default {
 			title: '',
 			description: '',
 			back: '',
-			optoutdDescription: '',
+			optoutdDescription: ``,
 			purpose1: {
-				description: 'Allow storing or accessing information on a user\'s device.'
+				description: `Allow storing or accessing information on a user's device.`
 			},
 			purpose2: {
 				description: `Allow processing of a user's data to provide and inform personalised advertising (including delivery, measurement, and reporting) based on a user's preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices  for that purpose.
@@ -72,11 +72,6 @@ export default {
 					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
 					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
 				</ul>`
-			},
-			customPurpose1: {
-				menu: '',
-				title: '',
-				description: ''
 			}
 		},
 		vendors: {
@@ -91,7 +86,7 @@ export default {
 	fr: {
 		banner: {
 			title: 'Les cookies nous aident à vous délivrer un service de qualité.',
-			description: 'Nos partenaires et nous-mêmes utilisons les cookies afin de proposer du contenu et de la publicité pertinents.',
+			description: 'Nos partenaires et nous-même utilisons les cookies afin de proposer du contenu et de la publicité pertinents.',
 			links: {
 				data: {
 					title: 'Données utilisées',
@@ -122,11 +117,11 @@ export default {
 		},
 		summary: {
 			title: 'Comment sont utilisées mes données ?',
-			description: 'Nos partenaires et nous-mêmes utilisons les cookies (petits fichiers texte) du navigateur afin de comprendre les centres d\'intérêt de nos visiteurs et ainsi leur proposer du contenu et de la publicité pertinents. Désormais, nous avons besoin de votre consentement.',
-			detailLink: 'Informations et préférences',
+			description: 'Nos partenaires et nous-même utilisons les cookies (petits fichiers texte) du navigateur afin de comprendre les centres d\'intérêt de nos visiteurs et ainsi leur proposer du contenu et de la publicité pertinents. Désormais, nous avons besoin de votre consentement.',
+			detailLink: 'Informations et configuration',
 			who: {
 				title: 'Qui utilise mes données ?',
-				description: `Nous et seulement quelques partenaires sélectionnées peuvent utiliser vos données. 
+				description: `Seulement nos partenaires et nous-même peuvent utiliser vos données. 
 					Vous pouvez personnaliser vos choix ci-dessus ou continuer à utiliser notre site si vous êtes d'accord.`,
 				link: 'Voir la liste complète de nos partenaires'
 			},
@@ -145,6 +140,15 @@ export default {
 			description: 'Ci-dessous la liste des données pouvant être collectées :',
 			back: 'Configurer comment ces données sont utilisées',
 			optoutdDescription: '',
+			items: `<ul>
+						<li>Type de navigateur et son paramétrage</li>
+						<li>Informations sur le système d'exploitation</li>
+						<li>Données des cookies</li>
+						<li>Informations sur l'appareil utilisé</li>
+						<li>L'adresse IP à partir de laquelle l'appareil accède au site Web</li>
+						<li>Informations sur l'activité de l'utilisateur sur cet appareil, y compris les pages Web visitées</li>
+						<li>Informations de géolocalisation de l'appareil lorsqu'il accède au site Web</li>
+					</ul>`,
 			purpose1: {
 				menu: 'Stockage d\'informations et accès',
 				title: 'Stockage d\'informations et accès',
@@ -169,11 +173,6 @@ export default {
 				menu: 'Mesures',
 				title: 'Mesures',
 				description: 'Autoriser la collecte d’informations sur votre utilisation du contenu et la combinaison avec des informations précédemment collectées, utilisées pour mesurer, comprendre et rendre compte de votre utilisation du service. Cela n’inclut pas la personnalisation, la collecte d’informations sur votre utilisation de ce service pour personnaliser ultérieurement le contenu et/ou la publicité dans d’autres contextes, par exemple sur d’autres services, tels que des sites ou des applications.'
-			},
-			customPurpose1: {
-				menu: '',
-				title: '',
-				description: ''
 			}
 		},
 		vendors: {
