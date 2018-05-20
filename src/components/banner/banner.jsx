@@ -80,28 +80,37 @@ export default class Banner extends Component {
 						class={style.message}
 						ref={el => this.messageRef = el}
 					>
-						<div class={style.title}>
-						Ads help us run this site
-						</div>
-						When you visit our site, pre-selected companies may access and use certain information on your device to serve relevant ads or personalized content.
-
 						<div class={style.info}>
-							<a onClick={this.handleInfo(PANEL_COLLECTED)}>
-								<ChevronIcon class={[style.expand, selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : ''].join(' ')}  />
-							</a>Information that may be used.
-							<a onClick={this.handleInfo(PANEL_PURPOSE)}>
-								<ChevronIcon class={[style.expand, selectedPanelIndex === PANEL_PURPOSE && isExpanded ? style.expanded : ''].join(' ')}  />
-							</a>
-							Purposes for storing information.
-							<a onClick={this.handleLearnMore}>Learn More</a>
-							<a onClick={onSave}>Continue to site</a>
+							<div class={style.title}>
+							Ads help us run this site
+							</div>
+							When you visit our site, pre-selected companies may access and use certain information on your device to serve relevant ads or personalized content.
+							<a class={style.learnMoreMobile} onClick={this.handleLearnMore}>Learn More</a>
+
+							<div class={style.options}>
+								<div class={style.option}>
+									<a onClick={this.handleInfo(PANEL_COLLECTED)}>
+										<ChevronIcon class={[style.expand, selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : ''].join(' ')}  />
+										Information that may be used.
+									</a>
+								</div>
+								<div class={style.option}>
+									<a onClick={this.handleInfo(PANEL_PURPOSE)}>
+										<ChevronIcon class={[style.expand, selectedPanelIndex === PANEL_PURPOSE && isExpanded ? style.expanded : ''].join(' ')}  />
+										Purposes for storing information.
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class={style.consent}>
+							<a class={style.learnMore} onClick={this.handleLearnMore}>Learn More</a>
+							<a class={style.continue} onClick={onSave}>Continue to site</a>
 						</div>
 					</div>
 					<Panel
 						selectedIndex={selectedPanelIndex}
 						class={style.infoExpanded}>
 						<div class={style.infoExpanded}>
-							Information that may be used:
 							<ul>
 								<li>Type of browser and its settings</li>
 								<li>Information about the device's operating system</li>
@@ -113,7 +122,6 @@ export default class Banner extends Component {
 							</ul>
 						</div>
 						<div class={style.infoExpanded}>
-							How information may be used:
 							<ul>
 								<li>Storage and access of information</li>
 								<li>Ad selection and delivery</li>

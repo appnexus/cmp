@@ -7,51 +7,153 @@
 	bottom: -1000px;
 	z-index: 99999;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	color: @color-textLight;
 	background: white;
-	font-size: 18px;
+	font-size: 16px;
 	max-height: 100%;
 	transition: bottom 0.5s ease-in-out;
 
 	box-shadow: 0px 0px 5px @color-primary;
-	padding: 0 20px;
+	padding: 0 30px;
 
-	a {
-		text-decoration: underline;
-		padding: 0 4px;
+	@media @smartphone {
+		padding: 0 20px;
 	}
 
-	.title {
-		font-size: 24px;
-		color: @color-text;
-		padding: 20px 0;
-	}
-	.message {
-		padding: 20px 0;
-	}
+	.content {
+		.message {
+			display: flex;
 
-	.expand {
-		padding: 0;
-		height: 20px;
-		fill: @color-primary;
-		transform: rotate(-90deg);
-		transition: 0.5s ease;
+			@media @smartphone {
+				display: block;
+			}
 
-		&.expanded {
-			transform: rotate(0deg);
+			.info {
+				flex: 1;
+				line-height: 16px;
+
+				@media @smartphone {
+					font-size: 12px;
+				}
+
+				.title {
+					font-size: 22px;
+					color: @color-text;
+					padding: 30px 0 15px 0;
+
+					@media @smartphone {
+						font-size: 16px;
+						padding: 20px 0 10px 0;
+					}
+				}
+
+				.expand {
+					padding: 0;
+					height: 20px;
+					fill: @color-primary;
+					transform: rotate(-90deg);
+					transition: 0.5s ease;
+
+					&.expanded {
+						transform: rotate(0deg);
+					}
+				}
+
+				.learnMoreMobile {
+					display: none;
+
+					@media @smartphone {
+						display: inline;
+						text-decoration: underline;
+						margin-left: 5px;
+					}
+				}
+
+				.options {
+					margin: 15px 0 20px 0;
+					display: flex;
+
+					@media @smartphone {
+						display: block;
+						margin: 10px 0;
+					}
+
+					.option {
+						margin-right: 20px;
+						margin-left: -2px;
+
+						a {
+							text-decoration: none;
+							color: @color-secondary;
+
+							svg {
+								vertical-align: middle;
+								margin-right: 5px;
+								position: relative;
+								top: -1px;
+								fill: @color-secondary;
+							}
+						}
+					}
+
+					@media @smartphone {
+						display: block;
+					}
+				}
+			}
+
+			.consent {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex: 0;
+				white-space: nowrap;
+
+				@media @smartphone {
+					display: block;
+					padding-bottom: 20px;
+				}
+
+				a {
+					line-height: 48px;
+					display: block;
+					text-align: center;
+					width: 100%;
+					border: 1px solid @color-primary;
+					padding: 0 15px;
+
+					&.learnMore {
+						color: @color-primary;
+
+						@media @smartphone {
+							display: none;
+						}
+					}
+
+					&.continue {
+						margin-left: 10px;
+						background: @color-primary;
+						color: #fff;
+
+						@media @smartphone {
+							margin-left: 0;
+							line-height: 38px;
+							font-size: 14px;
+						}
+					}
+				}
+			}
 		}
 	}
-	.info {
-		display: flex;
-	}
+
 	.infoExpanded {
-		padding: 0 10px 10px 10px;
-		min-height: 210px;
+		padding: 0 0 30px 0;
+		min-height: 200px;
+
 		ul {
 			margin: 0;
+			padding: 0 0 0 20px;
+			list-style-type: square;
 		}
 	}
 }
