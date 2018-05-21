@@ -72,7 +72,7 @@ export default class Vendors extends Component {
 					</div>
 				</div>
 				<div class={detailsStyle.description}>
-					What this means: {description}
+					<strong>What this means:</strong> {description}
 				</div>
 				<div class={detailsStyle.description}>
 					Depending on the type of data they collect, use,

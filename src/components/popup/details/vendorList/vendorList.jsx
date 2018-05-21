@@ -27,9 +27,10 @@ export default class VendorList extends Component {
 					</div>
 				</div>
 				<div class={detailsStyle.description}>
-					Here is the complete list of compnaies who will use your information. Please view their privacy policy for more details.
+					Here is the complete list of companies who may use your information. You can review their privacy policies for specific
+					data use, security, and retention practices.
 				</div>
-				<a onClick={onBack}>Customize how these companies use data from the previous page</a>
+				<a onClick={onBack}>Customize how these companies use your data from the previous page</a>
 				<table>
 					{vendors.map(({name, policyUrl}, index) => (
 						<tr class={index % 2 === 0 ? style.even : style.odd}>

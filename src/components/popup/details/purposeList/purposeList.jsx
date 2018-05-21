@@ -33,11 +33,11 @@ export default class PurposeList extends Component {
 				<div class={detailsStyle.description}>
 					Below is a complete list of the information that may be gathered.
 				</div>
-				<div class={style.infoItems}>
+				<ul class={style.infoItems}>
 					{infoItems.map(item => (
-						<div class={style.infoItem}>{item}</div>
+						<li class={style.infoItem}>{item}</li>
 					))}
-				</div>
+				</ul>
 				<a onClick={onBack}>Customize how this data is used from the previous page</a>
 			</div>
 		);

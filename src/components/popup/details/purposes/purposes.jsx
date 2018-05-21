@@ -100,8 +100,8 @@ export default class Purposes extends Component {
 					How is this information being used?
 				</div>
 				<div class={style.description}>
-					We and select companies may access and use your information for the below purposes. You may
-					customize your choices below or continue using our site if you're OK with the purposes.
+					We and pre-selected companies may access and use your information for the following purposes. You can
+					customize your choices below, and continue using our site if you consent to the use of your data for these purposes.
 				</div>
 				<div class={style.purposeItems}>
 					{purposeItems.map(({title, description}) => (
@@ -115,7 +115,7 @@ export default class Purposes extends Component {
 					Who is using this information?
 				</div>
 				<div className={style.description}>
-					We and pre-selected companies will use your information. You can see each company in the links above or <a>see the complete list here.</a>
+					We and pre-selected companies will use your information. You can <a>see the complete list here.</a>
 				</div>
 				<div className={style.title}>
 					What information is being used?

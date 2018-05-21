@@ -33,8 +33,8 @@ export default class VendorList extends Component {
 						Learn more about how your information is used.
 					</div>
 					<div class={detailsStyle.description}>
-						We and select companies may access and use your information for the below purposes. You may
-						customize your choices below or continue using our site if you're OK with the purposes.
+						We and pre-selected companies may access and use your information for the following purposes. You can
+						customize your choices below, and continue using our site if you consent to the use of your data for these purposes.
 					</div>
 					<div class={style.purposeItems}>
 						{purposes.map(purposeItem => (
@@ -48,8 +48,7 @@ export default class VendorList extends Component {
 						Who is using this information?
 					</div>
 					<div class={detailsStyle.description}>
-						We and pre-selected companies will use your information. You can see each company in
-						the links above or <a onClick={onVendorListClick}>see the complete list here.</a>
+						We and pre-selected companies will use your information. You can <a onClick={onVendorListClick}>see the complete list here.</a>
 					</div>
 					<div class={detailsStyle.title}>
 						What information is being used?
