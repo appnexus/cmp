@@ -44,8 +44,6 @@ export default class Banner extends Component {
 		const {isShowing, onSave, theme} = props;
 		const {selectedPanelIndex, isExpanded} = state;
 
-		console.log(isShowing);
-
 		return (
 			<div
 				ref={el => this.bannerRef = el}
