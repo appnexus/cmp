@@ -44,10 +44,12 @@ export default class Banner extends Component {
 		const {isShowing, onSave, theme} = props;
 		const {selectedPanelIndex, isExpanded} = state;
 
+		console.log(isShowing);
+
 		return (
 			<div
 				ref={el => this.bannerRef = el}
-				class={style.banner}
+				class={[style.banner, !isShowing ? style.hidden : ''].join(' ')}
 				style={{boxShadow: `0px 0px 5px ${theme.primary}`, backgroundColor: theme.background, color: theme.textLight}}
 			>
 				<div class={style.content}>
