@@ -4,7 +4,7 @@
 	position: fixed;
 	right: 0;
 	left: 0;
-	bottom: -1000px;
+	bottom: 0;
 	z-index: 99999;
 
 	color: @color-textLight;
@@ -14,10 +14,12 @@
 	transition: bottom 0.5s ease-in-out;
 
 	box-shadow: 0px 0px 5px @color-primary;
-	padding: 0 30px;
+	padding: 15px 30px;
 
 	@media @smartphone {
-		padding: 0 20px;
+		margin-top: -80px;
+		padding: 15px 20px;
+		overflow: auto;
 	}
 
 	.content {
@@ -39,48 +41,27 @@
 				.title {
 					font-size: 22px;
 					color: @color-text;
-					padding: 30px 0 15px 0;
+					padding: 15px 0;
 
 					@media @smartphone {
 						font-size: 16px;
-						padding: 20px 0 10px 0;
-					}
-				}
-
-				.expand {
-					padding: 0;
-					height: 20px;
-					fill: @color-primary;
-					transform: rotate(-90deg);
-					transition: 0.5s ease;
-
-					&.expanded {
-						transform: rotate(0deg);
-					}
-				}
-
-				.learnMoreMobile {
-					display: none;
-
-					@media @smartphone {
-						display: inline;
-						text-decoration: underline;
-						margin-left: 5px;
+						padding: 5px 0 10px 0;
 					}
 				}
 
 				.options {
-					margin: 15px 0 20px 0;
-					display: flex;
+					margin: 15px 0 0 0;
 
 					@media @smartphone {
-						display: block;
-						margin: 10px 0;
+						margin: 10px 0 20px 0;
 					}
 
 					.option {
-						margin-right: 20px;
-						margin-left: -2px;
+						margin: 0 20px 6px -2px;
+
+						@media @smartphone {
+							margin: 0 20px 3px -2px;
+						}
 
 						a {
 							text-decoration: none;
@@ -91,55 +72,75 @@
 								margin-right: 5px;
 								position: relative;
 								top: -1px;
+								transform: rotate(-90deg);
+								transition: 0.5s ease;
 								fill: @color-secondary;
 							}
 						}
-					}
 
-					@media @smartphone {
-						display: block;
+						.optionDetails {
+							max-height: 0;
+							overflow: hidden;
+							transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+
+							ul {
+								margin: 5px 0 15px 0;
+								padding: 0 0 0 36px;
+							}
+						}
+
+						&.expanded {
+							a {
+								svg {
+									transform: rotate(0deg);
+								}
+							}
+
+							.optionDetails {
+								max-height: 600px;
+								transition: max-height 1s ease-in-out;
+							}
+						}
 					}
 				}
 			}
 
 			.consent {
 				display: flex;
-				align-items: center;
-				justify-content: center;
 				flex: 0;
 				white-space: nowrap;
+				margin-left: 30px;
 
 				@media @smartphone {
-					display: block;
-					padding-bottom: 20px;
+					margin-left: 0;
 				}
 
 				a {
-					line-height: 48px;
 					display: block;
+					position: relative;
+					line-height: 48px;
+					height: 48px;
 					text-align: center;
 					width: 100%;
 					border: 1px solid @color-primary;
 					padding: 0 15px;
+					flex: 1 0 40%;
+
+					@media @smartphone {
+						top: auto !important;
+						line-height: 38px;
+						font-size: 14px;
+						height: 38px;
+					}
 
 					&.learnMore {
 						color: @color-primary;
-
-						@media @smartphone {
-							display: none;
-						}
 					}
 
 					&.continue {
 						margin-left: 10px;
 						background: @color-primary;
 						color: #fff;
-
-						@media @smartphone {
-							margin-left: 0;
-							line-height: 38px;
-							font-size: 14px;
-						}
 					}
 				}
 			}
