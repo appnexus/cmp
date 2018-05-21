@@ -68,7 +68,7 @@ export default class Banner extends Component {
 								<div class={[style.option, selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : ''].join(' ')}>
 									<a
 										onClick={this.handleInfo(PANEL_COLLECTED)}
-										style={{color: theme.secondary}}
+										style={{color: theme.textLink}}
 									>
 										<ChevronIcon />
 										Information that may be used.
@@ -76,7 +76,7 @@ export default class Banner extends Component {
 
 									<div
 										class={style.optionDetails}
-										style={{color: theme.secondaryText}}
+										style={{color: theme.textLight}}
 									>
 										<ul>
 											<li>Type of browser and its settings</li>
@@ -92,7 +92,7 @@ export default class Banner extends Component {
 								<div class={[style.option, selectedPanelIndex === PANEL_PURPOSE && isExpanded ? style.expanded : ''].join(' ')}>
 									<a
 										onClick={this.handleInfo(PANEL_PURPOSE)}
-										style={{color: theme.secondary}}
+										style={{color: theme.textLink}}
 									>
 										<ChevronIcon />
 										Purposes for storing information.
@@ -100,7 +100,7 @@ export default class Banner extends Component {
 
 									<div
 										class={style.optionDetails}
-										style={{color: theme.secondaryText}}
+										style={{color: theme.textLight}}
 									>
 										<ul>
 											<li>Storage and access of information</li>

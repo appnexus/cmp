@@ -51,7 +51,8 @@ export default class Vendors extends Component {
 			vendors,
 			purposes,
 			selectedVendorIds,
-			selectedPurpose
+			selectedPurpose,
+			theme,
 		} = props;
 
 		const {
@@ -67,22 +68,22 @@ export default class Vendors extends Component {
 		return (
 			<div class={style.vendors}>
 				<div class={style.header}>
-					<div class={detailsStyle.title}>
+					<div class={detailsStyle.title} style={{color: theme.text}}>
 						{name}
 					</div>
 				</div>
-				<div class={detailsStyle.description}>
+				<div class={detailsStyle.description} style={{color: theme.textLight}}>
 					<strong>What this means:</strong> {description}
 				</div>
-				<div class={detailsStyle.description}>
+				<div class={detailsStyle.description} style={{color: theme.textLight}}>
 					Depending on the type of data they collect, use,
 					and process and other factors including privacy by design, certain partners rely on your consent while others require you to opt-out.
 					For information on each vendor and to exercise your choices, see below.
-					Or to opt-out, visit the <a href='http://optout.networkadvertising.org/?c=1#!/' target='_blank'>NAI</a>
-					, <a href='http://optout.aboutads.info/?c=2#!/' target='_blank'>DAA</a>
-					, or <a href='http://youronlinechoices.eu/' target='_blank'>EDAA</a> sites.
+					Or to opt-out, visit the <a href='http://optout.networkadvertising.org/?c=1#!/' target='_blank' style={{color: theme.textLink}}>NAI</a>
+					, <a href='http://optout.aboutads.info/?c=2#!/' target='_blank' style={{color: theme.textLink}}>DAA</a>
+					, or <a href='http://youronlinechoices.eu/' target='_blank' style={{color: theme.textLink}}>EDAA</a> sites.
 				</div>
-				<a class={style.toggleAll} onClick={this.handleToggleAll}>Allow All</a>
+				<a class={style.toggleAll} onClick={this.handleToggleAll} style={{color: theme.primary}}>Allow All</a>
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
@@ -91,13 +92,14 @@ export default class Vendors extends Component {
 								<td>
 									<div class={style.vendorName}>
 										{name}
-										<a href={policyUrl} class={style.policy} target='_blank'><ExternalLinkIcon /></a>
+										<a href={policyUrl} class={style.policy} target='_blank'><ExternalLinkIcon color={theme.textLink} /></a>
 									</div>
 								</td>
 								<td class={style.allowColumn}>
 									{purposeIds.indexOf(selectedPurpose.id) > -1 ?
 										<span class={style.allowSwitch}>
 										Allow <Switch
+											color={theme.primary}
 											dataId={id}
 											isSelected={selectedVendorIds.has(id)}
 											onClick={this.handleSelectVendor}

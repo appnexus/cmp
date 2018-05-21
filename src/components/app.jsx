@@ -48,6 +48,7 @@ export default class App extends Component {
 				/>
 				<Popup store={store}
 					   onSave={this.onSave}
+					   theme={theme}
 				/>
 			</div>
 		);

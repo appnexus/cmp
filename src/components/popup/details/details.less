@@ -9,20 +9,23 @@
 	.body {
 		flex: 1;
 		min-height: 0;
-		overflow: scroll;
+		overflow: auto;
 		-webkit-overflow-scrolling: touch;
 		padding: 25px;
 	}
+
 	.footer {
 		display: flex;
 		flex: 0 1 70px;
 		border-top: 1px solid @color-border;
 	}
+
 	.save {
 		background: @color-buttonSuccess;
 		border-radius: 0;
 		flex: 1;
 	}
+
 	.back {
 		background: @color-primary;
 		border-radius: 0;
@@ -30,13 +33,13 @@
 	}
 }
 
-
 .title {
 	font-weight: bold;
 	font-size: 22px;
 	padding: 5px 0;
 	color: @color-text;
 }
+
 .description {
 	padding-bottom: 20px;
 	color: @color-textLight;
