@@ -67,6 +67,26 @@ div.vendors {
 		display: flex;
 		align-items: center;
 		font-size: 14px;
+
+		svg {
+			vertical-align: middle;
+		}
+
+		@media @smartphone {
+			font-size: 12px;
+			line-height: 14px;
+		}
+	}
+
+	.allowAllToggle {
+		text-align: right;
+
+		@media @smartphone {
+			font-size: 14px;
+			line-height: 16px;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
 	}
 
 	table {
@@ -82,18 +102,20 @@ div.vendors {
 			min-height: 40px;
 			th {
 				font-weight: bold;
-				white-space: nowrap;
 			}
 			td, th {
 				padding: 5px;
 				font-size: 12px;
-				white-space: nowrap;
+
 				&:first-child {
 					width: 100%;
 					text-align: left;
 				}
+
 				&:last-child {
-					padding-right: 25px;
+					padding-right: 15px;
+					white-space: nowrap;
+					text-align: right;
 				}
 			}
 		}
@@ -102,16 +124,18 @@ div.vendors {
 			background-color: @color-table-background;
 		}
 	}
+
 	.allowColumn {
 		text-align: center;
 	}
+
 	.allowSwitch {
 		display: flex;
 		align-items: center;
 	}
+
 	.policy {
 		margin: 0 5px;
-		display: flex;
 		fill: @color-primary;
 	}
 }

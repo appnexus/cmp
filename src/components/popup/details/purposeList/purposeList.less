@@ -8,6 +8,19 @@
 		li {
 			color: @color-textLight;
 			padding: 5px 0;
+
+			@media @smartphone {
+				font-size: 14px;
+				padding: 2px 0;
+			}
+		}
+	}
+
+	a {
+		@media @smartphone {
+			font-size: 14px;
+			line-height: 16px;
+			display: block;
 		}
 	}
 }

@@ -83,7 +83,7 @@ export default class Vendors extends Component {
 					, <a href='http://optout.aboutads.info/?c=2#!/' target='_blank' style={{color: theme.textLink}}>DAA</a>
 					, or <a href='http://youronlinechoices.eu/' target='_blank' style={{color: theme.textLink}}>EDAA</a> sites.
 				</div>
-				<a class={style.toggleAll} onClick={this.handleToggleAll} style={{color: theme.primary}}>Allow All</a>
+				<a class={style.toggleAll} onClick={this.handleToggleAll} style={{color: theme.primary}} class={style.allowAllToggle}>Toggle All</a>
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
@@ -91,8 +91,9 @@ export default class Vendors extends Component {
 							<tr key={id} class={index % 2 === 0 ? style.even : ''}>
 								<td>
 									<div class={style.vendorName}>
-										{name}
-										<a href={policyUrl} class={style.policy} target='_blank'><ExternalLinkIcon color={theme.textLink} /></a>
+										<a href={policyUrl} class={style.policy} style={{ color: theme.textLink}} target='_blank'>
+											{name} <ExternalLinkIcon color={theme.textLink} />
+										</a>
 									</div>
 								</td>
 								<td class={style.allowColumn}>
