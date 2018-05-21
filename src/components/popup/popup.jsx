@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import style from './popup.less';
 import Details from './details/details';
+import CloseButton from '../closebutton/closebutton';
 
 
 export default class Popup extends Component {
@@ -25,6 +26,7 @@ export default class Popup extends Component {
 					onClick={this.handleClose}
 				/>
 				<div class={style.content}>
+					<CloseButton onClick={this.handleClose} stroke={theme.secondary} fill={theme.background} />
 					<Details
 						onSave={onSave}
 						store={store}
