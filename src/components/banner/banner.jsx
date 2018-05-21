@@ -40,24 +40,9 @@ export default class Banner extends Component {
 		this.props.onShowModal(true);
 	};
 
-	// Ensures the right aligned buttons are centered vertically but won't slide around when options are expanded.
-	calculateButtonOffset = () => {
-		const {messageRef} = this;
-
-		if (messageRef) {
-			const height = messageRef.getBoundingClientRect().height;
-			const buttonOffset = (height - 48) / 2;
-
-			if (!this.state.buttonOffset) {
-				this.setState({buttonOffset});
-			}
-		}
-	};
-
 	render(props, state) {
 		const {isShowing, onSave} = props;
-		const {selectedPanelIndex, buttonOffset, isExpanded} = state;
-		this.calculateButtonOffset();
+		const {selectedPanelIndex, isExpanded} = state;
 
 		return (
 			<div
@@ -116,14 +101,12 @@ export default class Banner extends Component {
 							<a
 								class={style.learnMore}
 								onClick={this.handleLearnMore}
-								style={{top: `${buttonOffset}px`}}
 							>
 								Learn More
 							</a>
 							<a
 								class={style.continue}
 								onClick={onSave}
-								style={{top: `${buttonOffset}px`}}
 							>
 								Continue to site
 							</a>

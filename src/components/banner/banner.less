@@ -118,6 +118,7 @@
 				a {
 					display: block;
 					position: relative;
+					transform: translateY(50% + 24px);
 					line-height: 48px;
 					height: 48px;
 					text-align: center;
@@ -127,7 +128,8 @@
 					flex: 1 0 40%;
 
 					@media @smartphone {
-						top: auto !important;
+						top: auto;
+						transform: none;
 						line-height: 38px;
 						font-size: 14px;
 						height: 38px;
