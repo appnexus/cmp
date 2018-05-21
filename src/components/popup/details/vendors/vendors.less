@@ -3,7 +3,6 @@
 div.vendors {
 	display: flex;
 	flex-direction: column;
-	padding: 2%;
 
 	.header {
 		display: flex;
@@ -13,6 +12,7 @@ div.vendors {
 			align-items: center;
 		}
 	}
+
 	.title {
 		flex: 1;
 		font-size: 24px;
@@ -22,6 +22,7 @@ div.vendors {
 			padding-bottom: 5px;
 		}
 	}
+
 	.button {
 		min-width: 140px;
 		padding: 8px;
@@ -35,12 +36,14 @@ div.vendors {
 			flex: 1;
 		}
 	}
+
 	.options {
 		display: flex;
 		@media @smartphone {
 			width: 100%;
 		}
 	}
+
 	.description {
 		margin: 10px 0;
 		flex-shrink: 0;
@@ -50,24 +53,47 @@ div.vendors {
 		display: flex;
 		flex-shrink: 0;
 	}
+
 	.vendorContent {
 		display: flex;
 	}
+
 	.vendorList {
 		margin-top: 10px;
 	}
+
 	.vendorName {
 		min-height: 30px;
 		display: flex;
 		align-items: center;
 		font-size: 14px;
+
+		svg {
+			vertical-align: middle;
+		}
+
+		@media @smartphone {
+			font-size: 12px;
+			line-height: 14px;
+		}
 	}
+
+	.allowAllToggle {
+		text-align: right;
+
+		@media @smartphone {
+			font-size: 14px;
+			line-height: 16px;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+	}
+
 	table {
 		width: 100%;
 		border-collapse: collapse;
 
 		thead tr {
-			background-color: @color-table-background;
 			border: 1px solid @color-border;
 			font-size: 12px;
 		}
@@ -76,18 +102,20 @@ div.vendors {
 			min-height: 40px;
 			th {
 				font-weight: bold;
-				white-space: nowrap;
 			}
 			td, th {
 				padding: 5px;
 				font-size: 12px;
-				white-space: nowrap;
+
 				&:first-child {
 					width: 100%;
 					text-align: left;
 				}
+
 				&:last-child {
-					padding-right: 25px;
+					padding-right: 15px;
+					white-space: nowrap;
+					text-align: right;
 				}
 			}
 		}
@@ -96,16 +124,18 @@ div.vendors {
 			background-color: @color-table-background;
 		}
 	}
+
 	.allowColumn {
 		text-align: center;
 	}
+
 	.allowSwitch {
 		display: flex;
 		align-items: center;
 	}
+
 	.policy {
 		margin: 0 5px;
-		display: flex;
 		fill: @color-primary;
 	}
 }

@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import style from './banner.less';
 import Label from '../label/label';
-import Panel from '../panel/panel';
 import ChevronIcon from '../chevronicon/chevronicon';
 
 class LocalLabel extends Label {
@@ -12,8 +11,6 @@ class LocalLabel extends Label {
 
 const PANEL_COLLECTED = 0;
 const PANEL_PURPOSE = 1;
-
-const BANNER_OFFSET = 20;
 
 export default class Banner extends Component {
 
@@ -43,86 +40,96 @@ export default class Banner extends Component {
 		this.props.onShowModal(true);
 	};
 
-	calculateBannerHeight = () => {
-		const {isExpanded} = this.state;
-		const {isShowing} = this.props;
-		const {bannerRef, messageRef} = this;
-		if (bannerRef) {
-			const bannerHeight = bannerRef.getBoundingClientRect().height;
-			const messageHeight = messageRef.getBoundingClientRect().height;
-			let bannerBottom = 0;
-			if (!isExpanded && isShowing) {
-				bannerBottom = messageHeight - bannerHeight;
-			}
-			else if (!isShowing) {
-				bannerBottom = -bannerHeight - BANNER_OFFSET;
-			}
-
-			if (bannerBottom !== this.state.bannerBottom) {
-				this.setState({bannerBottom});
-			}
-		}
-	};
-
 	render(props, state) {
-		const {isShowing, onSave} = props;
-		const {selectedPanelIndex, bannerBottom, isExpanded} = state;
-		this.calculateBannerHeight();
+		const {isShowing, onSave, theme} = props;
+		const {selectedPanelIndex, isExpanded} = state;
 
 		return (
 			<div
 				ref={el => this.bannerRef = el}
-				class={style.banner}
-				style={{bottom: `${bannerBottom}px`}}
+				class={[style.banner, !isShowing ? style.hidden : ''].join(' ')}
+				style={{boxShadow: `0px 0px 5px ${theme.primary}`, backgroundColor: theme.background, color: theme.textLight}}
 			>
 				<div class={style.content}>
 					<div
 						class={style.message}
 						ref={el => this.messageRef = el}
 					>
-						<div class={style.title}>
-						Ads help us run this site
-						</div>
-						When you visit our site, pre-selected companies may access and use certain information on your device to serve relevant ads or personalized content.
-
 						<div class={style.info}>
-							<a onClick={this.handleInfo(PANEL_COLLECTED)}>
-								<ChevronIcon class={[style.expand, selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : ''].join(' ')}  />
-							</a>Information that may be used.
-							<a onClick={this.handleInfo(PANEL_PURPOSE)}>
-								<ChevronIcon class={[style.expand, selectedPanelIndex === PANEL_PURPOSE && isExpanded ? style.expanded : ''].join(' ')}  />
+							<div
+								class={style.title}
+								style={{color: theme.text}}
+							>
+								Ads help us run this site
+							</div>
+							When you visit our site, pre-selected companies may access and use certain information on your device to serve relevant ads or personalized content.
+
+							<div class={style.options}>
+								<div class={[style.option, selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : ''].join(' ')}>
+									<a
+										onClick={this.handleInfo(PANEL_COLLECTED)}
+										style={{color: theme.textLink}}
+									>
+										<ChevronIcon />
+										Information that may be used.
+									</a>
+
+									<div
+										class={style.optionDetails}
+										style={{color: theme.textLight}}
+									>
+										<ul>
+											<li>Type of browser and its settings</li>
+											<li>Information about the device's operating system</li>
+											<li>Cookie information</li>
+											<li>Information about other identifiers assigned to the device</li>
+											<li>The IP address from which the device accesses a client's website or mobile application</li>
+											<li>Information about the user's activity on that device, including web pages and mobile apps visited or used</li>
+											<li>Information about the geographic location of the device when it accesses a website or mobile application</li>
+										</ul>
+									</div>
+								</div>
+								<div class={[style.option, selectedPanelIndex === PANEL_PURPOSE && isExpanded ? style.expanded : ''].join(' ')}>
+									<a
+										onClick={this.handleInfo(PANEL_PURPOSE)}
+										style={{color: theme.textLink}}
+									>
+										<ChevronIcon />
+										Purposes for storing information.
+									</a>
+
+									<div
+										class={style.optionDetails}
+										style={{color: theme.textLight}}
+									>
+										<ul>
+											<li>Storage and access of information</li>
+											<li>Ad selection and delivery</li>
+											<li>Content selection and delivery</li>
+											<li>Personalization</li>
+											<li>Measurement</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class={style.consent}>
+							<a
+								class={style.learnMore}
+								onClick={this.handleLearnMore}
+								style={{color: theme.primary, borderColor: theme.primary}}
+							>
+								Learn More
 							</a>
-							Purposes for storing information.
-							<a onClick={this.handleLearnMore}>Learn More</a>
-							<a onClick={onSave}>Continue to site</a>
+							<a
+								class={style.continue}
+								onClick={onSave}
+								style={{backgroundColor: theme.primary, borderColor: theme.primary, color: theme.primaryText}}
+							>
+								Continue to site
+							</a>
 						</div>
 					</div>
-					<Panel
-						selectedIndex={selectedPanelIndex}
-						class={style.infoExpanded}>
-						<div class={style.infoExpanded}>
-							Information that may be used:
-							<ul>
-								<li>Type of browser and its settings</li>
-								<li>Information about the device's operating system</li>
-								<li>Cookie information</li>
-								<li>Information about other identifiers assigned to the device</li>
-								<li>The IP address from which the device accesses a client's website or mobile application</li>
-								<li>Information about the user's activity on that device, including web pages and mobile apps visited or used</li>
-								<li>Information about the geographic location of the device when it accesses a website or mobile application</li>
-							</ul>
-						</div>
-						<div class={style.infoExpanded}>
-							How information may be used:
-							<ul>
-								<li>Storage and access of information</li>
-								<li>Ad selection and delivery</li>
-								<li>Content selection and delivery</li>
-								<li>Personalization</li>
-								<li>Measurement</li>
-							</ul>
-						</div>
-					</Panel>
 				</div>
 			</div>
 		);

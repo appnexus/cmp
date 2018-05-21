@@ -20,25 +20,26 @@ export default class PurposeList extends Component {
 
 	render(props, state) {
 		const {
-			onBack
+			onBack,
+			theme,
 		} = props;
 
 		return (
 			<div class={style.purposeList}>
 				<div class={style.header}>
-					<div class={detailsStyle.title}>
+					<div class={detailsStyle.title} style={{color: theme.text}}>
 						What information is being used?
 					</div>
 				</div>
-				<div class={detailsStyle.description}>
+				<div class={detailsStyle.description} style={{color: theme.textLight}}>
 					Below is a complete list of the information that may be gathered.
 				</div>
-				<div class={style.infoItems}>
+				<ul class={style.infoItems}>
 					{infoItems.map(item => (
-						<div class={style.infoItem}>{item}</div>
+						<li class={style.infoItem} style={{color: theme.textLight}}>{item}</li>
 					))}
-				</div>
-				<a onClick={onBack}>Customize how this data is used from the previous page</a>
+				</ul>
+				<a onClick={onBack} style={{color: theme.textLink}}>Customize how this data is used from the previous page</a>
 			</div>
 		);
 	}

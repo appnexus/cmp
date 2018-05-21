@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import style from './popup.less';
 import Details from './details/details';
+import CloseButton from '../closebutton/closebutton';
 
 
 export default class Popup extends Component {
@@ -11,7 +12,7 @@ export default class Popup extends Component {
 	};
 
 	render(props, state) {
-		const {store, onSave} = props;
+		const {store, onSave, theme} = props;
 		const {isModalShowing} = store;
 
 		return (
@@ -21,13 +22,16 @@ export default class Popup extends Component {
 			>
 				<div
 					class={style.overlay}
+					style={{background: theme.overlayBackground}}
 					onClick={this.handleClose}
 				/>
 				<div class={style.content}>
+					<CloseButton onClick={this.handleClose} stroke={theme.secondary} fill={theme.background} />
 					<Details
 						onSave={onSave}
 						store={store}
-						onClose={this.handleClose} />
+						onClose={this.handleClose}
+						theme={theme} />
 				</div>
 			</div>
 		);

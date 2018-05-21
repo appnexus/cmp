@@ -4,6 +4,7 @@
 	.even {
 		background: @color-table-background;
 	}
+
 	table {
 		border-collapse: collapse;
 		margin-top: 10px;
@@ -11,17 +12,33 @@
 		tr {
 			td {
 				padding: 10px;
-				white-space: nowrap;
 			}
 		}
 	}
-	.company {
-		display: flex;
-		align-items: center;
+
+	.customize {
+		margin-bottom: 30px;
+		display: block;
+
+		@media @smartphone {
+			font-size: 14px;
+			line-height: 16px;
+		}
 	}
-	.policy {
-		fill: @color-primary;
-		margin: 0 5px;
-		display: flex;
+
+	.company {
+		min-height: 20px;
+		align-items: center;
+		font-size: 14px;
+
+		svg {
+			vertical-align: middle;
+			margin: 0 5px;
+		}
+
+		@media @smartphone {
+			font-size: 12px;
+			line-height: 14px;
+		}
 	}
 }

@@ -25,37 +25,37 @@ export default class VendorList extends Component {
 				purposes,
 				onVendorListClick,
 				onPurposeListClick,
+				theme,
 			} = props;
 
 			return (
 				<div class={style.summary}>
-					<div class={detailsStyle.title}>
-						Learn more about how information is being used?
+					<div class={detailsStyle.title} style={{color: theme.text}}>
+						Learn more about how your information is used.
 					</div>
 					<div class={detailsStyle.description}>
-						We and select companies may access and use your information for the below purposes. You may
-						customize your choices below or continue using our site if you're OK with the purposes.
+						We and pre-selected companies may access and use your information for the following purposes. You can
+						customize your choices below, and continue using our site if you consent to the use of your data for these purposes.
 					</div>
 					<div class={style.purposeItems}>
 						{purposes.map(purposeItem => (
-							<div class={style.purposeItem}>
+							<div class={style.purposeItem} style={{borderColor: theme.divider}}>
 								<span class={style.purposeTitle}>{purposeItem.name}</span>
-								<a class={style.learnMore} onClick={this.handlePurposeItemClick(purposeItem)}>Learn More & Set Preferences</a>
+								<a class={style.learnMore} onClick={this.handlePurposeItemClick(purposeItem)} style={{color: theme.textLink}}>Learn More & Set Preferences</a>
 							</div>
 						))}
 					</div>
-					<div class={detailsStyle.title}>
+					<div class={detailsStyle.title} style={{color: theme.text}}>
 						Who is using this information?
 					</div>
 					<div class={detailsStyle.description}>
-						We and pre-selected companies will use your information. You can see each company in
-						the links above or <a onClick={onVendorListClick}>see the complete list here.</a>
+						We and pre-selected companies will use your information. You can <a onClick={onVendorListClick} style={{color: theme.textLink}}>see the complete list here.</a>
 					</div>
-					<div class={detailsStyle.title}>
+					<div class={detailsStyle.title} style={{color: theme.text}}>
 						What information is being used?
 					</div>
 					<div class={detailsStyle.description}>
-						Different companies use different information, <a onClick={onPurposeListClick}>see the complete list here.</a>
+						Different companies use different information, <a onClick={onPurposeListClick} style={{color: theme.textLink}}>see the complete list here.</a>
 					</div>
 				</div>
 			);
