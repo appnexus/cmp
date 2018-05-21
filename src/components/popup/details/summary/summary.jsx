@@ -30,7 +30,7 @@ export default class VendorList extends Component {
 			return (
 				<div class={style.summary}>
 					<div class={detailsStyle.title}>
-						Learn more about how information is being used?
+						Learn more about how your information is used.
 					</div>
 					<div class={detailsStyle.description}>
 						We and select companies may access and use your information for the below purposes. You may
