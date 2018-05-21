@@ -6,132 +6,182 @@
  */
 export default {
 	en: {
-		intro: {
+		banner: {
 			title: '',
 			description: '',
-			acceptAll: '',
-			rejectAll: '',
-			showPurposes: ''
+			links: {
+				data: {
+					title: '',
+					description: ''
+				},
+				purposes: {
+					title: '',
+					description: ''
+				},
+				manage: '',
+				accept: ''
+			}
+		},
+		summary: {
+			title: '',
+			description: '',
+			who: {
+				title: '',
+				description: ''
+			},
+			what: {
+				title: '',
+				description: ''
+			}
 		},
 		details: {
-			title: '',
 			back: '',
 			save: ''
 		},
 		purposes: {
-			active: '',
-			inactive: '',
-			showVendors: '',
-			cookies: {
-				menu: '',
-				title: '',
-				description: ''
-			},
+			title: '',
+			description: '',
+			back: '',
+			optoutdDescription: ``,
 			purpose1: {
-				description: 'Allow storing or accessing information on a user’s device.'
+				description: `Allow storing or accessing information on a user's device.`
 			},
 			purpose2: {
-				description: `Allow processing of a user’s data to provide and inform personalised advertising (including delivery, measurement, and reporting) based on a user’s preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices  for that purpose.
+				description: `Allow processing of a user's data to provide and inform personalised advertising (including delivery, measurement, and reporting) based on a user's preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices  for that purpose.
 				Will include following Features:
 				<ul>
 					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
-					<li>Linking Devices - allow processing of a user’s data to connect such user across multiple devices.</li>
-					<li>Precise Geographic Location data - allow processing of a user’s precise geographic location data in support of a purpose for which that certain third party has consent.</li>
+					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
+					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
 				</ul>`
 			},
 			purpose3: {
-				description: `Allow processing of a user’s data to deliver content or advertisements and measure the delivery of such content or advertisements, extract insights and generate reports to understand service usage; and/or accessing or storing information on devices for that purpose.  
+				description: `Allow processing of a user's data to deliver content or advertisements and measure the delivery of such content or advertisements, extract insights and generate reports to understand service usage; and/or accessing or storing information on devices for that purpose.
 				Will include following Features:
 				<ul>
 					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
-					<li>Linking Devices - allow processing of a user’s data to connect such user across multiple devices.</li>
-					<li>Precise Geographic Location data - allow processing of a user’s precise geographic location data in support of a purpose for which that certain third party has consent.</li>
+					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
+					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
 				</ul>`
 			},
 			purpose4: {
-				description: `Allow processing of a user’s data to provide and inform personalised content (including delivery, measurement, and reporting) based on a user’s preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices for that purpose.  
+				description: `Allow processing of a user's data to provide and inform personalised content (including delivery, measurement, and reporting) based on a user's preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices for that purpose.
 				Will include following Features:
 				<ul>
 					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
-					<li>Linking Devices - allow processing of a user’s data to connect such user across multiple devices.</li>
-					<li>Precise Geographic Location data - allow processing of a user’s precise geographic location data in support of a purpose for which that certain third party has consent.</li>
+					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
+					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
 				</ul>`
-			},
-			customPurpose1: {
-				menu: '',
-				title: '',
-				description: ''
 			}
 		},
 		vendors: {
 			title: '',
-			rejectAll: '',
-			acceptAll: '',
-			company: '',
-			offOn: '',
 			description: '',
-			moreChoices: ''
-		},
-		footer: {
-			message: '',
-			consentLink: ''
+			accept: '',
+			acceptAll: '',
+			optOut: '',
+			back : ''
 		}
 	},
-	de: {
-		intro: {
-			title: 'Diese Website verwendet Cookies',
-			description: 'Wir und unsere Partner verwenden sogenannte Cookies (kleine Textdateien) im Webbrowser um zu verstehen, was unsere Besucher interessiert und entsprechend relevante Inhalte und Werbung anbieten zu können. Zukünftig benötigen wir wahrscheinlich ihr/euer Einverständnis dazu. Ein Beispiel, wie dies aussehen könnte, finden sie/findet ihr unter dieser Erklärung ',
-			acceptAll: 'Alle Cookies akzeptieren',
-			rejectAll: 'Alle Cookies ablehnen',
-			showPurposes: 'Verwendungszwecke zeigen'
+	fr: {
+		banner: {
+			title: 'Les cookies nous aident à vous délivrer un service de qualité.',
+			description: 'Nos partenaires et nous-même utilisons les cookies afin de proposer du contenu et de la publicité pertinents.',
+			links: {
+				data: {
+					title: 'Données utilisées',
+					description: `Données pouvant être utilisées:
+								<ul>
+									<li>Données sur le navigateur utilisé</li>
+									<li>Données sur le systeme d'exploitation utilisé</li>
+									<li>Données des cookies</li>
+									<li>Données spécifiques au terminal (ordinateur de bureau, mobile...)</li>
+									<li>Adresse IP</li>
+									<li>Données de navigation (pages visitées)</li>
+									<li>Données de géolocalisation</li>
+								</ul>`
+				},
+				purposes: {
+					title: 'Utilisation des données',
+					description: `A quoi servent ces données:
+								<ul>
+									<li>Stockage et accès à ces données</li>
+									<li>Publicités personnalisées</li>
+									<li>Contenus personnalisés</li>
+									<li>Mesure d'audience</li>
+								</ul>`
+				},
+				manage: 'Préférences',
+				accept: 'Continuer'
+			}
+		},
+		summary: {
+			title: 'Comment sont utilisées mes données ?',
+			description: 'Nos partenaires et nous-même utilisons les cookies (petits fichiers texte) du navigateur afin de comprendre les centres d\'intérêt de nos visiteurs et ainsi leur proposer du contenu et de la publicité pertinents. Désormais, nous avons besoin de votre consentement.',
+			detailLink: 'Informations et configuration',
+			who: {
+				title: 'Qui utilise mes données ?',
+				description: `Seulement nos partenaires et nous-même pouvons utiliser vos données. 
+					Vous pouvez personnaliser vos choix ci-dessus ou continuer à utiliser notre site si vous êtes d'accord.`,
+				link: 'Voir la liste complète de nos partenaires'
+			},
+			what: {
+				title: 'Quelles données sont utilisées ?',
+				description: 'Chaque partenaire utilise différemment vos données.',
+				link: 'Voir la liste complète des données utilisées'
+			}
 		},
 		details: {
-			title: 'Datenschutzeinstellungen',
-			back: 'Abbrechen',
-			save: 'Sichern und Beenden'
+			back: 'Retour',
+			save: 'Valider et continuer sur le site'
 		},
 		purposes: {
-			active: 'Aktiv',
-			inactive: 'Inaktiv',
-			showVendors: '',
-			cookies: {
-				menu: 'Wie wir Cookies einsetzen',
-				title: 'Diese Website verwendet Cookies',
-				description: 'Unsere Partner und wir setzen Cookies (kleine Textdateien) und sammeln Informationen während des Surfens im Web in diesem Browser. Dies dient dazu zu verstehen, was unsere Besucher interessiert und entsprechend relevante Inhalte und Werbung anbieten zu können.'
-			},
+			title: 'Données collectées',
+			description: 'Ci-dessous la liste des données pouvant être collectées :',
+			back: 'Configurer comment ces données sont utilisées',
+			optoutdDescription: '',
+			items: `<ul>
+						<li>Type de navigateur et son paramétrage</li>
+						<li>Informations sur le système d'exploitation</li>
+						<li>Données des cookies</li>
+						<li>Informations sur l'appareil utilisé</li>
+						<li>L'adresse IP à partir de laquelle l'appareil accède au site Web</li>
+						<li>Informations sur l'activité de l'utilisateur sur cet appareil, y compris les pages Web visitées</li>
+						<li>Informations de géolocalisation de l'appareil lorsqu'il accède au site Web</li>
+					</ul>`,
 			purpose1: {
-				menu: 'Zugriff auf ein Gerät',
-				title: 'Zugriff auf ein Gerät',
-				description: 'Die Erlaubnis zum Speichern und Abrufen von Informationen auf dem Gerät eines Website-Besuchers.Das ist notwendig, um Cookies im Web-Browser zu speichern und zur Anzeige relevanter Informationen und Werbung abrufen zu können.'
+				menu: 'Stockage d\'informations et accès',
+				title: 'Stockage d\'informations et accès',
+				description: 'Autoriser le stockage d’informations ou l’accès à des informations déjà stockées sur votre appareil, telles que des identifiants publicitaires, des identifiants de dispositif, des cookies et des technologies similaires.'
 			},
 			purpose2: {
-				menu: 'Persönlich angepaßte Werbung',
-				title: 'Persönlich angepaßte Werbung',
-				description: 'Die Erlaubnis, Besucherdaten so zu verarbeiten und/oder zu speichern und abzurufen, dass persönlich angepaßte Werbung angeboten und angezeigt werden kann (dies umfaßt die Auslieferung, Messung und die Erstellung von Berichten darüber). Dies erfolgt auf der Basis bekannter Präferenzen oder Interessen, oder durch das Schließen auf Präferenzen oder Interessen durch die Erfassung von Daten auch über verschiedene Websites, Apps oder Geräte hinweg zu diesem Zweck.'
+				menu: 'Personnalisation',
+				title: 'Personnalisation',
+				description: 'Autoriser la collecte et le traitement d’informations sur votre utilisation de ce service pour ensuite personnaliser la publicité et/ou le contenu qui vous sont proposés dans d’autres contextes, tels que sur d’autres sites ou applications, au fil du temps. En règle générale, le contenu du site ou de l’application est utilisé pour déterminer vos centres d’intérêt et permettent de déterminer le choix de la publicité et/ou du contenu.'
 			},
 			purpose3: {
-				menu: 'Analysen',
-				title: 'Analysen',
-				description: 'Die Erlaubnis, Besucherdaten zur Anzeige von Inhalten oder Werbung zu verarbeiten, und zur Messung der Auslieferung solcher Inhalte oder Werbung. Umfasst ist die Gewinnung von Erkenntnissen und die Generierung von Berichten um die Nutzung des angebotenen Service zu verstehen, und/oder das Abrufen oder Speichern von Informationen auf Geräten zu diesem Zweck.'
+				menu: 'Sélection d\'annonces, diffusion, rapport',
+				title: 'Sélection d\'annonces, diffusion, rapport',
+				description: 'Autoriser le traitement des données d\'un utilisateur pour fournir du contenu ou des publicités et mesurer la diffusion de ces contenus ou publicités, extraire des informations et générer des rapports pour comprendre l\'utilisation des services; et / ou accéder ou stocker des informations sur des dispositifs à cette fin. Inclura les caractéristiques suivantes:'
 			},
 			purpose4: {
-				menu: 'Persönlich angepasste Inhalte',
-				title: 'Persönlich angepasste Inhalte',
-				description: 'Die Erlaubnis, Besucherdaten zur Anzeige von personalisierten Inhalten zu verarbeiten, und zur Messung der Auslieferung. Umfasst ist die Gewinnung von Erkenntnissen darüber und die Generierung von Berichten dazu. Dies erfolgt auf der Basis bekannter Präferenzen oder Interessen, oder durch das Schließen auf Präferenzen oder Interessen durch die Erfassung von Daten auch über verschiedene Websites, Apps oder Geräte hinweg zu diesem Zweck.'
+				menu: 'Sélection de contenu, diffusion, rapport',
+				title: 'Sélection de contenu, diffusion, rapport',
+				description: 'Autoriser le traitement des données d\'un utilisateur pour la création de contenu personnalisé (y compris la diffusion, l\'analyse et la création de rapports) en fonction des préférences ou des intérêts d\'un utilisateur connus ou inférer à partir de données collectées sur plusieurs sites, applications ou appareils; et / ou accéder ou stocker des informations sur des dispositifs à cette fin. Inclura les caractéristiques suivantes:'
+			},
+			purpose5: {
+				menu: 'Mesures',
+				title: 'Mesures',
+				description: 'Autoriser la collecte d’informations sur votre utilisation du contenu et la combinaison avec des informations précédemment collectées, utilisées pour mesurer, comprendre et rendre compte de votre utilisation du service. Cela n’inclut pas la personnalisation, la collecte d’informations sur votre utilisation de ce service pour personnaliser ultérieurement le contenu et/ou la publicité dans d’autres contextes, par exemple sur d’autres services, tels que des sites ou des applications.'
 			}
 		},
 		vendors: {
-			title: 'Unsere Partner',
-			rejectAll: 'Alle ablehnen',
-			acceptAll: 'Alle akzeptieren',
-			company: 'Unternehmen',
-			offOn: 'Aus/An',
-			description: 'Helfen Sie uns, Ihnen einen besseren Service zu bieten! Unsere Partner verwenden Cookies Ihres Browsers, um quer durch das Web zu verstehen, was Sie interessiert und Ihnen entsprechend relevante Inhalte und Werbung anzubieten.',
-			moreChoices: 'Weitere Auswahlmöglichkeiten'
-		},
-		footer: {
-			message: 'Du kannst deine Datenschutz-Einstellungen bearbeiten',
-			consentLink: 'hier'
+			title: 'Nos partenaires',
+			description: 'Aidez-nous à vous fournir une meilleure expérience en ligne! Nos partenaires utilisent des cookies et collectent des informations à partir de votre navigateur sur le Web pour vous fournir du contenu, diffuser des publicités pertinentes et analyser les audiences Web.',
+			accept: 'Accepter',
+			acceptAll: 'Accepter tout',
+			optOut: '',
+			back : 'Configurer comment ces sociétés récupèrent mes données'
 		}
 	}
 };

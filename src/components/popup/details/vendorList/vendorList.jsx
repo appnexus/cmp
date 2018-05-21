@@ -2,6 +2,13 @@ import { h, Component } from 'preact';
 import style from './vendorList.less';
 import detailsStyle from '../details.less';
 import ExternalLinkIcon from '../../../externallinkicon/externallinkicon';
+import Label from "../../../label/label";
+
+class LocalLabel extends Label {
+	static defaultProps = {
+		prefix: 'vendors'
+	};
+}
 
 export default class VendorList extends Component {
 	constructor(props) {
@@ -23,13 +30,13 @@ export default class VendorList extends Component {
 			<div class={style.vendorList}>
 				<div class={style.header}>
 					<div class={detailsStyle.title}>
-						Who is using this information?
+						<LocalLabel localizeKey='title'>Who is using this information?</LocalLabel>
 					</div>
 				</div>
 				<div class={detailsStyle.description}>
-					Here is the complete list of compnaies who will use your information. Please view their privacy policy for more details.
+					<LocalLabel localizeKey='description'>Here is the complete list of companies who will use your information. Please view their privacy policy for more details.</LocalLabel>
 				</div>
-				<a onClick={onBack}>Customize how these companies use data from the previous page</a>
+				<a onClick={onBack}><LocalLabel localizeKey='back'>Customize how these companies use data from the previous page</LocalLabel></a>
 				<table>
 					{vendors.map(({name, policyUrl}, index) => (
 						<tr class={index % 2 === 0 ? style.even : style.odd}>
