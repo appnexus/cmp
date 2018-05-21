@@ -41,13 +41,14 @@ export default class Banner extends Component {
 	};
 
 	render(props, state) {
-		const {isShowing, onSave} = props;
+		const {isShowing, onSave, theme} = props;
 		const {selectedPanelIndex, isExpanded} = state;
 
 		return (
 			<div
 				ref={el => this.bannerRef = el}
 				class={style.banner}
+				style={{boxShadow: `0px 0px 5px ${theme.primary}`, backgroundColor: theme.background, color: theme.textLight}}
 			>
 				<div class={style.content}>
 					<div
@@ -55,19 +56,28 @@ export default class Banner extends Component {
 						ref={el => this.messageRef = el}
 					>
 						<div class={style.info}>
-							<div class={style.title}>
-							Ads help us run this site
+							<div
+								class={style.title}
+								style={{color: theme.text}}
+							>
+								Ads help us run this site
 							</div>
 							When you visit our site, pre-selected companies may access and use certain information on your device to serve relevant ads or personalized content.
 
 							<div class={style.options}>
 								<div class={[style.option, selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : ''].join(' ')}>
-									<a onClick={this.handleInfo(PANEL_COLLECTED)}>
+									<a
+										onClick={this.handleInfo(PANEL_COLLECTED)}
+										style={{color: theme.secondary}}
+									>
 										<ChevronIcon />
 										Information that may be used.
 									</a>
 
-									<div class={style.optionDetails}>
+									<div
+										class={style.optionDetails}
+										style={{color: theme.secondaryText}}
+									>
 										<ul>
 											<li>Type of browser and its settings</li>
 											<li>Information about the device's operating system</li>
@@ -80,12 +90,18 @@ export default class Banner extends Component {
 									</div>
 								</div>
 								<div class={[style.option, selectedPanelIndex === PANEL_PURPOSE && isExpanded ? style.expanded : ''].join(' ')}>
-									<a onClick={this.handleInfo(PANEL_PURPOSE)}>
+									<a
+										onClick={this.handleInfo(PANEL_PURPOSE)}
+										style={{color: theme.secondary}}
+									>
 										<ChevronIcon />
 										Purposes for storing information.
 									</a>
 
-									<div class={style.optionDetails}>
+									<div
+										class={style.optionDetails}
+										style={{color: theme.secondaryText}}
+									>
 										<ul>
 											<li>Storage and access of information</li>
 											<li>Ad selection and delivery</li>
@@ -101,12 +117,14 @@ export default class Banner extends Component {
 							<a
 								class={style.learnMore}
 								onClick={this.handleLearnMore}
+								style={{color: theme.primary, borderColor: theme.primary}}
 							>
 								Learn More
 							</a>
 							<a
 								class={style.continue}
 								onClick={onSave}
+								style={{backgroundColor: theme.primary, borderColor: theme.primary, color: theme.primaryText}}
 							>
 								Continue to site
 							</a>
