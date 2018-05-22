@@ -47,7 +47,7 @@ export default class Setup extends Component {
 					</p>
 					<p>
 						<span class={style.action}>NOTE:</span> This is an example of how a CMP can function wrapped
-						up into a single script.  This should NOT be used on an actual site.  Please refer to the <a href='/#setup'>setup</a> page
+						up into a single script.  This should NOT be used on an actual site.  Please refer to the <Link to='/setup'>setup</Link> page
 						to see how to configure and install this CMP.
 					</p>
 					<CodeMirror
@@ -100,7 +100,7 @@ export default class Setup extends Component {
 						https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework</a>.
 					</p>
 					<p>
-						<span class={style.action}>NOTE:</span> IDs listed in the <a href='#/config'>config</a> under <span className={style.highlight}>allowedVendorIds</span>will override this list.
+						<span class={style.action}>NOTE:</span> IDs listed in the <Link to='/config'>config</Link> under <span className={style.highlight}>allowedVendorIds</span>will override this list.
 					</p>
 				</section>
 				<section>
