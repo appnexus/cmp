@@ -135,7 +135,7 @@ export default class Cmp {
 			this.openConsentTool = true;
 			this.notify('openConsentTool', { section: 'intro' });
 
-			callback();
+			callback(true);
 		},
 
 		/**
@@ -148,7 +148,7 @@ export default class Cmp {
 			this.openConsentTool = true;
 			this.notify('openConsentTool', { section: 'details' });
 
-			callback();
+			callback(true);
 		}
 	};
 

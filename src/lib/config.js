@@ -13,7 +13,8 @@ const defaultConfig = {
 	getConsentData: null,
 	setConsentData: null,
 	legIntPurposeIds: [],
-	purposeGroups: []
+	purposeGroups: [],
+	autoDisplay: true
 };
 
 class Config {
