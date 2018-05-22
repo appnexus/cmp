@@ -131,7 +131,11 @@ export default class Cmp {
 		showConsentTool: (_, callback = () => {}) => {
 			this.store.toogleDetailViewAsDefault(false);
 			this.store.toggleConsentToolShowing(true);
-			callback(true);
+
+			this.openConsentTool = true;
+			this.notify('openConsentTool', { section: 'intro' });
+
+			callback();
 		},
 
 		/**
@@ -142,9 +146,9 @@ export default class Cmp {
 			this.store.toggleConsentToolShowing(true);
 
 			this.openConsentTool = true;
-			this.notify('openConsentTool');
+			this.notify('openConsentTool', { section: 'details' });
 
-			callback(true);
+			callback();
 		}
 	};
 
