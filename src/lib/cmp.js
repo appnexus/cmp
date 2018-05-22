@@ -123,30 +123,20 @@ export default class Cmp {
 
 		/**
 		 * Trigger the consent tool UI to be shown
-		 * When autoDisplay is set false does not show the consent tool and Callback call with false
 		 */
 		showConsentTool: (_, callback = () => {}) => {
-			if (config.autoDisplay) {
-				this.store.toogleDetailViewAsDefault(false)
-				this.store.toggleConsentToolShowing(true)
-				callback(true);
-			} else {
-				callback(false);
-			}
+			this.store.toogleDetailViewAsDefault(false);
+			this.store.toggleConsentToolShowing(true);
+			callback(true);
 		},
 
 		/**
 		 * Trigger the consent tool UI to be shown on Detail View
-		 * When autoDisplay is set false does not show the consent tool and Callback call with false
 		 */
 		showConsentDetailView: (_, callback = () => {}) => {
-			if (config.autoDisplay) {
-				this.store.toogleDetailViewAsDefault(true)
-				this.store.toggleConsentToolShowing(true)
+			this.store.toogleDetailViewAsDefault(true);
+			this.store.toggleConsentToolShowing(true);
 				callback(true);
-			} else {
-				callback(false);
-			}
 		}
 	};
 
