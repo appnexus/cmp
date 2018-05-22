@@ -10,6 +10,7 @@ export default class Cmp {
 	constructor(store) {
 		this.isLoaded = false;
 		this.cmpReady = false;
+		this.openConsentTool = false;
 		this.eventListeners = {};
 		this.store = store;
 		this.processCommand.receiveMessage = this.receiveMessage;
@@ -95,6 +96,9 @@ export default class Cmp {
 			if (event === 'cmpReady' && this.cmpReady) {
 				callback({event});
 			}
+			if (event === 'openConsentTool' && this.openConsentTool) {
+				callback({event});
+			}
 		},
 
 		/**
@@ -127,7 +131,11 @@ export default class Cmp {
 		showConsentTool: (_, callback = () => {}) => {
 			this.store.toogleDetailViewAsDefault(false);
 			this.store.toggleConsentToolShowing(true);
-			callback(true);
+
+			this.openConsentTool = true;
+			this.notify('openConsentTool', { section: 'intro' });
+
+			callback();
 		},
 
 		/**
@@ -136,7 +144,11 @@ export default class Cmp {
 		showConsentDetailView: (_, callback = () => {}) => {
 			this.store.toogleDetailViewAsDefault(true);
 			this.store.toggleConsentToolShowing(true);
-				callback(true);
+
+			this.openConsentTool = true;
+			this.notify('openConsentTool', { section: 'details' });
+
+			callback();
 		}
 	};
 
