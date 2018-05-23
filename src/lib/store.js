@@ -59,6 +59,7 @@ export default class Store {
 
 		this.isConsentToolShowing = false;
 		this.isFooterShowing = false;
+		this.isDetailViewAsDefault = false;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);
@@ -344,6 +345,11 @@ export default class Store {
 		this.isConsentToolShowing = false;
 		this.storeUpdate();
 	};
+
+	toogleDetailViewAsDefault = (isDefault) => {
+		this.isDetailViewAsDefault = typeof isDefault === 'boolean' ? isDefault : !this.isDetailViewAsDefault;
+		this.storeUpdate();
+	}
 
 	updateVendorList = vendorList => {
 
