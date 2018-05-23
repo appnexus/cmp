@@ -20,6 +20,7 @@ import PublisherCookieEncoder from '../tools/publisherCookieEncoder';
 import VendorCookieDecoder from '../tools/vendorCookieDecoder';
 import PublisherCookieDecoder from '../tools/publisherCookieDecoder';
 import VendorListBuilder from '../tools/vendorListBuilder/vendorListBuilder';
+import VendorCookieInspector from '../tools/vendorCookieInspector/vendorCookieInspector';
 import Intro from '../intro/intro';
 import Configration from '../docs/configuration';
 import QuickStart from '../docs/quickstart';
@@ -76,7 +77,8 @@ export const navItems = [
 			{to: '/tools/vendor-cookie-encoder', title: 'Encode Vendor Cookie', component: VendorCookieEncoder},
 			{to: '/tools/vendor-cookie-decoder', title: 'Decode Vendor Cookie', component: VendorCookieDecoder},
 			{to: '/tools/publisher-cookie-encoder', title: 'Encode Publisher Cookie', component: PublisherCookieEncoder},
-			{to: '/tools/publisher-cookie-decoder', title: 'Decode Publisher Cookie', component: PublisherCookieDecoder}
+			{to: '/tools/publisher-cookie-decoder', title: 'Decode Publisher Cookie', component: PublisherCookieDecoder},
+			{to: '/tools/vendor-cookie-inspector', title: 'Vendor Cookie Inspector', component: VendorCookieInspector}
 		]
 	}
 ];

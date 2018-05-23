@@ -1,0 +1,77 @@
+@import '../../../style/variables';
+
+.vendorInspector {
+	width: 100%;
+
+	.pageTitle {
+		font-size: 1.2em;
+	}
+
+	.sectionTitle {
+		font-size: 1.1em;
+		display: block;
+		margin: 15px 0 5px 0;
+	}
+
+	.cookieInput {
+		width: 100%;
+		padding: 8px;
+		border-radius: 4px;
+		box-sizing: border-box;
+	}
+
+	.cookieName {
+		font-weight: bold;
+		margin: 15px 0 5px 0;
+	}
+	.cookieValue {
+		padding: 5px;
+		border: 1px solid @color-light-gray;
+	}
+
+	.error {
+		margin-top: 20px;
+		text-align: center;
+	}
+
+	.vendorListTitle {
+		font-size: 1.1em;
+		margin: 10px 0;
+	}
+
+	.vendorList {
+		display: flex;
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			tr td {
+				padding: 2px;
+			}
+		}
+
+		.odd {
+			background: @color-background-gray;
+		}
+
+		.allowedVendors {
+			flex: 1;
+		}
+		.disallowedVendors {
+			flex: 1;
+			border-left: 1px solid @color-light-gray;
+		}
+		.purposes {
+			flex: 1;
+			border-left: 1px solid @color-light-gray;
+		}
+		.vendorHeader {
+			font-weight: bold;
+			background: @color-background-gray;
+			padding: 5px;
+		}
+		.empty {
+			margin: 10px 5px;
+		}
+	}
+}
