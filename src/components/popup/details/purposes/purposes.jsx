@@ -81,7 +81,8 @@ export default class Purposes extends Component {
 			purposes,
 			customPurposes,
 			selectedPurposeIds,
-			selectedCustomPurposeIds
+			selectedCustomPurposeIds,
+			theme,
 		} = props;
 
 		const {selectedPurposeIndex} = state;
@@ -107,7 +108,7 @@ export default class Purposes extends Component {
 					{purposeItems.map(({title, description}) => (
 						<div class={style.purposeItem}>
 							<span class={style.purposeTitle}>{title}</span>
-							<a class={style.learnMore}>Learn More & Set Preferences</a>
+							<a class={style.learnMore} style={{color: theme.primary}}>Learn More & Set Preferences</a>
 						</div>
 					))}
 				</div>
@@ -115,13 +116,13 @@ export default class Purposes extends Component {
 					Who is using this information?
 				</div>
 				<div className={style.description}>
-					We and pre-selected companies will use your information. You can see each company in the links above or <a>see the complete list here.</a>
+					We and pre-selected companies will use your information. You can see each company in the links above or <a style={{color: theme.primary}}>see the complete list here.</a>
 				</div>
 				<div className={style.title}>
 					What information is being used?
 				</div>
 				<div className={style.description}>
-					Different companies use different information, <a>see the complete list here.</a>
+					Different companies use different information, <a style={{color: theme.primary}}>see the complete list here.</a>
 				</div>
 			</div>
 		);
