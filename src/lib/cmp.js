@@ -3,6 +3,7 @@ import config from './config';
 import {
 	encodeVendorConsentData
 } from './cookie/cookie';
+const arrayFrom = require('core-js/library/fn/array/from');
 
 export const CMP_GLOBAL_NAME = '__cmp';
 
@@ -175,8 +176,8 @@ export default class Cmp {
 		// Encode the persisted data
 		return persistedVendorConsentData && encodeVendorConsentData({
 			...persistedVendorConsentData,
-			selectedVendorIds: new Set(Array.from(selectedVendorIds).filter(id => allowedVendorIds.has(id))),
-			selectedPurposeIds: new Set(Array.from(selectedPurposeIds).filter(id => allowedPurposeIds.has(id))),
+			selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => allowedVendorIds.has(id))),
+			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds).filter(id => allowedPurposeIds.has(id))),
 			vendorList
 		});
 	};
