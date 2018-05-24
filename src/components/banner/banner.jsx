@@ -104,7 +104,7 @@ export default class Banner extends Component {
                                         style={{color: theme.textLink}}
                                     >
                                         <ChevronIcon/>
-                                        Purposes for storing information.
+                                        <LocalLabel localizeKey='links.purposes.title'>Purposes for storing information.</LocalLabel>
                                     </a>
 
                                     <div
