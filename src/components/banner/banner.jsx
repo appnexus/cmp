@@ -75,27 +75,33 @@ export default class Banner extends Component {
                                     <a onClick={this.handleInfo(PANEL_COLLECTED)} style={{color: theme.textLink}}>
                                         <ChevronIcon/>
                                         <LocalLabel localizeKey='links.data.title'>Information that may be
-                                            used.</LocalLabel>
+                                            used.
+                                        </LocalLabel>
                                     </a>
-
-                                    <LocalLabel localizeKey='links.data.description'>
-                                        Information that may be used:
-                                        <ul>
-                                            <li>Type of browser and its settings</li>
-                                            <li>Information about the device's operating system</li>
-                                            <li>Cookie information</li>
-                                            <li>Information about other identifiers assigned to the device</li>
-                                            <li>The IP address from which the device accesses a client's website or
-                                                mobile application
-                                            </li>
-                                            <li>Information about the user's activity on that device, including web
-                                                pages and mobile apps visited or used
-                                            </li>
-                                            <li>Information about the geographic location of the device when it accesses
-                                                a website or mobile application
-                                            </li>
-                                        </ul>
-                                    </LocalLabel>
+                                    <div
+                                        className={style.optionDetails}
+                                        style={{color: theme.textLight}}
+                                    >
+                                        <LocalLabel localizeKey='links.data.description'>
+                                            Information that may be used:
+                                            <ul>
+                                                <li>Type of browser and its settings</li>
+                                                <li>Information about the device's operating system</li>
+                                                <li>Cookie information</li>
+                                                <li>Information about other identifiers assigned to the device</li>
+                                                <li>The IP address from which the device accesses a client's website or
+                                                    mobile application
+                                                </li>
+                                                <li>Information about the user's activity on that device, including web
+                                                    pages and mobile apps visited or used
+                                                </li>
+                                                <li>Information about the geographic location of the device when it
+                                                    accesses
+                                                    a website or mobile application
+                                                </li>
+                                            </ul>
+                                        </LocalLabel>
+                                    </div>
                                 </div>
                                 <div
                                     class={[style.option, selectedPanelIndex === PANEL_PURPOSE && isExpanded ? style.expanded : ''].join(' ')}>
@@ -104,7 +110,8 @@ export default class Banner extends Component {
                                         style={{color: theme.textLink}}
                                     >
                                         <ChevronIcon/>
-                                        <LocalLabel localizeKey='links.purposes.title'>Purposes for storing information.</LocalLabel>
+                                        <LocalLabel localizeKey='links.purposes.title'>Purposes for storing
+                                            information.</LocalLabel>
                                     </a>
 
                                     <div
