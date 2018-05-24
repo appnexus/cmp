@@ -12,17 +12,28 @@
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
 		padding: 25px;
+
+		@media @smartphone {
+			padding-top: 40px;
+		}
 	}
+
 	.footer {
 		display: flex;
 		flex: 0 1 70px;
 		border-top: 1px solid @color-border;
+
+		@media @smartphone {
+			flex: 0 1 50px;
+		}
 	}
+
 	.save {
 		background: @color-buttonSuccess;
 		border-radius: 0;
 		flex: 1;
 	}
+
 	.back {
 		background: @color-primary;
 		border-radius: 0;
@@ -30,14 +41,23 @@
 	}
 }
 
-
 .title {
 	font-weight: bold;
 	font-size: 22px;
 	padding: 5px 0;
 	color: @color-text;
+
+	@media @smartphone {
+		font-size: 18px;
+	}
 }
+
 .description {
 	padding-bottom: 20px;
 	color: @color-textLight;
+
+	@media @smartphone {
+		font-size: 14px;
+		line-height: 20px;
+	}
 }
