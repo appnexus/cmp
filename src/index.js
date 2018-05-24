@@ -1,4 +1,4 @@
-!Array.reduce &&  require('core-js/fn/array/reduce');
+!Array.reduce && require('core-js/fn/array/reduce');
 !Array.fill && require('core-js/fn/array/fill');
 !Array.map && require('core-js/fn/array/map');
 !Array.forEach && require('core-js/fn/array/for-each');
