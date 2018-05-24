@@ -4,54 +4,165 @@
 	position: fixed;
 	right: 0;
 	left: 0;
-	bottom: -1000px;
+	bottom: 0;
 	z-index: 99999;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	color: @color-textLight;
 	background: white;
-	font-size: 18px;
+	font-size: 16px;
 	max-height: 100%;
-	transition: bottom 0.5s ease-in-out;
+	transition: bottom 0.5s ease-in-out, opacity 0.5s linear;
 
 	box-shadow: 0px 0px 5px @color-primary;
-	padding: 0 20px;
+	padding: 15px 30px;
 
-	a {
-		text-decoration: underline;
-		padding: 0 4px;
+	@media @smartphone {
+		margin-top: -80px;
+		padding: 15px 20px;
+		overflow: auto;
 	}
 
-	.title {
-		font-size: 24px;
-		color: @color-text;
-		padding: 20px 0;
-	}
-	.message {
-		padding: 20px 0;
+	&.hidden {
+		pointer-events: none;
+		bottom: -250px;
+		opacity: 0;
 	}
 
-	.expand {
-		padding: 0;
-		height: 20px;
-		fill: @color-primary;
-		transform: rotate(-90deg);
-		transition: 0.5s ease;
+	.content {
+		.message {
+			display: flex;
 
-		&.expanded {
-			transform: rotate(0deg);
+			@media @smartphone {
+				display: block;
+			}
+
+			.info {
+				flex: 1;
+				line-height: 16px;
+
+				@media @smartphone {
+					font-size: 12px;
+				}
+
+				.title {
+					font-size: 22px;
+					color: @color-text;
+					padding: 15px 0;
+
+					@media @smartphone {
+						font-size: 16px;
+						padding: 5px 0 10px 0;
+					}
+				}
+
+				.options {
+					margin: 15px 0 0 0;
+
+					@media @smartphone {
+						margin: 10px 0 20px 0;
+					}
+
+					.option {
+						margin: 0 20px 6px -2px;
+
+						@media @smartphone {
+							margin: 0 20px 3px -2px;
+						}
+
+						a {
+							text-decoration: none;
+							color: @color-secondary;
+
+							svg {
+								vertical-align: middle;
+								margin-right: 5px;
+								position: relative;
+								top: -1px;
+								transform: rotate(-90deg);
+								transition: 0.5s ease;
+								fill: @color-secondary;
+							}
+						}
+
+						.optionDetails {
+							max-height: 0;
+							overflow: hidden;
+							transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+
+							ul {
+								margin: 5px 0 15px 0;
+								padding: 0 0 0 36px;
+							}
+						}
+
+						&.expanded {
+							a {
+								svg {
+									transform: rotate(0deg);
+								}
+							}
+
+							.optionDetails {
+								max-height: 600px;
+								transition: max-height 1s ease-in-out;
+							}
+						}
+					}
+				}
+			}
+
+			.consent {
+				display: flex;
+				flex: 0;
+				white-space: nowrap;
+				margin-left: 30px;
+
+				@media @smartphone {
+					margin-left: 0;
+				}
+
+				a {
+					display: block;
+					position: relative;
+					transform: translateY(50% + 24px);
+					line-height: 48px;
+					height: 48px;
+					text-align: center;
+					width: 100%;
+					border: 1px solid @color-primary;
+					padding: 0 15px;
+					flex: 1 0 40%;
+
+					@media @smartphone {
+						top: auto;
+						transform: none;
+						line-height: 38px;
+						font-size: 14px;
+						height: 38px;
+					}
+
+					&.learnMore {
+						color: @color-primary;
+					}
+
+					&.continue {
+						margin-left: 10px;
+						background: @color-primary;
+						color: #fff;
+					}
+				}
+			}
 		}
 	}
-	.info {
-		display: flex;
-	}
+
 	.infoExpanded {
-		padding: 0 10px 10px 10px;
-		min-height: 210px;
+		padding: 0 0 30px 0;
+		min-height: 200px;
+
 		ul {
 			margin: 0;
+			padding: 0 0 0 20px;
+			list-style-type: square;
 		}
 	}
 }
