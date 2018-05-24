@@ -35,7 +35,8 @@ export default class App extends Component {
 		const {
 			isModalShowing,
 			isBannerShowing,
-			toggleModalShowing
+			toggleModalShowing,
+			theme
 		} = store;
 
 		return (
@@ -44,9 +45,11 @@ export default class App extends Component {
 						isModalShowing={isModalShowing}
 						onSave={this.onSave}
 						onShowModal={toggleModalShowing}
+						theme={theme}
 				/>
 				<Popup store={store}
 					   onSave={this.onSave}
+					   theme={theme}
 				/>
 			</div>
 		);
