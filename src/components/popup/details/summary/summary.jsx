@@ -35,11 +35,12 @@ export default class VendorList extends Component {
 			purposes,
 			onVendorListClick,
 			onPurposeListClick,
+			theme,
 		} = props;
 
 		return (
 			<div class={style.summary}>
-				<div class={detailsStyle.title}>
+				<div class={detailsStyle.title} style={{color: theme.text}}>
 					<SummaryLabel localizeKey='title'>Learn more about how information is being used?</SummaryLabel>
 				</div>
 				<div class={detailsStyle.description}>
@@ -50,15 +51,15 @@ export default class VendorList extends Component {
 				</div>
 				<div class={style.purposeItems}>
 					{purposes.map((purposeItem, index) => (
-						<div class={style.purposeItem}>
+						<div class={style.purposeItem} style={{borderColor: theme.divider}}>
 							<span class={style.purposeTitle}><PurposesLabel localizeKey={`purpose${purposeItem.id}.menu`}>{purposeItem.name}</PurposesLabel></span>
-							<a class={style.learnMore} onClick={this.handlePurposeItemClick(purposeItem)}>
+							<a class={style.learnMore} onClick={this.handlePurposeItemClick(purposeItem)} style={{color: theme.textLink}}>
 								<SummaryLabel localizeKey='detailLink'>Learn More & Set Preferences</SummaryLabel>
 							</a>
 						</div>
 					))}
 				</div>
-				<div class={detailsStyle.title}>
+				<div class={detailsStyle.title} style={{color: theme.text}}>
 					<SummaryLabel localizeKey='who.title'>Who is using this information?</SummaryLabel>
 				</div>
 				<div class={detailsStyle.description}>
@@ -66,16 +67,16 @@ export default class VendorList extends Component {
 						We and pre-selected companies will use your information. You can see each company in
 						the links above or
 					</SummaryLabel>&nbsp;
-					<a onClick={onVendorListClick}><SummaryLabel localizeKey='who.link'>see the complete list here.</SummaryLabel></a>
+					<a onClick={onVendorListClick} style={{color: theme.textLink}}><SummaryLabel localizeKey='who.link'>see the complete list here.</SummaryLabel></a>
 				</div>
-				<div class={detailsStyle.title}>
+				<div class={detailsStyle.title} style={{color: theme.text}}>
 					<SummaryLabel localizeKey='what.title'>What information is being used?</SummaryLabel>
 				</div>
 				<div class={detailsStyle.description}>
 					<SummaryLabel localizeKey='what.description'>
 						Different companies use different information,
 					</SummaryLabel>&nbsp;
-					<a onClick={onPurposeListClick}><SummaryLabel localizeKey='what.link'>see the complete list here.</SummaryLabel></a>
+					<a onClick={onPurposeListClick} style={{color: theme.textLink}}><SummaryLabel localizeKey='what.link'>see the complete list here.</SummaryLabel></a>
 				</div>
 			</div>
 		);
