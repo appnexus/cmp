@@ -10,6 +10,12 @@ button, input[type=button] {
 		border: none;
 		border-radius: 4px;
 		font-size: 18px;
+
+		@media @smartphone {
+			font-size: 14px;
+			padding: 0;
+		}
+
 		&:hover {
 			color: @color-linkColorHover;
 		}
