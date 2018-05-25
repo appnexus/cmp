@@ -3,7 +3,7 @@ import Promise from 'promise-polyfill';
 import Store from './store';
 import Cmp, { CMP_GLOBAL_NAME } from './cmp';
 import { readVendorConsentCookie, readPublisherConsentCookie, decodeVendorConsentData, decodePublisherConsentData } from './cookie/cookie';
-import { fetchVendorList, fetchPurposeList } from './vendor';
+import { fetchPubVendorList, fetchGlobalVendorList, fetchPurposeList } from './vendor';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
@@ -22,6 +22,7 @@ function readExternalConsentData(config) {
 					try {
 						resolve([
 							data.vendor && decodeVendorConsentData(data.vendor) || undefined,
+							undefined,
 							data.publisher && decodePublisherConsentData(data.publisher) || undefined
 						]);
 					} catch (err) {
@@ -36,9 +37,11 @@ function readExternalConsentData(config) {
 }
 
 function readInternalConsentData() {
-	return readVendorConsentCookie().then(vendorConsentData => {
-		return [vendorConsentData, readPublisherConsentCookie()];
-	});
+	return Promise.all([
+		readVendorConsentCookie(),
+		fetchPubVendorList(),
+		readPublisherConsentCookie()
+	]);
 }
 
 export function init(configUpdates) {
@@ -47,7 +50,13 @@ export function init(configUpdates) {
 
 	// Fetch the current vendor consent before initializing
 	return (config.getConsentData ? readExternalConsentData(config) : readInternalConsentData())
-		.then(([vendorConsentData, publisherConsentData]) => {
+		.then(([vendorConsentData, pubVendorsList, publisherConsentData]) => {
+			const {vendors} = pubVendorsList || {};
+
+			// Check config for allowedVendorIds then the pubVendorList
+			const {allowedVendorIds: configVendorIds} = config;
+			const allowedVendorIds = configVendorIds instanceof Array && configVendorIds.length ? configVendorIds :
+				vendors && vendors.map(vendor => vendor.id);
 
 			// Initialize the store with all of our consent data
 			const store = new Store({
@@ -55,7 +64,9 @@ export function init(configUpdates) {
 				cmpId: CMP_ID,
 				cookieVersion: COOKIE_VERSION,
 				vendorConsentData,
-				publisherConsentData
+				publisherConsentData,
+				pubVendorsList,
+				allowedVendorIds
 			});
 
 			// Pull queued command from __cmp stub
@@ -67,14 +78,14 @@ export function init(configUpdates) {
 			// Expose `processCommand` as the CMP implementation
 			window[CMP_GLOBAL_NAME] = cmp.processCommand;
 
-			// Render the UI
-			const App = require('../components/app').default;
-			render(<App store={store} notify={cmp.notify} />, document.body);
-
 			// Notify listeners that the CMP is loaded
 			log.debug(`Successfully loaded CMP version: ${pack.version}`);
 			cmp.isLoaded = true;
 			cmp.notify('isLoaded');
+
+			// Render the UI
+			const App = require('../components/app').default;
+			render(<App store={store} notify={cmp.notify} />, document.body);
 
 			// Execute any previously queued command
 			cmp.commandQueue = commandQueue;
@@ -82,7 +93,7 @@ export function init(configUpdates) {
 
 			// Request lists
 			return Promise.all([
-				fetchVendorList().then(store.updateVendorList),
+				fetchGlobalVendorList().then(store.updateVendorList),
 				fetchPurposeList().then(store.updateCustomPurposeList)
 			]).then(() => {
 				cmp.cmpReady = true;
@@ -95,5 +106,3 @@ export function init(configUpdates) {
 			log.error('Failed to load CMP', err);
 		});
 }
-
-

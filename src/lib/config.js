@@ -14,7 +14,8 @@ const defaultConfig = {
 	setConsentData: null,
 	legIntPurposeIds: [],
 	purposeGroups: [],
-	autoDisplay: true
+	autoDisplay: true,
+	allowedVendorIds: null
 };
 
 class Config {

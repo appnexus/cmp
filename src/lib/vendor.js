@@ -4,11 +4,21 @@ import config from './config';
 import log from './log';
 import { sendPortalCommand } from './portal';
 
+const PUB_VENDOR_LOCATION = '/.well-known/pubvendors.json';
+
 /**
- * Attempt to load the vendors list from the global location and
- * fallback to portal location.
+ * Fetch the pubvendors.json from the local domain
  */
-function fetchVendorList() {
+function fetchPubVendorList() {
+	return fetch(PUB_VENDOR_LOCATION)
+		.then(res => res.json())
+		.catch(() => {});
+}
+
+/**
+ * Fetch the global vendor list if the location is configured
+ */
+function fetchGlobalVendorList() {
 	const {globalVendorListLocation, storeConsentGlobally, globalConsentLocation} = config;
 	return (globalVendorListLocation ?
 		fetch(globalVendorListLocation) :
@@ -18,7 +28,7 @@ function fetchVendorList() {
 			if (storeConsentGlobally && globalConsentLocation) {
 				return sendPortalCommand({command: 'readVendorList'});
 			}
-			log.error(`Failed to load vendor list from ${globalVendorListLocation}`, err);
+			log.error(`Failed to load global vendor list from ${globalVendorListLocation}`, err);
 		});
 }
 
@@ -35,6 +45,7 @@ function fetchPurposeList() {
 }
 
 export {
-	fetchVendorList,
-	fetchPurposeList,
+	fetchGlobalVendorList,
+	fetchPubVendorList,
+	fetchPurposeList
 };
