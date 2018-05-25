@@ -59,16 +59,15 @@ export function init(configUpdates) {
 			const App = require('../components/app').default;
 			render(<App store={store} notify={cmp.notify} />, document.body);
 
-
-			// Execute any previously queued command
-			cmp.commandQueue = commandQueue;
-			cmp.processCommandQueue();
-
 			// Request lists
 			return Promise.all([
 				fetchGlobalVendorList().then(store.updateVendorList),
 				fetchPurposeList().then(store.updateCustomPurposeList)
 			]).then(() => {
+				// Execute any previously queued command
+				cmp.commandQueue = commandQueue;
+				cmp.processCommandQueue();
+
 				cmp.cmpReady = true;
 				cmp.notify('cmpReady');
 			}).catch(err => {
