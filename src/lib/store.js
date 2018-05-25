@@ -226,6 +226,7 @@ export default class Store {
 
 		// Update version of list to one we are using
 		vendorConsentData.vendorListVersion = vendorListVersion;
+		publisherConsentData.vendorListVersion = vendorListVersion;
 
 		publisherConsentData.created = publisherConsentData.created || now;
 		publisherConsentData.lastUpdated = now;
@@ -236,7 +237,8 @@ export default class Store {
 		// Write publisher cookie if enabled
 		if (config.storePublisherData) {
 			writePublisherConsentCookie({
-				...vendorConsentData, ...publisherConsentData,
+				...vendorConsentData,
+				...publisherConsentData,
 				vendorList,
 				customPurposeList
 			});
