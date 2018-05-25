@@ -19,14 +19,13 @@ export default class Intro extends Component {
 		const {
 			onAcceptAll,
 			onShowPurposes,
-			onClose
 		} = props;
 
 		return (
 			<div class={style.intro}>
 				<CloseButton
 					class={style.close}
-					onClick={onClose}
+					onClick={onAcceptAll}
 				/>
 				<div class={style.title}>
 					<LocalLabel localizeKey='title'>Thanks for visiting</LocalLabel>
