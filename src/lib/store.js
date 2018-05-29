@@ -229,13 +229,15 @@ export default class Store {
 
 		// Update version of list to one we are using
 		vendorConsentData.vendorListVersion = vendorListVersion;
+		publisherConsentData.vendorListVersion = vendorListVersion;
 
 		publisherConsentData.created = publisherConsentData.created || now;
 		publisherConsentData.lastUpdated = now;
 
 		const vendorConsents = {...vendorConsentData, vendorList};
 		const publisherConsents = {
-			...vendorConsentData, ...publisherConsentData,
+			...vendorConsentData,
+			...publisherConsentData,
 			vendorList,
 			customPurposeList
 		};

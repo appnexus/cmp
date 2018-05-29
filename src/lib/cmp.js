@@ -1,7 +1,8 @@
 import log from './log';
 import config from './config';
 import {
-	encodeVendorConsentData
+	encodeVendorConsentData,
+	encodePublisherConsentData
 } from './cookie/cookie';
 const arrayFrom = require('core-js/library/fn/array/from');
 
@@ -23,8 +24,20 @@ export default class Cmp {
 		 * Get all publisher consent data from the data store.
 		 */
 		getPublisherConsents: (purposeIds, callback = () => {}) => {
+			const {
+				persistedPublisherConsentData,
+				persistedVendorConsentData,
+				vendorList,
+				customPurposeList
+			} = this.store;
+
 			const consent = {
-				metadata: this.generateConsentString(),
+				metadata: encodePublisherConsentData({
+					...persistedPublisherConsentData,
+					...persistedVendorConsentData,
+					vendorList,
+					customPurposeList
+				}),
 				gdprApplies: config.gdprApplies,
 				hasGlobalScope: config.storeConsentGlobally,
 				...this.store.getPublisherConsentsObject()
