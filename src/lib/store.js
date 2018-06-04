@@ -337,7 +337,6 @@ export default class Store {
 
 	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
-		this.isConsentToolShowing === true ? document.body.classList.add('cmp') : document.body.classList.remove('cmp');
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
