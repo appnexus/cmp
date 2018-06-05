@@ -283,5 +283,5 @@ export default {
 			optOut: 'Benötigt Opt-Out',
 			back : 'Zurück'
 		}
-	}	
+	}
 };
