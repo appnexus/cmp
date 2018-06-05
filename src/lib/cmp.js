@@ -3,6 +3,7 @@ import config from './config';
 import {
 	encodeVendorConsentData
 } from './cookie/cookie';
+const arrayFrom = require('core-js/library/fn/array/from');
 
 export const CMP_GLOBAL_NAME = '__cmp';
 
@@ -10,6 +11,7 @@ export default class Cmp {
 	constructor(store) {
 		this.isLoaded = false;
 		this.cmpReady = false;
+		this.openConsentTool = false;
 		this.eventListeners = {};
 		this.store = store;
 		this.processCommand.receiveMessage = this.receiveMessage;
@@ -95,6 +97,9 @@ export default class Cmp {
 			if (event === 'cmpReady' && this.cmpReady) {
 				callback({event});
 			}
+			if (event === 'openConsentTool' && this.openConsentTool) {
+				callback({event});
+			}
 		},
 
 		/**
@@ -125,7 +130,25 @@ export default class Cmp {
 		 * Trigger the consent tool UI to be shown
 		 */
 		showConsentTool: (_, callback = () => {}) => {
+			this.store.toogleDetailViewAsDefault(false);
 			this.store.toggleConsentToolShowing(true);
+
+			this.openConsentTool = true;
+			this.notify('openConsentTool', { section: 'intro' });
+
+			callback(true);
+		},
+
+		/**
+		 * Trigger the consent tool UI to be shown on Detail View
+		 */
+		showConsentDetailView: (_, callback = () => {}) => {
+			this.store.toogleDetailViewAsDefault(true);
+			this.store.toggleConsentToolShowing(true);
+
+			this.openConsentTool = true;
+			this.notify('openConsentTool', { section: 'details' });
+
 			callback(true);
 		},
 
@@ -161,8 +184,8 @@ export default class Cmp {
 		// Encode the persisted data
 		return persistedVendorConsentData && encodeVendorConsentData({
 			...persistedVendorConsentData,
-			selectedVendorIds: new Set(Array.from(selectedVendorIds).filter(id => allowedVendorIds.has(id))),
-			selectedPurposeIds: new Set(Array.from(selectedPurposeIds).filter(id => allowedPurposeIds.has(id))),
+			selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => allowedVendorIds.has(id))),
+			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds).filter(id => allowedPurposeIds.has(id))),
 			vendorList
 		});
 	};

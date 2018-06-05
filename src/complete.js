@@ -3,22 +3,23 @@ import 'core-js/fn/array/fill';
 import 'core-js/fn/array/map';
 import 'core-js/fn/array/for-each';
 import 'core-js/fn/array/filter';
-import 'core-js/fn/array/from';
+import 'core-js/fn/set';
 import log from './lib/log';
 import { init } from './lib/init';
 import { CMP_GLOBAL_NAME } from "./lib/cmp";
+import configuration from "./lib/config";
 
 function handleConsentResult(cmp, {vendorListVersion: listVersion} = {}, {created, vendorListVersion} = {}) {
 	if (!created) {
 		log.debug('No consent data found. Showing consent tool');
-		cmp('showConsentTool');
+		configuration.autoDisplay && cmp('showConsentTool');
 	}
 	else if (!listVersion) {
 		log.debug('Could not determine vendor list version. Not showing consent tool');
 	}
 	else if (vendorListVersion !== listVersion) {
 		log.debug(`Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`);
-		cmp('showConsentTool');
+		configuration.autoDisplay && cmp('showConsentTool');
 	}
 	else {
 		log.debug('Consent found. Not showing consent tool. Show footer when not all consents set to true');

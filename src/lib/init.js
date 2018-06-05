@@ -21,8 +21,8 @@ function readExternalConsentData(config) {
 				} else {
 					try {
 						resolve([
-							data.vendor && decodeVendorConsentData(data.vendor) || '',
-							data.publisher && decodePublisherConsentData(data.publisher) || ''
+							data.vendor && decodeVendorConsentData(data.vendor) || undefined,
+							data.publisher && decodePublisherConsentData(data.publisher) || undefined
 						]);
 					} catch (err) {
 						reject(err);

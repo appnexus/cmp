@@ -107,6 +107,11 @@ const events = [
 		result: '{"event":"cmpReady"}'
 	},
 	{
+		name: 'openConsentTool',
+		description: 'Fired when the CMP ConsentTool wants to be opened',
+		result: '{"event":"openConsentTool"}'
+	},
+	{
 		name: 'onSubmit',
 		description: 'Fired when the user submits consent data via the consent tool UI',
 		result: '{"event":"onSubmit"}'

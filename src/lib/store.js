@@ -2,6 +2,7 @@ import { writePublisherConsentCookie, writeVendorConsentCookie, encodePublisherC
 import config from './config';
 import { findLocale } from './localize';
 import log from './log';
+const arrayFrom = require('core-js/library/fn/array/from');
 
 /**
  * Copy a data object and make sure to replace references
@@ -59,6 +60,7 @@ export default class Store {
 
 		this.isConsentToolShowing = false;
 		this.isFooterShowing = false;
+		this.isDetailViewAsDefault = false;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);
@@ -107,7 +109,7 @@ export default class Store {
 			// vendor ID to map any consent data we already have
 			const lastVendorId = Math.max(maxVendorId,
 				...vendors.map(({id}) => id),
-				...Array.from(selectedVendorIds));
+				...arrayFrom(selectedVendorIds));
 
 			// Map all IDs up to the highest vendor ID found
 			for (let i = 1; i <= lastVendorId; i++) {
@@ -118,7 +120,7 @@ export default class Store {
 		// Map all purpose IDs
 		const lastPurposeId = Math.max(
 			...purposes.map(({id}) => id),
-			...Array.from(selectedPurposeIds));
+			...arrayFrom(selectedPurposeIds));
 
 		const purposeMap = {};
 		for (let i = 1; i <= lastPurposeId; i++) {
@@ -171,11 +173,11 @@ export default class Store {
 
 		const lastStandardPurposeId = Math.max(
 			...purposes.map(({id}) => id),
-			...Array.from(selectedPurposeIds));
+			...arrayFrom(selectedPurposeIds));
 
 		const lastCustomPurposeId = Math.max(
 			...customPurposes.map(({id}) => id),
-			...Array.from(selectedPurposeIds));
+			...arrayFrom(selectedPurposeIds));
 
 		// Map all purpose IDs
 		const standardPurposeMap = {};
@@ -354,6 +356,11 @@ export default class Store {
 		this.storeUpdate();
 	};
 
+	toogleDetailViewAsDefault = (isDefault) => {
+		this.isDetailViewAsDefault = typeof isDefault === 'boolean' ? isDefault : !this.isDetailViewAsDefault;
+		this.storeUpdate();
+	}
+
 	updateVendorList = vendorList => {
 
 		const {
@@ -371,13 +378,22 @@ export default class Store {
 			this.vendorConsentData.selectedPurposeIds = new Set(purposes.map(p => p.id));
 			this.vendorConsentData.selectedVendorIds = new Set(vendors.map(v => v.id));
 		}
+		// If vendor consent data has already been persisted set default selected status only for new vendors
+		else {
+			const {maxVendorId} = this.persistedVendorConsentData;
+			vendors.forEach(v => {
+				if (v.id > maxVendorId) {
+					this.vendorConsentData.selectedVendorIds.add(v.id);
+				}
+			});
+		}
 
 		const {selectedVendorIds = new Set()} = this.vendorConsentData;
 
 		// Find the maxVendorId out of the vendor list and selectedVendorIds
 		this.vendorConsentData.maxVendorId = Math.max(maxVendorId,
 			...vendors.map(({id}) => id),
-			...Array.from(selectedVendorIds));
+			...arrayFrom(selectedVendorIds));
 		this.vendorList = vendorList;
 		this.storeUpdate();
 	};

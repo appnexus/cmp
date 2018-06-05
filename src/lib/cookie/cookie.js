@@ -11,6 +11,7 @@ import {
 import { sendPortalCommand } from '../portal';
 import pack from '../../../package.json';
 import config from '../config';
+const arrayFrom = require('core-js/library/fn/array/from');
 
 const PUBLISHER_CONSENT_COOKIE_NAME = 'pubconsent';
 const PUBLISHER_CONSENT_COOKIE_MAX_AGE = 33696000;
@@ -30,7 +31,7 @@ function encodeVendorIdsToBits(maxVendorId, selectedVendorIds = new Set()) {
 function encodePurposeIdsToBits(purposes, selectedPurposeIds = new Set()) {
 	const maxPurposeId = Math.max(0,
 		...purposes.map(({id}) => id),
-		...Array.from(selectedPurposeIds));
+		...arrayFrom(selectedPurposeIds));
 	let purposeString = '';
 	for (let id = 1; id <= maxPurposeId; id++) {
 		purposeString += (selectedPurposeIds.has(id) ? '1' : '0');
@@ -178,7 +179,6 @@ function decodePublisherConsentData(cookieValue) {
 		publisherPurposeVersion,
 		created,
 		lastUpdated,
-		standardPurposeIdBitString,
 		customPurposeIdBitString
 	} = decodePublisherCookieValue(cookieValue);
 
@@ -189,7 +189,6 @@ function decodePublisherConsentData(cookieValue) {
 		publisherPurposeVersion,
 		created,
 		lastUpdated,
-		selectedPurposeIds: decodeBitsToIds(standardPurposeIdBitString),
 		selectedCustomPurposeIds: decodeBitsToIds(customPurposeIdBitString)
 	};
 

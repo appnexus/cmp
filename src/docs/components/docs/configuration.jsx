@@ -108,6 +108,11 @@ export default class CmpApi extends Component {
 								Array of arrays with purpose identifiers that should be organized in groups - each one with single switch which activates/deactivates all purposes in given group. For example: <span class={style.highlight}>[[1, 4], [2, 3, 5]]</span>. Purposes which are not included in any group will be displayed separatelly
 							</span>
 						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>autoDisplay (Boolean)</span>:
+							<span class={style.argumentDescription}>Default is set true. If true  <span class={style.highlight}>autoDisplay: true</span> when initialize CMP the consent tool UI may be displayed automatically according to user's current consents.
+							If is set false <span class={style.highlight}>autoDisplay: false</span> the consent tool UI will never be displayed when initialize CMP</span>
+						</span>
 					</div>
 			</div>
 		);

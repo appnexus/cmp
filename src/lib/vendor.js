@@ -9,13 +9,16 @@ import { sendPortalCommand } from './portal';
  * fallback to portal location.
  */
 function fetchVendorList() {
-	const {globalVendorListLocation} = config;
+	const {globalVendorListLocation, storeConsentGlobally, globalConsentLocation} = config;
 	return (globalVendorListLocation ?
 		fetch(globalVendorListLocation) :
 		Promise.reject('Missing globalVendorListLocation'))
 		.then(res => res.json())
-		.catch(() => {
-			return sendPortalCommand({command: 'readVendorList'});
+		.catch(err => {
+			if (storeConsentGlobally && globalConsentLocation) {
+				return sendPortalCommand({command: 'readVendorList'});
+			}
+			log.error(`Failed to load vendor list from ${globalVendorListLocation}`, err);
 		});
 }
 
