@@ -83,6 +83,95 @@ export default {
 			back : ''
 		}
 	},
+	es: {
+		banner: {
+			title: 'Uso de cookies',
+			description: 'Utilizamos "cookies" propias y de terceros para elaborar información estadística y mostrarle publicidad personalizada a través del análisis de su navegación. Si continúa navegando acepta su uso.',
+			links: {
+				data: {
+					title: '',
+					description: ''
+				},
+				purposes: {
+					title: '',
+					description: ''
+				},
+				manage: 'Leer más',
+				accept: 'Aceptar'
+			}
+		},
+		details: {
+			title: 'configuración de privacidad',
+			back: 'Atrás',
+			save: 'Guardar y salir'
+		},
+		summary: {
+			title: 'Obtenga más información sobre cómo se usa la información.',
+			description: 'Nosotros y algunas empresas selectas podemos acceder y usar su información para los siguientes propósitos. Puede personalizar sus opciones a continuación o continuar usando nuestro sitio si está de acuerdo con los propósitos.',
+			detailLink: 'Más información',
+			who:{
+				title:'¿Quién está usando esta información?',
+				description:'Nosotros y las compañías preseleccionadas usaremos su información. Puede ver cada empresa en los enlaces de arriba o',
+				link:'mira la lista completa aquí.'
+			},
+			what:{
+				title:'¿Qué información está siendo utilizada?',
+				description:'Diferentes compañías usan información diferente,',
+				link:'mira la lista completa aquí.'
+			}
+		},
+		purposes: {
+			title: 'Datos recolectados',
+			description: 'A continuación se muestra la lista de datos que se pueden recopilar:',
+			back: 'Configura cómo se usan estos datos',
+			optoutdDescription: 'Dependiendo del tipo de datos que recopilan, usan y procesan, y otros factores, incluida la privacidad por diseño, ciertos socios confían en su consentimiento, mientras que otros requieren que se excluya. Para obtener información sobre cada proveedor y ejercer sus elecciones, consulte a continuación. O para optar por no participar, visite los sitios de NAI, DAA o EDAA.',
+			items: `<ul>
+						<li>Tipo y configuración del navegador</li>
+						<li>Información del sistema operativo</li>
+						<li>Datos de cookies</li>
+						<li>Información sobre el dispositivo utilizado</li>
+						<li>La dirección IP desde la que el dispositivo accede al sitio web</li>
+						<li>Información sobre la actividad del usuario en este dispositivo, incluidas las páginas web visitadas</li>
+						<li>Información de geolocalización del dispositivo al acceder al sitio web</li>
+					</ul>`,
+			purpose1: {
+				menu: 'Almacenamiento y acceso a la información',
+				title: 'Almacenamiento y acceso a la información',
+				description: 'El almacenamiento y acceso a la información que ya está almacenada en su dispositivo, como identificadores publicitarios, identificadores de dispositivos, cookies y tecnologías similares.'
+			},
+			purpose2: {
+				menu: 'Personalización',
+				title: 'Personalización',
+				description: 'La recopilación y el procesamiento de información para personalizar posteriormente la publicidad y/o contenidos para usted, como en otros sitios web o aplicaciones, a lo largo del tiempo. Normalmente, la selección futura de publicidad y/o contenido.'
+			},
+			purpose3: {
+				menu: 'Selección de anuncios, entregas, informes',
+				title: 'Selección de anuncios, entregas, informes',
+				description: 'Recopilación de información y combinación de información recopilada previamente, para seleccionar y entregar anuncios para usted, medir la entrega y la efectividad de dichos anuncios. Esto incluye el uso de información recopilada previamente sobre sus intereses para seleccionar anuncios, procesar datos sobre qué publicidades se mostraron, con qué frecuencia se mostraron, cuándo y dónde se mostraron y si tomó alguna medida relacionada con el anuncio, incluyendo, por ejemplo, clicks sobre los anuncios o compras. Esto no incluye la personalización, que es la recopilación y el procesamiento de la información sobre el uso de este servicio para personalizar posteriormente la publicidad y / o contenido en otros contextos, como sitios web o aplicaciones, a lo largo del tiempo.'
+				
+			},
+			purpose4: {
+				menu: 'Selección de contenido, entrega, informes',
+				title: 'Selección de contenido, entrega, informes',
+				description: 'Recopilación de información, y combinación con información recopilada previamente, para seleccionar y entregar contenido para usted, y para medir la entrega y la efectividad de dicho contenido. Esto incluye el uso de información recopilada anteriormente sobre sus intereses para seleccionar contenido, procesar datos sobre qué contenido se mostró, con qué frecuencia o durante cuánto tiempo se mostró, cuándo y dónde se mostró y si realizó alguna acción relacionada con el contenido, incluyendo por ejemplo, clicks sobre el contenido. Esto no incluye la personalización, que es la recopilación y el procesamiento de la información sobre el uso de este servicio para personalizar posteriormente el contenido y / o publicidad en otros contextos, como sitios web o aplicaciones, a lo largo del tiempo.'
+				
+			},
+			purpose5: {
+				menu: 'Medición',
+				title: 'Medición',
+				description: 'Recopilación de información sobre su uso del contenido y la combinación con información recopilada anteriormente, utilizada para medir, comprender e informar sobre el uso que hace del servicio. Esto no incluye la personalización, la recopilación de información sobre el uso de este servicio para personalizar posteriormente el contenido y / o la publicidad en otros contextos, es decir, en otros servicios, como sitios web o aplicaciones, a lo largo del tiempo.'
+				
+			},
+		},
+		vendors: {
+			title: 'Nuestros Partners',
+			description: 'Ayúdenos a ofrecerle un mejor servicio. Nuestros socios utilizan las cookies de su navegador para comprender, a través de la web, lo que le interesa y para ofrecerle contenido y publicidad relevantes.',
+			accept: 'Aceptar',
+			acceptAll: 'Aceptar todo',
+			optOut: 'Requiere opt-out',
+			back : 'Atrás'
+		}
+	},
 	fr: {
 		banner: {
 			title: 'Les cookies nous aident à vous délivrer un service de qualité.',
