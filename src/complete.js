@@ -72,7 +72,7 @@ function addLocatorFrame() {
 addLocatorFrame();
 
 // Add stub
-const commandQueue = [];
+const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};
 const cmp = function (command, parameter, callback) {
 	commandQueue.push({
 		command,
@@ -94,13 +94,13 @@ cmp.receiveMessage = function (event) {
 	}
 };
 
-window.__cmp = cmp;
+window[CMP_GLOBAL_NAME] = cmp;
 
 // Listen for postMessage events
 const listen = window.attachEvent || window.addEventListener;
 listen('message', event => {
-	window.__cmp.receiveMessage(event);
+	window[CMP_GLOBAL_NAME].receiveMessage(event);
 }, false);
 
 // Initialize CMP and then check if we need to ask for consent
-init(configUpdates).then(() => checkConsent(window.__cmp));
+init(configUpdates).then(() => checkConsent(window[CMP_GLOBAL_NAME]));
