@@ -82,7 +82,7 @@ export function init(configUpdates) {
 
 			let isConsentToolShowing = store.isConsentToolShowing;
 			store.subscribe(store => {
-				if (store.isConsentToolShowing != isConsentToolShowing) {
+				if (store.isConsentToolShowing !== isConsentToolShowing) {
 					isConsentToolShowing = store.isConsentToolShowing;
 					cmp.notify('onToggleConsentToolShowing', isConsentToolShowing);
 				}
