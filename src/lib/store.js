@@ -339,6 +339,7 @@ export default class Store {
 
 	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		this.isDetailViewAsDefault = false;
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
@@ -353,6 +354,7 @@ export default class Store {
 		}
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
 		this.isConsentToolShowing = false;
+		this.isDetailViewAsDefault  = true;
 		this.storeUpdate();
 	};
 
