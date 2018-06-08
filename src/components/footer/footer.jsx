@@ -24,7 +24,7 @@ export default class Footer extends Component {
 	handleShowConsent = () => {
 		const { store } = this.props;
 		const { toggleConsentToolShowing } = store;
-		toggleConsentToolShowing(true);
+		toggleConsentToolShowing(true, true);
 	};
 
 	render(props) {
