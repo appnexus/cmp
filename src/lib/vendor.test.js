@@ -11,16 +11,27 @@ import { fetchVendorList, fetchPurposeList } from './vendor';
 
 describe('vendor', () => {
 
+	let xhr;
+
 	beforeEach(() => {
 		mockPortal.sendPortalCommand = jest.fn().mockImplementation(() => Promise.resolve());
-		window.fetch = jest.fn().mockImplementation(() => Promise.resolve({json: () => {}}));
+		xhr = {
+			responseText: '{}',
+			open: jest.fn(),
+			send: () => {
+				this.onload();
+			}
+		};
+		window.XMLHttpRequest = jest.fn(() => xhr);
 	});
 
 	it('fetchVendorList sends a portal command', (done) => {
 		config.update({
 			storeConsentGlobally: true
 		});
-		window.fetch = jest.fn().mockImplementation(() => Promise.reject());
+		xhr.send = () => {
+			this.onerror();
+		};
 		fetchVendorList()
 			.then(() => {
 				expect(mockPortal.sendPortalCommand.mock.calls[0][0]).to.deep.equal({ command: 'readVendorList' });
@@ -35,7 +46,7 @@ describe('vendor', () => {
 		});
 
 		fetchPurposeList().then(() => {
-			expect(window.fetch.mock.calls).to.be.empty;
+			expect(window.XMLHttpRequest.mock.calls).to.be.empty;
 			done();
 		});
 	});
@@ -46,7 +57,7 @@ describe('vendor', () => {
 		});
 
 		fetchPurposeList().then(() => {
-			expect(window.fetch.mock.calls).to.be.empty;
+			expect(window.XMLHttpRequest.mock.calls).to.be.empty;
 			done();
 		});
 	});
@@ -58,7 +69,7 @@ describe('vendor', () => {
 		});
 
 		fetchPurposeList().then(() => {
-			expect(window.fetch.mock.calls[0][0]).to.equal('somepath.json');
+			expect(xhr.open.mock.calls[0][0]).to.equal('GET', 'somepath.json', true);
 			done();
 		});
 	});
