@@ -337,11 +337,8 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	toggleConsentToolShowing = (isShown, sectionIntro) => {
+	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
-		if (sectionIntro) {
-			this.isDetailViewAsDefault = false;
-		}
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
@@ -353,7 +350,6 @@ export default class Store {
 		}
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
 		this.isConsentToolShowing = false;
-		this.isDetailViewAsDefault  = true;
 		this.storeUpdate();
 	};
 
