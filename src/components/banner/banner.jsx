@@ -73,7 +73,7 @@ export default class Banner extends Component {
 			<div
 				ref={el => this.bannerRef = el}
 				class={style.banner}
-				style={{bottom: `${bannerBottom}px`}}
+				style={{bottom: `${bannerBottom}px`, visibility: isShowing ? 'visible' : 'hidden'}}
 			>
 				<div class={style.content}>
 					<div
