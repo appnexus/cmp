@@ -11,9 +11,18 @@ import { fetchPubVendorList, fetchGlobalVendorList, fetchPurposeList } from './v
 
 describe('vendor', () => {
 
+	let xhr;
+
 	beforeEach(() => {
 		mockPortal.sendPortalCommand = jest.fn().mockImplementation(() => Promise.resolve());
-		window.fetch = jest.fn().mockImplementation(() => Promise.resolve({json: () => {}}));
+		xhr = {
+			responseText: '{}',
+			open: jest.fn(),
+			send: () => {
+				this.onload();
+			}
+		};
+		window.XMLHttpRequest = jest.fn(() => xhr);
 	});
 
 
@@ -42,11 +51,14 @@ describe('vendor', () => {
 			globalVendorListLocation: null,
 			storeConsentGlobally: true
 		});
-
-		fetchGlobalVendorList().then(() => {
-			expect(window.fetch.mock.calls).to.be.empty;
-			done();
-		});
+		xhr.send = () => {
+			this.onerror();
+		};
+		fetchGlobalVendorList()
+			.then(() => {
+				expect(mockPortal.sendPortalCommand.mock.calls[0][0]).to.deep.equal({ command: 'readVendorList' });
+				done();
+			});
 	});
 
 	it('fetchPurposeList returns nothing if there is no customPurposeListLocation', (done) => {
@@ -55,7 +67,7 @@ describe('vendor', () => {
 		});
 
 		fetchPurposeList().then(() => {
-			expect(window.fetch.mock.calls).to.be.empty;
+			expect(window.XMLHttpRequest.mock.calls).to.be.empty;
 			done();
 		});
 	});
@@ -66,7 +78,7 @@ describe('vendor', () => {
 		});
 
 		fetchPurposeList().then(() => {
-			expect(window.fetch.mock.calls).to.be.empty;
+			expect(window.XMLHttpRequest.mock.calls).to.be.empty;
 			done();
 		});
 	});
@@ -78,7 +90,7 @@ describe('vendor', () => {
 		});
 
 		fetchPurposeList().then(() => {
-			expect(window.fetch.mock.calls[0][0]).to.equal('somepath.json');
+			expect(xhr.open.mock.calls[0][0]).to.equal('GET', 'somepath.json', true);
 			done();
 		});
 	});

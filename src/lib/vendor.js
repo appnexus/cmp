@@ -1,8 +1,26 @@
 import Promise from 'promise-polyfill';
-import 'whatwg-fetch';
 import config from './config';
 import log from './log';
 import { sendPortalCommand } from './portal';
+
+function fetch(url) {
+	return new Promise((resolve, reject) => {
+		const xhr = new XMLHttpRequest();
+		xhr.onload = () => {
+			resolve({
+				json: () => JSON.parse(xhr.responseText)
+			});
+		};
+		xhr.onerror = () => {
+			reject(new TypeError('Network request failed'));
+		};
+		xhr.ontimeout = () => {
+			reject(new TypeError('Network request failed'));
+		};
+		xhr.open('GET', url, true);
+		xhr.send(null);
+	});
+}
 
 const PUB_VENDOR_LOCATION = '/.well-known/pubvendors.json';
 
