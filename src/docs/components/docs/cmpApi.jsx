@@ -58,6 +58,17 @@ const commands = [
 			resultDescription: 'true'
 		}
 	},
+  {
+		command: 'showFooter',
+		parameter: {
+			type: '[parameter]',
+			description: '(ignored)'
+		},
+		callback: {
+			resultType: 'result (Boolean)',
+			resultDescription: 'true'
+		}
+	},
 	{
 		command: 'addEventListener',
 		parameter: {
@@ -108,7 +119,7 @@ const events = [
 ];
 
 export default class CmpApi extends Component {
-	render() {
+	render () {
 
 		return (
 			<div className={style.api}>

@@ -66,6 +66,8 @@ export default class Store {
 		this.updateCustomPurposeList(customPurposeList);
 	}
 
+	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);
+
 	/**
 	 * Build vendor consent object from data that has already been persisted. This
 	 * list will only return consent=true for vendors that exist in the current
@@ -342,6 +344,10 @@ export default class Store {
 	};
 
 	toggleFooterShowing = (isShown) => {
+		const vendorConsents = this.getVendorConsentsObject();
+		if (this.isAllSetTrue(vendorConsents.purposeConsents) && this.isAllSetTrue(vendorConsents.vendorConsents)) {
+			isShown = false;
+		}
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
 		this.isConsentToolShowing = false;
 		this.storeUpdate();
@@ -350,7 +356,7 @@ export default class Store {
 	toogleDetailViewAsDefault = (isDefault) => {
 		this.isDetailViewAsDefault = typeof isDefault === 'boolean' ? isDefault : !this.isDetailViewAsDefault;
 		this.storeUpdate();
-	}
+	};
 
 	updateVendorList = vendorList => {
 

@@ -41,8 +41,7 @@ export default class Details extends Component {
 	render(props, state) {
 		const {
 			onCancel,
-			onSave,
-			onClose,
+			onSaveOrClose,
 			store
 		} = props;
 		const { selectedPanelIndex } = state;
@@ -67,7 +66,7 @@ export default class Details extends Component {
 			<div class={style.details}>
 				<CloseButton
 					class={style.close}
-					onClick={onClose}
+					onClick={onSaveOrClose}
 				/>
 				<div class={style.header}>
 					<LocalLabel localizeKey='title'>User Privacy Preferences</LocalLabel>
@@ -93,7 +92,7 @@ export default class Details extends Component {
 				</div>
 				<div class={style.footer}>
 					<a class={style.cancel} onClick={this.handleBack}><LocalLabel localizeKey='back'>Back</LocalLabel></a>
-					<Button class={style.save} onClick={onSave}><LocalLabel localizeKey='save'>Save and Exit</LocalLabel></Button>
+					<Button class={style.save} onClick={onSaveOrClose}><LocalLabel localizeKey='save'>Save and Exit</LocalLabel></Button>
 				</div>
 			</div>
 		);

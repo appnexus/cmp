@@ -150,6 +150,14 @@ export default class Cmp {
 			this.notify('openConsentTool', { section: 'details' });
 
 			callback(true);
+		},
+
+		/**
+		 * Trigger the footer UI to be shown
+		 */
+		showFooter: (_, callback = () => {}) => {
+			this.store.toggleFooterShowing(true);
+			callback(true);
 		}
 	};
 

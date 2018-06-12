@@ -22,7 +22,8 @@ function handleConsentResult(cmp, {vendorListVersion: listVersion} = {}, {create
 		configuration.autoDisplay && cmp('showConsentTool');
 	}
 	else {
-		log.debug('Consent found. Not showing consent tool');
+		log.debug('Consent found. Not showing consent tool. Show footer when not all consents set to true');
+		cmp('showFooter');
 	}
 }
 

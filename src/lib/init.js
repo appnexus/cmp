@@ -80,6 +80,14 @@ export function init(configUpdates) {
 			cmp.commandQueue = commandQueue;
 			cmp.processCommandQueue();
 
+			let isConsentToolShowing = store.isConsentToolShowing;
+			store.subscribe(store => {
+				if (store.isConsentToolShowing !== isConsentToolShowing) {
+					isConsentToolShowing = store.isConsentToolShowing;
+					cmp.notify('onToggleConsentToolShowing', isConsentToolShowing);
+				}
+			});
+
 			// Request lists
 			return Promise.all([
 				fetchVendorList().then(store.updateVendorList),

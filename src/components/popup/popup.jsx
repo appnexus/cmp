@@ -43,10 +43,10 @@ export default class Popup extends Component {
 		});
 	};
 
-	handleClose = () => {
+	handleCloseOrSave = () => {
 		const { store, onSave } = this.props;
 		onSave();
-		store.toggleFooterShowing(true);
+		this.onCancel()
 	};
 
 	render(props, state) {
@@ -67,13 +67,12 @@ export default class Popup extends Component {
 						<Intro
 							onAcceptAll={this.onAcceptAll}
 							onShowPurposes={this.handleShowDetails}
-							onClose={this.handleClose}
 						/>
 						<Details
-							onSave={this.props.onSave}
+							onSaveOrClose={this.handleCloseOrSave}
 							onCancel={this.onCancel}
 							store={this.props.store}
-							onClose={this.handleClose} />
+						/>
 					</Panel>
 				</div>
 			</div>
