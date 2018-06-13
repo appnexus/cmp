@@ -56,11 +56,11 @@ const configUpdates = {
 
 // Add locator frame
 function addLocatorFrame() {
-	if (!window.frames['__cmpLocator']) {
+	if (!window.frames[CMP_GLOBAL_NAME + 'Locator']) {
 		if (document.body) {
 			const frame = document.createElement('iframe');
 			frame.style.display = 'none';
-			frame.name = '__cmpLocator';
+			frame.name = CMP_GLOBAL_NAME + 'Locator';
 			document.body.appendChild(frame);
 		}
 		else {
@@ -82,7 +82,7 @@ const cmp = function (command, parameter, callback) {
 };
 cmp.commandQueue = commandQueue;
 cmp.receiveMessage = function (event) {
-	const data = event && event.data && event.data.__cmpCall;
+	const data = event && event.data && event.data[CMP_GLOBAL_NAME + 'Call'];
 	if (data) {
 		const {callId, command, parameter} = data;
 		commandQueue.push({
