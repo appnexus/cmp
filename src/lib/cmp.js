@@ -174,7 +174,7 @@ export default class Cmp {
 				if (event) {
 					this.processCommand(command, parameter, returnValue =>
 						event.source.postMessage({
-							__cmpReturn: {
+							[CMP_GLOBAL_NAME + 'Return']: {
 								callId,
 								command,
 								returnValue
@@ -193,11 +193,11 @@ export default class Cmp {
 	 * call `processCommand`
 	 */
 	receiveMessage = ({data, origin, source}) => {
-		const {__cmpCall: cmp} = data;
+		const {[CMP_GLOBAL_NAME + 'Call']: cmp} = data;
 		if (cmp) {
 			const {callId, command, parameter} = cmp;
 			this.processCommand(command, parameter, returnValue =>
-				source.postMessage({__cmpReturn: {callId, command, returnValue}}, origin));
+				source.postMessage({[CMP_GLOBAL_NAME + 'Return']: {callId, command, returnValue}}, origin));
 		}
 	};
 
