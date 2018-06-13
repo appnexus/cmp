@@ -7,7 +7,7 @@ import config from './config';
 jest.mock('./portal');
 const mockPortal = require('./portal');
 
-import { fetchVendorList, fetchPurposeList } from './vendor';
+import { fetchPubVendorList, fetchGlobalVendorList, fetchPurposeList } from './vendor';
 
 describe('vendor', () => {
 
@@ -25,20 +25,41 @@ describe('vendor', () => {
 		window.XMLHttpRequest = jest.fn(() => xhr);
 	});
 
-	it('fetchVendorList sends a portal command', (done) => {
+
+	it('fetchPubVendorList fetches from `.well-known` URL', (done) => {
+
+		fetchPubVendorList().then(() => {
+			expect(xhr.open.mock.calls[0][1]).to.equal('/.well-known/pubvendors.json');
+			done();
+		});
+	});
+
+	it('fetchGlobalVendorList fetches from configured globalVendorListLocation', (done) => {
 		config.update({
+			globalVendorListLocation: 'globalpath.json',
+			storeConsentGlobally: true
+		});
+
+		fetchGlobalVendorList().then(() => {
+			expect(xhr.open.mock.calls[0][1]).to.equal('globalpath.json');
+			done();
+		});
+	});
+
+	it('fetchGlobalVendorList returns nothing if globalVendorListLocation is empty', (done) => {
+		config.update({
+			globalVendorListLocation: null,
 			storeConsentGlobally: true
 		});
 		xhr.send = () => {
 			this.onerror();
 		};
-		fetchVendorList()
+		fetchGlobalVendorList()
 			.then(() => {
 				expect(mockPortal.sendPortalCommand.mock.calls[0][0]).to.deep.equal({ command: 'readVendorList' });
 				done();
 			});
 	});
-
 
 	it('fetchPurposeList returns nothing if there is no customPurposeListLocation', (done) => {
 		config.update({
