@@ -29,7 +29,7 @@ describe('vendor', () => {
 	it('fetchPubVendorList fetches from `.well-known` URL', (done) => {
 
 		fetchPubVendorList().then(() => {
-			expect(window.fetch.mock.calls[0][0]).to.equal('/.well-known/pubvendors.json');
+			expect(xhr.open.mock.calls[0][1]).to.equal('/.well-known/pubvendors.json');
 			done();
 		});
 	});
@@ -41,7 +41,7 @@ describe('vendor', () => {
 		});
 
 		fetchGlobalVendorList().then(() => {
-			expect(window.fetch.mock.calls[0][0]).to.equal('globalpath.json');
+			expect(xhr.open.mock.calls[0][1]).to.equal('globalpath.json');
 			done();
 		});
 	});

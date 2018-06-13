@@ -3,6 +3,10 @@ import config from './config';
 import log from './log';
 import { sendPortalCommand } from './portal';
 
+
+const PUB_VENDOR_LOCATION = '/.well-known/pubvendors.json';
+
+
 function fetch(url) {
 	return new Promise((resolve, reject) => {
 		const xhr = new XMLHttpRequest();
@@ -22,7 +26,6 @@ function fetch(url) {
 	});
 }
 
-const PUB_VENDOR_LOCATION = '/.well-known/pubvendors.json';
 
 /**
  * Fetch the pubvendors.json from the local domain
