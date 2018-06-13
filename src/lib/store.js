@@ -399,6 +399,17 @@ export default class Store {
 			this.vendorConsentData.selectedVendorIds = new Set(vendors.map(v => v.id));
 		}
 
+		// If vendor consent data has already been persisted set default selected status only for new vendors
+		else {
+			const {persistedMaxVendorId} = this.persistedVendorConsentData;
+			vendors.forEach(v => {
+				if (v.id > persistedMaxVendorId) {
+					this.vendorConsentData.selectedVendorIds.add(v.id);
+				}
+			});
+		}
+
+
 		const {selectedVendorIds = new Set()} = this.vendorConsentData;
 
 		// Find the maxVendorId out of the vendor list and selectedVendorIds
