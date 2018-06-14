@@ -7,9 +7,7 @@ import 'core-js/fn/array/from';
 import 'core-js/fn/set';
 import log from './lib/log';
 import { init } from './lib/init';
-import { CMP_GLOBAL_NAME, CMP_CALL_NAME } from "./lib/cmp";
-
-const CMP_LOCATOR_NAME = CMP_GLOBAL_NAME + 'Locator';
+import { CMP_GLOBAL_NAME, CMP_CALL_NAME, CMP_LOCATOR_NAME } from "./lib/cmp";
 
 function handleConsentResult(cmp, {vendorListVersion: listVersion} = {}, {created, vendorListVersion} = {}) {
 	if (!created) {
