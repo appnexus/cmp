@@ -102,10 +102,12 @@ export function init(configUpdates) {
 			// Request lists
 			return Promise.all([
 				fetchGlobalVendorList().then(store.updateVendorList),
-				fetchPurposeList().then(store.updateCustomPurposeList)
-			]).then(() => {
+				fetchPurposeList().then(store.updateCustomPurposeList),
+				store
+			]).then((store) => {
 				cmp.cmpReady = true;
 				cmp.notify('cmpReady');
+				return store[2];
 			}).catch(err => {
 				log.error('Failed to load lists. CMP not ready', err);
 			});
