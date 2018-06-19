@@ -103,7 +103,7 @@ export function init(configUpdates) {
 			return Promise.all([
 				store,
 				fetchGlobalVendorList().then(store.updateVendorList),
-				fetchPurposeList().then(store.updateCustomPurposeList),
+				fetchPurposeList().then(store.updateCustomPurposeList)
 			]).then((params) => {
 				cmp.cmpReady = true;
 				cmp.notify('cmpReady');
