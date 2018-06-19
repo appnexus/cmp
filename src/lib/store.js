@@ -401,9 +401,9 @@ export default class Store {
 
 		// If vendor consent data has already been persisted set default selected status only for new vendors
 		else {
-			const {persistedMaxVendorId} = this.persistedVendorConsentData;
+			const {maxVendorId} = this.persistedVendorConsentData;
 			vendors.forEach(v => {
-				if (v.id > persistedMaxVendorId) {
+				if (v.id > maxVendorId) {
 					this.vendorConsentData.selectedVendorIds.add(v.id);
 				}
 			});

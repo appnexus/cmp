@@ -99,6 +99,20 @@ describe('store', () => {
 		expect(store.vendorConsentData.selectedPurposeIds).to.deep.equal(selectedPurposeIds);
 	});
 
+	it('initializes with new vendor list', () => {
+		const expected = new Set(vendorList.vendors.map(v => v.id));
+		const selectedVendorIds = new Set([1, 2]);
+		const store = new Store({
+			vendorConsentData: {
+				created: new Date(),
+				selectedVendorIds,
+				maxVendorId:2
+			}
+		});
+		store.updateVendorList(vendorList);
+		expect(store.vendorConsentData.selectedVendorIds).to.deep.equal(expected);
+	});
+
 	it('build correct vendor consents object', () => {
 		const store = new Store({
 			vendorList,
