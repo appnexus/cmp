@@ -201,19 +201,24 @@ export default class Cmp {
 			log.info(`Process ${queue.length} queued commands`);
 			this.commandQueue = [];
 			queue.forEach(({callId, command, parameter, callback, event}) => {
-				// If command is queued with an event we will relay its result via postMessage
-				if (event) {
-					this.processCommand(command, parameter, returnValue =>
-						event.source.postMessage({
-							__cmpReturn: {
-								callId,
-								command,
-								returnValue
-							}
-						}, event.origin));
-				}
-				else {
-					this.processCommand(command, parameter, callback);
+				try {
+					// If command is queued with an event we will relay its result via postMessage
+					if (event) {
+						this.processCommand(command, parameter, returnValue =>
+							event.source.postMessage({
+								__cmpReturn: {
+									callId,
+									command,
+									returnValue
+								}
+							}, event.origin));
+					}
+					else {
+						this.processCommand(command, parameter, callback);
+					}
+				} catch (err) {
+					log.error(`Invalid commandQueue element ${err}`);
+					return;
 				}
 			});
 		}
