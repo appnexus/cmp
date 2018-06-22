@@ -218,7 +218,6 @@ export default class Cmp {
 					}
 				} catch (err) {
 					log.error(`Invalid commandQueue element ${err}`);
-					return;
 				}
 			});
 		}
@@ -274,7 +273,11 @@ export default class Cmp {
 		log.info(`Notify event: ${event}`);
 		const eventSet = this.eventListeners[event] || new Set();
 		eventSet.forEach(listener => {
-			listener({event, data});
+			try {
+				listener({event, data});
+			} catch (err) {
+				log.error(err);
+			}
 		});
 
 		// Process any queued commands that were waiting for consent data
