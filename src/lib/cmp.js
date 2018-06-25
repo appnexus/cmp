@@ -61,6 +61,15 @@ export default class Cmp {
 		},
 
 		/**
+		 * Get the consent string value.
+		 */
+		getConsentString: (params = {}, callback = () => {}) => {
+			const consent = this.generateConsentString(params);
+
+			callback(consent, !!consent);
+		},
+
+		/**
 		 * Get the encoded vendor consent data value.
 		 */
 		getConsentData: (_, callback = () => {}) => {
@@ -174,7 +183,7 @@ export default class Cmp {
 		}
 	};
 
-	generateConsentString = () => {
+	generateConsentString = (data = {}) => {
 		const {
 			persistedVendorConsentData,
 			vendorList,
@@ -184,14 +193,18 @@ export default class Cmp {
 		const {
 			selectedVendorIds = new Set(),
 			selectedPurposeIds = new Set()
-		} = persistedVendorConsentData || {};
+		} = {
+			...persistedVendorConsentData,
+			...data
+		};
 
 		// Encode the persisted data
 		return persistedVendorConsentData && encodeVendorConsentData({
 			...persistedVendorConsentData,
+			vendorList,
+			...data,
 			selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))),
 			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds)),
-			vendorList
 		});
 	};
 
