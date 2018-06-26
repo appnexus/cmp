@@ -89,12 +89,28 @@ export default {
 			description: 'Utilizamos "cookies" propias y de terceros para elaborar información estadística y mostrarle publicidad personalizada a través del análisis de su navegación. Si continúa navegando acepta su uso.',
 			links: {
 				data: {
-					title: '',
-					description: ''
+					title: 'Información que puede ser usada.',
+					description: `Información que puede ser usada:
+								<ul>
+									<li>Tipo de navegador y su configuración</li>
+									<li>Información sobre el sistema operativo del dispositivo</li>
+									<li>Información sobre las cookies</li>
+									<li>Información sobre otros identificadores asignados al dispositivo</li>
+									<li>Dirección IP desde la cual el dispositivo accede al sitio web o aplicación móvil</li>
+									<li>Información sobre la actividad del usuario en ese dispositivo, incluidas las páginas web y las aplicaciones móviles visitadas o utilizadas</li>
+									<li>Información sobre la ubicación geográfica del dispositivo cuando accede a un sitio web o aplicación móvil</li>
+								</ul>`
 				},
 				purposes: {
-					title: '',
-					description: ''
+					title: 'Propósitos para almacenar información.',
+					description: `Cómo puede ser usada la información:
+								<ul>
+									<li>Almacenamiento y acceso a la información</li>
+									<li>Selección de anuncios y entrega</li>
+									<li>Selección de contenido y entrega</li>
+									<li>Personalización</li>
+									<li>Medición</li>
+								</ul>`
 				},
 				manage: 'Leer más',
 				accept: 'Aceptar'
@@ -148,19 +164,19 @@ export default {
 				menu: 'Selección de anuncios, entregas, informes',
 				title: 'Selección de anuncios, entregas, informes',
 				description: 'Recopilación de información y combinación de información recopilada previamente, para seleccionar y entregar anuncios para usted, medir la entrega y la efectividad de dichos anuncios. Esto incluye el uso de información recopilada previamente sobre sus intereses para seleccionar anuncios, procesar datos sobre qué publicidades se mostraron, con qué frecuencia se mostraron, cuándo y dónde se mostraron y si tomó alguna medida relacionada con el anuncio, incluyendo, por ejemplo, clicks sobre los anuncios o compras. Esto no incluye la personalización, que es la recopilación y el procesamiento de la información sobre el uso de este servicio para personalizar posteriormente la publicidad y / o contenido en otros contextos, como sitios web o aplicaciones, a lo largo del tiempo.'
-				
+
 			},
 			purpose4: {
 				menu: 'Selección de contenido, entrega, informes',
 				title: 'Selección de contenido, entrega, informes',
 				description: 'Recopilación de información, y combinación con información recopilada previamente, para seleccionar y entregar contenido para usted, y para medir la entrega y la efectividad de dicho contenido. Esto incluye el uso de información recopilada anteriormente sobre sus intereses para seleccionar contenido, procesar datos sobre qué contenido se mostró, con qué frecuencia o durante cuánto tiempo se mostró, cuándo y dónde se mostró y si realizó alguna acción relacionada con el contenido, incluyendo por ejemplo, clicks sobre el contenido. Esto no incluye la personalización, que es la recopilación y el procesamiento de la información sobre el uso de este servicio para personalizar posteriormente el contenido y / o publicidad en otros contextos, como sitios web o aplicaciones, a lo largo del tiempo.'
-				
+
 			},
 			purpose5: {
 				menu: 'Medición',
 				title: 'Medición',
 				description: 'Recopilación de información sobre su uso del contenido y la combinación con información recopilada anteriormente, utilizada para medir, comprender e informar sobre el uso que hace del servicio. Esto no incluye la personalización, la recopilación de información sobre el uso de este servicio para personalizar posteriormente el contenido y / o la publicidad en otros contextos, es decir, en otros servicios, como sitios web o aplicaciones, a lo largo del tiempo.'
-				
+
 			},
 		},
 		vendors: {
