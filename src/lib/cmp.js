@@ -63,10 +63,22 @@ export default class Cmp {
 		/**
 		 * Get the consent string value.
 		 */
-		getConsentString: (params = {}, callback = () => {}) => {
-			const consent = this.generateConsentString(params);
+		getConsentFields: (params = {}, callback = () => {}) => {
+			const data = this.store.getConsentFieldsObject();
+			const now = new Date();
+			const consent = {
+				metadata: this.generateConsentString({
+					created: now,
+					lastUpdated: now,
+					...data,
+					...params
+				}),
+				gdprApplies: config.gdprApplies,
+				hasGlobalScope: config.storeConsentGlobally,
+				...data
+			};
 
-			callback(consent, !!consent);
+			callback(consent, true);
 		},
 
 		/**
@@ -198,14 +210,21 @@ export default class Cmp {
 			...data
 		};
 
-		// Encode the persisted data
-		return persistedVendorConsentData && encodeVendorConsentData({
+		const consentData = {
 			...persistedVendorConsentData,
 			vendorList,
 			...data,
 			selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))),
-			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds)),
-		});
+			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds))
+		};
+
+		const valid = (data = {}) => [
+			'cmpId', 'cmpVersion', 'consentLanguage', 'consentScreen', 'cookieVersion', 'created', 'lastUpdated',
+			'maxVendorId', 'selectedPurposeIds', 'selectedVendorIds', 'vendorListVersion'
+		].every(prop => data.hasOwnProperty(prop));
+
+		// Encode the persisted data
+		return valid(consentData) ? encodeVendorConsentData(consentData) : undefined;
 	};
 
 	processCommandQueue = () => {
