@@ -1,7 +1,8 @@
 import log from './log';
 import config from './config';
 import {
-	encodeVendorConsentData
+	encodeVendorConsentData,
+	encodePublisherConsentData
 } from './cookie/cookie';
 const arrayFrom = require('core-js/library/fn/array/from');
 
@@ -23,8 +24,20 @@ export default class Cmp {
 		 * Get all publisher consent data from the data store.
 		 */
 		getPublisherConsents: (purposeIds, callback = () => {}) => {
+			const {
+				persistedPublisherConsentData,
+				persistedVendorConsentData,
+				vendorList,
+				customPurposeList
+			} = this.store;
+
 			const consent = {
-				metadata: this.generateConsentString(),
+				metadata: encodePublisherConsentData({
+					...persistedPublisherConsentData,
+					...persistedVendorConsentData,
+					vendorList,
+					customPurposeList
+				}),
 				gdprApplies: config.gdprApplies,
 				hasGlobalScope: config.storeConsentGlobally,
 				...this.store.getPublisherConsentsObject()
@@ -150,34 +163,34 @@ export default class Cmp {
 			this.notify('openConsentTool', { section: 'details' });
 
 			callback(true);
+		},
+
+		/**
+		 * Trigger the footer UI to be shown
+		 */
+		showFooter: (_, callback = () => {}) => {
+			this.store.toggleFooterShowing(true);
+			callback(true);
 		}
 	};
 
 	generateConsentString = () => {
 		const {
 			persistedVendorConsentData,
-			vendorList
+			vendorList,
+			allowedVendorIds
 		} = this.store;
-
-		const {
-			vendors = [],
-			purposes = []
-		} = vendorList || {};
 
 		const {
 			selectedVendorIds = new Set(),
 			selectedPurposeIds = new Set()
 		} = persistedVendorConsentData || {};
 
-		// Filter consents by values that exist in the current vendorList
-		const allowedVendorIds = new Set(vendors.map(({id}) => id));
-		const allowedPurposeIds = new Set(purposes.map(({id}) => id));
-
 		// Encode the persisted data
 		return persistedVendorConsentData && encodeVendorConsentData({
 			...persistedVendorConsentData,
-			selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => allowedVendorIds.has(id))),
-			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds).filter(id => allowedPurposeIds.has(id))),
+			selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))),
+			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds)),
 			vendorList
 		});
 	};
@@ -188,19 +201,23 @@ export default class Cmp {
 			log.info(`Process ${queue.length} queued commands`);
 			this.commandQueue = [];
 			queue.forEach(({callId, command, parameter, callback, event}) => {
-				// If command is queued with an event we will relay its result via postMessage
-				if (event) {
-					this.processCommand(command, parameter, returnValue =>
-						event.source.postMessage({
-							__cmpReturn: {
-								callId,
-								command,
-								returnValue
-							}
-						}, event.origin));
-				}
-				else {
-					this.processCommand(command, parameter, callback);
+				try {
+					// If command is queued with an event we will relay its result via postMessage
+					if (event) {
+						this.processCommand(command, parameter, returnValue =>
+							event.source.postMessage({
+								__cmpReturn: {
+									callId,
+									command,
+									returnValue
+								}
+							}, event.origin));
+					}
+					else {
+						this.processCommand(command, parameter, callback);
+					}
+				} catch (err) {
+					log.error(`Invalid commandQueue element ${err}`);
 				}
 			});
 		}
@@ -256,7 +273,11 @@ export default class Cmp {
 		log.info(`Notify event: ${event}`);
 		const eventSet = this.eventListeners[event] || new Set();
 		eventSet.forEach(listener => {
-			listener({event, data});
+			try {
+				listener({event, data});
+			} catch (err) {
+				log.error(err);
+			}
 		});
 
 		// Process any queued commands that were waiting for consent data
