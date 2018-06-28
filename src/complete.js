@@ -9,7 +9,7 @@ import { init } from './lib/init';
 import { CMP_GLOBAL_NAME } from "./lib/cmp";
 import configuration from "./lib/config";
 
-function handleConsentResult(cmp, {vendorListVersion: listVersion} = {}, {created, vendorListVersion} = {}) {
+function handleConsentResult(cmp, {isConsentToolShowing}, {vendorListVersion: listVersion} = {}, {created, vendorListVersion} = {}) {
 	if (!created) {
 		log.debug('No consent data found. Showing consent tool');
 		configuration.autoDisplay && cmp('showConsentTool');
@@ -23,11 +23,11 @@ function handleConsentResult(cmp, {vendorListVersion: listVersion} = {}, {create
 	}
 	else {
 		log.debug('Consent found. Not showing consent tool. Show footer when not all consents set to true');
-		configuration.autoDisplay && cmp('showFooter');
+		!isConsentToolShowing && configuration.autoDisplay && cmp('showFooter');
 	}
 }
 
-function checkConsent(cmp) {
+function checkConsent(cmp, store) {
 	if (!cmp) {
 		log.error('CMP failed to load');
 	}
@@ -37,12 +37,12 @@ function checkConsent(cmp) {
 	else {
 		cmp('getVendorList', null, vendorList => {
 			const timeout = setTimeout(() => {
-				handleConsentResult(cmp, vendorList);
+				handleConsentResult(cmp, store, vendorList);
 			}, 100);
 
 			cmp('getVendorConsents', null, vendorConsents => {
 				clearTimeout(timeout);
-				handleConsentResult(cmp, vendorList, vendorConsents);
+				handleConsentResult(cmp, store, vendorList, vendorConsents);
 			});
 		});
 	}
@@ -104,4 +104,4 @@ listen('message', event => {
 }, false);
 
 // Initialize CMP and then check if we need to ask for consent
-init(configUpdates).then(() => checkConsent(window.__cmp));
+init(configUpdates).then((store) => checkConsent(window.__cmp, store));
