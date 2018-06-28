@@ -32,8 +32,8 @@ const commands = [
 			description: '(ignored)'
 		},
 		callback: {
-			resultType: 'result (String)',
-			resultDescription: 'Base64 encoded string containing all vendor consent data'
+			resultType: 'result (Object)',
+			resultDescription: 'Object containing Base64 encoded string of all vendor consent data'
 		}
 	},
 	{
