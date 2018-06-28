@@ -138,10 +138,18 @@ export default class Cmp {
 		},
 
 		/**
-		 * Trigger the consent tool UI to be shown
+		 * Trigger the consent tool banner to be shown
 		 */
 		showConsentTool: (_, callback = () => {}) => {
 			this.store.toggleConsentToolShowing(true);
+			callback(true);
+		},
+
+		/**
+		 * Trigger the consent tool modal to be shown
+		 */
+		showModal: (_, callback = () => {}) => {
+			this.store.toggleModalShowing(true);
 			callback(true);
 		}
 	};
