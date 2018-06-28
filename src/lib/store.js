@@ -211,7 +211,6 @@ export default class Store {
 	 * Build consent fields object from data that has already been persisted.
 	 */
 	getConsentFieldsObject = () => {
-		const now = new Date();
 		const {
 			persistedVendorConsentData = {},
 			vendorConsentData = {}
