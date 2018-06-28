@@ -224,7 +224,7 @@ export default class Cmp {
 		].every(prop => data.hasOwnProperty(prop));
 
 		// Encode the persisted data
-		return valid(consentData) ? encodeVendorConsentData(consentData) : undefined;
+		return persistedVendorConsentData || valid(consentData) ? encodeVendorConsentData(consentData) : undefined;
 	};
 
 	processCommandQueue = () => {
