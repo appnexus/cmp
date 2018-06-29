@@ -62,7 +62,6 @@ export default class Store {
 		this.allowedVendorIds = new Set(allowedVendorIds);
 		this.isConsentToolShowing = false;
 		this.isBannerShowing = false;
-		this.theme = config.theme;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);

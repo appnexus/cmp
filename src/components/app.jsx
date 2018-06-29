@@ -5,6 +5,10 @@ import Popup from './popup/popup';
 import Banner from './banner/banner';
 
 export default class App extends Component {
+	static defaultProps = {
+		theme: {}
+	};
+
 	state = {
 		store: this.props.store
 	};
@@ -31,12 +35,14 @@ export default class App extends Component {
 		const {
 			store,
 		} = state;
+		const {
+			theme,
+		} = props;
 
 		const {
 			isModalShowing,
 			isBannerShowing,
 			toggleModalShowing,
-			theme
 		} = store;
 
 		return (

@@ -59,6 +59,15 @@ export default class Details extends Component {
 		} = state;
 
 		const {
+			backgroundColor,
+			textLightColor,
+			dividerColor,
+			secondaryColor,
+			secondaryTextColor,
+			primaryColor,
+			primaryTextColor,
+		} = theme;
+		const {
 			vendorList = {},
 			customPurposeList = {},
 			vendorConsentData,
@@ -81,7 +90,7 @@ export default class Details extends Component {
 			.sort(({name: n1}, {name: n2}) => n1.toLowerCase() === n2.toLowerCase() ? 0 : n1.toLowerCase() > n2.toLowerCase() ? 1 : -1);
 
 		return (
-			<div class={style.details} style={{backgroundColor: theme.background, color: theme.textLight}}>
+			<div class={style.details} style={{backgroundColor: backgroundColor, color: textLightColor}}>
 				<div class={style.body}>
 					<Panel selectedIndex={selectedPanelIndex}>
 						<Summary
@@ -111,20 +120,20 @@ export default class Details extends Component {
 						/>
 					</Panel>
 				</div>
-				<div class={style.footer} style={{borderColor: theme.divider}}>
+				<div class={style.footer} style={{borderColor: dividerColor}}>
 					{selectedPanelIndex > 0 &&
 					<Button
 						class={style.back}
 						onClick={this.handleBack}
-						backgroundColor={theme.secondary}
-						textColor={theme.secondaryText}
+						backgroundColor={secondaryColor}
+						textColor={secondaryTextColor}
 					>&lt; <LocalLabel localizeKey='back'>Back</LocalLabel></Button>
 					}
 					<Button
 						class={style.save}
 						onClick={onSave}
-						backgroundColor={theme.primary}
-						textColor={theme.primaryText}
+						backgroundColor={primaryColor}
+						textColor={primaryTextColor}
 					><LocalLabel localizeKey='save'>Continue Using Site</LocalLabel></Button>
 				</div>
 			</div>

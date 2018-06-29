@@ -80,7 +80,7 @@
 								top: -1px;
 								transform: rotate(-90deg);
 								transition: 0.5s ease;
-								fill: @color-secondary;
+								fill: @color-linkColor;
 							}
 						}
 
@@ -103,6 +103,7 @@
 							}
 
 							.optionDetails {
+								margin-left: 21px;
 								max-height: 600px;
 								transition: max-height 1s ease-in-out;
 							}
@@ -124,7 +125,7 @@
 				a {
 					display: block;
 					position: relative;
-					transform: translateY(50% + 24px);
+					margin-top: 30px;
 					line-height: 48px;
 					height: 48px;
 					text-align: center;
@@ -135,7 +136,7 @@
 
 					@media @smartphone {
 						top: auto;
-						transform: none;
+						margin: 0;
 						line-height: 38px;
 						font-size: 14px;
 						height: 38px;

@@ -12,6 +12,7 @@ export default class Popup extends Component {
 
 	render(props, state) {
 		const {store, onSave, theme} = props;
+		const {overlayBackground, secondaryColor, backgroundColor} = theme;
 		const {isModalShowing} = store;
 
 		return (
@@ -21,11 +22,11 @@ export default class Popup extends Component {
 			>
 				<div
 					class={style.overlay}
-					style={{background: theme.overlayBackground}}
+					style={{background: overlayBackground}}
 					onClick={this.handleClose}
 				/>
 				<div class={style.content}>
-					<CloseButton onClick={this.handleClose} stroke={theme.secondary} fill={theme.background} />
+					<CloseButton onClick={this.handleClose} stroke={secondaryColor} fill={backgroundColor} />
 					<Details
 						onSave={onSave}
 						store={store}
