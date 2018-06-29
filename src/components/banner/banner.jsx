@@ -81,46 +81,53 @@ export default class Banner extends Component {
 						ref={el => this.messageRef = el}
 					>
 						<div class={style.title}>
-						Ads help us run this site
+							<LocalLabel localizeKey='title'>Ads help us run this site</LocalLabel>
 						</div>
+						<LocalLabel localizeKey='description'>
 						When you visit our site, pre-selected companies may access and use certain information on your device to serve relevant ads or personalized content.
-
+						</LocalLabel>
 						<div class={style.info}>
 							<a onClick={this.handleInfo(PANEL_COLLECTED)}>
 								<ChevronIcon class={[style.expand, selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : ''].join(' ')}  />
-							</a>Information that may be used.
+							</a>
+							<LocalLabel localizeKey='links.data.title'>Information that may be used.</LocalLabel>
 							<a onClick={this.handleInfo(PANEL_PURPOSE)}>
 								<ChevronIcon class={[style.expand, selectedPanelIndex === PANEL_PURPOSE && isExpanded ? style.expanded : ''].join(' ')}  />
 							</a>
-							Purposes for storing information.
-							<a onClick={this.handleLearnMore}>Learn More</a>
-							<a onClick={onSave}>Continue to site</a>
+							<LocalLabel localizeKey='links.purposes.title'>Purposes for storing information.</LocalLabel>
+
+							<a onClick={this.handleLearnMore}><LocalLabel localizeKey='links.manage'>Learn More</LocalLabel></a>
+							<a onClick={onSave}><LocalLabel localizeKey='links.accept'>Continue to site</LocalLabel></a>
 						</div>
 					</div>
 					<Panel
 						selectedIndex={selectedPanelIndex}
 						class={style.infoExpanded}>
 						<div class={style.infoExpanded}>
-							Information that may be used:
-							<ul>
-								<li>Type of browser and its settings</li>
-								<li>Information about the device's operating system</li>
-								<li>Cookie information</li>
-								<li>Information about other identifiers assigned to the device</li>
-								<li>The IP address from which the device accesses a client's website or mobile application</li>
-								<li>Information about the user's activity on that device, including web pages and mobile apps visited or used</li>
-								<li>Information about the geographic location of the device when it accesses a website or mobile application</li>
-							</ul>
+							<LocalLabel localizeKey='links.data.description'>
+								Information that may be used:
+								<ul>
+									<li>Type of browser and its settings</li>
+									<li>Information about the device's operating system</li>
+									<li>Cookie information</li>
+									<li>Information about other identifiers assigned to the device</li>
+									<li>The IP address from which the device accesses a client's website or mobile application</li>
+									<li>Information about the user's activity on that device, including web pages and mobile apps visited or used</li>
+									<li>Information about the geographic location of the device when it accesses a website or mobile application</li>
+								</ul>
+							</LocalLabel>
 						</div>
 						<div class={style.infoExpanded}>
-							How information may be used:
-							<ul>
-								<li>Storage and access of information</li>
-								<li>Ad selection and delivery</li>
-								<li>Content selection and delivery</li>
-								<li>Personalization</li>
-								<li>Measurement</li>
-							</ul>
+							<LocalLabel localizeKey='links.purposes.description'>
+								How information may be used:
+								<ul>
+									<li>Storage and access of information</li>
+									<li>Ad selection and delivery</li>
+									<li>Content selection and delivery</li>
+									<li>Personalization</li>
+									<li>Measurement</li>
+								</ul>
+							</LocalLabel>
 						</div>
 					</Panel>
 				</div>

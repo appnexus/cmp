@@ -7,7 +7,7 @@ import 'core-js/fn/array/from';
 import 'core-js/fn/set';
 import log from './lib/log';
 import { init } from './lib/init';
-import { CMP_GLOBAL_NAME } from "./lib/cmp";
+import { CMP_GLOBAL_NAME, CMP_CALL_NAME, CMP_LOCATOR_NAME } from "./lib/cmp";
 
 function handleConsentResult(cmp, {vendorListVersion: listVersion} = {}, {created, vendorListVersion} = {}) {
 	if (!created) {
@@ -56,11 +56,11 @@ const configUpdates = {
 
 // Add locator frame
 function addLocatorFrame() {
-	if (!window.frames['__cmpLocator']) {
+	if (!window.frames[CMP_LOCATOR_NAME]) {
 		if (document.body) {
 			const frame = document.createElement('iframe');
 			frame.style.display = 'none';
-			frame.name = '__cmpLocator';
+			frame.name = CMP_LOCATOR_NAME;
 			document.body.appendChild(frame);
 		}
 		else {
@@ -72,7 +72,7 @@ function addLocatorFrame() {
 addLocatorFrame();
 
 // Add stub
-const commandQueue = [];
+const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};
 const cmp = function (command, parameter, callback) {
 	commandQueue.push({
 		command,
@@ -82,7 +82,7 @@ const cmp = function (command, parameter, callback) {
 };
 cmp.commandQueue = commandQueue;
 cmp.receiveMessage = function (event) {
-	const data = event && event.data && event.data.__cmpCall;
+	const data = event && event.data && event.data[CMP_CALL_NAME];
 	if (data) {
 		const {callId, command, parameter} = data;
 		commandQueue.push({
@@ -94,13 +94,13 @@ cmp.receiveMessage = function (event) {
 	}
 };
 
-window.__cmp = cmp;
+window[CMP_GLOBAL_NAME] = cmp;
 
 // Listen for postMessage events
 const listen = window.attachEvent || window.addEventListener;
 listen('message', event => {
-	window.__cmp.receiveMessage(event);
+	window[CMP_GLOBAL_NAME].receiveMessage(event);
 }, false);
 
 // Initialize CMP and then check if we need to ask for consent
-init(configUpdates).then(() => checkConsent(window.__cmp));
+init(configUpdates).then(() => checkConsent(window[CMP_GLOBAL_NAME]));
