@@ -23,27 +23,34 @@ export default class VendorList extends Component {
 
 		const {
 			vendors,
-			onBack
+			onBack,
+			theme,
 		} = props;
+
+		const {
+			textColor,
+			textLightColor,
+			textLinkColor
+		} = theme;
 
 		return (
 			<div class={style.vendorList}>
 				<div class={style.header}>
-					<div class={detailsStyle.title}>
+					<div class={detailsStyle.title} style={{color: textColor}}>
 						<LocalLabel localizeKey='title'>Who is using this information?</LocalLabel>
 					</div>
 				</div>
-				<div class={detailsStyle.description}>
+				<div class={detailsStyle.description} style={{color: textLightColor}}>
 					<LocalLabel localizeKey='description'>Here is the complete list of companies who will use your information. Please view their privacy policy for more details.</LocalLabel>
 				</div>
-				<a onClick={onBack}><LocalLabel localizeKey='back'>Customize how these companies use data from the previous page</LocalLabel></a>
+				<a onClick={onBack} style={{color: textLinkColor}} class={style.customize}><LocalLabel localizeKey='back'>Customize how these companies use data from the previous page</LocalLabel></a>
 				<table>
 					{vendors.map(({name, policyUrl}, index) => (
 						<tr class={index % 2 === 0 ? style.even : style.odd}>
 							<td>
-								<div class={style.company}>
+								<div class={style.company} style={{color: textLightColor}}>
 									{name}
-									<a href={policyUrl} className={style.policy} target='_blank'><ExternalLinkIcon /></a>
+									<a href={policyUrl} className={style.policy} style={{color: textLinkColor}} target='_blank'><ExternalLinkIcon color={textLinkColor} /></a>
 								</div>
 							</td>
 						</tr>
