@@ -11,17 +11,36 @@
 		tr {
 			td {
 				padding: 10px;
-				white-space: nowrap;
 			}
 		}
 	}
+
+	.customize {
+		margin-bottom: 30px;
+		display: block;
+
+		@media @smartphone {
+			font-size: 14px;
+			line-height: 16px;
+		}
+	}
+
 	.company {
-		display: flex;
+		min-height: 20px;
 		align-items: center;
 	}
 	.policy {
 		fill: @color-primary;
+		font-size: 14px;
+
+		svg {
+			vertical-align: middle;
+ 			margin: 0 5px;
+ 		}
 		margin: 0 5px;
-		display: flex;
+		@media @smartphone {
+			font-size: 12px;
+			line-height: 14px;
+		}
 	}
 }

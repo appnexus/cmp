@@ -81,6 +81,22 @@ export default class CmpApi extends Component {
 								by pubvendors.json.
 							</span>
 						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>theme (Object)</span>:
+							<span class={style.argumentDescription}>
+								Some basic colors can be changed through the <span class={style.highlight}>theme</span> object.
+								<span class={style.argument}><span class={style.argumentType}>overlayBackground</span></span>
+								<span class={style.argument}><span class={style.argumentType}>primaryColor</span></span>
+								<span class={style.argument}><span class={style.argumentType}>primaryTextColor</span></span>
+								<span class={style.argument}><span class={style.argumentType}>secondaryColor</span></span>
+								<span class={style.argument}><span class={style.argumentType}>secondaryTextColor</span></span>
+								<span class={style.argument}><span class={style.argumentType}>textLinkColor</span></span>
+								<span class={style.argument}><span class={style.argumentType}>backgroundColor</span></span>
+								<span class={style.argument}><span class={style.argumentType}>textColor</span></span>
+								<span class={style.argument}><span class={style.argumentType}>textLightColor</span></span>
+								<span class={style.argument}><span class={style.argumentType}>dividerColor</span></span>
+							</span>
+						</span>
 					</div>
 			</div>
 		);
