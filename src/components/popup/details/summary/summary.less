@@ -14,14 +14,28 @@
 		&:last-child {
 			border-bottom: 1px solid @color-border;
 		}
+
+		@media @smartphone {
+			padding: 15px 0;
+			display: block;
+			line-height: 16px;
+		}
 	}
 
 	.learnMore {
 		font-size: 14px;
+		@media @smartphone {
+			font-size: 12px;
+		}
 	}
 
 	.purposeTitle {
 		flex: 1;
 		font-size: 18px;
+		@media @smartphone {
+			font-size: 14px;
+			display: block;
+			margin-bottom: 0;
+		}
 	}
 }
