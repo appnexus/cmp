@@ -58,6 +58,11 @@ const commonConfig = {
 	module: {
 		rules: [
 			{
+				test: /\.hbs/,
+				exclude: /node_modules/,
+				use: 'handlebars-loader'
+			},
+			{
 				test: /\.jsx?$/,
 				exclude: path.resolve(__dirname, 'src'),
 				enforce: 'pre',
@@ -165,6 +170,40 @@ const commonConfig = {
 };
 
 module.exports = [
+	// S1 CMP
+	{
+		entry: {
+			cmp: './s1/cmp.js'
+		},
+		...commonConfig,
+		output: {
+			path: path.resolve(__dirname, 'build'),
+			publicPath: './',
+			filename: 's1.[name].js'
+		},
+		plugins: [
+			new webpack.DefinePlugin({
+				'process.env.NODE_ENV': JSON.stringify(ENV)
+			}),
+			new HtmlWebpackPlugin({
+				filename: 's1cmp.html',
+				template: 's1cmp.hbs',
+				inject: false,
+				inline: UglifyJS.minify(fs.readFileSync('./src/loader.js', 'utf8')).code
+			}),
+			new CopyWebpackPlugin([
+				{ from: 'assets', to: '.' },
+				{
+					from: 'loader.js',
+					to: '.',
+					transform(content) {
+						// Just want to uglify and copy this file over
+						return Promise.resolve(Buffer.from(UglifyJS.minify(content.toString()).code, 'utf8'));
+					}
+				}
+			])
+		].concat(ENV === 'production' ? uglifyPlugin : [])
+	},
 	// CMP config
 	{
 		entry: {
