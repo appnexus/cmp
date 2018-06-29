@@ -17,17 +17,18 @@ export default class PurposeList extends Component {
 
 	render(props, state) {
 		const {
-			onBack
+			onBack,
+			theme,
 		} = props;
 
 		return (
 			<div class={style.purposeList}>
 				<div class={style.header}>
-					<div class={detailsStyle.title}>
+					<div class={detailsStyle.title} style={{color: theme.text}}>
 						<LocalLabel localizeKey='title'>What information is being used?</LocalLabel>
 					</div>
 				</div>
-				<div class={detailsStyle.description}>
+				<div class={detailsStyle.description} style={{color: theme.textLight}}>
 					<LocalLabel localizeKey='description'>Below is a complete list of the information that may be gathered.</LocalLabel>
 				</div>
 				<div class={style.infoItems}>
@@ -43,7 +44,7 @@ export default class PurposeList extends Component {
 						</ul>
 					</LocalLabel>
 				</div>
-				<a onClick={onBack}><LocalLabel localizeKey='back'>Customize how this data is used from the previous page</LocalLabel></a>
+				<a onClick={onBack} style={{color: theme.textLink}}>><LocalLabel localizeKey='back'>Customize how this data is used from the previous page</LocalLabel></a>
 			</div>
 		);
 	}

@@ -51,6 +51,7 @@ export default class Details extends Component {
 			onSave,
 			onClose,
 			store,
+			theme,
 		} = props;
 		const {
 			selectedPanelIndex,
@@ -80,7 +81,7 @@ export default class Details extends Component {
 			.sort(({name: n1}, {name: n2}) => n1.toLowerCase() === n2.toLowerCase() ? 0 : n1.toLowerCase() > n2.toLowerCase() ? 1 : -1);
 
 		return (
-			<div class={style.details}>
+			<div class={style.details} style={{backgroundColor: theme.background, color: theme.textLight}}>
 				<div class={style.body}>
 					<Panel selectedIndex={selectedPanelIndex}>
 						<Summary
@@ -88,13 +89,16 @@ export default class Details extends Component {
 							onPurposeClick={this.handlePurposeClick}
 							onVendorListClick={this.handlePanelClick(SECTION_VENDOR_LIST)}
 							onPurposeListClick={this.handlePanelClick(SECTION_PURPOSE_LIST)}
+							theme={theme}
 						/>
 						<VendorList
 							vendors={formattedVendors}
 							onBack={this.handleBack}
+							theme={theme}
 						/>
 						<PurposeList
 							onBack={this.handleBack}
+							theme={theme}
 						/>
 						<Vendors
 							vendors={formattedVendors}
@@ -103,14 +107,25 @@ export default class Details extends Component {
 							selectAllVendors={selectAllVendors}
 							selectedVendorIds={selectedVendorIds}
 							selectedPurpose={selectedPurpose}
+							theme={theme}
 						/>
 					</Panel>
 				</div>
-				<div class={style.footer}>
+				<div class={style.footer} style={{borderColor: theme.divider}}>
 					{selectedPanelIndex > 0 &&
-					<Button class={style.back} onClick={this.handleBack}>&lt; <LocalLabel localizeKey='back'>Back</LocalLabel></Button>
+					<Button
+						class={style.back}
+						onClick={this.handleBack}
+						backgroundColor={theme.secondary}
+						textColor={theme.secondaryText}
+					>&lt; <LocalLabel localizeKey='back'>Back</LocalLabel></Button>
 					}
-					<Button class={style.save} onClick={onSave}><LocalLabel localizeKey='save'>Continue Using Site</LocalLabel></Button>
+					<Button
+						class={style.save}
+						onClick={onSave}
+						backgroundColor={theme.primary}
+						textColor={theme.primaryText}
+					><LocalLabel localizeKey='save'>Continue Using Site</LocalLabel></Button>
 				</div>
 			</div>
 		);
