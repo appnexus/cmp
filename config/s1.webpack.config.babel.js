@@ -32,7 +32,7 @@ module.exports = [
 				'process.env.NODE_ENV': JSON.stringify(ENV)
 			}),
 			new HtmlWebpackPlugin({
-				filename: '../reference.html',
+				filename: './reference.html',
 				template: 's1/reference.hbs',
 				inject: false,
 				inline: UglifyJS.minify(fs.readFileSync('./src/s1/loader.js', 'utf8')).code,
