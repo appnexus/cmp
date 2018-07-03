@@ -38,7 +38,7 @@ Check the version you want to use, new versions are opt-in only.
   <script type="text/javascript" src="//s.flocdn.com/cmp/0.0.1/loader.js"></script>
   <script type="text/javascript">
   const config = {
-    scriptSrc: 'https://s.flocdn.com/cmp/s1.cmp.js',
+    scriptSrc: 'https://s.flocdn.com/cmp/0.0.1/cmp.js',
     gdprApplies: true,
     // logging: true,
     // pubVendorListLocation: '/.well-known/pubvendors.json',
@@ -106,7 +106,7 @@ Example Configuration:
 
 ```
 const config = {
-  scriptSrc: '//s.flocdn.com/cmp/s1.cmp.js',
+  scriptSrc: '//s.flocdn.com/cmp/0.0.1/cmp.js',
   gdprApplies: true,
   pubVendorListLocation: '//s.flocdn.com/cmp/pubvendors.json', // OPTIONAL, whitelists vendors
   logging: false,
@@ -144,7 +144,7 @@ Callback Example
 
 cmp('init', {
     gdprApplies: true,
-    scriptSrc: '//s.flocdn.com/cmp/s1.cmp.js'
+    scriptSrc: '//s.flocdn.com/cmp/0.0.1/cmp.js'
   }, (result) => {
 
   // Consent is required and there was an error
