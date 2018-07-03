@@ -14,7 +14,7 @@
     "upload:original": "cross-var s3-deploy './dist/{*.?(js|html),docs/**}' --cwd './dist' --region us-west-2 --bucket s1-layout-cdn/cmp --gzip --cache 1440 --invalidate '/cmp/*.js /cmp/* /cmp/docs/*'",
     "build:s1": "cross-env NODE_ENV=production webpack --progress --config config/s1.webpack.config.babel.js",
     "deploy:s1": "yarn build:s1 && yarn upload:s1",
-    "upload:s1": "cross-var s3-deploy './dist/$npm_package_version/**' --cwd './dist/$npm_package_version' --region us-west-2 --bucket s1-layout-cdn/cmp/$npm_package_version --gzip --preventUpdates --immutable --ext js",
+    "upload:s1": "cross-var s3-deploy './dist/$npm_package_version/**' --cwd './dist/$npm_package_version' --region us-west-2 --bucket s1-layout-cdn/cmp/$npm_package_version --gzip --preventUpdates --immutable",
     "prebuild": "npm run clean && mkdirp dist",
     "test": "npm run -s lint && jest --coverage",
     "test:watch": "npm run -s test -- --watch",
