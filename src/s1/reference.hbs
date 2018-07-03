@@ -7,10 +7,10 @@
 <body>
 	<h1>System1 CMP Reference Pa</h1>
 	<pre>
-		&lt;script src="./{{{ htmlWebpackPlugin.options.version }}}/loader.js"&gt;&lt;/script&gt;
+		&lt;script src="./loader.js"&gt;&lt;/script&gt;
 		&lt;script&gt;
 		const config = {
-			scriptSrc: 'https://s.flocdn.com/christian-test/{{{ htmlWebpackPlugin.options.version }}}/cmp.js',
+			scriptSrc: 'https://s.flocdn.com/cmp/{{{ htmlWebpackPlugin.options.version }}}/cmp.js',
 			gdprApplies: true
 		};
 
@@ -52,10 +52,10 @@
 
 
 	<!--// LOADER //-->
-	<script src="./{{{htmlWebpackPlugin.options.version}}}/loader.js"></script>
+	<script src="./loader.js"></script>
 	<script>
 		const config = {
-			scriptSrc: window.location.search.indexOf("remote=true") >= 0 ? 'https://s.flocdn.com/christian-test/{{{htmlWebpackPlugin.options.version}}}/cmp.js' : './{{{htmlWebpackPlugin.options.version}}}/cmp.js',
+			scriptSrc: window.location.search.indexOf("remote=true") >= 0 ? 'https://s.flocdn.com/cmp/{{{htmlWebpackPlugin.options.version}}}/cmp.js' : './cmp.js',
 			// scriptSrc: './s1.cmp.js',
 			// logging: false,
 			// pubVendorListLocation: './pubvendors.json',
