@@ -61,6 +61,27 @@ export default class Cmp {
 		},
 
 		/**
+		 * Get the consent string value.
+		 */
+		getConsentFields: (params = {}, callback = () => {}) => {
+			const data = this.store.getConsentFieldsObject();
+			const now = new Date();
+			const consent = {
+				metadata: this.generateConsentString({
+					created: now,
+					lastUpdated: now,
+					...data,
+					...params
+				}),
+				gdprApplies: config.gdprApplies,
+				hasGlobalScope: config.storeConsentGlobally,
+				...data
+			};
+
+			callback(consent, true);
+		},
+
+		/**
 		 * Get the encoded vendor consent data value.
 		 */
 		getConsentData: (_, callback = () => {}) => {
@@ -174,7 +195,7 @@ export default class Cmp {
 		}
 	};
 
-	generateConsentString = () => {
+	generateConsentString = (data = {}) => {
 		const {
 			persistedVendorConsentData,
 			vendorList,
@@ -184,15 +205,26 @@ export default class Cmp {
 		const {
 			selectedVendorIds = new Set(),
 			selectedPurposeIds = new Set()
-		} = persistedVendorConsentData || {};
+		} = {
+			...persistedVendorConsentData,
+			...data
+		};
+
+		const consentData = {
+			...persistedVendorConsentData,
+			vendorList,
+			...data,
+			selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))),
+			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds))
+		};
+
+		const valid = (data = {}) => [
+			'cmpId', 'cmpVersion', 'consentLanguage', 'consentScreen', 'cookieVersion', 'created', 'lastUpdated',
+			'maxVendorId', 'selectedPurposeIds', 'selectedVendorIds', 'vendorListVersion'
+		].every(prop => data.hasOwnProperty(prop));
 
 		// Encode the persisted data
-		return persistedVendorConsentData && encodeVendorConsentData({
-			...persistedVendorConsentData,
-			selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))),
-			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds)),
-			vendorList
-		});
+		return persistedVendorConsentData || valid(consentData) ? encodeVendorConsentData(consentData) : undefined;
 	};
 
 	processCommandQueue = () => {
