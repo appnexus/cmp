@@ -1,9 +1,10 @@
 import log from './log';
 import config from './config';
+import { encodeVendorConsentData } from './cookie/cookie';
 import {
-	encodeVendorConsentData,
-	encodePublisherConsentData
-} from './cookie/cookie';
+	encodeVendorCookieValue,
+	encodePublisherCookieValue
+} from "./cookie/cookieutils";
 
 export const CMP_GLOBAL_NAME = '__cmp';
 export const CMP_CALL_NAME = CMP_GLOBAL_NAME + 'Call';
@@ -28,17 +29,26 @@ export default class Cmp {
 			const {
 				persistedPublisherConsentData,
 				persistedVendorConsentData,
-				vendorList,
-				customPurposeList
 			} = this.store;
 
+			// Encode limited fields for "metadata"
+			const metadata = encodePublisherCookieValue({
+				...persistedPublisherConsentData,
+				...persistedVendorConsentData,
+			}, [
+				'cookieVersion',
+				'created',
+				'lastUpdated',
+				'cmpId',
+				'cmpVersion',
+				'consentScreen',
+				'consentLanguage',
+				'vendorListVersion',
+				'publisherPurposeVersion'
+			]);
+
 			const consent = {
-				metadata: encodePublisherConsentData({
-					...persistedPublisherConsentData,
-					...persistedVendorConsentData,
-					vendorList,
-					customPurposeList
-				}),
+				metadata,
 				gdprApplies: config.gdprApplies,
 				hasGlobalScope: config.storeConsentGlobally,
 				...this.store.getPublisherConsentsObject()
@@ -51,8 +61,22 @@ export default class Cmp {
 		 * @param {Array} vendorIds Array of vendor IDs to retrieve.  If empty return all vendors.
 		 */
 		getVendorConsents: (vendorIds, callback = () => {}) => {
+
+			// Encode limited fields for "metadata"
+			const { persistedVendorConsentData } = this.store;
+			const metadata = persistedVendorConsentData && encodeVendorCookieValue(persistedVendorConsentData, [
+				'cookieVersion',
+				'created',
+				'lastUpdated',
+				'cmpId',
+				'cmpVersion',
+				'consentScreen',
+				'consentLanguage',
+				'vendorListVersion',
+			]);
+
 			const consent = {
-				metadata: this.generateConsentString(),
+				metadata,
 				gdprApplies: config.gdprApplies,
 				hasGlobalScope: config.storeConsentGlobally,
 				...this.store.getVendorConsentsObject(vendorIds)
@@ -77,8 +101,8 @@ export default class Cmp {
 		 * Get the entire vendor list
 		 */
 		getVendorList: (vendorListVersion, callback = () => {}) => {
-			const {vendorList} = this.store;
-			const {vendorListVersion: listVersion} = vendorList || {};
+			const { vendorList } = this.store;
+			const { vendorListVersion: listVersion } = vendorList || {};
 			if (!vendorListVersion || vendorListVersion === listVersion) {
 				callback(vendorList, true);
 			}
@@ -106,10 +130,10 @@ export default class Cmp {
 
 			// Trigger load events immediately if they have already occurred
 			if (event === 'isLoaded' && this.isLoaded) {
-				callback({event});
+				callback({ event });
 			}
 			if (event === 'cmpReady' && this.cmpReady) {
-				callback({event});
+				callback({ event });
 			}
 		},
 
@@ -180,7 +204,7 @@ export default class Cmp {
 		if (queue.length) {
 			log.info(`Process ${queue.length} queued commands`);
 			this.commandQueue = [];
-			queue.forEach(({callId, command, parameter, callback, event}) => {
+			queue.forEach(({ callId, command, parameter, callback, event }) => {
 				// If command is queued with an event we will relay its result via postMessage
 				if (event) {
 					this.processCommand(command, parameter, returnValue =>
@@ -203,12 +227,18 @@ export default class Cmp {
 	 * Handle a message event sent via postMessage to
 	 * call `processCommand`
 	 */
-	receiveMessage = ({data, origin, source}) => {
-		const {[CMP_CALL_NAME]: cmp} = data;
+	receiveMessage = ({ data, origin, source }) => {
+		const { [CMP_CALL_NAME]: cmp } = data;
 		if (cmp) {
-			const {callId, command, parameter} = cmp;
+			const { callId, command, parameter } = cmp;
 			this.processCommand(command, parameter, returnValue =>
-				source.postMessage({[CMP_RETURN_NAME]: {callId, command, returnValue}}, origin));
+				source.postMessage({
+					[CMP_RETURN_NAME]: {
+						callId,
+						command,
+						returnValue
+					}
+				}, origin));
 		}
 	};
 
@@ -249,7 +279,7 @@ export default class Cmp {
 		log.info(`Notify event: ${event}`);
 		const eventSet = this.eventListeners[event] || new Set();
 		eventSet.forEach(listener => {
-			listener({event, data});
+			listener({ event, data });
 		});
 
 		// Process any queued commands that were waiting for consent data
