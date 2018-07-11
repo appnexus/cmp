@@ -27,7 +27,7 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 					if (command === 'ping') {
 						if (callback) {
 							callback({
-								gdprAppliesGlobally: !!(window.__cmp && window.__cmp.config && window.__cmp.config.storeConsentGlobally),
+								gdprAppliesGlobally: !!(window.__cmp && window.__cmp.config && window.__cmp.config.gdprAppliesGlobally),
 								cmpLoaded: false
 							}); 
 						}
