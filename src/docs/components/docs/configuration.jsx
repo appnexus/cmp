@@ -82,6 +82,19 @@ export default class CmpApi extends Component {
 							</span>
 						</span>
 						<span class={style.argument}>
+							<span class={style.argumentType}>gdprApplies (Boolean)</span>:
+							<span class={style.argumentDescription}>
+								Indicates that the publisher has configured the CMP to apply GDPR. This flag does not change the behavior of the CMP.
+							</span>
+						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>gdprAppliesGlobally (Boolean)</span>:
+							<span class={style.argumentDescription}>
+								Indicates that the publisher has configured the CMP to apply GDPR to all (including non-EU) visitors.
+								This flag does not change the behavior of the CMP.
+							</span>
+						</span>
+						<span class={style.argument}>
 							<span class={style.argumentType}>theme (Object)</span>:
 							<span class={style.argumentDescription}>
 								Some basic colors can be changed through the <span class={style.highlight}>theme</span> object.
