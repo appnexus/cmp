@@ -265,4 +265,44 @@ describe('cookieutils', () => {
 
 		expect(decoded).to.deep.equal(consentData);
 	});
+
+
+	it('encodes and decodes only a subset of vendor fields', () => {
+
+		const aDate = new Date('2018-07-15 PDT');
+
+		const consentData = {
+			cookieVersion: 1,
+			created: aDate,
+			lastUpdated: aDate,
+			cmpId: 1,
+			cmpVersion: 1,
+			consentScreen: 1,
+			consentLanguage: 'EN',
+			vendorListVersion: 1,
+			purposeIdBitString: '000000001010101010001100',
+			maxVendorId: 5,
+			isRange: false,
+			vendorIdBitString: '10011',
+		};
+
+		const includeFields = [
+			'cookieVersion',
+			'created',
+			'lastUpdated',
+			'cmpId',
+			'vendorListVersion'
+		];
+
+		const bitString = encodeVendorCookieValue(consentData, includeFields);
+		const decoded = decodeVendorCookieValue(bitString, includeFields);
+
+		expect(decoded).to.deep.equal({
+			cookieVersion: 1,
+			created: aDate,
+			lastUpdated: aDate,
+			cmpId: 1,
+			vendorListVersion: 1
+		});
+	});
 });
