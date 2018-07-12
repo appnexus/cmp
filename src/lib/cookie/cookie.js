@@ -204,7 +204,8 @@ function readCookie(name) {
 
 function writeCookie(name, value, maxAgeSeconds, path = '/') {
 	const maxAge = maxAgeSeconds === null ? '' : `;max-age=${maxAgeSeconds}`;
-	document.cookie = `${name}=${value};path=${path}${maxAge}`;
+	const expires = maxAgeSeconds === null ? '' : ';expires=' + new Date(new Date() * 1 + maxAgeSeconds * 1000).toUTCString();
+	document.cookie = `${name}=${value};path=${path}${maxAge}${expires}`;
 }
 
 function readPublisherConsentCookie() {
