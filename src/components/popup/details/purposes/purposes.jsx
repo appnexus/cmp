@@ -12,7 +12,8 @@ class LocalLabel extends Label {
 
 export default class Purposes extends Component {
 	state = {
-		selectedPurposeIndex: 0
+		selectedPurposeIndex: 0,
+		initialDisplayOfDetailView: 1
 	};
 
 	static defaultProps = {
@@ -99,13 +100,25 @@ export default class Purposes extends Component {
 		const {
 			onShowVendors,
 			selectedPurposeIds,
-			selectedCustomPurposeIds
+			selectedCustomPurposeIds,
+			store
 		} = props;
+
+		const persistedVendorConsentData = store.persistedVendorConsentData || {};
+		const {created} = persistedVendorConsentData;
 
 		const {selectedPurposeIndex} = state;
 
 		const allPurposes = this.getAllPurposes();
 		const selectedPurpose = allPurposes[selectedPurposeIndex];
+
+		if (!created && selectedPurposeIndex && this.state.initialDisplayOfDetailView) {
+			this.setState({
+				initialDisplayOfDetailView: 0
+			});
+			this.handleSelectPurpose({isSelected: false})
+		}
+
 		const purposeIsActive = selectedPurpose && selectedPurpose.ids.some(id =>
 			selectedPurpose.custom ? selectedCustomPurposeIds.has(id) : selectedPurposeIds.has(id)
 		);
