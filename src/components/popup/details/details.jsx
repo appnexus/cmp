@@ -55,8 +55,8 @@ export default class Details extends Component {
 			selectCustomPurpose,
 			selectAllVendors,
 			selectVendor,
-			persistedVendorConsentData = {}}
-		 = store;
+			persistedVendorConsentData = {}
+		} = store;
 		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
 		const { selectedCustomPurposeIds } = publisherConsentData;
 		const { purposes = [], vendors = [] } = vendorList;
