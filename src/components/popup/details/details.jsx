@@ -54,8 +54,9 @@ export default class Details extends Component {
 			selectPurpose,
 			selectCustomPurpose,
 			selectAllVendors,
-			selectVendor
-		} = store;
+			selectVendor,
+			persistedVendorConsentData = {}}
+		 = store;
 		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
 		const { selectedCustomPurposeIds } = publisherConsentData;
 		const { purposes = [], vendors = [] } = vendorList;
@@ -81,7 +82,7 @@ export default class Details extends Component {
 							selectPurpose={selectPurpose}
 							selectCustomPurpose={selectCustomPurpose}
 							onShowVendors={this.handleShowVendors}
-							store = {store}
+							persistedVendorConsentData={persistedVendorConsentData}
 						/>
 						<Vendors
 							selectedVendorIds={selectedVendorIds}

@@ -101,12 +101,11 @@ export default class Purposes extends Component {
 			onShowVendors,
 			selectedPurposeIds,
 			selectedCustomPurposeIds,
-			store
+			persistedVendorConsentData
 		} = props;
 
 		const persistedVendorConsentData = store.persistedVendorConsentData || {};
 		const {created} = persistedVendorConsentData;
-
 		const {selectedPurposeIndex} = state;
 
 		const allPurposes = this.getAllPurposes();

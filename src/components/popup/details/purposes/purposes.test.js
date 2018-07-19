@@ -13,7 +13,7 @@ describe('Purposes', () => {
 	});
 
 	it('should render links for vendors and all standard and custom purposes', () => {
-		let store = {};
+		let persistedVendorConsentData = {};
 
 		const purposes = render(<Purposes
 			purposes={[
@@ -23,7 +23,7 @@ describe('Purposes', () => {
 			customPurposes={[
 				{ id: 1, name: 'Custom Purpose 1' },
 			]}
-			store={store}
+			persistedVendorConsentData={persistedVendorConsentData}
 		/>, scratch);
 
 		const purposeLinks = purposes.querySelectorAll(`.${style.purposeItem}`);
@@ -33,7 +33,7 @@ describe('Purposes', () => {
 	it('should select a standard purpose', () => {
 		const selectPurpose = jest.fn();
 		const selectCustomPurpose = jest.fn();
-		let store = {};
+		let persistedVendorConsentData = {};
 		let purposes;
 		render(<Purposes
 			ref={ref => purposes = ref}
@@ -43,7 +43,7 @@ describe('Purposes', () => {
 			]}
 			selectPurpose={selectPurpose}
 			selectCustomPurpose={selectCustomPurpose}
-			store={store}
+			persistedVendorConsentData={persistedVendorConsentData}
 		/>, scratch);
 
 		purposes.handleSelectPurposeDetail(1)();
@@ -59,7 +59,7 @@ describe('Purposes', () => {
 		const selectCustomPurpose = jest.fn();
 
 		let purposes;
-		let store = {};
+		let persistedVendorConsentData = {};
 		render(<Purposes
 			ref={ref => purposes = ref}
 			purposes={[
@@ -71,7 +71,7 @@ describe('Purposes', () => {
 			]}
 			selectPurpose={selectPurpose}
 			selectCustomPurpose={selectCustomPurpose}
-			store={store}
+			persistedVendorConsentData={persistedVendorConsentData}
 		/>, scratch);
 
 		purposes.handleSelectPurposeDetail(2)();
@@ -87,7 +87,7 @@ describe('Purposes', () => {
 		const selectCustomPurpose = jest.fn();
 
 		let purposes;
-		let store = {};
+		let persistedVendorConsentData = {};
 		render(<Purposes
 			ref={ref => purposes = ref}
 			purposes={[
@@ -96,7 +96,7 @@ describe('Purposes', () => {
 			]}
 			selectPurpose={selectPurpose}
 			selectCustomPurpose={selectCustomPurpose}
-			store={store}
+			persistedVendorConsentData={persistedVendorConsentData}
 		/>, scratch);
 
 		purposes.componentDidUpdate = (prevProps, prevState) => {
