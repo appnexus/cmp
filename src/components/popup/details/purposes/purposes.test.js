@@ -81,4 +81,32 @@ describe('Purposes', () => {
 		expect(selectCustomPurpose.mock.calls[0][1]).to.equal(true);
 		expect(selectPurpose.mock.calls).to.be.empty;
 	});
+
+	it('after selecting group of purposes with index 1, consent for those purposes should be withdrawn', done => {
+		const selectPurpose = jest.fn();
+		const selectCustomPurpose = jest.fn();
+
+		let purposes;
+		let store = {};
+		render(<Purposes
+			ref={ref => purposes = ref}
+			purposes={[
+				{ id: 1, name: 'Purpose 1' },
+				{ id: 2, name: 'Purpose 2' }
+			]}
+			selectPurpose={selectPurpose}
+			selectCustomPurpose={selectCustomPurpose}
+			store={store}
+		/>, scratch);
+
+		purposes.componentDidUpdate = (prevProps, prevState) => {
+			if (purposes.state.selectedPurposeIndex === prevState.selectedPurposeIndex) {
+				expect(selectPurpose.mock.calls[0][0]).to.equal(2);
+				expect(selectPurpose.mock.calls[0][1]).to.equal(false);
+				expect(selectCustomPurpose.mock.calls).to.be.empty;
+				done();
+			}
+		};
+		purposes.handleSelectPurposeDetail(1)();
+	});
 });
