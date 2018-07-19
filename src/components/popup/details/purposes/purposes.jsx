@@ -104,7 +104,6 @@ export default class Purposes extends Component {
 			persistedVendorConsentData
 		} = props;
 
-		const persistedVendorConsentData = store.persistedVendorConsentData || {};
 		const {created} = persistedVendorConsentData;
 		const {selectedPurposeIndex} = state;
 
