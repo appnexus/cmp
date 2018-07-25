@@ -12,7 +12,7 @@ export default {
 			
     <p style="margin: 25px 0 10px 0; font-weight: 900">Zgoda</p>
 	
-    <p> Jeśli chcesz zgodzić się na przetwarzanie przez Zaufanych Partnerów Grupy Onet-RAS Polska Twoich danych osobowych, które udostępniasz w historii przeglądania stron i aplikacji internetowych, w celach marketingowych (obejmujących zautomatyzowaną analizę Twojej aktywności na stronach internetowych i w aplikacjach w celu ustalenia Twoich potencjalnych zainteresowań dla dostosowania reklamy i oferty) w tym na umieszczanie znaczników internetowych (cookies itp.) na Twoich urządzeniach i odczytywanie takich znaczników, kliknij przycisk „Przejdź do serwisu” lub zamknij to okno. </p>
+    <p> Jeśli chcesz zgodzić się na przetwarzanie przez Zaufanych Partnerów Grupy Onet-RAS Polska Twoich danych osobowych, które udostępniasz w historii przeglądania stron i aplikacji internetowych oraz danych lokalizacyjnych generowanych przez Twoje urządzenie, w celach marketingowych (obejmujących zautomatyzowaną analizę Twojej aktywności na stronach internetowych i w aplikacjach w celu ustalenia Twoich potencjalnych zainteresowań dla dostosowania reklamy i oferty) w tym na umieszczanie znaczników internetowych (cookies itp.) na Twoich urządzeniach i odczytywanie takich znaczników, kliknij przycisk „Przejdź do serwisu” lub zamknij to okno. </p>
 	
 <p>Jeśli nie chcesz wyrazić zgody lub ograniczyć jej zakres, kliknij „Ustawienia zaawansowane”.  </p>
 
@@ -21,7 +21,7 @@ export default {
             
            <p>Powyższa zgoda dotyczy przetwarzania Twoich danych osobowych w celach marketingowych Zaufanych Partnerów. Zaufani Partnerzy to firmy z obszaru e-commerce i reklamodawcy oraz działające w ich imieniu domy mediowe i podobne organizacje, z którymi Grupa Onet-RAS Polska współpracuje lub które polecane są przez międzynarodowe organizacje branżowe takie jak np. organizacja IAB (Interactive Advertising Bureau).</p>
 		   
-<p>Podmioty z Grupy Onet-RAS Polska w ramach udostępnianych przez siebie usług internetowych przetwarzają Twoje dane we własnych celach marketingowych w oparciu o prawnie uzasadniony, wspólny interes podmiotów Grupy Onet-RAS Polska. Przetwarzanie takie nie wymaga dodatkowej zgody z Twojej strony, ale możesz mu się w każdej chwili sprzeciwić. O ile nie zdecydujesz inaczej, dokonując stosownych zmian ustawień w Twojej przeglądarce, podmioty z Grupy Onet-RAS Polska będą również instalować na Twoich urządzeniach pliki cookies i podobne oraz odczytywać informacje z takich plików. Bliższe informacje o cookies znajdziesz w akapicie „Cookies” pod koniec tej informacji.</p>
+<p>Podmioty z Grupy Onet-RAS Polska w ramach udostępnianych przez siebie usług internetowych przetwarzają Twoje dane opisane na wstępie we własnych celach marketingowych w oparciu o prawnie uzasadniony, wspólny interes podmiotów Grupy Onet-RAS Polska. Przetwarzanie takie nie wymaga dodatkowej zgody z Twojej strony, ale możesz mu się w każdej chwili sprzeciwić. O ile nie zdecydujesz inaczej, dokonując stosownych zmian ustawień w Twojej przeglądarce, podmioty z Grupy Onet-RAS Polska będą również instalować na Twoich urządzeniach pliki cookies i podobne oraz odczytywać informacje z takich plików. Bliższe informacje o cookies znajdziesz w akapicie „Cookies” pod koniec tej informacji.</p>
 </p>
     <p style="margin: 25px 0 10px 0; font-weight: 900">Administrator danych osobowych</p>
     <p> Administratorem Twoich danych osobowych jest podmiot z Grupy Onet-RAS Polska, z którego serwisu lub aplikacji korzystasz. Naszą nazwę znajdziesz zawsze na samym dole strony po prawej stronie, a logo na planszy zawierającej niniejszą informację. Informację o powołaniu przez nas inspektora ochrony danych i jego danych kontaktowych znajdziesz też na samym dole strony w polityce prywatności. Administratorami Twoich danych osobowych będą także pozostałe podmioty z Grupy Onet-RAS Polska, których pełne dane możesz sprawdzić <a href="https://polityka-prywatnosci.onet.pl/grupa-onetras.html" target="_blank">pod tym linkiem</a>. Jeżeli wyrazisz zgodę, o którą wyżej prosimy, administratorami Twoich danych osobowych będą także nasi Zaufani Partnerzy. Listę Zaufanych Partnerów możesz sprawdzić w każdym momencie na stronie naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank">polityki prywatności</a> i tam też zmodyfikować lub cofnąć swoje zgody.</p>
@@ -40,11 +40,11 @@ export default {
         </ul>
         
 		<br>
-        <p> Twoje dane przetwarzane będą do czasu istnienia podstawy do ich przetwarzania, czyli w przypadku udzielenia zgody do momentu jej cofnięcia, ograniczenia lub innych działań z Twojej strony ograniczających tę zgodę, w przypadku niezbędności danych do wykonania umowy, przez czas jej wykonywania i ewentualnie okres przedawnienia roszczeń z niej (zwykle nie więcej niż 3 lata, a maksymalnie 10 lat), a w przypadku, gdy podstawą przetwarzania danych jest uzasadniony interes administratora, do czasu zgłoszenia przez Ciebie skutecznego sprzeciwu.</p>
+        <p> Twoje dane przetwarzane będą do czasu istnienia podstawy do ich przetwarzania, czyli w przypadku udzielenia zgody do momentu jej cofnięcia, ograniczenia lub innych działań z Twojej strony ograniczających tę zgodę, w przypadku niezbędności danych do wykonania umowy, przez czas jej wykonywania i ewentualnie okres przedawnienia roszczeń z niej (zwykle nie więcej niż 3 lata, a maksymalnie 6 lat), a w przypadku, gdy podstawą przetwarzania danych jest uzasadniony interes administratora, do czasu zgłoszenia przez Ciebie skutecznego sprzeciwu.</p>
       
 	  <p style="margin: 25px 0 10px 0; font-weight: 900">Przekazywanie danych</p>
 		
-        <p> Administratorzy danych mogą powierzać Twoje dane podwykonawcom IT, księgowym, agencjom marketingowym etc. Zrobią to jedynie na podstawie umowy o powierzenie przetwarzania danych zobowiązującej taki podmiot do odpowiedniego zabezpieczenia danych i niekorzystania z nich do własnych celów.</p>
+        <p> Administratorzy danych mogą powierzać Twoje dane podwykonawcom IT, księgowym, agencjom marketingowym etc. Zrobią to jedynie w niezbędnym zakresie i na podstawie umowy o powierzenie przetwarzania danych zobowiązującej taki podmiot do odpowiedniego zabezpieczenia danych i niekorzystania z nich do własnych celów.</p>
 		
         <p style="margin: 25px 0 10px 0; font-weight: 900">Cookies</p>
 		

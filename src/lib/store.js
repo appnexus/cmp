@@ -208,6 +208,40 @@ export default class Store {
 	};
 
 	/**
+	 * Build consent fields object from data that has already been persisted.
+	 */
+	getConsentFieldsObject = () => {
+		const {
+			persistedVendorConsentData = {},
+			vendorConsentData = {}
+		} = this;
+		const {
+			cmpId,
+			cmpVersion,
+			consentLanguage,
+			consentScreen = 0,
+			cookieVersion,
+			created,
+			globalVendorListVersion,
+			lastUpdated,
+			publisherVendorsVersion
+		} = {
+			...vendorConsentData,
+			...persistedVendorConsentData
+		};
+		return {
+			cmpId,
+			cmpVersion,
+			consentLanguage,
+			consentScreen,
+			cookieVersion,
+			created,
+			globalVendorListVersion,
+			lastUpdated,
+			publisherVendorsVersion
+		};
+	};
+	/**
 	 * Persist all consent data to the cookie.  This data will NOT be filtered
 	 * by the vendorList and will include global consents set no matter what
 	 * was allowed by the list.
