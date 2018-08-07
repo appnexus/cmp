@@ -208,7 +208,7 @@ function decodeFields({ input, fields, startPosition = 0 }) {
  * either `selectedVendorIds` or the `vendorRangeList` depending on
  * the value of the `isRange` flag.
  */
-function encodeDataToBits(data, definitionMap) {
+function encodeDataToBits(data, definitionMap, includeFields) {
 	const { cookieVersion } = data;
 
 	if (typeof cookieVersion !== 'number') {
@@ -218,7 +218,12 @@ function encodeDataToBits(data, definitionMap) {
 		log.error(`Could not find definition to encode cookie version ${cookieVersion}`);
 	}
 	else {
-		const cookieFields = definitionMap[cookieVersion].fields;
+		let cookieFields = definitionMap[cookieVersion].fields;
+
+		// Filter the set of fields to encode if "includeFields" is provided
+		if (includeFields && includeFields instanceof Array) {
+			cookieFields = cookieFields.filter(({name}) => includeFields.indexOf(name) > -1);
+		}
 		return encodeFields({ input: data, fields: cookieFields });
 	}
 }
@@ -227,8 +232,8 @@ function encodeDataToBits(data, definitionMap) {
  * Take all fields required to encode the cookie and produce the
  * URL safe Base64 encoded value.
  */
-function encodeCookieValue(data, definitionMap) {
-	const binaryValue = encodeDataToBits(data, definitionMap);
+function encodeCookieValue(data, definitionMap, includeFields) {
+	const binaryValue = encodeDataToBits(data, definitionMap, includeFields);
 	if (binaryValue) {
 
 		// Pad length to multiple of 8
@@ -248,8 +253,8 @@ function encodeCookieValue(data, definitionMap) {
 	}
 }
 
-function encodeVendorCookieValue(vendorData) {
-	return encodeCookieValue(vendorData, vendorVersionMap);
+function encodeVendorCookieValue(vendorData, includeFields) {
+	return encodeCookieValue(vendorData, vendorVersionMap, includeFields);
 }
 
 function encodePublisherCookieValue(publisherData) {
@@ -260,7 +265,7 @@ function encodePublisherCookieValue(publisherData) {
 /**
  * Decode the (URL safe Base64) value of a cookie into an object.
  */
-function decodeCookieValue(cookieValue, definitionMap) {
+function decodeCookieValue(cookieValue, definitionMap, includeFields) {
 
 	// Replace safe characters
 	const unsafe = cookieValue
@@ -275,10 +280,10 @@ function decodeCookieValue(cookieValue, definitionMap) {
 		inputBits += padLeft(bitString, 8 - bitString.length);
 	}
 
-	return decodeCookieBitValue(inputBits, definitionMap);
+	return decodeCookieBitValue(inputBits, definitionMap, includeFields);
 }
 
-function decodeCookieBitValue(bitString, definitionMap) {
+function decodeCookieBitValue(bitString, definitionMap, includeFields) {
 	const cookieVersion = decodeBitsToInt(bitString, 0, NUM_BITS_VERSION);
 	if (typeof cookieVersion !== 'number') {
 		log.error('Could not find cookieVersion to decode');
@@ -288,14 +293,19 @@ function decodeCookieBitValue(bitString, definitionMap) {
 		log.error(`Could not find definition to decode cookie version ${cookieVersion}`);
 		return {};
 	}
-	const cookieFields = definitionMap[cookieVersion].fields;
+	let cookieFields = definitionMap[cookieVersion].fields;
+
+	// Filter the set of fields to decode if "includeFields" is provided
+	if (includeFields && includeFields instanceof Array) {
+		cookieFields = cookieFields.filter(({name}) => includeFields.indexOf(name) > -1);
+	}
 	const { decodedObject } = decodeFields({ input: bitString, fields: cookieFields });
 	return decodedObject;
 }
 
 
-function decodeVendorCookieValue(cookieValue) {
-	return decodeCookieValue(cookieValue, vendorVersionMap);
+function decodeVendorCookieValue(cookieValue, includeFields) {
+	return decodeCookieValue(cookieValue, vendorVersionMap, includeFields);
 }
 
 function decodePublisherCookieValue(cookieValue) {

@@ -11,6 +11,7 @@ const defaultConfig = {
 	localization: {},
 	forceLocale: null,
 	gdprApplies: true,
+	gdprAppliesGlobally: false,
 	allowedVendorIds: null,
 	theme: {}
 };
