@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>System1 CMP</title>
+</head>
+<body>
+	<h1>System1 CMP Reference Page</h1>
+	<code>
+		&lt;script src="./loader.js"&gt;&lt;/script&gt;
+		&lt;script&gt;
+		const config = {
+			scriptSrc: 'https://s.flocdn.com/cmp/{{{ htmlWebpackPlugin.options.version }}}/cmp.js',
+			gdprApplies: true
+		};
+
+		function onConsentChanged(result) {
+			console.log("onConsentChanged");
+			if (document.cookie.indexOf("gdpr_opt_in=1") < 0) {
+				console.log("all:consent:failed", result);
+			} else {
+				console.log("all:consent:succeeded", result);
+			}
+		}
+
+		cmp('init', config, function (result) {
+			if (result.consentRequired) {
+				if (result.errorMsg) {
+					cmp('showConsentTool');
+					cmp('addEventListener', 'onConsentChanged', onConsentChanged);
+				} else {
+					if (document.cookie.indexOf("gdpr_opt_in=1") >= 0) {
+						console.log("cmp:init: all consent achieved", result);
+					} else {
+						console.log("cmp:init: only some consent achieved", result);
+					}
+				}
+			} else {
+				console.log("cmp:init: consent not required", result);
+			}
+		});
+		&lt;/script&gt;
+	</code>
+
+	<hr />
+
+	<h1>Inline Loader Script</h1>
+
+	<code>
+		{{{ htmlWebpackPlugin.options.inline }}}
+	</code>
+
+
+	<!--// LOADER //-->
+	<script src="./loader.js"></script>
+	<script>
+		const config = {
+			scriptSrc: window.location.search.indexOf("remote=true") >= 0 ? 'https://s.flocdn.com/cmp/{{{htmlWebpackPlugin.options.version}}}/cmp.js' : './cmp.js',
+			// scriptSrc: './s1.cmp.js',
+			// logging: false,
+			// pubVendorListLocation: './pubvendors.json',
+			// pubVendorListLocation: 'https://s.flocdn.com/cmp/pubvendors.json',
+			// logging: false,
+			// customPurposeListLocation: './purposes.json',
+			// globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
+			// globalConsentLocation: './portal.html',
+			// storeConsentGlobally: false,
+			// storePublisherData: false,
+			// localization: {},
+			// forceLocale: null,
+			gdprApplies: true,
+			// allowedVendorIds: null
+		}
+
+		function onConsentChanged(result) {
+			console.log("onConsentChanged");
+			if (document.cookie.indexOf("gdpr_opt_in=1") < 0) {
+				console.log("all:consent:failed", result);
+				// window.location.reload();
+			} else {
+				console.log("all:consent:succeeded", result);
+			}
+		}
+
+		cmp('init', config, function (result) {
+			if (result.consentRequired) {
+				if (result.errorMsg) {
+					cmp('showConsentTool');
+					cmp('addEventListener', 'onConsentChanged', onConsentChanged);
+				} else {
+					// consent achieved
+					if (document.cookie.indexOf("gdpr_opt_in=1") >= 0) {
+						console.log("cmp:init: all consent achieved", result);
+					} else {
+						console.log("cmp:init: only some consent achieved", result);
+					}
+				}
+			} else {
+				console.log("cmp:init: consent not required", result);
+			}
+		});
+
+	</script>
+
+
+	<!--//
+	<script>
+		cmp('init', {
+			scriptSrc: './s1.cmp.js',
+			countryCode: 'us',
+			logging: false,
+			pubVendorListLocation: './pubvendors.json'
+		}, (result) => {
+			console.log("init", result);
+			if (result.consentRequired && !result.hasConsented) {
+				cmp('showConsentTool'); // gdpr
+			}
+		});
+
+		cmp('addEventListener', 'onSubmit', (result) => {
+			// Turn GA on or off
+			// Turn OMJS on or off
+			//
+			console.log("onSubmit", result);
+		});
+	</script>
+	//-->
+
+</body>
+</html>

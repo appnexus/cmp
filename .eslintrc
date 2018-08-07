@@ -24,7 +24,8 @@
     }
   },
   "globals": {
-    "sleep": 1
+    "sleep": 1,
+    "define": 1
   },
   "rules": {
     "react/jsx-no-bind": [2, { "ignoreRefs": true }],

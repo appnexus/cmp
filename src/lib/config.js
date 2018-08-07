@@ -4,6 +4,7 @@ const defaultConfig = {
 	customPurposeListLocation: './purposes.json',
 	globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
 	globalConsentLocation: './portal.html',
+	pubVendorListLocation: null,
 	storeConsentGlobally: false,
 	storePublisherData: false,
 	logging: false,
