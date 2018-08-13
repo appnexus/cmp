@@ -229,7 +229,7 @@ describe('store', () => {
 		store.persist();
 
 		const publisherObject = store.getPublisherConsentsObject();
-		const selectedCustomPurposeIds = Object.keys(publisherObject.customPurposes).filter(key => publisherObject.customPurposes[key]);
+		const selectedCustomPurposeIds = Object.keys(publisherObject.customPurposeConsents).filter(key => publisherObject.customPurposeConsents[key]);
 
 		expect(selectedCustomPurposeIds).to.deep.equal(['2', '3']);
 	});
@@ -247,7 +247,7 @@ describe('store', () => {
 		store.persist();
 
 		const publisherObject = store.getPublisherConsentsObject();
-		const selectedCustomPurposeIds = Object.keys(publisherObject.customPurposes).filter(key => publisherObject.customPurposes[key]);
+		const selectedCustomPurposeIds = Object.keys(publisherObject.customPurposeConsents).filter(key => publisherObject.customPurposeConsents[key]);
 
 		expect(selectedCustomPurposeIds.length).to.equal(customPurposeList.purposes.length);
 	});

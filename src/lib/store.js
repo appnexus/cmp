@@ -197,8 +197,8 @@ export default class Store {
 			cmpId,
 			vendorListVersion,
 			publisherPurposeVersion,
-			standardPurposes: standardPurposeMap,
-			customPurposes: customPurposeMap
+			standardPurposeConsents: standardPurposeMap,
+			customPurposeConsents: customPurposeMap
 		};
 	};
 

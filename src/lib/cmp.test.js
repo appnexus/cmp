@@ -77,8 +77,8 @@ describe('cmp', () => {
 
 		it('getPublisherConsents executes', (done) => {
 			cmp.processCommand('getPublisherConsents', null, data => {
-				expect(Object.keys(data.standardPurposes).length).to.equal(vendorList.purposes.length);
-				expect(Object.keys(data.customPurposes).length).to.equal(customPurposeList.purposes.length);
+				expect(Object.keys(data.standardPurposeConsents).length).to.equal(vendorList.purposes.length);
+				expect(Object.keys(data.customPurposeConsents).length).to.equal(customPurposeList.purposes.length);
 				done();
 			});
 		});
@@ -86,11 +86,11 @@ describe('cmp', () => {
 		it('getPublisherConsents returns only persisted data', (done) => {
 			cmp.store.selectPurpose(1, false);
 			cmp.processCommand('getPublisherConsents', null, data => {
-				expect(data.standardPurposes['1']).to.be.true;
+				expect(data.standardPurposeConsents['1']).to.be.true;
 				cmp.store.persist();
 
 				cmp.processCommand('getPublisherConsents', null, data => {
-					expect(data.standardPurposes['1']).to.be.false;
+					expect(data.standardPurposeConsents['1']).to.be.false;
 					done();
 				});
 			});
