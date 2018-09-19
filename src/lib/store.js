@@ -224,7 +224,8 @@ export default class Store {
 			created,
 			globalVendorListVersion,
 			lastUpdated,
-			publisherVendorsVersion
+			publisherVendorsVersion,
+			vendorListVersion
 		} = {
 			...vendorConsentData,
 			...persistedVendorConsentData
@@ -237,6 +238,7 @@ export default class Store {
 			cookieVersion,
 			created,
 			globalVendorListVersion,
+			vendorListVersion,
 			lastUpdated,
 			publisherVendorsVersion
 		};

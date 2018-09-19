@@ -40,7 +40,7 @@ function checkConsent(cmp, store) {
 				handleConsentResult(cmp, store, vendorList);
 			}, 100);
 
-			cmp('getVendorConsents', null, vendorConsents => {
+			cmp('getConsentFields', null, vendorConsents => {
 				clearTimeout(timeout);
 				handleConsentResult(cmp, store, vendorList, vendorConsents);
 			});
