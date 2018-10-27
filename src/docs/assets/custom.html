@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Yett Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href=".//style/index.css">
+    <script src="../cmp.custom.bundle.js"></script>
+    <script src="./inline.js" type="javascript/blocked"></script>
+    <script type='text/javascript'>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      
+      //window.alert("prueba");
+      ga('create', 'UA-93493218-1', 'auto');
+      ga('send', 'pageview');
+      
+      </script>	     
+</head>
+<body>
+    <script type='text/javascript'>
+        (function() {
+            //window.alert("this must be blocked")
+            var script = document.createElement('script')
+            script.setAttribute('src', './dynamic.js')
+            script.setAttribute('type', 'application/javascript')
+            document.head.appendChild(script)
+        })()
+    </script>
+    <main>
+
+        <header>
+            <h1>
+                Custom vendors
+            </h1>
+            <h3>Example with custom vendors</h3>
+        </header>
+        <section>
+            <h4>This page includes two blacklisted scripts appending html content when executed.</h4>
+                <ul>
+                    <li>One which is inlined with a <code>&lt;script&gt;</code> tag inserted inside <code>&lt;head&gt;</code>.</li>
+                    <li>The other one inserted using :<br/>
+                        <code>document.createElement('SCRIPT') && document.head.appendChild(scriptElement)</code>.</li>
+                </ul>
+            <p>
+                These scripts should not have been executed on load, so initially the dashed zone below should be empty!
+                <br/>
+                Check out your browser's devtools network/source tabs 😉.
+            </p>
+            <div class="buttons-wrapper">
+                <button onclick="yett.unblock('inline.js')">
+                    Unblock the inline script
+                </button>
+                <button onclick="yett.unblock('dynamic.js')">
+                    Unblock the dynamic script
+                </button>
+                <button onclick='yett.unblock()'>
+                    Unblock all scripts
+                </button>
+                <button onclick='window.location.reload()'>Try again!</button>
+            </div>
+            <p id="content">
+            </p>
+            <p class="footnote">
+                <a href="https://github.com/snipsco/yett/blob/master/docs/index.html" target="_blank">
+                    Check out the code.
+                </a>
+            </p>
+        </section>
+    </main>
+    <div id="i2">
+        <iframe id="i1" src="http://www.oondeo.es" marginwidth="0" marginheight="0" scrolling="no" width="1145" height="170" frameborder="0"></iframe>
+    </div>
+    <script src="../cmp.bundle.js"></script>    
+</body>
+</html>
