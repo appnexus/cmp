@@ -8,7 +8,7 @@ export default {
 	pl: {
 		intro: {
 			title: 'Szanowna Użytkowniczko, Szanowny Użytkowniku,',
-			description: `<p> Zanim klikniesz „Przejdź do serwisu” lub zamkniesz to okno, prosimy o przeczytanie tej informacji. Prosimy w niej o Twoją dobrowolną zgodę na przetwarzanie Twoich danych osobowych przez naszych partnerów biznesowych oraz przekazujemy informacje o tzw. cookies i o przetwarzaniu przez nas Twoich danych osobowych. Klikając „Przejdź do serwisu” lub zamykając okno przez kliknięcie w znaczek X, zgadzasz się na poniższe. Możesz też odmówić zgody lub ograniczyć jej zakres.</p>
+			description: `<p> Zanim klikniesz „Przejdź do serwisu” lub zamkniesz to okno, prosimy o przeczytanie tej informacji. Prosimy w niej o Twoją dobrowolną zgodę na przetwarzanie Twoich danych osobowych przez naszych partnerów biznesowych oraz przekazujemy informacje o tzw. cookies i o przetwarzaniu przez nas Twoich danych osobowych. <span style="font-weight: bold">Klikając „Przejdź do serwisu” lub zamykając okno przez kliknięcie w znaczek X, zgadzasz się na poniższe.</span> Możesz też odmówić zgody lub ograniczyć jej zakres.</p>
 			
     <p style="margin: 25px 0 10px 0; font-weight: 900">Zgoda</p>
 	
