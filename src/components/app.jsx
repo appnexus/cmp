@@ -3,6 +3,7 @@ import style from './app.less';
 
 import Popup from './popup/popup';
 import Banner from './banner/banner';
+import PersistentButton from './persistentbutton/persistentbutton';
 
 export default class App extends Component {
 	static defaultProps = {
@@ -57,7 +58,12 @@ export default class App extends Component {
 					   onSave={this.onSave}
 					   theme={theme}
 				/>
+			<PersistentButton   
+				onClick={toggleModalShowing} 
+				theme={theme} 
+			/>				
 			</div>
+
 		);
 	}
 }

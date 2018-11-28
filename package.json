@@ -103,6 +103,7 @@
     "react-codemirror2": "^4.0.0",
     "react-router-dom": "^4.2.2",
     "serve": "^9.2.0",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "yett": "git+https://github.com/oondeo/yett.git"
   }
 }

@@ -1,0 +1,44 @@
+@import '../../style/variables';
+
+.popup {
+	display: flex;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 99999;
+	justify-content: center;
+    align-items: center;
+    
+    &.hidden {
+        display: none;
+		pointer-events: none;
+		// bottom: -250px;
+		// opacity: 0;
+	}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.content {
+	max-width: 770px;
+	background: white;
+    display: flex;
+    flex-direction: column;
+	align-items: center;
+	position: relative;
+    padding:85px;
+	@media @smartphone {
+		width: 98%;
+		height: 98%;
+	}
+}
+
+}

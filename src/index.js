@@ -13,5 +13,11 @@ function start() {
 	const {config} = window[CMP_GLOBAL_NAME] || {};
 	init(config);
 }
-
+ 
+// in development, set up HMR:
+if (module.hot) {
+	console.log("Development Environment");
+	require('preact/devtools');   // turn this on if you want to enable React DevTools!
+	module.hot.accept('./components/app', () => requestAnimationFrame(init) );
+}
 start();
