@@ -14,7 +14,7 @@ class PurposesLabel extends Label {
 	};
 }
 
-export default class VendorList extends Component {
+export default class Summary extends Component {
 	constructor(props) {
 		super(props);
 	}
