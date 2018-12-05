@@ -42,7 +42,7 @@ export default class Vendors extends Component {
 
 	handleToggleAll = () => {
 		const {isSelectAll} = this.state;
-		this[isSelectAll ? 'handleAcceptAll' : 'handleRejectAll']();
+		this[!isSelectAll ? 'handleAcceptAll' : 'handleRejectAll']();
 		this.setState({isSelectAll: !isSelectAll});
 	};
 
@@ -95,7 +95,13 @@ export default class Vendors extends Component {
 						, or <a href='http://youronlinechoices.eu/' target='_blank' style={{color: textLinkColor}}>EDAA</a> sites.
 					</PurposesLabel></p>
 				</div>
-				<a class={style.toggleAll} onClick={this.handleToggleAll} style={{color: primaryColor}}><VendorsLabel localizeKey='acceptAll'>Allow All</VendorsLabel></a>
+				<span class={style.allowSwitch} style={{color: primaryColor}}>
+						<VendorsLabel localizeKey='acceptAll'>Allow All</VendorsLabel> <Switch
+							color={primaryColor}
+							isSelected={this.state.isSelectAll}
+							onClick={this.handleToggleAll}
+						/>
+				</span>
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
