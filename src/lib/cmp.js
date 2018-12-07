@@ -207,12 +207,13 @@ export default class Cmp {
 			queue.forEach(({ callId, command, parameter, callback, event }) => {
 				// If command is queued with an event we will relay its result via postMessage
 				if (event) {
-					this.processCommand(command, parameter, returnValue =>
+					this.processCommand(command, parameter, (returnValue, success) =>
 						event.source.postMessage({
 							[CMP_RETURN_NAME]: {
 								callId,
 								command,
-								returnValue
+								returnValue,
+								success
 							}
 						}, event.origin));
 				}
@@ -231,12 +232,13 @@ export default class Cmp {
 		const { [CMP_CALL_NAME]: cmp } = data;
 		if (cmp) {
 			const { callId, command, parameter } = cmp;
-			this.processCommand(command, parameter, returnValue =>
+			this.processCommand(command, parameter, (returnValue, success) =>
 				source.postMessage({
 					[CMP_RETURN_NAME]: {
 						callId,
 						command,
-						returnValue
+						returnValue,
+						success
 					}
 				}, origin));
 		}
