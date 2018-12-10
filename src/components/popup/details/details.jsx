@@ -14,35 +14,31 @@ class LocalLabel extends Label {
 	};
 }
 
-const SECTION_PURPOSES = 0;
-const SECTION_VENDOR_LIST = 1;
-const SECTION_PURPOSE_LIST = 2;
-const SECTION_VENDORS = 3;
+export const SECTION_PURPOSES = 0;
+export const SECTION_VENDOR_LIST = 1;
+export const SECTION_PURPOSE_LIST = 2;
+export const SECTION_VENDORS = 3;
 
 export default class Details extends Component {
-	state = {
-		selectedPanelIndex: SECTION_PURPOSES
-	};
 
 	handlePanelClick = panelIndex => {
 		return () => {
-			this.setState({
-				selectedPanelIndex: Math.max(0, panelIndex)
-			});
+			this.props.onChangeDetailsPanel(Math.max(0, panelIndex));
 		};
 	};
 
 	handleBack = () => {
-		this.setState({
-			selectedPanelIndex: SECTION_PURPOSES
-		});
+		this.props.onChangeDetailsPanel(SECTION_PURPOSES);
 	};
 
 	handlePurposeClick = purposeItem => {
-		this.setState({
-			selectedPurpose: purposeItem,
-			selectedPanelIndex: SECTION_VENDORS
-		});
+		const {
+			onChangeDetailsPanel,
+			onSelectPurpose,
+		} = this.props;
+
+		onChangeDetailsPanel(SECTION_VENDORS);
+		onSelectPurpose(purposeItem);
 	};
 
 
@@ -52,11 +48,9 @@ export default class Details extends Component {
 			onClose,
 			store,
 			theme,
-		} = props;
-		const {
 			selectedPanelIndex,
-			selectedPurpose
-		} = state;
+			selectedPurposeDetails
+		} = props;
 
 		const {
 			backgroundColor,
@@ -77,20 +71,23 @@ export default class Details extends Component {
 			selectAllVendors,
 			selectVendor
 		} = store;
-		const {selectedPurposeIds, selectedVendorIds} = vendorConsentData;
-		const {selectedCustomPurposeIds} = publisherConsentData;
-		const {purposes = [], vendors = []} = vendorList;
-		const {purposes: customPurposes = []} = customPurposeList;
+		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
+		const { selectedCustomPurposeIds } = publisherConsentData;
+		const { purposes = [], vendors = [] } = vendorList;
+		const { purposes: customPurposes = [] } = customPurposeList;
 
 		const formattedVendors = vendors
 			.map(vendor => ({
 				...vendor,
 				policyUrl: vendor.policyUrl.indexOf('://') > -1 ? vendor.policyUrl : `http://${vendor.policyUrl}`
 			}))
-			.sort(({name: n1}, {name: n2}) => n1.toLowerCase() === n2.toLowerCase() ? 0 : n1.toLowerCase() > n2.toLowerCase() ? 1 : -1);
+			.sort(({ name: n1 }, { name: n2 }) => n1.toLowerCase() === n2.toLowerCase() ? 0 : n1.toLowerCase() > n2.toLowerCase() ? 1 : -1);
 
 		return (
-			<div class={style.details} style={{backgroundColor: backgroundColor, color: textLightColor}}>
+			<div class={style.details} style={{
+				backgroundColor: backgroundColor,
+				color: textLightColor
+			}}>
 				<div class={style.body}>
 					<Panel selectedIndex={selectedPanelIndex}>
 						<Summary
@@ -115,12 +112,12 @@ export default class Details extends Component {
 							selectVendor={selectVendor}
 							selectAllVendors={selectAllVendors}
 							selectedVendorIds={selectedVendorIds}
-							selectedPurpose={selectedPurpose}
+							selectedPurposeDetails={selectedPurposeDetails}
 							theme={theme}
 						/>
 					</Panel>
 				</div>
-				<div class={style.footer} style={{borderColor: dividerColor}}>
+				<div class={style.footer} style={{ borderColor: dividerColor }}>
 					{selectedPanelIndex > 0 &&
 					<Button
 						class={style.back}
