@@ -79,6 +79,7 @@ export default {
 			description: '',
 			accept: '',
 			acceptAll: '',
+			acceptNone: '',
 			optOut: '',
 			back : ''
 		}
@@ -90,8 +91,7 @@ export default {
 			links: {
 				data: {
 					title: 'Información que puede ser usada.',
-					description: `Información que puede ser usada:
-								<ul>
+					description: `<ul>
 									<li>Tipo de navegador y su configuración</li>
 									<li>Información sobre el sistema operativo del dispositivo</li>
 									<li>Información sobre las cookies</li>
@@ -103,14 +103,7 @@ export default {
 				},
 				purposes: {
 					title: 'Propósitos para almacenar información.',
-					description: `Cómo puede ser usada la información:
-								<ul>
-									<li>Almacenamiento y acceso a la información</li>
-									<li>Selección de anuncios y entrega</li>
-									<li>Selección de contenido y entrega</li>
-									<li>Personalización</li>
-									<li>Medición</li>
-								</ul>`
+					description: `Cómo puede ser usada la información:`
 				},
 				manage: 'Leer más',
 				accept: 'Aceptar'
@@ -195,8 +188,7 @@ export default {
 			links: {
 				data: {
 					title: 'Données utilisées',
-					description: `Données pouvant être utilisées:
-								<ul>
+					description: `<ul>
 									<li>Données sur le navigateur utilisé</li>
 									<li>Données sur le systeme d'exploitation utilisé</li>
 									<li>Données des cookies</li>
@@ -208,13 +200,7 @@ export default {
 				},
 				purposes: {
 					title: 'Utilisation des données',
-					description: `A quoi servent ces données:
-								<ul>
-									<li>Stockage et accès à ces données</li>
-									<li>Publicités personnalisées</li>
-									<li>Contenus personnalisés</li>
-									<li>Mesure d'audience</li>
-								</ul>`
+					description: `A quoi servent ces données:`
 				},
 				manage: 'Préférences',
 				accept: 'Continuer'
@@ -296,8 +282,7 @@ export default {
 			links: {
 				data: {
 					title: 'Verwendungszwecke',
-					description: `Datenverwendungszwecke:
-								<ul>
+					description: `<ul>
 									<li>Browserdaten</li>
 									<li>Betriebssystemdaten</li>
 									<li>Cookie-Daten</li>
@@ -309,13 +294,7 @@ export default {
 				},
 				purposes: {
 					title: 'Verwendung von Daten',
-					description: `Wozu dienen diese Daten?
-								<ul>
-									<li>Speicherung und Zugriff auf diese Daten</li>
-									<li>Personalisierte Anzeigen</li>
-									<li>Personalisierter Inhalt</li>
-									<li>Zielgruppenmessung</li>
-								</ul>`
+					description: `Wozu dienen diese Daten?`
 				},
 				manage: 'Einstellungen',
 				accept: 'Akzeptieren und fortsetzen'
@@ -396,8 +375,7 @@ export default {
 			links: {
 				data: {
 					title: 'Informacje jakie mogą być używane.',
-					description: `Informacje jakie mogą być używane:
-					<ul>
+					description: `<ul>
 						<li>Rodzaj przeglądarki i jej ustawienia</li>
 						<li>Informacje o systemie operacyjnym urządzenia</li>
 						<li>Informacje zawarte w ciasteszkach (cookie)</li>
@@ -409,13 +387,7 @@ export default {
 				},
 				purposes: {
 					title: 'Cele przechowywania informacji.',
-					description: `W jaki sposób informacje mogą być używane:
-					<ul>
-						<li>Zapisywanie i odczytywanie informacji</li>
-						<li>Dobieranie i dostarczanie reklam</li>
-						<li>Personalizacja</li>
-						<li>Pomiary</li>
-					</ul>`
+					description: `W jaki sposób informacje mogą być używane:`
 				},
 				manage: 'Zobacz więcej',
 				accept: '<b>Akceptuję</b>'
