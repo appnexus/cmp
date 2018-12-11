@@ -1,7 +1,10 @@
 import log from './log';
 
+// These options are documented at http://acdn.origin.appnexus.net/cmp/docs/#/config.
+// We highly recommend reading the options as the defaults may not fit your goals.
 const defaultConfig = {
 	customPurposeListLocation: './purposes.json',
+	// The location of the latest vendorlist to use.
 	globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: false,
