@@ -78,7 +78,7 @@ export default class Vendors extends Component {
 					</div>
 				</div>
 				<div class={detailsStyle.description} style={{color: textLightColor}}>
-					<p><PurposesLabel localizeKey={`purpose${selectedPurposeId}.description`}>What this means: {description}</PurposesLabel></p>
+					<p><PurposesLabel localizeKey={`purpose${selectedPurposeId}.description`}>{description}</PurposesLabel></p>
 					<p><PurposesLabel localizeKey='optoutdDescription'>
 						Depending on the type of data they collect, use,
 						and process and other factors including privacy by design, certain partners rely on your consent while others require you to opt-out.

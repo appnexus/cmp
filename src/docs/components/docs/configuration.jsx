@@ -75,9 +75,23 @@ export default class CmpApi extends Component {
 							</span>
 						</span>
 						<span class={style.argument}>
+							<span class={style.argumentType}>localization (Object)</span>:
+							<span class={style.argumentDescription}>
+								Localization options. An important note: The translations.js file will be used to present legally important information for languages other than English, which
+								means you will need to keep non-English translations updated with the latest non-English equivalent language. The default 'purposes' language for English is pulled
+								from the vendorlist.json in this example.
+							</span>
+						</span>
+						<span class={style.argument}>
+							<span class={style.argumentType}>forceLocale (String)</span>:
+							<span class={style.argumentDescription}>
+								Overrides user browser locale indications and instead uses the given locale, e.g. 'en-us'
+							</span>
+						</span>
+						<span class={style.argument}>
 							<span class={style.argumentType}>allowedVendorIds (Array[number])</span>:
 							<span class={style.argumentDescription}>
-								White list of vendor IDs to display and persist data for in the CMP.  This will override a list provided
+								Allow list of vendor IDs to display and persist data for in the CMP.  This will override a list provided
 								by pubvendors.json.
 							</span>
 						</span>

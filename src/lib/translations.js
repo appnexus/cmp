@@ -2,7 +2,9 @@
  * The default set of translated pieces of text indexed by locale.
  * Values from window.__cmp.config.localization will override these
  * per locale.  Empty values will use the english value provided
- * inline in each component.
+ * inline in each component. Because the purpose definitions will change,
+ * you will need to update the translations regularly. As a consequence, this
+ * translations.js file is very important to keep up to date.
  */
 export default {
 	en: {
@@ -44,34 +46,16 @@ export default {
 			back: '',
 			optoutdDescription: ``,
 			purpose1: {
-				description: `Allow storing or accessing information on a user's device.`
+				description: ''
 			},
 			purpose2: {
-				description: `Allow processing of a user's data to provide and inform personalised advertising (including delivery, measurement, and reporting) based on a user's preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices  for that purpose.
-				Will include following Features:
-				<ul>
-					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
-					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
-					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
-				</ul>`
+				description: ''
 			},
 			purpose3: {
-				description: `Allow processing of a user's data to deliver content or advertisements and measure the delivery of such content or advertisements, extract insights and generate reports to understand service usage; and/or accessing or storing information on devices for that purpose.
-				Will include following Features:
-				<ul>
-					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
-					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
-					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
-				</ul>`
+				description: ''
 			},
 			purpose4: {
-				description: `Allow processing of a user's data to provide and inform personalised content (including delivery, measurement, and reporting) based on a user's preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices for that purpose.
-				Will include following Features:
-				<ul>
-					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
-					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
-					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
-				</ul>`
+				description: ''
 			}
 		},
 		vendors: {
@@ -212,7 +196,7 @@ export default {
 			detailLink: 'Informations et configuration',
 			who: {
 				title: 'Qui utilise mes données ?',
-				description: `Seulement nos partenaires et nous-même pouvons utiliser vos données. 
+				description: `Seulement nos partenaires et nous-même pouvons utiliser vos données.
 					Vous pouvez personnaliser vos choix ci-dessus ou continuer à utiliser notre site si vous êtes d'accord.`,
 				link: 'Voir la liste complète de nos partenaires'
 			},
