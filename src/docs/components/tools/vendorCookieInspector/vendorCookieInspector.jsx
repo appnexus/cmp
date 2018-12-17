@@ -123,6 +123,29 @@ export default class VendorCookieDecoder extends Component {
 		this.setState({ localCookie: readCookie(VENDOR_CONSENT_COOKIE_NAME) });
 	};
 
+	readParams = () => {
+		var vendor_cookie = this.getUrlParam("string");
+		if (typeof(vendor_cookie) === "string") {
+			this.setState({ b64: vendor_cookie});
+		}
+	}
+
+	getUrlVars = () => {
+		var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+	};
+
+	getUrlParam = (parameter, defaultvalue) => {
+	    var urlparameter = defaultvalue;
+	    if(window.location.href.indexOf(parameter) > -1){
+	        urlparameter = this.getUrlVars()[parameter];
+	        }
+	    return urlparameter;
+	}
+
 	handleInspectLocal = () => {
 		this.decodeB64(this.state.localCookie);
 	};
@@ -130,6 +153,7 @@ export default class VendorCookieDecoder extends Component {
 	componentWillMount() {
 		this.fetchVendorList();
 		this.readCookies();
+		this.readParams();
 	}
 
 	render(props, state) {
