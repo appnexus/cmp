@@ -277,13 +277,14 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	selectAllVendors = (isSelected, purposeId) => {
+	selectAllVendors = (isSelected, purposeId, includeLegitimateInterest = false) => {
 		const {vendors = []} = this.vendorList || {};
 		const operation = isSelected ? 'add' : 'delete';
-		vendors.forEach(({id, purposeIds = []}) => {
+		vendors.forEach(({id, purposeIds = [], legIntPurposeIds = []}) => {
 			// If a purposeId is supplied only toggle vendors that support that purpose
 			if (typeof purposeId !== 'number' ||
-				purposeIds.indexOf(purposeId) > -1) {
+				purposeIds.indexOf(purposeId) > -1 ||
+				(includeLegitimateInterest && legIntPurposeIds.indexOf(purposeId) > -1)) {
 				this.vendorConsentData.selectedVendorIds[operation](id);
 			}
 		});

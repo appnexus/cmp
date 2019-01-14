@@ -43,7 +43,7 @@ export default class App extends Component {
 		// each purpose they inspect.
 		if (!created &&
 			!visitedPurposes[purposeItem.id]) {
-			selectAllVendors(false, purposeItem.id);
+			selectAllVendors(false, purposeItem.id, true);
 		}
 		this.setState({
 			visitedPurposes: {
