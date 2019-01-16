@@ -369,7 +369,12 @@ export default class Store {
 		// If vendor consent data has never been persisted set default selected status
 		if (!created) {
 			this.vendorConsentData.selectedPurposeIds = new Set(purposes.map(p => p.id));
-			this.vendorConsentData.selectedVendorIds = new Set(vendors.map(v => v.id));
+
+			// Default will be to allow consent UNLESS they have not requested consent for any purposes
+			this.vendorConsentData.selectedVendorIds = new Set(
+				vendors
+					.filter(v => v.purposeIds.length)
+					.map(v => v.id));
 		}
 
 		const {selectedVendorIds = new Set()} = this.vendorConsentData;
