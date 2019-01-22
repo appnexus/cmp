@@ -451,7 +451,7 @@ export default {
 			back: 'Dostosuj sposób, w jaki te firmy korzystają z danych z poprzedniej strony'
 		}
 	},
-		it: {
+	it: {
 		banner: {
 			title: 'Uso dei cookies',
 			description: 'Utilizziamo i nostri "cookie" e di terze parti per raccogliere informazioni statistiche e mostrarti pubblicità personalizzata attraverso l\'analisi della tua navigazione. Se continui a navigare, accetti tale utilizzo',
