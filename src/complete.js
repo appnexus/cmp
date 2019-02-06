@@ -98,7 +98,13 @@ cmp.receiveMessage = function (event) {
 window.__cmp = cmp;
 
 // Listen for postMessage events
-const listen = window.attachEvent || window.addEventListener;
+function listen(type, listener, useCapture) {
+	if (window.addEventListener) {
+		window.addEventListener(type, listener, useCapture);
+	} else if (window.attachEvent) {
+		window.attachEvent('on' + type, listener);
+	}
+}
 listen('message', event => {
 	window.__cmp.receiveMessage(event);
 }, false);
