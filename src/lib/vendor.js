@@ -40,7 +40,31 @@ function fetchPubVendorList() {
  * Fetch the global vendor list if the location is configured
  */
 function fetchGlobalVendorList() {
-	const {globalVendorListLocation, storeConsentGlobally, globalConsentLocation} = config;
+	const {globalVendorListLocation, storeConsentGlobally, globalConsentLocation, getVendorList} = config;
+	if (getVendorList) {
+		return new Promise((resolve, reject) => {
+			try {
+				getVendorList((err, data) => {
+					if (err) {
+						reject(err);
+					} else {
+						try {
+							resolve(data);
+						} catch (err) {
+							reject(err);
+						}
+					}
+				});
+			} catch (err) {
+				reject(err);
+			}
+		}).catch(err => {
+			if (storeConsentGlobally && globalConsentLocation) {
+				return sendPortalCommand({command: 'readVendorList'});
+			}
+			log.error(`Failed to load global vendor list from configuration`, err);
+		});
+	}
 	return (globalVendorListLocation ?
 		fetch(globalVendorListLocation) :
 		Promise.reject('Missing globalVendorListLocation'))

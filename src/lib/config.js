@@ -12,6 +12,7 @@ const defaultConfig = {
 	gdprApplies: true,
 	getConsentData: null,
 	setConsentData: null,
+	getVendorList: null,
 	legIntPurposeIds: [],
 	purposeGroups: [],
 	autoDisplay: true,

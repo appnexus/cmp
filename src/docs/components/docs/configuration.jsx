@@ -97,6 +97,16 @@ export default class CmpApi extends Component {
 							</span>
 						</span>
 						<span class={style.argument}>
+							<span class={style.argumentType}>getVendorList(callback) (Function)</span>:
+							<span class={style.argumentDescription}>
+								Custom function to read global vendor list (overwrites <span class={style.highlight}>globalVendorListLocation</span> configuration)
+								<span className={style.functionSectionTitle}>Arguments</span>
+								<span className={style.argument}>
+									<span className={style.argumentType}>callback(err, vendorList) (Function)</span>: <span>Function to be executed with vendor list object</span>
+								</span>
+							</span>
+						</span>
+						<span class={style.argument}>
 							<span class={style.argumentType}>legIntPurposeIds (Array)</span>:
 							<span class={style.argumentDescription}>
 								List of (non-consentable) data purposes that will be used under legitimate interest
