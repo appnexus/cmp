@@ -3,7 +3,13 @@ function buildScript(config, cmpLocation='../cmp.bundle.js') {
 	return `(function(window, document) {
 		if (!window.__cmp) {
 			window.__cmp = (function() {
-				var listen = window.attachEvent || window.addEventListener;
+				function listen(type, listener, useCapture) {
+					if (window.addEventListener) {
+						window.addEventListener(type, listener, useCapture);
+					} else if (window.attachEvent) {
+						window.attachEvent('on' + type, listener);
+					}
+				}
 				listen('message', function(event) {
 					window.__cmp.receiveMessage(event);
 				}, false);
