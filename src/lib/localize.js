@@ -35,7 +35,7 @@ export class Localize {
 			const [language] = locale.toLowerCase().split('-');
 			return {
 				...acc,
-				[locale]: {
+				[locale.toLowerCase()]: {
 					...acc[locale],
 					...this.flattenObject(data[language]),
 					...this.flattenObject(data[locale])
