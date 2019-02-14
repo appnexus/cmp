@@ -194,12 +194,36 @@ function decodePublisherConsentData(cookieValue) {
 }
 
 function readCookie(name) {
-	const value = `; ${document.cookie}`;
-	const parts = value.split(`; ${name}=`);
+	const cookies = document.cookie.split(';');
+	const result = [];
 
-	if (parts.length === 2) {
-		return parts.pop().split(';').shift();
+	for (const cookie of cookies) {
+		const i = cookie.indexOf('='),
+			  key = cookie.substring(0, i).trim(),
+			  value = cookie.substring(i + 1, cookie.length).trim();
+
+		if (key === name) {
+			result.push(value);
+		}
 	}
+
+	return result;
+}
+
+function cookieReducer(cookies, func) {
+	if (!cookies || cookies.length === 0) {
+		return undefined;
+	}
+
+	return cookies
+		.map(cookie => func(cookie))
+		.reduce((cookie1, cookie2) => {
+			return (cookie1 && cookie2)
+				? cookie1.vendorListVersion > cookie2.vendorListVersion
+					? cookie1
+					: cookie2
+				: (cookie1 || cookie2);
+		});
 }
 
 function writeCookie(name, value, maxAgeSeconds, path = '/') {
@@ -210,11 +234,9 @@ function writeCookie(name, value, maxAgeSeconds, path = '/') {
 function readPublisherConsentCookie() {
 	// If configured try to read publisher cookie
 	if (config.storePublisherData) {
-		const cookie = readCookie(PUBLISHER_CONSENT_COOKIE_NAME);
-		log.debug('Read publisher consent data from local cookie', cookie);
-		if (cookie) {
-			return decodePublisherConsentData(cookie);
-		}
+		const cookies = readCookie(PUBLISHER_CONSENT_COOKIE_NAME);
+		log.debug('Read publisher consent data from local cookie', cookies);
+		return cookieReducer(cookies, decodePublisherConsentData);
 	}
 }
 
@@ -272,9 +294,9 @@ function writeGlobalVendorConsentCookie(vendorConsentData) {
  * @returns Promise resolved with decoded cookie object
  */
 function readLocalVendorConsentCookie() {
-	const cookie = readCookie(VENDOR_CONSENT_COOKIE_NAME);
-	log.debug('Read consent data from local cookie', cookie);
-	return Promise.resolve(cookie && decodeVendorConsentData(cookie));
+	const cookies = readCookie(VENDOR_CONSENT_COOKIE_NAME);
+	log.debug('Read consent data from local cookie', cookies);
+	return Promise.resolve(cookieReducer(cookies, decodeVendorConsentData));
 }
 
 /**
