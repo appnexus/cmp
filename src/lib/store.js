@@ -106,6 +106,10 @@ export default class Store {
 		if (vendorIds && vendorIds.length) {
 			vendorIds.forEach(id => vendorMap[id] = selectedVendorIds.has(id) && (!allowedVendorIds.size || allowedVendorIds.has(id)));
 		}
+		else if (vendors) {
+			vendors.forEach(({id}) => vendorMap[id] = selectedVendorIds.has(id) && (!allowedVendorIds.size || allowedVendorIds.has(id)));
+			selectedVendorIds.forEach(id => !(vendorMap[id]) && (vendorMap[id] = false));
+		}
 		else {
 			// In case the vendor list has not been loaded yet find the highest
 			// vendor ID to map any consent data we already have
