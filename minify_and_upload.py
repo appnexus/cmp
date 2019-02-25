@@ -39,5 +39,6 @@ def get_bundled_cmp_from_build_folder():
 if __name__ == "__main__":
     # Default behavior of this script is to minify and upload everything that needs it
     build_loaders_for_all_locales()
+    get_bundled_cmp_from_build_folder()
     minify(files_to_process)
     upload(files_to_process)
