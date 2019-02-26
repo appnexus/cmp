@@ -9,15 +9,11 @@ const defaultConfig = {
 	globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
 	globalConsentLocation: 'M32CMP.mgr.consensu.org',
         // We have a global consent location, might as well use it.
-        storeConsentGlobally: true,
+        storeConsentGlobally: false,
 	storePublisherData: false,
 	logging: false,
-	localization: {},
-	forceLocale: null,
 	gdprApplies: true,
-	gdprAppliesGlobally: false,
-	allowedVendorIds: null,
-	theme: {}
+	gdprAppliesGlobally: true,
 };
 
 class Config {
