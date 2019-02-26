@@ -1,16 +1,17 @@
 from subprocess import run, check_output, call
 from sys import argv
+from jsmin import jsmin
 import preppy
-import os, shutil
-
+import os
+import shutil
 # List of files we want to process as a default behavior
 supported_locales = ["en", "fr", "es"]
-files_to_process = [*["m32cmploader_{}.js".format locale for locale in supported_locales], "m32cmp.js"]
+files_to_process = [*["m32cmploader_{}.js".format(locale) for locale in supported_locales], "m32cmp.js"]
 
 def minify(files):
-    for file in files:
-        # -m is to mangle the names, -o is the output (obviously)
-        call(["uglifyjs", "-m", file, "-o", "{}.min.js".format(file.split(".")[0])])
+    for f in files:
+        with open("{}.min.js".format(f.split(".")[0]), "w") as out_f, open(f, "r") as in_f:
+            out_f.write(jsmin(in_f.read()))
 
 def put_on_rdc(file):
         run(['gcloud', 'compute', '--project', 'm32-infrastructure', 'copy-files', file, 'bitnami@rdc1-m32-media-prod:/rdc/html/{}'.format(file), '--zone', 'us-east1-b']).check_returncode()
@@ -26,7 +27,7 @@ def build_loaders_for_all_locales():
     """builds a different loader script for each locale. If you want to add one, add it to the supported_locales array above."""
     for locale in supported_locales:
         with open("m32cmploader_{}.js".format(locale), "w+") as f:
-            f.write(preppy.getModule("cmp_loader.prep").get(m32hb_text))
+            f.write(preppy.getModule("cmp_loader.prep").get(locale))
 
 def get_bundled_cmp_from_build_folder():
     # copies the file to our current dir if it's there. Otherwise, warn the user to use yarn build
