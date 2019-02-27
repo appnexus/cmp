@@ -1,5 +1,5 @@
 {{def(locale)}}
-(function(window, document) {
+(function() {
     if (!window.__cmp) {
         window.__cmp = (function() {
             var listen = window.attachEvent || window.addEventListener;
@@ -60,5 +60,50 @@
         t.src = 'https://rdc.m32.media/m32cmp.min.js';
         var tag = document.getElementsByTagName('head')[0];
         tag.appendChild(t);
+        // this part of the code will whow the consent ui if either the region is Europe and the consent data is not present or if the window.__showm32cmp variable is set
+        // by the publisher and consent data is not present.
+        var geocountries = {"IM":"Europe","VI":"Americas","UY":"Americas","IN":"Asia","FR":"Europe","OM":"Asia","AU":"Oceania","BQ":"Americas","FM":"Oceania","HN":"Americas","UG":"Africa","TV":"Oceania","CD":"Africa","TF":"Africa","UA":"Europe","BH":"Asia","TT":"Americas","CM":"Africa","MH":"Oceania","PN":"Oceania","JP":"Asia","IL":"Asia","CX":"Oceania","SK":"Europe","FO":"Europe","PM":"Americas","KM":"Africa","BO":"Americas","CN":"Asia","MR":"Africa","ER":"Africa","ME":"Europe","MF":"Americas","IE":"Europe","SR":"Americas","YE":"Asia","IO":"Africa","BB":"Americas","CC":"Oceania","GU":"Oceania","VC":"Americas","LV":"Europe","LA":"Asia","NA":"Africa","QA":"Asia","HU":"Europe","FK":"Americas","SO":"Africa","MT":"Europe","ET":"Africa","HT":"Americas","FI":"Europe","AD":"Europe","GQ":"Africa","SG":"Asia","TM":"Asia","SB":"Oceania","DM":"Americas","LR":"Africa","TZ":"Africa","MO":"Asia","GI":"Europe","SC":"Africa","MD":"Europe","AT":"Europe","JM":"Americas","NZ":"Oceania","AM":"Asia","PS":"Asia","GN":"Africa","TC":"Americas","MN":"Asia","ID":"Asia","UZ":"Asia","JO":"Asia","LY":"Africa","KW":"Asia","WS":"Oceania","BE":"Europe","ML":"Africa","GS":"Americas","GH":"Africa","EC":"Americas","AE":"Asia","DK":"Europe","YT":"Africa","BI":"Africa","ZA":"Africa","CH":"Europe","CF":"Africa","TG":"Africa","GR":"Europe","VG":"Americas","KH":"Asia","PH":"Asia","PE":"Americas","MG":"Africa","GP":"Americas","PW":"Oceania","RE":"Africa","IT":"Europe","RO":"Europe","NC":"Oceania","NF":"Oceania","AR":"Americas","JE":"Europe","BR":"Americas","TL":"Asia","LI":"Europe","VN":"Asia","KE":"Africa","RS":"Europe","MC":"Europe","LK":"Asia","ZM":"Africa","CA":"Americas","FJ":"Oceania","US":"Americas","SM":"Europe","AQ":"","SH":"Africa","EE":"Europe","GT":"Americas","CI":"Africa","AW":"Americas","EH":"Africa","NO":"Europe","GA":"Africa","MQ":"Americas","KP":"Asia","DE":"Europe","NE":"Africa","BM":"Americas","MZ":"Africa","PG":"Oceania","GW":"Africa","BJ":"Africa","GG":"Europe","BN":"Asia","DO":"Americas","MU":"Africa","GM":"Africa","TJ":"Asia","ST":"Africa","SL":"Africa","DZ":"Africa","CO":"Americas","KY":"Americas","HM":"Oceania","BV":"Americas","SJ":"Europe","BD":"Asia","GF":"Americas","ZW":"Africa","GY":"Americas","HK":"Asia","HR":"Europe","MM":"Asia","TH":"Asia","CL":"Americas","EG":"Africa","UM":"Oceania","PY":"Americas","NI":"Americas","BT":"Asia","BA":"Europe","IR":"Asia","NP":"Asia","CY":"Asia","LS":"Africa","MK":"Europe","VU":"Oceania","CK":"Oceania","NU":"Oceania","WF":"Oceania","MY":"Asia","AX":"Europe","MS":"Americas","CR":"Americas","BS":"Americas","LU":"Europe","KN":"Americas","SA":"Asia","BG":"Europe","TO":"Oceania","PR":"Americas","KI":"Oceania","VE":"Americas","SI":"Europe","SN":"Africa","TD":"Africa","MA":"Africa","PF":"Oceania","GL":"Americas","SY":"Asia","LB":"Asia","AO":"Africa","MV":"Asia","RU":"Europe","PT":"Europe","CW":"Americas","ES":"Europe","TK":"Oceania","AS":"Oceania","CZ":"Europe","KG":"Asia","GD":"Americas","TR":"Asia","IS":"Europe","GB":"Europe","PK":"Asia","BF":"Africa","VA":"Europe","IQ":"Asia","AL":"Europe","SV":"Americas","AZ":"Asia","DJ":"Africa","AG":"Americas","KR":"Asia","CU":"Americas","CV":"Africa","SX":"Americas","SD":"Africa","LC":"Americas","BZ":"Americas","PA":"Americas","CG":"Africa","BL":"Americas","NR":"Oceania","MX":"Americas","GE":"Asia","BY":"Europe","BW":"Africa","AI":"Americas","MW":"Africa","NG":"Africa","SS":"Africa","TW":"Asia","RW":"Africa","MP":"Oceania","NL":"Europe","SE":"Europe","LT":"Europe","PL":"Europe","KZ":"Asia","SZ":"Africa","AF":"Asia","TN":"Africa"};
+        var geoxmlhttp = new XMLHttpRequest();
+        // this will show the ui if the consentData variable has not been set at the time it is called
+        function conditionallyShowUI(){
+            var showUIIfNoConsentData = function() {
+                if (window.__consentData === undefined){
+                    window.__cmp("showConsentTool");
+                }
+            };
+            // this asks the cmp for consent data and conditionally shows the ui after 300 ms
+            // the cmp's behavior if there is no consent data is to wait for consent to call the callback. It follows that if the
+            // callback wasn't called after a reasonable delay (here arbitrarily chosen as 300ms) there is no data available on consent and the ui should be shown
+            var startTimer = function() {
+                window.__cmp("getConsentData",undefined ,function(response) {window.__consentData = response;});
+                setTimeout(showUIIfNoConsentData, 300);
+            };
+            // starts that whole process only when the complete cmp implementation is loaded
+            window.__cmp("addEventlistener", "isLoaded", startTimer);
+        };
+
+        var __showm32cmp = window.__showm32cmp || false;
+        geoxmlhttp.onreadystatechange = madops.wrapWithErrorLogs(function() {
+            if (geoxmlhttp.readyState == madops.DONE_CONSTANT ) {
+                if (geoxmlhttp.status == 200) {
+                    try {
+                        // show consent data if europe or the variable was set
+                        __showm32cmp = window.__showm32cmp || geocountries[JSON.parse(geoxmlhttp.responseText).country_code] == "Europe";
+                    } catch (e) {
+                        // better safe than sorry
+                        __showm32cmp = true;
+                    }
+                    if (__showm32cmp) {
+                        conditionallyShowUI();
+                    }
+                } else {
+                    // On status othen than success : again, better safe than sorry
+                    conditionallyShowUI();
+                }
+            }
+        });
+
+        geoxmlhttp.open("GET", "https://geoloc.m32.media/json/", true);
+        geoxmlhttp.send();
     }
-})(window, document);
+})();
