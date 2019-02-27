@@ -79,7 +79,7 @@
                 setTimeout(showUIIfNoConsentData, 300);
             };
             // starts that whole process only when the complete cmp implementation is loaded
-            window.__cmp("addEventlistener", "isLoaded", startTimer);
+            window.__cmp("addEventListener", "isLoaded", startTimer);
         };
 
         var __showm32cmp = window.__showm32cmp || false;
