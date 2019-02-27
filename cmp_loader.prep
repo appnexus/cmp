@@ -83,8 +83,8 @@
         };
 
         var __showm32cmp = window.__showm32cmp || false;
-        geoxmlhttp.onreadystatechange = madops.wrapWithErrorLogs(function() {
-            if (geoxmlhttp.readyState == madops.DONE_CONSTANT ) {
+        geoxmlhttp.onreadystatechange = function(){
+            if (geoxmlhttp.readyState == 4) {
                 if (geoxmlhttp.status == 200) {
                     try {
                         // show consent data if europe or the variable was set
@@ -101,7 +101,7 @@
                     conditionallyShowUI();
                 }
             }
-        });
+        };
 
         geoxmlhttp.open("GET", "https://geoloc.m32.media/json/", true);
         geoxmlhttp.send();
