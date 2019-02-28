@@ -1,6 +1,7 @@
 /* eslint-disable max-nested-callbacks */
 import { expect } from 'chai';
 import {Localize} from './localize';
+import config from './config';
 
 describe('localize', () => {
 
@@ -27,6 +28,36 @@ describe('localize', () => {
 		});
 	});
 
+
+	it('applies specific locale', () => {
+		config.update({
+			forceLocale: 'es-es'
+		});
+		const localization = {
+			'es-es': {
+				prop1: 'new prop1',
+			}
+		};
+		const localize = new Localize(localization);
+		expect(localize.localizedValues).deep.equal({
+			'prop1': 'new prop1',
+		});
+	});
+
+	it('ignores locale casing', () => {
+		config.update({
+			forceLocale: 'es'
+		});
+		const localization = {
+			ES: {
+				prop1: 'new prop1',
+			}
+		};
+		const localize = new Localize(localization);
+		expect(localize.localizedValues).deep.equal({
+			'prop1': 'new prop1',
+		});
+	});
 
 
 });
