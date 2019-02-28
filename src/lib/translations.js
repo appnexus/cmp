@@ -450,5 +450,102 @@ export default {
 			optOut: 'wymaga odwołania zgody',
 			back: 'Dostosuj sposób, w jaki te firmy korzystają z danych z poprzedniej strony'
 		}
+	},
+	it: {
+		banner: {
+			title: 'Uso dei cookies',
+			description: 'Utilizziamo i nostri "cookie" e di terze parti per raccogliere informazioni statistiche e mostrarti pubblicità personalizzata attraverso l\'analisi della tua navigazione. Se continui a navigare, accetti tale utilizzo',
+			links: {
+				data: {
+					title: 'Informazioni che possono essere utilizzate.',
+					description: `<ul>
+									<li>Tipo di browser e sua configurazione</li>
+									<li>Informazioni sul sistema operativo del dispositivo</li>
+									<li>Informazioni sui cookie</li>
+									<li>Informazioni su altri identificatori assegnati al dispositivo</li>
+									<li>Indirizzo IP da cui il dispositivo accede al sito Web o all'applicazione mobile</li>
+									<li>Informazioni sull'attività dell'utente su questo dispositivo, comprese le pagine Web e le applicazioni mobile visitate o utilizzate</li>
+									<li>Informazioni sulla posizione geografica del dispositivo quando si accede a un sito Web o un'applicazione mobile</li>
+								</ul>`
+				},
+				purposes: {
+					title: 'Uso dei dati.',
+					description: `Come possono essere utilizzate le informazioni:`
+				},
+				manage: 'Leggi di più',
+				accept: 'Accetta'
+			}
+		},
+		details: {
+			title: 'Impostazioni sulla privacy',
+			back: 'Indietro',
+			save: 'Salva ed esci'
+		},
+		summary: {
+			title: 'Ulteriori informazioni su come vengono utilizzate le informazioni.',
+			description: 'Noi e alcune società selezionate possiamo accedere e utilizzare le tue informazioni per i seguenti scopi. Puoi personalizzare le tue opzioni qui sotto o continuare a utilizzare il nostro sito se sei d\'accordo con gli scopi.',
+			detailLink: 'Maggiori informazioni',
+			who:{
+				title:'Chi sta usando queste informazioni?',
+				description:'Noi e le società preselezionate utilizziamo le tue informazioni. Puoi vedere ciascuna compagnia nei link sopra.',
+				link:'Guarda l\'elenco completo qui.'
+			},
+			what:{
+				title:'Quali informazioni vengono utilizzate?',
+				description:'Diverse aziende usano informazioni diverse,',
+				link:'Guarda l\'elenco completo qui.'
+			}
+		},
+		purposes: {
+			title: 'Dati raccolti',
+			description: 'Di seguito è riportato l\'elenco dei dati che possono essere raccolti:',
+			back: 'Configura come vengono utilizzati questi dati',
+			optoutdDescription: 'A seconda del tipo di dati che raccolgono, utilizzano e elaborano, e di altri fattori, inclusa la privacy in base alla progettazione, alcuni partner fanno affidamento sul loro consenso, mentre altri richiedono che vengano esclusi. Per informazioni su ciascun fornitore ed esercitare le tue scelte, vedi sotto. O per rinunciare, visitare i siti NAI, DAA o EDAA.',
+			items: `<ul>
+						<li>Tipo e configurazione del browser</li>
+						<li>Informazioni sul sistema operativo</li>
+						<li>Dati dei cookie</li>
+						<li>Informazioni sul dispositivo utilizzato</li>
+						<li>L'indirizzo IP da cui il dispositivo accede al sito Web</li>
+						<li>Informazioni sull'attività dell'utente su questo dispositivo, comprese le pagine Web visitate</li>
+						<li>Informazioni sulla posizione del dispositivo quando si accede al sito Web</li>
+					</ul>`,
+			purpose1: {
+				menu: 'Archiviazione e accesso alle informazioni',
+				title: 'Archiviazione e accesso alle informazioni',
+				description: 'La memorizzazione e l\'accesso alle informazioni già memorizzate sul dispositivo, come identificatori pubblicitari, identificativi del dispositivo, cookie e tecnologie simili.'
+			},
+			purpose2: {
+				menu: 'Personalizzazione',
+				title: 'Personalizzazione',
+				description: 'La raccolta e l\'elaborazione di informazioni per personalizzare successivamente la pubblicità e / o il contenuto per te, come in altri siti Web o applicazioni, nel tempo. Normalmente, la futura selezione di pubblicità e / o contenuti.'
+			},
+			purpose3: {
+				menu: 'Selezione degli annunci, diffusione, report',
+				title: 'Selezione degli annunci, diffusione, report',
+				description: 'Consentire l\'elaborazione dei dati di un utente per fornire contenuti o annunci pubblicitari e misurare la diffusione di tali contenuti o pubblicità, estrarre informazioni e generare rapporti per comprendere l\'uso dei servizi; e / o accedere o memorizzare informazioni sui dispositivi per questo scopo. Includi le seguenti funzionalità.'
+
+			},
+			purpose4: {
+				menu: 'Selezione dei contenuti, diffusione, report',
+				title: 'Selezione dei contenuti, diffusione, report',
+				description: 'Raccolta di informazioni e combinazione con informazioni precedentemente raccolte per selezionare e fornire contenuti per te e per misurare la consegna e l\'efficacia di tali contenuti. Ciò include l\'uso delle informazioni raccolte in precedenza sui tuoi interessi per selezionare il contenuto, elaborare i dati su quale contenuto è stato visualizzato, con quale frequenza o per quanto tempo è stato mostrato, quando e dove è stato visualizzato e se hai intrapreso qualche azione relativa al contenuto, incluso esempio, clic sul contenuto. Ciò non include la personalizzazione, che è la raccolta e l\'elaborazione di informazioni sull\'uso di questo servizio per personalizzare successivamente il contenuto e / o la pubblicità in altri contesti, come siti Web o applicazioni, nel tempo.'
+
+			},
+			purpose5: {
+				menu: 'Misurazione',
+				title: 'Misurazione',
+				description: 'Raccolta di informazioni sull\'utilizzo del contenuto e sulla combinazione di informazioni raccolte in precedenza, utilizzate per misurare, comprendere e riferire sull\'utilizzo del servizio. Ciò non include la personalizzazione, la raccolta di informazioni sull\'uso di questo servizio per personalizzare successivamente il contenuto e / o la pubblicità in altri contesti, ovvero in altri servizi, come siti Web o applicazioni, nel tempo.'
+
+			},
+		},
+		vendors: {
+			title: 'I nostri partner',
+			description: 'Aiutaci ad offrirti un servizio migliore. I nostri partner utilizzano i loro cookie del browser per comprendere, attraverso il web, i loro interessi e offrire contenuti e pubblicità pertinenti.',
+			accept: 'Accetta',
+			acceptAll: 'Accetta tutto',
+			optOut: 'Richiede la rinuncia',
+			back : 'Indietro'
+		}
 	}
 };
