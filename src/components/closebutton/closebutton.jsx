@@ -10,6 +10,8 @@ export default class CloseButton extends Component {
 		hasBorder: true
 	};
 
+
+
 	render(props) {
 		const {
 			onClick,
@@ -21,6 +23,7 @@ export default class CloseButton extends Component {
 		} = props;
 
 		return (
+
 			<span
 				class={[style.closeButton, hasBorder ? style.hasBorder : '', props.class].join(' ')}
 				style={{boxShadow: `0px 0px 3px ${stroke}`, backgroundColor: fill}}

@@ -33,9 +33,12 @@ export default class Popup extends Component {
 					style={{background: overlayBackground}}
 					onClick={this.handleClose}
 				/>
+				<CloseButton class={style.mobileClose} onClick={this.handleClose} stroke={secondaryColor} fill={backgroundColor} />
+
 				{isModalShowing ?
+
 					<div class={style.content}>
-						<CloseButton onClick={this.handleClose} stroke={secondaryColor} fill={backgroundColor} />
+						<CloseButton class={style.desktopClose} onClick={this.handleClose} stroke={secondaryColor} fill={backgroundColor} />
 						<Details
 							onSave={onSave}
 							store={store}
