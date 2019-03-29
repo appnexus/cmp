@@ -7,16 +7,28 @@ import shutil
 # List of files we want to process as a default behavior
 supported_locales = ["en", "fr", "es"]
 files_to_process = [*["m32cmploader_{}.js".format(locale) for locale in supported_locales], "m32cmp.js"]
+git_branch = check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"]).decode().strip()
 
 def minify(files):
     for f in files:
         with open("{}.min.js".format(f.split(".")[0]), "w") as out_f, open(f, "r") as in_f:
             out_f.write(jsmin(in_f.read()))
 
-def put_on_rdc(file):
-        run(['gcloud', 'compute', '--project', 'm32-infrastructure', 'copy-files', file, 'bitnami@rdc1-m32-media-prod:/rdc/html/{}'.format(file), '--zone', 'us-east1-b']).check_returncode()
+def put_on_rdc(file, prod):
+    test_dir = ''
+    if not prod:
+        test_dir = '/m32cmp/{}'.format(git_branch)
+    print('FILE {}'.format(file))
+    try:
+        run(['gcloud', 'compute', '--project', 'm32-infrastructure', 'copy-files', file, 'bitnami@rdc1-m32-media-prod:/rdc/html{}/{}'.format(test_dir, file), '--zone', 'us-east1-b']).check_returncode()
+    except:
+        # If the upload failed, try again but creates the right folder on the server.
+        os.mkdir(git_branch)
+        run(['gcloud', 'compute', '--project', 'm32-infrastructure', 'copy-files', git_branch, 'bitnami@rdc1-m32-media-prod:/rdc/html/m32cmp', '--zone', 'us-east1-b']).check_returncode()
+        run(['gcloud', 'compute', '--project', 'm32-infrastructure', 'copy-files', file, 'bitnami@rdc1-m32-media-prod:/rdc/html{}/{}'.format(test_dir, file), '--zone', 'us-east1-b']).check_returncode()
+        os.rmdir(git_branch)
 
-def upload(files):
+def upload(files, prod=False):
     for file in files:
         # Stores the new minified and unminified files.
         if file in files_to_process:

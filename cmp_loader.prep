@@ -55,9 +55,53 @@
             };
             return cmp;
         }());
+
+        cookies = {
+            createCookie:function(name, value, days) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days*24*60*60*1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            },
+            readCookie:function(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(";");
+                for(var i=0;i < ca.length;i++) {
+                    var c = ca[i];
+                    while (c.charAt(0)==" ") c = c.substring(1,c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                }
+                return null;
+            },
+        };
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+            var results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        };
+        var debug = "";
+        if (getParameterByName("m32cmp_debug") || cookies.readCookie("m32cmp_debug")) {
+            var branch = getParameterByName("m32cmp_debug") || cookies.readCookie("m32cmp_debug");
+            // by default, the testing branch is the staging area for master.
+            branch = branch === "true" ? "master" : branch;
+            // as in madops, 0.0007 is the fraction of a day that corresponds to a minute
+            cookies.createCookie("m32cmp_debug", branch, 2*0.0007);
+            debug = "/m32cmp/"+branch;
+        }
+
+        var scrLocation = "//rdc.m32.media" + m32hb.debug + "/m32cmp.min.js";
+
         var t = document.createElement('script');
         t.async = false;
-        t.src = 'https://rdc.m32.media/m32cmp.min.js';
+        t.src = scrLocation;
         var tag = document.getElementsByTagName('head')[0];
         tag.appendChild(t);
         // this part of the code will whow the consent ui if either the region is Europe and the consent data is not present or if the window.__showm32cmp variable is set
@@ -65,7 +109,7 @@
         var geocountries = {"IM":"Europe","VI":"Americas","UY":"Americas","IN":"Asia","FR":"Europe","OM":"Asia","AU":"Oceania","BQ":"Americas","FM":"Oceania","HN":"Americas","UG":"Africa","TV":"Oceania","CD":"Africa","TF":"Africa","UA":"Europe","BH":"Asia","TT":"Americas","CM":"Africa","MH":"Oceania","PN":"Oceania","JP":"Asia","IL":"Asia","CX":"Oceania","SK":"Europe","FO":"Europe","PM":"Americas","KM":"Africa","BO":"Americas","CN":"Asia","MR":"Africa","ER":"Africa","ME":"Europe","MF":"Americas","IE":"Europe","SR":"Americas","YE":"Asia","IO":"Africa","BB":"Americas","CC":"Oceania","GU":"Oceania","VC":"Americas","LV":"Europe","LA":"Asia","NA":"Africa","QA":"Asia","HU":"Europe","FK":"Americas","SO":"Africa","MT":"Europe","ET":"Africa","HT":"Americas","FI":"Europe","AD":"Europe","GQ":"Africa","SG":"Asia","TM":"Asia","SB":"Oceania","DM":"Americas","LR":"Africa","TZ":"Africa","MO":"Asia","GI":"Europe","SC":"Africa","MD":"Europe","AT":"Europe","JM":"Americas","NZ":"Oceania","AM":"Asia","PS":"Asia","GN":"Africa","TC":"Americas","MN":"Asia","ID":"Asia","UZ":"Asia","JO":"Asia","LY":"Africa","KW":"Asia","WS":"Oceania","BE":"Europe","ML":"Africa","GS":"Americas","GH":"Africa","EC":"Americas","AE":"Asia","DK":"Europe","YT":"Africa","BI":"Africa","ZA":"Africa","CH":"Europe","CF":"Africa","TG":"Africa","GR":"Europe","VG":"Americas","KH":"Asia","PH":"Asia","PE":"Americas","MG":"Africa","GP":"Americas","PW":"Oceania","RE":"Africa","IT":"Europe","RO":"Europe","NC":"Oceania","NF":"Oceania","AR":"Americas","JE":"Europe","BR":"Americas","TL":"Asia","LI":"Europe","VN":"Asia","KE":"Africa","RS":"Europe","MC":"Europe","LK":"Asia","ZM":"Africa","CA":"Americas","FJ":"Oceania","US":"Americas","SM":"Europe","AQ":"","SH":"Africa","EE":"Europe","GT":"Americas","CI":"Africa","AW":"Americas","EH":"Africa","NO":"Europe","GA":"Africa","MQ":"Americas","KP":"Asia","DE":"Europe","NE":"Africa","BM":"Americas","MZ":"Africa","PG":"Oceania","GW":"Africa","BJ":"Africa","GG":"Europe","BN":"Asia","DO":"Americas","MU":"Africa","GM":"Africa","TJ":"Asia","ST":"Africa","SL":"Africa","DZ":"Africa","CO":"Americas","KY":"Americas","HM":"Oceania","BV":"Americas","SJ":"Europe","BD":"Asia","GF":"Americas","ZW":"Africa","GY":"Americas","HK":"Asia","HR":"Europe","MM":"Asia","TH":"Asia","CL":"Americas","EG":"Africa","UM":"Oceania","PY":"Americas","NI":"Americas","BT":"Asia","BA":"Europe","IR":"Asia","NP":"Asia","CY":"Asia","LS":"Africa","MK":"Europe","VU":"Oceania","CK":"Oceania","NU":"Oceania","WF":"Oceania","MY":"Asia","AX":"Europe","MS":"Americas","CR":"Americas","BS":"Americas","LU":"Europe","KN":"Americas","SA":"Asia","BG":"Europe","TO":"Oceania","PR":"Americas","KI":"Oceania","VE":"Americas","SI":"Europe","SN":"Africa","TD":"Africa","MA":"Africa","PF":"Oceania","GL":"Americas","SY":"Asia","LB":"Asia","AO":"Africa","MV":"Asia","RU":"Europe","PT":"Europe","CW":"Americas","ES":"Europe","TK":"Oceania","AS":"Oceania","CZ":"Europe","KG":"Asia","GD":"Americas","TR":"Asia","IS":"Europe","GB":"Europe","PK":"Asia","BF":"Africa","VA":"Europe","IQ":"Asia","AL":"Europe","SV":"Americas","AZ":"Asia","DJ":"Africa","AG":"Americas","KR":"Asia","CU":"Americas","CV":"Africa","SX":"Americas","SD":"Africa","LC":"Americas","BZ":"Americas","PA":"Americas","CG":"Africa","BL":"Americas","NR":"Oceania","MX":"Americas","GE":"Asia","BY":"Europe","BW":"Africa","AI":"Americas","MW":"Africa","NG":"Africa","SS":"Africa","TW":"Asia","RW":"Africa","MP":"Oceania","NL":"Europe","SE":"Europe","LT":"Europe","PL":"Europe","KZ":"Asia","SZ":"Africa","AF":"Asia","TN":"Africa"};
         var geoxmlhttp = new XMLHttpRequest();
         // this will show the ui if the consentData variable has not been set at the time it is called
-        function conditionallyShowUI(){
+        function conditionallyShowUI() {
             var showUIIfNoConsentData = function() {
                 if (window.__consentData === undefined){
                     window.__cmp("showConsentTool");
