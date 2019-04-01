@@ -97,7 +97,7 @@
             debug = "/m32cmp/"+branch;
         }
 
-        var scrLocation = "//rdc.m32.media" + m32hb.debug + "/m32cmp.min.js";
+        var scrLocation = "//rdc.m32.media" + debug + "/m32cmp.min.js";
 
         var t = document.createElement('script');
         t.async = false;
