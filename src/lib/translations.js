@@ -22,7 +22,6 @@ export default {
            <p>Powyższa zgoda dotyczy przetwarzania Twoich danych osobowych w celach marketingowych Zaufanych Partnerów. Zaufani Partnerzy to firmy z obszaru e-commerce i reklamodawcy oraz działające w ich imieniu domy mediowe i podobne organizacje, z którymi Grupa RAS Polska współpracuje lub które polecane są przez międzynarodowe organizacje branżowe takie jak np. organizacja IAB (Interactive Advertising Bureau).</p>
 		   
 <p>Podmioty z Grupy RAS Polska w ramach udostępnianych przez siebie usług internetowych przetwarzają Twoje dane opisane na wstępie w celach marketingowych w oparciu o prawnie uzasadniony, wspólny interes podmiotów Grupy RAS Polska. Dane te są jednocześnie danymi niezbędnymi do realizacji przez nas umowy zawartej z Tobą, która dotyczy korzystania przez Ciebie z naszych usług i serwisów internetowych, ze względu na właściwości tych usług. Treść tej umowy określa regulamin portalu Onet - <a href="https://polityka-prywatnosci.onet.pl/regulamin.html" target="_blank" rel="noopener">https://polityka-prywatnosci.onet.pl/regulamin.html</a> - lub regulaminy innych usług świadczonych przez podmioty z Grupy RAS Polska.</p>
-</p>
 
 <p>Przetwarzanie takie nie wymaga dodatkowej zgody z Twojej strony, ale możesz mu się w każdej chwili sprzeciwić. O ile nie zdecydujesz inaczej, dokonując stosownych zmian ustawień w Twojej przeglądarce, podmioty z Grupy RAS Polska będą również instalować na Twoich urządzeniach pliki cookies i podobne oraz odczytywać informacje z takich plików. Bliższe informacje o cookies znajdziesz w akapicie „Cookies” pod koniec tej informacji.
 </p>
@@ -57,7 +56,7 @@ export default {
 		<p style="margin: 25px 0 10px 0; font-weight: 900">Twoje uprawnienia</p>
         <p> Przysługują Ci następujące uprawnienia wobec Twoich danych i ich przetwarzania przez nas, inne podmioty z Grupy RAS Polska i Zaufanych Partnerów:</p>
 		<br>
-        <p>1. Jeśli udzieliłeś zgody na przetwarzanie danych możesz ją w każdej chwili wycofać (cofnięcie zgody oczywiście nie uchyli zgodności z prawem przetwarzania już dokonanego na jej podstawie);</p>
+          <p>1. Jeśli udzieliłeś zgody na przetwarzanie danych możesz ją w każdej chwili wycofać (cofnięcie zgody oczywiście nie uchyli zgodności z prawem przetwarzania już dokonanego na jej podstawie);</p>
         <p>2. Masz również prawo żądania dostępu do Twoich danych osobowych, ich sprostowania, usunięcia lub ograniczenia przetwarzania, prawo do przeniesienia danych, wyrażenia sprzeciwu wobec przetwarzania danych oraz prawo do wniesienia skargi do organu nadzorczego, którym w Polsce jest Prezes Urzędu Ochrony Danych Osobowych. <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Pod tym adresem</a> znajdziesz dodatkowe informacje dotyczące przetwarzania danych i Twoich uprawnień.
         </p>`,
 			acceptAll: 'Przejdź do serwisu',
