@@ -388,9 +388,22 @@ export default class Store {
 	};
 
 	toggleFooterShowing = (isShown) => {
-		const vendorConsents = this.getVendorConsentsObject();
-		if (this.isAllSetTrue(vendorConsents.purposeConsents) && this.isAllSetTrue(vendorConsents.vendorConsents)) {
-			isShown = false;
+		const vendorConsentsObject = this.getVendorConsentsObject();
+		if (this.isAllSetTrue(vendorConsentsObject.purposeConsents)) {
+			let vendorConsents;
+			if (this.vendorList) {
+				const {vendors = {}} = this.vendorList;
+				const vendorIds = new Set(vendors.map(({id}) => id));
+				vendorConsents = {};
+				Object.keys(vendorConsentsObject.vendorConsents).filter(id => vendorIds.has(Number(id))).forEach(id => {
+					vendorConsents[id] = vendorConsentsObject.vendorConsents[id];
+				});
+			} else {
+				vendorConsents = vendorConsentsObject.vendorConsents;
+			}
+			if (this.isAllSetTrue(vendorConsents)) {
+				isShown = false;
+			}
 		}
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
 		this.isConsentToolShowing = false;
