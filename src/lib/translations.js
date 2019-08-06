@@ -94,5 +94,59 @@ export default {
 			message: 'Zmień swoje ustawienia prywatności klikając',
 			consentLink: 'tutaj'
 		}
+	},
+	sr: {
+		intro: {
+			title: 'Hvala na poseti',
+			description: 'Da bismo bili u mogućnosti da održimo uspešno poslovanje portala, mi i određene treće strane postavljamo kolačiće, pristupamo i čuvamo informacije na Vašem uređaju za različite svrhe. Naši partneri takođe prikupljaju podatke da bi Vam prikazali personalizovani sadržaj i oglase. Neki od naših partnera traže i  Vašu saglasnost za prikupljanje podataka da bismo Vam omogućili bolje korisničko iskustvo.',
+			acceptAll: 'Prihvatam, hvala!',
+			showPurposes: 'Odaberi svoje postavke'
+		},
+		details: {
+			title: 'Postavke korisnika',
+			back: 'Nazad',
+			save: 'Snimi i izađi'
+		},
+		purposes: {
+			active: 'Aktivno',
+			inactive: 'Neaktivno',
+			showVendors: 'Prikaži celu listu partnera',
+			purpose1: {
+				menu: 'Skladištenje i pristup informacijama',
+				title: 'Skladištenje i pristup informacijama',
+				description: 'Sladištenje informacija ili pristup tim informacijama, na Vašem uređaju, kao što su oglasni identifikatori, i/ili korišćenje kolačića i slične tehnologije'
+			},
+			purpose2: {
+				menu: 'Personalizacija',
+				title: 'Personalizacija',
+				description: 'Prikupljanje i obrada informacija o Vašoj upotrebi ove web stranice kako bi se kasnije personalizovalo oglašavanje za Vas u drugim kontekstima, tj. na drugim web lokacijama ili aplikacijama. Sadržaj web lokacije ili aplikacije se obično koristi kako bi se profilisala Vaša interesovanja koja određuju Vaše buduće izbore.'
+			},
+			purpose3: {
+				menu: 'Izbor oglasa, isporuka, izveštavanje',
+				title: 'Izbor oglasa, isporuka, izveštavanje',
+				description: 'Prikupljanje informacija i ukrštanje sa prethodno prikupljenim informacijama za odabir i isporuku oglasa relevantnih za Vas, kao i za merenje isporuke i efikasnosti takvih oglasa. To uključuje upotrebu prethodno prikupljenih informacija o Vašim interesovanjima za odabir oglasa, obradu podataka o tome koji su oglasi prikazani, koliko često su oni prikazani, kada i gde su prikazani, i da li ste preduzeli bilo kakvu radnju u vezi sa oglasom, uključujući na primer klik na oglas ili kupovina.'
+			},
+			purpose4: {
+				menu: 'Izbor Vašeg sadržaja, isporuka i izveštaji',
+				title: 'Izbor Vašeg sadržaja, isporuka i izveštaji',
+				description: 'Prikupljanje informacija i ukrštanje sa prethodno prikupljenim informacijama za izbor i isporuku sadržaja za Vas i za merenje isporuke i efikasnosti takvog sadržaja. Ovo uključuje upotrebu prethodno prikupljenih informacija o Vašim interesovanjima za izbor sadržaja, obradu podataka o tome koji je sadržaj prikazan, koliko često ili koliko dugo je prikazivan, kada i gde je prikazan, i da li ste preduzeli bilo kakvu radnju vezanu za sadržaj, uključujući na primer klik na sadržaj.'
+			},
+			purpose5: {
+				menu: 'Merenje',
+				title: 'Merenje',
+				description: 'Prikupljanje informacija o Vašem izboru sadržaja i kombinacija sa prethodno prikupljenim informacijama koje se koriste za merenje, razumevanje i izveštavanje o Vašoj preferencijama sadržaja.'
+			}
+		},
+		vendors: {
+			title: 'Naši partneri',
+			company: 'Kompanija',
+			offOn: 'Dozvoli',
+			description: 'Pomozite nam da vam pružimo bolje iskustvo na našem sajtu! Naši partneri postavljaju kolačiće i prikupljaju informacije iz Vašeg pretraživača kako bi Vam pružili sadržaj web lokacija i isporučili relevantno oglašavanje',
+			moreChoices: 'Više opcija'
+		},
+		footer: {
+			message: 'Podsetnik da uvek možete promeniti Vaša podešavanja',
+			consentLink: 'ovde'
+		}
 	}
 };
