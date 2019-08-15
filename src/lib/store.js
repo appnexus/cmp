@@ -197,8 +197,8 @@ export default class Store {
 			cmpId,
 			vendorListVersion,
 			publisherPurposeVersion,
-			standardPurposes: standardPurposeMap,
-			customPurposes: customPurposeMap
+			standardPurposeConsents: standardPurposeMap,
+			customPurposeConsents: customPurposeMap
 		};
 	};
 
@@ -277,10 +277,16 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	selectAllVendors = (isSelected) => {
+	selectAllVendors = (isSelected, purposeId) => {
 		const {vendors = []} = this.vendorList || {};
 		const operation = isSelected ? 'add' : 'delete';
-		vendors.forEach(({id}) => this.vendorConsentData.selectedVendorIds[operation](id));
+		vendors.forEach(({id, purposeIds = []}) => {
+			// If a purposeId is supplied only toggle vendors that support that purpose
+			if (typeof purposeId !== 'number' ||
+				purposeIds.indexOf(purposeId) > -1) {
+				this.vendorConsentData.selectedVendorIds[operation](id);
+			}
+		});
 		this.storeUpdate();
 	};
 

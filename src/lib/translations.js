@@ -2,7 +2,9 @@
  * The default set of translated pieces of text indexed by locale.
  * Values from window.__cmp.config.localization will override these
  * per locale.  Empty values will use the english value provided
- * inline in each component.
+ * inline in each component. Because the purpose definitions will change,
+ * you will need to update the translations regularly. As a consequence, this
+ * translations.js file is very important to keep up to date.
  */
 export default {
 	en: {
@@ -44,34 +46,16 @@ export default {
 			back: '',
 			optoutdDescription: ``,
 			purpose1: {
-				description: `Allow storing or accessing information on a user's device.`
+				description: ''
 			},
 			purpose2: {
-				description: `Allow processing of a user's data to provide and inform personalised advertising (including delivery, measurement, and reporting) based on a user's preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices  for that purpose.
-				Will include following Features:
-				<ul>
-					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
-					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
-					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
-				</ul>`
+				description: ''
 			},
 			purpose3: {
-				description: `Allow processing of a user's data to deliver content or advertisements and measure the delivery of such content or advertisements, extract insights and generate reports to understand service usage; and/or accessing or storing information on devices for that purpose.
-				Will include following Features:
-				<ul>
-					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
-					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
-					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
-				</ul>`
+				description: ''
 			},
 			purpose4: {
-				description: `Allow processing of a user's data to provide and inform personalised content (including delivery, measurement, and reporting) based on a user's preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices for that purpose.
-				Will include following Features:
-				<ul>
-					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
-					<li>Linking Devices - allow processing of a user's data to connect such user across multiple devices.</li>
-					<li>Precise Geographic Location data - allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent.</li>
-				</ul>`
+				description: ''
 			}
 		},
 		vendors: {
@@ -79,6 +63,7 @@ export default {
 			description: '',
 			accept: '',
 			acceptAll: '',
+			acceptNone: '',
 			optOut: '',
 			back : ''
 		}
@@ -90,8 +75,7 @@ export default {
 			links: {
 				data: {
 					title: 'Información que puede ser usada.',
-					description: `Información que puede ser usada:
-								<ul>
+					description: `<ul>
 									<li>Tipo de navegador y su configuración</li>
 									<li>Información sobre el sistema operativo del dispositivo</li>
 									<li>Información sobre las cookies</li>
@@ -103,14 +87,7 @@ export default {
 				},
 				purposes: {
 					title: 'Propósitos para almacenar información.',
-					description: `Cómo puede ser usada la información:
-								<ul>
-									<li>Almacenamiento y acceso a la información</li>
-									<li>Selección de anuncios y entrega</li>
-									<li>Selección de contenido y entrega</li>
-									<li>Personalización</li>
-									<li>Medición</li>
-								</ul>`
+					description: `Cómo puede ser usada la información:`
 				},
 				manage: 'Leer más',
 				accept: 'Aceptar'
@@ -195,8 +172,7 @@ export default {
 			links: {
 				data: {
 					title: 'Données utilisées',
-					description: `Données pouvant être utilisées:
-								<ul>
+					description: `<ul>
 									<li>Données sur le navigateur utilisé</li>
 									<li>Données sur le systeme d'exploitation utilisé</li>
 									<li>Données des cookies</li>
@@ -208,13 +184,7 @@ export default {
 				},
 				purposes: {
 					title: 'Utilisation des données',
-					description: `A quoi servent ces données:
-								<ul>
-									<li>Stockage et accès à ces données</li>
-									<li>Publicités personnalisées</li>
-									<li>Contenus personnalisés</li>
-									<li>Mesure d'audience</li>
-								</ul>`
+					description: `A quoi servent ces données:`
 				},
 				manage: 'Préférences',
 				accept: 'Continuer'
@@ -226,7 +196,7 @@ export default {
 			detailLink: 'Informations et configuration',
 			who: {
 				title: 'Qui utilise mes données ?',
-				description: `Seulement nos partenaires et nous-même pouvons utiliser vos données. 
+				description: `Seulement nos partenaires et nous-même pouvons utiliser vos données.
 					Vous pouvez personnaliser vos choix ci-dessus ou continuer à utiliser notre site si vous êtes d'accord.`,
 				link: 'Voir la liste complète de nos partenaires'
 			},
@@ -296,8 +266,7 @@ export default {
 			links: {
 				data: {
 					title: 'Verwendungszwecke',
-					description: `Datenverwendungszwecke:
-								<ul>
+					description: `<ul>
 									<li>Browserdaten</li>
 									<li>Betriebssystemdaten</li>
 									<li>Cookie-Daten</li>
@@ -309,13 +278,7 @@ export default {
 				},
 				purposes: {
 					title: 'Verwendung von Daten',
-					description: `Wozu dienen diese Daten?
-								<ul>
-									<li>Speicherung und Zugriff auf diese Daten</li>
-									<li>Personalisierte Anzeigen</li>
-									<li>Personalisierter Inhalt</li>
-									<li>Zielgruppenmessung</li>
-								</ul>`
+					description: `Wozu dienen diese Daten?`
 				},
 				manage: 'Einstellungen',
 				accept: 'Akzeptieren und fortsetzen'
@@ -396,8 +359,7 @@ export default {
 			links: {
 				data: {
 					title: 'Informacje jakie mogą być używane.',
-					description: `Informacje jakie mogą być używane:
-					<ul>
+					description: `<ul>
 						<li>Rodzaj przeglądarki i jej ustawienia</li>
 						<li>Informacje o systemie operacyjnym urządzenia</li>
 						<li>Informacje zawarte w ciasteszkach (cookie)</li>
@@ -409,13 +371,7 @@ export default {
 				},
 				purposes: {
 					title: 'Cele przechowywania informacji.',
-					description: `W jaki sposób informacje mogą być używane:
-					<ul>
-						<li>Zapisywanie i odczytywanie informacji</li>
-						<li>Dobieranie i dostarczanie reklam</li>
-						<li>Personalizacja</li>
-						<li>Pomiary</li>
-					</ul>`
+					description: `W jaki sposób informacje mogą być używane:`
 				},
 				manage: 'Zobacz więcej',
 				accept: '<b>Akceptuję</b>'
@@ -493,6 +449,103 @@ export default {
 			acceptAll: 'Zaakceptuj wszystko',
 			optOut: 'wymaga odwołania zgody',
 			back: 'Dostosuj sposób, w jaki te firmy korzystają z danych z poprzedniej strony'
+		}
+	},
+	it: {
+		banner: {
+			title: 'Uso dei cookies',
+			description: 'Utilizziamo i nostri "cookie" e di terze parti per raccogliere informazioni statistiche e mostrarti pubblicità personalizzata attraverso l\'analisi della tua navigazione. Se continui a navigare, accetti tale utilizzo',
+			links: {
+				data: {
+					title: 'Informazioni che possono essere utilizzate.',
+					description: `<ul>
+									<li>Tipo di browser e sua configurazione</li>
+									<li>Informazioni sul sistema operativo del dispositivo</li>
+									<li>Informazioni sui cookie</li>
+									<li>Informazioni su altri identificatori assegnati al dispositivo</li>
+									<li>Indirizzo IP da cui il dispositivo accede al sito Web o all'applicazione mobile</li>
+									<li>Informazioni sull'attività dell'utente su questo dispositivo, comprese le pagine Web e le applicazioni mobile visitate o utilizzate</li>
+									<li>Informazioni sulla posizione geografica del dispositivo quando si accede a un sito Web o un'applicazione mobile</li>
+								</ul>`
+				},
+				purposes: {
+					title: 'Uso dei dati.',
+					description: `Come possono essere utilizzate le informazioni:`
+				},
+				manage: 'Leggi di più',
+				accept: 'Accetta'
+			}
+		},
+		details: {
+			title: 'Impostazioni sulla privacy',
+			back: 'Indietro',
+			save: 'Salva ed esci'
+		},
+		summary: {
+			title: 'Ulteriori informazioni su come vengono utilizzate le informazioni.',
+			description: 'Noi e alcune società selezionate possiamo accedere e utilizzare le tue informazioni per i seguenti scopi. Puoi personalizzare le tue opzioni qui sotto o continuare a utilizzare il nostro sito se sei d\'accordo con gli scopi.',
+			detailLink: 'Maggiori informazioni',
+			who:{
+				title:'Chi sta usando queste informazioni?',
+				description:'Noi e le società preselezionate utilizziamo le tue informazioni. Puoi vedere ciascuna compagnia nei link sopra.',
+				link:'Guarda l\'elenco completo qui.'
+			},
+			what:{
+				title:'Quali informazioni vengono utilizzate?',
+				description:'Diverse aziende usano informazioni diverse,',
+				link:'Guarda l\'elenco completo qui.'
+			}
+		},
+		purposes: {
+			title: 'Dati raccolti',
+			description: 'Di seguito è riportato l\'elenco dei dati che possono essere raccolti:',
+			back: 'Configura come vengono utilizzati questi dati',
+			optoutdDescription: 'A seconda del tipo di dati che raccolgono, utilizzano e elaborano, e di altri fattori, inclusa la privacy in base alla progettazione, alcuni partner fanno affidamento sul loro consenso, mentre altri richiedono che vengano esclusi. Per informazioni su ciascun fornitore ed esercitare le tue scelte, vedi sotto. O per rinunciare, visitare i siti NAI, DAA o EDAA.',
+			items: `<ul>
+						<li>Tipo e configurazione del browser</li>
+						<li>Informazioni sul sistema operativo</li>
+						<li>Dati dei cookie</li>
+						<li>Informazioni sul dispositivo utilizzato</li>
+						<li>L'indirizzo IP da cui il dispositivo accede al sito Web</li>
+						<li>Informazioni sull'attività dell'utente su questo dispositivo, comprese le pagine Web visitate</li>
+						<li>Informazioni sulla posizione del dispositivo quando si accede al sito Web</li>
+					</ul>`,
+			purpose1: {
+				menu: 'Archiviazione e accesso alle informazioni',
+				title: 'Archiviazione e accesso alle informazioni',
+				description: 'La memorizzazione e l\'accesso alle informazioni già memorizzate sul dispositivo, come identificatori pubblicitari, identificativi del dispositivo, cookie e tecnologie simili.'
+			},
+			purpose2: {
+				menu: 'Personalizzazione',
+				title: 'Personalizzazione',
+				description: 'La raccolta e l\'elaborazione di informazioni per personalizzare successivamente la pubblicità e / o il contenuto per te, come in altri siti Web o applicazioni, nel tempo. Normalmente, la futura selezione di pubblicità e / o contenuti.'
+			},
+			purpose3: {
+				menu: 'Selezione degli annunci, diffusione, report',
+				title: 'Selezione degli annunci, diffusione, report',
+				description: 'Consentire l\'elaborazione dei dati di un utente per fornire contenuti o annunci pubblicitari e misurare la diffusione di tali contenuti o pubblicità, estrarre informazioni e generare rapporti per comprendere l\'uso dei servizi; e / o accedere o memorizzare informazioni sui dispositivi per questo scopo. Includi le seguenti funzionalità.'
+
+			},
+			purpose4: {
+				menu: 'Selezione dei contenuti, diffusione, report',
+				title: 'Selezione dei contenuti, diffusione, report',
+				description: 'Raccolta di informazioni e combinazione con informazioni precedentemente raccolte per selezionare e fornire contenuti per te e per misurare la consegna e l\'efficacia di tali contenuti. Ciò include l\'uso delle informazioni raccolte in precedenza sui tuoi interessi per selezionare il contenuto, elaborare i dati su quale contenuto è stato visualizzato, con quale frequenza o per quanto tempo è stato mostrato, quando e dove è stato visualizzato e se hai intrapreso qualche azione relativa al contenuto, incluso esempio, clic sul contenuto. Ciò non include la personalizzazione, che è la raccolta e l\'elaborazione di informazioni sull\'uso di questo servizio per personalizzare successivamente il contenuto e / o la pubblicità in altri contesti, come siti Web o applicazioni, nel tempo.'
+
+			},
+			purpose5: {
+				menu: 'Misurazione',
+				title: 'Misurazione',
+				description: 'Raccolta di informazioni sull\'utilizzo del contenuto e sulla combinazione di informazioni raccolte in precedenza, utilizzate per misurare, comprendere e riferire sull\'utilizzo del servizio. Ciò non include la personalizzazione, la raccolta di informazioni sull\'uso di questo servizio per personalizzare successivamente il contenuto e / o la pubblicità in altri contesti, ovvero in altri servizi, come siti Web o applicazioni, nel tempo.'
+
+			},
+		},
+		vendors: {
+			title: 'I nostri partner',
+			description: 'Aiutaci ad offrirti un servizio migliore. I nostri partner utilizzano i loro cookie del browser per comprendere, attraverso il web, i loro interessi e offrire contenuti e pubblicità pertinenti.',
+			accept: 'Accetta',
+			acceptAll: 'Accetta tutto',
+			optOut: 'Richiede la rinuncia',
+			back : 'Indietro'
 		}
 	}
 };

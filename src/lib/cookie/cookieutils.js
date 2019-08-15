@@ -261,11 +261,10 @@ function encodePublisherCookieValue(publisherData) {
 	return encodeCookieValue(publisherData, publisherVersionMap);
 }
 
-
 /**
- * Decode the (URL safe Base64) value of a cookie into an object.
+ * Decode a (URL safe Base64) value to a bitstring.
  */
-function decodeCookieValue(cookieValue, definitionMap, includeFields) {
+function decodeB64toBitString(cookieValue) {
 
 	// Replace safe characters
 	const unsafe = cookieValue
@@ -280,6 +279,14 @@ function decodeCookieValue(cookieValue, definitionMap, includeFields) {
 		inputBits += padLeft(bitString, 8 - bitString.length);
 	}
 
+	return inputBits;
+}
+
+/**
+ * Decode the (URL safe Base64) value of a cookie into an object.
+ */
+function decodeCookieValue(cookieValue, definitionMap, includeFields) {
+	const inputBits = decodeB64toBitString(cookieValue);
 	return decodeCookieBitValue(inputBits, definitionMap, includeFields);
 }
 
@@ -331,5 +338,7 @@ export {
 	decodeVendorCookieValue,
 	encodePublisherCookieValue,
 	decodePublisherCookieValue,
-	decode6BitCharacters
+	decode6BitCharacters,
+	decodeB64toBitString,
+	decodeField,
 };

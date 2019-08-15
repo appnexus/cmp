@@ -29,20 +29,13 @@ export default class Vendors extends Component {
 		selectedVendorIds: new Set(),
 		selectVendor: () => {},
 		selectAllVendors: () => {},
-		selectedPurpose: {}
-	};
-
-	handleAcceptAll = () => {
-		this.props.selectAllVendors(true);
-	};
-
-	handleRejectAll = () => {
-		this.props.selectAllVendors(false);
+		selectedPurposeDetails: {}
 	};
 
 	handleToggleAll = () => {
+		const { id: selectedPurposeId } = this.props.selectedPurposeDetails;
 		const {isSelectAll} = this.state;
-		this[isSelectAll ? 'handleAcceptAll' : 'handleRejectAll']();
+		this.props.selectAllVendors(isSelectAll, selectedPurposeId);
 		this.setState({isSelectAll: !isSelectAll});
 	};
 
@@ -52,11 +45,12 @@ export default class Vendors extends Component {
 
 	render(props, state) {
 
+		const { isSelectAll } = state;
 		const {
 			vendors,
 			purposes,
 			selectedVendorIds,
-			selectedPurpose,
+			selectedPurposeDetails,
 			theme,
 		} = props;
 
@@ -71,11 +65,10 @@ export default class Vendors extends Component {
 			id: selectedPurposeId,
 			name,
 			description
-		} = selectedPurpose;
+		} = selectedPurposeDetails;
 
 		const validVendors = vendors
 			.filter(({legIntPurposeIds = [], purposeIds = []}) => legIntPurposeIds.indexOf(selectedPurposeId) > -1 || purposeIds.indexOf(selectedPurposeId) > -1);
-
 
 		return (
 			<div class={style.vendors}>
@@ -85,7 +78,7 @@ export default class Vendors extends Component {
 					</div>
 				</div>
 				<div class={detailsStyle.description} style={{color: textLightColor}}>
-					<p><PurposesLabel localizeKey={`purpose${selectedPurposeId}.description`}>What this means: {description}</PurposesLabel></p>
+					<p><PurposesLabel localizeKey={`purpose${selectedPurposeId}.description`}>{description}</PurposesLabel></p>
 					<p><PurposesLabel localizeKey='optoutdDescription'>
 						Depending on the type of data they collect, use,
 						and process and other factors including privacy by design, certain partners rely on your consent while others require you to opt-out.
@@ -95,7 +88,12 @@ export default class Vendors extends Component {
 						, or <a href='http://youronlinechoices.eu/' target='_blank' style={{color: textLinkColor}}>EDAA</a> sites.
 					</PurposesLabel></p>
 				</div>
-				<a class={style.toggleAll} onClick={this.handleToggleAll} style={{color: primaryColor}}><VendorsLabel localizeKey='acceptAll'>Allow All</VendorsLabel></a>
+				<a class={style.toggleAll} onClick={this.handleToggleAll} style={{color: primaryColor}}>
+					{isSelectAll ?
+						<VendorsLabel localizeKey='acceptAll'>Allow All</VendorsLabel> :
+						<VendorsLabel localizeKey='acceptNone'>Disallow All</VendorsLabel>
+					}
+				</a>
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
@@ -108,7 +106,7 @@ export default class Vendors extends Component {
 										</div>
 									</td>
 									<td class={style.allowColumn}>
-										{purposeIds.indexOf(selectedPurpose.id) > -1 ?
+										{purposeIds.indexOf(selectedPurposeDetails.id) > -1 ?
 											<span class={style.allowSwitch}>
 												<VendorsLabel localizeKey='accept'>Allow</VendorsLabel> <Switch
 													color={primaryColor}
