@@ -11,7 +11,7 @@ import config from './config';
 const CMP_VERSION = 1;
 
 // CMP_ID is the ID of your consent management provider according to the IAB. Get an ID here: https://advertisingconsent.eu/cmps/
-const CMP_ID = 0;
+const CMP_ID = 38;
 
 // The cookie specification version, as determined by the IAB. Current is 1.
 const COOKIE_VERSION = 1;
