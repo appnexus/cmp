@@ -9,19 +9,37 @@
 export default {
 	en: {
 		banner: {
-			title: '',
-			description: '',
+			title: 'Ads help us run this site', /* We Value Privacy */
+			description: `When you visit our site, pre-selected companies may access and use certain information on your device and about this site to serve relevant ads or personalized content.`,
+			/* By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click "Learn More" to change your settings. */
 			links: {
 				data: {
-					title: '',
-					description: ''
+					title: 'Information that may be used',
+					description: `
+						<ul>
+							<li>Type of browser and its settings</li>
+							<li>Information about the device's operating system</li>
+							<li>Cookie information</li>
+							<li>Information about other identifiers assigned to the device</li>
+							<li>The IP address from which the device accesses a client's website or
+								mobile application
+							</li>
+							<li>Information about the user's activity on that device, including web
+								pages and mobile apps visited or used
+							</li>
+							<li>Information about the geographic location of the device when it
+								accesses
+								a website or mobile application
+							</li>
+						</ul>
+					`
 				},
 				purposes: {
 					title: '',
 					description: ''
 				},
-				manage: '',
-				accept: ''
+				manage: 'Manage your choices', /* Learn More */
+				accept: 'Continue to site' /* OK */
 			}
 		},
 		summary: {
@@ -46,16 +64,37 @@ export default {
 			back: '',
 			optoutdDescription: ``,
 			purpose1: {
-				description: ''
+				description: 'Allow storing or accessing information on a user’s device.'
 			},
 			purpose2: {
-				description: ''
+				description: `Allow processing of a user’s data to provide and inform personalised advertising (including delivery, measurement, and reporting) based on a user’s preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices  for that purpose.
+				Will include following Features:
+				<ul>
+					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
+					<li>Linking Devices - allow processing of a user’s data to connect such user across multiple devices.</li>
+					<li>Precise Geographic Location data - allow processing of a user’s precise geographic location data in support of a purpose for which that certain third party has consent.</li>
+				</ul>`
 			},
 			purpose3: {
-				description: ''
+				description: `Allow processing of a user’s data to deliver content or advertisements and measure the delivery of such content or advertisements, extract insights and generate reports to understand service usage; and/or accessing or storing information on devices for that purpose.
+				Will include following Features:
+				<ul>
+					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
+					<li>Linking Devices - allow processing of a user’s data to connect such user across multiple devices.</li>
+					<li>Precise Geographic Location data - allow processing of a user’s precise geographic location data in support of a purpose for which that certain third party has consent.</li>
+				</ul>`
 			},
 			purpose4: {
-				description: ''
+				description: `Allow processing of a user’s data to provide and inform personalised content (including delivery, measurement, and reporting) based on a user’s preferences or interests known or inferred from data collected across multiple sites, apps, or devices; and/or accessing or storing information on devices for that purpose.
+				Will include following Features:
+				<ul>
+					<li>Matching Data to Offline Sources - combining data from offline sources that were initially collected in other contexts.</li>
+					<li>Linking Devices - allow processing of a user’s data to connect such user across multiple devices.</li>
+					<li>Precise Geographic Location data - allow processing of a user’s precise geographic location data in support of a purpose for which that certain third party has consent.</li>
+				</ul>`
+			},
+			purpose5: {
+				description: `The collection of information about your use of the content, and combination with previously collected information, used to measure, understand, and report on your usage of the service. This does not include personalisation, the collection of information about your use of this service to subsequently personalise content and/or advertising for you in other contexts, i.e. on other service, such as websites or apps, over time.`
 			}
 		},
 		vendors: {
@@ -66,6 +105,18 @@ export default {
 			acceptNone: '',
 			optOut: '',
 			back : ''
+		},
+		footer: {
+			message: 'We Value Privacy',
+			description: `
+				<span>To help make this website better, to personalize and enhance your content experience, for advertising purposes and to analyze our traffic, we and our partners use technology such as cookies, pixels, and/or beacons to collect certain data. By continuing to use the site or clicking “OK”, you agree to the use of this technology and collecting the data.</span>
+			`,
+			privacyPolicy: `Please visit our <a target="_blank" href="http://system1.com/terms/privacy.html">Privacy Policy</a> to learn more about
+				how we collect and use data. You can modify your settings at any
+				time by clicking
+			`,
+			privacyPolicyButton: 'Manage Privacy Settings',
+			consentLink: 'OK'
 		}
 	},
 	es: {

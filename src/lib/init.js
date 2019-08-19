@@ -16,6 +16,8 @@ const CMP_ID = 38;
 // The cookie specification version, as determined by the IAB. Current is 1.
 const COOKIE_VERSION = 1;
 
+let store;
+
 export function init(configUpdates) {
 	config.update(configUpdates);
 	log.debug('Using configuration:', config);
@@ -35,7 +37,7 @@ export function init(configUpdates) {
 				vendors && vendors.map(vendor => vendor.id);
 
 			// Initialize the store with all of our consent data
-			const store = new Store({
+			store = new Store({
 				cmpVersion: CMP_VERSION,
 				cmpId: CMP_ID,
 				cookieVersion: COOKIE_VERSION,
@@ -63,7 +65,8 @@ export function init(configUpdates) {
 				...cmp.commands,
 				notify: cmp.notify,
 				isLoaded: cmp.isLoaded,
-				processCommand: cmp.processCommand
+				processCommand: cmp.processCommand,
+				store: cmp.store // System1:edit this customization enables autoConsenting features
 			});
 
 			cmp.notify('isLoaded');
@@ -92,3 +95,9 @@ export function init(configUpdates) {
 			log.error('Failed to load CMP', err);
 		});
 }
+
+// System1:start return store access
+export function getStore() {
+	return store;
+}
+// System1:end

@@ -18,9 +18,11 @@ const PUBLISHER_CONSENT_COOKIE_MAX_AGE = 33696000;
 const VENDOR_CONSENT_COOKIE_NAME = 'euconsent';
 const VENDOR_CONSENT_COOKIE_MAX_AGE = 33696000;
 
+// System1:start COOKIE_DOMAIN customized to work as *.somedomain by default
 const host = (window && window.location && window.location.hostname) || '';
 const parts = host.split('.');
 const COOKIE_DOMAIN = parts.length > 1 ? `;domain=.${parts.slice(-2).join('.')}` : '';
+// System1:end
 
 function encodeVendorIdsToBits(maxVendorId, selectedVendorIds = new Set()) {
 	let vendorString = '';
@@ -207,7 +209,10 @@ function readCookie(name) {
 
 function writeCookie(name, value, maxAgeSeconds, path = '/') {
 	const maxAge = maxAgeSeconds === null ? '' : `;max-age=${maxAgeSeconds}`;
-	document.cookie = `${name}=${value}${COOKIE_DOMAIN};path=${path}${maxAge}`;
+	const expires = maxAgeSeconds === null ? '' : ';expires=' + new Date(new Date() * 1 + maxAgeSeconds * 1000).toUTCString();
+	// System1:start COOKIE_DOMAIN customized to work as *.somedomain by default
+	document.cookie = `${name}=${value}${COOKIE_DOMAIN};path=${path}${maxAge}${expires}`;
+	// System1:end
 }
 
 function readPublisherConsentCookie() {

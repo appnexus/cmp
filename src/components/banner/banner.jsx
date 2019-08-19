@@ -30,6 +30,28 @@ export default class Banner extends Component {
 		};
 	}
 
+	handleClose = () => {
+		const { store } = this.props;
+		const { toggleFooterShowing } = store;
+		toggleFooterShowing(false);
+	};
+
+	handleShowConsent = () => {
+		const { store } = this.props;
+		const { toggleConsentToolShowing } = store;
+		toggleConsentToolShowing(true);
+	};
+
+	onAcceptAll = () => {
+		const { store, onSave } = this.props;
+		const { toggleFooterShowing } = store;
+		store.selectAllVendors(true);
+		store.selectAllPurposes(true);
+		store.selectAllCustomPurposes(true);
+		onSave();
+		toggleFooterShowing(false);
+	};
+
 	handleInfo = (index) => () => {
 		const { isExpanded, selectedPanelIndex } = this.state;
 		this.setState({
@@ -40,12 +62,13 @@ export default class Banner extends Component {
 
 	handleWindowClick = e => {
 		if (!this.bannerRef || !this.bannerRef.contains(e.target)) {
-			this.props.onSave();
+			this.onAcceptAll();
 		}
 	};
 
 	handleLearnMore = () => {
-		this.props.onShowModal(true);
+		// this.props.onShowModal(true);
+		this.thushandleShowConsent();
 	};
 
 	handlePurposeItemClick = purposeItem => {
@@ -59,7 +82,7 @@ export default class Banner extends Component {
 	};
 
 	render(props, state) {
-		const { isShowing, onSave, theme, purposes } = props;
+		const { isShowing, theme, purposes } = props;
 		const { selectedPanelIndex, isExpanded } = state;
 		const {
 			primaryColor,
@@ -76,7 +99,7 @@ export default class Banner extends Component {
 				class={[style.banner, !isShowing ? style.hidden : ''].join(' ')}
 				style={{
 					boxShadow: `0px 0px 5px ${primaryColor}`,
-					backgroundColor: backgroundColor,
+					backgroundColor,
 					color: textLightColor
 				}}
 			>
@@ -164,7 +187,7 @@ export default class Banner extends Component {
 							</a>
 							<a
 								class={style.continue}
-								onClick={onSave}
+								onClick={this.onAcceptAll}
 								style={{
 									backgroundColor: primaryColor,
 									borderColor: primaryColor,

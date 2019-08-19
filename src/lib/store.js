@@ -60,7 +60,7 @@ export default class Store {
 
 		this.pubVendorsList = pubVendorsList;
 		this.allowedVendorIds = new Set(allowedVendorIds);
-		this.isConsentToolShowing = false;
+		this.isModalShowing = false;
 		this.isBannerShowing = false;
 
 		this.updateVendorList(vendorList);

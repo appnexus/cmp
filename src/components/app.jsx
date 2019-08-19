@@ -91,14 +91,15 @@ export default class App extends Component {
 		return (
 			<div class={style.gdpr}>
 				<Banner isShowing={isBannerShowing}
-						isModalShowing={isModalShowing}
-						onSave={this.onSave}
-						onShowModal={toggleModalShowing}
-						onSelectPurpose={this.onSelectPurpose}
-						onChangeDetailsPanel={this.onChangeDetailsPanel}
-						theme={theme}
-						purposes={purposes}
-						selectedPurposeDetails={selectedPurposeDetails}
+					isModalShowing={isModalShowing}
+					onSave={this.onSave}
+					onShowModal={toggleModalShowing}
+					onSelectPurpose={this.onSelectPurpose}
+					onChangeDetailsPanel={this.onChangeDetailsPanel}
+					theme={theme}
+					purposes={purposes}
+					selectedPurposeDetails={selectedPurposeDetails}
+					store={store}
 				/>
 				<Popup store={store}
 					   onSave={this.onSave}

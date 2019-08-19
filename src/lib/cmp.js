@@ -177,7 +177,14 @@ export default class Cmp {
 		showModal: (_, callback = () => {}) => {
 			this.store.toggleModalShowing(true);
 			callback(true);
+		},
+		
+		acceptAllConsents: (_, callback = () => {}) => {
+			this.store.persist();
+			callback();
 		}
+
+		
 	};
 
 	generateConsentString = () => {

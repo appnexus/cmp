@@ -15,7 +15,7 @@
 			logging = 'logging',
 			scriptSrc = 'scriptSrc';
 
-		return function(isModule) {
+		return function() {
 			// 1. already exists, start queueing requests
 			if (window[cmp] && window[__cmp]) {
 				window[cmp] = window[__cmp];

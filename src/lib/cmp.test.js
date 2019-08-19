@@ -223,4 +223,12 @@ describe('cmp', () => {
 		expect(processSpy.mock.calls[0][0]).to.equal('showConsentTool');
 	});
 
+	it('acceptAllConsents executes', (done) => {
+		const persist = jest.spyOn(cmp.store, 'persist');
+		cmp.processCommand('acceptAllConsents', null, () => {
+			expect(persist.mock.calls).to.have.length(1);
+			done();
+		});
+	});
+
 });
