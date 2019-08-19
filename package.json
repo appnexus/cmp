@@ -1,6 +1,6 @@
 {
   "name": "appnexus-cmp",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "clean": "rm -rf dist",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --config config/webpack.config.babel.js",
