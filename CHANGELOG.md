@@ -5,8 +5,7 @@
 ### Refactor
 
  - [x] Merge latest from upstream repo 
- - [x] Merge latest System1 customizations from `modal` branch into footer-UI refactor
-
+ - [x] Merge latest System1 customizations from `modal` branch into footer-UI refactor (see docs in modal branch: https://github.com/Openmail/system1-cmp/tree/modal)
 
 <a name="0.0.1"></a>
 
