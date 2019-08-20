@@ -9,9 +9,10 @@
 export default {
 	en: {
 		banner: {
-			title: 'Ads help us run this site', /* We Value Privacy */
-			description: `When you visit our site, pre-selected companies may access and use certain information on your device and about this site to serve relevant ads or personalized content.`,
-			/* By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click "Learn More" to change your settings. */
+			title: 'We Value Privacy',
+			description: `We and our partners are using technologies like Cookies or Targeting and process personal data like the IP-address or browser information in order to personalize the advertising that you see. This helps us to show you more relevant ads and improves your internet experience. We also use it in order to measure results or align our website content. Because we value your privacy, we are herewith asking for your permission to use this technologies. You can always change/withdraw your consent later by clicking on the settings button on the left lower corner of the page.`,
+			// description: `When you visit our site, pre-selected companies may access and use certain information on your device and about this site to serve relevant ads or personalized content.`,
+			// description: `By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click "Learn More" to change your settings.`,
 			links: {
 				data: {
 					title: 'Information that may be used',
