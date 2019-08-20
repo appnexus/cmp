@@ -62,6 +62,7 @@ export default class Store {
 		this.allowedVendorIds = new Set(allowedVendorIds);
 		this.isModalShowing = false;
 		this.isBannerShowing = false;
+		this.isFooterShowing = false;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);
@@ -335,6 +336,7 @@ export default class Store {
 
 	toggleModalShowing = (isShown) => {
 		this.isModalShowing = typeof isShown === 'boolean' ? isShown : !this.isModalShowing;
+		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
 

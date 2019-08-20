@@ -23,7 +23,8 @@ export default class Popup extends Component {
 	}
 
 	handleClose = () => {
-		const {store} = this.props;
+		const { store, onSave } = this.props;
+		onSave();
 		store.toggleModalShowing(false);
 	};
 

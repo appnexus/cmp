@@ -3,6 +3,7 @@ import style from './app.less';
 import { SECTION_PURPOSES, SECTION_VENDORS } from './popup/details/details';
 import Popup from './popup/popup';
 import Banner from './banner/banner';
+import Footer from './footer/footer';
 
 export default class App extends Component {
 	static defaultProps = {
@@ -109,6 +110,7 @@ export default class App extends Component {
 					   theme={theme}
 					   selectedPurposeDetails={selectedPurposeDetails}
 				/>
+				<Footer store={store} onSave={this.onSave} />
 			</div>
 		);
 	}

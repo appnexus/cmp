@@ -84,6 +84,7 @@ export default class Banner extends Component {
 	render(props, state) {
 		const { isShowing, theme, purposes } = props;
 		const { selectedPanelIndex, isExpanded } = state;
+		
 		const {
 			primaryColor,
 			primaryTextColor,
