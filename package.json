@@ -98,6 +98,7 @@
     "classnames": "^2.2.5",
     "codemirror": "^5.34.0",
     "core-js": "^2.5.3",
+    "cross-var": "^1.1.0",
     "handlebars-loader": "^1.7.1",
     "js-beautify": "^1.7.5",
     "lodash": "^4.17.11",
