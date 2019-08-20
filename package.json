@@ -110,6 +110,7 @@
     "query-string": "^5.0.1",
     "react-codemirror2": "^5.1.0",
     "react-router-dom": "^4.2.2",
+    "s3-deploy": "^1.3.0",
     "serve": "^10.1.2",
     "uglify-es": "^3.3.9",
     "whatwg-fetch": "^2.0.3"
