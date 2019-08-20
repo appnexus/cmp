@@ -1,0 +1,105 @@
+@import '../../style/variables';
+
+.footer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 99999;
+	min-height: 50px;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	text-align: left;
+	background: white;
+	padding: .5em 1.5em;
+	border-top: 2px solid @color-primary;
+
+	@media @smartphone {
+		flex-wrap: wrap;
+		justify-content: left;
+		padding: .75em .75em;
+	}
+
+	.descriptionRow {
+		padding-right: 10px;
+		text-align: left;
+		line-height: 1em;
+
+		@media @smartphone {
+			padding-right: 0px;
+			line-height: 0.9em;
+		}
+	}
+
+	.privacyRow {
+		margin-top: 0.5em;
+		line-height: 1em;
+
+		.message, a {
+			font-size: 10px;
+		}
+
+
+		@media @smartphone {
+			padding-top: 5px;
+		}
+	}
+
+	.consentBtn {
+		margin-left: 5px;
+		padding: 8px 14px;
+		background: #37a6eb;
+		color: white;
+		font-size: 12px;
+		width: 100px;
+    display: inline-block;
+		border-radius: 4px;
+    text-align: center;
+
+		@media @smartphone {
+			margin-top: 10px;
+			margin-left: 0px;
+			padding: 4px 7px;
+			font-size: 10px;
+		}
+
+		&:hover {
+			background: #1170ab;
+			color: white;
+		}
+	}
+
+	.modalLink {
+		color: #37a6eb;
+		font-size: 12px;
+
+		@media @smartphone {
+			font-size: 10px;
+		}
+	}
+
+	.title {
+		font-weight: bold;
+		font-size: 16px;
+		margin-right: 10px;
+		display: block;
+		margin-bottom: 5px;
+
+		@media @smartphone {
+			font-size: 12px;
+		}
+	}
+	.message {
+		font-size: 12px;
+		display: inline;
+
+		@media @smartphone {
+			font-size: 10px;
+		}
+	}
+	.close {
+		right: 0;
+		top: 0;
+	}
+}

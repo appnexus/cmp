@@ -60,8 +60,9 @@ export default class Store {
 
 		this.pubVendorsList = pubVendorsList;
 		this.allowedVendorIds = new Set(allowedVendorIds);
-		this.isConsentToolShowing = false;
+		this.isModalShowing = false;
 		this.isBannerShowing = false;
+		this.isFooterShowing = false;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);
@@ -197,8 +198,8 @@ export default class Store {
 			cmpId,
 			vendorListVersion,
 			publisherPurposeVersion,
-			standardPurposes: standardPurposeMap,
-			customPurposes: customPurposeMap
+			standardPurposeConsents: standardPurposeMap,
+			customPurposeConsents: customPurposeMap
 		};
 	};
 
@@ -277,10 +278,16 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	selectAllVendors = (isSelected) => {
+	selectAllVendors = (isSelected, purposeId) => {
 		const {vendors = []} = this.vendorList || {};
 		const operation = isSelected ? 'add' : 'delete';
-		vendors.forEach(({id}) => this.vendorConsentData.selectedVendorIds[operation](id));
+		vendors.forEach(({id, purposeIds = []}) => {
+			// If a purposeId is supplied only toggle vendors that support that purpose
+			if (typeof purposeId !== 'number' ||
+				purposeIds.indexOf(purposeId) > -1) {
+				this.vendorConsentData.selectedVendorIds[operation](id);
+			}
+		});
 		this.storeUpdate();
 	};
 
@@ -329,6 +336,7 @@ export default class Store {
 
 	toggleModalShowing = (isShown) => {
 		this.isModalShowing = typeof isShown === 'boolean' ? isShown : !this.isModalShowing;
+		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
 

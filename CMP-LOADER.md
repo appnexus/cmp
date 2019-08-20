@@ -1,44 +1,64 @@
-# system1-cmp
+# System1 CMP Loader
 
-System1-CMP is a container around the [appnexus-cmp](https://github.com/appnexus/cmp) that provides additional features for loading the CMP and for providing a complete CMP solution. We would like to customize the CMP but still be able to upgrade the CMP SDK as the upstream [appnexus-cmp](https://github.com/appnexus/cmp) improves over time.
+The System1 CMP Loader is a shim around the [appnexus-cmp](https://github.com/appnexus/cmp); it aims to improve installation, integration, and management of the underlying CMP and to allow us to swap out the underlying CMP at a later date.
+
+---
+
+## Note
+
+The `modal` is currently used in production, it implements an optional "footer" UI solution for initial consent requests that pops the CMP into a modal view. 
+`master` branch has been upgraded to the latest appnexus-cmp but has not been used in production at System1 yet. 
+
+Eventually we need to merge changes from the `modal` branch into `master` (probably manually) and upgrade master to the lastest from appnexus and apply any customizations on top. 
+
+As of now, just apply new changes to the `modal` branch until we formalize a plan to migrate to the lastest master branch.
+
+---
+
+
+[Complete Docs Are a Work In Progress](http://s.flocdn.com/cmp/docs/#/)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-  - [Installation](#installation)
-  - [CMP Loader API](#cmp-loader-api)
-    - [init](#init)
-      - [init: config](#init-config)
-      - [init: callback](#init-callback)
-    - [Arguments](#arguments)
-    - [Possible Commands](#possible-commands)
+
+- [Terminology](#terminology)
+- [Installation](#installation)
+  - [Quickstart](#quickstart)
+- [Roadmap](#roadmap)
+- [CMP Loader API](#cmp-loader-api)
+  - [init](#init)
+    - [init: config](#init-config)
+    - [init: callback](#init-callback)
+  - [Arguments](#arguments)
+  - [Possible Commands](#possible-commands)
     - [Examples](#examples)
   - [Events](#events)
     - [Examples](#examples-1)
-  - [Build](#build)
-  - [Deploy](#deploy)
-  - [Upload](#upload)
-- [AppNexus CMP](#appnexus-cmp)
-    - [Installation](#installation-1)
-  - [Build for Production](#build-for-production)
-  - [Documentation](#documentation)
-  - [Development](#development)
-  - [Testing](#testing)
+- [Deploy](#deploy)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Installation
+# Terminology
 
-Check the version you want to use, new versions are opt-in only.
+| Term | Description |
+| --- | --- |
+| CMP Loader | System1 CMP loader or container. Provides API shell, loader, initializer for actual CMP |
+| CMP | Consent Management Platform implementation detail and UI ([appnexus-cmp](https://github.com/appnexus/cmp), quantcast-cmp) |
+
+# Installation
+
+The CMP Loader provides a shim to the CMP SDK. Use the CMP Loader to queue commands and events asynchronously to the CMP SDK.
+
+## Quickstart
 
 ```
 <html>
 <body>
-  <script type="text/javascript" src="//s.flocdn.com/cmp/0.0.1/loader.js"></script>
+  <script type="text/javascript" src="//s.flocdn.com/cmp/${VERSION}/loader.js"></script>
   <script type="text/javascript">
   const config = {
-    scriptSrc: 'https://s.flocdn.com/cmp/1.0.0/cmp.js',
+    scriptSrc: 'https://s.flocdn.com/cmp/${VERSION}/cmp.js',
     gdprApplies: true,
     // logging: true,
     // pubVendorListLocation: '/.well-known/pubvendors.json',
@@ -83,11 +103,27 @@ Check the version you want to use, new versions are opt-in only.
 </html>
 ```
 
-## CMP Loader API
+# Roadmap
+
+The goal is to provide a CMP loader that acts as an SDK for integrating the CMP with your website where you might need more support listening for sideEffects.
+
+- [x] Provide a CMP loader that maintains CMP scope after loading
+- [x] Allow `import` of CMP so it can be included in another CMP project as an SDK
+- [x] Allow CMP Loader to be directly inlined for immediate use.
+- [x] Expose `init` function to allow for dynamic configuration
+- [x] Set cookie `gdpr_opt_in` as boolean for user consent to all Purposes/Vendors or not
+- [x] Allow customization of location for `pubvendors.json`
+- [x] Add `consentChanged` event to trigger change in consent
+- [x] Return consent object in onSubmit
+- [x] Add `shouldAutoConsent` config flag to allow for automatic consent
+- [x] Add `shouldAutoConsentWithFooter` config flag to allow for automatic consent and pop to footer
+
+
+# CMP Loader API
 
 The CMP Loader exposes access to the underlying CMP SDK: [appnexus-cmp API](http://s.flocdn.com/cmp/docs/#/cmp-api) and externalizes configuration of the CMP SDK.
 
-### init
+## init
 
 You must call `init` explicitly to start the CMP. Otherwise, the CMP Loader will only queue commands and not initialize the CMP SDK.
 
@@ -98,7 +134,7 @@ You must call `init` explicitly to start the CMP. Otherwise, the CMP Loader will
 cmp('init', config, callback);
 ```
 
-#### init: config
+### init: config
 
 `config` is a required argument of `init`. It allows us to configure/customize the CMP.
 
@@ -106,7 +142,7 @@ Example Configuration:
 
 ```
 const config = {
-  scriptSrc: '//s.flocdn.com/cmp/0.0.1/cmp.js',
+  scriptSrc: '//s.flocdn.com/cmp/${VERSION}/cmp.js',
   gdprApplies: true,
   pubVendorListLocation: '//s.flocdn.com/cmp/pubvendors.json', // OPTIONAL, whitelists vendors
   logging: false,
@@ -126,8 +162,10 @@ cmp('init', config);
 - `gdprApplies`: Booelan: Enable / disable load of the CMP SDK
 - `pubVendorListLocation`: OPTIONAL: location of pub vendor list
 - `globalVendorListLocation`: OPTIONAL: global vendorList is managed by the IAB.
+- `shouldAutoConsent`: OPTIONAL: automatically consent on behalf of the user.
+- `shouldAutoConsentWithFooter`: OPTIONAL: automatically consent on behalf of the user and immediately open footer
 
-#### init: callback
+### init: callback
 
 Use the callback to determine if you should show the consent tool or not.
 
@@ -140,11 +178,11 @@ Use the callback to determine if you should show the consent tool or not.
 Callback Example
 
 ```
-<script type="text/javascript" src="https://s.flocdn.com/cmp/loader.js"></script>
+<script type="text/javascript" src="https://s.flocdn.com/cmp/${VERSION}/loader.js"></script>
 
 cmp('init', {
     gdprApplies: true,
-    scriptSrc: '//s.flocdn.com/cmp/0.0.1/cmp.js'
+    scriptSrc: '//s.flocdn.com/cmp/${VERSION}/cmp.js'
   }, (result) => {
 
   // Consent is required and there was an error
@@ -159,7 +197,7 @@ cmp('init', {
 });
 ```
 
-### Arguments
+## Arguments
 
 ```
 cmp(command, [parameter], [callback])
@@ -169,7 +207,7 @@ cmp(command, [parameter], [callback])
 - `[parameter]` (\*): Parameter to be passed to the command function
 - `[callback]` (Function): Function to be executed with the result of the command
 
-### Possible Commands
+## Possible Commands
 
 - `init` REQUIRED, can only be called once
 - `addEventListener`
@@ -203,101 +241,17 @@ cmp('addEventListener', 'onConsentChanged', (event) => console.log(event));
 cmp('addEventListener', 'onSubmit', (event) => console.log(event));
 ```
 
-## Build
-
-Build the original project and the System1 project:
-```
-yarn build          # builds both projects
-yarn build:s1       # builds just the System1 loader and "complete" CMP SDK.
-yarn build:original # builds just the original CMP provided by appnexus
-```
-
-## Deploy
-
-Deploy will build and upload the project files to a System1 S3 bucket for public use
+# Deploy
 
 ```
-yarn deploy         # builds and uploads both projects
-yarn build:s1       # builds and uploads just the versioned S1 project
-yarn build:original # builds and uploads just the original project
+yarn deploy
 ```
 
-## Upload
+# Local Development
 
-The system1-cmp project lives in `dist/{version}` and is immutable, you can't upload it more than once.
-This *should* be a safe operation to make as you'll just see an error in the terminal telling you the files already exist.
-You will need to bump the `package.json` version in order to publish any changes to S3.
-
-```
-yarn upload:s1
-```
-
-The original project gets deployed to S3, but it's for reference only, it will invalidate automatically, and no one should have a production dependency on it.
-This should be a safe operation as it does not affect production files.
-
-```
-yarn upload:original
-```
-
-[![Build Status](https://travis-ci.org/appnexus/cmp.svg?branch=master)](https://travis-ci.org/appnexus/cmp)
-
-# AppNexus CMP
-CMP is a tool for publishers to engage users of their properties and gather & store end user consent.
-
-### Installation
-
-```sh
-git clone https://github.com/appnexus/cmp.git
-cd cmp
-yarn install
-```
-
-## Build for Production
-
-```sh
-yarn build
-```
-
-This produces a production build of the `cmp` script and the docs application:
-+ `./build/cmp.bundle.js` - CMP script to include on your site
-+ `./build/docs/` - Application hosting the documentation
-
-## Documentation
-
-Instructions to install the CMP as well as API docs and examples are available in the `docs`
-application included with the repo.
-
-```sh
-yarn start
-```
-
-The documentation can be viewed at:
-`http://localhost:5000/docs/`
-
-## Development
 You can start a development server that will monitor changes to all CMP and docs files with:
 ```sh
 yarn dev:s1
 ```
 
-Development server can be accessed at:
-`http://localhost:8080/reference.html`
-
-## Testing
-
-```sh
-yarn test
-```
-
-## Deployment
-
-- [x] Bump the version in package.json for any new release
-- [x] There are 2 branches, `master` and `modal`.
-  - `master` branch is the latest CMP, it's not used anywhere in production yet.
-	- `modal` branch is the MODAL-based CMP (based on an older version), but it is in use across many sites in production.
-- [x] PR against master or modal depending on your work and get an approval
-- [x] Once approved, you can use `yarn deploy` which will build and upload an immutable version of the System-1 CMP (and non-modified appnexus CMP + docs) to S3. 
-
-```sh
-yarn deploy
-```
+Access the System1 s1cmp complete reference at http://localhost:8080/reference.html

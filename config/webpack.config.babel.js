@@ -39,7 +39,10 @@ module.exports = [
 				filename: 'index.html',
 				template: 'index.html',
 				chunks: ['cmp']
-			})
+			}),
+			new CopyWebpackPlugin([
+				{ from: '../serve.json', to: '.' }
+			])
 		].concat(ENV === 'production' ? uglifyPlugin : [])
 	},
 	// Docs config

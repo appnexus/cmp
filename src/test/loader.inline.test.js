@@ -3,9 +3,10 @@
 
 import { expect } from 'chai';
 import fs from 'fs';
-import vendorlist from '../../docs/assets/vendorlist.json';
-// import pubvendorsStub
-// import vendorlistStub
+import vendorlist from '../docs/assets/vendorlist.json';
+import { COOKIE_DOMAIN } from "../lib/cookie/cookie";
+import { deleteAllCookies } from "./helpers";
+
 const fakeScriptSrc = './fake-loader-src.js';
 
 describe('cmpLoader as script tag', () => {
@@ -13,17 +14,17 @@ describe('cmpLoader as script tag', () => {
 
 	beforeEach(() => {
 		appendChild = window.document.body.appendChild = jest.fn(() => {});
-		const content = fs.readFileSync('./src/s1/loader.js');
+		const content = fs.readFileSync('./src/loader.js');
 		eval(content + '; global.cmp = cmp');
 	});
 
 	afterEach(() => {
+		deleteAllCookies(COOKIE_DOMAIN);
 		eval('; global.cmp = null; cmp = null;');
 		jest.restoreAllMocks();
 		appendChild.mockRestore();
 	});
 
-	// 1.
 	it('loads cmp as script tag', done => {
 		expect(global.cmp).to.not.be.undefined;
 		expect(typeof global.cmp).to.equal('function');
@@ -111,7 +112,7 @@ describe('cmpLoader as script tag', () => {
 				return Promise.resolve(src);
 			});
 			appendChild = window.document.body.appendChild = jest.fn(() => {
-				require('../cmp'); // need to require this here because there is no built version that we can script load
+				require('../s1/cmp'); // need to require this here because there is no built version that we can script load
 			});
 		});
 
@@ -168,6 +169,52 @@ describe('cmpLoader as script tag', () => {
 			);
 
 			global.cmp('addEventListener', 'isLoaded', callback);
+		});
+
+
+		it('auto accepts consents', done => {
+			global.cmp(
+				'init',
+				{
+					scriptSrc: fakeScriptSrc,
+					gdprApplies: true,
+					shouldAutoConsent: true
+				},
+				(result) => {
+					expect(result.consentRequired).to.be.true;
+					expect(result.errorMsg).to.be.empty;
+					expect(document.cookie.indexOf("gdpr_opt_in=1")).to.be.above(1);
+					done();
+				}
+			);
+		});
+
+		it("auto accepts consents and shows footer", done => {
+			expect(document.cookie.indexOf("euconsent")).to.be.below(0);
+
+			let toggleFooterShowing;
+
+			global.cmp("addEventListener", "isLoaded", () => {
+				const store = global.cmp.store;
+				toggleFooterShowing = jest.spyOn(store, "toggleFooterShowing");
+			});
+
+			global.cmp(
+				"init",
+				{
+					scriptSrc: fakeScriptSrc,
+					gdprApplies: true,
+					shouldAutoConsentWithFooter: true
+				},
+				result => {
+					expect(result.consentRequired).to.be.true;
+					expect(result.errorMsg).to.be.empty;
+					expect(document.cookie.indexOf("gdpr_opt_in=1")).to.be.above(1);
+					expect(toggleFooterShowing.mock.calls).to.have.length(1);
+					toggleFooterShowing.mockRestore();
+					done();
+				}
+			);
 		});
 	});
 });

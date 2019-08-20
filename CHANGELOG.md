@@ -1,3 +1,12 @@
+<a name="1.0.0"></a>
+
+## [1.0.0](https://github.com/openmail/system1-cmp/compare/v0.0.1...v1.0.0) (2019-08-19)
+
+### Refactor
+
+ - [x] Merge latest from upstream repo 
+ - [x] Merge latest System1 customizations from `modal` branch into footer-UI refactor (see docs in modal branch: https://github.com/Openmail/system1-cmp/tree/modal)
+
 <a name="0.0.1"></a>
 
 ## [0.0.1](https://github.com/openmail/system1-cmp/compare/v0.0.0...v0.0.1) (2018-07-02)

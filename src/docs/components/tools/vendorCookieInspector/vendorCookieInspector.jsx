@@ -1,12 +1,21 @@
 import { h, Component } from 'preact';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 
-import { decodeVendorConsentData, VENDOR_CONSENT_COOKIE_NAME } from '../../../../lib/cookie/cookie';
-import { vendorVersionMap } from '../../../../lib/cookie/definitions';
-import { decodeCookieValue } from '../../../../lib/cookie/cookieutils';
+import {
+	decodeVendorConsentData,
+	VENDOR_CONSENT_COOKIE_NAME
+} from '../../../../lib/cookie/cookie';
+import {
+	decodeCookieValue,
+	decodeB64toBitString,
+} from '../../../../lib/cookie/cookieutils';
+import {
+	NUM_BITS_VERSION,
+	vendorVersionMap
+} from '../../../../lib/cookie/definitions';
 import { readCookie } from '../../../../lib/cookie/cookie';
-import { sendPortalCommand } from '../../../../lib/portal';
 import Store from '../../../../lib/store';
+import { validateBitString } from '../cookieDecoder';
 
 import style from './vendorCookieInspector.less';
 
@@ -30,6 +39,8 @@ export default class VendorCookieDecoder extends Component {
 
 	decodeB64 = (b64) => {
 		try {
+			const decodedBitString = decodeB64toBitString(b64);
+			validateBitString(decodedBitString, vendorVersionMap);
 			const vendorConsentData = decodeVendorConsentData(b64);
 
 			const store = new Store({
@@ -51,7 +62,7 @@ export default class VendorCookieDecoder extends Component {
 					return acc;
 				}, [[], []]);
 
-			const allowedPurposes = purposes.map(({id, name}) => {
+			const allowedPurposes = purposes.map(({ id, name }) => {
 				return {
 					id,
 					name,
@@ -75,7 +86,7 @@ export default class VendorCookieDecoder extends Component {
 				disallowedVendors: [],
 				allowedPurposes: [],
 				decodedB64: {},
-				error: 'Failed to decode Base64 value'
+				error: err.message
 			});
 		}
 	};
@@ -84,6 +95,7 @@ export default class VendorCookieDecoder extends Component {
 		fetch(GLOBAL_LIST_LOCATION)
 			.then(res => res.json())
 			.then(list => {
+				console.log('fetchVendorList', GLOBAL_LIST_LOCATION, list);
 				const { vendors, purposes, vendorListVersion } = list;
 				const vendorMap = vendors.reduce((acc, vendor) => {
 					return {
@@ -206,7 +218,7 @@ export default class VendorCookieDecoder extends Component {
 								<div class={style.vendorHeader}>Purposes</div>
 								<table>
 									<tbody>
-									{allowedPurposes.map(({id, name, allowed}, index) => (
+									{allowedPurposes.map(({ id, name, allowed }, index) => (
 										<tr class={index % 2 === 0 ? style.even : style.odd}>
 											<td>{id}</td>
 											<td>{name}</td>

@@ -1,3 +1,5 @@
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-var */
 /**
  * creates and manages global cmp and __cmp objects on window
  * cmp queues incoming requests
@@ -10,10 +12,10 @@
 
 	var cmpLoader = (function(cmp, __cmp) {
 		var gdprApplies = 'gdprApplies',
-				logging = 'logging',
-				scriptSrc = 'scriptSrc';
+			logging = 'logging',
+			scriptSrc = 'scriptSrc';
 
-		return function(isModule) {
+		return function() {
 			// 1. already exists, start queueing requests
 			if (window[cmp] && window[__cmp]) {
 				window[cmp] = window[__cmp];
@@ -82,7 +84,7 @@
 							}
 						}
 					};
-				// 4. return temporay cmp command queue
+				// 4. return temporary cmp command queue
 				return window[cmp];
 			})(window, document, 'script', 'commandQueue');
 		};

@@ -2,10 +2,17 @@ import { h, Component } from 'preact';
 import style from './banner.less';
 import Label from '../label/label';
 import ChevronIcon from '../chevronicon/chevronicon';
+import { SECTION_VENDOR_LIST } from '../popup/details/details';
 
 class LocalLabel extends Label {
 	static defaultProps = {
 		prefix: 'banner'
+	};
+}
+
+class PurposesLabel extends Label {
+	static defaultProps = {
+		prefix: 'purposes'
 	};
 }
 
@@ -23,6 +30,29 @@ export default class Banner extends Component {
 		};
 	}
 
+	handleClose = () => {
+		const { store } = this.props;
+		const { toggleFooterShowing } = store;
+		toggleFooterShowing(false);
+	};
+
+	handleShowConsent = () => {
+		const { store, onShowModal} = this.props;
+		const { toggleConsentToolShowing } = store;
+		toggleConsentToolShowing(true);
+		onShowModal(true);
+	};
+
+	onAcceptAll = () => {
+		const { store, onSave } = this.props;
+		const { toggleFooterShowing } = store;
+		store.selectAllVendors(true);
+		store.selectAllPurposes(true);
+		store.selectAllCustomPurposes(true);
+		onSave();
+		toggleFooterShowing(false);
+	};
+
 	handleInfo = (index) => () => {
 		const { isExpanded, selectedPanelIndex } = this.state;
 		this.setState({
@@ -33,18 +63,28 @@ export default class Banner extends Component {
 
 	handleWindowClick = e => {
 		if (!this.bannerRef || !this.bannerRef.contains(e.target)) {
-			this.props.onSave();
+			this.onAcceptAll();
 		}
 	};
 
 	handleLearnMore = () => {
-		this.props.onShowModal(true);
+		this.handleShowConsent();
 	};
 
+	handlePurposeItemClick = purposeItem => {
+		return () => {
+			this.props.onSelectPurpose(purposeItem);
+		};
+	};
+
+	handleVendorListClick = () => {
+		this.props.onChangeDetailsPanel(SECTION_VENDOR_LIST);
+	};
 
 	render(props, state) {
-		const { isShowing, onSave, theme } = props;
+		const { isShowing, theme, purposes } = props;
 		const { selectedPanelIndex, isExpanded } = state;
+		
 		const {
 			primaryColor,
 			primaryTextColor,
@@ -60,7 +100,7 @@ export default class Banner extends Component {
 				class={[style.banner, !isShowing ? style.hidden : ''].join(' ')}
 				style={{
 					boxShadow: `0px 0px 5px ${primaryColor}`,
-					backgroundColor: backgroundColor,
+					backgroundColor,
 					color: textLightColor
 				}}
 			>
@@ -74,16 +114,19 @@ export default class Banner extends Component {
 								<LocalLabel localizeKey='title'>Ads help us run this site</LocalLabel>
 							</div>
 							<LocalLabel localizeKey='description'>
-								When you visit our site, pre-selected companies may access and use certain information
-								on your device to serve relevant ads or personalized content.
+								When you visit our site, <a onClick={this.handleVendorListClick}>pre-selected companies</a> may access and use certain
+								information on your device and about this site to serve relevant ads or personalized content.
 							</LocalLabel>
 							<div class={style.options}>
 								<div
 									class={[style.option, selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : ''].join(' ')}>
-									<a onClick={this.handleInfo(PANEL_COLLECTED)} >
+									<a
+										onClick={this.handleInfo(PANEL_COLLECTED)}
+										class={style.detailExpand}
+									>
 										<ChevronIcon color={textLinkColor}/>
 										<LocalLabel localizeKey='links.data.title'>Information that may be
-											used.
+											used
 										</LocalLabel>
 									</a>
 									<div
@@ -91,7 +134,6 @@ export default class Banner extends Component {
 										style={{ color: textLightColor }}
 									>
 										<LocalLabel localizeKey='links.data.description'>
-											Information that may be used:
 											<ul>
 												<li>Type of browser and its settings</li>
 												<li>Information about the device's operating system</li>
@@ -115,27 +157,26 @@ export default class Banner extends Component {
 									class={[style.option, selectedPanelIndex === PANEL_PURPOSE && isExpanded ? style.expanded : ''].join(' ')}>
 									<a
 										onClick={this.handleInfo(PANEL_PURPOSE)}
+										class={style.detailExpand}
 									>
 										<ChevronIcon color={textLinkColor} />
 										<LocalLabel localizeKey='links.purposes.title'>Purposes for storing
-											information.</LocalLabel>
+											information</LocalLabel>
 									</a>
 
 									<div
 										class={style.optionDetails}
 										style={{ color: textLightColor }}
 									>
-
-										<LocalLabel localizeKey='links.purposes.description'>
-											How information may be used:
-											<ul>
-												<li>Storage and access of information</li>
-												<li>Ad selection and delivery</li>
-												<li>Content selection and delivery</li>
-												<li>Personalization</li>
-												<li>Measurement</li>
-											</ul>
-										</LocalLabel>
+										<ul>
+											{purposes.map((purposeItem, index) => (
+												<li class={style.purposeItem}>
+													<a class={style.learnMore} onClick={this.handlePurposeItemClick(purposeItem)} style={{color: textLinkColor}}>
+														<PurposesLabel localizeKey={`purpose${purposeItem.id}.menu`}>{purposeItem.name}</PurposesLabel>
+													</a>
+												</li>
+											))}
+										</ul>
 									</div>
 								</div>
 							</div>
@@ -143,11 +184,11 @@ export default class Banner extends Component {
 						<div class={style.consent}>
 							<a class={style.learnMore} onClick={this.handleLearnMore}
 							   style={{ color: primaryColor, borderColor: primaryColor }}>
-								<LocalLabel localizeKey='links.manage'>Learn More</LocalLabel>
+								<LocalLabel localizeKey='links.manage'>Manage Your Choices</LocalLabel>
 							</a>
 							<a
 								class={style.continue}
-								onClick={onSave}
+								onClick={this.onAcceptAll}
 								style={{
 									backgroundColor: primaryColor,
 									borderColor: primaryColor,
