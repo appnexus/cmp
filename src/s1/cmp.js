@@ -67,11 +67,12 @@ const initialize = (config, callback) => {
 	});
 };
 
-const checkHasConsentedAll = ({ purposeConsents } = {}) => {
+const checkHasConsentedAll = ({vendors}, { purposeConsents, vendorConsents } = {}) => {
+	const hasAnyVendorsDisabled = vendors.find(({id}) => vendorConsents[id] === false);
 	const hasAnyPurposeDisabled = Object.keys(purposeConsents).find(key => {
 		return purposeConsents[key] === false;
 	});
-	return !hasAnyPurposeDisabled;
+	return !hasAnyPurposeDisabled && !hasAnyVendorsDisabled;
 };
 
 const checkConsent = ({
@@ -137,22 +138,22 @@ const handleConsentResult = ({
 		errorMsg = 'No consent data found. Show consent tool';
 	}
 
-	// if (vendorListVersion !== listVersion) {
-	// 	errorMsg = `Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`;
-	// }
-	log.debug("FIXME: Unify pubVendorVersion and globalVendorVersion", listVersion, vendorListVersion);
+	if (vendorListVersion !== listVersion) {
+		errorMsg = `Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`;
+	}
+	
 	if (errorMsg) {
 		log.debug(errorMsg);
 	}
 
-	// if (!listVersion) {
-	// 	errorMsg =
-	// 		'Could not determine vendor list version. Not showing consent tool';
-	// }
+	if (!listVersion) {
+		errorMsg =
+			'Could not determine vendor list version. Not showing consent tool';
+	}
 
 	if (callback && typeof callback === "function") {
 		// store as 1 or 0
-		const hasConsented = checkHasConsentedAll(vendorConsentData);
+		const hasConsented = checkHasConsentedAll(vendorList, vendorConsentData);
 		if (created) {
 			writeCookie(GDPR_OPT_IN_COOKIE, hasConsented ? "1" : "0", GDPR_OPT_IN_COOKIE_MAX_AGE);
 		}

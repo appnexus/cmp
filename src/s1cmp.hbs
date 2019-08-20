@@ -21,10 +21,10 @@
 			// scriptSrc: './s1.cmp.js',
 			// logging: false,
 			// pubVendorListLocation: './pubvendors.json',
-			// pubVendorListLocation: 'https://s.flocdn.com/cmp/pubvendors.json',
+			pubVendorListLocation: 'https://s.flocdn.com/cmp/pubvendors.json',
 			// logging: false,
 			// customPurposeListLocation: './purposes.json',
-			// globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
+			globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
 			globalConsentLocation: 'https://s.flocdn.com/cmp/docs/portal.html',
 			storeConsentGlobally: false,
 			// storePublisherData: false,
@@ -37,19 +37,13 @@
 		}
 
 		function onConsentChanged(result) {
-			console.log("onConsentChanged");
 			if (document.cookie.indexOf("gdpr_opt_in=1") < 0) {
-				console.log("all:consent:failed", result);
+				console.log("cmp:all-consent:failed", result);
 				// window.location.reload();
 			} else {
-				console.log("all:consent:succeeded", result);
+				console.log("cmp:all-consent:succeeded", result);
 			}
 		}
-
-		cmp("addEventListener", "isLoaded", () => {
-			const store = cmp.store;
-			console.log('addEventListener', store.toggleFooterShowing);
-		});
 
 		cmp('init', config, function (result) {
 			if (result.consentRequired) {

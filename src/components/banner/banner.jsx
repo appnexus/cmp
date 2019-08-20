@@ -37,9 +37,10 @@ export default class Banner extends Component {
 	};
 
 	handleShowConsent = () => {
-		const { store } = this.props;
+		const { store, onShowModal} = this.props;
 		const { toggleConsentToolShowing } = store;
 		toggleConsentToolShowing(true);
+		onShowModal(true);
 	};
 
 	onAcceptAll = () => {
@@ -67,8 +68,7 @@ export default class Banner extends Component {
 	};
 
 	handleLearnMore = () => {
-		// this.props.onShowModal(true);
-		this.thushandleShowConsent();
+		this.handleShowConsent();
 	};
 
 	handlePurposeItemClick = purposeItem => {
