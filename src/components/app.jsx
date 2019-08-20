@@ -91,25 +91,29 @@ export default class App extends Component {
 
 		return (
 			<div class={style.gdpr}>
-				<Banner isShowing={isBannerShowing}
-					isModalShowing={isModalShowing}
-					onSave={this.onSave}
-					onShowModal={toggleModalShowing}
-					onSelectPurpose={this.onSelectPurpose}
-					onChangeDetailsPanel={this.onChangeDetailsPanel}
-					theme={theme}
-					purposes={purposes}
-					selectedPurposeDetails={selectedPurposeDetails}
-					store={store}
-				/>
-				<Popup store={store}
-					   onSave={this.onSave}
-					   onChangeDetailsPanel={this.onChangeDetailsPanel}
-					   onSelectPurpose={this.onSelectPurpose}
-					   selectedDetailsPanelIndex={selectedDetailsPanelIndex}
-					   theme={theme}
-					   selectedPurposeDetails={selectedPurposeDetails}
-				/>
+				{ isBannerShowing &&
+					<Banner isShowing={isBannerShowing}
+						isModalShowing={isModalShowing}
+						onSave={this.onSave}
+						onShowModal={toggleModalShowing}
+						onSelectPurpose={this.onSelectPurpose}
+						onChangeDetailsPanel={this.onChangeDetailsPanel}
+						theme={theme}
+						purposes={purposes}
+						selectedPurposeDetails={selectedPurposeDetails}
+						store={store}
+					/>
+				}
+				{ isModalShowing &&
+					<Popup store={store}
+						onSave={this.onSave}
+						onChangeDetailsPanel={this.onChangeDetailsPanel}
+						onSelectPurpose={this.onSelectPurpose}
+						selectedDetailsPanelIndex={selectedDetailsPanelIndex}
+						theme={theme}
+						selectedPurposeDetails={selectedPurposeDetails}
+					/>
+				}
 				<Footer store={store} onSave={this.onSave} />
 			</div>
 		);
