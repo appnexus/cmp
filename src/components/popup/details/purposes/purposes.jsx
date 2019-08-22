@@ -123,7 +123,7 @@ export default class Purposes extends Component {
 		if (!created && !purposeIsTechnical && !renderedPurposeIndices.has(selectedPurposeIndex)) {
 			renderedPurposeIndices.add(selectedPurposeIndex);
 			this.setState({renderedPurposeIndices});
-			this.handleSelectPurpose({isSelected: false})
+			this.handleSelectPurpose({isSelected: false});
 		}
 
 		return (
