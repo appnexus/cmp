@@ -14,7 +14,14 @@ describe('Details', () => {
 	});
 
 	it('should render with purpose panel initially', () => {
-		const store = new Store();
+		const store = new Store({
+			vendorList: {
+				purposes: [
+					{ id: 1, name: 'Purpose 1' },
+					{ id: 2, name: 'Purpose 2' }
+				]
+			}
+		});
 		store.isConsentToolShowing = false;
 		const details = <Details store={store} />;
 		expect(details).to.contain(purposesStyle.purposes);
@@ -22,7 +29,14 @@ describe('Details', () => {
 
 
 	it('should switch between panel states', () => {
-		const store = new Store();
+		const store = new Store({
+			vendorList: {
+				purposes: [
+					{ id: 1, name: 'Purpose 1' },
+					{ id: 2, name: 'Purpose 2' }
+				]
+			}
+		});
 
 		let details;
 		render(<Details
