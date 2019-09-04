@@ -25,8 +25,8 @@ export default class Banner extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isExpanded: false,
-			selectedPanelIndex: 0,
+			isExpanded: true,
+			selectedPanelIndex: 1,
 		};
 	}
 

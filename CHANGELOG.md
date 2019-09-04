@@ -1,3 +1,11 @@
+<a name="1.1.1"></a>
+
+## [1.1.1](https://github.com/openmail/system1-cmp/compare/v1.1.0...v1.1.1) (2019-09-04)
+
+### Refactor
+
+ - [x] For Policy Check 3 (provide a direct link to the vendor list in first UI layer), render the `<Banner>` with the Vendor Purposes accordion expanded.
+
 <a name="1.1.0"></a>
 
 ## [1.1.0](https://github.com/openmail/system1-cmp/compare/v1.0.0...v1.1.0) (2019-09-03)
