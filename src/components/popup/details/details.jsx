@@ -73,7 +73,7 @@ export default class Details extends Component {
 		} = store;
 		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
 		const { selectedCustomPurposeIds } = publisherConsentData;
-		const { purposes = [], vendors = [] } = vendorList;
+		const { purposes = [], vendors = [], features = [] } = vendorList;
 		const { purposes: customPurposes = [] } = customPurposeList;
 
 		const formattedVendors = vendors
@@ -91,7 +91,7 @@ export default class Details extends Component {
 				<div class={style.body}>
 					<Panel selectedIndex={selectedPanelIndex}>
 						<Summary
-							purposes={purposes}
+							purposes={[...purposes, ...customPurposes]}
 							onPurposeClick={this.handlePurposeClick}
 							onVendorListClick={this.handlePanelClick(SECTION_VENDOR_LIST)}
 							onPurposeListClick={this.handlePanelClick(SECTION_PURPOSE_LIST)}
@@ -109,6 +109,7 @@ export default class Details extends Component {
 						<Vendors
 							vendors={formattedVendors}
 							purposes={purposes}
+							features={features}
 							selectVendor={selectVendor}
 							selectAllVendors={selectAllVendors}
 							selectedVendorIds={selectedVendorIds}
