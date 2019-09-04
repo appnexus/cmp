@@ -55,11 +55,17 @@ div.vendors {
 	.vendorList {
 		margin-top: 10px;
 	}
+	.vendorItem {
+		display: flex;
+		flex-wrap: wrap;
+	}
 	.vendorName {
 		min-height: 30px;
-		display: flex;
-		align-items: center;
+		line-height: 40px;
+		flex: 1;
 		font-size: 14px;
+		padding: 0 4px;
+		text-align: left;
 
 		svg {
 			vertical-align: middle;
@@ -67,12 +73,58 @@ div.vendors {
 
 		@media @smartphone {
 			font-size: 12px;
-			line-height: 14px;
+			line-height: 40px;
+			padding: 0 4px;
+		}
+	}
+
+	.vendorFeaturesBtn {
+		line-height: 40px;
+		padding: 0 10px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+
+		@media @smartphone {
+			padding: 0 5px;
+		}
+	}
+
+	.vendorFeaturesBtnActive {
+		background-color: #41afbb25;
+		
+		a {
+			color: #000;
+		}
+	}
+
+	.vendorFeatures {
+		flex: 100%;
+		text-align: left;
+		padding: 8px 20px;
+		background-color: #41afbb25;
+		border-radius: 5px;
+		margin: 0 8px 8px;
+		white-space: normal;
+
+		ul {
+			margin: 0;
+			padding: 0 10px;
+			line-height: 16px;
+		}
+
+		li {
+			margin: 8px 0;
+		}
+
+		p {
+			padding: 0;
+			margin: 0;
 		}
 	}
 
 	.allowAllToggle {
 		text-align: right;
+		line-height: 40px;
 
 		@media @smartphone {
 			font-size: 14px;
@@ -104,9 +156,13 @@ div.vendors {
 					text-align: left;
 				}
 				&:last-child {
-					padding-right: 15px;
+					/*padding-right: 15px;*/
 					white-space: nowrap;
 					text-align: right;
+				}
+
+				@media @smartphone {
+					padding: 5px 2px;
 				}
 			}
 		}
@@ -117,10 +173,25 @@ div.vendors {
 	}
 	.allowColumn {
 		text-align: center;
+		padding: 0;
+		padding-left: 5px;
+		line-height: 40px;
 	}
 	.allowSwitch {
 		display: flex;
 		align-items: center;
+
+		@media @smartphone {
+			display: inline-block;
+
+			span {
+				display: block;
+				padding: 0;
+				margin: 0;
+				line-height: 12px;
+				margin: auto
+			}
+		}
 	}
 	.policy {
 		margin: 0 5px;

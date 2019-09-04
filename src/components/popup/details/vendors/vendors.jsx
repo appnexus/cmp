@@ -16,16 +16,41 @@ class PurposesLabel extends Label {
 	};
 }
 
+class FeaturesButton extends Component {
+
+	onClick = () => {
+		this.props.handleToggleFeatures(this.props.id);
+	}
+
+	render(props) {
+		const {
+			children,
+			style
+		} = props;
+
+		return (
+			<a
+				onClick={this.onClick}
+				style={style}
+			>
+				{children}
+			</a>
+		);
+	}
+}
+
 export default class Vendors extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isSelectAll: true
+			isSelectAll: true,
+			showFeaturesId: null,
 		};
 	}
 
 	static defaultProps = {
 		vendors: [],
+		features: [],
 		selectedVendorIds: new Set(),
 		selectVendor: () => {},
 		selectAllVendors: () => {},
@@ -39,13 +64,33 @@ export default class Vendors extends Component {
 		this.setState({isSelectAll: !isSelectAll});
 	};
 
+	handleToggleFeatures = (id) => {
+		const {showFeaturesId} = this.state;
+		if (showFeaturesId === id) {
+			this.setState({showFeaturesId: null});
+		} else {
+			this.setState({showFeaturesId: id});
+		}
+	}
+
 	handleSelectVendor = ({dataId, isSelected}) => {
 		this.props.selectVendor(dataId, isSelected);
 	};
 
+	renderFeature(featureId) {
+		const {features} = this.props;
+		const feature = features.find(({id}) => (id === featureId));
+		return feature && (
+			<li>
+				<b>{feature.name}</b>
+				<p>{feature.description}</p>
+			</li>
+		);
+	}
+
 	render(props, state) {
 
-		const { isSelectAll } = state;
+		const { isSelectAll, showFeaturesId } = state;
 		const {
 			vendors,
 			purposes,
@@ -97,25 +142,42 @@ export default class Vendors extends Component {
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-							{validVendors.map(({id, name, purposeIds, policyUrl, policyUrlDisplay}, index) => (
+							{validVendors.map(({id, name, purposeIds, featureIds, policyUrl, policyUrlDisplay}, index) => (
 								<tr key={id} class={index % 2 === 0 ? style.even : ''}>
-									<td>
+									<td class={style.vendorItem}>
 										<div class={style.vendorName}>
 											{name}
 											<a href={policyUrl} class={style.policy} style={{ color: textLinkColor}} target='_blank'><ExternalLinkIcon color={textLinkColor} /></a>
 										</div>
-									</td>
-									<td class={style.allowColumn}>
-										{purposeIds.indexOf(selectedPurposeDetails.id) > -1 ?
-											<span class={style.allowSwitch}>
-												<VendorsLabel localizeKey='accept'>Allow</VendorsLabel> <Switch
-													color={primaryColor}
-													dataId={id}
-													isSelected={selectedVendorIds.has(id)}
-													onClick={this.handleSelectVendor}
-												/>
-											</span> :
-											<VendorsLabel localizeKey='optOut'>requires opt-out</VendorsLabel>
+										{featureIds.length > 0 && 
+											<div class={[style.vendorFeaturesBtn, showFeaturesId === id ? style.vendorFeaturesBtnActive : ''].join(' ')}>
+												<FeaturesButton
+													id={id}
+													handleToggleFeatures={this.handleToggleFeatures}
+												>
+													Features
+												</FeaturesButton>
+											</div>
+										}
+										<div class={style.allowColumn}>
+											{purposeIds.indexOf(selectedPurposeDetails.id) > -1 ?
+												<span class={style.allowSwitch}>
+													<VendorsLabel localizeKey='accept'>Allow</VendorsLabel> <Switch
+														color={primaryColor}
+														dataId={id}
+														isSelected={selectedVendorIds.has(id)}
+														onClick={this.handleSelectVendor}
+													/>
+												</span> :
+												<VendorsLabel localizeKey='optOut'>requires opt-out</VendorsLabel>
+											}
+										</div>
+										{showFeaturesId === id && 
+											<div class={[index % 2 === 0 ? style.even : '', style.vendorFeatures].join(' ')}>
+												<ul>
+													{featureIds.map(featureId => this.renderFeature(featureId))}
+												</ul>
+											</div>
 										}
 									</td>
 								</tr>

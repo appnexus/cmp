@@ -1,3 +1,11 @@
+<a name="1.1.0"></a>
+
+## [1.1.0](https://github.com/openmail/system1-cmp/compare/v1.0.0...v1.1.0) (2019-09-03)
+
+### Feature
+
+ - [x] Add Vendor Features UI for Policy Check 10 and 13 (insert names and definitions of Features somewhere in your UI and add these information on a vendor per vendor basis. You can find names and definitions of Features and their employment per vendor in the GVL.)
+
 <a name="1.0.0"></a>
 
 ## [1.0.0](https://github.com/openmail/system1-cmp/compare/v0.0.1...v1.0.0) (2019-08-19)
