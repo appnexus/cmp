@@ -1,7 +1,9 @@
 [![Build Status](https://travis-ci.org/appnexus/cmp.svg?branch=master)](https://travis-ci.org/appnexus/cmp)
 
+> **WARNING**: This demo CMP code is absolutely not production-ready without additional time investment, and is not compatible with TCF 2.0.
+
 # AppNexus CMP
-CMP is a tool for publishers to engage users of their properties and gather & store end user consent.
+This sample CMP was designed to facilitate support for the initial adoption of TCF 1.0, and is not being actively maintained, and will not be updated to support TCF 2.0. We strongly recommend that you either adopt a commercial CMP or another open source alternative, then register the CMP with the IAB Europe to be recognized as sending valid signals in the advertising ecosystem. AppNexus requires the use of a CMP registered with the IAB Europe if using the TCF for GDPR/ePrivacy. 
 
 ### Installation
 
