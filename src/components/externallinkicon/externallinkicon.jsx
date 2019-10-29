@@ -5,7 +5,6 @@ export default class ExternalLinkIcon extends Component {
 	static defaultProps = {
 	};
 
-
 	render(props) {
 		return (
 			<svg width='16' height='16' viewBox='0 0 16 16' class={props.class}>

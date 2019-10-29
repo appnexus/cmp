@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import style from './vendors.less';
-import Button from '../../../button/button';
 import Switch from '../../../switch/switch';
 import Label from "../../../label/label";
 import ExternalLinkIcon from '../../../externallinkicon/externallinkicon'
