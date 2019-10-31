@@ -89,7 +89,7 @@ export default class Vendors extends Component {
 								<td>
 									<div class={style.vendorName}>
 										{name}
-										{policyUrl && policyUrl !== '' &&
+										{policyUrl &&
 										<a href={policyUrl} className={style.policy} target='_blank'><ExternalLinkIcon/></a>
 										}
 									</div>
