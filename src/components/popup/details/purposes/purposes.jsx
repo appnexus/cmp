@@ -93,11 +93,13 @@ export default class Purposes extends Component {
 		return allPurposes;
 	};
 
+	createOnShowVendors(filter = {}) {
+		return () => this.props.onShowVendors(filter);
+	}
 
 	render(props, state) {
 
 		const {
-			onShowVendors,
 			selectedPurposeIds,
 			selectedCustomPurposeIds,
 			persistedVendorConsentData
@@ -157,7 +159,10 @@ export default class Purposes extends Component {
 						<div class={style.body}>
 							<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />
 							{!purposeIsTechnical &&
-							<a class={style.vendorLink} onClick={onShowVendors}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
+							<a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: false })}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
+							}
+							{!purposeIsTechnical &&
+							<a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: true })}><LocalLabel localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel></a>
 							}
 						</div>
 					</div>
