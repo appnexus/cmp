@@ -70,7 +70,8 @@ export default {
 		purposes: {
 			active: 'Aktywna',
 			inactive: 'Nieaktywna',
-			showVendors: 'Pokaż listę naszych Zaufanych Partnerów',
+			showVendors: 'Pokaż listę Zaufanych Partnerów',
+			showCustomVendors: 'Pokaż listę pozostałych Zaufanych Partnerów',
 			purpose1: {
 				menu: 'Cookies itp.',
 				title: 'Instalowanie plików cookies itp. na Twoich urządzeniach i dostęp do tych plików.',

@@ -18,10 +18,34 @@ class LocalLabel extends Label {
 
 export default class Details extends Component {
 	state = {
-		selectedPanelIndex: SECTION_PURPOSES
+		selectedPanelIndex: SECTION_PURPOSES,
+		vendors: []
 	};
 
-	handleShowVendors = () => {
+	getVendors = ({ isCustom = null, purposeIds = [], featureIds = [] } = {}) => {
+		const { vendorList = {} } = this.props.store;
+		const { vendors = [] } = vendorList;
+		return vendors.filter(vendor => {
+			if (isCustom !== null && (isCustom && vendor.external_id || !isCustom && !vendor.external_id)) {
+				return false;
+			}
+
+			const vendorPurposeIds = new Set([...(vendor.purposeIds || []), ...(vendor.legIntPurposeIds || [])]);
+			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
+				return false;
+			}
+
+			const vendorFeatureIds = new Set(vendor.featureIds || []);
+			if (!featureIds.every(featureId => vendorFeatureIds.has(featureId))) {
+				return false;
+			}
+
+			return true;
+		});
+	};
+
+	handleShowVendors = (filter) => {
+		this.state.vendors = this.getVendors(filter);
 		this.setState({
 			selectedPanelIndex: SECTION_VENDORS
 		});
@@ -59,7 +83,7 @@ export default class Details extends Component {
 		} = store;
 		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
 		const { selectedCustomPurposeIds } = publisherConsentData;
-		const { purposes = [], vendors = [] } = vendorList;
+		const { purposes = [] } = vendorList;
 		const { purposes: customPurposes = [] } = customPurposeList;
 
 
@@ -88,7 +112,7 @@ export default class Details extends Component {
 							selectedVendorIds={selectedVendorIds}
 							selectAllVendors={selectAllVendors}
 							selectVendor={selectVendor}
-							vendors={vendors}
+							vendors={state.vendors}
 						/>
 					</Panel>
 				</div>
