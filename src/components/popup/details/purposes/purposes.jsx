@@ -21,7 +21,7 @@ const Purpose = (props) => {
 		isActive,
 		onToggle,
 		createOnShowVendors,
-		isLegitimateInterest,
+		isSwitchable,
 		isPublisherPurpose
 	} = props;
 
@@ -31,7 +31,7 @@ const Purpose = (props) => {
 				<div className={style.title}>
 					<LocalLabel localizeKey={`purpose${purpose.id}.title`}>{purpose.name}</LocalLabel>
 				</div>
-				{!isLegitimateInterest &&
+				{isSwitchable &&
 					<div className={style.active}>
 						<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
 						<Switch
@@ -135,7 +135,7 @@ export default class Purposes extends Component {
 		} = state;
 
 		const purposeIsActive = (id) => selectedPurposeIds.has(id);
-		const purposeIsLegitimateInterest = (id) => config.legIntPurposeIds.indexOf(id) >= 0;
+		const purposeIsSwitchable = (id) => !(config.legIntPurposeIds.indexOf(id) >= 0 || config.contractPurposeIds.indexOf(id) >= 0);
 
 		if (!created && !renderedTabIndices.has(selectedTab)) {
 			renderedTabIndices.add(selectedTab);
@@ -185,7 +185,7 @@ export default class Purposes extends Component {
 																	   isPublisherPurpose={true}
 																	   purpose={purpose}
 																	   isActive={purposeIsActive(purpose.id)}
-																	   isLegitimateInterest={purposeIsLegitimateInterest(purpose.id)}
+																	   isSwitchable={purposeIsSwitchable(purpose.id)}
 																	   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																	   onToggle={this.handleSelectPurpose}/>)}
 						</div>
@@ -205,7 +205,7 @@ export default class Purposes extends Component {
 								{purposes.map((purpose, index) => <Purpose key={index}
 																		   purpose={purpose}
 																		   isActive={purposeIsActive(purpose.id)}
-																		   isLegitimateInterest={false}
+																		   isSwitchable={false}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		   onToggle={this.handleSelectPurpose}/>)}
 							</div>
@@ -218,8 +218,7 @@ export default class Purposes extends Component {
 							</div>
 						</div>
 					</div>
-				)
-				}
+				)}
 			</div>
 		);
 	}
