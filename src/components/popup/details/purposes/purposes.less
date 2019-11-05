@@ -31,12 +31,47 @@
 			cursor: auto;
 		}
 	}
-	.purposeDescription {
+	.purposesDescription {
 		flex: 1;
 		padding: 20px;
 		overflow: auto;
 	}
+	.vendorsSection {
+		margin: 20px 0;
+
+		.header {
+			font-size: 22px;
+			font-weight: 700;
+			flex: 0 0 100%;
+			display: inline-block;
+			margin: 5% 0;
+		}
+	}
+	.publisherPurposes {
+		border-bottom: 1px solid #eaeaea;
+	}
+	.sectionInfo {
+		.sectionHeader{
+			display: flex;
+    		flex-wrap: wrap;
+
+			.title {
+				font-size: 24px;
+				font-weight: bold;
+				flex: 0 0 100%;
+				@media @smartphone {
+					font-size: 20px;
+					padding-bottom: 5px;
+				}
+			}
+		}
+		.sectionBody {
+			margin: 3% 0;
+		}
+	}
+
 	.purposeDetail {
+		margin-bottom: 10%;
 
 		.detailHeader {
 			display: flex;
@@ -45,7 +80,7 @@
 		.title {
 			font-size: 24px;
 			font-weight: bold;
-			flex: 1 1 auto;
+			flex: 0 0 100%;
 			@media @smartphone {
 				font-size: 20px;
 				padding-bottom: 5px;

@@ -1,172 +1,3 @@
-// import { h, Component } from 'preact';
-// import style from './purposes.less';
-// import Switch from '../../../switch/switch';
-// import Label from "../../../label/label";
-// import config from '../../../../lib/config';
-//
-// class LocalLabel extends Label {
-// 	static defaultProps = {
-// 		prefix: 'purposes'
-// 	};
-// }
-//
-// export default class Purposes extends Component {
-// 	state = {
-// 		selectedPurposeIndex: 0,
-// 		renderedPurposeIndices: new Set()
-// 	};
-//
-// 	static defaultProps = {
-// 		onShowVendors: () => {},
-// 		purposes: [],
-// 		customPurposes: [],
-// 		selectedPurposeIds: new Set(),
-// 		selectedCustomPurposeIds: new Set()
-// 	};
-//
-//
-// 	handleSelectPurposeDetail = index => {
-// 		return () => {
-// 			this.setState({
-// 				selectedPurposeIndex: index
-// 			});
-// 		};
-// 	};
-//
-// 	handleSelectPurpose = ({isSelected}) => {
-// 		const {selectedPurposeIndex} = this.state;
-// 		const {
-// 			selectPurpose,
-// 			selectCustomPurpose
-// 		} = this.props;
-// 		const allPurposes = this.getAllPurposes();
-// 		const selectedPurpose = allPurposes[selectedPurposeIndex];
-//
-// 		selectedPurpose.ids.forEach(id => {
-// 			if (selectedPurpose.custom) {
-// 				selectCustomPurpose(id, isSelected);
-// 			}
-// 			else {
-// 				selectPurpose(id, isSelected);
-// 			}
-// 		});
-// 	};
-//
-// 	getAllPurposes = () => {
-// 		const {
-// 			purposes,
-// 			customPurposes
-// 		} = this.props;
-// 		let allPurposes = [];
-//
-// 		let purposeIdToGroupIndex = {};
-// 		(config.purposeGroups || []).forEach((ids, i) => {
-// 			ids.forEach(id => {
-// 				purposeIdToGroupIndex[id] = i;
-// 			});
-// 		});
-// 		let groupIndexToPurposeIndex = {};
-// 		(purposes || []).forEach(purpose => {
-// 			if (purposeIdToGroupIndex.hasOwnProperty(purpose.id)) {
-// 				const groupIndex = purposeIdToGroupIndex[purpose.id];
-// 				if (groupIndexToPurposeIndex.hasOwnProperty(groupIndex)) {
-// 					allPurposes[groupIndexToPurposeIndex[groupIndex]].ids.push(purpose.id);
-// 					return;
-// 				}
-// 				groupIndexToPurposeIndex[groupIndex] = allPurposes.length;
-// 			}
-// 			allPurposes.push({
-// 				ids: [purpose.id],
-// 				name: purpose.name,
-// 				custom: false
-// 			});
-// 		});
-//
-// 		(customPurposes || []).forEach(purpose => {
-// 			allPurposes.push({
-// 				ids: [purpose.id],
-// 				name: purpose.name,
-// 				custom: true
-// 			});
-// 		});
-//
-// 		return allPurposes;
-// 	};
-//
-//
-// 	render(props, state) {
-//
-// 		const {
-// 			onShowVendors,
-// 			selectedPurposeIds,
-// 			selectedCustomPurposeIds,
-// 			persistedVendorConsentData
-// 		} = props;
-//
-// 		const {created} = persistedVendorConsentData;
-// 		const {
-// 			selectedPurposeIndex,
-// 			renderedPurposeIndices
-// 		} = state;
-//
-// 		const allPurposes = this.getAllPurposes();
-// 		const selectedPurpose = allPurposes[selectedPurposeIndex];
-//
-// 		const tabIsActive = selectedPurpose && selectedPurpose.ids.some(id =>
-// 			selectedPurpose.custom ? selectedCustomPurposeIds.has(id) : selectedPurposeIds.has(id)
-// 		);
-// 		const purposeIsTechnical = config.legIntPurposeIds && selectedPurpose && !selectedPurpose.custom && selectedPurpose.ids.some(id =>
-// 			config.legIntPurposeIds.indexOf(id) >= 0
-// 		);
-// 		const currentPurposeLocalizePrefix = `${selectedPurpose && selectedPurpose.custom ? 'customPurpose' : 'purpose'}${selectedPurpose && selectedPurpose.ids}`;
-//
-// 		if (!created && !purposeIsTechnical && !renderedPurposeIndices.has(selectedPurposeIndex)) {
-// 			renderedPurposeIndices.add(selectedPurposeIndex);
-// 			this.setState({renderedPurposeIndices});
-// 			this.handleSelectPurpose({isSelected: false});
-// 		}
-//
-// 		return (
-// 			<div class={style.purposes}>
-// 				<div class={style.purposeList}>
-// 					{allPurposes.map((purpose, index) => (
-// 						<div class={[style.purposeItem, selectedPurposeIndex === index ? style.selectedPurpose : ''].join(' ')}
-// 							 onClick={this.handleSelectPurposeDetail(index)}
-// 						>
-// 							<LocalLabel localizeKey={`${purpose.custom ? 'customPurpose' : 'purpose'}${purpose.ids}.menu`}>{purpose.name}</LocalLabel>
-// 						</div>
-// 					))}
-// 				</div>
-// 				{selectedPurpose &&
-// 				<div class={style.purposeDescription}>
-// 					<div class={style.purposeDetail}>
-// 						<div class={style.detailHeader}>
-// 							<div class={style.title}>
-// 								<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.title`}>{selectedPurpose.name}</LocalLabel>
-// 							</div>
-// 							{!purposeIsTechnical &&
-// 							<div class={style.active}>
-// 								<LocalLabel localizeKey={tabIsActive ? 'active' : 'inactive'}>{tabIsActive ? 'Active' : 'Inactive'}</LocalLabel>
-// 								<Switch
-// 									isSelected={tabIsActive}
-// 									onClick={this.handleSelectPurpose}
-// 								/>
-// 							</div>
-// 							}
-// 						</div>
-// 						<div class={style.body}>
-// 							<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />
-// 							{!purposeIsTechnical &&
-// 							<a class={style.vendorLink} onClick={onShowVendors}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
-// 							}
-// 						</div>
-// 					</div>
-// 				</div>
-// 				}
-// 			</div>
-// 		);
-// 	}
-// }
 import { h, Component } from 'preact';
 import style from './purposes.less';
 import Switch from '../../../switch/switch';
@@ -179,191 +10,223 @@ class LocalLabel extends Label {
 	};
 }
 
+const Purpose = (props) => {
+	const {
+		purpose,
+		isActive,
+		onToggle,
+		createOnShowVendors,
+		isLegitimateInterest,
+		isPublisherPurpose
+	} = props;
+
+	console.log(isLegitimateInterest);
+
+	return (
+		<div className={style.purposeDetail}>
+			<div className={style.detailHeader}>
+				<div className={style.title}>
+					<LocalLabel localizeKey={`purpose${purpose.id}.title`}>{purpose.name}</LocalLabel>
+				</div>
+				{!isLegitimateInterest &&
+					<div className={style.active}>
+						<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
+						<Switch
+							isSelected={isActive}
+							dataId={purpose.id}
+							onClick={onToggle}
+						/>
+					</div>
+				}
+			</div>
+			<div className={style.body}>
+				<LocalLabel localizeKey={`purpose${purpose.id}.description`} />
+				{!isPublisherPurpose && (
+					<div>
+						<a className={style.vendorLink}
+						   onClick={createOnShowVendors({isCustom: false, purposeIds: [purpose.id]})}>
+							<LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel>
+						</a>
+						<a className={style.vendorLink}
+						   onClick={createOnShowVendors({isCustom: true, purposeIds: [purpose.id]})}>
+							<LocalLabel localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel>
+						</a>
+					</div>
+				)}
+			</div>
+		</div>
+	);
+};
+
+const Feature = (props) => {
+	const {
+		feature,
+		createOnShowVendors
+	} = props;
+
+	return (
+		<div className={style.purposeDetail}>
+			<div className={style.detailHeader}>
+				<div className={style.title}>
+					<LocalLabel prefix="features" localizeKey={`feature${feature.id}.title`}/>
+				</div>
+			</div>
+			<div className={style.body}>
+				<LocalLabel prefix="features" localizeKey={`feature${feature.id}.description`}/>
+				<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: false, featuresIds: [feature.id]})}>
+					<LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel>
+				</a>
+				<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: true, featuresIds: [feature.id]})}>
+					<LocalLabel localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel>
+				</a>
+			</div>
+		</div>
+	);
+};
+
 export default class Purposes extends Component {
 	state = {
-		selectedTabIndex: 0,
+		selectedPurposeIndex: 0,
+		selectedTab: 0,
 		renderedPurposeIndices: new Set()
 	};
 
 	static defaultProps = {
 		onShowVendors: () => {},
 		purposes: [],
+		features: [],
 		customPurposes: [],
-		selectedTabIds: new Set(),
+		selectedPurposeIds: new Set(),
 		selectedCustomPurposeIds: new Set()
 	};
 
-
-	handleSelectTabDetail = index => {
-		console.log(index);
+	handleSelectTab = index => {
 		return () => {
 			this.setState({
-				selectedTabIndex: index
+				selectedTab: index
 			});
 		};
 	};
 
-	handleSelectTab = ({isSelected}) => {
-		const {selectedTabIndex} = this.state;
-		const {
-			selectPurpose,
-			selectCustomPurpose
-		} = this.props;
-		const allPurposes = this.getAllPurposes();
-		const selectedTab = allPurposes[selectedTabIndex];
-
-		selectedTab.ids.forEach(id => {
-			if (selectedTab.custom) {
-				selectCustomPurpose(id, isSelected);
-			}
-			else {
-				selectPurpose(id, isSelected);
-			}
-		});
+	handleSelectPurpose = (e) => {
+		const { isSelected, dataId } = e;
+		this.props.selectPurpose(dataId, isSelected);
 	};
 
-	// getAllPurposes = () => {
-	// 	const {
-	// 		purposes,
-	// 		customPurposes
-	// 	} = this.props;
-	// 	let allPurposes = [];
-	//
-	// 	let purposeIdToGroupIndex = {};
-	// 	(config.purposeGroups || []).forEach((ids, i) => {
-	// 		ids.forEach(id => {
-	// 			purposeIdToGroupIndex[id] = i;
-	// 		});
-	// 	});
-	// 	let groupIndexToPurposeIndex = {};
-	// 	(purposes || []).forEach(purpose => {
-	// 		if (purposeIdToGroupIndex.hasOwnProperty(purpose.id)) {
-	// 			const groupIndex = purposeIdToGroupIndex[purpose.id];
-	// 			if (groupIndexToPurposeIndex.hasOwnProperty(groupIndex)) {
-	// 				allPurposes[groupIndexToPurposeIndex[groupIndex]].ids.push(purpose.id);
-	// 				return;
-	// 			}
-	// 			groupIndexToPurposeIndex[groupIndex] = allPurposes.length;
-	// 		}
-	// 		allPurposes.push({
-	// 			ids: [purpose.id],
-	// 			name: purpose.name,
-	// 			custom: false
-	// 		});
-	// 	});
-	//
-	// 	(customPurposes || []).forEach(purpose => {
-	// 		allPurposes.push({
-	// 			ids: [purpose.id],
-	// 			name: purpose.name,
-	// 			custom: true
-	// 		});
-	// 	});
-	//
-	// 	return allPurposes;
-	// };
-
+	createOnShowVendors(filter = {}) {
+		return () => this.props.onShowVendors(filter);
+	}
 
 	render(props, state) {
-		const tabs = ['Leg Int Publishera', 'Cele i funkcje przetwarzania danych osobowych'];
 
 		const {
-			onShowVendors,
-			selectedTabIds,
-			selectedCustomPurposeIds,
-			persistedVendorConsentData,
+			selectedPurposeIds,
+			// selectedCustomPurposeIds,
+			// persistedVendorConsentData,
 			purposes,
 			features
 		} = props;
 
-		const {created} = persistedVendorConsentData;
+		// const {created} = persistedVendorConsentData;
 		const {
-			selectedTabIndex,
-			renderedPurposeIndices
+			// selectedPurposeIndex,
+			// renderedPurposeIndices,
+			selectedTab
 		} = state;
 
-		// const allPurposes = this.getAllPurposes();
-		const selectedTab = tabs[selectedTabIndex];
+		const tabs = ['Info wydawcy', 'Cele i funkcje przetwarzania danych osobowych'];
 
-		// const tabIsActive = selectedTab && selectedTab.ids.some(id =>
-		// 	selectedTab.custom ? selectedCustomPurposeIds.has(id) : selectedTabIds.has(id)
+		// const allPurposes = this.getAllPurposes();
+		// const selectedPurpose = allPurposes[selectedPurposeIndex];
+
+		// const purposeIsActive = selectedPurpose && selectedPurpose.ids.some(id =>
+		// 	selectedPurpose.custom ? selectedCustomPurposeIds.has(id) : selectedPurposeIds.has(id)
 		// );
-		// const purposeIsTechnical = config.legIntPurposeIds && selectedTab && !selectedTab.custom && selectedTab.ids.some(id =>
+		// const purposeIsTechnical = config.legIntPurposeIds && selectedPurpose && !selectedPurpose.custom && selectedPurpose.ids.some(id =>
 		// 	config.legIntPurposeIds.indexOf(id) >= 0
 		// );
-		// const currentPurposeLocalizePrefix = `${selectedTab && selectedTab.custom ? 'customPurpose' : 'purpose'}${selectedTab && selectedTab.ids}`;
-		const currentPurposeLocalizePrefix = selectedTab;
+		// const currentPurposeLocalizePrefix = `${selectedPurpose && selectedPurpose.custom ? 'customPurpose' : 'purpose'}${selectedPurpose && selectedPurpose.ids}`;
 
-		// if (!created && !purposeIsTechnical && !renderedPurposeIndices.has(selectedTabIndex)) {
-		// 	renderedPurposeIndices.add(selectedTabIndex);
+		// if (!created && !purposeIsTechnical && !renderedPurposeIndices.has(selectedPurposeIndex)) {
+		// 	renderedPurposeIndices.add(selectedPurposeIndex);
 		// 	this.setState({renderedPurposeIndices});
-		// 	this.handleSelectTab({isSelected: false});
+		// 	this.handleSelectPurpose({isSelected: false});
 		// }
+
+		const purposeIsActive = (id) => selectedPurposeIds.has(id);
+		const purposeIsLegitimateInterest = (id) => config.legIntPurposeIds.indexOf(id) >= 0;
 
 		return (
 			<div class={style.purposes}>
 				<div class={style.purposeList}>
 					{tabs.map((tab, index) => (
-						<div class={[style.purposeItem, selectedTabIndex === index ? style.selectedPurpose : ''].join(' ')}
-							onClick={this.handleSelectTabDetail(index)}
+						<div class={[style.purposeItem, selectedTab === index ? style.selectedPurpose : ''].join(' ')}
+							onClick={this.handleSelectTab(index)}
 						>
-							<LocalLabel>{tab}</LocalLabel>
+							<LocalLabel prefix="tabs" localizeKey={`tab${index+1}.menu`}>{tab}</LocalLabel>
 						</div>
 					))}
 				</div>
-				{!selectedTabIndex ? (
-					<div>Leg int publisher info</div>
-				) : (
-					<div className={style.purposeDescription}>
+				{!selectedTab ? (
+					<div className={style.purposesDescription}>
 						<div className={style.purposeDetail}>
 							<div className={style.detailHeader}>
 								<div className={style.title}>
-									<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.title`}>{selectedTab}</LocalLabel>
+									<LocalLabel prefix="tabs" localizeKey={`tab1.title`}/>
 								</div>
-
-								{/* switch */}
-
-								{/*<div className={style.active}>*/}
-								{/*	<LocalLabel*/}
-								{/*		localizeKey={tabIsActive ? 'active' : 'inactive'}>{tabIsActive ? 'Active' : 'Inactive'}</LocalLabel>*/}
-								{/*	<Switch*/}
-								{/*		isSelected={tabIsActive}*/}
-								{/*		onClick={this.handleSelectTab}*/}
-								{/*	/>*/}
-								{/*</div>*/}
 							</div>
 							<div className={style.body}>
-								<div>
-									Cele
-									{purposes.map((purpose, index) => {
-										return (
-											<div key={index} style="margin: 10px 0">
-												{/*<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />*/}
-												<div>
-													<p style="font-weight: bold">{purpose.name}</p>
-													<p>{purpose.description}</p>
-												</div>
-											</div>
-										);
-									})}
+								<LocalLabel prefix="tabs" localizeKey={`tab1.description`}/>
+							</div>
+						</div>
+					</div>
+				) : (
+					<div className={style.purposesDescription}>
+						<div className={style.publisherPurposes}>
+							<div className={style.sectionInfo}>
+								<div className={style.header}>
+									<div className={style.title}>
+										<LocalLabel prefix="publisherConsents" localizeKey={`title`}/>
+									</div>
 								</div>
-								<div style="margin-top: 30px">
-									Funkcje
-									{features.map((feature, index) => {
-										return (
-											<div key={index}>
-												{/*<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />*/}
-												<div>
-													<p style="font-weight: bold">{feature.name}</p>
-													<p>{feature.description}</p>
-												</div>
-											</div>
-										);
-									})}
+								<div className={style.body}>
+									<LocalLabel prefix="publisherConsents" localizeKey={`description`}/>
 								</div>
-								{/*{!purposeIsTechnical &&*/}
-								{/*	<a class={style.vendorLink} onClick={onShowVendors}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>*/}
-								{/*}*/}
+							</div>
+							{purposes.map((purpose, index) => <Purpose key={index}
+																	   isPublisherPurpose={true}
+																	   purpose={purpose}
+																	   isActive={purposeIsActive(purpose.id)}
+																	   isLegitimateInterest={purposeIsLegitimateInterest(purpose.id)}
+																	   createOnShowVendors={this.createOnShowVendors.bind(this)}
+																	   onToggle={this.handleSelectPurpose}/>)}
+						</div>
+						<div className={style.vendorsSection}>
+							<div className={style.sectionInfo}>
+								<div className={style.sectionHeader}>
+									<div className={style.title}>
+										<LocalLabel prefix="vendorConsents" localizeKey={`title`}/>
+									</div>
+								</div>
+								<div className={style.sectionBody}>
+									<LocalLabel prefix="vendorConsents" localizeKey={`description`}/>
+								</div>
+							</div>
+							<div>
+								<LocalLabel className={style.header} prefix="purposes" localizeKey={`title`}/>
+								{purposes.map((purpose, index) => <Purpose key={index}
+																		   purpose={purpose}
+																		   isActive={purposeIsActive(purpose.id)}
+																		   isLegitimateInterest={false}
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		   onToggle={this.handleSelectPurpose}/>)}
+							</div>
+							<div>
+								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}/>
+								{features.map((feature, index) => <Feature key={index}
+																		   feature={feature}
+																		   createOnShowVendors={this.createOnShowVendors}/>
+								)}
 							</div>
 						</div>
 					</div>
