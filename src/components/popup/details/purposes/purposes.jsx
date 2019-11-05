@@ -119,37 +119,15 @@ export default class Purposes extends Component {
 
 		const {
 			selectedPurposeIds,
-			// selectedCustomPurposeIds,
-			// persistedVendorConsentData,
 			purposes,
 			features
 		} = props;
 
-		// const {created} = persistedVendorConsentData;
 		const {
-			// selectedPurposeIndex,
-			// renderedPurposeIndices,
 			selectedTab
 		} = state;
 
-		const tabs = ['Info wydawcy', 'Cele i funkcje przetwarzania danych osobowych'];
-
-		// const allPurposes = this.getAllPurposes();
-		// const selectedPurpose = allPurposes[selectedPurposeIndex];
-
-		// const purposeIsActive = selectedPurpose && selectedPurpose.ids.some(id =>
-		// 	selectedPurpose.custom ? selectedCustomPurposeIds.has(id) : selectedPurposeIds.has(id)
-		// );
-		// const purposeIsTechnical = config.legIntPurposeIds && selectedPurpose && !selectedPurpose.custom && selectedPurpose.ids.some(id =>
-		// 	config.legIntPurposeIds.indexOf(id) >= 0
-		// );
-		// const currentPurposeLocalizePrefix = `${selectedPurpose && selectedPurpose.custom ? 'customPurpose' : 'purpose'}${selectedPurpose && selectedPurpose.ids}`;
-
-		// if (!created && !purposeIsTechnical && !renderedPurposeIndices.has(selectedPurposeIndex)) {
-		// 	renderedPurposeIndices.add(selectedPurposeIndex);
-		// 	this.setState({renderedPurposeIndices});
-		// 	this.handleSelectPurpose({isSelected: false});
-		// }
+		const tabs = ['Publisher informations', 'Purposes & Features'];
 
 		const purposeIsActive = (id) => selectedPurposeIds.has(id);
 		const purposeIsLegitimateInterest = (id) => config.legIntPurposeIds.indexOf(id) >= 0;
@@ -166,7 +144,7 @@ export default class Purposes extends Component {
 					))}
 				</div>
 				{!selectedTab ? (
-					<div className={style.purposesDescription}>
+					<div className={style.purposeDescription}>
 						<div className={style.purposeDetail}>
 							<div className={style.detailHeader}>
 								<div className={style.title}>
@@ -179,7 +157,7 @@ export default class Purposes extends Component {
 						</div>
 					</div>
 				) : (
-					<div className={style.purposesDescription}>
+					<div className={style.purposeDescription}>
 						<div className={style.publisherSection}>
 							<div className={style.sectionInfo}>
 								<div className={style.sectionHeader}>

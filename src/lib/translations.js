@@ -93,17 +93,6 @@ export default {
 			showVendors: 'Pokaż listę Zaufanych Partnerów',
 			showCustomVendors: 'Pokaż listę pozostałych Zaufanych Partnerów',
 			title: 'Cele',
-			// purpose1: {
-			// 	menu: 'Cookies itp.',
-			// 	title: 'Instalowanie plików cookies itp. na Twoich urządzeniach i dostęp do tych plików.',
-			// 	description: `<p>Na naszych stronach internetowych i w aplikacjach używamy technologii, takich jak pliki cookie, local storage i podobnych służących do zbierania i przetwarzania danych osobowych oraz danych eksploatacyjnych w celu personalizowania udostępnianych treści i reklam oraz analizowania ruchu na naszych stronach. Te pliki cookie pomagają poprawić jakość treści reklamowych na stronach i w aplikacjach. Dzięki tym technologiom możemy zapewnić Ci lepszą obsługę poprzez serwowanie reklam lepiej dopasowanych do Twoich preferencji i serwowanie treści, które mogą Cię bardziej zainteresować. Pliki te pozwalają nam również lepiej badać i analizować zainteresowanie naszymi stronami i treściami, które Ci serwujemy. Dzięki tym analizom możemy zadbać o jakość serwowanych przez nas treści.</p>
-			// 	<p>Szczegółową informację na temat plików cookie i ich funkcjonowania znajdziesz <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">pod tym linkiem</a>. Znajdziesz tam także informację o tym jak zmienić ustawienia przeglądarki, by ograniczyć lub wyłączyć funkcjonowanie plików cookies itp. oraz jak usunąć takie pliki z Twojego urządzenia.</p>`
-			// },
-			// 'purpose2,3,4,5': {
-			// 	menu: 'Przetwarzanie danych osobowych',
-			// 	title: 'Przetwarzanie danych osobowych w celach marketingowych przez naszych Zaufanych Partnerów.',
-			// 	description: '<p>Zgoda dotyczy przetwarzania Twoich danych osobowych, które udostępniasz w historii przeglądania stron i aplikacji internetowych, w celach marketingowych (obejmujących zautomatyzowaną analizę Twojej aktywności na stronach internetowych i w aplikacjach w celu ustalenia Twoich potencjalnych zainteresowań dla dostosowania reklamy i oferty przez np. zestawianie w odpowiednich grupach użytkowników, oraz związane z tym niezbędne działania statystyczne) przez naszych Zaufanych Partnerów. Na podstawie tej zgody, Twoje dane, w tym zebrane informacje o Twojej aktywności na stronach internetowych, będą wykorzystywane do prezentowania Ci reklam produktów i usług naszych Partnerów biznesowych, dopasowanych do Twoich zainteresowań.</p>'
-			// },
 			purpose1: {
 				menu: '',
 				title: 'Przechowywanie i dostęp do informacji',
