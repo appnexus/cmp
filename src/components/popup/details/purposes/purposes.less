@@ -35,6 +35,11 @@
 		flex: 1;
 		padding: 20px;
 		overflow: auto;
+
+		@media screen and (max-width: 768px) {
+			overflow: scroll;
+			height: 47vh;
+		}
 	}
 	.vendorsSection {
 		margin: 20px 0;
@@ -47,7 +52,7 @@
 			margin: 5% 0;
 		}
 	}
-	.publisherPurposes {
+	.publisherSection {
 		border-bottom: 1px solid #eaeaea;
 	}
 	.sectionInfo {
@@ -72,6 +77,8 @@
 
 	.purposeDetail {
 		margin-bottom: 10%;
+		overflow: auto;
+		height: auto;
 
 		.detailHeader {
 			display: flex;

@@ -20,8 +20,6 @@ const Purpose = (props) => {
 		isPublisherPurpose
 	} = props;
 
-	console.log(isLegitimateInterest);
-
 	return (
 		<div className={style.purposeDetail}>
 			<div className={style.detailHeader}>
@@ -182,14 +180,14 @@ export default class Purposes extends Component {
 					</div>
 				) : (
 					<div className={style.purposesDescription}>
-						<div className={style.publisherPurposes}>
+						<div className={style.publisherSection}>
 							<div className={style.sectionInfo}>
-								<div className={style.header}>
+								<div className={style.sectionHeader}>
 									<div className={style.title}>
 										<LocalLabel prefix="publisherConsents" localizeKey={`title`}/>
 									</div>
 								</div>
-								<div className={style.body}>
+								<div className={style.sectionBody}>
 									<LocalLabel prefix="publisherConsents" localizeKey={`description`}/>
 								</div>
 							</div>
