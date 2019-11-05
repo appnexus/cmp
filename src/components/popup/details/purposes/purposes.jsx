@@ -10,6 +10,11 @@ class LocalLabel extends Label {
 	};
 }
 
+const TABS = [
+	'Publisher informations',
+	'Purposes & Features'
+];
+
 const Purpose = (props) => {
 	const {
 		purpose,
@@ -86,7 +91,7 @@ export default class Purposes extends Component {
 	state = {
 		selectedPurposeIndex: 0,
 		selectedTab: 0,
-		renderedPurposeIndices: new Set()
+		renderedTabIndices: new Set()
 	};
 
 	static defaultProps = {
@@ -106,10 +111,7 @@ export default class Purposes extends Component {
 		};
 	};
 
-	handleSelectPurpose = (e) => {
-		const { isSelected, dataId } = e;
-		this.props.selectPurpose(dataId, isSelected);
-	};
+	handleSelectPurpose = ({isSelected, dataId}) => this.props.selectPurpose(dataId, isSelected);
 
 	createOnShowVendors(filter = {}) {
 		return () => this.props.onShowVendors(filter);
@@ -119,23 +121,33 @@ export default class Purposes extends Component {
 
 		const {
 			selectedPurposeIds,
+			selectedCustomPurposeIds,
 			purposes,
-			features
+			features,
+			persistedVendorConsentData
 		} = props;
 
-		const {
-			selectedTab
-		} = state;
+		const {created} = persistedVendorConsentData;
 
-		const tabs = ['Publisher informations', 'Purposes & Features'];
+		const {
+			selectedTab,
+			renderedTabIndices
+		} = state;
 
 		const purposeIsActive = (id) => selectedPurposeIds.has(id);
 		const purposeIsLegitimateInterest = (id) => config.legIntPurposeIds.indexOf(id) >= 0;
 
+		if (!created && !renderedTabIndices.has(selectedTab)) {
+			renderedTabIndices.add(selectedTab);
+			for (let purpose of purposes) {
+				this.handleSelectPurpose({isSelected: false, dataId: purpose.id});
+			}
+		}
+
 		return (
 			<div class={style.purposes}>
 				<div class={style.purposeList}>
-					{tabs.map((tab, index) => (
+					{TABS.map((tab, index) => (
 						<div class={[style.purposeItem, selectedTab === index ? style.selectedPurpose : ''].join(' ')}
 							onClick={this.handleSelectTab(index)}
 						>
