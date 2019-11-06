@@ -192,6 +192,7 @@ export default class Purposes extends Component {
 
 		if (!created && selectedTabIndex === 1 && !renderedTabIndices.has(selectedTabIndex)) {
 			renderedTabIndices.add(selectedTabIndex);
+			// TODO: differentiate publisher purposes from vendor purposes (publisher leg int purpose should not be unselected)
 			for (let i = 0, j = purposes.length; i<j; i++) {
 				if (!purposeIsTechnical(i)) {
 					this.handleSelectPurpose({isSelected: false, dataId: i});
