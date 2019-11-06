@@ -23,7 +23,7 @@ const Purpose = (props) => {
 		onToggle,
 		createOnShowVendors,
 		isTechnical,
-		isPublisherPurpose
+		isPublisherPurpose = false
 	} = props;
 
 	return (
@@ -271,7 +271,7 @@ export default class Purposes extends Component {
 								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}/>
 								{features.map((feature, index) => <Feature key={index}
 																		   feature={feature}
-																		   createOnShowVendors={this.createOnShowVendors}/>
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>
 								)}
 							</div>
 						</div>
