@@ -42,14 +42,16 @@ export default class Purposes extends Component {
 		const allPurposes = this.getAllPurposes();
 		const selectedPurpose = allPurposes[selectedPurposeIndex];
 
-		selectedPurpose.ids.forEach(id => {
-			if (selectedPurpose.custom) {
-				selectCustomPurpose(id, isSelected);
-			}
-			else {
-				selectPurpose(id, isSelected);
-			}
-		});
+		if (selectedPurpose) {
+			selectedPurpose.ids.forEach(id => {
+				if (selectedPurpose.custom) {
+					selectCustomPurpose(id, isSelected);
+				}
+				else {
+					selectPurpose(id, isSelected);
+				}
+			});
+		}
 	};
 
 	getAllPurposes = () => {
