@@ -42,11 +42,21 @@ export default class Vendors extends Component {
 		});
 	};
 
+	getActiveAttributesNameElements = (setOfAttributes, idsOfActiveAttributes, translationPrefix='') => {
+		const activeAttributes = setOfAttributes
+			.filter(attribute => idsOfActiveAttributes.includes(attribute['id']))
+			.map(attribute => <Label localizeKey={`${translationPrefix}${attribute['id']}.title`}>{attribute['name']}</Label>);
+
+		return activeAttributes.length ? activeAttributes.reduce((prev, curr) => [...prev, ', ', curr]) : [];
+	};
+
 	render(props, state) {
 
 		const {
 			vendors,
 			selectedVendorIds,
+			purposes,
+			features
 		} = props;
 		const { editingConsents } = this.state;
 
@@ -84,13 +94,33 @@ export default class Vendors extends Component {
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-						{vendors.map(({ id, name, policyUrl }, index) => (
+						{vendors.map(({ id, name, policyUrl, purposeIds, legIntPurposeIds, featureIds }, index) => (
 							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
 								<td>
 									<div class={style.vendorName}>
 										{name}
 										{policyUrl &&
 										<a href={policyUrl} className={style.policy} target='_blank'><ExternalLinkIcon/></a>
+										}
+									</div>
+									<div class={style.vendorDescription}>
+										{purposeIds && !!purposeIds.length &&
+										<span>
+											<Label localizeKey='purposes.title'>Purposes</Label>{': '}
+											{this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}{'. '}
+										</span>
+										}
+										{legIntPurposeIds && !!legIntPurposeIds.length &&
+										<span>
+											<Label localizeKey='purposes.legitimateInterestTitle'>Legitimate interest purposes</Label>{': '}
+											{this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}{'. '}
+										</span>
+										}
+										{featureIds && !!featureIds.length &&
+										<span>
+											<Label localizeKey='features.title'>Features</Label>{': '}
+											{this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}{'. '}
+										</span>
 										}
 									</div>
 								</td>

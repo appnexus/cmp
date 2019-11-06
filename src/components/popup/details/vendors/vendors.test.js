@@ -15,15 +15,27 @@ describe('Vendors', () => {
 	it('should render the vendor list', () => {
 		const vendors = render(<Vendors
 			vendors={[
-				{id: 1, name: 'Vendor 1'},
-				{id: 2, name: 'Vendor 2'},
-				{id: 3, name: 'Vendor 3'},
-				{id: 4, name: 'Vendor 4'}
+				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
+				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
+				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
+				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+			]}
+			purposes={[
+				{id: 1, name: 'Purpose 1'},
+				{id: 2, name: 'Purpose 2'},
+			]}
+			features={[
+				{id: 1, name: 'Feature 1'},
+				{id: 2, name: 'Feature 2'},
 			]}
 		/>, scratch);
 
 		const vendorRows = vendors.querySelectorAll(`.${style.vendorContent} tr`);
+		const firstVendorAttributes = vendorRows[0].querySelectorAll(`.${style.vendorDescription} span`);
+		const secondVendorAttributes = vendorRows[1].querySelectorAll(`.${style.vendorDescription} span`);
 		expect(vendorRows.length).to.equal(4);
+		expect(firstVendorAttributes.length).to.equal(6);
+		expect(secondVendorAttributes.length).to.equal(3);
 	});
 
 	it('should handle selecting a vendor', () => {
@@ -33,10 +45,18 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1'},
-				{id: 2, name: 'Vendor 2'},
-				{id: 3, name: 'Vendor 3'},
-				{id: 4, name: 'Vendor 4'}
+				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
+				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
+				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
+				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+			]}
+			purposes={[
+				{id: 1, name: 'Purpose 1'},
+				{id: 2, name: 'Purpose 2'},
+			]}
+			features={[
+				{id: 1, name: 'Feature 1'},
+				{id: 2, name: 'Feature 2'},
 			]}
 			selectVendor={selectVendor}
 		/>, scratch);
@@ -53,10 +73,18 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1'},
-				{id: 2, name: 'Vendor 2'},
-				{id: 3, name: 'Vendor 3'},
-				{id: 4, name: 'Vendor 4'}
+				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
+				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
+				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
+				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+			]}
+			purposes={[
+				{id: 1, name: 'Purpose 1'},
+				{id: 2, name: 'Purpose 2'},
+			]}
+			features={[
+				{id: 1, name: 'Feature 1'},
+				{id: 2, name: 'Feature 2'},
 			]}
 			selectAllVendors={selectAllVendors}
 		/>, scratch);
@@ -72,10 +100,18 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1'},
-				{id: 2, name: 'Vendor 2'},
-				{id: 3, name: 'Vendor 3'},
-				{id: 4, name: 'Vendor 4'}
+				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
+				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
+				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
+				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+			]}
+			purposes={[
+				{id: 1, name: 'Purpose 1'},
+				{id: 2, name: 'Purpose 2'},
+			]}
+			features={[
+				{id: 1, name: 'Feature 1'},
+				{id: 2, name: 'Feature 2'},
 			]}
 			selectAllVendors={selectAllVendors}
 		/>, scratch);
