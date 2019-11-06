@@ -22,7 +22,7 @@ const Purpose = (props) => {
 		isActive,
 		onToggle,
 		createOnShowVendors,
-		isSwitchable,
+		isTechnical,
 		isPublisherPurpose
 	} = props;
 
@@ -32,7 +32,7 @@ const Purpose = (props) => {
 				<div className={style.title}>
 					<LocalLabel localizeKey={`purpose${purpose.id}.title`}>{purpose.name}</LocalLabel>
 				</div>
-				{isSwitchable &&
+				{!isTechnical &&
 					<div className={style.active}>
 						<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
 						<Switch
@@ -180,12 +180,20 @@ export default class Purposes extends Component {
 			selectedPurposeIds.has(id) :
 			selectedCustomPurposeIds.has(id);
 
-		const purposeIsSwitchable = (id) => !(config.legIntPurposeIds.indexOf(id) >= 0 || config.contractPurposeIds.indexOf(id) >= 0);
+		const purposeIsTechnical = (index) => {
+			const selectedPurpose = allPurposes[index];
+
+			return config.legIntPurposeIds &&
+				config.contractPurposeIds &&
+				selectedPurpose && !selectedPurpose.custom &&
+				config.legIntPurposeIds.indexOf(selectedPurpose.id) >= 0 ||
+				config.contractPurposeIds.indexOf(selectedPurpose.id) >= 0;
+		};
 
 		if (!created && selectedTabIndex === 1 && !renderedTabIndices.has(selectedTabIndex)) {
 			renderedTabIndices.add(selectedTabIndex);
 			for (let i = 0, j = purposes.length; i<j; i++) {
-				if (purposeIsSwitchable(purposes[i].id)) {
+				if (!purposeIsTechnical(i)) {
 					this.handleSelectPurpose({isSelected: false, dataId: i});
 				}
 			}
@@ -233,7 +241,7 @@ export default class Purposes extends Component {
 																		  isPublisherPurpose={true}
 																		  purpose={purpose}
 																		  isActive={purposeIsActive(purpose.id)}
-																		  isSwitchable={purposeIsSwitchable(purpose.id)}
+																		  isTechnical={purposeIsTechnical(index)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		  onToggle={this.handleSelectPurpose}/>)}
 						</div>
@@ -254,7 +262,7 @@ export default class Purposes extends Component {
 																		   index={index}
 																		   purpose={purpose}
 																		   isActive={purposeIsActive(purpose.id)}
-																		   isSwitchable={true}
+																		   isTechnical={false}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		   onToggle={this.handleSelectPurpose}/>)}
 							</div>
