@@ -116,7 +116,6 @@ export default class CmpApi extends Component {
 							<span className={style.argumentType}>contractPurposeIds (Array)</span>:
 							<span className={style.argumentDescription}>
 								List of (non-consentable) data purposes that are required for the performance of a contract
-								processing is necessary for the performance of a contract to which the data subject is party or in order to take steps at the request of the data subject prior to entering into a contract;
 							</span>
 						</span>
 						<span class={style.argument}>
