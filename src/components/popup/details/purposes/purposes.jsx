@@ -4,16 +4,16 @@ import Switch from '../../../switch/switch';
 import Label from "../../../label/label";
 import config from '../../../../lib/config';
 
+const TABS = [
+	'Publisher informations',
+	'Purposes & Features'
+];
+
 class LocalLabel extends Label {
 	static defaultProps = {
 		prefix: 'purposes'
 	};
 }
-
-const TABS = [
-	'Publisher informations',
-	'Purposes & Features'
-];
 
 const Purpose = (props) => {
 	const {
@@ -207,7 +207,7 @@ export default class Purposes extends Component {
 						<div class={[style.purposeItem, selectedTabIndex === index ? style.selectedPurpose : ''].join(' ')}
 							onClick={this.handleSelectTab(index)}
 						>
-							<LocalLabel prefix="tabs" localizeKey={`tab${index+1}.menu`} />
+							<LocalLabel prefix="tabs" localizeKey={`tab${index+1}.menu`}/>
 						</div>
 					))}
 				</div>
