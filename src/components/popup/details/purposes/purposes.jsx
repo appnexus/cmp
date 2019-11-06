@@ -18,6 +18,7 @@ const TABS = [
 const Purpose = (props) => {
 	const {
 		purpose,
+		index,
 		isActive,
 		onToggle,
 		createOnShowVendors,
@@ -36,7 +37,7 @@ const Purpose = (props) => {
 						<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
 						<Switch
 							isSelected={isActive}
-							dataId={purpose.id}
+							dataId={index}
 							onClick={onToggle}
 						/>
 					</div>
@@ -89,8 +90,7 @@ const Feature = (props) => {
 
 export default class Purposes extends Component {
 	state = {
-		selectedPurposeIndex: 0,
-		selectedTab: 0,
+		selectedTabIndex: 0,
 		renderedTabIndices: new Set()
 	};
 
@@ -106,12 +106,52 @@ export default class Purposes extends Component {
 	handleSelectTab = index => {
 		return () => {
 			this.setState({
-				selectedTab: index
+				selectedTabIndex: index
 			});
 		};
 	};
 
-	handleSelectPurpose = ({isSelected, dataId}) => this.props.selectPurpose(dataId, isSelected);
+	handleSelectPurpose = ({isSelected, dataId}) => {
+		const {
+			selectPurpose,
+			selectCustomPurpose
+		} = this.props;
+
+		const allPurposes = this.getAllPurposes();
+		const selectedPurpose = allPurposes[dataId];
+
+		if (selectedPurpose.custom) {
+			selectCustomPurpose(selectedPurpose.id, isSelected);
+		} else {
+			selectPurpose(selectedPurpose.id, isSelected);
+		}
+	};
+
+	getAllPurposes = () => {
+		const {
+			purposes,
+			customPurposes
+		} = this.props;
+		let allPurposes = [];
+
+		(purposes || []).forEach(purpose => {
+			allPurposes.push({
+				id: purpose.id,
+				name: purpose.name,
+				custom: false
+			});
+		});
+
+		(customPurposes || []).forEach(purpose => {
+			allPurposes.push({
+				id: purpose.id,
+				name: purpose.name,
+				custom: true
+			});
+		});
+
+		return allPurposes;
+	};
 
 	createOnShowVendors(filter = {}) {
 		return () => this.props.onShowVendors(filter);
@@ -130,17 +170,24 @@ export default class Purposes extends Component {
 		const {created} = persistedVendorConsentData;
 
 		const {
-			selectedTab,
+			selectedTabIndex,
 			renderedTabIndices
 		} = state;
 
-		const purposeIsActive = (id) => selectedPurposeIds.has(id);
+		const allPurposes = this.getAllPurposes();
+
+		const purposeIsActive = (id) => id <= purposes.length ?
+			selectedPurposeIds.has(id) :
+			selectedCustomPurposeIds.has(id);
+
 		const purposeIsSwitchable = (id) => !(config.legIntPurposeIds.indexOf(id) >= 0 || config.contractPurposeIds.indexOf(id) >= 0);
 
-		if (!created && !renderedTabIndices.has(selectedTab)) {
-			renderedTabIndices.add(selectedTab);
-			for (let purpose of purposes) {
-				this.handleSelectPurpose({isSelected: false, dataId: purpose.id});
+		if (!created && selectedTabIndex === 1 && !renderedTabIndices.has(selectedTabIndex)) {
+			renderedTabIndices.add(selectedTabIndex);
+			for (let i = 0, j = purposes.length; i<j; i++) {
+				if (purposeIsSwitchable(purposes[i].id)) {
+					this.handleSelectPurpose({isSelected: false, dataId: i});
+				}
 			}
 		}
 
@@ -148,14 +195,14 @@ export default class Purposes extends Component {
 			<div class={style.purposes}>
 				<div class={style.purposeList}>
 					{TABS.map((tab, index) => (
-						<div class={[style.purposeItem, selectedTab === index ? style.selectedPurpose : ''].join(' ')}
+						<div class={[style.purposeItem, selectedTabIndex === index ? style.selectedPurpose : ''].join(' ')}
 							onClick={this.handleSelectTab(index)}
 						>
 							<LocalLabel prefix="tabs" localizeKey={`tab${index+1}.menu`}>{tab}</LocalLabel>
 						</div>
 					))}
 				</div>
-				{!selectedTab ? (
+				{!selectedTabIndex ? (
 					<div className={style.purposeDescription}>
 						<div className={style.purposeDetail}>
 							<div className={style.detailHeader}>
@@ -181,13 +228,14 @@ export default class Purposes extends Component {
 									<LocalLabel prefix="publisherConsents" localizeKey={`description`}/>
 								</div>
 							</div>
-							{purposes.map((purpose, index) => <Purpose key={index}
-																	   isPublisherPurpose={true}
-																	   purpose={purpose}
-																	   isActive={purposeIsActive(purpose.id)}
-																	   isSwitchable={purposeIsSwitchable(purpose.id)}
-																	   createOnShowVendors={this.createOnShowVendors.bind(this)}
-																	   onToggle={this.handleSelectPurpose}/>)}
+							{allPurposes.map((purpose, index) => <Purpose key={index}
+																		  index={index}
+																		  isPublisherPurpose={true}
+																		  purpose={purpose}
+																		  isActive={purposeIsActive(purpose.id)}
+																		  isSwitchable={purposeIsSwitchable(purpose.id)}
+																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		  onToggle={this.handleSelectPurpose}/>)}
 						</div>
 						<div className={style.vendorsSection}>
 							<div className={style.sectionInfo}>
@@ -203,9 +251,10 @@ export default class Purposes extends Component {
 							<div>
 								<LocalLabel className={style.header} prefix="purposes" localizeKey={`title`}/>
 								{purposes.map((purpose, index) => <Purpose key={index}
+																		   index={index}
 																		   purpose={purpose}
 																		   isActive={purposeIsActive(purpose.id)}
-																		   isSwitchable={false}
+																		   isSwitchable={true}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		   onToggle={this.handleSelectPurpose}/>)}
 							</div>
