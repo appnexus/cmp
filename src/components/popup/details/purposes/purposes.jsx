@@ -207,7 +207,7 @@ export default class Purposes extends Component {
 						<div class={[style.purposeItem, selectedTabIndex === index ? style.selectedPurpose : ''].join(' ')}
 							onClick={this.handleSelectTab(index)}
 						>
-							<LocalLabel prefix="tabs" localizeKey={`tab${index+1}.menu`}>{tab}</LocalLabel>
+							<LocalLabel prefix="tabs" localizeKey={`tab${index+1}.menu`} />
 						</div>
 					))}
 				</div>
