@@ -3,10 +3,7 @@ import style from './popup.less';
 import Intro from './intro/intro';
 import Details from './details/details';
 import Panel from '../panel/panel';
-import {
-	SECTION_INTRO,
-	SECTION_DETAILS
-} from '../../lib/store';
+import { SECTION_DETAILS } from '../../lib/store';
 
 export default class Popup extends Component {
 	onAcceptAll = () => {
@@ -18,13 +15,11 @@ export default class Popup extends Component {
 	};
 
 	onCancel = () => {
-		this.props.store.section = SECTION_INTRO;
-		this.forceUpdate();
+		this.props.store.updateSection();
 	};
 
 	handleShowDetails = () => {
-		this.props.store.section = SECTION_DETAILS;
-		this.forceUpdate();
+		this.props.store.updateSection(SECTION_DETAILS);
 	};
 
 	handleCloseOrSave = () => {

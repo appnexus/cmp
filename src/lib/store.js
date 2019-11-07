@@ -418,6 +418,10 @@ export default class Store {
 
 	updateSection = (section = SECTION_INTRO, subsection = SECTION_PURPOSES) => {
 		this.section = section;
+		this.updateSubsection(subsection);
+	};
+
+	updateSubsection = (subsection) => {
 		this.subsection = subsection;
 		this.storeUpdate();
 	};

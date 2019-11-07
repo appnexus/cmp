@@ -6,10 +6,7 @@ import Purposes from './purposes/purposes';
 import Vendors from './vendors/vendors';
 import Panel from '../../panel/panel';
 import Label from "../../label/label";
-import {
-	SECTION_PURPOSES,
-	SECTION_VENDORS
-} from '../../../lib/store';
+import { SECTION_PURPOSES, SECTION_VENDORS } from '../../../lib/store';
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -52,10 +49,10 @@ export default class Details extends Component {
 	};
 
 	handleShowVendors = (filter) => {
-		this.props.store.subsection = SECTION_VENDORS;
 		this.setState({
 			vendors: this.filterVendors(filter)
 		});
+		this.props.store.updateSubsection(SECTION_VENDORS);
 	};
 
 	handleBack = () => {
