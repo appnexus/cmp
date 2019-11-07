@@ -52,9 +52,10 @@ export default class Details extends Component {
 	};
 
 	handleShowVendors = (filter) => {
-		this.state.vendors = this.filterVendors(filter);
 		this.props.store.subsection = SECTION_VENDORS;
-		this.forceUpdate();
+		this.setState({
+			vendors: this.filterVendors(filter)
+		});
 	};
 
 	handleBack = () => {
