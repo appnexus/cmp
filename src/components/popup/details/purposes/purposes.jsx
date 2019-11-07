@@ -176,9 +176,15 @@ export default class Purposes extends Component {
 
 		const allPurposes = this.getAllPurposes();
 
-		const purposeIsActive = (id) => id <= purposes.length ?
-			selectedPurposeIds.has(id) :
-			selectedCustomPurposeIds.has(id);
+		console.log(selectedPurposeIds);
+
+		const purposeIsActive = (index) => {
+			const selectedPurpose = allPurposes[index];
+
+			return selectedPurpose && selectedPurpose.custom ?
+				selectedCustomPurposeIds.has(selectedPurpose.id) :
+				selectedPurposeIds.has(selectedPurpose.id);
+		};
 
 		const purposeIsTechnical = (index) => {
 			const selectedPurpose = allPurposes[index];
@@ -241,7 +247,7 @@ export default class Purposes extends Component {
 																		  index={index}
 																		  isPublisherPurpose={true}
 																		  purpose={purpose}
-																		  isActive={purposeIsActive(purpose.id)}
+																		  isActive={purposeIsActive(index)}
 																		  isTechnical={purposeIsTechnical(index)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		  onToggle={this.handleSelectPurpose}/>)}
@@ -262,7 +268,7 @@ export default class Purposes extends Component {
 								{purposes.map((purpose, index) => <Purpose key={index}
 																		   index={index}
 																		   purpose={purpose}
-																		   isActive={purposeIsActive(purpose.id)}
+																		   isActive={purposeIsActive(index)}
 																		   isTechnical={false}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		   onToggle={this.handleSelectPurpose}/>)}
