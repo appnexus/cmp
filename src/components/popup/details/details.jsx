@@ -58,8 +58,7 @@ export default class Details extends Component {
 	handleBack = () => {
 		const { onCancel, store } = this.props;
 		const { subsection } = store;
-		store.subsection = Math.max(0, subsection - 1);
-		this.forceUpdate();
+		store.updateSubsection(Math.max(0, subsection - 1));
 		if (subsection === SECTION_PURPOSES) {
 			onCancel();
 		}
