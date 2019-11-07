@@ -176,8 +176,6 @@ export default class Purposes extends Component {
 
 		const allPurposes = this.getAllPurposes();
 
-		console.log(selectedPurposeIds);
-
 		const purposeIsActive = (index) => {
 			const selectedPurpose = allPurposes[index];
 
