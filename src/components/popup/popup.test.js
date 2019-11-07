@@ -56,11 +56,11 @@ describe('Popup', () => {
 			ref={ref => popup = ref}
 		/>, scratch);
 
-		expect(popup.state.selectedPanelIndex).to.equal(0);
+		expect(popup.props.store.section).to.equal(0);
 		popup.handleShowDetails();
-		expect(popup.state.selectedPanelIndex).to.equal(1);
+		expect(popup.props.store.section).to.equal(1);
 		popup.onCancel();
-		expect(popup.state.selectedPanelIndex).to.equal(0);
+		expect(popup.props.store.section).to.equal(0);
 	});
 
 });
