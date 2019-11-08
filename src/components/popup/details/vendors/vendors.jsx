@@ -106,19 +106,19 @@ export default class Vendors extends Component {
 									<div class={style.vendorDescription}>
 										{purposeIds && !!purposeIds.length &&
 										<span>
-											<Label localizeKey='purposes.title'>Purposes</Label>{': '}
+											<LocalLabel localizeKey='purposes'>Purposes</LocalLabel>{': '}
 											{this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}{'. '}
 										</span>
 										}
 										{legIntPurposeIds && !!legIntPurposeIds.length &&
 										<span>
-											<Label localizeKey='purposes.legitimateInterestTitle'>Legitimate interest purposes</Label>{': '}
+											<LocalLabel localizeKey='legitimateInterestPurposes'>Legitimate interest purposes</LocalLabel>{': '}
 											{this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}{'. '}
 										</span>
 										}
 										{featureIds && !!featureIds.length &&
 										<span>
-											<Label localizeKey='features.title'>Features</Label>{': '}
+											<LocalLabel localizeKey='features'>Features</LocalLabel>{': '}
 											{this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}{'. '}
 										</span>
 										}
