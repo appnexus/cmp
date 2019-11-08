@@ -16,7 +16,7 @@ class LocalLabel extends Label {
 
 export default class Purposes extends Component {
 	state = {
-		selectedTab: 0,
+		selectedTab: TAB_PUBLISHER_INFO,
 		renderedTabIndices: new Set()
 	};
 
