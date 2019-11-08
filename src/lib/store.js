@@ -4,6 +4,11 @@ import { findLocale } from './localize';
 import log from './log';
 const arrayFrom = require('core-js/library/fn/array/from');
 
+export const SECTION_INTRO = 0;
+export const SECTION_DETAILS = 1;
+export const SECTION_PURPOSES = 0;
+export const SECTION_VENDORS = 1;
+
 /**
  * Copy a data object and make sure to replace references
  * of Set objects with new ones.
@@ -64,7 +69,8 @@ export default class Store {
 		this.allowedVendorIds = new Set(allowedVendorIds);
 		this.isConsentToolShowing = false;
 		this.isFooterShowing = false;
-		this.isDetailViewAsDefault = false;
+		this.section = SECTION_INTRO;
+		this.subsection = SECTION_PURPOSES;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);
@@ -410,8 +416,13 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	toogleDetailViewAsDefault = (isDefault) => {
-		this.isDetailViewAsDefault = typeof isDefault === 'boolean' ? isDefault : !this.isDetailViewAsDefault;
+	updateSection = (section = SECTION_INTRO, subsection = SECTION_PURPOSES) => {
+		this.section = section;
+		this.updateSubsection(subsection);
+	};
+
+	updateSubsection = (subsection) => {
+		this.subsection = subsection;
 		this.storeUpdate();
 	};
 

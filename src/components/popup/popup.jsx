@@ -3,26 +3,9 @@ import style from './popup.less';
 import Intro from './intro/intro';
 import Details from './details/details';
 import Panel from '../panel/panel';
-
-
-const SECTION_INTRO = 0;
-const SECTION_DETAILS = 1;
+import { SECTION_DETAILS } from '../../lib/store';
 
 export default class Popup extends Component {
-	state = {
-		selectedPanelIndex: SECTION_INTRO,
-		isDetailViewAsDefault: false
-	};
-
-	componentWillReceiveProps(newProps) {
-		if (newProps.store.isDetailViewAsDefault !== this.state.isDetailViewAsDefault) {
-			this.setState({
-				selectedPanelIndex: newProps.store.isDetailViewAsDefault ? SECTION_DETAILS : SECTION_INTRO,
-				isDetailViewAsDefault: newProps.store.isDetailViewAsDefault
-			});
-		}
-	}
-
 	onAcceptAll = () => {
 		const { store, onSave } = this.props;
 		store.selectAllVendors(true);
@@ -32,27 +15,22 @@ export default class Popup extends Component {
 	};
 
 	onCancel = () => {
-		this.setState({
-			selectedPanelIndex: SECTION_INTRO
-		});
+		this.props.store.updateSection();
 	};
 
 	handleShowDetails = () => {
-		this.setState({
-			selectedPanelIndex: SECTION_DETAILS
-		});
+		this.props.store.updateSection(SECTION_DETAILS);
 	};
 
 	handleCloseOrSave = () => {
-		const { store, onSave } = this.props;
+		const { onSave } = this.props;
 		onSave();
 		this.onCancel()
 	};
 
-	render(props, state) {
+	render(props) {
 		const { store } = props;
-		const { selectedPanelIndex } = state;
-		const { isConsentToolShowing } = store;
+		const { isConsentToolShowing, section } = store;
 
 		return (
 			<div
@@ -63,7 +41,7 @@ export default class Popup extends Component {
 					class={style.overlay}
 				/>
 				<div class={style.content}>
-					<Panel selectedIndex={selectedPanelIndex}>
+					<Panel selectedIndex={section}>
 						<Intro
 							onAcceptAll={this.onAcceptAll}
 							onShowPurposes={this.handleShowDetails}
@@ -71,7 +49,7 @@ export default class Popup extends Component {
 						<Details
 							onSaveOrClose={this.handleCloseOrSave}
 							onCancel={this.onCancel}
-							store={this.props.store}
+							store={store}
 						/>
 					</Panel>
 				</div>

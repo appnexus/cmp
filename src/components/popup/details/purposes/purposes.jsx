@@ -48,10 +48,12 @@ export default class Purposes extends Component {
 		const allPurposes = this.getAllPurposes();
 		const selectedPurpose = allPurposes[dataId];
 
-		if (selectedPurpose.custom) {
-			selectCustomPurpose(selectedPurpose.id, isSelected);
-		} else {
-			selectPurpose(selectedPurpose.id, isSelected);
+		if (selectedPurpose) {
+			if (selectedPurpose.custom) {
+				selectCustomPurpose(selectedPurpose.id, isSelected);
+			} else {
+				selectPurpose(selectedPurpose.id, isSelected);
+			}
 		}
 	};
 

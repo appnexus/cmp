@@ -4,6 +4,10 @@ import {
 	encodeVendorConsentData,
 	encodePublisherConsentData
 } from './cookie/cookie';
+import {
+	SECTION_DETAILS,
+	SECTION_VENDORS
+} from './store';
 const arrayFrom = require('core-js/library/fn/array/from');
 
 export const CMP_GLOBAL_NAME = '__cmp';
@@ -164,7 +168,7 @@ export default class Cmp {
 		 * Trigger the consent tool UI to be shown
 		 */
 		showConsentTool: (_, callback = () => {}) => {
-			this.store.toogleDetailViewAsDefault(false);
+			this.store.updateSection();
 			this.store.toggleConsentToolShowing(true);
 
 			this.openConsentTool = true;
@@ -177,7 +181,20 @@ export default class Cmp {
 		 * Trigger the consent tool UI to be shown on Detail View
 		 */
 		showConsentDetailView: (_, callback = () => {}) => {
-			this.store.toogleDetailViewAsDefault(true);
+			this.store.updateSection(SECTION_DETAILS);
+			this.store.toggleConsentToolShowing(true);
+
+			this.openConsentTool = true;
+			this.notify('openConsentTool', { section: 'details' });
+
+			callback(true);
+		},
+
+		/**
+		 * Trigger the vendors UI to be shown
+		 */
+		showVendors: (_, callback = () => {}) => {
+			this.store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
 			this.store.toggleConsentToolShowing(true);
 
 			this.openConsentTool = true;
