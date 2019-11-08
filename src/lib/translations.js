@@ -69,23 +69,34 @@ export default {
 		},
 		tabs: {
 			tab1: {
-				menu: 'Informacje wydawcy',
-				title: 'Lorem ipsum dolor sit amet',
-				description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla nisl erat, sodales molestie tortor accumsan sed. Vivamus at massa suscipit, ornare magna quis, tincidunt ante. Sed at enim vel est aliquet pharetra ut vehicula enim. In scelerisque justo orci, ac vehicula ligula finibus blandit. Vivamus non convallis nunc. Integer vitae vestibulum est, at scelerisque diam. Morbi blandit a erat vitae fermentum. Duis pulvinar pretium hendrerit. Vestibulum ligula justo, mattis nec tortor eu, dictum tempor urna. Quisque varius finibus neque vitae pellentesque. Curabitur pharetra vitae neque porta blandit. Suspendisse commodo lacinia sapien, ac egestas neque pharetra ut. Sed in tincidunt urna, id porttitor ipsum. In neque tortor, condimentum at est sed, tempor dignissim odio. Pellentesque suscipit, quam sit amet efficitur facilisis, enim nibh rhoncus nulla, id malesuada lectus ante et justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>',
+				menu: 'Informacje ogólne',
+				title: 'Szanowna Użytkowniczko, Szanowny Użytkowniku,',
+				description: `<p>Znajdujesz się z szczegółowej sekcji mechanizmu umożliwiającego zarządzanie procesami przetwarzania Twoich danych osobowych na stronach internetowych i innych narzędziach udostępnianych przez podmioty z Grupy Ringier Axel Springer Polska. </p>
+
+<p style="margin: 25px 0 10px 0">W zakładce widocznej poniżej uzyskasz niezbędne informacje o celach, zakresach i podstawach przetwarzania Twoich danych osobowych, administratorach tych danych oraz będziesz mogła/mógł zarządzić tym przetwarzaniem.</p>
+
+<p style="margin: 25px 0 10px 0">Możesz w niej określić którym z <a onclick="__cmp('showVendors')">Zaufanych Partnerów</a> chcesz wyrazić zgodę na przetwarzanie Twoich danych osobowych, a także ustalić cele przetwarzania których dotyczyć ma Twoja zgoda – służy do tego suwak. Pozostawienie suwaka odznaczonego (ma on wtedy kolor szary) oznacza brak zgody, zaś kliknięcie w suwak powodować będzie wyrażenie zgody (suwak zmieni wtedy kolor na żółty), której on dotyczy – jej zakres jest podany przy danym suwaku. Pamiętaj, by potwierdzić Twój wybór klikając po dokonaniu wybranych przez Ciebie ustawień w przycisk <span style="font-weight: bold; display: inline">„Zapisz i zamknij”</span>.</p>\
+
+<p style="margin: 25px 0 10px 0">Niektórzy z <a onclick="__cmp('showVendors')">Zaufanych Partnerów</a> przetwarzać mogą Twoje dane w oparciu o ich uzasadniony interes. W takim wypadku nie udzielasz im zgody na przetwarzanie Twoich danych, ale możesz wyrazić sprzeciw wobec takiego przetwarzania.</p>
+
+<p style="margin: 25px 0 10px 0">W zakładce „Przetwarzanie danych osobowych” dowiesz się także jak wykorzystywane są technologie cookies i podobne oraz jak zablokować ich działanie w Twojej przeglądarce.</p>
+
+<p style="margin: 25px 0 10px 0">W razie jakichkolwiek wątpliwości zapraszamy do kontaktu na adres <a href="mailto:iod@grupaonet.pl">iod@grupaonet.pl</a>. Pomocne informacje znajdziesz także zawsze w naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Polityce Prywatności</a></p>
+`,
 			},
 			tab2: {
-				menu: 'Cele i funkcje przetwarzania danych osobowych',
+				menu: 'Przetwarzanie danych osobowych',
 				title: '',
 				description: '',
 			}
 		},
 		publisherConsents: {
 			title: "Zgody dla wydawcy",
-			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla nisl erat, sodales molestie tortor accumsan sed.',
+			description: '',
 		},
 		vendorConsents: {
 			title: "Zgody dla partnerów",
-			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla nisl erat, sodales molestie tortor accumsan sed.',
+			description: '',
 		},
 		purposes: {
 			active: 'Aktywna',
