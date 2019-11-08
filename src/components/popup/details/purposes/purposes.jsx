@@ -5,10 +5,8 @@ import config from '../../../../lib/config';
 import Feature from './feature';
 import Purpose from "./purpose";
 
-const TABS = [
-	'Publisher informations',
-	'Purposes & Features'
-];
+const PUBLISHER_INFO = 0;
+const CONSENTS = 1;
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -137,13 +135,17 @@ export default class Purposes extends Component {
 		return (
 			<div class={style.purposes}>
 				<div class={style.purposeList}>
-					{TABS.map((tab, index) => (
-						<div class={[style.purposeItem, selectedTabIndex === index ? style.selectedPurpose : ''].join(' ')}
-							onClick={this.handleSelectTab(index)}
-						>
-							<LocalLabel prefix="tabs" localizeKey={`tab${index+1}.menu`}/>
-						</div>
-					))}
+					<div class={[style.purposeItem, selectedTabIndex === PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
+						onClick={this.handleSelectTab(PUBLISHER_INFO)}
+					>
+						<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}/>
+					</div>
+					<div
+						className={[style.purposeItem, selectedTabIndex === CONSENTS ? style.selectedPurpose : ''].join(' ')}
+						onClick={this.handleSelectTab(CONSENTS)}
+					>
+						<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}/>
+					</div>
 				</div>
 				{!selectedTabIndex ? (
 					<div className={style.purposeDescription}>
