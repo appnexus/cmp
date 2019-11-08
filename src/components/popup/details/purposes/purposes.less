@@ -40,44 +40,51 @@
 			overflow: scroll;
 			height: 47vh;
 		}
-	}
-	.vendorsSection {
-		margin: 20px 0;
 
-		.header {
-			font-size: 22px;
-			font-weight: 700;
-			flex: 0 0 100%;
-			display: inline-block;
-			margin: 5% 0;
+		.purposesSection {
+			border-bottom: 1px solid #eaeaea;
+
+			&:not(:first-child) {
+				margin: 3% 0;
+			}
+
+			&:last-child {
+				border: none;
+			}
+
+			.header {
+				font-size: 22px;
+				font-weight: 700;
+				flex: 0 0 100%;
+				display: inline-block;
+			}
 		}
 	}
-	.publisherSection {
-		border-bottom: 1px solid #eaeaea;
-	}
-	.sectionInfo {
 
-		.sectionHeader{
+	.sectionInfo {
+		& > div {
+			margin-bottom: 3%;
+		}
+
+		.sectionHeader {
 			display: flex;
 			flex-wrap: wrap;
 
 			.title {
-				font-size: 24px;
+				font-size: 22px;
 				font-weight: bold;
 				flex: 0 0 100%;
+
 				@media @smartphone {
 					font-size: 20px;
 					padding-bottom: 5px;
 				}
 			}
 		}
-		.sectionBody {
-			margin: 3% 0;
-		}
 	}
 
 	.purposeDetail {
-		margin-bottom: 3%;
+		margin: 3% 0;
 		overflow: auto;
 		height: auto;
 
@@ -85,6 +92,7 @@
 			display: flex;
 			flex-wrap: wrap;
 		}
+
 		.title {
 			font-size: 24px;
 			font-weight: bold;
@@ -94,6 +102,7 @@
 				padding-bottom: 5px;
 			}
 		}
+
 		.active {
 			color: @color-primary;
 			font-weight: bold;
@@ -103,6 +112,7 @@
 				flex: 1 1 auto;
 			}
 		}
+
 		.body {
 			margin: 5% 0;
 		}

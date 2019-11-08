@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
 import style from './purposes.less';
-import Switch from '../../../switch/switch';
 import Label from "../../../label/label";
 import config from '../../../../lib/config';
+import Feature from './feature';
+import Purpose from "./purpose";
 
 const TABS = [
 	'Publisher informations',
@@ -14,79 +15,6 @@ class LocalLabel extends Label {
 		prefix: 'purposes'
 	};
 }
-
-const Purpose = (props) => {
-	const {
-		purpose,
-		index,
-		isActive,
-		onToggle,
-		createOnShowVendors,
-		isTechnical,
-		isPublisherPurpose = false
-	} = props;
-
-	return (
-		<div className={style.purposeDetail}>
-			<div className={style.detailHeader}>
-				<div className={style.title}>
-					<LocalLabel localizeKey={`purpose${purpose.id}.title`}>{purpose.name}</LocalLabel>
-				</div>
-				{!isTechnical &&
-					<div className={style.active}>
-						<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
-						<Switch
-							isSelected={isActive}
-							dataId={index}
-							onClick={onToggle}
-						/>
-					</div>
-				}
-			</div>
-			<div className={style.body}>
-				<LocalLabel localizeKey={`purpose${purpose.id}.description`} />
-				{!isPublisherPurpose && (
-					<div>
-						<a className={style.vendorLink}
-						   onClick={createOnShowVendors({isCustom: false, purposeIds: [purpose.id]})}>
-							<LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel>
-						</a>
-						<a className={style.vendorLink}
-						   onClick={createOnShowVendors({isCustom: true, purposeIds: [purpose.id]})}>
-							<LocalLabel localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel>
-						</a>
-					</div>
-				)}
-			</div>
-		</div>
-	);
-};
-
-const Feature = (props) => {
-	const {
-		feature,
-		createOnShowVendors
-	} = props;
-
-	return (
-		<div className={style.purposeDetail}>
-			<div className={style.detailHeader}>
-				<div className={style.title}>
-					<LocalLabel prefix="features" localizeKey={`feature${feature.id}.title`}/>
-				</div>
-			</div>
-			<div className={style.body}>
-				<LocalLabel prefix="features" localizeKey={`feature${feature.id}.description`}/>
-				<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: false, featuresIds: [feature.id]})}>
-					<LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel>
-				</a>
-				<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: true, featuresIds: [feature.id]})}>
-					<LocalLabel localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel>
-				</a>
-			</div>
-		</div>
-	);
-};
 
 export default class Purposes extends Component {
 	state = {
@@ -230,7 +158,7 @@ export default class Purposes extends Component {
 					</div>
 				) : (
 					<div className={style.purposeDescription}>
-						<div className={style.publisherSection}>
+						<div className={style.purposesSection}>
 							<div className={style.sectionInfo}>
 								<div className={style.sectionHeader}>
 									<div className={style.title}>
@@ -250,7 +178,7 @@ export default class Purposes extends Component {
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		  onToggle={this.handleSelectPurpose}/>)}
 						</div>
-						<div className={style.vendorsSection}>
+						<div className={style.purposesSection}>
 							<div className={style.sectionInfo}>
 								<div className={style.sectionHeader}>
 									<div className={style.title}>
