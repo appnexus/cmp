@@ -323,15 +323,13 @@ export default class Store {
 		}
 
 		// Write vendor cookie to appropriate domain
-		if (config.storeConsentGlobally) {
-			this.mergeVendorConsentsToGlobalCookie();
-			this.mergePurposeConsentsToGlobalCookie();
+		this.mergeVendorConsentsToGlobalCookie();
+		this.mergePurposeConsentsToGlobalCookie();
 
-			const globalVendorConsents = {...globalVendorConsentData, vendorList};
-			writeVendorConsentCookie(globalVendorConsents);
+		const globalVendorConsents = {...globalVendorConsentData, vendorList};
+		writeVendorConsentCookie(globalVendorConsents);
 
-			this.persistedGlobalVendorConsentData = copyData(globalVendorConsentData);
-		}
+		this.persistedGlobalVendorConsentData = copyData(globalVendorConsentData);
 
 		// Store the persisted data
 		this.persistedVendorConsentData = copyData(vendorConsentData);
