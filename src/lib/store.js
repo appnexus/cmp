@@ -534,6 +534,7 @@ export default class Store {
 			}
 			if (this.globalVendorConsentData.selectedVendorIds.has(globalId)) {
 				selectedLocalIdsOfGlobalVendorInGlobalCookie.add(localId);
+				this.vendorConsentData.selectedVendorIds.add(localId);
 			}
 		});
 
