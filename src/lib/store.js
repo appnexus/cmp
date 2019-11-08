@@ -471,7 +471,7 @@ export default class Store {
 		} = vendorList || {};
 
 		//collection of global and local vendor ids [global id, local id]
-		this.globalVendorIdsPresentOnList = new Map(vendors.filter(vendor => vendor.external_id).map( vendor => {
+		this.globalVendorIdsPresentOnList = new Map(vendors.filter(vendor => vendor.external_id).map(vendor => {
 			return [vendor.external_id, vendor.id];
 		}));
 
@@ -497,7 +497,7 @@ export default class Store {
 			maxVendorId : maxGlobalVendorId = 0 } = this.globalVendorConsentData;
 
 		//Find the maxVendorId for globalVendor
-		this.globalVendorConsentData.maxVendorId = Math.max( maxGlobalVendorId,
+		this.globalVendorConsentData.maxVendorId = Math.max(maxGlobalVendorId,
 			...vendors.map(({external_id}) => external_id || 0),
 			...arrayFrom(selectedGlobalVendorIds));
 
@@ -528,18 +528,14 @@ export default class Store {
 	mergeVendorConsentsFromGlobalCookie = () => {
 		let selectedLocalIdsOfGlobalVendorInGlobalCookie = new Set();
 		let selectedLocalIdsOfGlobalVendorInLocalCookie = new Set();
-		const selectedGlobalVendorIdsInGlobalCookie = this.globalVendorConsentData.selectedVendorIds;
 		const globalCookieMaxVendorId = this.persistedGlobalVendorConsentData.maxVendorId;
 
 		this.globalVendorIdsPresentOnList.forEach( (localId, globalId) => {
 			if (this.vendorConsentData.selectedVendorIds.has(localId) && globalId <= globalCookieMaxVendorId) {
 				selectedLocalIdsOfGlobalVendorInLocalCookie.add(localId);
 			}
-		});
-
-		selectedGlobalVendorIdsInGlobalCookie.forEach( globalId => {
-			if (this.globalVendorIdsPresentOnList.has(globalId)) {
-				selectedLocalIdsOfGlobalVendorInGlobalCookie.add(this.globalVendorIdsPresentOnList.get(globalId));
+			if (this.globalVendorConsentData.selectedVendorIds.has(globalId)) {
+				selectedLocalIdsOfGlobalVendorInGlobalCookie.add(localId);
 			}
 		});
 
