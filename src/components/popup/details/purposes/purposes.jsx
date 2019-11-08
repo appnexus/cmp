@@ -5,8 +5,8 @@ import config from '../../../../lib/config';
 import Feature from './feature';
 import Purpose from "./purpose";
 
-const PUBLISHER_INFO = 0;
-const CONSENTS = 1;
+const TAB_PUBLISHER_INFO = 0;
+const TAB_CONSENTS = 1;
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -16,7 +16,7 @@ class LocalLabel extends Label {
 
 export default class Purposes extends Component {
 	state = {
-		selectedTabIndex: 0,
+		selectedTab: 0,
 		renderedTabIndices: new Set()
 	};
 
@@ -29,10 +29,10 @@ export default class Purposes extends Component {
 		selectedCustomPurposeIds: new Set()
 	};
 
-	handleSelectTab = index => {
+	handleSelectTab = tab => {
 		return () => {
 			this.setState({
-				selectedTabIndex: index
+				selectedTab: tab
 			});
 		};
 	};
@@ -98,56 +98,48 @@ export default class Purposes extends Component {
 		const {created} = persistedVendorConsentData;
 
 		const {
-			selectedTabIndex,
+			selectedTab,
 			renderedTabIndices
 		} = state;
 
 		const allPurposes = this.getAllPurposes();
 
-		const purposeIsActive = (index) => {
-			const selectedPurpose = allPurposes[index];
+		const purposeIsActive = (purpose) =>  purpose && purpose.custom ?
+			selectedCustomPurposeIds.has(purpose.id) :
+			selectedPurposeIds.has(purpose.id);
 
-			return selectedPurpose && selectedPurpose.custom ?
-				selectedCustomPurposeIds.has(selectedPurpose.id) :
-				selectedPurposeIds.has(selectedPurpose.id);
-		};
+		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
+			config.contractPurposeIds &&
+			purpose && !purpose.custom &&
+			config.legIntPurposeIds.indexOf(purpose.id) >= 0 ||
+			config.contractPurposeIds.indexOf(purpose.id) >= 0;
 
-		const purposeIsTechnical = (index) => {
-			const selectedPurpose = allPurposes[index];
-
-			return config.legIntPurposeIds &&
-				config.contractPurposeIds &&
-				selectedPurpose && !selectedPurpose.custom &&
-				config.legIntPurposeIds.indexOf(selectedPurpose.id) >= 0 ||
-				config.contractPurposeIds.indexOf(selectedPurpose.id) >= 0;
-		};
-
-		if (!created && selectedTabIndex === 1 && !renderedTabIndices.has(selectedTabIndex)) {
-			renderedTabIndices.add(selectedTabIndex);
+		if (!created && selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
+			renderedTabIndices.add(selectedTab);
 			// TODO: differentiate publisher purposes from vendor purposes (publisher leg int purpose should not be unselected)
-			for (let i = 0, j = purposes.length; i<j; i++) {
-				if (!purposeIsTechnical(i)) {
-					this.handleSelectPurpose({isSelected: false, dataId: i});
+			purposes.forEach((purpose, index) => {
+				if (!purposeIsTechnical(purpose)) {
+					this.handleSelectPurpose({isSelected: false, dataId: index});
 				}
-			}
+			});
 		}
 
 		return (
 			<div class={style.purposes}>
 				<div class={style.purposeList}>
-					<div class={[style.purposeItem, selectedTabIndex === PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
-						onClick={this.handleSelectTab(PUBLISHER_INFO)}
+					<div class={[style.purposeItem, selectedTab === TAB_PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
+						onClick={this.handleSelectTab(TAB_PUBLISHER_INFO)}
 					>
 						<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}/>
 					</div>
 					<div
-						className={[style.purposeItem, selectedTabIndex === CONSENTS ? style.selectedPurpose : ''].join(' ')}
-						onClick={this.handleSelectTab(CONSENTS)}
+						className={[style.purposeItem, selectedTab === TAB_CONSENTS ? style.selectedPurpose : ''].join(' ')}
+						onClick={this.handleSelectTab(TAB_CONSENTS)}
 					>
 						<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}/>
 					</div>
 				</div>
-				{!selectedTabIndex ? (
+				{!selectedTab ? (
 					<div className={style.purposeDescription}>
 						<div className={style.purposeDetail}>
 							<div className={style.detailHeader}>
@@ -169,7 +161,7 @@ export default class Purposes extends Component {
 										<LocalLabel prefix="publisherConsents" localizeKey={`title`}/>
 									</div>
 								</div>
-								<div className={style.sectionBody}>
+								<div>
 									<LocalLabel prefix="publisherConsents" localizeKey={`description`}/>
 								</div>
 							</div>
@@ -177,8 +169,8 @@ export default class Purposes extends Component {
 																		  index={index}
 																		  isPublisherPurpose={true}
 																		  purpose={purpose}
-																		  isActive={purposeIsActive(index)}
-																		  isTechnical={purposeIsTechnical(index)}
+																		  isActive={purposeIsActive(purpose)}
+																		  isTechnical={purposeIsTechnical(purpose)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		  onToggle={this.handleSelectPurpose}/>)}
 						</div>
@@ -198,7 +190,7 @@ export default class Purposes extends Component {
 								{purposes.map((purpose, index) => <Purpose key={index}
 																		   index={index}
 																		   purpose={purpose}
-																		   isActive={purposeIsActive(index)}
+																		   isActive={purposeIsActive(purpose)}
 																		   isTechnical={false}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		   onToggle={this.handleSelectPurpose}/>)}
