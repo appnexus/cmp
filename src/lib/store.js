@@ -1,4 +1,4 @@
-import { writePublisherConsentCookie, writeVendorConsentCookie, encodePublisherConsentData, encodeVendorConsentData } from "./cookie/cookie";
+import { writePublisherConsentCookie, writeVendorConsentCookie, readVendorConsentCookie, encodePublisherConsentData, encodeVendorConsentData } from "./cookie/cookie";
 import config from './config';
 import { findLocale } from './localize';
 import log from './log';
@@ -27,6 +27,7 @@ export default class Store {
 		cmpVersion = 1,
 		cookieVersion = 1,
 		vendorConsentData,
+		globalVendorConsentData,
 		publisherConsentData,
 		vendorList,
 		customPurposeList,
@@ -36,7 +37,9 @@ export default class Store {
 		// Keep track of data that has already been persisted
 		this.persistedVendorConsentData = copyData(vendorConsentData);
 		this.persistedPublisherConsentData = copyData(publisherConsentData);
+		this.persistedGlobalVendorConsentData = copyData(globalVendorConsentData);
 
+		const consentLanguage = findLocale().substr(0, 2).toUpperCase();
 		this.vendorConsentData = Object.assign(
 			{
 				selectedPurposeIds: new Set(),
@@ -47,8 +50,22 @@ export default class Store {
 				cookieVersion,
 				cmpId,
 				cmpVersion,
-				consentLanguage: findLocale().substr(0, 2).toUpperCase()
+				consentLanguage
 			});
+
+		this.globalVendorConsentData = Object.assign(
+			{
+				selectedPurposeIds: new Set(),
+				selectedVendorIds: new Set()
+			},
+			globalVendorConsentData,
+			{
+				cookieVersion,
+				cmpId,
+				cmpVersion,
+				consentLanguage
+			}
+		);
 
 		this.publisherConsentData = Object.assign(
 			{
@@ -59,7 +76,7 @@ export default class Store {
 				cookieVersion,
 				cmpId
 			});
-
+		this.globalVendorIdsPresentOnList = new Map();
 		this.pubVendorsList = pubVendorsList;
 		this.allowedVendorIds = new Set(allowedVendorIds);
 		this.isConsentToolShowing = false;
@@ -251,22 +268,27 @@ export default class Store {
 	persist = () => {
 		const {
 			vendorConsentData,
+			globalVendorConsentData,
 			publisherConsentData,
 			vendorList,
 			customPurposeList
 		} = this;
 
 		const {
-			vendorListVersion = 1
+			vendorListVersion = 1,
+			globalVendorListVersion = 1
 		} = vendorList || {};
 
 		// Update modification dates and write the cookies
 		const now = new Date();
 		vendorConsentData.created = vendorConsentData.created || now;
 		vendorConsentData.lastUpdated = now;
+		globalVendorConsentData.created = globalVendorConsentData.created || now;
+		globalVendorConsentData.lastUpdated = now;
 
 		// Update version of list to one we are using
 		vendorConsentData.vendorListVersion = vendorListVersion;
+		globalVendorConsentData.vendorListVersion = globalVendorListVersion;
 		publisherConsentData.vendorListVersion = vendorListVersion;
 
 		publisherConsentData.created = publisherConsentData.created || now;
@@ -295,14 +317,20 @@ export default class Store {
 			} catch (err) {
 				log.error('Failed writing external consent data', err);
 			}
-		} else {
-			// Write vendor cookie to appropriate domain
-			writeVendorConsentCookie(vendorConsents);
-
+		} else if (config.storePublisherData) {
 			// Write publisher cookie if enabled
-			if (config.storePublisherData) {
-				writePublisherConsentCookie(publisherConsents);
-			}
+			writePublisherConsentCookie(publisherConsents);
+		}
+
+		// Write vendor cookie to appropriate domain
+		if (config.storeConsentGlobally) {
+			this.mergeVendorConsentsToGlobalCookie();
+			this.mergePurposeConsentsToGlobalCookie();
+
+			const globalVendorConsents = {...globalVendorConsentData, vendorList};
+			writeVendorConsentCookie(globalVendorConsents);
+
+			this.persistedGlobalVendorConsentData = copyData(globalVendorConsentData);
 		}
 
 		// Store the persisted data
@@ -442,6 +470,11 @@ export default class Store {
 			purposes = [],
 		} = vendorList || {};
 
+		//collection of global and local vendor ids [global id, local id]
+		this.globalVendorIdsPresentOnList = new Map(vendors.filter(vendor => vendor.external_id).map( vendor => {
+			return [vendor.external_id, vendor.id];
+		}));
+
 		// If vendor consent data has never been persisted set default selected status
 		if (!created) {
 			this.vendorConsentData.selectedPurposeIds = new Set(purposes.map(p => p.id));
@@ -459,6 +492,14 @@ export default class Store {
 
 
 		const {selectedVendorIds = new Set()} = this.vendorConsentData;
+		const {
+			selectedVendorIds : selectedGlobalVendorIds = new Set(),
+			maxVendorId : maxGlobalVendorId = 0 } = this.globalVendorConsentData;
+
+		//Find the maxVendorId for globalVendor
+		this.globalVendorConsentData.maxVendorId = Math.max( maxGlobalVendorId,
+			...vendors.map(({external_id}) => external_id || 0),
+			...arrayFrom(selectedGlobalVendorIds));
 
 		// Find the maxVendorId out of the vendor list and selectedVendorIds
 		this.vendorConsentData.maxVendorId = Math.max(maxVendorId,
@@ -482,5 +523,53 @@ export default class Store {
 
 		this.customPurposeList = customPurposeList;
 		this.storeUpdate();
+	};
+
+	mergeVendorConsentsFromGlobalCookie = () => {
+		let selectedLocalIdsOfGlobalVendorInGlobalCookie = new Set();
+		let selectedLocalIdsOfGlobalVendorInLocalCookie = new Set();
+		const selectedGlobalVendorIdsInGlobalCookie = this.globalVendorConsentData.selectedVendorIds;
+		const globalCookieMaxVendorId = this.persistedGlobalVendorConsentData.maxVendorId;
+
+		this.globalVendorIdsPresentOnList.forEach( (localId, globalId) => {
+			if (this.vendorConsentData.selectedVendorIds.has(localId) && globalId <= globalCookieMaxVendorId) {
+				selectedLocalIdsOfGlobalVendorInLocalCookie.add(localId);
+			}
+		});
+
+		selectedGlobalVendorIdsInGlobalCookie.forEach( globalId => {
+			if (this.globalVendorIdsPresentOnList.has(globalId)) {
+				selectedLocalIdsOfGlobalVendorInGlobalCookie.add(this.globalVendorIdsPresentOnList.get(globalId));
+			}
+		});
+
+		selectedLocalIdsOfGlobalVendorInLocalCookie.forEach( localId => {
+			const isNewVendorOnList = this.persistedVendorConsentData && localId > this.persistedVendorConsentData.maxVendorId;
+
+			if (!isNewVendorOnList && !selectedLocalIdsOfGlobalVendorInGlobalCookie.has(localId)) {
+				this.vendorConsentData.selectedVendorIds.delete(localId);
+			}
+		});
+	};
+
+	mergeVendorConsentsToGlobalCookie = () => {
+		this.globalVendorIdsPresentOnList.forEach( (localId, globalId) => {
+			if (this.vendorConsentData.selectedVendorIds.has(localId)) {
+				this.globalVendorConsentData.selectedVendorIds.add(globalId);
+			} else {
+				this.globalVendorConsentData.selectedVendorIds.delete(globalId);
+			}
+		});
+	};
+
+	mergePurposeConsentsFromGlobalCookie = () => {
+		const selectedPurposeIds = Array.from(this.vendorConsentData.selectedPurposeIds);
+		this.vendorConsentData.selectedPurposeIds = new Set(selectedPurposeIds.filter( id => (
+			this.globalVendorConsentData.selectedPurposeIds.has(id) || config.legIntPurposeIds.includes(id)
+		)));
+	};
+
+	mergePurposeConsentsToGlobalCookie = () => {
+		this.globalVendorConsentData.selectedPurposeIds = new Set(...this.vendorConsentData.selectedPurposeIds);
 	};
 }
