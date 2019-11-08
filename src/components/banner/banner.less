@@ -39,9 +39,11 @@
 			.info {
 				flex: 1;
 				line-height: 16px;
+				max-width: calc(100% - 236px);
 
 				@media @smartphone {
 					font-size: 12px;
+					max-width: none;
 				}
 
 				.title {
@@ -115,12 +117,13 @@
 
 			.consent {
 				display: flex;
-				flex: 0;
 				white-space: nowrap;
 				margin-left: 30px;
+				width: 368px;
 
 				@media @smartphone {
 					margin-left: 0;
+					width: auto;
 				}
 
 				a {
