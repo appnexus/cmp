@@ -1,4 +1,4 @@
-import { writePublisherConsentCookie, writeVendorConsentCookie, readVendorConsentCookie, encodePublisherConsentData, encodeVendorConsentData } from "./cookie/cookie";
+import { writePublisherConsentCookie, writeVendorConsentCookie,encodePublisherConsentData, encodeVendorConsentData } from "./cookie/cookie";
 import config from './config';
 import { findLocale } from './localize';
 import log from './log';
@@ -317,19 +317,23 @@ export default class Store {
 			} catch (err) {
 				log.error('Failed writing external consent data', err);
 			}
-		} else if (config.storePublisherData) {
+			// Write vendor cookie to appropriate domain
+			this.mergeVendorConsentsToGlobalCookie();
+			this.mergePurposeConsentsToGlobalCookie();
+
+			const globalVendorConsents = {...globalVendorConsentData, vendorList};
+			writeVendorConsentCookie(globalVendorConsents);
+
+			this.persistedGlobalVendorConsentData = copyData(globalVendorConsentData);
+		} else  {
+			// Write vendor cookie to appropriate domain
+			writeVendorConsentCookie(vendorConsents);
+
 			// Write publisher cookie if enabled
-			writePublisherConsentCookie(publisherConsents);
+			if (config.storePublisherData) {
+				writePublisherConsentCookie(publisherConsents);
+			}
 		}
-
-		// Write vendor cookie to appropriate domain
-		this.mergeVendorConsentsToGlobalCookie();
-		this.mergePurposeConsentsToGlobalCookie();
-
-		const globalVendorConsents = {...globalVendorConsentData, vendorList};
-		writeVendorConsentCookie(globalVendorConsents);
-
-		this.persistedGlobalVendorConsentData = copyData(globalVendorConsentData);
 
 		// Store the persisted data
 		this.persistedVendorConsentData = copyData(vendorConsentData);

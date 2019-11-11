@@ -38,16 +38,19 @@ function readExternalConsentData(config) {
 
 function readInternalConsentData() {
 	return Promise.all([
-		readVendorConsentCookie(),
-		fetchPubVendorList(),
-		readPublisherConsentCookie()
+		[
+			readVendorConsentCookie(),
+			fetchPubVendorList(),
+			readPublisherConsentCookie()
+		],
+		undefined
 	]);
 }
 
 function readGlobalAndExternalConsentData(config) {
 	return Promise.all([
-		readVendorConsentCookie(),
-		readExternalConsentData(config)
+		readExternalConsentData(config),
+		readVendorConsentCookie()
 	]);
 }
 
@@ -56,9 +59,8 @@ export function init(configUpdates) {
 	log.debug('Using configuration:', config);
 
 	// Fetch the current vendor consent before initializing
-	// return ((config.getConsentData) ? readExternalConsentData(config) : readInternalConsentData())
-	return readGlobalAndExternalConsentData(config) // ToDo - it is temporary solution
-		.then(([globalVendorConsentData, [vendorConsentData, pubVendorsList, publisherConsentData]]) => {
+	return ((config.getConsentData) ? readGlobalAndExternalConsentData(config) : readInternalConsentData())
+		.then(([[vendorConsentData, pubVendorsList, publisherConsentData], globalVendorConsentData]) => {
 			const {vendors} = pubVendorsList || {};
 
 			// Check config for allowedVendorIds then the pubVendorList
