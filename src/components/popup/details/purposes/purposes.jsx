@@ -161,10 +161,10 @@ export default class Purposes extends Component {
 						<div class={style.body}>
 							<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />
 							{!purposeIsTechnical &&
-							<a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: false })}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
+							<div><a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: false })}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a></div>
 							}
 							{!purposeIsTechnical &&
-							<a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: true })}><LocalLabel localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel></a>
+							<div><a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: true })}><LocalLabel localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel></a></div>
 							}
 						</div>
 					</div>
