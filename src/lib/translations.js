@@ -91,18 +91,16 @@ export default {
 			}
 		},
 		publisherConsents: {
-			title: "Zgody dla wydawcy",
-			description: '',
+			title: "Zgody dla Wydawcy",
 		},
 		vendorConsents: {
-			title: "Zgody dla partnerów",
-			description: '',
+			title: "Zgody dla Partnerów",
 		},
 		purposes: {
 			active: 'Aktywna',
 			inactive: 'Nieaktywna',
-			showVendors: 'Pokaż listę Zaufanych Partnerów',
-			showCustomVendors: 'Pokaż listę pozostałych Zaufanych Partnerów',
+			showVendors: 'Pokaż listę Zaufanych Partnerów IAB',
+			showCustomVendors: 'Pokaż listę Zaufanych Partnerów',
 			title: 'Cele',
 			purpose1: {
 				menu: '',

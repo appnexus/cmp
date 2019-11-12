@@ -161,9 +161,6 @@ export default class Purposes extends Component {
 										<LocalLabel prefix="publisherConsents" localizeKey={`title`}/>
 									</div>
 								</div>
-								<div>
-									<LocalLabel prefix="publisherConsents" localizeKey={`description`}/>
-								</div>
 							</div>
 							{allPurposes.map((purpose, index) => <Purpose key={index}
 																		  index={index}
@@ -180,9 +177,6 @@ export default class Purposes extends Component {
 									<div className={style.title}>
 										<LocalLabel prefix="vendorConsents" localizeKey={`title`}/>
 									</div>
-								</div>
-								<div className={style.sectionBody}>
-									<LocalLabel prefix="vendorConsents" localizeKey={`description`}/>
 								</div>
 							</div>
 							<div>
