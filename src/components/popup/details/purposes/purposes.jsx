@@ -13,7 +13,7 @@ class LocalLabel extends Label {
 export default class Purposes extends Component {
 	state = {
 		selectedPurposeIndex: 0,
-		initialDisplayOfDetailView: 1
+		renderedPurposeIndices: new Set()
 	};
 
 	static defaultProps = {
@@ -41,16 +41,17 @@ export default class Purposes extends Component {
 		} = this.props;
 		const allPurposes = this.getAllPurposes();
 		const selectedPurpose = allPurposes[selectedPurposeIndex];
-		const ids = selectedPurpose.ids;
 
-		selectedPurpose.ids.forEach(id => {
-			if (selectedPurpose.custom) {
-				selectCustomPurpose(id, isSelected);
-			}
-			else {
-				selectPurpose(id, isSelected);
-			}
-		});
+		if (selectedPurpose) {
+			selectedPurpose.ids.forEach(id => {
+				if (selectedPurpose.custom) {
+					selectCustomPurpose(id, isSelected);
+				}
+				else {
+					selectPurpose(id, isSelected);
+				}
+			});
+		}
 	};
 
 	getAllPurposes = () => {
@@ -94,28 +95,26 @@ export default class Purposes extends Component {
 		return allPurposes;
 	};
 
+	createOnShowVendors(filter = {}) {
+		return () => this.props.onShowVendors(filter);
+	}
 
 	render(props, state) {
 
 		const {
-			onShowVendors,
 			selectedPurposeIds,
 			selectedCustomPurposeIds,
 			persistedVendorConsentData
 		} = props;
 
 		const {created} = persistedVendorConsentData;
-		const {selectedPurposeIndex} = state;
+		const {
+			selectedPurposeIndex,
+			renderedPurposeIndices
+		} = state;
 
 		const allPurposes = this.getAllPurposes();
 		const selectedPurpose = allPurposes[selectedPurposeIndex];
-
-		if (!created && selectedPurposeIndex && this.state.initialDisplayOfDetailView) {
-			this.setState({
-				initialDisplayOfDetailView: 0
-			});
-			this.handleSelectPurpose({isSelected: false})
-		}
 
 		const purposeIsActive = selectedPurpose && selectedPurpose.ids.some(id =>
 			selectedPurpose.custom ? selectedCustomPurposeIds.has(id) : selectedPurposeIds.has(id)
@@ -124,6 +123,12 @@ export default class Purposes extends Component {
 			config.legIntPurposeIds.indexOf(id) >= 0
 		);
 		const currentPurposeLocalizePrefix = `${selectedPurpose && selectedPurpose.custom ? 'customPurpose' : 'purpose'}${selectedPurpose && selectedPurpose.ids}`;
+
+		if (!created && !purposeIsTechnical && !renderedPurposeIndices.has(selectedPurposeIndex)) {
+			renderedPurposeIndices.add(selectedPurposeIndex);
+			this.setState({renderedPurposeIndices});
+			this.handleSelectPurpose({isSelected: false});
+		}
 
 		return (
 			<div class={style.purposes}>
@@ -155,9 +160,10 @@ export default class Purposes extends Component {
 						</div>
 						<div class={style.body}>
 							<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />
-							{!purposeIsTechnical &&
-							<a class={style.vendorLink} onClick={onShowVendors}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
-							}
+							{!purposeIsTechnical && [
+							<div><a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: true })}><LocalLabel localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel></a></div>,
+							<div><a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: false })}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a></div>
+							]}
 						</div>
 					</div>
 				</div>

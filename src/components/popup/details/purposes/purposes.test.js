@@ -14,7 +14,7 @@ describe('Purposes', () => {
 
 	it('should render links for vendors and all standard and custom purposes', () => {
 		let persistedVendorConsentData = {};
-
+		const selectPurpose = jest.fn();
 		const purposes = render(<Purposes
 			purposes={[
 				{ id: 1, name: 'Purpose 1' },
@@ -24,10 +24,13 @@ describe('Purposes', () => {
 				{ id: 1, name: 'Custom Purpose 1' },
 			]}
 			persistedVendorConsentData={persistedVendorConsentData}
+			selectPurpose={selectPurpose}
 		/>, scratch);
 
 		const purposeLinks = purposes.querySelectorAll(`.${style.purposeItem}`);
 		expect(purposeLinks.length).to.equal(3);
+		expect(selectPurpose.mock.calls[0][0]).to.equal(1);
+		expect(selectPurpose.mock.calls[0][1]).to.equal(false);
 	});
 
 	it('should select a standard purpose', () => {
@@ -49,8 +52,8 @@ describe('Purposes', () => {
 		purposes.handleSelectPurposeDetail(1)();
 		purposes.handleSelectPurpose({isSelected: true});
 
-		expect(selectPurpose.mock.calls[0][0]).to.equal(2);
-		expect(selectPurpose.mock.calls[0][1]).to.equal(true);
+		expect(selectPurpose.mock.calls[1][0]).to.equal(2);
+		expect(selectPurpose.mock.calls[1][1]).to.equal(true);
 		expect(selectCustomPurpose.mock.calls).to.be.empty;
 	});
 
@@ -79,7 +82,7 @@ describe('Purposes', () => {
 
 		expect(selectCustomPurpose.mock.calls[0][0]).to.equal(1);
 		expect(selectCustomPurpose.mock.calls[0][1]).to.equal(true);
-		expect(selectPurpose.mock.calls).to.be.empty;
+		expect(selectPurpose.mock.calls).not.to.be.empty;
 	});
 
 	it('after selecting group of purposes with index 1, consent for those purposes should be withdrawn', done => {
@@ -101,8 +104,8 @@ describe('Purposes', () => {
 
 		purposes.componentDidUpdate = (prevProps, prevState) => {
 			if (purposes.state.selectedPurposeIndex === prevState.selectedPurposeIndex) {
-				expect(selectPurpose.mock.calls[0][0]).to.equal(2);
-				expect(selectPurpose.mock.calls[0][1]).to.equal(false);
+				expect(selectPurpose.mock.calls[1][0]).to.equal(2);
+				expect(selectPurpose.mock.calls[1][1]).to.equal(false);
 				expect(selectCustomPurpose.mock.calls).to.be.empty;
 				done();
 			}

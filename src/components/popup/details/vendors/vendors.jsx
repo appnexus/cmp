@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 import style from './vendors.less';
-import Button from '../../../button/button';
 import Switch from '../../../switch/switch';
 import Label from "../../../label/label";
+import ExternalLinkIcon from '../../../externallinkicon/externallinkicon'
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -84,9 +84,16 @@ export default class Vendors extends Component {
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-						{vendors.map(({ id, name }, index) => (
+						{vendors.map(({ id, name, policyUrl }, index) => (
 							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
-								<td><div class={style.vendorName}>{name}</div></td>
+								<td>
+									<div class={style.vendorName}>
+										{name}
+										{policyUrl &&
+										<a href={policyUrl} className={style.policy} target='_blank'><ExternalLinkIcon/></a>
+										}
+									</div>
+								</td>
 								{editingConsents &&
 								<td>
 									<Switch

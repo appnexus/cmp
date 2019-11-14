@@ -58,7 +58,29 @@ const commands = [
 			resultDescription: 'true'
 		}
 	},
-  {
+	{
+		command: 'showConsentDetailView',
+		parameter: {
+			type: '[parameter]',
+			description: '(ignored)'
+		},
+		callback: {
+			resultType: 'result (Boolean)',
+			resultDescription: 'true'
+		}
+	},
+	{
+		command: 'showVendors',
+		parameter: {
+			type: '[parameter]',
+			description: '(ignored)'
+		},
+		callback: {
+			resultType: 'result (Boolean)',
+			resultDescription: 'true'
+		}
+	},
+    {
 		command: 'showFooter',
 		parameter: {
 			type: '[parameter]',

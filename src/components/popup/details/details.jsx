@@ -6,9 +6,7 @@ import Purposes from './purposes/purposes';
 import Vendors from './vendors/vendors';
 import Panel from '../../panel/panel';
 import Label from "../../label/label";
-
-const SECTION_PURPOSES = 0;
-const SECTION_VENDORS = 1;
+import { SECTION_PURPOSES, SECTION_VENDORS } from '../../../lib/store';
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -17,34 +15,60 @@ class LocalLabel extends Label {
 }
 
 export default class Details extends Component {
-	state = {
-		selectedPanelIndex: SECTION_PURPOSES
+	constructor(props) {
+		super(props);
+		this.state = {
+			vendors: this.getVendors()
+		};
+	}
+
+	getVendors = () => {
+		const { vendorList = {} } = this.props.store;
+		const { vendors = [] } = vendorList;
+		return vendors;
 	};
 
-	handleShowVendors = () => {
-		this.setState({
-			selectedPanelIndex: SECTION_VENDORS
+	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [] } = {}) => {
+		return this.getVendors().filter(vendor => {
+			if (isCustom !== null && (isCustom && vendor.external_id || !isCustom && !vendor.external_id)) {
+				return false;
+			}
+
+			const vendorPurposeIds = new Set([...(vendor.purposeIds || []), ...(vendor.legIntPurposeIds || [])]);
+			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
+				return false;
+			}
+
+			const vendorFeatureIds = new Set(vendor.featureIds || []);
+			if (!featureIds.every(featureId => vendorFeatureIds.has(featureId))) {
+				return false;
+			}
+
+			return true;
 		});
+	};
+
+	handleShowVendors = (filter) => {
+		this.setState({
+			vendors: this.filterVendors(filter)
+		});
+		this.props.store.updateSubsection(SECTION_VENDORS);
 	};
 
 	handleBack = () => {
-		const { onCancel } = this.props;
-		const { selectedPanelIndex } = this.state;
-		this.setState({
-			selectedPanelIndex: Math.max(0, selectedPanelIndex - 1)
-		});
-		if (selectedPanelIndex === SECTION_PURPOSES) {
+		const { onCancel, store } = this.props;
+		const { subsection } = store;
+		store.updateSubsection(Math.max(0, subsection - 1));
+		if (subsection === SECTION_PURPOSES) {
 			onCancel();
 		}
 	};
 
 	render(props, state) {
 		const {
-			onCancel,
 			onSaveOrClose,
 			store
 		} = props;
-		const { selectedPanelIndex } = state;
 
 		const {
 			vendorList = {},
@@ -55,11 +79,12 @@ export default class Details extends Component {
 			selectCustomPurpose,
 			selectAllVendors,
 			selectVendor,
-			persistedVendorConsentData = {}
+			persistedVendorConsentData = {},
+			subsection
 		} = store;
 		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
 		const { selectedCustomPurposeIds } = publisherConsentData;
-		const { purposes = [], vendors = [] } = vendorList;
+		const { purposes = [] } = vendorList;
 		const { purposes: customPurposes = [] } = customPurposeList;
 
 
@@ -73,7 +98,7 @@ export default class Details extends Component {
 					<LocalLabel localizeKey='title'>User Privacy Preferences</LocalLabel>
 				</div>
 				<div class={style.body}>
-					<Panel selectedIndex={selectedPanelIndex}>
+					<Panel selectedIndex={subsection}>
 						<Purposes
 							purposes={purposes}
 							customPurposes={customPurposes}
@@ -88,7 +113,7 @@ export default class Details extends Component {
 							selectedVendorIds={selectedVendorIds}
 							selectAllVendors={selectAllVendors}
 							selectVendor={selectVendor}
-							vendors={vendors}
+							vendors={state.vendors}
 						/>
 					</Panel>
 				</div>
