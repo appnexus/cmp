@@ -9,3 +9,7 @@ export const deleteAllCookies = (domain = "") => {
 		document.cookie = name + `=;${domain}expires=Thu, 01 Jan 1970 00:00:00 GMT`;
 	}
 };
+
+export const setCookue = (name = "", value ="", expires = 30000, path = "/") => {
+	document.cookie = `${name}=${value}; expires=${(Date.now() + expires)}; path=${path}`;
+};
