@@ -67,21 +67,83 @@ export default {
 			back: 'Wstecz',
 			save: 'Zapisz i zamknij'
 		},
+		tabs: {
+			tab1: {
+				menu: 'Informacje ogólne',
+				title: 'Szanowna Użytkowniczko, Szanowny Użytkowniku,',
+				description: `<p>Znajdujesz się z szczegółowej sekcji mechanizmu umożliwiającego zarządzanie procesami przetwarzania Twoich danych osobowych na stronach internetowych i innych narzędziach udostępnianych przez podmioty z Grupy Ringier Axel Springer Polska. </p>
+
+<p style="margin: 25px 0 10px 0">W zakładce widocznej poniżej uzyskasz niezbędne informacje o celach, zakresach i podstawach przetwarzania Twoich danych osobowych, administratorach tych danych oraz będziesz mogła/mógł zarządzić tym przetwarzaniem.</p>
+
+<p style="margin: 25px 0 10px 0">Możesz w niej określić którym z <a onclick="__cmp('showVendors')">Zaufanych Partnerów</a> chcesz wyrazić zgodę na przetwarzanie Twoich danych osobowych, a także ustalić cele przetwarzania których dotyczyć ma Twoja zgoda – służy do tego suwak. Pozostawienie suwaka odznaczonego (ma on wtedy kolor szary) oznacza brak zgody, zaś kliknięcie w suwak powodować będzie wyrażenie zgody (suwak zmieni wtedy kolor na żółty), której on dotyczy – jej zakres jest podany przy danym suwaku. Pamiętaj, by potwierdzić Twój wybór klikając po dokonaniu wybranych przez Ciebie ustawień w przycisk <span style="font-weight: bold; display: inline">„Zapisz i zamknij”</span>.</p>\
+
+<p style="margin: 25px 0 10px 0">Niektórzy z <a onclick="__cmp('showVendors')">Zaufanych Partnerów</a> przetwarzać mogą Twoje dane w oparciu o ich uzasadniony interes. W takim wypadku nie udzielasz im zgody na przetwarzanie Twoich danych, ale możesz wyrazić sprzeciw wobec takiego przetwarzania.</p>
+
+<p style="margin: 25px 0 10px 0">W zakładce „Przetwarzanie danych osobowych” dowiesz się także jak wykorzystywane są technologie cookies i podobne oraz jak zablokować ich działanie w Twojej przeglądarce.</p>
+
+<p style="margin: 25px 0 10px 0">W razie jakichkolwiek wątpliwości zapraszamy do kontaktu na adres <a href="mailto:iod@grupaonet.pl">iod@grupaonet.pl</a>. Pomocne informacje znajdziesz także zawsze w naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Polityce Prywatności</a></p>
+`,
+			},
+			tab2: {
+				menu: 'Przetwarzanie danych osobowych',
+				title: '',
+				description: '',
+			}
+		},
+		publisherConsents: {
+			title: "Zgody dla Wydawcy",
+		},
+		vendorConsents: {
+			title: "Zgody dla Partnerów",
+		},
 		purposes: {
 			active: 'Aktywna',
 			inactive: 'Nieaktywna',
 			showVendors: 'Pokaż listę Zaufanych Partnerów IAB',
 			showCustomVendors: 'Pokaż listę Zaufanych Partnerów',
+			title: 'Cele',
 			purpose1: {
-				menu: 'Cookies itp.',
-				title: 'Instalowanie plików cookies itp. na Twoich urządzeniach i dostęp do tych plików.',
-				description: `<p>Na naszych stronach internetowych i w aplikacjach używamy technologii, takich jak pliki cookie, local storage i podobnych służących do zbierania i przetwarzania danych osobowych oraz danych eksploatacyjnych w celu personalizowania udostępnianych treści i reklam oraz analizowania ruchu na naszych stronach. Te pliki cookie pomagają poprawić jakość treści reklamowych na stronach i w aplikacjach. Dzięki tym technologiom możemy zapewnić Ci lepszą obsługę poprzez serwowanie reklam lepiej dopasowanych do Twoich preferencji i serwowanie treści, które mogą Cię bardziej zainteresować. Pliki te pozwalają nam również lepiej badać i analizować zainteresowanie naszymi stronami i treściami, które Ci serwujemy. Dzięki tym analizom możemy zadbać o jakość serwowanych przez nas treści.</p>
-				<p>Szczegółową informację na temat plików cookie i ich funkcjonowania znajdziesz <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">pod tym linkiem</a>. Znajdziesz tam także informację o tym jak zmienić ustawienia przeglądarki, by ograniczyć lub wyłączyć funkcjonowanie plików cookies itp. oraz jak usunąć takie pliki z Twojego urządzenia.</p>`
+				menu: '',
+				title: 'Przechowywanie i dostęp do informacji',
+				description: '<p>Przechowywanie informacji albo dostęp do informacji przechowywanych na urządzeniu użytkownika, w tym dostęp do identyfikatorów reklamowych, innych identyfikatorów urządzenia, wykorzystanie plików cookie oraz podobnych technologii.</p>'
 			},
-			'purpose2,3,4,5': {
-				menu: 'Przetwarzanie danych osobowych',
-				title: 'Przetwarzanie danych osobowych w celach marketingowych przez naszych Zaufanych Partnerów.',
-				description: '<p>Zgoda dotyczy przetwarzania Twoich danych osobowych, które udostępniasz w historii przeglądania stron i aplikacji internetowych, w celach marketingowych (obejmujących zautomatyzowaną analizę Twojej aktywności na stronach internetowych i w aplikacjach w celu ustalenia Twoich potencjalnych zainteresowań dla dostosowania reklamy i oferty przez np. zestawianie w odpowiednich grupach użytkowników, oraz związane z tym niezbędne działania statystyczne) przez naszych Zaufanych Partnerów. Na podstawie tej zgody, Twoje dane, w tym zebrane informacje o Twojej aktywności na stronach internetowych, będą wykorzystywane do prezentowania Ci reklam produktów i usług naszych Partnerów biznesowych, dopasowanych do Twoich zainteresowań.</p>'
+			purpose2: {
+				menu: '',
+				title: 'Personalizacja',
+				description: '<p>Gromadzenie i przetwarzanie informacji na temat sposobu korzystania przez użytkownika z usługi, aby z czasem dokonać personalizacji reklam lub treści dla użytkownika w innych kontekstach, na przykład w innych witrynach albo aplikacjach. Zazwyczaj treści w witrynie lub aplikacji są wykorzystywane do wyciągania wniosków na temat zainteresowań użytkownika, które zapewniają dane na potrzeby doboru reklam lub treści w przyszłości.</p>'
+			},
+			purpose3: {
+				menu: '',
+				title: 'Wybór i dostarczanie reklam, tworzenie raportów na temat reklam',
+				description: '<p>Gromadzenie informacji oraz przetwarzanie uprzednio zgromadzonych informacji w celu wyboru i dostarczenia użytkownikowi reklam oraz oceny dostarczania i skuteczności tych reklam. Obejmuje to wykorzystywanie uprzednio zgromadzonych informacji na temat zainteresowań użytkownika w celu wyboru reklam, przetwarzanie danych na temat wyświetlonych reklam, częstotliwości, czasu i miejsca ich wyświetlania, oraz informacji czy użytkownik podjął działania w związku z reklamą, np. klikając na reklamę albo dokonując zakupu. Nie obejmuje to Personalizacji, która obejmuje gromadzenie i przetwarzanie informacji na temat sposobu korzystania przez użytkownika z usługi, aby z czasem dokonać personalizacji reklam lub treści dla użytkownika w innych kontekstach, na przykład w witrynach albo aplikacjach.</p>'
+			},
+			purpose4: {
+				menu: '',
+				title: 'Wybór i dostarczanie treści, tworzenie raportów na temat treści',
+				description: '<p>Gromadzenie informacji oraz przetwarzanie uprzednio zgromadzonych informacji w celu wyboru i dostarczenia treści oraz oceny dostarczania i skuteczności tych treści. Obejmuje to wykorzystywanie uprzednio zgromadzonych informacji na temat zainteresowań użytkownika w celu wyboru treści, przetwarzanie danych na temat wyświetlonych treści, częstotliwości, czasu i miejsca ich wyświetlania, oraz informacji czy użytkownik podjął działania w związku z treścią, np. klikając na treść. Nie obejmuje to Personalizacji, która obejmuje gromadzenie i przetwarzanie informacji na temat sposobu korzystania przez użytkownika z usługi, aby z czasem dokonać personalizacji treści lub reklam dla użytkownika w innych kontekstach, na przykład w witrynach albo aplikacjach.</p>'
+			},
+			purpose5: {
+				menu: '',
+				title: 'Pomiary',
+				description: '<p>Gromadzenie informacji na temat wykorzystywania treści przez użytkownika oraz przetwarzanie uprzednio zgromadzonych informacji w celu oceny, zrozumienia i tworzenia raportów na temat wykorzystywania usługi przez użytkownika. Nie obejmuje to Personalizacji, gromadzenia i przetwarzanie informacji na temat sposobu korzystania przez użytkownika z usługi, aby z czasem dokonać personalizacji treści lub reklam dla użytkownika w innych kontekstach, tj. w ramach usługi, na przykład w witrynach albo aplikacjach.</p>'
+			}
+		},
+		features: {
+			title: 'Funkcje',
+			feature1: {
+				menu: '',
+				title: 'Zestawianie danych offline',
+				description: '<p>Łączenie danych ze źródeł offline, które zostały wyjściowo zgromadzone w kontekstach innych niż dane zgromadzone online na potrzeby realizacji jednego albo większej liczby celów.</p>'
+			},
+			feature2: {
+				menu: '',
+				title: 'Łączenie urządzeń',
+				description: '<p>Przetwarzanie danych w celu powiązania ze sobą wielu urządzeń należących do tego samego użytkownika na potrzeby realizacji jednego albo większej liczby celów.</p>'
+			},
+			feature3: {
+				menu: '',
+				title: 'Dokładne dane dotyczące lokalizacji geograficznej',
+				description: '<p>Gromadzenie i obsługa dokładnych danych dotyczących lokalizacji geograficznej na potrzeby realizacji jednego albo większej liczby celów.</p>'
 			}
 		},
 		vendors: {
