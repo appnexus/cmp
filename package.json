@@ -1,10 +1,11 @@
 {
   "name": "appnexus-cmp",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "scripts": {
     "clean": "rimraf ./dist",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --config config/webpack.config.babel.js",
+    "dev": "yarn dev:s1",
     "dev:s1": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --config config/s1.webpack.config.babel.js",
+    "dev:original": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --config config/webpack.config.babel.js",
     "start": "serve dist -c 1",
     "prestart": "npm run build",
     "build": "yarn clean && yarn build:original && yarn build:s1",

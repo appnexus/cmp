@@ -47,7 +47,11 @@
 
 		cmp('init', config, function (result) {
 			if (result.consentRequired) {
+				if (result.warningMsg) {
+					console.log('cmp:init: warningMsg', result.warningMsg);
+				}
 				if (result.errorMsg) {
+					console.log('cmp:init: errorMsg', result.errorMsg);
 					cmp('showConsentTool');
 					cmp('addEventListener', 'onConsentChanged', onConsentChanged);
 				} else {

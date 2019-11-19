@@ -1,11 +1,11 @@
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable no-eval */
 
-import { expect } from 'chai';
+import {expect} from 'chai';
 import fs from 'fs';
 import vendorlist from '../docs/assets/vendorlist.json';
-import { COOKIE_DOMAIN } from "../lib/cookie/cookie";
-import { deleteAllCookies } from "./helpers";
+import {COOKIE_DOMAIN} from '../lib/cookie/cookie';
+import {deleteAllCookies, setCookie, oldEuconsentCookie} from './helpers';
 
 const fakeScriptSrc = './fake-loader-src.js';
 
@@ -52,9 +52,7 @@ describe('cmpLoader as script tag', () => {
 		});
 
 		expect(log.mock.calls).to.have.length(1);
-		expect(log.mock.calls[0][0]).to.contain(
-			'gdprApplies turned off so no CMP'
-		);
+		expect(log.mock.calls[0][0]).to.contain('gdprApplies turned off so no CMP');
 
 		log.mockRestore();
 		done();
@@ -141,7 +139,7 @@ describe('cmpLoader as script tag', () => {
 					gdprApplies: true
 				},
 				() => {
-					const init = global.cmp.commandQueue.find(({ command }) => {
+					const init = global.cmp.commandQueue.find(({command}) => {
 						return command === 'init';
 					});
 					expect(init).to.be.undefined;
@@ -171,7 +169,6 @@ describe('cmpLoader as script tag', () => {
 			global.cmp('addEventListener', 'isLoaded', callback);
 		});
 
-
 		it('auto accepts consents', done => {
 			global.cmp(
 				'init',
@@ -180,27 +177,27 @@ describe('cmpLoader as script tag', () => {
 					gdprApplies: true,
 					shouldAutoConsent: true
 				},
-				(result) => {
+				result => {
 					expect(result.consentRequired).to.be.true;
 					expect(result.errorMsg).to.be.empty;
-					expect(document.cookie.indexOf("gdpr_opt_in=1")).to.be.above(1);
+					expect(document.cookie.indexOf('gdpr_opt_in=1')).to.be.above(1);
 					done();
 				}
 			);
 		});
 
-		it("auto accepts consents and shows footer", done => {
-			expect(document.cookie.indexOf("euconsent")).to.be.below(0);
+		it('auto accepts consents and shows footer', done => {
+			expect(document.cookie.indexOf('euconsent')).to.be.below(0);
 
 			let toggleFooterShowing;
 
-			global.cmp("addEventListener", "isLoaded", () => {
+			global.cmp('addEventListener', 'isLoaded', () => {
 				const store = global.cmp.store;
-				toggleFooterShowing = jest.spyOn(store, "toggleFooterShowing");
+				toggleFooterShowing = jest.spyOn(store, 'toggleFooterShowing');
 			});
 
 			global.cmp(
-				"init",
+				'init',
 				{
 					scriptSrc: fakeScriptSrc,
 					gdprApplies: true,
@@ -209,10 +206,159 @@ describe('cmpLoader as script tag', () => {
 				result => {
 					expect(result.consentRequired).to.be.true;
 					expect(result.errorMsg).to.be.empty;
-					expect(document.cookie.indexOf("gdpr_opt_in=1")).to.be.above(1);
+					expect(document.cookie.indexOf('gdpr_opt_in=1')).to.be.above(1);
 					expect(toggleFooterShowing.mock.calls).to.have.length(1);
 					toggleFooterShowing.mockRestore();
 					done();
+				}
+			);
+		});
+
+		it('triggers onConsentChanged with autoconsent', done => {
+			expect(document.cookie.indexOf('euconsent')).to.equal(-1);
+
+			global.cmp('addEventListener', 'onConsentChanged', () => {
+				expect(document.cookie.indexOf('gdpr_opt_in=1')).to.be.above(1);
+				done();
+			});
+
+			global.cmp(
+				'init',
+				{
+					scriptSrc: fakeScriptSrc,
+					gdprApplies: true,
+					shouldAutoConsentWithFooter: true
+				},
+				result => {
+					expect(result.consentRequired).to.be.true;
+					expect(result.errorMsg).to.be.empty;
+				}
+			);
+		});
+
+		it('auto upgrades consent and does not trigger onConsentChanged when consent found with correctable error', done => {
+			expect(document.cookie.indexOf('euconsent')).to.equal(-1);
+			expect(document.cookie.indexOf('gdpr_opt_in')).to.equal(-1);
+			setCookie('euconsent', oldEuconsentCookie);
+			setCookie('gdpr_opt_in', '1');
+			expect(document.cookie.indexOf('euconsent')).to.be.above(-1);
+			expect(document.cookie.indexOf('gdpr_opt_in')).to.be.above(-1);
+
+			const onConsentChanged = jest.fn();
+			global.cmp('addEventListener', 'onConsentChanged', onConsentChanged);
+
+			global.cmp(
+				'init',
+				{
+					scriptSrc: fakeScriptSrc,
+					gdprApplies: true
+					// shouldAutoUpgradeConsent is true by default
+				},
+				result => {
+					expect(result.consentRequired).to.be.true;
+					expect(result.errorMsg).to.be.empty;
+					expect(result.warningMsg).to.equal(
+						'Consent found for version 165, but received vendor list version 5. Consent upgraded, show consent notice'
+					);
+					expect(document.cookie.indexOf('gdpr_opt_in=1')).to.be.above(1);
+
+					setTimeout(() => {
+						// notification happens after init callback, so wait a tick
+						expect(onConsentChanged.mock.calls).to.have.length(0);
+						onConsentChanged.mockRestore();
+						done();
+					}, 0);
+				}
+			);
+		});
+
+		it('auto upgrades consent and triggers onConsentChanged when gdpr_opt_in_cookie is reset', done => {
+			expect(document.cookie.indexOf('euconsent')).to.equal(-1);
+			expect(document.cookie.indexOf('gdpr_opt_in')).to.equal(-1);
+			setCookie('euconsent', oldEuconsentCookie);
+			expect(document.cookie.indexOf('euconsent')).to.be.above(-1);
+
+			global.cmp('addEventListener', 'onConsentChanged', () => {
+				expect(document.cookie.indexOf('gdpr_opt_in=1')).to.be.above(-1);
+				done();
+			});
+
+			global.cmp(
+				'init',
+				{
+					scriptSrc: fakeScriptSrc,
+					gdprApplies: true
+					// shouldAutoUpgradeConsent is true by default
+				},
+				result => {
+					expect(result.consentRequired).to.be.true;
+					expect(result.errorMsg).to.be.empty;
+					expect(result.warningMsg).to.equal(
+						'Consent found for version 165, but received vendor list version 5. Consent upgraded, show consent notice'
+					);
+					expect(document.cookie.indexOf('gdpr_opt_in=1')).to.be.above(1);
+				}
+			);
+		});
+
+		it('does not trigger onConsentChanged when errorMsg present and consent exists', done => {
+			expect(document.cookie.indexOf('euconsent')).to.equal(-1);
+			setCookie('euconsent', oldEuconsentCookie);
+			expect(document.cookie.indexOf('euconsent')).to.equal(0);
+
+			const onConsentChanged = jest.fn();
+			global.cmp('addEventListener', 'onConsentChanged', onConsentChanged);
+
+			global.cmp(
+				'init',
+				{
+					scriptSrc: fakeScriptSrc,
+					gdprApplies: true,
+					shouldAutoUpgradeConsent: false
+				},
+				result => {
+					expect(result.consentRequired).to.be.true;
+					expect(result.errorMsg).to.equal(
+						'Consent found for version 165, but received vendor list version 5. Show consent tool'
+					);
+					expect(result.warningMsg).to.be.empty;
+					expect(document.cookie.indexOf('gdpr_opt_in=1')).to.be.above(1);
+
+					setTimeout(() => {
+						// notification happens after init callback, so wait a tick
+						expect(onConsentChanged.mock.calls).to.have.length(0);
+						onConsentChanged.mockRestore();
+						done();
+					}, 0);
+				}
+			);
+		});
+
+		it('does not autoconsent or trigger onConsentChanged when autoconsent is off', done => {
+			expect(document.cookie.indexOf('euconsent')).to.equal(-1);
+
+			const onConsentChanged = jest.fn();
+			global.cmp('addEventListener', 'onConsentChanged', onConsentChanged);
+
+			global.cmp(
+				'init',
+				{
+					scriptSrc: fakeScriptSrc,
+					gdprApplies: true
+				},
+				result => {
+					expect(result.consentRequired).to.be.true;
+					expect(result.errorMsg).to.equal(
+						'No consent data found. Show consent tool'
+					);
+					expect(result.hasConsented).to.be.false;
+
+					setTimeout(() => {
+						// notification happens after init callback, so wait a tick
+						expect(onConsentChanged.mock.calls).to.have.length(0);
+						onConsentChanged.mockRestore();
+						done();
+					}, 0);
 				}
 			);
 		});
