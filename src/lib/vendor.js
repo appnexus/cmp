@@ -22,12 +22,15 @@ function fetchPubVendorList() {
 function fetchGlobalVendorList() {
 	const {globalVendorListLocation} = config;
 
-	return (globalVendorListLocation ?
-		fetch(globalVendorListLocation) :
-		Promise.reject('Missing globalVendorListLocation'))
+	return (globalVendorListLocation
+		? fetch(globalVendorListLocation)
+		: Promise.reject('Missing globalVendorListLocation')
+	)
 		.then(res => res.json())
 		.catch(() => {
-			log.error(`Failed to load global vendor list from: ${globalVendorListLocation}`);
+			log.error(
+				`Failed to load global vendor list from: ${globalVendorListLocation}`
+			);
 		});
 }
 
@@ -38,18 +41,17 @@ function fetchPurposeList() {
 
 	return fetch(config.customPurposeListLocation, {
 		headers: {
-			'Accept': 'application/json',
+			Accept: 'application/json',
 			'Content-Type': 'application/json'
 		}
 	})
 		.then(res => res.json())
 		.catch(err => {
-			log.error(`Failed to load custom purposes list from ${config.customPurposeListLocation}`, err);
+			log.error(
+				`Failed to load custom purposes list from ${config.customPurposeListLocation}`,
+				err
+			);
 		});
 }
 
-export {
-	fetchGlobalVendorList,
-	fetchPubVendorList,
-	fetchPurposeList
-};
+export {fetchGlobalVendorList, fetchPubVendorList, fetchPurposeList};

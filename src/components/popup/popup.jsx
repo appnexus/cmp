@@ -1,29 +1,28 @@
-import { h, Component } from 'preact';
+import {h, Component} from 'preact';
 import style from './popup.less';
 import Details from './details/details';
 import CloseButton from '../closebutton/closebutton';
 
 export default class Popup extends Component {
-
 	componentDidMount = () => {
 		document.onkeydown = this.onKeyDown;
-	}
+	};
 
 	componentWillUnmount = () => {
 		document.onkeydown = null;
-	}
+	};
 
-	onKeyDown = (evt) => {
+	onKeyDown = evt => {
 		evt = evt || window.event;
 		const {key = '', keyCode = ''} = evt;
-		const isEscape = (key === 'Escape' || key === 'Esc' || keyCode === 27);
+		const isEscape = key === 'Escape' || key === 'Esc' || keyCode === 27;
 		if (isEscape) {
 			this.handleClose();
 		}
-	}
+	};
 
 	handleClose = () => {
-		const { store, onSave } = this.props;
+		const {store, onSave} = this.props;
 		onSave();
 		store.toggleModalShowing(false);
 	};
@@ -36,10 +35,10 @@ export default class Popup extends Component {
 			onChangeDetailsPanel,
 			onSelectPurpose,
 			selectedDetailsPanelIndex,
-			selectedPurposeDetails,
+			selectedPurposeDetails
 		} = props;
 		const {overlayBackground, secondaryColor, backgroundColor} = theme;
-		const {isModalShowing, vendorConsentData} = store;
+		const {isModalShowing} = store;
 
 		return (
 			<div
@@ -51,9 +50,13 @@ export default class Popup extends Component {
 					style={{background: overlayBackground}}
 					onClick={this.handleClose}
 				/>
-				{isModalShowing ?
+				{isModalShowing ? (
 					<div class={style.content}>
-						<CloseButton onClick={this.handleClose} stroke={secondaryColor} fill={backgroundColor} />
+						<CloseButton
+							onClick={this.handleClose}
+							stroke={secondaryColor}
+							fill={backgroundColor}
+						/>
 						<Details
 							onSave={onSave}
 							store={store}
@@ -64,8 +67,8 @@ export default class Popup extends Component {
 							selectedPurposeDetails={selectedPurposeDetails}
 							theme={theme}
 						/>
-					</div> : null
-				}
+					</div>
+				) : null}
 			</div>
 		);
 	}

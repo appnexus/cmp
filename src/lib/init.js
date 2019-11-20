@@ -1,9 +1,16 @@
-import { h, render } from 'preact';
+import {h, render} from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
-import Cmp, { CMP_GLOBAL_NAME } from './cmp';
-import { readVendorConsentCookie, readPublisherConsentCookie } from './cookie/cookie';
-import { fetchPubVendorList, fetchGlobalVendorList, fetchPurposeList } from './vendor';
+import Cmp, {CMP_GLOBAL_NAME} from './cmp';
+import {
+	readVendorConsentCookie,
+	readPublisherConsentCookie
+} from './cookie/cookie';
+import {
+	fetchPubVendorList,
+	fetchGlobalVendorList,
+	fetchPurposeList
+} from './vendor';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
@@ -24,17 +31,16 @@ export function init(configUpdates) {
 	const startTime = Date.now();
 
 	// Fetch the current vendor consent before initializing
-	return Promise.all([
-		readVendorConsentCookie(),
-		fetchPubVendorList()
-	])
+	return Promise.all([readVendorConsentCookie(), fetchPubVendorList()])
 		.then(([vendorConsentData, pubVendorsList]) => {
 			const {vendors} = pubVendorsList || {};
 
 			// Check config for allowedVendorIds then the pubVendorList
 			const {allowedVendorIds: configVendorIds} = config;
-			const allowedVendorIds = configVendorIds instanceof Array && configVendorIds.length ? configVendorIds :
-				vendors && vendors.map(vendor => vendor.id);
+			const allowedVendorIds =
+				configVendorIds instanceof Array && configVendorIds.length
+					? configVendorIds
+					: vendors && vendors.map(vendor => vendor.id);
 
 			// Initialize the store with all of our consent data
 			store = new Store({
@@ -57,7 +63,10 @@ export function init(configUpdates) {
 			// window[CMP_GLOBAL_NAME] = cmp.processCommand;
 
 			// Notify listeners that the CMP is loaded
-			log.debug(`Successfully loaded CMP version: ${pack.version} in ${Date.now() - startTime}ms`);
+			log.debug(
+				`Successfully loaded CMP version: ${pack.version} in ${Date.now() -
+					startTime}ms`
+			);
 
 			cmp.isLoaded = true;
 
@@ -73,8 +82,10 @@ export function init(configUpdates) {
 
 			// Render the UI
 			const App = require('../components/app').default;
-			render(<App store={store} theme={config.theme} notify={cmp.notify} />, document.body);
-
+			render(
+				<App store={store} theme={config.theme} notify={cmp.notify} />,
+				document.body
+			);
 
 			// Execute any previously queued command
 			cmp.commandQueue = commandQueue;
@@ -84,12 +95,14 @@ export function init(configUpdates) {
 			return Promise.all([
 				fetchGlobalVendorList().then(store.updateVendorList),
 				fetchPurposeList().then(store.updateCustomPurposeList)
-			]).then(() => {
-				cmp.cmpReady = true;
-				cmp.notify('cmpReady');
-			}).catch(err => {
-				log.error('Failed to load lists. CMP not ready', err);
-			});
+			])
+				.then(() => {
+					cmp.cmpReady = true;
+					cmp.notify('cmpReady');
+				})
+				.catch(err => {
+					log.error('Failed to load lists. CMP not ready', err);
+				});
 		})
 		.catch(err => {
 			log.error('Failed to load CMP', err);
