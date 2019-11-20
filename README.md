@@ -122,7 +122,11 @@ const config = {
   allowedVendorIds: null,
   shouldAutoConsent: false,
 	shouldAutoConsentWithFooter: false,
-	shouldAutoUpgradeConsent: true
+	shouldAutoUpgradeConsent: true,
+  theme: { //
+    isBannerModal: true // OPTIONAL, to enable Banner as a modal or footer component
+  }
+
 }
 cmp('init', config);
 ```
@@ -134,6 +138,8 @@ cmp('init', config);
 - `shouldAutoConsent`: OPTIONAL: false by default, agrees to all consents on behalf of user
 - `shouldAutoConsentWithFooter`: OPTIONAL: false by default, agrees to all consents on behalf of user and displays a notice
 - `shouldAutoUpgradeConsent`: OPTIONAL: true by default, if user previously consented and vendor list changed, automatically upgrade consent and display a notice
+- `theme`: OPTIONAL object to provide style overrides,
+  - `isBannerModal`: OPTIONAL: boolean, false by deafult, true to use Modal on initial CMP banner
 
 #### init: callback
 

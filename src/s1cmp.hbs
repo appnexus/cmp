@@ -18,18 +18,20 @@
 	<script>
 		const config = {
 			scriptSrc: window.location.search.indexOf("remote=true") >= 0 ? 'https://s.flocdn.com/cmp/s1.cmp.js' : './cmp.js',
-			// scriptSrc: './s1.cmp.js',
-			// logging: false,
-			// pubVendorListLocation: './pubvendors.json',
-			pubVendorListLocation: 'https://s.flocdn.com/cmp/pubvendors.json',
-			// logging: false,
-			// customPurposeListLocation: './purposes.json',
+			// pubVendorListLocation: './assets/pubvendors.json',
+			// pubVendorListLocation: 'https://s.flocdn.com/cmp/pubvendors.json',
+			logging: false,
+			storePublisherData: true, // required for customPurposeListLocation
+			customPurposeListLocation: './assets/purposes.json',
+			// globalVendorListLocation: './assets/quiz.pubvendors.json',
 			globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
 			globalConsentLocation: 'https://s.flocdn.com/cmp/docs/portal.html',
 			storeConsentGlobally: false,
-			// storePublisherData: false,
 			// localization: {},
 			// forceLocale: null,
+			theme: {
+				isBannerModal: true
+			},
 			gdprApplies: true,
 			// allowedVendorIds: null,
 			shouldAutoConsent: false,
@@ -69,7 +71,7 @@
 		});
 
 		const showBtn = document.getElementById('show-button');
-		showBtn.addEventListener('click', () => {
+		showBtn.addEventListener('click', function () {
 			cmp('showConsentTool');
 		});
 

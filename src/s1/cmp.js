@@ -5,6 +5,7 @@ import 'core-js/fn/array/from';
 import 'core-js/fn/array/find';
 import 'core-js/fn/array/map';
 import 'core-js/fn/object/keys';
+import 'core-js/fn/promise';
 
 import cmp from '../loader';
 import {init, getStore} from '../lib/init';
@@ -68,7 +69,7 @@ const initialize = (config, callback) => {
 };
 
 const checkHasConsentedAll = (
-	{vendors},
+	{vendors = []},
 	{purposeConsents, vendorConsents} = {}
 ) => {
 	const hasAnyVendorsDisabled = vendors.find(

@@ -17,41 +17,79 @@
 	padding: 15px 30px;
 
 	@media @smartphone {
-		margin-top: -80px;
 		padding: 15px 20px;
 		overflow: auto;
 	}
 
 	&.hidden {
 		pointer-events: none;
-		bottom: -250px;
+		transform: translateY(1000px);
 		opacity: 0;
+	}
+
+	&.bannerModal {
+		top: 0;
+		display: flex;
+		background: rgba(0, 0, 0, 0.2);
+		justify-content: center;
+		align-items: flex-start;
+		box-shadow: none;
+		padding-top: 110px;
+
+		@media @smartphone {
+			align-items: flex-start;
+			padding-top: 20%;
+		}
+
+		.content {
+			max-width: 100%;
+			max-height: calc(100% - 50px);
+			height: auto;
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+			box-sizing: border-box;
+			background: #fff;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			flex-direction: column; /* fixes IE11 max-height with overflow */
+			position: relative;
+			padding: 2em;
+			box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5);
+			border: 1px solid #41afbb;
+			border-radius: 4px;
+		}
 	}
 
 	.content {
 		.message {
 			display: flex;
+			flex-wrap: wrap;
 
 			@media @smartphone {
 				display: block;
 			}
 
 			.info {
-				flex: 1;
-				line-height: 16px;
+				line-height: 24px;
+				max-width: 750px;
 
 				@media @smartphone {
 					font-size: 12px;
+					line-height: 20px;
 				}
 
 				.title {
-					font-size: 22px;
+					font-size: 32px;
+					font-weight: bold;
 					color: @color-text;
 					padding: 15px 0;
+					margin-bottom: 10px;
 
 					@media @smartphone {
-						font-size: 16px;
-						padding: 5px 0 10px 0;
+						font-size: 28px;
+						line-height: inherit;
+						font-weight: bold;
 					}
 				}
 
@@ -59,7 +97,7 @@
 					margin: 15px 0 0 0;
 
 					@media @smartphone {
-						margin: 10px 0 20px 0;
+						margin: 10px 0;
 					}
 
 					.option {
@@ -73,7 +111,6 @@
 							color: @color-secondary;
 						}
 						a {
-
 							svg {
 								vertical-align: middle;
 								margin-right: 5px;
@@ -89,14 +126,23 @@
 							max-height: 0;
 							overflow: hidden;
 							transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+							transform: translateZ(0);
 
 							ul {
-								margin: 5px 0 15px 0;
+								margin: 5px 0 5px 0;
 								padding: 0 0 0 36px;
+							}
+
+							@media @smartphone {
+								ul {
+									padding-left: 15px;
+								}
 							}
 						}
 
 						&.expanded {
+							transform: translateZ(0);
+
 							a {
 								svg {
 									transform: rotate(0deg);
@@ -114,43 +160,56 @@
 			}
 
 			.consent {
-				display: flex;
-				flex: 0;
-				white-space: nowrap;
-				margin-left: 30px;
+				flex-basis: 100%;
+				text-align: left;
+				margin-top: 30px;
+				margin-bottom: 30px;
+				font-size: 20px;
 
 				@media @smartphone {
-					margin-left: 0;
+					display: flex; /* primary flex container */
+					flex-direction: row; /* horizontal alignment of flex items (default value; can be omitted) */
+					align-items: stretch; /* will apply equal heights to flex items (default value; can be omitted) */
+					font-size: 1em;
+					line-height: 1.2em;
+					text-align: center;
+					margin-top: 20px;
+					margin-bottom: 20px;
 				}
 
 				a {
-					display: block;
-					position: relative;
-					margin-top: 30px;
-					line-height: 48px;
-					height: 48px;
-					text-align: center;
-					width: 100%;
+					display: inline-block;
 					border: 1px solid @color-primary;
-					padding: 0 15px;
-					flex: 1 0 40%;
+					text-align: center;
+					transition: all 0.5s ease-in-out;
+					padding: 1em;
+					border-radius: 4px;
 
 					@media @smartphone {
-						top: auto;
-						margin: 0;
-						line-height: 38px;
-						font-size: 14px;
-						height: 38px;
+						flex: 1;
 					}
 
 					&.learnMore {
 						color: @color-primary;
+
+						&:hover {
+							color: @color-secondary;
+							border: 1px solid @color-secondary;
+							background: rgba(@color-primary, 0.2);
+						}
 					}
 
 					&.continue {
-						margin-left: 10px;
-						background: @color-primary;
 						color: #fff;
+						background: @color-buttonSuccess;
+						border: 1px solid @color-primary;
+						margin-left: 1em;
+
+						&:hover {
+							color: #fff;
+							background: darken(@color-buttonSuccess, 10%);
+							border: 1px solid @color-buttonSuccess;
+						}
 					}
 				}
 			}

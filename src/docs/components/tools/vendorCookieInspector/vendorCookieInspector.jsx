@@ -95,7 +95,6 @@ export default class VendorCookieDecoder extends Component {
 		fetch(GLOBAL_LIST_LOCATION)
 			.then(res => res.json())
 			.then(list => {
-				console.log('fetchVendorList', GLOBAL_LIST_LOCATION, list);
 				const { vendors, purposes, vendorListVersion } = list;
 				const vendorMap = vendors.reduce((acc, vendor) => {
 					return {
