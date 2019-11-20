@@ -84,7 +84,7 @@ export default class Details extends Component {
 		} = store;
 		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
 		const { selectedCustomPurposeIds } = publisherConsentData;
-		const { purposes = [], features = []} = vendorList;
+		const { purposes = [], features = [] } = vendorList;
 		const { purposes: customPurposes = [] } = customPurposeList;
 
 
@@ -115,6 +115,8 @@ export default class Details extends Component {
 							selectAllVendors={selectAllVendors}
 							selectVendor={selectVendor}
 							vendors={state.vendors}
+							purposes={purposes}
+							features={features}
 						/>
 					</Panel>
 				</div>

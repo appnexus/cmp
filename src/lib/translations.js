@@ -151,7 +151,10 @@ export default {
 			company: 'Partner',
 			offOn: 'Akceptuję',
 			description: 'Poniżej znajduje się lista podmiotów, którym możesz wyrazić zgodę opisaną w poprzednim oknie. Dzięki tej zgodzie możliwe będzie lepsze dopasowania treści i reklam prezentowanych przez naszych Zaufanych Partnerów do Twoich zainteresowań. Jeśli nie wyrażasz zgody danemu Zaufanemu Partnerowi kliknij poniżej w „Zmień ustawienia Zaufanych Partnerów” i odznacz wybraną opcję.',
-			moreChoices: 'Zmień ustawienia Zaufanych Partnerów'
+			moreChoices: 'Zmień ustawienia Zaufanych Partnerów',
+			purposes: 'Cele przetwarzania',
+			legitimateInterestPurposes: 'Cele przetwarzania na podstawie uzasadnionego interesu',
+			features: 'Funkcje'
 		},
 		footer: {
 			message: 'Zmień swoje ustawienia prywatności klikając',
