@@ -44,9 +44,9 @@ describe('Details', () => {
 			ref={ref => details = ref}
 		/>, scratch);
 
-		expect(details.state.selectedPanelIndex).to.equal(0);
+		expect(details.props.store.subsection).to.equal(0);
 		details.handleShowVendors();
-		expect(details.state.selectedPanelIndex).to.equal(1);
+		expect(details.props.store.subsection).to.equal(1);
 	});
 
 });

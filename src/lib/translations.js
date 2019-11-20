@@ -69,29 +69,38 @@ export default {
 		},
 		tabs: {
 			tab1: {
-				menu: 'Informacje wydawcy',
-				title: 'Lorem ipsum dolor sit amet',
-				description: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla nisl erat, sodales molestie tortor accumsan sed. Vivamus at massa suscipit, ornare magna quis, tincidunt ante. Sed at enim vel est aliquet pharetra ut vehicula enim. In scelerisque justo orci, ac vehicula ligula finibus blandit. Vivamus non convallis nunc. Integer vitae vestibulum est, at scelerisque diam. Morbi blandit a erat vitae fermentum. Duis pulvinar pretium hendrerit. Vestibulum ligula justo, mattis nec tortor eu, dictum tempor urna. Quisque varius finibus neque vitae pellentesque. Curabitur pharetra vitae neque porta blandit. Suspendisse commodo lacinia sapien, ac egestas neque pharetra ut. Sed in tincidunt urna, id porttitor ipsum. In neque tortor, condimentum at est sed, tempor dignissim odio. Pellentesque suscipit, quam sit amet efficitur facilisis, enim nibh rhoncus nulla, id malesuada lectus ante et justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>',
+				menu: 'Informacje ogólne',
+				title: 'Szanowna Użytkowniczko, Szanowny Użytkowniku,',
+				description: `<p>Znajdujesz się z szczegółowej sekcji mechanizmu umożliwiającego zarządzanie procesami przetwarzania Twoich danych osobowych na stronach internetowych i innych narzędziach udostępnianych przez podmioty z Grupy Ringier Axel Springer Polska. </p>
+
+<p style="margin: 25px 0 10px 0">W zakładce widocznej poniżej uzyskasz niezbędne informacje o celach, zakresach i podstawach przetwarzania Twoich danych osobowych, administratorach tych danych oraz będziesz mogła/mógł zarządzić tym przetwarzaniem.</p>
+
+<p style="margin: 25px 0 10px 0">Możesz w niej określić którym z <a onclick="__cmp('showVendors')">Zaufanych Partnerów</a> chcesz wyrazić zgodę na przetwarzanie Twoich danych osobowych, a także ustalić cele przetwarzania których dotyczyć ma Twoja zgoda – służy do tego suwak. Pozostawienie suwaka odznaczonego (ma on wtedy kolor szary) oznacza brak zgody, zaś kliknięcie w suwak powodować będzie wyrażenie zgody (suwak zmieni wtedy kolor na żółty), której on dotyczy – jej zakres jest podany przy danym suwaku. Pamiętaj, by potwierdzić Twój wybór klikając po dokonaniu wybranych przez Ciebie ustawień w przycisk <span style="font-weight: bold; display: inline">„Zapisz i zamknij”</span>.</p>\
+
+<p style="margin: 25px 0 10px 0">Niektórzy z <a onclick="__cmp('showVendors')">Zaufanych Partnerów</a> przetwarzać mogą Twoje dane w oparciu o ich uzasadniony interes. W takim wypadku nie udzielasz im zgody na przetwarzanie Twoich danych, ale możesz wyrazić sprzeciw wobec takiego przetwarzania.</p>
+
+<p style="margin: 25px 0 10px 0">W zakładce „Przetwarzanie danych osobowych” dowiesz się także jak wykorzystywane są technologie cookies i podobne oraz jak zablokować ich działanie w Twojej przeglądarce.</p>
+
+<p style="margin: 25px 0 10px 0">W razie jakichkolwiek wątpliwości zapraszamy do kontaktu na adres <a href="mailto:iod@grupaonet.pl">iod@grupaonet.pl</a>. Pomocne informacje znajdziesz także zawsze w naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Polityce Prywatności</a></p>
+`,
 			},
 			tab2: {
-				menu: 'Cele i funkcje przetwarzania danych osobowych',
+				menu: 'Przetwarzanie danych osobowych',
 				title: '',
 				description: '',
 			}
 		},
 		publisherConsents: {
-			title: "Zgody dla wydawcy",
-			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla nisl erat, sodales molestie tortor accumsan sed.',
+			title: "Zgody dla Wydawcy",
 		},
 		vendorConsents: {
-			title: "Zgody dla partnerów",
-			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla nisl erat, sodales molestie tortor accumsan sed.',
+			title: "Zgody dla Partnerów",
 		},
 		purposes: {
 			active: 'Aktywna',
 			inactive: 'Nieaktywna',
-			showVendors: 'Pokaż listę Zaufanych Partnerów',
-			showCustomVendors: 'Pokaż listę pozostałych Zaufanych Partnerów',
+			showVendors: 'Pokaż listę Zaufanych Partnerów IAB',
+			showCustomVendors: 'Pokaż listę Zaufanych Partnerów',
 			title: 'Cele',
 			purpose1: {
 				menu: '',
@@ -142,68 +151,11 @@ export default {
 			company: 'Partner',
 			offOn: 'Akceptuję',
 			description: 'Poniżej znajduje się lista podmiotów, którym możesz wyrazić zgodę opisaną w poprzednim oknie. Dzięki tej zgodzie możliwe będzie lepsze dopasowania treści i reklam prezentowanych przez naszych Zaufanych Partnerów do Twoich zainteresowań. Jeśli nie wyrażasz zgody danemu Zaufanemu Partnerowi kliknij poniżej w „Zmień ustawienia Zaufanych Partnerów” i odznacz wybraną opcję.',
-			moreChoices: 'Zmień ustawienia Zaufanych Partnerów',
-			purposes: 'Cele przetwarzania',
-			legitimateInterestPurposes: 'Cele przetwarzania na podstawie uzasadnionego interesu',
-			features: 'Funkcje'
+			moreChoices: 'Zmień ustawienia Zaufanych Partnerów'
 		},
 		footer: {
 			message: 'Zmień swoje ustawienia prywatności klikając',
 			consentLink: 'tutaj'
-		}
-	},
-	sr: {
-		intro: {
-			title: 'Hvala na poseti',
-			description: 'Da bismo bili u mogućnosti da održimo uspešno poslovanje portala, mi i određene treće strane postavljamo kolačiće, pristupamo i čuvamo informacije na Vašem uređaju za različite svrhe. Naši partneri takođe prikupljaju podatke da bi Vam prikazali personalizovani sadržaj i oglase. Neki od naših partnera traže i  Vašu saglasnost za prikupljanje podataka da bismo Vam omogućili bolje korisničko iskustvo.',
-			acceptAll: 'Prihvatam, hvala!',
-			showPurposes: 'Odaberi svoje postavke'
-		},
-		details: {
-			title: 'Postavke korisnika',
-			back: 'Nazad',
-			save: 'Snimi i izađi'
-		},
-		purposes: {
-			active: 'Aktivno',
-			inactive: 'Neaktivno',
-			showVendors: 'Prikaži celu listu partnera',
-			purpose1: {
-				menu: 'Skladištenje i pristup informacijama',
-				title: 'Skladištenje i pristup informacijama',
-				description: 'Sladištenje informacija ili pristup tim informacijama, na Vašem uređaju, kao što su oglasni identifikatori, i/ili korišćenje kolačića i slične tehnologije'
-			},
-			purpose2: {
-				menu: 'Personalizacija',
-				title: 'Personalizacija',
-				description: 'Prikupljanje i obrada informacija o Vašoj upotrebi ove web stranice kako bi se kasnije personalizovalo oglašavanje za Vas u drugim kontekstima, tj. na drugim web lokacijama ili aplikacijama. Sadržaj web lokacije ili aplikacije se obično koristi kako bi se profilisala Vaša interesovanja koja određuju Vaše buduće izbore.'
-			},
-			purpose3: {
-				menu: 'Izbor oglasa, isporuka, izveštavanje',
-				title: 'Izbor oglasa, isporuka, izveštavanje',
-				description: 'Prikupljanje informacija i ukrštanje sa prethodno prikupljenim informacijama za odabir i isporuku oglasa relevantnih za Vas, kao i za merenje isporuke i efikasnosti takvih oglasa. To uključuje upotrebu prethodno prikupljenih informacija o Vašim interesovanjima za odabir oglasa, obradu podataka o tome koji su oglasi prikazani, koliko često su oni prikazani, kada i gde su prikazani, i da li ste preduzeli bilo kakvu radnju u vezi sa oglasom, uključujući na primer klik na oglas ili kupovina.'
-			},
-			purpose4: {
-				menu: 'Izbor Vašeg sadržaja, isporuka i izveštaji',
-				title: 'Izbor Vašeg sadržaja, isporuka i izveštaji',
-				description: 'Prikupljanje informacija i ukrštanje sa prethodno prikupljenim informacijama za izbor i isporuku sadržaja za Vas i za merenje isporuke i efikasnosti takvog sadržaja. Ovo uključuje upotrebu prethodno prikupljenih informacija o Vašim interesovanjima za izbor sadržaja, obradu podataka o tome koji je sadržaj prikazan, koliko često ili koliko dugo je prikazivan, kada i gde je prikazan, i da li ste preduzeli bilo kakvu radnju vezanu za sadržaj, uključujući na primer klik na sadržaj.'
-			},
-			purpose5: {
-				menu: 'Merenje',
-				title: 'Merenje',
-				description: 'Prikupljanje informacija o Vašem izboru sadržaja i kombinacija sa prethodno prikupljenim informacijama koje se koriste za merenje, razumevanje i izveštavanje o Vašoj preferencijama sadržaja.'
-			}
-		},
-		vendors: {
-			title: 'Naši partneri',
-			company: 'Kompanija',
-			offOn: 'Dozvoli',
-			description: 'Pomozite nam da vam pružimo bolje iskustvo na našem sajtu! Naši partneri postavljaju kolačiće i prikupljaju informacije iz Vašeg pretraživača kako bi Vam pružili sadržaj web lokacija i isporučili relevantno oglašavanje',
-			moreChoices: 'Više opcija'
-		},
-		footer: {
-			message: 'Podsetnik da uvek možete promeniti Vaša podešavanja',
-			consentLink: 'ovde'
 		}
 	}
 };

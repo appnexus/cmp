@@ -5,32 +5,40 @@ import style from './purposes.less';
 
 import Purposes from './purposes';
 
-describe('Purposes', () => {
+describe('Purposes and Features', () => {
 	let scratch;
 
 	beforeEach(() => {
 		scratch = document.createElement('div');
 	});
 
-	it('should render links for vendors and all standard and custom purposes', () => {
+	it('should render all standard, custom purposes for publisher and purposes and features for vendors', () => {
 		let persistedVendorConsentData = {};
 		const selectPurpose = jest.fn();
+		let purposesRef;
 		const purposes = render(<Purposes
-			purposes={[
+			ref = {ref => purposesRef = ref}
+			purposes = {[
 				{ id: 1, name: 'Purpose 1' },
 				{ id: 2, name: 'Purpose 2' }
 			]}
-			customPurposes={[
+			features = {[
+				{ id: 1, name: 'Feature 1' },
+				{ id: 2, name: 'Feature 2' }
+			]}
+			customPurposes = {[
 				{ id: 1, name: 'Custom Purpose 1' },
 			]}
 			persistedVendorConsentData={persistedVendorConsentData}
 			selectPurpose={selectPurpose}
 		/>, scratch);
 
-		const purposeLinks = purposes.querySelectorAll(`.${style.purposeItem}`);
-		expect(purposeLinks.length).to.equal(3);
-		expect(selectPurpose.mock.calls[0][0]).to.equal(1);
-		expect(selectPurpose.mock.calls[0][1]).to.equal(false);
+		purposesRef.componentDidUpdate = () => {
+			const purposesAndFeatures = purposes.querySelectorAll(`.${style.purposeDetail}`);
+			expect(purposesAndFeatures.length).to.equal(7);
+		};
+
+		purposesRef.handleSelectTab(1)();
 	});
 
 	it('should select a standard purpose', () => {
@@ -49,11 +57,10 @@ describe('Purposes', () => {
 			persistedVendorConsentData={persistedVendorConsentData}
 		/>, scratch);
 
-		purposes.handleSelectPurposeDetail(1)();
-		purposes.handleSelectPurpose({isSelected: true});
+		purposes.handleSelectPurpose({isSelected: true, dataId: 0});
 
-		expect(selectPurpose.mock.calls[1][0]).to.equal(2);
-		expect(selectPurpose.mock.calls[1][1]).to.equal(true);
+		expect(selectPurpose.mock.calls[0][0]).to.equal(1);
+		expect(selectPurpose.mock.calls[0][1]).to.equal(true);
 		expect(selectCustomPurpose.mock.calls).to.be.empty;
 	});
 
@@ -77,15 +84,15 @@ describe('Purposes', () => {
 			persistedVendorConsentData={persistedVendorConsentData}
 		/>, scratch);
 
-		purposes.handleSelectPurposeDetail(2)();
-		purposes.handleSelectPurpose({isSelected: true});
+		purposes.handleSelectPurpose({isSelected: true, dataId: 2});
+		purposes.handleSelectPurpose({isSelected: true, dataId: 1});
 
 		expect(selectCustomPurpose.mock.calls[0][0]).to.equal(1);
 		expect(selectCustomPurpose.mock.calls[0][1]).to.equal(true);
 		expect(selectPurpose.mock.calls).not.to.be.empty;
 	});
 
-	it('after selecting group of purposes with index 1, consent for those purposes should be withdrawn', done => {
+	it('after selecting group of purposes with index 1, consent for those purposes should be withdrawn', () => {
 		const selectPurpose = jest.fn();
 		const selectCustomPurpose = jest.fn();
 
@@ -102,14 +109,11 @@ describe('Purposes', () => {
 			persistedVendorConsentData={persistedVendorConsentData}
 		/>, scratch);
 
-		purposes.componentDidUpdate = (prevProps, prevState) => {
-			if (purposes.state.selectedPurposeIndex === prevState.selectedPurposeIndex) {
-				expect(selectPurpose.mock.calls[1][0]).to.equal(2);
-				expect(selectPurpose.mock.calls[1][1]).to.equal(false);
-				expect(selectCustomPurpose.mock.calls).to.be.empty;
-				done();
-			}
+		purposes.componentDidUpdate = () => {
+			expect(selectPurpose.mock.calls[1][0]).to.equal(2);
+			expect(selectPurpose.mock.calls[1][1]).to.equal(false);
+			expect(selectCustomPurpose.mock.calls).to.be.empty;
 		};
-		purposes.handleSelectPurposeDetail(1)();
+		purposes.handleSelectTab(1)();
 	});
 });

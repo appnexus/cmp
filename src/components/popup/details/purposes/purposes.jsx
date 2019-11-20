@@ -1,8 +1,12 @@
 import { h, Component } from 'preact';
 import style from './purposes.less';
-import Switch from '../../../switch/switch';
 import Label from "../../../label/label";
 import config from '../../../../lib/config';
+import Feature from './feature';
+import Purpose from "./purpose";
+
+const TAB_PUBLISHER_INFO = 0;
+const TAB_CONSENTS = 1;
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -12,44 +16,43 @@ class LocalLabel extends Label {
 
 export default class Purposes extends Component {
 	state = {
-		selectedPurposeIndex: 0,
-		renderedPurposeIndices: new Set()
+		selectedTab: TAB_PUBLISHER_INFO,
+		renderedTabIndices: new Set()
 	};
 
 	static defaultProps = {
 		onShowVendors: () => {},
 		purposes: [],
+		features: [],
 		customPurposes: [],
 		selectedPurposeIds: new Set(),
 		selectedCustomPurposeIds: new Set()
 	};
 
-
-	handleSelectPurposeDetail = index => {
+	handleSelectTab = tab => {
 		return () => {
 			this.setState({
-				selectedPurposeIndex: index
+				selectedTab: tab
 			});
 		};
 	};
 
-	handleSelectPurpose = ({isSelected}) => {
-		const {selectedPurposeIndex} = this.state;
+	handleSelectPurpose = ({isSelected, dataId}) => {
 		const {
 			selectPurpose,
 			selectCustomPurpose
 		} = this.props;
-		const allPurposes = this.getAllPurposes();
-		const selectedPurpose = allPurposes[selectedPurposeIndex];
 
-		selectedPurpose.ids.forEach(id => {
+		const allPurposes = this.getAllPurposes();
+		const selectedPurpose = allPurposes[dataId];
+
+		if (selectedPurpose) {
 			if (selectedPurpose.custom) {
-				selectCustomPurpose(id, isSelected);
+				selectCustomPurpose(selectedPurpose.id, isSelected);
+			} else {
+				selectPurpose(selectedPurpose.id, isSelected);
 			}
-			else {
-				selectPurpose(id, isSelected);
-			}
-		});
+		}
 	};
 
 	getAllPurposes = () => {
@@ -59,24 +62,9 @@ export default class Purposes extends Component {
 		} = this.props;
 		let allPurposes = [];
 
-		let purposeIdToGroupIndex = {};
-		(config.purposeGroups || []).forEach((ids, i) => {
-			ids.forEach(id => {
-				purposeIdToGroupIndex[id] = i;
-			});
-		});
-		let groupIndexToPurposeIndex = {};
 		(purposes || []).forEach(purpose => {
-			if (purposeIdToGroupIndex.hasOwnProperty(purpose.id)) {
-				const groupIndex = purposeIdToGroupIndex[purpose.id];
-				if (groupIndexToPurposeIndex.hasOwnProperty(groupIndex)) {
-					allPurposes[groupIndexToPurposeIndex[groupIndex]].ids.push(purpose.id);
-					return;
-				}
-				groupIndexToPurposeIndex[groupIndex] = allPurposes.length;
-			}
 			allPurposes.push({
-				ids: [purpose.id],
+				id: purpose.id,
 				name: purpose.name,
 				custom: false
 			});
@@ -84,7 +72,7 @@ export default class Purposes extends Component {
 
 		(customPurposes || []).forEach(purpose => {
 			allPurposes.push({
-				ids: [purpose.id],
+				id: purpose.id,
 				name: purpose.name,
 				custom: true
 			});
@@ -102,72 +90,115 @@ export default class Purposes extends Component {
 		const {
 			selectedPurposeIds,
 			selectedCustomPurposeIds,
+			purposes,
+			features,
 			persistedVendorConsentData
 		} = props;
 
 		const {created} = persistedVendorConsentData;
+
 		const {
-			selectedPurposeIndex,
-			renderedPurposeIndices
+			selectedTab,
+			renderedTabIndices
 		} = state;
 
 		const allPurposes = this.getAllPurposes();
-		const selectedPurpose = allPurposes[selectedPurposeIndex];
 
-		const purposeIsActive = selectedPurpose && selectedPurpose.ids.some(id =>
-			selectedPurpose.custom ? selectedCustomPurposeIds.has(id) : selectedPurposeIds.has(id)
-		);
-		const purposeIsTechnical = config.legIntPurposeIds && selectedPurpose && !selectedPurpose.custom && selectedPurpose.ids.some(id =>
-			config.legIntPurposeIds.indexOf(id) >= 0
-		);
-		const currentPurposeLocalizePrefix = `${selectedPurpose && selectedPurpose.custom ? 'customPurpose' : 'purpose'}${selectedPurpose && selectedPurpose.ids}`;
+		const purposeIsActive = (purpose) =>  purpose && purpose.custom ?
+			selectedCustomPurposeIds.has(purpose.id) :
+			selectedPurposeIds.has(purpose.id);
 
-		if (!created && !purposeIsTechnical && !renderedPurposeIndices.has(selectedPurposeIndex)) {
-			renderedPurposeIndices.add(selectedPurposeIndex);
-			this.setState({renderedPurposeIndices});
-			this.handleSelectPurpose({isSelected: false});
+		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
+			config.contractPurposeIds &&
+			purpose && !purpose.custom &&
+			config.legIntPurposeIds.indexOf(purpose.id) >= 0 ||
+			config.contractPurposeIds.indexOf(purpose.id) >= 0;
+
+		if (!created && selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
+			renderedTabIndices.add(selectedTab);
+			// TODO: differentiate publisher purposes from vendor purposes (publisher leg int purpose should not be unselected)
+			purposes.forEach((purpose, index) => {
+				if (!purposeIsTechnical(purpose)) {
+					this.handleSelectPurpose({isSelected: false, dataId: index});
+				}
+			});
 		}
 
 		return (
 			<div class={style.purposes}>
 				<div class={style.purposeList}>
-					{allPurposes.map((purpose, index) => (
-						<div class={[style.purposeItem, selectedPurposeIndex === index ? style.selectedPurpose : ''].join(' ')}
-							 onClick={this.handleSelectPurposeDetail(index)}
-						>
-							<LocalLabel localizeKey={`${purpose.custom ? 'customPurpose' : 'purpose'}${purpose.ids}.menu`}>{purpose.name}</LocalLabel>
-						</div>
-					))}
-				</div>
-				{selectedPurpose &&
-				<div class={style.purposeDescription}>
-					<div class={style.purposeDetail}>
-						<div class={style.detailHeader}>
-							<div class={style.title}>
-								<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.title`}>{selectedPurpose.name}</LocalLabel>
-							</div>
-							{!purposeIsTechnical &&
-							<div class={style.active}>
-								<LocalLabel localizeKey={purposeIsActive ? 'active' : 'inactive'}>{purposeIsActive ? 'Active' : 'Inactive'}</LocalLabel>
-								<Switch
-									isSelected={purposeIsActive}
-									onClick={this.handleSelectPurpose}
-								/>
-							</div>
-							}
-						</div>
-						<div class={style.body}>
-							<LocalLabel localizeKey={`${currentPurposeLocalizePrefix}.description`} />
-							{!purposeIsTechnical &&
-							<a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: false })}><LocalLabel localizeKey='showVendors'>Show full vendor list</LocalLabel></a>
-							}
-							{!purposeIsTechnical &&
-							<a class={style.vendorLink} onClick={this.createOnShowVendors({ isCustom: true })}><LocalLabel localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel></a>
-							}
-						</div>
+					<div class={[style.purposeItem, selectedTab === TAB_PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
+						onClick={this.handleSelectTab(TAB_PUBLISHER_INFO)}
+					>
+						<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}/>
+					</div>
+					<div
+						className={[style.purposeItem, selectedTab === TAB_CONSENTS ? style.selectedPurpose : ''].join(' ')}
+						onClick={this.handleSelectTab(TAB_CONSENTS)}
+					>
+						<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}/>
 					</div>
 				</div>
-				}
+				{!selectedTab ? (
+					<div className={style.purposeDescription}>
+						<div className={style.purposeDetail}>
+							<div className={style.detailHeader}>
+								<div className={style.title}>
+									<LocalLabel prefix="tabs" localizeKey={`tab1.title`}/>
+								</div>
+							</div>
+							<div className={style.body}>
+								<LocalLabel prefix="tabs" localizeKey={`tab1.description`}/>
+							</div>
+						</div>
+					</div>
+				) : (
+					<div className={style.purposeDescription}>
+						<div className={style.purposesSection}>
+							<div className={style.sectionInfo}>
+								<div className={style.sectionHeader}>
+									<div className={style.title}>
+										<LocalLabel prefix="publisherConsents" localizeKey={`title`}/>
+									</div>
+								</div>
+							</div>
+							{allPurposes.map((purpose, index) => <Purpose key={index}
+																		  index={index}
+																		  isPublisherPurpose={true}
+																		  purpose={purpose}
+																		  isActive={purposeIsActive(purpose)}
+																		  isTechnical={purposeIsTechnical(purpose)}
+																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		  onToggle={this.handleSelectPurpose}/>)}
+						</div>
+						<div className={style.purposesSection}>
+							<div className={style.sectionInfo}>
+								<div className={style.sectionHeader}>
+									<div className={style.title}>
+										<LocalLabel prefix="vendorConsents" localizeKey={`title`}/>
+									</div>
+								</div>
+							</div>
+							<div>
+								<LocalLabel className={style.header} prefix="purposes" localizeKey={`title`}/>
+								{purposes.map((purpose, index) => <Purpose key={index}
+																		   index={index}
+																		   purpose={purpose}
+																		   isActive={purposeIsActive(purpose)}
+																		   isTechnical={false}
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		   onToggle={this.handleSelectPurpose}/>)}
+							</div>
+							<div>
+								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}/>
+								{features.map((feature, index) => <Feature key={index}
+																		   feature={feature}
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>
+								)}
+							</div>
+						</div>
+					</div>
+				)}
 			</div>
 		);
 	}
