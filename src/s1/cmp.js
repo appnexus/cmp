@@ -127,10 +127,7 @@ const handleConsentResult = ({
 	const autoConsentFlow = (shouldAutoConsentWithFooter, warningMsg = '') => {
 		cmp('acceptAllConsents');
 		if (shouldAutoConsentWithFooter) {
-			const store = getStore();
-			if (store) {
-				store.toggleFooterShowing(true);
-			}
+			cmp('showConsentTool');
 		}
 		checkConsent({
 			callback,
