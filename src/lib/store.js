@@ -1,4 +1,4 @@
-import { writePublisherConsentCookie, writeVendorConsentCookie,encodePublisherConsentData, encodeVendorConsentData } from "./cookie/cookie";
+import { writePublisherConsentCookie, writeVendorConsentCookie, encodePublisherConsentData, encodeVendorConsentData } from "./cookie/cookie";
 import config from './config';
 import { findLocale } from './localize';
 import log from './log';
@@ -473,9 +473,9 @@ export default class Store {
 		} = vendorList || {};
 
 		//collection of global and local vendor ids [global id, local id]
-		this.globalVendorIdsPresentOnList = new Map(vendors.filter(vendor => vendor.external_id).map(vendor => {
-			return [vendor.external_id, vendor.id];
-		}));
+		this.globalVendorIdsPresentOnList = new Map(vendors.filter(vendor => vendor.external_id).map(
+			vendor => [vendor.external_id, vendor.id]
+		));
 
 		// If vendor consent data has never been persisted set default selected status
 		if (!created) {
@@ -516,7 +516,7 @@ export default class Store {
 
 		// If publisher consent has never been persisted set the default selected status
 		if (!created) {
-			const {purposes = [],} = customPurposeList || {};
+			const {purposes = []} = customPurposeList || {};
 			this.publisherConsentData.selectedCustomPurposeIds = new Set(purposes.map(p => p.id));
 		}
 
@@ -528,8 +528,8 @@ export default class Store {
 	};
 
 	mergeVendorConsentsFromGlobalCookie = () => {
-		let selectedLocalIdsOfGlobalVendorInGlobalCookie = new Set();
-		let selectedLocalIdsOfGlobalVendorInLocalCookie = new Set();
+		const selectedLocalIdsOfGlobalVendorInGlobalCookie = new Set();
+		const selectedLocalIdsOfGlobalVendorInLocalCookie = new Set();
 		const globalCookieMaxVendorId = this.persistedGlobalVendorConsentData.maxVendorId;
 
 		this.globalVendorIdsPresentOnList.forEach( (localId, globalId) => {
@@ -562,13 +562,12 @@ export default class Store {
 	};
 
 	mergePurposeConsentsFromGlobalCookie = () => {
-		const selectedPurposeIds = Array.from(this.vendorConsentData.selectedPurposeIds);
-		this.vendorConsentData.selectedPurposeIds = new Set(selectedPurposeIds.filter( id => (
-			this.globalVendorConsentData.selectedPurposeIds.has(id) || config.legIntPurposeIds.includes(id)
-		)));
+		this.vendorConsentData.selectedPurposeIds = new Set([...this.vendorConsentData.selectedPurposeIds].filter(
+			id => this.globalVendorConsentData.selectedPurposeIds.has(id) || config.legIntPurposeIds.includes(id)
+		));
 	};
 
 	mergePurposeConsentsToGlobalCookie = () => {
-		this.globalVendorConsentData.selectedPurposeIds = new Set(...this.vendorConsentData.selectedPurposeIds);
+		this.globalVendorConsentData.selectedPurposeIds = this.vendorConsentData.selectedPurposeIds;
 	};
 }

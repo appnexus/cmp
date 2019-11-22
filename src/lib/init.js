@@ -42,8 +42,7 @@ function readInternalConsentData() {
 			readVendorConsentCookie(),
 			fetchPubVendorList(),
 			readPublisherConsentCookie()
-		],
-		undefined
+		]
 	]);
 }
 
