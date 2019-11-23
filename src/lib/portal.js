@@ -1,5 +1,5 @@
-import config from "./config";
-import Promise from "promise-polyfill";
+import config from './config';
+import Promise from 'promise-polyfill';
 
 const PORTAL_LOAD_TIMEOUT_MILLISECONDS = 5000;
 const PORTAL_COMMAND_TIMEOUT_MILLISECONDS = 2000;

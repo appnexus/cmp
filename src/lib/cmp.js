@@ -1,10 +1,7 @@
 import log from './log';
 import config from './config';
 import { encodeVendorConsentData } from './cookie/cookie';
-import {
-	encodeVendorCookieValue,
-	encodePublisherCookieValue
-} from "./cookie/cookieutils";
+import { encodeVendorCookieValue, encodePublisherCookieValue } from './cookie/cookieutils';
 
 export const CMP_GLOBAL_NAME = '__cmp';
 export const CMP_CALL_NAME = CMP_GLOBAL_NAME + 'Call';
@@ -28,26 +25,26 @@ export default class Cmp {
 		 * Get all publisher consent data from the data store.
 		 */
 		getPublisherConsents: (purposeIds, callback = () => {}) => {
-			const {
-				persistedPublisherConsentData,
-				persistedVendorConsentData,
-			} = this.store;
+			const { persistedPublisherConsentData, persistedVendorConsentData } = this.store;
 
 			// Encode limited fields for "metadata"
-			const metadata = encodePublisherCookieValue({
-				...persistedPublisherConsentData,
-				...persistedVendorConsentData,
-			}, [
-				'cookieVersion',
-				'created',
-				'lastUpdated',
-				'cmpId',
-				'cmpVersion',
-				'consentScreen',
-				'consentLanguage',
-				'vendorListVersion',
-				'publisherPurposeVersion'
-			]);
+			const metadata = encodePublisherCookieValue(
+				{
+					...persistedPublisherConsentData,
+					...persistedVendorConsentData
+				},
+				[
+					'cookieVersion',
+					'created',
+					'lastUpdated',
+					'cmpId',
+					'cmpVersion',
+					'consentScreen',
+					'consentLanguage',
+					'vendorListVersion',
+					'publisherPurposeVersion'
+				]
+			);
 
 			const consent = {
 				metadata,
@@ -63,19 +60,20 @@ export default class Cmp {
 		 * @param {Array} vendorIds Array of vendor IDs to retrieve.  If empty return all vendors.
 		 */
 		getVendorConsents: (vendorIds, callback = () => {}) => {
-
 			// Encode limited fields for "metadata"
 			const { persistedVendorConsentData } = this.store;
-			const metadata = persistedVendorConsentData && encodeVendorCookieValue(persistedVendorConsentData, [
-				'cookieVersion',
-				'created',
-				'lastUpdated',
-				'cmpId',
-				'cmpVersion',
-				'consentScreen',
-				'consentLanguage',
-				'vendorListVersion',
-			]);
+			const metadata =
+				persistedVendorConsentData &&
+				encodeVendorCookieValue(persistedVendorConsentData, [
+					'cookieVersion',
+					'created',
+					'lastUpdated',
+					'cmpId',
+					'cmpVersion',
+					'consentScreen',
+					'consentLanguage',
+					'vendorListVersion'
+				]);
 
 			const consent = {
 				metadata,
@@ -107,8 +105,7 @@ export default class Cmp {
 			const { vendorListVersion: listVersion } = vendorList || {};
 			if (!vendorListVersion || vendorListVersion === listVersion) {
 				callback(vendorList, true);
-			}
-			else {
+			} else {
 				callback(null, false);
 			}
 		},
@@ -178,34 +175,30 @@ export default class Cmp {
 			this.store.toggleModalShowing(true);
 			callback(true);
 		},
-		
+
 		acceptAllConsents: (_, callback = () => {}) => {
 			this.store.persist();
 			callback();
 		}
-
-		
 	};
 
 	generateConsentString = () => {
-		const {
-			persistedVendorConsentData,
-			vendorList,
-			allowedVendorIds
-		} = this.store;
+		const { persistedVendorConsentData, vendorList, allowedVendorIds } = this.store;
 
-		const {
-			selectedVendorIds = new Set(),
-			selectedPurposeIds = new Set()
-		} = persistedVendorConsentData || {};
+		const { selectedVendorIds = new Set(), selectedPurposeIds = new Set() } = persistedVendorConsentData || {};
 
 		// Encode the persisted data
-		return persistedVendorConsentData && encodeVendorConsentData({
-			...persistedVendorConsentData,
-			selectedVendorIds: new Set(Array.from(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))),
-			selectedPurposeIds: new Set(Array.from(selectedPurposeIds)),
-			vendorList
-		});
+		return (
+			persistedVendorConsentData &&
+			encodeVendorConsentData({
+				...persistedVendorConsentData,
+				selectedVendorIds: new Set(
+					Array.from(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))
+				),
+				selectedPurposeIds: new Set(Array.from(selectedPurposeIds)),
+				vendorList
+			})
+		);
 	};
 
 	processCommandQueue = () => {
@@ -217,15 +210,18 @@ export default class Cmp {
 				// If command is queued with an event we will relay its result via postMessage
 				if (event) {
 					this.processCommand(command, parameter, returnValue =>
-						event.source.postMessage({
-							[CMP_RETURN_NAME]: {
-								callId,
-								command,
-								returnValue
-							}
-						}, event.origin));
-				}
-				else {
+						event.source.postMessage(
+							{
+								[CMP_RETURN_NAME]: {
+									callId,
+									command,
+									returnValue
+								}
+							},
+							event.origin
+						)
+					);
+				} else {
 					this.processCommand(command, parameter, callback);
 				}
 			});
@@ -241,13 +237,17 @@ export default class Cmp {
 		if (cmp) {
 			const { callId, command, parameter } = cmp;
 			this.processCommand(command, parameter, returnValue =>
-				source.postMessage({
-					[CMP_RETURN_NAME]: {
-						callId,
-						command,
-						returnValue
-					}
-				}, origin));
+				source.postMessage(
+					{
+						[CMP_RETURN_NAME]: {
+							callId,
+							command,
+							returnValue
+						}
+					},
+					origin
+				)
+			);
 		}
 	};
 

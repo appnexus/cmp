@@ -22,50 +22,50 @@ jest.mock('../portal');
 const mockPortal = require('../portal');
 
 const vendorList = {
-	"version": 1,
-	"origin": "http://ib.adnxs.com/vendors.json",
-	"purposes": [
+	'version': 1,
+	'origin': 'http://ib.adnxs.com/vendors.json',
+	'purposes': [
 		{
-			"id": 1,
-			"name": "Accessing a Device or Browser"
+			'id': 1,
+			'name': 'Accessing a Device or Browser'
 		},
 		{
-			"id": 2,
-			"name": "Advertising Personalisation"
+			'id': 2,
+			'name': 'Advertising Personalisation'
 		},
 		{
-			"id": 3,
-			"name": "Analytics"
+			'id': 3,
+			'name': 'Analytics'
 		},
 		{
-			"id": 4,
-			"name": "Content Personalisation"
+			'id': 4,
+			'name': 'Content Personalisation'
 		}
 	],
-	"vendors": [
+	'vendors': [
 		{
-			"id": 1,
-			"name": "Globex"
+			'id': 1,
+			'name': 'Globex'
 		},
 		{
-			"id": 2,
-			"name": "Initech"
+			'id': 2,
+			'name': 'Initech'
 		},
 		{
-			"id": 3,
-			"name": "CRS"
+			'id': 3,
+			'name': 'CRS'
 		},
 		{
-			"id": 4,
-			"name": "Umbrella"
+			'id': 4,
+			'name': 'Umbrella'
 		},
 		{
-			"id": 10,
-			"name": "Pierce and Pierce"
+			'id': 10,
+			'name': 'Pierce and Pierce'
 		},
 		{
-			"id": 8,
-			"name": "Aperture"
+			'id': 8,
+			'name': 'Aperture'
 		}
 	]
 };

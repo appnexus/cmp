@@ -28,22 +28,22 @@
 			globalConsentLocation: 'https://s.flocdn.com/cmp/docs/portal.html',
 			storeConsentGlobally: false,
 			// localization: {},
-			// forceLocale: null,
+			// forceLocale: 'es',
 			theme: {
 				isBannerModal: true
 			},
 			gdprApplies: true,
 			// allowedVendorIds: null,
 			shouldAutoConsent: false,
-			shouldAutoConsentWithFooter: false
+			shouldAutoConsentWithFooter: true
 		}
 
 		function onConsentChanged(result) {
 			if (document.cookie.indexOf("gdpr_opt_in=1") < 0) {
-				console.log("cmp:all-consent:failed", result);
+				console.log("cmp:onConsentChanged all-consent:failed", result);
 				// window.location.reload();
 			} else {
-				console.log("cmp:all-consent:succeeded", result);
+				console.log("cmp:onConsentChanged all-consent:succeeded", result);
 			}
 		}
 
@@ -55,7 +55,6 @@
 				if (result.errorMsg) {
 					console.log('cmp:init: errorMsg', result.errorMsg);
 					cmp('showConsentTool');
-					cmp('addEventListener', 'onConsentChanged', onConsentChanged);
 				} else {
 					// consent achieved
 					if (document.cookie.indexOf("gdpr_opt_in=1") >= 0) {
@@ -63,8 +62,8 @@
 					} else {
 						console.log("cmp:init: only some consent achieved", result);
 					}
-					cmp('addEventListener', 'onConsentChanged', onConsentChanged);
 				}
+				cmp('addEventListener', 'onConsentChanged', onConsentChanged);
 			} else {
 				console.log("cmp:init: consent not required", result);
 			}

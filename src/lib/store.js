@@ -1,4 +1,4 @@
-import { writePublisherConsentCookie, writeVendorConsentCookie } from "./cookie/cookie";
+import { writePublisherConsentCookie, writeVendorConsentCookie } from './cookie/cookie';
 import config from './config';
 import { findLocale } from './localize';
 

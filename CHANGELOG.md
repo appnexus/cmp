@@ -1,3 +1,17 @@
+<a name="1.3.2"></a>
+
+## [1.3.2](https://github.com/openmail/system1-cmp/compare/v1.3.1...v1.3.2) (2019-11-22)
+
+### Refactor
+
+- [x] Trigger onConsentChanged after callback in init to avoid double calls
+- [x] eslint / prettier configs and run updates to fix formatting incongruities
+
+### Fix
+
+- [x] Coerce cookie to Boolean to fix '0' coercing to True in onConsentChanged
+- [x] Fix failing autoConsent footer test to test Banner
+
 <a name="1.3.1"></a>
 
 ## [1.3.1](https://github.com/openmail/system1-cmp/compare/v1.3.0...v1.3.1) (2019-11-21)

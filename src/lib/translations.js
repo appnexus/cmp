@@ -10,7 +10,7 @@ export default {
 	en: {
 		banner: {
 			title: 'Privacy Choices',
-			description: `By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click "Learn More" to change your settings.`,
+			description: 'By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click "Learn More" to change your settings.',
 			links: {
 				data: {
 					title: 'Information that may be used',
@@ -61,7 +61,7 @@ export default {
 			title: '',
 			description: '',
 			back: '',
-			optoutdDescription: ``,
+			optoutdDescription: '',
 			purpose1: {
 				description:
 					'Allow storing or accessing information on a user’s device.'
@@ -94,7 +94,7 @@ export default {
 				</ul>`
 			},
 			purpose5: {
-				description: `The collection of information about your use of the content, and combination with previously collected information, used to measure, understand, and report on your usage of the service. This does not include personalisation, the collection of information about your use of this service to subsequently personalise content and/or advertising for you in other contexts, i.e. on other service, such as websites or apps, over time.`
+				description: 'The collection of information about your use of the content, and combination with previously collected information, used to measure, understand, and report on your usage of the service. This does not include personalisation, the collection of information about your use of this service to subsequently personalise content and/or advertising for you in other contexts, i.e. on other service, such as websites or apps, over time.'
 			},
 			purpose10: {
 				title: '',
@@ -148,7 +148,7 @@ export default {
 				},
 				purposes: {
 					title: 'Propósitos para almacenar información.',
-					description: `Cómo puede ser usada la información:`
+					description: 'Cómo puede ser usada la información:'
 				},
 				manage: 'Leer más',
 				accept: 'Aceptar'
@@ -253,7 +253,7 @@ export default {
 				},
 				purposes: {
 					title: 'Utilisation des données',
-					description: `A quoi servent ces données:`
+					description: 'A quoi servent ces données:'
 				},
 				manage: 'Préférences',
 				accept: 'Continuer'
@@ -262,7 +262,7 @@ export default {
 		summary: {
 			title: 'Comment sont utilisées mes données ?',
 			description:
-				"Nos partenaires et nous-même utilisons les cookies (petits fichiers texte) du navigateur afin de comprendre les centres d'intérêt de nos visiteurs et ainsi leur proposer du contenu et de la publicité pertinents. Désormais, nous avons besoin de votre consentement.",
+				'Nos partenaires et nous-même utilisons les cookies (petits fichiers texte) du navigateur afin de comprendre les centres d\'intérêt de nos visiteurs et ainsi leur proposer du contenu et de la publicité pertinents. Désormais, nous avons besoin de votre consentement.',
 			detailLink: 'Informations et configuration',
 			who: {
 				title: 'Qui utilise mes données ?',
@@ -295,8 +295,8 @@ export default {
 						<li>Informations de géolocalisation de l'appareil lorsqu'il accède au site Web</li>
 					</ul>`,
 			purpose1: {
-				menu: "Stockage d'informations et accès",
-				title: "Stockage d'informations et accès",
+				menu: 'Stockage d\'informations et accès',
+				title: 'Stockage d\'informations et accès',
 				description:
 					'Autoriser le stockage d’informations ou l’accès à des informations déjà stockées sur votre appareil, telles que des identifiants publicitaires, des identifiants de dispositif, des cookies et des technologies similaires.'
 			},
@@ -307,16 +307,16 @@ export default {
 					'Autoriser la collecte et le traitement d’informations sur votre utilisation de ce service pour ensuite personnaliser la publicité et/ou le contenu qui vous sont proposés dans d’autres contextes, tels que sur d’autres sites ou applications, au fil du temps. En règle générale, le contenu du site ou de l’application est utilisé pour déterminer vos centres d’intérêt et permettent de déterminer le choix de la publicité et/ou du contenu.'
 			},
 			purpose3: {
-				menu: "Sélection d'annonces, diffusion, rapport",
-				title: "Sélection d'annonces, diffusion, rapport",
+				menu: 'Sélection d\'annonces, diffusion, rapport',
+				title: 'Sélection d\'annonces, diffusion, rapport',
 				description:
-					"Autoriser le traitement des données d'un utilisateur pour fournir du contenu ou des publicités et mesurer la diffusion de ces contenus ou publicités, extraire des informations et générer des rapports pour comprendre l'utilisation des services; et / ou accéder ou stocker des informations sur des dispositifs à cette fin. Inclura les caractéristiques suivantes:"
+					'Autoriser le traitement des données d\'un utilisateur pour fournir du contenu ou des publicités et mesurer la diffusion de ces contenus ou publicités, extraire des informations et générer des rapports pour comprendre l\'utilisation des services; et / ou accéder ou stocker des informations sur des dispositifs à cette fin. Inclura les caractéristiques suivantes:'
 			},
 			purpose4: {
 				menu: 'Sélection de contenu, diffusion, rapport',
 				title: 'Sélection de contenu, diffusion, rapport',
 				description:
-					"Autoriser le traitement des données d'un utilisateur pour la création de contenu personnalisé (y compris la diffusion, l'analyse et la création de rapports) en fonction des préférences ou des intérêts d'un utilisateur connus ou inférer à partir de données collectées sur plusieurs sites, applications ou appareils; et / ou accéder ou stocker des informations sur des dispositifs à cette fin. Inclura les caractéristiques suivantes:"
+					'Autoriser le traitement des données d\'un utilisateur pour la création de contenu personnalisé (y compris la diffusion, l\'analyse et la création de rapports) en fonction des préférences ou des intérêts d\'un utilisateur connus ou inférer à partir de données collectées sur plusieurs sites, applications ou appareils; et / ou accéder ou stocker des informations sur des dispositifs à cette fin. Inclura les caractéristiques suivantes:'
 			},
 			purpose5: {
 				menu: 'Mesures',
@@ -355,7 +355,7 @@ export default {
 				},
 				purposes: {
 					title: 'Verwendung von Daten',
-					description: `Wozu dienen diese Daten?`
+					description: 'Wozu dienen diese Daten?'
 				},
 				manage: 'Einstellungen',
 				accept: 'Akzeptieren und fortsetzen'
@@ -368,7 +368,7 @@ export default {
 			detailLink: 'Informationen und Einstellungen',
 			who: {
 				title: 'Wer nutzt meine Daten?',
-				description: `Nur unsere Partner und wir können Ihre Daten verwenden. Sie können Ihre Auswahl oben anpassen oder unsere Website weiterhin nutzen, wenn Sie zustimmen.`,
+				description: 'Nur unsere Partner und wir können Ihre Daten verwenden. Sie können Ihre Auswahl oben anpassen oder unsere Website weiterhin nutzen, wenn Sie zustimmen.',
 				link: 'Sehen Sie die komplette Liste unserer Partner'
 			},
 			what: {
@@ -456,7 +456,7 @@ export default {
 				},
 				purposes: {
 					title: 'Cele przechowywania informacji.',
-					description: `W jaki sposób informacje mogą być używane:`
+					description: 'W jaki sposób informacje mogą być używane:'
 				},
 				manage: 'Zobacz więcej',
 				accept: '<b>Akceptuję</b>'
@@ -566,7 +566,7 @@ export default {
 				},
 				purposes: {
 					title: 'Uso dei dati.',
-					description: `Come possono essere utilizzate le informazioni:`
+					description: 'Come possono essere utilizzate le informazioni:'
 				},
 				manage: 'Leggi di più',
 				accept: 'Accetta'
@@ -581,24 +581,24 @@ export default {
 			title:
 				'Ulteriori informazioni su come vengono utilizzate le informazioni.',
 			description:
-				"Noi e alcune società selezionate possiamo accedere e utilizzare le tue informazioni per i seguenti scopi. Puoi personalizzare le tue opzioni qui sotto o continuare a utilizzare il nostro sito se sei d'accordo con gli scopi.",
+				'Noi e alcune società selezionate possiamo accedere e utilizzare le tue informazioni per i seguenti scopi. Puoi personalizzare le tue opzioni qui sotto o continuare a utilizzare il nostro sito se sei d\'accordo con gli scopi.',
 			detailLink: 'Maggiori informazioni',
 			who: {
 				title: 'Chi sta usando queste informazioni?',
 				description:
 					'Noi e le società preselezionate utilizziamo le tue informazioni. Puoi vedere ciascuna compagnia nei link sopra.',
-				link: "Guarda l'elenco completo qui."
+				link: 'Guarda l\'elenco completo qui.'
 			},
 			what: {
 				title: 'Quali informazioni vengono utilizzate?',
 				description: 'Diverse aziende usano informazioni diverse,',
-				link: "Guarda l'elenco completo qui."
+				link: 'Guarda l\'elenco completo qui.'
 			}
 		},
 		purposes: {
 			title: 'Dati raccolti',
 			description:
-				"Di seguito è riportato l'elenco dei dati che possono essere raccolti:",
+				'Di seguito è riportato l\'elenco dei dati che possono essere raccolti:',
 			back: 'Configura come vengono utilizzati questi dati',
 			optoutdDescription:
 				'A seconda del tipo di dati che raccolgono, utilizzano e elaborano, e di altri fattori, inclusa la privacy in base alla progettazione, alcuni partner fanno affidamento sul loro consenso, mentre altri richiedono che vengano esclusi. Per informazioni su ciascun fornitore ed esercitare le tue scelte, vedi sotto. O per rinunciare, visitare i siti NAI, DAA o EDAA.',
@@ -615,31 +615,31 @@ export default {
 				menu: 'Archiviazione e accesso alle informazioni',
 				title: 'Archiviazione e accesso alle informazioni',
 				description:
-					"La memorizzazione e l'accesso alle informazioni già memorizzate sul dispositivo, come identificatori pubblicitari, identificativi del dispositivo, cookie e tecnologie simili."
+					'La memorizzazione e l\'accesso alle informazioni già memorizzate sul dispositivo, come identificatori pubblicitari, identificativi del dispositivo, cookie e tecnologie simili.'
 			},
 			purpose2: {
 				menu: 'Personalizzazione',
 				title: 'Personalizzazione',
 				description:
-					"La raccolta e l'elaborazione di informazioni per personalizzare successivamente la pubblicità e / o il contenuto per te, come in altri siti Web o applicazioni, nel tempo. Normalmente, la futura selezione di pubblicità e / o contenuti."
+					'La raccolta e l\'elaborazione di informazioni per personalizzare successivamente la pubblicità e / o il contenuto per te, come in altri siti Web o applicazioni, nel tempo. Normalmente, la futura selezione di pubblicità e / o contenuti.'
 			},
 			purpose3: {
 				menu: 'Selezione degli annunci, diffusione, report',
 				title: 'Selezione degli annunci, diffusione, report',
 				description:
-					"Consentire l'elaborazione dei dati di un utente per fornire contenuti o annunci pubblicitari e misurare la diffusione di tali contenuti o pubblicità, estrarre informazioni e generare rapporti per comprendere l'uso dei servizi; e / o accedere o memorizzare informazioni sui dispositivi per questo scopo. Includi le seguenti funzionalità."
+					'Consentire l\'elaborazione dei dati di un utente per fornire contenuti o annunci pubblicitari e misurare la diffusione di tali contenuti o pubblicità, estrarre informazioni e generare rapporti per comprendere l\'uso dei servizi; e / o accedere o memorizzare informazioni sui dispositivi per questo scopo. Includi le seguenti funzionalità.'
 			},
 			purpose4: {
 				menu: 'Selezione dei contenuti, diffusione, report',
 				title: 'Selezione dei contenuti, diffusione, report',
 				description:
-					"Raccolta di informazioni e combinazione con informazioni precedentemente raccolte per selezionare e fornire contenuti per te e per misurare la consegna e l'efficacia di tali contenuti. Ciò include l'uso delle informazioni raccolte in precedenza sui tuoi interessi per selezionare il contenuto, elaborare i dati su quale contenuto è stato visualizzato, con quale frequenza o per quanto tempo è stato mostrato, quando e dove è stato visualizzato e se hai intrapreso qualche azione relativa al contenuto, incluso esempio, clic sul contenuto. Ciò non include la personalizzazione, che è la raccolta e l'elaborazione di informazioni sull'uso di questo servizio per personalizzare successivamente il contenuto e / o la pubblicità in altri contesti, come siti Web o applicazioni, nel tempo."
+					'Raccolta di informazioni e combinazione con informazioni precedentemente raccolte per selezionare e fornire contenuti per te e per misurare la consegna e l\'efficacia di tali contenuti. Ciò include l\'uso delle informazioni raccolte in precedenza sui tuoi interessi per selezionare il contenuto, elaborare i dati su quale contenuto è stato visualizzato, con quale frequenza o per quanto tempo è stato mostrato, quando e dove è stato visualizzato e se hai intrapreso qualche azione relativa al contenuto, incluso esempio, clic sul contenuto. Ciò non include la personalizzazione, che è la raccolta e l\'elaborazione di informazioni sull\'uso di questo servizio per personalizzare successivamente il contenuto e / o la pubblicità in altri contesti, come siti Web o applicazioni, nel tempo.'
 			},
 			purpose5: {
 				menu: 'Misurazione',
 				title: 'Misurazione',
 				description:
-					"Raccolta di informazioni sull'utilizzo del contenuto e sulla combinazione di informazioni raccolte in precedenza, utilizzate per misurare, comprendere e riferire sull'utilizzo del servizio. Ciò non include la personalizzazione, la raccolta di informazioni sull'uso di questo servizio per personalizzare successivamente il contenuto e / o la pubblicità in altri contesti, ovvero in altri servizi, come siti Web o applicazioni, nel tempo."
+					'Raccolta di informazioni sull\'utilizzo del contenuto e sulla combinazione di informazioni raccolte in precedenza, utilizzate per misurare, comprendere e riferire sull\'utilizzo del servizio. Ciò non include la personalizzazione, la raccolta di informazioni sull\'uso di questo servizio per personalizzare successivamente il contenuto e / o la pubblicità in altri contesti, ovvero in altri servizi, come siti Web o applicazioni, nel tempo.'
 			}
 		},
 		vendors: {

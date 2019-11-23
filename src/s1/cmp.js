@@ -8,9 +8,9 @@ import 'core-js/fn/object/keys';
 import 'core-js/fn/promise';
 
 import cmp from '../loader';
-import {init, getStore} from '../lib/init';
+import { init } from '../lib/init';
 import log from '../lib/log';
-import {readCookie, writeCookie} from '../lib/cookie/cookie';
+import { readCookie, writeCookie } from '../lib/cookie/cookie';
 
 const GDPR_OPT_IN_COOKIE = 'gdpr_opt_in';
 const GDPR_OPT_IN_COOKIE_MAX_AGE = 33696000;
@@ -39,7 +39,7 @@ const addPostmessageReceiver = cmp => {
 	const onReceiveMessage = event => {
 		const data = event && event.data && event.data.__cmpCall;
 		if (data) {
-			const {command, parameter} = data;
+			const { command, parameter } = data;
 			cmp.call(this, command, parameter);
 		}
 	};
@@ -69,11 +69,11 @@ const initialize = (config, callback) => {
 };
 
 const checkHasConsentedAll = (
-	{vendors = []},
-	{purposeConsents, vendorConsents} = {}
+	{ vendors = [] },
+	{ purposeConsents, vendorConsents } = {}
 ) => {
 	const hasAnyVendorsDisabled = vendors.find(
-		({id}) => vendorConsents[id] === false
+		({ id }) => vendorConsents[id] === false
 	);
 	const hasAnyPurposeDisabled = Object.keys(purposeConsents).find(key => {
 		return purposeConsents[key] === false;
@@ -81,7 +81,11 @@ const checkHasConsentedAll = (
 	return !hasAnyPurposeDisabled && !hasAnyVendorsDisabled;
 };
 
-const checkConsent = ({callback = () => {}, config, warningMsg = ''} = {}) => {
+const checkConsent = ({
+	callback = () => {},
+	config,
+	warningMsg = ''
+} = {}) => {
 	let errorMsg = '';
 	if (!cmp.isLoaded) {
 		errorMsg = 'CMP failed to load';
@@ -120,9 +124,11 @@ const handleConsentResult = ({
 	warningMsg = '',
 	errorMsg = ''
 }) => {
-	const hasConsentedCookie = !!readCookie(GDPR_OPT_IN_COOKIE);
-	const {vendorListVersion: listVersion} = vendorList;
-	const {created, vendorListVersion} = vendorConsentData;
+	const hasConsentedCookie = Boolean(
+		parseInt(readCookie(GDPR_OPT_IN_COOKIE) || 0, 10)
+	);
+	const { vendorListVersion: listVersion } = vendorList;
+	const { created, vendorListVersion } = vendorConsentData;
 
 	const autoConsentFlow = (shouldAutoConsentWithFooter, warningMsg = '') => {
 		cmp('acceptAllConsents');
@@ -136,7 +142,7 @@ const handleConsentResult = ({
 	};
 
 	if (!created) {
-		const {shouldAutoConsent, shouldAutoConsentWithFooter} = config || {};
+		const { shouldAutoConsent, shouldAutoConsentWithFooter } = config || {};
 		if (shouldAutoConsent || shouldAutoConsentWithFooter) {
 			log.debug('CMP: auto-consent to all conditions.');
 			autoConsentFlow(shouldAutoConsentWithFooter);
@@ -144,7 +150,7 @@ const handleConsentResult = ({
 		}
 		errorMsg = 'No consent data found. Show consent tool';
 	} else if (vendorListVersion !== listVersion) {
-		const {shouldAutoUpgradeConsent} = config || {};
+		const { shouldAutoUpgradeConsent } = config || {};
 		if (shouldAutoUpgradeConsent) {
 			warningMsg = `Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Consent upgraded, show consent notice`;
 			log.debug(warningMsg);
@@ -181,11 +187,11 @@ const handleConsentResult = ({
 			warningMsg
 		};
 
-		callback.call(this, consent);
-
 		if (created && hasConsented !== hasConsentedCookie && !errorMsg) {
 			cmp.notify('onConsentChanged', consent);
 		}
+
+		callback.call(this, consent);
 	}
 };
 
@@ -193,13 +199,13 @@ const handleConsentResult = ({
 (() => {
 	const initIndex =
 		cmp.commandQueue &&
-		cmp.commandQueue.findIndex(({command}) => {
+		cmp.commandQueue.findIndex(({ command }) => {
 			return command === 'init';
 		});
 
 	// 1. initialize call was queued from global scope (inline cmpLoader)
 	if (initIndex >= 0 && cmp.commandQueue[initIndex]) {
-		const [{parameter: config, callback}] = cmp.commandQueue.splice(
+		const [{ parameter: config, callback }] = cmp.commandQueue.splice(
 			initIndex,
 			1
 		); // remove "init" from command list because it doesn't exist
@@ -214,7 +220,7 @@ const handleConsentResult = ({
 		// 2. initialize call never queued, so initialize with default Config
 	} else {
 		initialize(defaultConfig, result => {
-			const {errorMsg} = result;
+			const { errorMsg } = result;
 			if (errorMsg) {
 				log.debug(errorMsg);
 				cmp('showConsentTool');
