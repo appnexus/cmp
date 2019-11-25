@@ -10,6 +10,7 @@ export default class Popup extends Component {
 		const { store, onSave } = this.props;
 		store.selectAllVendors(true);
 		store.selectAllPurposes(true);
+		store.selectAllStandardPurposes(true);
 		store.selectAllCustomPurposes(true);
 		onSave();
 	};

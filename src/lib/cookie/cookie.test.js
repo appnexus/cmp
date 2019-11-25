@@ -123,6 +123,7 @@ describe('cookie', () => {
 			publisherPurposeVersion: 1,
 			created: aDate,
 			lastUpdated: aDate,
+			selectedStandardPurposeIds: new Set([1, 4, 5]),
 			selectedCustomPurposeIds: new Set([2, 3])
 		};
 

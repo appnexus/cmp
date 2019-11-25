@@ -21,11 +21,13 @@ const Purpose = (props) => {
 		isPublisherPurpose = false
 	} = props;
 
+	const prefix = purpose.custom ? `customPurpose${purpose.id}` : `purpose${purpose.id}`;
+
 	return (
 		<div className={style.purposeDetail}>
 			<div className={style.detailHeader}>
 				<div className={style.title}>
-					<LocalLabel localizeKey={`purpose${purpose.id}.title`}>{purpose.name}</LocalLabel>
+					<LocalLabel localizeKey={`${prefix}.title`}>{purpose.name}</LocalLabel>
 				</div>
 				{!isTechnical &&
 					<div className={style.active}>
@@ -39,7 +41,7 @@ const Purpose = (props) => {
 				}
 			</div>
 			<div className={style.body}>
-				<LocalLabel localizeKey={`purpose${purpose.id}.description`} />
+				<LocalLabel localizeKey={`${prefix}.description`}>{purpose.description}</LocalLabel>
 				{!isPublisherPurpose && (
 					<div>
 						<a className={style.vendorLink}

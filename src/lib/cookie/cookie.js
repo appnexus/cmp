@@ -157,7 +157,7 @@ function encodePublisherConsentData(publisherData) {
 	const {
 		vendorList = {},
 		customPurposeList = {},
-		selectedPurposeIds,
+		selectedStandardPurposeIds,
 		selectedCustomPurposeIds
 	} = publisherData;
 	const {purposes: customPurposes = []} = customPurposeList;
@@ -166,7 +166,7 @@ function encodePublisherConsentData(publisherData) {
 	return encodePublisherCookieValue({
 		...publisherData,
 		numCustomPurposes: customPurposes.length,
-		standardPurposeIdBitString: encodePurposeIdsToBits(purposes, selectedPurposeIds),
+		standardPurposeIdBitString: encodePurposeIdsToBits(purposes, selectedStandardPurposeIds),
 		customPurposeIdBitString: encodePurposeIdsToBits(customPurposes, selectedCustomPurposeIds)
 	});
 }
@@ -179,6 +179,7 @@ function decodePublisherConsentData(cookieValue) {
 		publisherPurposeVersion,
 		created,
 		lastUpdated,
+		standardPurposeIdBitString,
 		customPurposeIdBitString
 	} = decodePublisherCookieValue(cookieValue);
 
@@ -189,6 +190,7 @@ function decodePublisherConsentData(cookieValue) {
 		publisherPurposeVersion,
 		created,
 		lastUpdated,
+		selectedStandardPurposeIds: decodeBitsToIds(standardPurposeIdBitString),
 		selectedCustomPurposeIds: decodeBitsToIds(customPurposeIdBitString)
 	};
 
