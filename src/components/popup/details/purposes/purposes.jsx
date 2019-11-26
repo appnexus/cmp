@@ -181,7 +181,7 @@ export default class Purposes extends Component {
 							<div className={style.sectionInfo}>
 								<div className={style.sectionHeader}>
 									<div className={style.title}>
-										<LocalLabel prefix="publisherConsents" localizeKey={`title`}/>
+										<LocalLabel prefix="publisherConsents" localizeKey={`title`}>Publisher consents</LocalLabel>
 									</div>
 								</div>
 							</div>
@@ -198,12 +198,12 @@ export default class Purposes extends Component {
 							<div className={style.sectionInfo}>
 								<div className={style.sectionHeader}>
 									<div className={style.title}>
-										<LocalLabel prefix="vendorConsents" localizeKey={`title`}/>
+										<LocalLabel prefix="vendorConsents" localizeKey={`title`}>Vendor consents</LocalLabel>
 									</div>
 								</div>
 							</div>
 							<div>
-								<LocalLabel className={style.header} prefix="purposes" localizeKey={`title`}/>
+								<LocalLabel className={style.header} prefix="purposes" localizeKey={`title`}>Purposes</LocalLabel>
 								{purposes.map((purpose, index) => <Purpose key={index}
 																		   index={index}
 																		   purpose={purpose}
@@ -213,7 +213,7 @@ export default class Purposes extends Component {
 																		   onToggle={this.createHandleSelectPurpose()}/>)}
 							</div>
 							<div>
-								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}/>
+								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}>Features</LocalLabel>
 								{features.map((feature, index) => <Feature key={index}
 																		   feature={feature}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>
