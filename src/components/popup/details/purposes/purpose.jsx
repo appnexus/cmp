@@ -46,11 +46,11 @@ const Purpose = (props) => {
 					<div>
 						<a className={style.vendorLink}
 						   onClick={createOnShowVendors({isCustom: false, purposeIds: [purpose.id]})}>
-							<LocalLabel prefix='purposes' localizeKey='showVendors'>Show full vendor list</LocalLabel>
+							<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
 						</a>
 						<a className={style.vendorLink}
 						   onClick={createOnShowVendors({isCustom: true, purposeIds: [purpose.id]})}>
-							<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel>
+							<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 						</a>
 					</div>
 				)}

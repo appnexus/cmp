@@ -150,13 +150,13 @@ export default class Purposes extends Component {
 					<div class={[style.purposeItem, selectedTab === TAB_PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
 						onClick={this.handleSelectTab(TAB_PUBLISHER_INFO)}
 					>
-						<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}/>
+						<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}>General information</LocalLabel>
 					</div>
 					<div
 						className={[style.purposeItem, selectedTab === TAB_CONSENTS ? style.selectedPurpose : ''].join(' ')}
 						onClick={this.handleSelectTab(TAB_CONSENTS)}
 					>
-						<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}/>
+						<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}>Personal data processing</LocalLabel>
 					</div>
 				</div>
 				{!selectedTab ? (
@@ -164,11 +164,14 @@ export default class Purposes extends Component {
 						<div className={style.purposeDetail}>
 							<div className={style.detailHeader}>
 								<div className={style.title}>
-									<LocalLabel prefix="tabs" localizeKey={`tab1.title`}/>
+									<LocalLabel prefix="tabs" localizeKey={`tab1.title`}>Learn more about how information is being used?</LocalLabel>
 								</div>
 							</div>
 							<div className={style.body}>
-								<LocalLabel prefix="tabs" localizeKey={`tab1.description`}/>
+								<LocalLabel prefix="tabs" localizeKey={`tab1.description`}>
+								We and select companies may access and use your information for the listed purposes. You may
+								customize your choices or continue using our site if you're OK with the purposes.
+								</LocalLabel>
 							</div>
 						</div>
 					</div>

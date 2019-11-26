@@ -86,8 +86,6 @@ export default {
 			},
 			tab2: {
 				menu: 'Przetwarzanie danych osobowych',
-				title: '',
-				description: '',
 			}
 		},
 		publisherConsents: {
@@ -103,27 +101,22 @@ export default {
 			showCustomVendors: 'Pokaż listę Zaufanych Partnerów',
 			title: 'Cele',
 			purpose1: {
-				menu: '',
 				title: 'Przechowywanie i dostęp do informacji',
 				description: '<p>Przechowywanie informacji albo dostęp do informacji przechowywanych na urządzeniu użytkownika, w tym dostęp do identyfikatorów reklamowych, innych identyfikatorów urządzenia, wykorzystanie plików cookie oraz podobnych technologii.</p>'
 			},
 			purpose2: {
-				menu: '',
 				title: 'Personalizacja',
 				description: '<p>Gromadzenie i przetwarzanie informacji na temat sposobu korzystania przez użytkownika z usługi, aby z czasem dokonać personalizacji reklam lub treści dla użytkownika w innych kontekstach, na przykład w innych witrynach albo aplikacjach. Zazwyczaj treści w witrynie lub aplikacji są wykorzystywane do wyciągania wniosków na temat zainteresowań użytkownika, które zapewniają dane na potrzeby doboru reklam lub treści w przyszłości.</p>'
 			},
 			purpose3: {
-				menu: '',
 				title: 'Wybór i dostarczanie reklam, tworzenie raportów na temat reklam',
 				description: '<p>Gromadzenie informacji oraz przetwarzanie uprzednio zgromadzonych informacji w celu wyboru i dostarczenia użytkownikowi reklam oraz oceny dostarczania i skuteczności tych reklam. Obejmuje to wykorzystywanie uprzednio zgromadzonych informacji na temat zainteresowań użytkownika w celu wyboru reklam, przetwarzanie danych na temat wyświetlonych reklam, częstotliwości, czasu i miejsca ich wyświetlania, oraz informacji czy użytkownik podjął działania w związku z reklamą, np. klikając na reklamę albo dokonując zakupu. Nie obejmuje to Personalizacji, która obejmuje gromadzenie i przetwarzanie informacji na temat sposobu korzystania przez użytkownika z usługi, aby z czasem dokonać personalizacji reklam lub treści dla użytkownika w innych kontekstach, na przykład w witrynach albo aplikacjach.</p>'
 			},
 			purpose4: {
-				menu: '',
 				title: 'Wybór i dostarczanie treści, tworzenie raportów na temat treści',
 				description: '<p>Gromadzenie informacji oraz przetwarzanie uprzednio zgromadzonych informacji w celu wyboru i dostarczenia treści oraz oceny dostarczania i skuteczności tych treści. Obejmuje to wykorzystywanie uprzednio zgromadzonych informacji na temat zainteresowań użytkownika w celu wyboru treści, przetwarzanie danych na temat wyświetlonych treści, częstotliwości, czasu i miejsca ich wyświetlania, oraz informacji czy użytkownik podjął działania w związku z treścią, np. klikając na treść. Nie obejmuje to Personalizacji, która obejmuje gromadzenie i przetwarzanie informacji na temat sposobu korzystania przez użytkownika z usługi, aby z czasem dokonać personalizacji treści lub reklam dla użytkownika w innych kontekstach, na przykład w witrynach albo aplikacjach.</p>'
 			},
 			purpose5: {
-				menu: '',
 				title: 'Pomiary',
 				description: '<p>Gromadzenie informacji na temat wykorzystywania treści przez użytkownika oraz przetwarzanie uprzednio zgromadzonych informacji w celu oceny, zrozumienia i tworzenia raportów na temat wykorzystywania usługi przez użytkownika. Nie obejmuje to Personalizacji, gromadzenia i przetwarzanie informacji na temat sposobu korzystania przez użytkownika z usługi, aby z czasem dokonać personalizacji treści lub reklam dla użytkownika w innych kontekstach, tj. w ramach usługi, na przykład w witrynach albo aplikacjach.</p>'
 			}
@@ -131,17 +124,14 @@ export default {
 		features: {
 			title: 'Funkcje',
 			feature1: {
-				menu: '',
 				title: 'Zestawianie danych offline',
 				description: '<p>Łączenie danych ze źródeł offline, które zostały wyjściowo zgromadzone w kontekstach innych niż dane zgromadzone online na potrzeby realizacji jednego albo większej liczby celów.</p>'
 			},
 			feature2: {
-				menu: '',
 				title: 'Łączenie urządzeń',
 				description: '<p>Przetwarzanie danych w celu powiązania ze sobą wielu urządzeń należących do tego samego użytkownika na potrzeby realizacji jednego albo większej liczby celów.</p>'
 			},
 			feature3: {
-				menu: '',
 				title: 'Dokładne dane dotyczące lokalizacji geograficznej',
 				description: '<p>Gromadzenie i obsługa dokładnych danych dotyczących lokalizacji geograficznej na potrzeby realizacji jednego albo większej liczby celów.</p>'
 			}
