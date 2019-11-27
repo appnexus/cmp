@@ -44,14 +44,18 @@ const Purpose = (props) => {
 				<LocalLabel localizeKey={`${prefix}.description`}>{purpose.description}</LocalLabel>
 				{!isPublisherPurpose && (
 					<div>
-						<a className={style.vendorLink}
-						   onClick={createOnShowVendors({isCustom: false, purposeIds: [purpose.id]})}>
-							<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
-						</a>
-						<a className={style.vendorLink}
-						   onClick={createOnShowVendors({isCustom: true, purposeIds: [purpose.id]})}>
-							<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
-						</a>
+						<div>
+							<a className={style.vendorLink}
+							onClick={createOnShowVendors({isCustom: false, purposeIds: [purpose.id]})}>
+								<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
+							</a>
+						</div>
+						<div>
+							<a className={style.vendorLink}
+							onClick={createOnShowVendors({isCustom: true, purposeIds: [purpose.id]})}>
+								<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
+							</a>
+						</div>
 					</div>
 				)}
 			</div>
