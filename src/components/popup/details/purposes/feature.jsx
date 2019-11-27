@@ -18,16 +18,16 @@ const Feature = (props) => {
 		<div className={style.purposeDetail}>
 			<div className={style.detailHeader}>
 				<div className={style.title}>
-					<LocalLabel localizeKey={`feature${feature.id}.title`}/>
+					<LocalLabel localizeKey={`feature${feature.id}.title`}>{feature.name}</LocalLabel>
 				</div>
 			</div>
 			<div className={style.body}>
-				<LocalLabel localizeKey={`feature${feature.id}.description`}/>
+				<LocalLabel localizeKey={`feature${feature.id}.description`}>{feature.description}</LocalLabel>
 				<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: false, featuresIds: [feature.id]})}>
-					<LocalLabel prefix='purposes' localizeKey='showVendors'>Show full vendor list</LocalLabel>
+					<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
 				</a>
 				<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: true, featuresIds: [feature.id]})}>
-					<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show full custom vendor list</LocalLabel>
+					<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 				</a>
 			</div>
 		</div>

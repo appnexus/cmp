@@ -229,6 +229,43 @@ describe('store', () => {
 		expect(selectedPurposeIds.length).to.equal(vendorList.purposes.length);
 	});
 
+	it('selects standard purpose IDs', () => {
+		const store = new Store({
+			vendorList,
+			publisherConsentData: {
+				created: new Date(),
+				selectedStandardPurposeIds: new Set([0, 2]),
+			}
+		});
+
+		store.selectStandardPurpose(0, false);
+		store.selectStandardPurpose(3, true);
+		store.persist();
+
+		const publisherObject = store.getPublisherConsentsObject();
+		const selectedStandardPurposeIds = Object.keys(publisherObject.standardPurposes).filter(key => publisherObject.standardPurposes[key]);
+
+		expect(selectedStandardPurposeIds).to.deep.equal(['2', '3']);
+	});
+
+	it('selects ALL standard purpose IDs', () => {
+		const store = new Store({
+			vendorList,
+			publisherConsentData: {
+				created: new Date(),
+				selectedStandardPurposeIds: new Set([0, 2]),
+			}
+		});
+
+		store.selectAllStandardPurposes(true);
+		store.persist();
+
+		const publisherObject = store.getPublisherConsentsObject();
+		const selectedStandardPurposeIds = Object.keys(publisherObject.standardPurposes).filter(key => publisherObject.standardPurposes[key]);
+
+		expect(selectedStandardPurposeIds.length).to.equal(vendorList.purposes.length);
+	});
+
 	it('selects custom purpose IDs', () => {
 		const store = new Store({
 			customPurposeList,

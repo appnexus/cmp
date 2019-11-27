@@ -26,6 +26,7 @@ export default class Purposes extends Component {
 		features: [],
 		customPurposes: [],
 		selectedPurposeIds: new Set(),
+		selectedStandardPurposeIds: new Set(),
 		selectedCustomPurposeIds: new Set()
 	};
 
@@ -37,9 +38,10 @@ export default class Purposes extends Component {
 		};
 	};
 
-	handleSelectPurpose = ({isSelected, dataId}) => {
+	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false) => {
 		const {
 			selectPurpose,
+			selectStandardPurpose,
 			selectCustomPurpose
 		} = this.props;
 
@@ -49,10 +51,16 @@ export default class Purposes extends Component {
 		if (selectedPurpose) {
 			if (selectedPurpose.custom) {
 				selectCustomPurpose(selectedPurpose.id, isSelected);
+			} else if (isPublisher) {
+				selectStandardPurpose(selectedPurpose.id, isSelected);
 			} else {
 				selectPurpose(selectedPurpose.id, isSelected);
 			}
 		}
+	};
+
+	createHandleSelectPurpose = (isPublisher) => {
+		return (data) => this.handleSelectPurpose(data, isPublisher);
 	};
 
 	getAllPurposes = () => {
@@ -66,6 +74,7 @@ export default class Purposes extends Component {
 			allPurposes.push({
 				id: purpose.id,
 				name: purpose.name,
+				description: purpose.description,
 				custom: false
 			});
 		});
@@ -74,6 +83,7 @@ export default class Purposes extends Component {
 			allPurposes.push({
 				id: purpose.id,
 				name: purpose.name,
+				description: purpose.description,
 				custom: true
 			});
 		});
@@ -89,13 +99,16 @@ export default class Purposes extends Component {
 
 		const {
 			selectedPurposeIds,
+			selectedStandardPurposeIds,
 			selectedCustomPurposeIds,
 			purposes,
 			features,
-			persistedVendorConsentData
+			persistedVendorConsentData,
+			persistedPublisherConsentData
 		} = props;
 
-		const {created} = persistedVendorConsentData;
+		const {created: vendorConsentCreated} = persistedVendorConsentData;
+		const {created: publisherConsentCreated} = persistedPublisherConsentData;
 
 		const {
 			selectedTab,
@@ -104,24 +117,31 @@ export default class Purposes extends Component {
 
 		const allPurposes = this.getAllPurposes();
 
-		const purposeIsActive = (purpose) =>  purpose && purpose.custom ?
+		const purposeIsActive = (purpose, isPublisher = false) => purpose && (
+			purpose.custom ?
 			selectedCustomPurposeIds.has(purpose.id) :
-			selectedPurposeIds.has(purpose.id);
+			(isPublisher ? selectedStandardPurposeIds : selectedPurposeIds).has(purpose.id)
+		);
 
 		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
 			config.contractPurposeIds &&
 			purpose && !purpose.custom &&
-			config.legIntPurposeIds.indexOf(purpose.id) >= 0 ||
-			config.contractPurposeIds.indexOf(purpose.id) >= 0;
+			(config.legIntPurposeIds.indexOf(purpose.id) >= 0 || config.contractPurposeIds.indexOf(purpose.id) >= 0);
 
-		if (!created && selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
+		if (selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
 			renderedTabIndices.add(selectedTab);
-			// TODO: differentiate publisher purposes from vendor purposes (publisher leg int purpose should not be unselected)
-			purposes.forEach((purpose, index) => {
-				if (!purposeIsTechnical(purpose)) {
+			if (!vendorConsentCreated) {
+				purposes.forEach((purpose, index) => {
 					this.handleSelectPurpose({isSelected: false, dataId: index});
-				}
-			});
+				});
+			}
+			if (!publisherConsentCreated) {
+				allPurposes.forEach((purpose, index) => {
+					if (!purposeIsTechnical(purpose)) {
+						this.handleSelectPurpose({isSelected: false, dataId: index}, true);
+					}
+				});
+			}
 		}
 
 		return (
@@ -130,13 +150,13 @@ export default class Purposes extends Component {
 					<div class={[style.purposeItem, selectedTab === TAB_PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
 						onClick={this.handleSelectTab(TAB_PUBLISHER_INFO)}
 					>
-						<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}/>
+						<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}>General information</LocalLabel>
 					</div>
 					<div
 						className={[style.purposeItem, selectedTab === TAB_CONSENTS ? style.selectedPurpose : ''].join(' ')}
 						onClick={this.handleSelectTab(TAB_CONSENTS)}
 					>
-						<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}/>
+						<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}>Personal data processing</LocalLabel>
 					</div>
 				</div>
 				{!selectedTab ? (
@@ -144,11 +164,14 @@ export default class Purposes extends Component {
 						<div className={style.purposeDetail}>
 							<div className={style.detailHeader}>
 								<div className={style.title}>
-									<LocalLabel prefix="tabs" localizeKey={`tab1.title`}/>
+									<LocalLabel prefix="tabs" localizeKey={`tab1.title`}>Learn more about how information is being used?</LocalLabel>
 								</div>
 							</div>
 							<div className={style.body}>
-								<LocalLabel prefix="tabs" localizeKey={`tab1.description`}/>
+								<LocalLabel prefix="tabs" localizeKey={`tab1.description`}>
+								We and select companies may access and use your information for the listed purposes. You may
+								customize your choices or continue using our site if you're OK with the purposes.
+								</LocalLabel>
 							</div>
 						</div>
 					</div>
@@ -158,7 +181,7 @@ export default class Purposes extends Component {
 							<div className={style.sectionInfo}>
 								<div className={style.sectionHeader}>
 									<div className={style.title}>
-										<LocalLabel prefix="publisherConsents" localizeKey={`title`}/>
+										<LocalLabel prefix="publisherConsents" localizeKey={`title`}>Publisher consents</LocalLabel>
 									</div>
 								</div>
 							</div>
@@ -166,31 +189,31 @@ export default class Purposes extends Component {
 																		  index={index}
 																		  isPublisherPurpose={true}
 																		  purpose={purpose}
-																		  isActive={purposeIsActive(purpose)}
+																		  isActive={purposeIsActive(purpose, true)}
 																		  isTechnical={purposeIsTechnical(purpose)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
-																		  onToggle={this.handleSelectPurpose}/>)}
+																		  onToggle={this.createHandleSelectPurpose(true)}/>)}
 						</div>
 						<div className={style.purposesSection}>
 							<div className={style.sectionInfo}>
 								<div className={style.sectionHeader}>
 									<div className={style.title}>
-										<LocalLabel prefix="vendorConsents" localizeKey={`title`}/>
+										<LocalLabel prefix="vendorConsents" localizeKey={`title`}>Vendor consents</LocalLabel>
 									</div>
 								</div>
 							</div>
 							<div>
-								<LocalLabel className={style.header} prefix="purposes" localizeKey={`title`}/>
+								<LocalLabel className={style.header} prefix="purposes" localizeKey={`title`}>Purposes</LocalLabel>
 								{purposes.map((purpose, index) => <Purpose key={index}
 																		   index={index}
 																		   purpose={purpose}
 																		   isActive={purposeIsActive(purpose)}
 																		   isTechnical={false}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
-																		   onToggle={this.handleSelectPurpose}/>)}
+																		   onToggle={this.createHandleSelectPurpose()}/>)}
 							</div>
 							<div>
-								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}/>
+								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}>Features</LocalLabel>
 								{features.map((feature, index) => <Feature key={index}
 																		   feature={feature}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>

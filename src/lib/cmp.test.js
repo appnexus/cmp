@@ -84,7 +84,7 @@ describe('cmp', () => {
 		});
 
 		it('getPublisherConsents returns only persisted data', (done) => {
-			cmp.store.selectPurpose(1, false);
+			cmp.store.selectStandardPurpose(1, false);
 			cmp.processCommand('getPublisherConsents', null, data => {
 				expect(data.standardPurposes['1']).to.be.true;
 				cmp.store.persist();

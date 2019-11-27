@@ -57,6 +57,7 @@ export default class Store {
 
 		this.publisherConsentData = Object.assign(
 			{
+				selectedStandardPurposeIds: new Set(),
 				selectedCustomPurposeIds: new Set()
 			},
 			publisherConsentData,
@@ -165,8 +166,7 @@ export default class Store {
 		const {
 			vendorList = {},
 			customPurposeList = {},
-			persistedPublisherConsentData = {},
-			persistedVendorConsentData = {}
+			persistedPublisherConsentData = {}
 		} = this;
 
 		const {
@@ -176,25 +176,25 @@ export default class Store {
 			cmpId,
 			vendorListVersion,
 			publisherPurposeVersion,
+			selectedStandardPurposeIds = new Set(),
 			selectedCustomPurposeIds = new Set()
 		} = persistedPublisherConsentData;
 
-		const {selectedPurposeIds = new Set()} = persistedVendorConsentData;
 		const {purposes = []} = vendorList;
 		const {purposes: customPurposes = []} = customPurposeList;
 
 		const lastStandardPurposeId = Math.max(
 			...purposes.map(({id}) => id),
-			...arrayFrom(selectedPurposeIds));
+			...arrayFrom(selectedStandardPurposeIds));
 
 		const lastCustomPurposeId = Math.max(
 			...customPurposes.map(({id}) => id),
-			...arrayFrom(selectedPurposeIds));
+			...arrayFrom(selectedStandardPurposeIds));
 
 		// Map all purpose IDs
 		const standardPurposeMap = {};
 		for (let i = 1; i <= lastStandardPurposeId; i++) {
-			standardPurposeMap[i] = selectedPurposeIds.has(i);
+			standardPurposeMap[i] = selectedStandardPurposeIds.has(i);
 		}
 		const customPurposeMap = {};
 		for (let i = 1; i <= lastCustomPurposeId; i++) {
@@ -369,6 +369,24 @@ export default class Store {
 		this.storeUpdate();
 	};
 
+	selectStandardPurpose = (purposeId, isSelected) => {
+		const {selectedStandardPurposeIds} = this.publisherConsentData;
+		if (isSelected) {
+			selectedStandardPurposeIds.add(purposeId);
+		}
+		else {
+			selectedStandardPurposeIds.delete(purposeId);
+		}
+		this.storeUpdate();
+	};
+
+	selectAllStandardPurposes = (isSelected) => {
+		const {purposes = []} = this.vendorList || {};
+		const operation = isSelected ? 'add' : 'delete';
+		purposes.forEach(({id}) => this.publisherConsentData.selectedStandardPurposeIds[operation](id));
+		this.storeUpdate();
+	};
+
 	selectCustomPurpose = (purposeId, isSelected) => {
 		const {selectedCustomPurposeIds} = this.publisherConsentData;
 		if (isSelected) {
@@ -468,6 +486,12 @@ export default class Store {
 			});
 		}
 
+		const {created: publisherConsentCreated} = this.publisherConsentData;
+
+		// If publisher consent has never been persisted set the default selected status
+		if (!publisherConsentCreated) {
+			this.publisherConsentData.selectedStandardPurposeIds = new Set(purposes.map(p => p.id));
+		}
 
 		const {selectedVendorIds = new Set()} = this.vendorConsentData;
 
