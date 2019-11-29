@@ -89,7 +89,7 @@ export default {
 			}
 		},
 		publisherConsents: {
-			title: "Zgody dla Wydawcy",
+			title: "Podstawy prawne przetwarzania danych przez Wydawcę (Uzasadniony interes administratora)",
 		},
 		vendorConsents: {
 			title: "Zgody dla Partnerów",
