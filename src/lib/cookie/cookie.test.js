@@ -279,14 +279,10 @@ describe('cookie', () => {
 	});
 
 	it('returns correct subdomain cookieDomain', () => {
-		global.window = Object.create(window);
-		const location = window.location;
 		const hostname = 'test.dummy.co.uk';
-		Object.defineProperty(window, 'location', {
-			value: {
-				hostname
-			}
-		});
+		const resetLocation = global.window.location;
+		delete global.window.location;
+		global.window.location = { hostname };
 		expect(window.location.hostname).to.equal(hostname);
 		config.update({
 			cookieDomain: '.dummy.co.uk'
@@ -294,6 +290,36 @@ describe('cookie', () => {
 		expect(getCookieDomain()).to.equal(';domain=.dummy.co.uk');
 
 		// reset
-		Object.defineProperty(window, 'location', location);
+		global.window.location = resetLocation;
+	});
+
+	it('allows wildcard cookieDomain on naked domain', () => {
+		const hostname = 'zoo.com';
+		const resetLocation = global.window.location;
+		delete global.window.location;
+		global.window.location = { hostname };
+		expect(window.location.hostname).to.equal(hostname);
+		config.update({
+			cookieDomain: '.zoo.com'
+		});
+		expect(getCookieDomain()).to.equal(';domain=.zoo.com');
+
+		// reset
+		global.window.location = resetLocation;
+	});
+
+	it('defaults to null when on primary TLD', () => {
+		const hostname = 'localhost';
+		const resetLocation = global.window.location;
+		delete global.window.location;
+		global.window.location = { hostname };
+		expect(window.location.hostname).to.equal(hostname);
+		config.update({
+			cookieDomain: 'localhost'
+		});
+		expect(getCookieDomain()).to.equal(''); // null
+
+		// reset
+		global.window.location = resetLocation;
 	});
 });
