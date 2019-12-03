@@ -1,3 +1,11 @@
+<a name="1.3.4"></a>
+
+## [1.3.4](https://github.com/openmail/system1-cmp/compare/v1.3.3...v1.3.4) (2019-12-03)
+
+### Refactor
+
+- [x] `getCookieDomain()` allows wildcard cookie on naked primary domain (ex: setting `cookieDomain: '.zoo.com'` while on `https://zoo.com`)
+
 <a name="1.3.3"></a>
 
 ## [1.3.3](https://github.com/openmail/system1-cmp/compare/v1.3.2...v1.3.3) (2019-12-02)

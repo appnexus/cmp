@@ -23,7 +23,7 @@ const getCookieDomain = () => {
 	const { cookieDomain: customCookieDomain } = config;
 	const hostname = (window && window.location && window.location.hostname) || '';
 	const cookieDomain =
-		hostname.split('.').length > 1 && customCookieDomain && hostname.indexOf(customCookieDomain) > -1
+		hostname.split('.').length > 1 && customCookieDomain && `.${hostname}`.indexOf(customCookieDomain) > -1
 			? `;domain=${customCookieDomain}`
 			: '';
 	return cookieDomain;
