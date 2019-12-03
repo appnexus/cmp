@@ -4,7 +4,7 @@
 import { expect } from 'chai';
 import fs from 'fs';
 import vendorlist from '../docs/assets/vendorlist.json';
-import { COOKIE_DOMAIN } from '../lib/cookie/cookie';
+import { getCookieDomain } from '../lib/cookie/cookie';
 import { deleteAllCookies, setCookie, oldEuconsentCookie } from './helpers';
 
 const fakeScriptSrc = './fake-loader-src.js';
@@ -19,7 +19,7 @@ describe('cmpLoader as script tag', () => {
 	});
 
 	afterEach(() => {
-		deleteAllCookies(COOKIE_DOMAIN);
+		deleteAllCookies(getCookieDomain());
 		eval('; global.cmp = null; cmp = null;');
 		jest.restoreAllMocks();
 		appendChild.mockRestore();
@@ -380,6 +380,26 @@ describe('cmpLoader as script tag', () => {
 						onConsentChanged.mockRestore();
 						done();
 					}, 0);
+				}
+			);
+		});
+
+		it('defaults to correct cookie domain', done => {
+			global.cmp(
+				'init',
+				{
+					scriptSrc: fakeScriptSrc,
+					gdprApplies: true,
+					shouldAutoConsentWithFooter: true,
+					cookieDomain: 'localhost'
+				},
+				result => {
+					expect(result.consentRequired).to.be.true;
+					expect(result.hasConsented).to.be.true;
+					const cookieDomain = getCookieDomain();
+					expect(cookieDomain).to.equal('');
+					expect(document.cookie.indexOf('gdpr_opt_in=1')).to.be.above(1);
+					done();
 				}
 			);
 		});

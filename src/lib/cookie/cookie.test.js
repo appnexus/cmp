@@ -4,6 +4,7 @@ import customPurposeList from '../../docs/assets/purposes.json';
 import config from '../config';
 
 import {
+	getCookieDomain,
 	writeCookie,
 	encodeVendorConsentData,
 	decodeVendorConsentData,
@@ -22,56 +23,55 @@ jest.mock('../portal');
 const mockPortal = require('../portal');
 
 const vendorList = {
-	'version': 1,
-	'origin': 'http://ib.adnxs.com/vendors.json',
-	'purposes': [
+	version: 1,
+	origin: 'http://ib.adnxs.com/vendors.json',
+	purposes: [
 		{
-			'id': 1,
-			'name': 'Accessing a Device or Browser'
+			id: 1,
+			name: 'Accessing a Device or Browser'
 		},
 		{
-			'id': 2,
-			'name': 'Advertising Personalisation'
+			id: 2,
+			name: 'Advertising Personalisation'
 		},
 		{
-			'id': 3,
-			'name': 'Analytics'
+			id: 3,
+			name: 'Analytics'
 		},
 		{
-			'id': 4,
-			'name': 'Content Personalisation'
+			id: 4,
+			name: 'Content Personalisation'
 		}
 	],
-	'vendors': [
+	vendors: [
 		{
-			'id': 1,
-			'name': 'Globex'
+			id: 1,
+			name: 'Globex'
 		},
 		{
-			'id': 2,
-			'name': 'Initech'
+			id: 2,
+			name: 'Initech'
 		},
 		{
-			'id': 3,
-			'name': 'CRS'
+			id: 3,
+			name: 'CRS'
 		},
 		{
-			'id': 4,
-			'name': 'Umbrella'
+			id: 4,
+			name: 'Umbrella'
 		},
 		{
-			'id': 10,
-			'name': 'Pierce and Pierce'
+			id: 10,
+			name: 'Pierce and Pierce'
 		},
 		{
-			'id': 8,
-			'name': 'Aperture'
+			id: 8,
+			name: 'Aperture'
 		}
 	]
 };
 
 describe('cookie', () => {
-
 	const aDate = new Date('2018-07-15 PDT');
 
 	beforeEach(() => {
@@ -101,7 +101,7 @@ describe('cookie', () => {
 			selectedVendorIds: new Set([1, 2, 4])
 		};
 
-		const encodedString = encodeVendorConsentData({...vendorConsentData, vendorList});
+		const encodedString = encodeVendorConsentData({ ...vendorConsentData, vendorList });
 		const decoded = decodeVendorConsentData(encodedString);
 
 		expect(decoded).to.deep.equal(vendorConsentData);
@@ -113,7 +113,7 @@ describe('cookie', () => {
 			cmpId: 1,
 			vendorListVersion: 1,
 			created: aDate,
-			lastUpdated: aDate,
+			lastUpdated: aDate
 		};
 
 		const publisherConsentData = {
@@ -127,13 +127,14 @@ describe('cookie', () => {
 		};
 
 		const encodedString = encodePublisherConsentData({
-			...vendorConsentData, ...publisherConsentData,
+			...vendorConsentData,
+			...publisherConsentData,
 			vendorList,
 			customPurposeList
 		});
 		const decoded = decodePublisherConsentData(encodedString);
 
-		expect(decoded).to.deep.equal({...vendorConsentData, ...publisherConsentData});
+		expect(decoded).to.deep.equal({ ...vendorConsentData, ...publisherConsentData });
 	});
 
 	it('writes and reads the local cookie when globalConsent = false', () => {
@@ -146,7 +147,7 @@ describe('cookie', () => {
 			cmpId: 1,
 			vendorListVersion: 1,
 			created: aDate,
-			lastUpdated: aDate,
+			lastUpdated: aDate
 		};
 
 		return writeVendorConsentCookie(vendorConsentData).then(() => {
@@ -167,7 +168,7 @@ describe('cookie', () => {
 			cmpId: 1,
 			vendorListVersion: 1,
 			created: aDate,
-			lastUpdated: aDate,
+			lastUpdated: aDate
 		};
 
 		return writeVendorConsentCookie(vendorConsentData).then(() => {
@@ -186,7 +187,7 @@ describe('cookie', () => {
 			cmpId: 1,
 			vendorListVersion: 1,
 			created: aDate,
-			lastUpdated: aDate,
+			lastUpdated: aDate
 		};
 
 		return readVendorConsentCookie(vendorConsentData).then(() => {
@@ -206,7 +207,7 @@ describe('cookie', () => {
 			vendorListVersion: 1,
 			publisherPurposeVersion: 1,
 			created: aDate,
-			lastUpdated: aDate,
+			lastUpdated: aDate
 		};
 
 		writePublisherConsentCookie(publisherConsentData);
@@ -214,19 +215,24 @@ describe('cookie', () => {
 
 		expect(document.cookie).to.contain(PUBLISHER_CONSENT_COOKIE_NAME);
 		expect(fromCookie).to.deep.include(publisherConsentData);
+
+		config.update({
+			cookieDomain: ''
+		});
 	});
 
 	it('converts selected vendor list to a range', () => {
 		const maxVendorId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
 		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 4]));
 
-		expect(ranges).to.deep.equal([{
-			isRange: true,
-			startVendorId: 2,
-			endVendorId: 4
-		}]);
+		expect(ranges).to.deep.equal([
+			{
+				isRange: true,
+				startVendorId: 2,
+				endVendorId: 4
+			}
+		]);
 	});
-
 
 	it('converts selected vendor list to multiple ranges', () => {
 		const maxVendorId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
@@ -249,5 +255,45 @@ describe('cookie', () => {
 				endVendorId: undefined
 			}
 		]);
+	});
+
+	it('returns current cookieDomain', () => {
+		config.update({
+			cookieDomain: ''
+		});
+		expect(getCookieDomain()).to.equal('');
+	});
+
+	it('returns configured cookieDomain', () => {
+		config.update({
+			cookieDomain: 'localhost'
+		});
+		expect(getCookieDomain()).to.equal('');
+	});
+
+	it('defaults to correct cookieDomain', () => {
+		config.update({
+			cookieDomain: '.dummy.com'
+		});
+		expect(getCookieDomain()).to.equal('');
+	});
+
+	it('returns correct subdomain cookieDomain', () => {
+		global.window = Object.create(window);
+		const location = window.location;
+		const hostname = 'test.dummy.co.uk';
+		Object.defineProperty(window, 'location', {
+			value: {
+				hostname
+			}
+		});
+		expect(window.location.hostname).to.equal(hostname);
+		config.update({
+			cookieDomain: '.dummy.co.uk'
+		});
+		expect(getCookieDomain()).to.equal(';domain=.dummy.co.uk');
+
+		// reset
+		Object.defineProperty(window, 'location', location);
 	});
 });

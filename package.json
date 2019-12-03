@@ -1,6 +1,6 @@
 {
   "name": "system1-cmp",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "System1 Consent Management Platform for GDPR Compliance",
   "scripts": {
     "clean": "rimraf ./dist",

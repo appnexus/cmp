@@ -1,3 +1,15 @@
+<a name="1.3.3"></a>
+
+## [1.3.3](https://github.com/openmail/system1-cmp/compare/v1.3.2...v1.3.3) (2019-12-02)
+
+### Feature
+
+- [x] Add `cookieDomain` config option to allow subdomain cookies
+
+### Fix
+
+- [x] Remove inference of domain in cookie setting because `co.uk` style public-suffixes make this difficult to implement
+
 <a name="1.3.2"></a>
 
 ## [1.3.2](https://github.com/openmail/system1-cmp/compare/v1.3.1...v1.3.2) (2019-11-22)

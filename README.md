@@ -113,6 +113,7 @@ const config = {
   pubVendorListLocation: '//s.flocdn.com/cmp/pubvendors.json', // OPTIONAL, whitelists vendors
   logging: false,
   customPurposeListLocation: './purposes.json',
+  cookieDomain: '.example.com',
   globalVendorListLocation: '//vendorlist.consensu.org/vendorlist.json',
   globalConsentLocation: './portal.html',
   storeConsentGlobally: false,
@@ -140,6 +141,7 @@ cmp('init', config);
 - `shouldAutoUpgradeConsent`: OPTIONAL: true by default, if user previously consented and vendor list changed, automatically upgrade consent and display a notice
 - `theme`: OPTIONAL object to provide style overrides,
   - `isBannerModal`: OPTIONAL: boolean, false by deafult, true to use Modal on initial CMP banner
+- `cookieDomain`: String: OPTIONAL: domain cookie is written to (used for subdomaining a cookie), (ex: `.example.com` writes a cookie readable by \*.example.com)
 
 #### init: callback
 
