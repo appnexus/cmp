@@ -24,6 +24,12 @@ export default class Vendors extends Component {
 		selectVendor: () => {}
 	};
 
+	componentDidMount() {
+		if (!this.props.vendorConsentCreated) {
+			this.handleRejectAll();
+		}
+	};
+
 	handleAcceptAll = () => {
 		this.props.selectAllVendors(true);
 	};
