@@ -257,21 +257,7 @@ describe('cookie', () => {
 		]);
 	});
 
-	it('returns current cookieDomain', () => {
-		config.update({
-			cookieDomain: ''
-		});
-		expect(getCookieDomain()).to.equal('');
-	});
-
-	it('returns configured cookieDomain', () => {
-		config.update({
-			cookieDomain: 'localhost'
-		});
-		expect(getCookieDomain()).to.equal('');
-	});
-
-	it('defaults to correct cookieDomain', () => {
+	it('returns null on invalid cookieDomain', () => {
 		config.update({
 			cookieDomain: '.dummy.com'
 		});
@@ -293,7 +279,7 @@ describe('cookie', () => {
 		global.window.location = resetLocation;
 	});
 
-	it('allows wildcard cookieDomain on naked domain', () => {
+	it('returns wildcard cookieDomain on naked domain', () => {
 		const hostname = 'zoo.com';
 		const resetLocation = global.window.location;
 		delete global.window.location;
@@ -303,12 +289,11 @@ describe('cookie', () => {
 			cookieDomain: '.zoo.com'
 		});
 		expect(getCookieDomain()).to.equal(';domain=.zoo.com');
-
-		// reset
 		global.window.location = resetLocation;
 	});
 
-	it('defaults to null when on primary TLD', () => {
+	// special case for localhost and new custom TLDs
+	it('returns null when on primary TLD', () => {
 		const hostname = 'localhost';
 		const resetLocation = global.window.location;
 		delete global.window.location;
@@ -318,8 +303,6 @@ describe('cookie', () => {
 			cookieDomain: 'localhost'
 		});
 		expect(getCookieDomain()).to.equal(''); // null
-
-		// reset
 		global.window.location = resetLocation;
 	});
 });
