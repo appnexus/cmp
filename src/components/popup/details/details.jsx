@@ -76,15 +76,17 @@ export default class Details extends Component {
 			vendorConsentData,
 			publisherConsentData,
 			selectPurpose,
+			selectStandardPurpose,
 			selectCustomPurpose,
 			selectAllVendors,
 			selectVendor,
 			persistedVendorConsentData = {},
+			persistedPublisherConsentData = {},
 			subsection
 		} = store;
 		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
-		const { selectedCustomPurposeIds } = publisherConsentData;
-		const { purposes = [] } = vendorList;
+		const { selectedStandardPurposeIds, selectedCustomPurposeIds } = publisherConsentData;
+		const { purposes = [], features = [] } = vendorList;
 		const { purposes: customPurposes = [] } = customPurposeList;
 
 
@@ -101,19 +103,25 @@ export default class Details extends Component {
 					<Panel selectedIndex={subsection}>
 						<Purposes
 							purposes={purposes}
+							features={features}
 							customPurposes={customPurposes}
 							selectedPurposeIds={selectedPurposeIds}
+							selectedStandardPurposeIds={selectedStandardPurposeIds}
 							selectedCustomPurposeIds={selectedCustomPurposeIds}
 							selectPurpose={selectPurpose}
+							selectStandardPurpose={selectStandardPurpose}
 							selectCustomPurpose={selectCustomPurpose}
 							onShowVendors={this.handleShowVendors}
 							persistedVendorConsentData={persistedVendorConsentData}
+							persistedPublisherConsentData={persistedPublisherConsentData}
 						/>
 						<Vendors
 							selectedVendorIds={selectedVendorIds}
 							selectAllVendors={selectAllVendors}
 							selectVendor={selectVendor}
 							vendors={state.vendors}
+							purposes={purposes}
+							features={features}
 						/>
 					</Panel>
 				</div>

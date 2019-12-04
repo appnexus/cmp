@@ -30,6 +30,7 @@ describe('Popup', () => {
 		const store = new Store();
 		store.selectAllVendors = jest.fn();
 		store.selectAllPurposes = jest.fn();
+		store.selectAllStandardPurposes = jest.fn();
 		store.selectAllCustomPurposes = jest.fn();
 
 		let popup;
@@ -39,6 +40,7 @@ describe('Popup', () => {
 			onSave={() => {
 				expect(store.selectAllVendors.mock.calls[0][0]).to.equal(true);
 				expect(store.selectAllPurposes.mock.calls[0][0]).to.equal(true);
+				expect(store.selectAllStandardPurposes.mock.calls[0][0]).to.equal(true);
 				expect(store.selectAllCustomPurposes.mock.calls[0][0]).to.equal(true);
 				done();
 			}}
