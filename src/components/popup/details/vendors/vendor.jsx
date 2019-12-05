@@ -1,4 +1,4 @@
-import {h, Component, Fragment} from "preact";
+import {h, Component} from "preact";
 
 import style from "./vendors.less";
 import ExternalLinkIcon from "../../../externallinkicon/externallinkicon";
@@ -15,25 +15,20 @@ export default class Vendor extends Component {
 		return false;
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		Object.entries(this.props).forEach(([key, val]) =>
-			prevProps[key] !== val && console.log(`Prop '${key}' changed`)
-		);
-		if (this.state) {
-			Object.entries(this.state).forEach(([key, val]) =>
-				prevState[key] !== val && console.log(`State '${key}' changed`)
-			);
-		}
-	}
-
 	render() {
-		const {purposes, legIntPurposes, features} = this.props;
+		const {
+			name,
+			policyUrl,
+			purposes,
+			legIntPurposes,
+			features
+		} = this.props;
 
 		return <div>
 			<div class={style.vendorName}>
-				{this.props.name}
-				{this.props.policyUrl &&
-				<a href={this.props.policyUrl} className={style.policy} target='_blank'><ExternalLinkIcon/></a>}
+				{name}
+				{policyUrl &&
+				<a href={policyUrl} className={style.policy} target='_blank'><ExternalLinkIcon/></a>}
 			</div>
 			<div class={style.vendorDescription}>
 				{purposes && !!purposes.length &&
