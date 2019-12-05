@@ -4,6 +4,8 @@ import { expect } from 'chai';
 import style from './vendors.less';
 
 import Vendors from './vendors';
+import Vendor from './vendor';
+import Label from "../../../label/label";
 
 describe('Vendors', () => {
 	let scratch;
@@ -31,11 +33,40 @@ describe('Vendors', () => {
 		/>, scratch);
 
 		const vendorRows = vendors.querySelectorAll(`.${style.vendorContent} tr`);
-		const firstVendorAttributes = vendorRows[0].querySelectorAll(`.${style.vendorDescription} span`);
-		const secondVendorAttributes = vendorRows[1].querySelectorAll(`.${style.vendorDescription} span`);
 		expect(vendorRows.length).to.equal(4);
-		expect(firstVendorAttributes.length).to.equal(6);
-		expect(secondVendorAttributes.length).to.equal(3);
+	});
+
+	it('should render vendor with all possible attributes', () => {
+		const vendor = render(<Vendor
+			name={'Vendor 1'}
+			policyUrl={'www.example.com'}
+			purposes={[<Label localizeKey={'purposes.title'}>Purpose 1</Label>]}
+			legIntPurposes={[<Label localizeKey={'purposes.title'}>Purpose 2</Label>]}
+			features={[<Label localizeKey={'features.title'}>Feature 1</Label>]}
+		/>, scratch);
+
+		const vendorRows = vendor.querySelectorAll(`div`);
+		const vendorDescriptionRecords = vendor.querySelectorAll(`div > span > span`);
+		expect(vendorRows.length).to.equal(2);
+		expect(vendorDescriptionRecords.length).to.equal(6);
+	});
+
+	it('should render vendor without features', () => {
+		const vendor = render(<Vendor
+			name={'Vendor 1'}
+			policyUrl={'www.example.com'}
+			purposes={[
+				<Label localizeKey={'purposes.title'}>Purpose 1</Label>,
+				<Label localizeKey={'purposes.title'}>Purpose 1</Label>
+			]}
+			legIntPurposes={[<Label localizeKey={'purposes.title'}>Purpose 2</Label>]}
+			features={[]}
+		/>, scratch);
+
+		const vendorRows = vendor.querySelectorAll(`div`);
+		const vendorDescriptionRecords = vendor.querySelectorAll(`div > span > span`);
+		expect(vendorRows.length).to.equal(2);
+		expect(vendorDescriptionRecords.length).to.equal(5);
 	});
 
 	it('should handle selecting a vendor', () => {
