@@ -158,7 +158,7 @@ describe('Vendors', () => {
 
 
 		vendors.handleFullConsentChange({isSelected: true});
-		expect(selectAllVendors.mock.calls[0][0]).to.equal(true);
+		expect(selectAllVendors.mock.calls[1][0]).to.equal(true);
 	});
 
 	it('should handle rejecting all vendors', () => {
@@ -219,7 +219,9 @@ describe('Vendors', () => {
 	});
 
 	it('should return true if all vendors are accepted', () => {
+		const selectAllVendors = jest.fn();
 		let vendors;
+
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
@@ -237,6 +239,7 @@ describe('Vendors', () => {
 				{id: 2, name: 'Feature 2'},
 			]}
 			selectedVendorIds={new Set([1, 2, 3, 4])}
+			selectAllVendors={selectAllVendors}
 		/>, scratch);
 
 		const result = vendors.isFullVendorsConsentChosen();
@@ -244,7 +247,9 @@ describe('Vendors', () => {
 	});
 
 	it('should return false if some vendors are rejected', () => {
+		const selectAllVendors = jest.fn();
 		let vendors;
+
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
@@ -262,6 +267,7 @@ describe('Vendors', () => {
 				{id: 2, name: 'Feature 2'},
 			]}
 			selectedVendorIds={new Set([1])}
+			selectAllVendors={selectAllVendors}
 		/>, scratch);
 
 		const result = vendors.isFullVendorsConsentChosen();
