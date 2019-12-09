@@ -26,6 +26,12 @@ export default class Vendors extends Component {
 		selectVendor: () => {}
 	};
 
+	componentDidMount() {
+		if (!this.props.vendorConsentCreated) {
+			this.handleRejectAll();
+		}
+	};
+
 	handleAcceptAll = () => {
 		this.props.selectAllVendors(true);
 	};
@@ -44,7 +50,16 @@ export default class Vendors extends Component {
 		});
 	};
 
-	getActiveAttributesNameElements = (setOfAttributes, idsOfActiveAttributes, translationPrefix='') => {
+	isFullVendorsConsentChosen = () => {
+		const {vendors, selectedVendorIds} = this.props;
+		return vendors.length === selectedVendorIds.size;
+	};
+
+	handleFullConsentChange = ({isSelected}) => {
+		isSelected ? this.handleAcceptAll() : this.handleRejectAll();
+	};
+
+	getActiveAttributesNameElements = (setOfAttributes, idsOfActiveAttributes, translationPrefix = '') => {
 		const activeAttributes = setOfAttributes
 			.filter(attribute => idsOfActiveAttributes.indexOf(attribute['id']) !== -1)
 			.map(attribute => <Label localizeKey={`${translationPrefix}${attribute['id']}.title`}>{attribute['name']}</Label>);
@@ -87,7 +102,15 @@ export default class Vendors extends Component {
 						<tr>
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
 							{editingConsents &&
+							<span>
 							<th><LocalLabel localizeKey='offOn'>Allow</LocalLabel></th>
+							<th>
+								<Switch
+									isSelected={this.isFullVendorsConsentChosen()}
+									onClick={this.handleFullConsentChange}
+								/>
+							</th>
+							</span>
 							}
 						</tr>
 						</thead>
