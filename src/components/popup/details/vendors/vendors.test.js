@@ -4,6 +4,8 @@ import { expect } from 'chai';
 import style from './vendors.less';
 
 import Vendors from './vendors';
+import Vendor from './vendor';
+import Label from "../../../label/label";
 
 describe('Vendors', () => {
 	let scratch;
@@ -34,13 +36,40 @@ describe('Vendors', () => {
 		/>, scratch);
 
 		const vendorRows = vendors.querySelectorAll(`.${style.vendorContent} tr`);
-		const firstVendorAttributes = vendorRows[0].querySelectorAll(`.${style.vendorDescription} span`);
-		const secondVendorAttributes = vendorRows[1].querySelectorAll(`.${style.vendorDescription} span`);
 		expect(vendorRows.length).to.equal(4);
-		expect(firstVendorAttributes.length).to.equal(6);
-		expect(secondVendorAttributes.length).to.equal(3);
-		expect(selectAllVendors.mock.calls.length).to.equal(1);
-		expect(selectAllVendors.mock.calls[0][0]).to.equal(false);
+	});
+
+	it('should render vendor with all possible attributes', () => {
+		const vendor = render(<Vendor
+			name={'Vendor 1'}
+			policyUrl={'www.example.com'}
+			purposes={[<Label localizeKey={'purposes.title'}>Purpose 1</Label>]}
+			legIntPurposes={[<Label localizeKey={'purposes.title'}>Purpose 2</Label>]}
+			features={[<Label localizeKey={'features.title'}>Feature 1</Label>]}
+		/>, scratch);
+
+		const vendorRows = vendor.querySelectorAll(`div`);
+		const vendorDescriptionRecords = vendor.querySelectorAll(`div > span > span`);
+		expect(vendorRows.length).to.equal(2);
+		expect(vendorDescriptionRecords.length).to.equal(6);
+	});
+
+	it('should render vendor without features', () => {
+		const vendor = render(<Vendor
+			name={'Vendor 1'}
+			policyUrl={'www.example.com'}
+			purposes={[
+				<Label localizeKey={'purposes.title'}>Purpose 1</Label>,
+				<Label localizeKey={'purposes.title'}>Purpose 1</Label>
+			]}
+			legIntPurposes={[<Label localizeKey={'purposes.title'}>Purpose 2</Label>]}
+			features={[]}
+		/>, scratch);
+
+		const vendorRows = vendor.querySelectorAll(`div`);
+		const vendorDescriptionRecords = vendor.querySelectorAll(`div > span > span`);
+		expect(vendorRows.length).to.equal(2);
+		expect(vendorDescriptionRecords.length).to.equal(5);
 	});
 
 	it('should handle selecting a vendor', () => {
@@ -129,7 +158,7 @@ describe('Vendors', () => {
 
 
 		vendors.handleFullConsentChange({isSelected: true});
-		expect(selectAllVendors.mock.calls[0][0]).to.equal(true);
+		expect(selectAllVendors.mock.calls[1][0]).to.equal(true);
 	});
 
 	it('should handle rejecting all vendors', () => {
@@ -190,7 +219,9 @@ describe('Vendors', () => {
 	});
 
 	it('should return true if all vendors are accepted', () => {
+		const selectAllVendors = jest.fn();
 		let vendors;
+
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
@@ -208,6 +239,7 @@ describe('Vendors', () => {
 				{id: 2, name: 'Feature 2'},
 			]}
 			selectedVendorIds={new Set([1, 2, 3, 4])}
+			selectAllVendors={selectAllVendors}
 		/>, scratch);
 
 		const result = vendors.isFullVendorsConsentChosen();
@@ -215,7 +247,9 @@ describe('Vendors', () => {
 	});
 
 	it('should return false if some vendors are rejected', () => {
+		const selectAllVendors = jest.fn();
 		let vendors;
+
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
@@ -233,6 +267,7 @@ describe('Vendors', () => {
 				{id: 2, name: 'Feature 2'},
 			]}
 			selectedVendorIds={new Set([1])}
+			selectAllVendors={selectAllVendors}
 		/>, scratch);
 
 		const result = vendors.isFullVendorsConsentChosen();

@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import style from './vendors.less';
 import Switch from '../../../switch/switch';
 import Label from "../../../label/label";
-import ExternalLinkIcon from '../../../externallinkicon/externallinkicon'
+import Vendor from './vendor'
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -20,6 +20,8 @@ export default class Vendors extends Component {
 
 	static defaultProps = {
 		vendors: [],
+		purposes: [],
+		features: [],
 		selectedVendorIds: new Set(),
 		selectVendor: () => {}
 	};
@@ -117,35 +119,14 @@ export default class Vendors extends Component {
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-						{vendors.map(({ id, name, policyUrl, purposeIds, legIntPurposeIds, featureIds }, index) => (
+						{vendors.map(({ id, name, policyUrl, purposeIds=[], legIntPurposeIds=[], featureIds=[] }, index) => (
 							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
 								<td>
-									<div class={style.vendorName}>
-										{name}
-										{policyUrl &&
-										<a href={policyUrl} className={style.policy} target='_blank'><ExternalLinkIcon/></a>
-										}
-									</div>
-									<div class={style.vendorDescription}>
-										{purposeIds && !!purposeIds.length &&
-										<span>
-											<LocalLabel localizeKey='purposes'>Purposes</LocalLabel>{': '}
-											{this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}{'. '}
-										</span>
-										}
-										{legIntPurposeIds && !!legIntPurposeIds.length &&
-										<span>
-											<LocalLabel localizeKey='legitimateInterestPurposes'>Legitimate interest purposes</LocalLabel>{': '}
-											{this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}{'. '}
-										</span>
-										}
-										{featureIds && !!featureIds.length &&
-										<span>
-											<LocalLabel localizeKey='features'>Features</LocalLabel>{': '}
-											{this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}{'. '}
-										</span>
-										}
-									</div>
+									<Vendor name={name}
+											policyUrl={policyUrl}
+											purposes={this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}
+											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}
+											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}/>
 								</td>
 								{editingConsents &&
 								<td>
