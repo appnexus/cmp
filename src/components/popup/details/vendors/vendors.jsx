@@ -27,17 +27,20 @@ export default class Vendors extends Component {
 	};
 
 	componentDidMount() {
-		if (!this.props.vendorConsentCreated) {
-			this.handleRejectAll();
+		const {vendorConsentCreated, initialVendorsRejection} = this.props;
+		if (!vendorConsentCreated) {
+			initialVendorsRejection();
 		}
 	};
 
 	handleAcceptAll = () => {
-		this.props.selectAllVendors(true);
+		const {vendors, selectVendors} = this.props;
+		selectVendors(vendors.map(({id}) => id), true)
 	};
 
 	handleRejectAll = () => {
-		this.props.selectAllVendors(false);
+		const {vendors, selectVendors} = this.props;
+		selectVendors(vendors.map(({id}) => id), false);
 	};
 
 	handleSelectVendor = ({ dataId, isSelected }) => {
@@ -52,7 +55,7 @@ export default class Vendors extends Component {
 
 	isFullVendorsConsentChosen = () => {
 		const {vendors, selectedVendorIds} = this.props;
-		return vendors.length === selectedVendorIds.size;
+		return !vendors.filter(({id}) => !selectedVendorIds.has(id)).length;
 	};
 
 	handleFullConsentChange = ({isSelected}) => {

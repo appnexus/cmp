@@ -78,8 +78,9 @@ export default class Details extends Component {
 			selectPurpose,
 			selectStandardPurpose,
 			selectCustomPurpose,
-			selectAllVendors,
+			selectVendors,
 			selectVendor,
+			initialVendorsRejection,
 			persistedVendorConsentData = {},
 			persistedPublisherConsentData = {},
 			subsection
@@ -112,14 +113,16 @@ export default class Details extends Component {
 							selectPurpose={selectPurpose}
 							selectStandardPurpose={selectStandardPurpose}
 							selectCustomPurpose={selectCustomPurpose}
+							initialVendorsRejection={initialVendorsRejection}
 							onShowVendors={this.handleShowVendors}
 							persistedVendorConsentData={persistedVendorConsentData}
 							persistedPublisherConsentData={persistedPublisherConsentData}
 						/>
 						<Vendors
 							selectedVendorIds={selectedVendorIds}
-							selectAllVendors={selectAllVendors}
+							selectVendors={selectVendors}
 							selectVendor={selectVendor}
+							initialVendorsRejection={initialVendorsRejection}
 							vendors={state.vendors}
 							purposes={purposes}
 							features={features}

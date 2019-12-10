@@ -72,6 +72,7 @@ export default class Store {
 		this.isFooterShowing = false;
 		this.section = SECTION_INTRO;
 		this.subsection = SECTION_PURPOSES;
+		this.hasInitialVendorsRejectionOccurs = false;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);
@@ -344,11 +345,33 @@ export default class Store {
 		this.storeUpdate();
 	};
 
+	selectVendors = (vendorIds, isSelected) => {
+		const {selectedVendorIds} = this.vendorConsentData;
+		if (isSelected) {
+			vendorIds.forEach(id => {
+				selectedVendorIds.add(id);
+			});
+		}
+		else {
+			vendorIds.forEach(id => {
+				selectedVendorIds.delete(id);
+			});
+		}
+		this.storeUpdate();
+	};
+
 	selectAllVendors = (isSelected) => {
 		const {vendors = []} = this.vendorList || {};
 		const operation = isSelected ? 'add' : 'delete';
 		vendors.forEach(({id}) => this.vendorConsentData.selectedVendorIds[operation](id));
 		this.storeUpdate();
+	};
+
+	initialVendorsRejection = () => {
+		if (!this.hasInitialVendorsRejectionOccurs) {
+			this.selectAllVendors(false);
+			this.hasInitialVendorsRejectionOccurs = true;
+		}
 	};
 
 	selectPurpose = (purposeId, isSelected) => {
