@@ -26,18 +26,14 @@ export default class Vendors extends Component {
 		selectVendor: () => {}
 	};
 
-	componentDidMount() {
-		if (!this.props.vendorConsentCreated) {
-			this.handleRejectAll();
-		}
-	};
-
 	handleAcceptAll = () => {
-		this.props.selectAllVendors(true);
+		const {vendors, selectVendors} = this.props;
+		selectVendors(vendors.map(({id}) => id), true)
 	};
 
 	handleRejectAll = () => {
-		this.props.selectAllVendors(false);
+		const {vendors, selectVendors} = this.props;
+		selectVendors(vendors.map(({id}) => id), false);
 	};
 
 	handleSelectVendor = ({ dataId, isSelected }) => {
@@ -45,6 +41,11 @@ export default class Vendors extends Component {
 	};
 
 	handleMoreChoices = () => {
+		const {vendorConsentCreated, initialVendorsRejection} = this.props;
+		if (!vendorConsentCreated) {
+			initialVendorsRejection();
+		}
+
 		this.setState({
 			editingConsents: true
 		});
@@ -52,7 +53,8 @@ export default class Vendors extends Component {
 
 	isFullVendorsConsentChosen = () => {
 		const {vendors, selectedVendorIds} = this.props;
-		return vendors.length === selectedVendorIds.size;
+		const isSelected = ({id}) => selectedVendorIds.has(id);
+		return vendors.every(isSelected);
 	};
 
 	handleFullConsentChange = ({isSelected}) => {

@@ -15,8 +15,6 @@ describe('Vendors', () => {
 	});
 
 	it('should render the vendor list', () => {
-		const selectAllVendors = jest.fn();
-
 		const vendors = render(<Vendors
 			vendors={[
 				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
@@ -32,14 +30,13 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
-			selectAllVendors={selectAllVendors}
 		/>, scratch);
 
 		const vendorRows = vendors.querySelectorAll(`.${style.vendorContent} tr`);
 		expect(vendorRows.length).to.equal(4);
 	});
 
-	it('should render vendor with all possible attributes', () => {
+	it('should render vendor with purposes, legIntPurposes and features', () => {
 		const vendor = render(<Vendor
 			name={'Vendor 1'}
 			policyUrl={'www.example.com'}
@@ -74,7 +71,7 @@ describe('Vendors', () => {
 
 	it('should handle selecting a vendor', () => {
 		const selectVendor = jest.fn();
-		const selectAllVendors = jest.fn();
+		const initialVendorsRejection = jest.fn();
 
 		let vendors;
 		render(<Vendors
@@ -94,18 +91,19 @@ describe('Vendors', () => {
 				{id: 2, name: 'Feature 2'},
 			]}
 			selectVendor={selectVendor}
-			selectAllVendors={selectAllVendors}
+			initialVendorsRejection={initialVendorsRejection}
 		/>, scratch);
 
+		vendors.handleMoreChoices();
 		vendors.handleSelectVendor({dataId: 2, isSelected: true});
-		expect(selectAllVendors.mock.calls.length).to.equal(1);
-		expect(selectAllVendors.mock.calls[0][0]).to.equal(false);
+		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
 		expect(selectVendor.mock.calls[0][0]).to.equal(2);
 		expect(selectVendor.mock.calls[0][1]).to.equal(true);
 	});
 
 	it('should handle accepting all vendors', () => {
-		const selectAllVendors = jest.fn();
+		const selectVendors = jest.fn();
+		const initialVendorsRejection = jest.fn();
 
 		let vendors;
 		render(<Vendors
@@ -124,17 +122,20 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
-			selectAllVendors={selectAllVendors}
+			selectVendors={selectVendors}
+			initialVendorsRejection={initialVendorsRejection}
 		/>, scratch);
 
+		vendors.handleMoreChoices();
 		vendors.handleAcceptAll();
-		expect(selectAllVendors.mock.calls.length).to.equal(2);
-		expect(selectAllVendors.mock.calls[0][0]).to.equal(false);
-		expect(selectAllVendors.mock.calls[1][0]).to.equal(true);
+		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
+		expect(selectVendors.mock.calls[0][0]).to.deep.equal([1, 2, 3, 4]);
+		expect(selectVendors.mock.calls[0][1]).to.equal(true);
 	});
 
 	it('should handle accepting all vendors if some vendors are rejected', () => {
-		const selectAllVendors = jest.fn();
+		const initialVendorsRejection = jest.fn();
+		const selectVendors = jest.fn();
 
 		let vendors;
 		render(<Vendors
@@ -153,16 +154,20 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
-			selectAllVendors={selectAllVendors}
+			initialVendorsRejection={initialVendorsRejection}
+			selectVendors={selectVendors}
 		/>, scratch);
 
-
+		vendors.handleMoreChoices();
 		vendors.handleFullConsentChange({isSelected: true});
-		expect(selectAllVendors.mock.calls[1][0]).to.equal(true);
+		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
+		expect(selectVendors.mock.calls[0][0]).to.deep.equal([1, 2, 3, 4]);
+		expect(selectVendors.mock.calls[0][1]).to.equal(true);
 	});
 
 	it('should handle rejecting all vendors', () => {
-		const selectAllVendors = jest.fn();
+		const initialVendorsRejection = jest.fn();
+		const selectVendors = jest.fn();
 
 		let vendors;
 		render(<Vendors
@@ -181,17 +186,20 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
-			selectAllVendors={selectAllVendors}
+			initialVendorsRejection={initialVendorsRejection}
+			selectVendors={selectVendors}
 		/>, scratch);
 
+		vendors.handleMoreChoices();
 		vendors.handleRejectAll();
-		expect(selectAllVendors.mock.calls.length).to.equal(2);
-		expect(selectAllVendors.mock.calls[0][0]).to.equal(false);
-		expect(selectAllVendors.mock.calls[1][0]).to.equal(false);
+		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
+		expect(selectVendors.mock.calls[0][0]).to.deep.equal([1, 2, 3, 4]);
+		expect(selectVendors.mock.calls[0][1]).to.equal(false);
 	});
 
 	it('should handle rejecting all vendors if some vendors are selected', () => {
-		const selectAllVendors = jest.fn();
+		const initialVendorsRejection = jest.fn();
+		const selectVendors = jest.fn();
 
 		let vendors;
 		render(<Vendors
@@ -210,16 +218,18 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
-			selectAllVendors={selectAllVendors}
+			initialVendorsRejection={initialVendorsRejection}
+			selectVendors={selectVendors}
 		/>, scratch);
 
-
+		vendors.handleMoreChoices();
 		vendors.handleFullConsentChange({isSelected: false});
-		expect(selectAllVendors.mock.calls[0][0]).to.equal(false);
+		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
+		expect(selectVendors.mock.calls[0][0]).to.deep.equal([1, 2, 3, 4]);
+		expect(selectVendors.mock.calls[0][1]).to.equal(false);
 	});
 
 	it('should return true if all vendors are accepted', () => {
-		const selectAllVendors = jest.fn();
 		let vendors;
 
 		render(<Vendors
@@ -239,7 +249,7 @@ describe('Vendors', () => {
 				{id: 2, name: 'Feature 2'},
 			]}
 			selectedVendorIds={new Set([1, 2, 3, 4])}
-			selectAllVendors={selectAllVendors}
+			initialVendorsRejection={jest.fn()}
 		/>, scratch);
 
 		const result = vendors.isFullVendorsConsentChosen();
@@ -247,7 +257,6 @@ describe('Vendors', () => {
 	});
 
 	it('should return false if some vendors are rejected', () => {
-		const selectAllVendors = jest.fn();
 		let vendors;
 
 		render(<Vendors
@@ -267,7 +276,7 @@ describe('Vendors', () => {
 				{id: 2, name: 'Feature 2'},
 			]}
 			selectedVendorIds={new Set([1])}
-			selectAllVendors={selectAllVendors}
+			initialVendorsRejection={jest.fn()}
 		/>, scratch);
 
 		const result = vendors.isFullVendorsConsentChosen();
