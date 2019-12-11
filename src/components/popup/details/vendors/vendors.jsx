@@ -55,7 +55,8 @@ export default class Vendors extends Component {
 
 	isFullVendorsConsentChosen = () => {
 		const {vendors, selectedVendorIds} = this.props;
-		return !vendors.filter(({id}) => !selectedVendorIds.has(id)).length;
+		const isSelected = ({id}) => selectedVendorIds.has(id);
+		return vendors.every(isSelected);
 	};
 
 	handleFullConsentChange = ({isSelected}) => {

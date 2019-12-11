@@ -72,7 +72,7 @@ export default class Store {
 		this.isFooterShowing = false;
 		this.section = SECTION_INTRO;
 		this.subsection = SECTION_PURPOSES;
-		this.hasInitialVendorsRejectionOccurs = false;
+		this.hasInitialVendorsRejectionOccured = false;
 
 		this.updateVendorList(vendorList);
 		this.updateCustomPurposeList(customPurposeList);
@@ -368,9 +368,9 @@ export default class Store {
 	};
 
 	initialVendorsRejection = () => {
-		if (!this.hasInitialVendorsRejectionOccurs) {
+		if (!this.hasInitialVendorsRejectionOccured) {
 			this.selectAllVendors(false);
-			this.hasInitialVendorsRejectionOccurs = true;
+			this.hasInitialVendorsRejectionOccured = true;
 		}
 	};
 
