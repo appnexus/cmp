@@ -368,6 +368,8 @@ export default class Store {
 	};
 
 	initialVendorsRejection = () => {
+		//vendors rejection can occurs only once in the lifetime of application
+		//should only be called if user vendor consent has not been created yet
 		if (!this.hasInitialVendorsRejectionOccured) {
 			this.selectAllVendors(false);
 			this.hasInitialVendorsRejectionOccured = true;

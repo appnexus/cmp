@@ -26,13 +26,6 @@ export default class Vendors extends Component {
 		selectVendor: () => {}
 	};
 
-	componentDidMount() {
-		const {vendorConsentCreated, initialVendorsRejection} = this.props;
-		if (!vendorConsentCreated) {
-			initialVendorsRejection();
-		}
-	};
-
 	handleAcceptAll = () => {
 		const {vendors, selectVendors} = this.props;
 		selectVendors(vendors.map(({id}) => id), true)
@@ -48,6 +41,11 @@ export default class Vendors extends Component {
 	};
 
 	handleMoreChoices = () => {
+		const {vendorConsentCreated, initialVendorsRejection} = this.props;
+		if (!vendorConsentCreated) {
+			initialVendorsRejection();
+		}
+
 		this.setState({
 			editingConsents: true
 		});
