@@ -104,7 +104,8 @@ export default class Purposes extends Component {
 			purposes,
 			features,
 			persistedVendorConsentData,
-			persistedPublisherConsentData
+			persistedPublisherConsentData,
+			initialVendorsRejection
 		} = props;
 
 		const {created: vendorConsentCreated} = persistedVendorConsentData;
@@ -134,6 +135,7 @@ export default class Purposes extends Component {
 				purposes.forEach((purpose, index) => {
 					this.handleSelectPurpose({isSelected: false, dataId: index});
 				});
+				initialVendorsRejection();
 			}
 			if (!publisherConsentCreated) {
 				allPurposes.forEach((purpose, index) => {

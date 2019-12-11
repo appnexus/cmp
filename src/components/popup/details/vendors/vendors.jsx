@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import style from './vendors.less';
 import Switch from '../../../switch/switch';
 import Label from "../../../label/label";
-import ExternalLinkIcon from '../../../externallinkicon/externallinkicon'
+import Vendor from './vendor'
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -20,16 +20,20 @@ export default class Vendors extends Component {
 
 	static defaultProps = {
 		vendors: [],
+		purposes: [],
+		features: [],
 		selectedVendorIds: new Set(),
 		selectVendor: () => {}
 	};
 
 	handleAcceptAll = () => {
-		this.props.selectAllVendors(true);
+		const {vendors, selectVendors} = this.props;
+		selectVendors(vendors.map(({id}) => id), true)
 	};
 
 	handleRejectAll = () => {
-		this.props.selectAllVendors(false);
+		const {vendors, selectVendors} = this.props;
+		selectVendors(vendors.map(({id}) => id), false);
 	};
 
 	handleSelectVendor = ({ dataId, isSelected }) => {
@@ -37,12 +41,27 @@ export default class Vendors extends Component {
 	};
 
 	handleMoreChoices = () => {
+		const {vendorConsentCreated, initialVendorsRejection} = this.props;
+		if (!vendorConsentCreated) {
+			initialVendorsRejection();
+		}
+
 		this.setState({
 			editingConsents: true
 		});
 	};
 
-	getActiveAttributesNameElements = (setOfAttributes, idsOfActiveAttributes, translationPrefix='') => {
+	isFullVendorsConsentChosen = () => {
+		const {vendors, selectedVendorIds} = this.props;
+		const isSelected = ({id}) => selectedVendorIds.has(id);
+		return vendors.every(isSelected);
+	};
+
+	handleFullConsentChange = ({isSelected}) => {
+		isSelected ? this.handleAcceptAll() : this.handleRejectAll();
+	};
+
+	getActiveAttributesNameElements = (setOfAttributes, idsOfActiveAttributes, translationPrefix = '') => {
 		const activeAttributes = setOfAttributes
 			.filter(attribute => idsOfActiveAttributes.indexOf(attribute['id']) !== -1)
 			.map(attribute => <Label localizeKey={`${translationPrefix}${attribute['id']}.title`}>{attribute['name']}</Label>);
@@ -85,7 +104,15 @@ export default class Vendors extends Component {
 						<tr>
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
 							{editingConsents &&
+							<span>
 							<th><LocalLabel localizeKey='offOn'>Allow</LocalLabel></th>
+							<th>
+								<Switch
+									isSelected={this.isFullVendorsConsentChosen()}
+									onClick={this.handleFullConsentChange}
+								/>
+							</th>
+							</span>
 							}
 						</tr>
 						</thead>
@@ -94,35 +121,14 @@ export default class Vendors extends Component {
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-						{vendors.map(({ id, name, policyUrl, purposeIds, legIntPurposeIds, featureIds }, index) => (
+						{vendors.map(({ id, name, policyUrl, purposeIds=[], legIntPurposeIds=[], featureIds=[] }, index) => (
 							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
 								<td>
-									<div class={style.vendorName}>
-										{name}
-										{policyUrl &&
-										<a href={policyUrl} className={style.policy} target='_blank'><ExternalLinkIcon/></a>
-										}
-									</div>
-									<div class={style.vendorDescription}>
-										{purposeIds && !!purposeIds.length &&
-										<span>
-											<LocalLabel localizeKey='purposes'>Purposes</LocalLabel>{': '}
-											{this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}{'. '}
-										</span>
-										}
-										{legIntPurposeIds && !!legIntPurposeIds.length &&
-										<span>
-											<LocalLabel localizeKey='legitimateInterestPurposes'>Legitimate interest purposes</LocalLabel>{': '}
-											{this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}{'. '}
-										</span>
-										}
-										{featureIds && !!featureIds.length &&
-										<span>
-											<LocalLabel localizeKey='features'>Features</LocalLabel>{': '}
-											{this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}{'. '}
-										</span>
-										}
-									</div>
+									<Vendor name={name}
+											policyUrl={policyUrl}
+											purposes={this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}
+											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}
+											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}/>
 								</td>
 								{editingConsents &&
 								<td>

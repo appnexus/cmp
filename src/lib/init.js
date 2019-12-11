@@ -9,7 +9,7 @@ import pack from '../../package.json';
 import config from './config';
 
 const CMP_VERSION = 1;
-const CMP_ID = 1;
+const CMP_ID = 280;
 const COOKIE_VERSION = 1;
 
 function readExternalConsentData(config) {
