@@ -15,8 +15,6 @@ describe('Vendors', () => {
 	});
 
 	it('should render the vendor list', () => {
-		const initialVendorsRejection = jest.fn();
-
 		const vendors = render(<Vendors
 			vendors={[
 				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
@@ -32,15 +30,13 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
-			initialVendorsRejection={initialVendorsRejection}
 		/>, scratch);
 
 		const vendorRows = vendors.querySelectorAll(`.${style.vendorContent} tr`);
 		expect(vendorRows.length).to.equal(4);
-		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
 	});
 
-	it('should render vendor with all possible attributes', () => {
+	it('should render vendor with purposes, legIntPurposes and features', () => {
 		const vendor = render(<Vendor
 			name={'Vendor 1'}
 			policyUrl={'www.example.com'}
@@ -98,6 +94,7 @@ describe('Vendors', () => {
 			initialVendorsRejection={initialVendorsRejection}
 		/>, scratch);
 
+		vendors.handleMoreChoices();
 		vendors.handleSelectVendor({dataId: 2, isSelected: true});
 		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
 		expect(selectVendor.mock.calls[0][0]).to.equal(2);
@@ -129,6 +126,7 @@ describe('Vendors', () => {
 			initialVendorsRejection={initialVendorsRejection}
 		/>, scratch);
 
+		vendors.handleMoreChoices();
 		vendors.handleAcceptAll();
 		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
 		expect(selectVendors.mock.calls[0][0]).to.deep.equal([1, 2, 3, 4]);
@@ -160,7 +158,7 @@ describe('Vendors', () => {
 			selectVendors={selectVendors}
 		/>, scratch);
 
-
+		vendors.handleMoreChoices();
 		vendors.handleFullConsentChange({isSelected: true});
 		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
 		expect(selectVendors.mock.calls[0][0]).to.deep.equal([1, 2, 3, 4]);
@@ -192,6 +190,7 @@ describe('Vendors', () => {
 			selectVendors={selectVendors}
 		/>, scratch);
 
+		vendors.handleMoreChoices();
 		vendors.handleRejectAll();
 		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
 		expect(selectVendors.mock.calls[0][0]).to.deep.equal([1, 2, 3, 4]);
@@ -223,7 +222,7 @@ describe('Vendors', () => {
 			selectVendors={selectVendors}
 		/>, scratch);
 
-
+		vendors.handleMoreChoices();
 		vendors.handleFullConsentChange({isSelected: false});
 		expect(initialVendorsRejection.mock.calls.length).to.equal(1);
 		expect(selectVendors.mock.calls[0][0]).to.deep.equal([1, 2, 3, 4]);
