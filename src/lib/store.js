@@ -562,9 +562,10 @@ export default class Store {
 	};
 
 	mergePurposeConsentsFromGlobalCookie = () => {
-		this.vendorConsentData.selectedPurposeIds = new Set([...this.vendorConsentData.selectedPurposeIds].filter(
-			id => this.globalVendorConsentData.selectedPurposeIds.has(id) || config.legIntPurposeIds.includes(id)
-		));
+		const selectedPurposeIds = Array.from(this.vendorConsentData.selectedPurposeIds);
+		this.vendorConsentData.selectedPurposeIds = new Set(selectedPurposeIds.filter( id => (
+			this.globalVendorConsentData.selectedPurposeIds.has(id) || config.legIntPurposeIds.includes(id)
+		)));
 	};
 
 	mergePurposeConsentsToGlobalCookie = () => {
