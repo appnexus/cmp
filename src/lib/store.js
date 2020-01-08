@@ -562,7 +562,7 @@ export default class Store {
 	};
 
 	mergePurposeConsentsFromGlobalCookie = () => {
-		const selectedPurposeIds = Array.from(this.vendorConsentData.selectedPurposeIds);
+		const selectedPurposeIds = arrayFrom(this.vendorConsentData.selectedPurposeIds);
 		this.vendorConsentData.selectedPurposeIds = new Set(selectedPurposeIds.filter( id => (
 			this.globalVendorConsentData.selectedPurposeIds.has(id) || config.legIntPurposeIds.includes(id)
 		)));
