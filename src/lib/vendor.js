@@ -59,9 +59,6 @@ function fetchGlobalVendorList() {
 				reject(err);
 			}
 		}).catch(err => {
-			if (storeConsentGlobally && globalConsentLocation) {
-				return sendPortalCommand({command: 'readVendorList'});
-			}
 			log.error(`Failed to load global vendor list from configuration`, err);
 		});
 	}
@@ -70,9 +67,6 @@ function fetchGlobalVendorList() {
 		Promise.reject('Missing globalVendorListLocation'))
 		.then(res => res.json())
 		.catch(err => {
-			if (storeConsentGlobally && globalConsentLocation) {
-				return sendPortalCommand({command: 'readVendorList'});
-			}
 			log.error(`Failed to load global vendor list from ${globalVendorListLocation}`, err);
 		});
 }
