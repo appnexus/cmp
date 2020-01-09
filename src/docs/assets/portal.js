@@ -1,6 +1,5 @@
 import Promise from 'promise-polyfill';
 import 'whatwg-fetch';
-import log from "../../lib/log";
 
 const host = (window && window.location && window.location.hostname) || '';
 const parts = host.split('.');

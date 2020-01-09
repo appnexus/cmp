@@ -1,7 +1,6 @@
 import Promise from 'promise-polyfill';
 import config from './config';
 import log from './log';
-import { sendPortalCommand } from './portal';
 
 
 const PUB_VENDOR_LOCATION = '/.well-known/pubvendors.json';
