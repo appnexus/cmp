@@ -39,7 +39,7 @@ function fetchPubVendorList() {
  * Fetch the global vendor list if the location is configured
  */
 function fetchGlobalVendorList() {
-	const {globalVendorListLocation, storeConsentGlobally, globalConsentLocation, getVendorList} = config;
+	const {globalVendorListLocation, getVendorList} = config;
 	if (getVendorList) {
 		return new Promise((resolve, reject) => {
 			try {
