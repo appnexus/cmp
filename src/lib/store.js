@@ -528,25 +528,13 @@ export default class Store {
 	};
 
 	mergeVendorConsentsFromGlobalCookie = () => {
-		const selectedLocalIdsOfGlobalVendorInGlobalCookie = new Set();
-		const selectedLocalIdsOfGlobalVendorInLocalCookie = new Set();
 		const globalCookieMaxVendorId = this.persistedGlobalVendorConsentData.maxVendorId;
 
-		this.globalVendorIdsPresentOnList.forEach( (localId, globalId) => {
-			if (this.vendorConsentData.selectedVendorIds.has(localId) && globalId <= globalCookieMaxVendorId) {
-				selectedLocalIdsOfGlobalVendorInLocalCookie.add(localId);
-			}
-			if (this.globalVendorConsentData.selectedVendorIds.has(globalId)) {
-				selectedLocalIdsOfGlobalVendorInGlobalCookie.add(localId);
-				this.vendorConsentData.selectedVendorIds.add(localId);
-			}
-		});
-
-		selectedLocalIdsOfGlobalVendorInLocalCookie.forEach( localId => {
-			const isNewVendorOnList = this.persistedVendorConsentData && localId > this.persistedVendorConsentData.maxVendorId;
-
-			if (!isNewVendorOnList && !selectedLocalIdsOfGlobalVendorInGlobalCookie.has(localId)) {
-				this.vendorConsentData.selectedVendorIds.delete(localId);
+		this.globalVendorIdsPresentOnList.forEach( (id, externalId) => {
+			if (this.globalVendorConsentData.selectedVendorIds.has(externalId)) {
+				this.vendorConsentData.selectedVendorIds.add(id);
+			} else if (this.vendorConsentData.selectedVendorIds.has(id) && externalId <= globalCookieMaxVendorId) {
+				this.vendorConsentData.selectedVendorIds.delete(id);
 			}
 		});
 	};
