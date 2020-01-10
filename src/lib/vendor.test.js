@@ -46,21 +46,6 @@ describe('vendor', () => {
 		});
 	});
 
-	it('fetchGlobalVendorList returns nothing if globalVendorListLocation is empty', (done) => {
-		config.update({
-			globalVendorListLocation: null,
-			storeConsentGlobally: true
-		});
-		xhr.send = () => {
-			this.onerror();
-		};
-		fetchGlobalVendorList()
-			.then(() => {
-				expect(mockPortal.sendPortalCommand.mock.calls[0][0]).to.deep.equal({ command: 'readVendorList' });
-				done();
-			});
-	});
-
 	it('fetchPurposeList returns nothing if there is no customPurposeListLocation', (done) => {
 		config.update({
 			customPurposeListLocation: undefined
