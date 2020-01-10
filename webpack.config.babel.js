@@ -170,7 +170,7 @@ module.exports = [
 	{
 		entry: {
 			cmp: './index.js',
-			'cmp.complete': './complete.js'
+			'cmp.complete': './complete.js',
 		},
 
 		output: {
@@ -191,7 +191,36 @@ module.exports = [
 				filename: 'index.html',
 				template: 'index.html',
 				chunks: ['cmp']
+			})
+		]).concat(ENV === 'production' ? uglifyPlugin : []),
+	},
+	// portal
+	{
+		entry: {
+			'portal': './docs/assets/portal.js'
+		},
+
+		output: {
+			path: path.resolve(__dirname, 'build'),
+			publicPath: './',
+			filename: '[name].bundle.js'
+		},
+		...commonConfig,
+		plugins: ([
+			new webpack.NoEmitOnErrorsPlugin(),
+			new webpack.DefinePlugin({
+				'process.env.NODE_ENV': JSON.stringify(ENV)
 			}),
+			new webpack.ProvidePlugin({
+				'Promise': 'promise-polyfill'
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'portal.html',
+				template: './docs/assets/portal.html',
+				chunks: ['portal'],
+				inlineSource: '\\.(js|css)$'
+			}),
+			new HtmlWebpackInlineSourcePlugin(),
 		]).concat(ENV === 'production' ? uglifyPlugin : []),
 	},
 	// Docs config
