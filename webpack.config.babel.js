@@ -171,7 +171,7 @@ module.exports = [
 		entry: {
 			cmp: './index.js',
 			'cmp.complete': './complete.js',
-			'portal': './docs/assets/portal.js'
+			portal: './docs/assets/portal.js'
 		},
 
 		output: {
