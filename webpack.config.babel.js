@@ -197,7 +197,7 @@ module.exports = [
 				filename: 'portal.html',
 				template: './docs/assets/portal.html',
 				chunks: ['portal'],
-				inlineSource: '\\.(js|css)$'
+				inlineSource: '\\.js$'
 			}),
 			new HtmlWebpackInlineSourcePlugin(),
 		]).concat(ENV === 'production' ? uglifyPlugin : []),
