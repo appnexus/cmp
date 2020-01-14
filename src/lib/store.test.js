@@ -28,26 +28,32 @@ const vendorList = {
 	"vendors": [
 		{
 			"id": 1,
+			"external_id": 1,
 			"name": "Globex"
 		},
 		{
 			"id": 2,
+			"external_id": 2,
 			"name": "Initech"
 		},
 		{
 			"id": 3,
+			"external_id": 3,
 			"name": "CRS"
 		},
 		{
 			"id": 4,
+			"external_id": 4,
 			"name": "Umbrella"
 		},
 		{
 			"id": 5,
+			"external_id": 5,
 			"name": "Aperture"
 		},
 		{
 			"id": 6,
+			"external_id": 6,
 			"name": "Pierce and Pierce"
 		}
 	]
@@ -350,4 +356,95 @@ describe('store', () => {
 		expect(store.vendorConsentData.created).to.equal(created);
 		expect(store.vendorConsentData.lastUpdated).to.be.above(lastUpdated);
 	});
+
+	it('merge vendor consent from global cookie when consents are same', () => {
+		const store = new Store({
+			vendorConsentData: {
+				selectedVendorIds: new Set([1, 2, 3, 4, 5, 6]),
+			},
+			globalVendorConsentData: {
+				maxVendorId: 6,
+				selectedVendorIds: new Set([1, 2, 3, 4, 5, 6]),
+			},
+		});
+		store.globalVendorIdsPresentOnList = new Map([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]);
+
+		store.mergeVendorConsentsFromGlobalCookie();
+		expect(Array.from(store.vendorConsentData.selectedVendorIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedVendorIds));
+	});
+
+	it('merge vendor consent from global cookie when consents differ', () => {
+		const store = new Store({
+			vendorConsentData: {
+				selectedVendorIds: new Set([1, 2, 3]),
+			},
+			globalVendorConsentData: {
+				maxVendorId: 6,
+				selectedVendorIds: new Set([3, 4, 5, 6]),
+			},
+		});
+		store.globalVendorIdsPresentOnList = new Map([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]);
+
+		store.mergeVendorConsentsFromGlobalCookie();
+		expect(Array.from(store.vendorConsentData.selectedVendorIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedVendorIds));
+	});
+
+	it('merge vendor consent to global cookie', () => {
+		const store = new Store({
+			vendorConsentData: {
+				selectedVendorIds: new Set([1, 2, 3, 4, 5]),
+			},
+			globalVendorConsentData: {
+				selectedVendorIds: new Set([1, 2]),
+			},
+		});
+		store.globalVendorIdsPresentOnList = new Map([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]);
+
+		store.mergeVendorConsentsToGlobalCookie();
+		expect(Array.from(store.globalVendorConsentData.selectedVendorIds)).to.deep.equal(Array.from(store.vendorConsentData.selectedVendorIds));
+	});
+
+	it('merge purpose consent from global cookie when consents are same', () => {
+		const store = new Store({
+			vendorList,
+			vendorConsentData: {
+				selectedPurposeIds: new Set([1, 2, 3, 4]),
+			},
+			globalVendorConsentData: {
+				selectedPurposeIds: new Set([1, 2, 3, 4]),
+			},
+		});
+
+		store.mergePurposeConsentsFromGlobalCookie();
+		expect(Array.from(store.vendorConsentData.selectedPurposeIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedPurposeIds));
+	});
+
+	it('merge purpose consent from global cookie when consents differ', () => {
+		const store = new Store({
+			vendorList,
+			vendorConsentData: {
+				selectedPurposeIds: new Set([1, 2]),
+			},
+			globalVendorConsentData: {
+				selectedPurposeIds: new Set([2, 3, 4]),
+			},
+		});
+
+		store.mergePurposeConsentsFromGlobalCookie();
+		expect(Array.from(store.vendorConsentData.selectedPurposeIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedPurposeIds));
+	});
+
+	it('merge purpose consent to global cookie', () => {
+		const store = new Store({
+			vendorList,
+			vendorConsentData: {
+				selectedPurposeIds: new Set([1, 2, 4]),
+			},
+			globalVendorConsentData: {
+				selectedPurposeIds: new Set([2, 3]),
+			},
+		});
+
+		store.mergePurposeConsentsToGlobalCookie();
+		expect(Array.from(store.globalVendorConsentData.selectedPurposeIds)).to.deep.equal(Array.from(store.vendorConsentData.selectedPurposeIds));	});
 });

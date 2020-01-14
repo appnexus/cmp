@@ -38,9 +38,18 @@ function readExternalConsentData(config) {
 
 function readInternalConsentData() {
 	return Promise.all([
-		readVendorConsentCookie(),
-		fetchPubVendorList(),
-		readPublisherConsentCookie()
+		[
+			readVendorConsentCookie(),
+			fetchPubVendorList(),
+			readPublisherConsentCookie()
+		]
+	]);
+}
+
+function readGlobalAndExternalConsentData(config) {
+	return Promise.all([
+		readExternalConsentData(config),
+		readVendorConsentCookie()
 	]);
 }
 
@@ -49,8 +58,8 @@ export function init(configUpdates) {
 	log.debug('Using configuration:', config);
 
 	// Fetch the current vendor consent before initializing
-	return (config.getConsentData ? readExternalConsentData(config) : readInternalConsentData())
-		.then(([vendorConsentData, pubVendorsList, publisherConsentData]) => {
+	return ((config.getConsentData) ? readGlobalAndExternalConsentData(config) : readInternalConsentData())
+		.then(([[vendorConsentData, pubVendorsList, publisherConsentData], globalVendorConsentData]) => {
 			const {vendors} = pubVendorsList || {};
 
 			// Check config for allowedVendorIds then the pubVendorList
@@ -64,6 +73,7 @@ export function init(configUpdates) {
 				cmpId: CMP_ID,
 				cookieVersion: COOKIE_VERSION,
 				vendorConsentData,
+				globalVendorConsentData,
 				publisherConsentData,
 				pubVendorsList,
 				allowedVendorIds
@@ -105,6 +115,12 @@ export function init(configUpdates) {
 				fetchGlobalVendorList().then(store.updateVendorList),
 				fetchPurposeList().then(store.updateCustomPurposeList)
 			]).then((params) => {
+				//Update consent data if cookie on global domain exists
+				if (store.persistedGlobalVendorConsentData) {
+					store.mergeVendorConsentsFromGlobalCookie();
+					store.mergePurposeConsentsFromGlobalCookie();
+				}
+
 				cmp.cmpReady = true;
 				cmp.notify('cmpReady');
 				return params[0];

@@ -1,7 +1,6 @@
 import Promise from 'promise-polyfill';
 import config from './config';
 import log from './log';
-import { sendPortalCommand } from './portal';
 
 
 const PUB_VENDOR_LOCATION = '/.well-known/pubvendors.json';
@@ -40,7 +39,7 @@ function fetchPubVendorList() {
  * Fetch the global vendor list if the location is configured
  */
 function fetchGlobalVendorList() {
-	const {globalVendorListLocation, storeConsentGlobally, globalConsentLocation, getVendorList} = config;
+	const {globalVendorListLocation, getVendorList} = config;
 	if (getVendorList) {
 		return new Promise((resolve, reject) => {
 			try {
@@ -59,9 +58,6 @@ function fetchGlobalVendorList() {
 				reject(err);
 			}
 		}).catch(err => {
-			if (storeConsentGlobally && globalConsentLocation) {
-				return sendPortalCommand({command: 'readVendorList'});
-			}
 			log.error(`Failed to load global vendor list from configuration`, err);
 		});
 	}
@@ -70,9 +66,6 @@ function fetchGlobalVendorList() {
 		Promise.reject('Missing globalVendorListLocation'))
 		.then(res => res.json())
 		.catch(err => {
-			if (storeConsentGlobally && globalConsentLocation) {
-				return sendPortalCommand({command: 'readVendorList'});
-			}
 			log.error(`Failed to load global vendor list from ${globalVendorListLocation}`, err);
 		});
 }
