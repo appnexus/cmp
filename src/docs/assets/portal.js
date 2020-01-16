@@ -18,7 +18,7 @@ function readCookie(name) {
 }
 
 function writeCookie({ name, value, path = '/'}) {
-	document.cookie = `${name}=${value}${COOKIE_DOMAIN};path=${path};max-age=${COOKIE_MAX_AGE}`;
+	document.cookie = `${name}=${value}${COOKIE_DOMAIN};path=${path};max-age=${COOKIE_MAX_AGE};SameSite=None;Secure`;
 	return Promise.resolve();
 }
 
