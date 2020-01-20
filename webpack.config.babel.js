@@ -170,7 +170,8 @@ module.exports = [
 	{
 		entry: {
 			cmp: './index.js',
-			'cmp.complete': './complete.js'
+			'cmp.complete': './complete.js',
+			portal: './docs/assets/portal.js'
 		},
 
 		output: {
@@ -192,6 +193,13 @@ module.exports = [
 				template: 'index.html',
 				chunks: ['cmp']
 			}),
+			new HtmlWebpackPlugin({
+				filename: 'portal.html',
+				template: './docs/assets/portal.html',
+				chunks: ['portal'],
+				inlineSource: '\\.js$'
+			}),
+			new HtmlWebpackInlineSourcePlugin(),
 		]).concat(ENV === 'production' ? uglifyPlugin : []),
 	},
 	// Docs config

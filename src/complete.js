@@ -51,7 +51,7 @@ function checkConsent(cmp, store) {
 // Preserve any config options already set
 const {config} = window[CMP_GLOBAL_NAME] || {};
 const configUpdates = {
-	globalConsentLocation: '//acdn.adnxs.com/cmp/docs/portal.html',
+	globalConsentLocation: 'https://rasp.mgr.consensu.org/portal.html',
 	...config
 };
 
