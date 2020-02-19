@@ -4,7 +4,7 @@
 
 ### Docs
 
-- [x] Change reference.html file and bump version
+- [x] Add react native call in reference.html file and bump version
 
 <a name="1.3.4"></a>
 
