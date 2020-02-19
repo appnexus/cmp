@@ -1,12 +1,5 @@
 {
-	"vendorListVersion": 26,
-	"lastUpdated": "2018-05-22T16:00:12Z",
-	"purposes": [
-		{
-			"id": 10,
-			"name": "Googles Purposes",
-			"description": "Enter description in translations...",
-			"optoutDescription": "Custom Purpose 10 OptOutDescription."
-		}
-	]
+	"vendorListVersion": 189,
+	"lastUpdated": "2020-02-19T16:00:12Z",
+	"purposes": []
 }
