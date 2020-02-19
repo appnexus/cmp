@@ -11,8 +11,6 @@
 	<!--// INLINE
 	<script>{{{ htmlWebpackPlugin.options.inline }}}</script>
 	-->
-	<h1>System1 CMP Reference Page</h1>
-	<button id="show-button">showConsentTool</button>
 	<!--// LOADER //-->
 	<script src="./loader.js"></script>
 	<script>
@@ -30,7 +28,7 @@
 			// localization: {},
 			// forceLocale: 'es',
 			theme: {
-				isBannerModal: true
+				isBannerModal: false
 			},
 			gdprApplies: true,
 			// cookieDomain: '.zoo.com',
@@ -40,6 +38,9 @@
 		}
 
 		function onConsentChanged(result) {
+			if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+				window.ReactNativeWebView.postMessage(document.cookie);
+			}
 			if (document.cookie.indexOf("gdpr_opt_in=1") < 0) {
 				console.log("cmp:onConsentChanged all-consent:failed", result);
 				// window.location.reload();
@@ -70,10 +71,7 @@
 			}
 		});
 
-		const showBtn = document.getElementById('show-button');
-		showBtn.addEventListener('click', function () {
-			cmp('showConsentTool');
-		});
+		cmp('showConsentTool')
 
 	</script>
 
