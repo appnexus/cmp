@@ -3,26 +3,30 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>System1 CMP</title>
+	<title>Info.com CMP</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
 </head>
 
 <body>
-	<!--// INLINE
-	<script>{{{ htmlWebpackPlugin.options.inline }}}</script>
-	-->
-	<!--// LOADER //-->
+	<!--// INLINE //-->
+	<script>
+		{{{ 
+			htmlWebpackPlugin.options.inline 
+		}}}
+	</script>
+	<!--// LOADER
 	<script src="./loader.js"></script>
+	//-->
 	<script>
 		const config = {
 			scriptSrc: window.location.search.indexOf("remote=true") >= 0 ? 'https://s.flocdn.com/cmp/s1.cmp.js' : './cmp.js',
-			// pubVendorListLocation: './assets/pubvendors.json',
-			// pubVendorListLocation: 'https://s.flocdn.com/cmp/pubvendors.json',
+			pubVendorListLocation: './assets/info.pubvendors.json',
+			// pubVendorListLocation: 'https://s.flocdn.com/cmp/info.pubvendors.json',
 			logging: false,
 			storePublisherData: true, // required for customPurposeListLocation
 			customPurposeListLocation: './assets/purposes.json',
-			// globalVendorListLocation: './assets/quiz.pubvendors.json',
-			globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
+			globalVendorListLocation: './assets/vendorlist.json',
+			// globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
 			globalConsentLocation: 'https://s.flocdn.com/cmp/docs/portal.html',
 			storeConsentGlobally: false,
 			// localization: {},
@@ -34,7 +38,7 @@
 			// cookieDomain: '.zoo.com',
 			// allowedVendorIds: null,
 			shouldAutoConsent: false,
-			shouldAutoConsentWithFooter: true
+			shouldAutoConsentWithFooter: false
 		}
 
 		function onConsentChanged(result) {
@@ -74,31 +78,6 @@
 		cmp('showConsentTool')
 
 	</script>
-
-
-	<!--//
-	<script>
-		cmp('init', {
-			scriptSrc: './s1.cmp.js',
-			countryCode: 'us',
-			logging: false,
-			pubVendorListLocation: './pubvendors.json'
-		}, (result) => {
-			console.log("init", result);
-			if (result.consentRequired && !result.hasConsented) {
-				cmp('showConsentTool'); // gdpr
-			}
-		});
-
-		cmp('addEventListener', 'onSubmit', (result) => {
-			// Turn GA on or off
-			// Turn OMJS on or off
-			//
-			console.log("onSubmit", result);
-		});
-	</script>
-	//-->
-
 </body>
 
 </html>
