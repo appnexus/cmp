@@ -130,14 +130,27 @@ export default class Vendors extends Component {
 											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}
 											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}/>
 								</td>
+								{editingConsents && id%2 === 0 &&
+									<td>
+										<LocalLabel>Reject</LocalLabel>
+										<Switch
+											dataId={id}
+											isSelected={selectedVendorIds.has(id)}
+											onClick={this.handleSelectVendor}
+										/>
+									</td>
+									||
+									<td/>
+								}
 								{editingConsents &&
-								<td>
-									<Switch
-										dataId={id}
-										isSelected={selectedVendorIds.has(id)}
-										onClick={this.handleSelectVendor}
-									/>
-								</td>
+									<td>
+										<LocalLabel>Consent</LocalLabel>
+										<Switch
+											dataId={id}
+											isSelected={selectedVendorIds.has(id)}
+											//onClick={this.handleSelectVendor}
+										/>
+									</td>
 								}
 							</tr>
 						))}

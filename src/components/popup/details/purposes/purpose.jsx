@@ -31,12 +31,25 @@ const Purpose = (props) => {
 				</div>
 				{!isTechnical &&
 					<div className={style.active}>
-						<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
-						<Switch
-							isSelected={isActive}
-							dataId={index}
-							onClick={onToggle}
-						/>
+						<div className={style.switch}>
+							<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
+							<Switch
+								isSelected={isActive}
+								dataId={index}
+								onClick={onToggle}
+							/>
+						</div>
+
+						<div className={style.switch}>
+							<LocalLabel>Uzasadniony interes</LocalLabel>
+							<Switch
+								isSelected={!isActive}
+								dataId={index}
+								onClick={onToggle}
+							/>
+						</div>
+
+
 					</div>
 				}
 			</div>
