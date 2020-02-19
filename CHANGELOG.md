@@ -1,3 +1,11 @@
+<a name="1.3.5"></a>
+
+## [1.3.4](https://github.com/openmail/system1-cmp/compare/v1.3.4...v1.3.5) (2019-12-03)
+
+### Docs
+
+- [x] Add react native call in reference.html file and bump version
+
 <a name="1.3.4"></a>
 
 ## [1.3.4](https://github.com/openmail/system1-cmp/compare/v1.3.3...v1.3.4) (2019-12-03)
