@@ -14,6 +14,12 @@
 			<%= props.loader %>
 		</script>
 		<script>
+			const MESSAGE_TYPE = {
+				INIT: 'INIT',
+				ON_SUBMIT: 'ON_SUBMIT',
+				ON_CONSENT_CHANGED: 'ON_CONSENT_CHANGED',
+			};
+
 			const config = {
 				scriptSrc: './cmp.js',
 				pubVendorListLocation: './config/info.pubvendors.json',
@@ -73,10 +79,16 @@
 				shouldAutoConsentWithFooter: false
 			}
 
-			function onConsentChanged(result) {
-				if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-					window.ReactNativeWebView.postMessage(document.cookie);
+			function nativePostMessage(namespace, msg) {
+				if (window.ReactnativeWebView && window.ReactNativeWebView.postMessage) {
+					window.ReactNativeWebView.postMessage(namespace + ':' + msg);
+				} else {
+					console.log(namespace + ':' + msg);
 				}
+			}
+
+			function onConsentChanged(result) {
+				nativePostMessage(MESSAGE_TYPE.ON_CONSENT_CHANGED, document.cookie);
 				if (document.cookie.indexOf("gdpr_opt_in=1") < 0) {
 					console.log("cmp:onConsentChanged all-consent:failed", result);
 					// window.location.reload();
@@ -86,6 +98,7 @@
 			}
 
 			cmp('init', config, function (result) {
+				nativePostMessage(MESSAGE_TYPE.INIT, document.cookie);
 				if (result.consentRequired) {
 					if (result.warningMsg) {
 						console.log('cmp:init: warningMsg', result.warningMsg);
@@ -107,7 +120,10 @@
 				}
 			});
 
-			cmp('showConsentTool')
+			cmp('showConsentTool');
+			cmp('addEventListener', 'onSubmit', function () {
+				nativePostMessage(MESSAGE_TYPE.ON_SUBMIT, document.cookie);
+			});
 
 		</script>
 	</body>

@@ -1,3 +1,11 @@
+<a name="1.4.1"></a>
+
+## [1.4.1](https://github.com/openmail/system1-cmp/compare/v1.4.0...v1.4.1) (2020-02-21)
+
+### Refactor
+
+- [x] Adds postMessage to Native Device from info-acs.html
+
 <a name="1.4.0"></a>
 
 ## [1.4.0](https://github.com/openmail/system1-cmp/compare/v1.3.5...v1.4.0) (2020-02-20)
