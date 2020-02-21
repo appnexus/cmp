@@ -7,7 +7,7 @@ import 'core-js/fn/array/map';
 import 'core-js/fn/object/keys';
 import 'core-js/fn/promise';
 
-import cmp from '../loader';
+import cmp from './loader';
 import { init } from '../lib/init';
 import log from '../lib/log';
 import { readCookie, writeCookie } from '../lib/cookie/cookie';
@@ -68,24 +68,15 @@ const initialize = (config, callback) => {
 	});
 };
 
-const checkHasConsentedAll = (
-	{ vendors = [] },
-	{ purposeConsents, vendorConsents } = {}
-) => {
-	const hasAnyVendorsDisabled = vendors.find(
-		({ id }) => vendorConsents[id] === false
-	);
+const checkHasConsentedAll = ({ vendors = [] }, { purposeConsents, vendorConsents } = {}) => {
+	const hasAnyVendorsDisabled = vendors.find(({ id }) => vendorConsents[id] === false);
 	const hasAnyPurposeDisabled = Object.keys(purposeConsents).find(key => {
 		return purposeConsents[key] === false;
 	});
 	return !hasAnyPurposeDisabled && !hasAnyVendorsDisabled;
 };
 
-const checkConsent = ({
-	callback = () => {},
-	config,
-	warningMsg = ''
-} = {}) => {
+const checkConsent = ({ callback = () => {}, config, warningMsg = '' } = {}) => {
 	let errorMsg = '';
 	if (!cmp.isLoaded) {
 		errorMsg = 'CMP failed to load';
@@ -124,9 +115,7 @@ const handleConsentResult = ({
 	warningMsg = '',
 	errorMsg = ''
 }) => {
-	const hasConsentedCookie = Boolean(
-		parseInt(readCookie(GDPR_OPT_IN_COOKIE) || 0, 10)
-	);
+	const hasConsentedCookie = Boolean(parseInt(readCookie(GDPR_OPT_IN_COOKIE) || 0, 10));
 	const { vendorListVersion: listVersion } = vendorList;
 	const { created, vendorListVersion } = vendorConsentData;
 
@@ -159,8 +148,7 @@ const handleConsentResult = ({
 		}
 		errorMsg = `Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Show consent tool`;
 	} else if (!listVersion) {
-		errorMsg =
-			'Could not determine vendor list version. Not showing consent tool';
+		errorMsg = 'Could not determine vendor list version. Not showing consent tool';
 	}
 
 	if (errorMsg) {
@@ -171,11 +159,7 @@ const handleConsentResult = ({
 		// store as 1 or 0
 		const hasConsented = checkHasConsentedAll(vendorList, vendorConsentData);
 		if (created) {
-			writeCookie(
-				GDPR_OPT_IN_COOKIE,
-				hasConsented ? '1' : '0',
-				GDPR_OPT_IN_COOKIE_MAX_AGE
-			);
+			writeCookie(GDPR_OPT_IN_COOKIE, hasConsented ? '1' : '0', GDPR_OPT_IN_COOKIE_MAX_AGE);
 		}
 		const consent = {
 			consentRequired: true,
@@ -205,10 +189,7 @@ const handleConsentResult = ({
 
 	// 1. initialize call was queued from global scope (inline cmpLoader)
 	if (initIndex >= 0 && cmp.commandQueue[initIndex]) {
-		const [{ parameter: config, callback }] = cmp.commandQueue.splice(
-			initIndex,
-			1
-		); // remove "init" from command list because it doesn't exist
+		const [{ parameter: config, callback }] = cmp.commandQueue.splice(initIndex, 1); // remove "init" from command list because it doesn't exist
 		initialize(
 			{
 				...defaultConfig,

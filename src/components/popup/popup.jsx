@@ -1,4 +1,4 @@
-import {h, Component} from 'preact';
+import { h, Component } from 'preact';
 import style from './popup.less';
 import Details from './details/details';
 import CloseButton from '../closebutton/closebutton';
@@ -14,7 +14,7 @@ export default class Popup extends Component {
 
 	onKeyDown = evt => {
 		evt = evt || window.event;
-		const {key = '', keyCode = ''} = evt;
+		const { key = '', keyCode = '' } = evt;
 		const isEscape = key === 'Escape' || key === 'Esc' || keyCode === 27;
 		if (isEscape) {
 			this.handleClose();
@@ -22,7 +22,7 @@ export default class Popup extends Component {
 	};
 
 	handleClose = () => {
-		const {store, onSave} = this.props;
+		const { store, onSave } = this.props;
 		onSave();
 		store.toggleModalShowing(false);
 	};
@@ -37,26 +37,21 @@ export default class Popup extends Component {
 			selectedDetailsPanelIndex,
 			selectedPurposeDetails
 		} = props;
-		const {overlayBackground, secondaryColor, backgroundColor} = theme;
-		const {isModalShowing} = store;
+		const { overlayBackground, secondaryColor, backgroundColor } = theme;
+		const { isModalShowing } = store;
+		const { isBannerInline } = theme;
+
+		const popupClasses = [style.popup];
+		if (isBannerInline) {
+			popupClasses.push(style.bannerInline);
+		}
 
 		return (
-			<div
-				class={style.popup}
-				style={{display: isModalShowing ? 'flex' : 'none'}}
-			>
-				<div
-					class={style.overlay}
-					style={{background: overlayBackground}}
-					onClick={this.handleClose}
-				/>
+			<div class={popupClasses.join(' ')} style={{ display: isModalShowing ? 'flex' : 'none' }}>
+				<div class={style.overlay} style={{ background: overlayBackground }} onClick={this.handleClose} />
 				{isModalShowing ? (
 					<div class={style.content}>
-						<CloseButton
-							onClick={this.handleClose}
-							stroke={secondaryColor}
-							fill={backgroundColor}
-						/>
+						<CloseButton onClick={this.handleClose} stroke={secondaryColor} fill={backgroundColor} />
 						<Details
 							onSave={onSave}
 							store={store}

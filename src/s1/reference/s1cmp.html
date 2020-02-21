@@ -10,12 +10,10 @@
 <body>
 	<!--// INLINE //-->
 	<script>
-		{{{ 
-			htmlWebpackPlugin.options.inline 
-		}}}
+		<%= props.loader %>
 	</script>
 	<!--// LOADER
-	<script src="./loader.js"></script>
+	<script src="../loader.js"></script>
 	//-->
 	<script>
 		const config = {
@@ -78,6 +76,10 @@
 		cmp('showConsentTool')
 
 	</script>
+	<p>
+		CMP: <%= props.version %>
+		Generated: <%= props.date %>
+	</p>
 </body>
 
 </html>

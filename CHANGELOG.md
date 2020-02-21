@@ -1,6 +1,16 @@
+<a name="1.4.0"></a>
+
+## [1.4.0](https://github.com/openmail/system1-cmp/compare/v1.3.5...v1.4.0) (2020-02-20)
+
+### Docs
+
+- [x] Surface more overrides in the `theme` object
+- [x] Create new info-acs.html reference as standalone CMP for the info.com Android Choice Screen
+- [x] Refactor build for config json files and mutiple html templates
+
 <a name="1.3.5"></a>
 
-## [1.3.4](https://github.com/openmail/system1-cmp/compare/v1.3.4...v1.3.5) (2019-12-03)
+## [1.3.5](https://github.com/openmail/system1-cmp/compare/v1.3.4...v1.3.5) (2020-02-19)
 
 ### Docs
 

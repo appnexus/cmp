@@ -7,13 +7,19 @@ import fs from 'fs';
 import UglifyJS from 'uglify-es';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-import {
-	commonConfig,
-	uglifyPlugin,
-	version
-} from './common.webpack.config.babel';
+import { commonConfig, uglifyPlugin, version } from './common.webpack.config.babel';
 
 const ENV = process.env.NODE_ENV || 'development';
+
+const pages = [
+	{
+		id: 's1cmp',
+		filename: 'reference'
+	},
+	{
+		id: 'info-acs'
+	}
+];
 
 module.exports = [
 	// S1 CMP
@@ -31,22 +37,38 @@ module.exports = [
 			new webpack.DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(ENV)
 			}),
-			new HtmlWebpackPlugin({
-				filename: './reference.html',
-				template: 's1cmp.hbs',
-				inject: false,
-				inline: UglifyJS.minify(fs.readFileSync('./src/loader.js', 'utf8')).code,
-				version
-			}),
+			...pages.map(
+				({ id, filename }) =>
+					new HtmlWebpackPlugin({
+						template: `./s1/reference/${id}.html`,
+						filename: `./${filename || id}.html`,
+						cache: true,
+						showErrors: true,
+						inject: false,
+						templateParameters() {
+							return {
+								props: {
+									version,
+									date: new Date().toTimeString(),
+									loader: UglifyJS.minify(fs.readFileSync('./src/s1/loader.js', 'utf8')).code
+								}
+							};
+						}
+					})
+			),
 			new CopyWebpackPlugin([
 				{
-					from: 'loader.js',
+					from: './s1/config',
+					to: './config'
+				}
+			]),
+			new CopyWebpackPlugin([
+				{
+					from: './s1/loader.js',
 					to: './loader.js',
 					transform(content) {
 						// Just want to uglify and copy this file over
-						return Promise.resolve(
-							Buffer.from(UglifyJS.minify(content.toString()).code, 'utf8')
-						);
+						return Promise.resolve(Buffer.from(UglifyJS.minify(content.toString()).code, 'utf8'));
 					}
 				}
 			])

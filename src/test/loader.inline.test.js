@@ -14,7 +14,7 @@ describe('cmpLoader as script tag', () => {
 
 	beforeEach(() => {
 		appendChild = window.document.body.appendChild = jest.fn(() => {});
-		const content = fs.readFileSync('./src/loader.js');
+		const content = fs.readFileSync('./src/s1/loader.js');
 		eval(content + '; global.cmp = cmp');
 	});
 

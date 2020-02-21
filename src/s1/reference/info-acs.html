@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Info.com Android Choice Screen CMP</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
+	</head>
+	<body>
+		<!--//
+			version: <%= props.version %>
+			generated: <%= props.date %>
+		//-->
+		<script>
+			<%= props.loader %>
+		</script>
+		<script>
+			const config = {
+				scriptSrc: './cmp.js',
+				pubVendorListLocation: './config/info.pubvendors.json',
+				// pubVendorListLocation: 'https://s.flocdn.com/cmp/info.pubvendors.json',
+				logging: false,
+				storePublisherData: true, // required for customPurposeListLocation
+				customPurposeListLocation: './config/purposes.json',
+				globalVendorListLocation: './config/vendorlist.json',
+				// globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
+				globalConsentLocation: 'https://s.flocdn.com/cmp/docs/portal.html',
+				storeConsentGlobally: false,
+				localization: {
+					en: {
+						banner: {
+							title: 'Privacy Choices',
+							description: 'By using this application, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click "Learn More" to change your settings.',
+							links: {
+								data: {
+									title: 'Information that may be used',
+									description: `
+										<ul>
+											<li>Type of browser and its settings</li>
+											<li>Information about the device's operating system</li>
+											<li>Cookie information</li>
+											<li>Information about other identifiers assigned to the device</li>
+											<li>The IP address from which the device accesses a client's website or mobile application</li>
+											<li>Information about the user's activity on that device, including web pages and mobile apps visited or used </li>
+											<li>Information about the geographic location of the device when it accesses a website or mobile application</li>
+										</ul>
+									`
+								},
+								purposes: {
+									title: 'Purposes for storing information'
+								},
+								manage: 'Learn More',
+								accept: 'Ok, Got It'
+							}
+						},
+						details: {
+							save: 'Save'
+						}
+					}
+				},
+				// forceLocale: 'es',
+				theme: {
+					isBannerInline: true,
+					primaryColor: '#09f',
+					textLinkColor: '#09f',
+					boxShadow: 'none',
+					secondaryColor: '#869cc0',
+					featuresColor: '#d0d3d7'
+				},
+				gdprApplies: true,
+				// cookieDomain: '.zoo.com',
+				// allowedVendorIds: null,
+				shouldAutoConsent: false,
+				shouldAutoConsentWithFooter: false
+			}
+
+			function onConsentChanged(result) {
+				if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+					window.ReactNativeWebView.postMessage(document.cookie);
+				}
+				if (document.cookie.indexOf("gdpr_opt_in=1") < 0) {
+					console.log("cmp:onConsentChanged all-consent:failed", result);
+					// window.location.reload();
+				} else {
+					console.log("cmp:onConsentChanged all-consent:succeeded", result);
+				}
+			}
+
+			cmp('init', config, function (result) {
+				if (result.consentRequired) {
+					if (result.warningMsg) {
+						console.log('cmp:init: warningMsg', result.warningMsg);
+					}
+					if (result.errorMsg) {
+						console.log('cmp:init: errorMsg', result.errorMsg);
+						cmp('showConsentTool');
+					} else {
+						// consent achieved
+						if (document.cookie.indexOf("gdpr_opt_in=1") >= 0) {
+							console.log("cmp:init: all consent achieved", result);
+						} else {
+							console.log("cmp:init: only some consent achieved", result);
+						}
+					}
+					cmp('addEventListener', 'onConsentChanged', onConsentChanged);
+				} else {
+					console.log("cmp:init: consent not required", result);
+				}
+			});
+
+			cmp('showConsentTool')
+
+		</script>
+	</body>
+</html>
