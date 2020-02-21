@@ -47,11 +47,9 @@ module.exports = [
 						inject: false,
 						templateParameters() {
 							return {
-								props: {
-									version,
-									date: new Date().toTimeString(),
-									loader: UglifyJS.minify(fs.readFileSync('./src/s1/loader.js', 'utf8')).code
-								}
+								version,
+								date: new Date().toTimeString(),
+								loader: UglifyJS.minify(fs.readFileSync('./src/s1/loader.js', 'utf8')).code
 							};
 						}
 					})

@@ -7,11 +7,11 @@
 	</head>
 	<body>
 		<!--//
-			version: <%= props.version %>
-			generated: <%= props.date %>
+			version: <%= version %>
+			generated: <%= date %>
 		//-->
 		<script>
-			<%= props.loader %>
+			<%= loader %>
 		</script>
 		<script>
 			const MESSAGE_TYPE = {
@@ -80,7 +80,7 @@
 			}
 
 			function nativePostMessage(namespace, msg) {
-				if (window.ReactnativeWebView && window.ReactNativeWebView.postMessage) {
+				if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
 					window.ReactNativeWebView.postMessage(namespace + ':' + msg);
 				} else {
 					console.log(namespace + ':' + msg);
