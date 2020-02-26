@@ -35,7 +35,6 @@ class FeaturesButton extends Component {
 export default class Vendors extends Component {
 	constructor(props) {
 		super(props);
-		console.log('props', props);
 		this.state = {
 			isSelectAll: false,
 			showFeaturesId: null

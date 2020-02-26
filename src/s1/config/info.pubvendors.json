@@ -1,10 +1,82 @@
 {
 	"publisherVendorsVersion": 1,
-	"globalVendorListVersion": 189,
+	"globalVendorListVersion": 190,
 	"lastUpdated": "2020-02-19T14:03:08Z",
+	"features": [
+		{
+			"id": 1
+		},
+		{
+			"id": 2
+		},
+		{
+			"id": 3
+		},
+		{
+			"id": "c1",
+			"name": "App performance and monitoring",
+			"description": "These services allow us to receive information about the performance and functionality of our app. Some examples include crash metrics and user interaction data. The information collected does not identify any individual user."
+		}
+	],
 	"vendors": [
 		{
 			"id": 25
+		},
+		{
+			"id": "c1",
+			"name": "Google Play Store",
+			"purposeIds": [],
+			"legIntPurposeIds": [5],
+			"featureIds": ["c1"],
+			"policyUrl": "https://play.google.com/about/play-terms"
+		},
+		{
+			"id": "c2",
+			"name": "Google Analytics",
+			"purposeIds": [],
+			"legIntPurposeIds": [5],
+			"featureIds": ["c1"],
+			"policyUrl": "https://policies.google.com/privacy"
+		},
+		{
+			"id": "c3",
+			"name": "Google Firebase",
+			"purposeIds": [],
+			"legIntPurposeIds": [5],
+			"featureIds": ["c1"],
+			"policyUrl": "https://firebase.google.com/support/privacy"
+		},
+		{
+			"id": "c4",
+			"name": "Yahoo Flurry",
+			"purposeIds": [],
+			"legIntPurposeIds": [5],
+			"featureIds": ["c1"],
+			"policyUrl": "http://www.flurry.com/legal-privacy/privacy-policy"
+		},
+		{
+			"id": "c5",
+			"name": "New Relic",
+			"purposeIds": [],
+			"legIntPurposeIds": [5],
+			"featureIds": ["c1"],
+			"policyUrl": "https://newrelic.com/termsandconditions/privacy"
+		},
+		{
+			"id": "c6",
+			"name": "Instabug",
+			"purposeIds": [],
+			"legIntPurposeIds": [5],
+			"featureIds": ["c1"],
+			"policyUrl": "https://instabug.com/privacy"
+		},
+		{
+			"id": "c7",
+			"name": "Microsoft Bing",
+			"purposeIds": [],
+			"legIntPurposeIds": [2, 3, 4, 5],
+			"featureIds": [1, 2, 3],
+			"policyUrl": "https://privacy.microsoft.com/en-us/privacystatement"
 		}
 	]
 }

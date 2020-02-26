@@ -3976,6 +3976,13 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
+eslint-config-prettier@^6.10.0:
+  version "6.10.0"
+  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/eslint-config-prettier/-/eslint-config-prettier-6.10.0.tgz#7b15e303bf9c956875c948f6b21500e48ded6a7f"
+  integrity sha1-exXjA7+clWh1yUj2shUA5I3tan8=
+  dependencies:
+    get-stdin "^6.0.0"
+
 eslint-plugin-jest@^21.7.0:
   version "21.27.2"
   resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/eslint-plugin-jest/-/eslint-plugin-jest-21.27.2.tgz#2a795b7c3b5e707df48a953d651042bd01d7b0a8"
@@ -4641,6 +4648,11 @@ get-stdin@^4.0.1:
   version "4.0.1"
   resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/get-stdin/-/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
   integrity sha1-uWjGsKBDhDJJAui/Gl3zJXmkUP4=
+
+get-stdin@^6.0.0:
+  version "6.0.0"
+  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/get-stdin/-/get-stdin-6.0.0.tgz#9e09bf712b360ab9225e812048f71fde9c89657b"
+  integrity sha1-ngm/cSs2CrkiXoEgSPcf3pyJZXs=
 
 get-stream@^3.0.0:
   version "3.0.0"

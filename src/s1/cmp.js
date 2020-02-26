@@ -68,8 +68,10 @@ const initialize = (config, callback) => {
 	});
 };
 
-const checkHasConsentedAll = ({ vendors = [] }, { purposeConsents, vendorConsents } = {}) => {
-	const hasAnyVendorsDisabled = vendors.find(({ id }) => vendorConsents[id] === false);
+const checkHasConsentedAll = ({ vendors = [] }, { allowedVendorIds, purposeConsents, vendorConsents } = {}) => {
+	const filteredVendors =
+		allowedVendorIds && allowedVendorIds.size ? vendors.filter(({ id }) => allowedVendorIds.has(id)) : vendors;
+	const hasAnyVendorsDisabled = filteredVendors.find(({ id }) => vendorConsents[id] === false);
 	const hasAnyPurposeDisabled = Object.keys(purposeConsents).find(key => {
 		return purposeConsents[key] === false;
 	});

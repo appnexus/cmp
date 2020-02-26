@@ -1,4 +1,4 @@
-import {h, Component} from 'preact';
+import { h, Component } from 'preact';
 import style from './details.less';
 import Button from '../../button/button';
 import Vendors from './vendors/vendors';
@@ -31,21 +31,43 @@ export default class Details extends Component {
 	};
 
 	handlePurposeClick = purposeItem => {
-		const {onChangeDetailsPanel, onSelectPurpose} = this.props;
+		const { onChangeDetailsPanel, onSelectPurpose } = this.props;
 
 		onChangeDetailsPanel(SECTION_VENDORS);
 		onSelectPurpose(purposeItem);
 	};
 
-	render(props, state) {
-		const {
-			onSave,
-			onClose,
-			store,
-			theme,
-			selectedPanelIndex,
-			selectedPurposeDetails
-		} = props;
+	formatVendors = (vendors, pubVendors, allowedVendorIds) => {
+		let formattedVendors = pubVendors.length
+			? pubVendors.map(vendor => ({
+					...vendors.find(({ id }) => id === vendor.id),
+					...vendor
+			  }))
+			: vendors.map(vendor => ({
+					...vendor,
+					policyUrl: vendor.policyUrl.indexOf('://') > -1 ? vendor.policyUrl : `https://${vendor.policyUrl}`
+			  }));
+
+		if (allowedVendorIds && allowedVendorIds.size) {
+			formattedVendors = formattedVendors.filter(({ id }) => allowedVendorIds.has(id));
+		}
+
+		return formattedVendors.sort(({ name: n1 }, { name: n2 }) =>
+			n1.toLowerCase() === n2.toLowerCase() ? 0 : n1.toLowerCase() > n2.toLowerCase() ? 1 : -1
+		);
+	};
+
+	formatFeatures = (features, pubFeatures) => {
+		return pubFeatures.length
+			? pubFeatures.map(feature => ({
+					...features.find(({ id }) => id === feature.id),
+					...feature
+			  }))
+			: features;
+	};
+
+	render(props) {
+		const { onSave, store, theme, selectedPanelIndex, selectedPurposeDetails } = props;
 
 		const {
 			backgroundColor,
@@ -57,38 +79,21 @@ export default class Details extends Component {
 			primaryTextColor
 		} = theme;
 		const {
+			allowedVendorIds,
 			vendorList = {},
 			customPurposeList = {},
 			vendorConsentData,
-			publisherConsentData,
 			pubVendorsList = {},
-			selectPurpose,
-			selectCustomPurpose,
 			selectAllVendors,
 			selectVendor
 		} = store;
-		const {selectedPurposeIds, selectedVendorIds} = vendorConsentData;
-		const {selectedCustomPurposeIds} = publisherConsentData;
-		const {purposes = [], vendors = [], features = []} = vendorList;
-		const {purposes: customPurposes = []} = customPurposeList;
-		const {vendors: pubVendors = []} = pubVendorsList;
+		const { selectedVendorIds } = vendorConsentData;
+		const { purposes = [], vendors = [], features = [] } = vendorList;
+		const { purposes: customPurposes = [] } = customPurposeList;
+		const { vendors: pubVendors = [], features: pubFeatures = [] } = pubVendorsList;
 
-		const formattedVendors = vendors
-			.map(vendor => ({
-				...vendor,
-				...pubVendors.find(({id}) => id === vendor.id),
-				policyUrl:
-					vendor.policyUrl.indexOf('://') > -1
-						? vendor.policyUrl
-						: `https://${vendor.policyUrl}`
-			}))
-			.sort(({name: n1}, {name: n2}) =>
-				n1.toLowerCase() === n2.toLowerCase()
-					? 0
-					: n1.toLowerCase() > n2.toLowerCase()
-					? 1
-					: -1
-			);
+		const formattedVendors = this.formatVendors(vendors, pubVendors, allowedVendorIds);
+		const formattedFeatures = this.formatFeatures(features, pubFeatures);
 
 		return (
 			<div
@@ -107,16 +112,12 @@ export default class Details extends Component {
 							onPurposeListClick={this.handlePanelClick(SECTION_PURPOSE_LIST)}
 							theme={theme}
 						/>
-						<VendorList
-							vendors={formattedVendors}
-							onBack={this.handleBack}
-							theme={theme}
-						/>
+						<VendorList vendors={formattedVendors} onBack={this.handleBack} theme={theme} />
 						<PurposeList onBack={this.handleBack} theme={theme} />
 						<Vendors
 							vendors={formattedVendors}
 							purposes={purposes}
-							features={features}
+							features={formattedFeatures}
 							selectVendor={selectVendor}
 							selectAllVendors={selectAllVendors}
 							selectedVendorIds={selectedVendorIds}
@@ -125,7 +126,7 @@ export default class Details extends Component {
 						/>
 					</Panel>
 				</div>
-				<div class={style.footer} style={{borderColor: dividerColor}}>
+				<div class={style.footer} style={{ borderColor: dividerColor }}>
 					{selectedPanelIndex > 0 && (
 						<Button
 							class={style.back}
@@ -136,12 +137,7 @@ export default class Details extends Component {
 							&lt; <LocalLabel localizeKey="back">Back</LocalLabel>
 						</Button>
 					)}
-					<Button
-						class={style.save}
-						onClick={onSave}
-						backgroundColor={primaryColor}
-						textColor={primaryTextColor}
-					>
+					<Button class={style.save} onClick={onSave} backgroundColor={primaryColor} textColor={primaryTextColor}>
 						<LocalLabel localizeKey="save">Continue Using Site</LocalLabel>
 					</Button>
 				</div>

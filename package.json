@@ -1,6 +1,6 @@
 {
   "name": "system1-cmp",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "System1 Consent Management Platform for TCF 1.1 GDPR Compliance",
   "scripts": {
     "clean": "rimraf ./dist",
@@ -106,6 +106,7 @@
     "codemirror": "^5.34.0",
     "core-js": "^2.5.3",
     "cross-var": "^1.1.0",
+    "eslint-config-prettier": "^6.10.0",
     "handlebars-loader": "^1.7.1",
     "js-beautify": "^1.7.5",
     "lodash": "^4.17.11",

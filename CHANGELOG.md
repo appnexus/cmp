@@ -1,3 +1,13 @@
+## [1.4.3](https://github.com/openmail/system1-cmp/compare/v1.4.2...v1.4.3) (2020-02-22)
+
+### Refactor
+
+- [x] `allowedVendorIds` now filters vendors out of the display list, but keeps all vendors in memory
+- [x] `pubvendors.json` can now provide custom features
+- [x] Update cached global vendor list to v190.
+- [x] Fix conflicting eslint, prettier, editorconfig settings
+
+
 <a name="1.4.2"></a>
 
 ## [1.4.2](https://github.com/openmail/system1-cmp/compare/v1.4.1...v1.4.2) (2020-02-21)

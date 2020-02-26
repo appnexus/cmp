@@ -10,7 +10,7 @@ function copyData(dataObject) {
 	if (typeof dataObject !== 'object') {
 		return dataObject;
 	}
-	const copy = {...dataObject};
+	const copy = { ...dataObject };
 	for (let key in copy) {
 		if (copy.hasOwnProperty(key) && copy[key] instanceof Set) {
 			copy[key] = new Set(copy[key]);
@@ -45,8 +45,11 @@ export default class Store {
 				cookieVersion,
 				cmpId,
 				cmpVersion,
-				consentLanguage: findLocale().substr(0, 2).toUpperCase()
-			});
+				consentLanguage: findLocale()
+					.substr(0, 2)
+					.toUpperCase()
+			}
+		);
 
 		this.publisherConsentData = Object.assign(
 			{
@@ -56,7 +59,8 @@ export default class Store {
 			{
 				cookieVersion,
 				cmpId
-			});
+			}
+		);
 
 		this.pubVendorsList = pubVendorsList;
 		this.allowedVendorIds = new Set(allowedVendorIds);
@@ -73,18 +77,10 @@ export default class Store {
 	 * list will only return consent=true for vendors that exist in the current
 	 * vendorList.
 	 */
-	getVendorConsentsObject = (vendorIds) => {
-		const {
-			vendorList = {},
-			persistedVendorConsentData = {},
-			pubVendorsList = {},
-			allowedVendorIds,
-		} = this;
+	getVendorConsentsObject = vendorIds => {
+		const { vendorList = {}, persistedVendorConsentData = {}, pubVendorsList = {}, allowedVendorIds } = this;
 
-		const {
-			publisherVendorsVersion,
-			globalVendorListVersion
-		} = pubVendorsList;
+		const { publisherVendorsVersion, globalVendorListVersion } = pubVendorsList;
 
 		const {
 			cookieVersion,
@@ -100,19 +96,16 @@ export default class Store {
 			selectedPurposeIds = new Set()
 		} = persistedVendorConsentData;
 
-		const {purposes = [], vendors = []} = vendorList;
+		const { purposes = [], vendors = [] } = vendorList;
 
 		// Map requested vendorIds
 		const vendorMap = {};
 		if (vendorIds && vendorIds.length) {
-			vendorIds.forEach(id => vendorMap[id] = selectedVendorIds.has(id) && (!allowedVendorIds.size || allowedVendorIds.has(id)));
-		}
-		else {
+			vendorIds.forEach(id => (vendorMap[id] = selectedVendorIds.has(id)));
+		} else {
 			// In case the vendor list has not been loaded yet find the highest
 			// vendor ID to map any consent data we already have
-			const lastVendorId = Math.max(maxVendorId,
-				...vendors.map(({id}) => id),
-				...Array.from(selectedVendorIds));
+			const lastVendorId = Math.max(maxVendorId, ...vendors.map(({ id }) => id), ...Array.from(selectedVendorIds));
 
 			// Map all IDs up to the highest vendor ID found
 			for (let i = 1; i <= lastVendorId; i++) {
@@ -121,9 +114,7 @@ export default class Store {
 		}
 
 		// Map all purpose IDs
-		const lastPurposeId = Math.max(
-			...purposes.map(({id}) => id),
-			...Array.from(selectedPurposeIds));
+		const lastPurposeId = Math.max(...purposes.map(({ id }) => id), ...Array.from(selectedPurposeIds));
 
 		const purposeMap = {};
 		for (let i = 1; i <= lastPurposeId; i++) {
@@ -131,6 +122,7 @@ export default class Store {
 		}
 
 		return {
+			allowedVendorIds,
 			cookieVersion,
 			created,
 			lastUpdated,
@@ -169,17 +161,13 @@ export default class Store {
 			selectedCustomPurposeIds = new Set()
 		} = persistedPublisherConsentData;
 
-		const {selectedPurposeIds = new Set()} = persistedVendorConsentData;
-		const {purposes = []} = vendorList;
-		const {purposes: customPurposes = []} = customPurposeList;
+		const { selectedPurposeIds = new Set() } = persistedVendorConsentData;
+		const { purposes = [] } = vendorList;
+		const { purposes: customPurposes = [] } = customPurposeList;
 
-		const lastStandardPurposeId = Math.max(
-			...purposes.map(({id}) => id),
-			...Array.from(selectedPurposeIds));
+		const lastStandardPurposeId = Math.max(...purposes.map(({ id }) => id), ...Array.from(selectedPurposeIds));
 
-		const lastCustomPurposeId = Math.max(
-			...customPurposes.map(({id}) => id),
-			...Array.from(selectedPurposeIds));
+		const lastCustomPurposeId = Math.max(...customPurposes.map(({ id }) => id), ...Array.from(selectedPurposeIds));
 
 		// Map all purpose IDs
 		const standardPurposeMap = {};
@@ -209,16 +197,9 @@ export default class Store {
 	 * was allowed by the list.
 	 */
 	persist = () => {
-		const {
-			vendorConsentData,
-			publisherConsentData,
-			vendorList,
-			customPurposeList
-		} = this;
+		const { vendorConsentData, publisherConsentData, vendorList, customPurposeList } = this;
 
-		const {
-			vendorListVersion = 1
-		} = vendorList || {};
+		const { vendorListVersion = 1 } = vendorList || {};
 
 		// Update modification dates and write the cookies
 		const now = new Date();
@@ -233,7 +214,7 @@ export default class Store {
 		publisherConsentData.lastUpdated = now;
 
 		// Write vendor cookie to appropriate domain
-		writeVendorConsentCookie({...vendorConsentData, vendorList});
+		writeVendorConsentCookie({ ...vendorConsentData, vendorList });
 
 		// Write publisher cookie if enabled
 		if (config.storePublisherData) {
@@ -255,11 +236,11 @@ export default class Store {
 
 	listeners = new Set();
 
-	subscribe = (callback) => {
+	subscribe = callback => {
 		this.listeners.add(callback);
 	};
 
-	unsubscribe = (callback) => {
+	unsubscribe = callback => {
 		this.listeners.delete(callback);
 	};
 
@@ -268,23 +249,22 @@ export default class Store {
 	};
 
 	selectVendor = (vendorId, isSelected) => {
-		const {selectedVendorIds} = this.vendorConsentData;
+		const { selectedVendorIds } = this.vendorConsentData;
 		if (isSelected) {
 			selectedVendorIds.add(vendorId);
-		}
-		else {
+		} else {
 			selectedVendorIds.delete(vendorId);
 		}
+		// TODO @potench store custom-vendor selection
 		this.storeUpdate();
 	};
 
 	selectAllVendors = (isSelected, purposeId) => {
-		const {vendors = []} = this.vendorList || {};
+		const { vendors = [] } = this.vendorList || {};
 		const operation = isSelected ? 'add' : 'delete';
-		vendors.forEach(({id, purposeIds = []}) => {
+		vendors.forEach(({ id, purposeIds = [] }) => {
 			// If a purposeId is supplied only toggle vendors that support that purpose
-			if (typeof purposeId !== 'number' ||
-				purposeIds.indexOf(purposeId) > -1) {
+			if (typeof purposeId !== 'number' || purposeIds.indexOf(purposeId) > -1) {
 				this.vendorConsentData.selectedVendorIds[operation](id);
 			}
 		});
@@ -292,106 +272,104 @@ export default class Store {
 	};
 
 	selectPurpose = (purposeId, isSelected) => {
-		const {selectedPurposeIds} = this.vendorConsentData;
+		const { selectedPurposeIds } = this.vendorConsentData;
 		if (isSelected) {
 			selectedPurposeIds.add(purposeId);
-		}
-		else {
+		} else {
 			selectedPurposeIds.delete(purposeId);
 		}
 		this.storeUpdate();
 	};
 
-	selectAllPurposes = (isSelected) => {
-		const {purposes = []} = this.vendorList || {};
+	selectAllPurposes = isSelected => {
+		const { purposes = [] } = this.vendorList || {};
 		const operation = isSelected ? 'add' : 'delete';
-		purposes.forEach(({id}) => this.vendorConsentData.selectedPurposeIds[operation](id));
+		purposes.forEach(({ id }) => this.vendorConsentData.selectedPurposeIds[operation](id));
 		this.storeUpdate();
 	};
 
 	selectCustomPurpose = (purposeId, isSelected) => {
-		const {selectedCustomPurposeIds} = this.publisherConsentData;
+		const { selectedCustomPurposeIds } = this.publisherConsentData;
 		if (isSelected) {
 			selectedCustomPurposeIds.add(purposeId);
-		}
-		else {
+		} else {
 			selectedCustomPurposeIds.delete(purposeId);
 		}
 		this.storeUpdate();
 	};
 
-	selectAllCustomPurposes = (isSelected) => {
-		const {purposes = []} = this.customPurposeList || {};
+	selectAllCustomPurposes = isSelected => {
+		const { purposes = [] } = this.customPurposeList || {};
 		const operation = isSelected ? 'add' : 'delete';
-		purposes.forEach(({id}) => this.publisherConsentData.selectedCustomPurposeIds[operation](id));
+		purposes.forEach(({ id }) => this.publisherConsentData.selectedCustomPurposeIds[operation](id));
 		this.storeUpdate();
 	};
 
-	toggleConsentToolShowing = (isShown) => {
+	toggleConsentToolShowing = isShown => {
 		this.isBannerShowing = typeof isShown === 'boolean' ? isShown : !this.isBannerShowing;
 		this.isModalShowing = false;
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
 
-	toggleModalShowing = (isShown) => {
+	toggleModalShowing = isShown => {
 		this.isModalShowing = typeof isShown === 'boolean' ? isShown : !this.isModalShowing;
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
 
-	toggleFooterShowing = (isShown) => {
+	toggleFooterShowing = isShown => {
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
 		this.isModalShowing = false;
 		this.storeUpdate();
 	};
 
 	updateVendorList = vendorList => {
-		const {
-			allowedVendorIds
-		} = this;
-
-		const {
-			created,
-			maxVendorId = 0
-		} = this.vendorConsentData;
-
-		// Filter vendors in vendorList by allowedVendorIds
-		if (vendorList && vendorList.vendors && allowedVendorIds.size) {
-			vendorList.vendors = vendorList.vendors.filter(({id}) => allowedVendorIds.has(id));
-		}
-
-		const {
-			vendors = [],
-			purposes = [],
-		} = vendorList || {};
+		// TODO @potench only global vendor list stored, need alt solution for custom vendor
+		// const { pubVendorsList = {}, allowedVendorIds } = this;
+		// const { vendors: pubVendors = [] } = pubVendorsList;
+		const { created, maxVendorId = 0 } = this.vendorConsentData;
+		const { vendors = [], purposes = [] } = vendorList || {};
 
 		// If vendor consent data has never been persisted set default selected status
 		if (!created) {
 			this.vendorConsentData.selectedPurposeIds = new Set(purposes.map(p => p.id));
 			this.vendorConsentData.selectedVendorIds = new Set(vendors.map(v => v.id));
+
+			// allowedVendorIds merged with pubVendorsList
+			// const formattedVendors = pubVendors.length
+			// 	? pubVendors.map(vendor => ({
+			// 			...vendors.find(({ id }) => id === vendor.id),
+			// 			...vendor
+			// 	  }))
+			// 	: vendors;
+			// this.vendorConsentData.selectedVendorIds = new Set(
+			// 	formattedVendors.filter(({ id }) => !allowedVendorIds.size || allowedVendorIds.has(id)).map(({ id }) => id)
+			// );
 		}
 
-		const {selectedVendorIds = new Set()} = this.vendorConsentData;
+		const { selectedVendorIds = new Set() } = this.vendorConsentData;
 
 		// Find the maxVendorId out of the vendor list and selectedVendorIds
-		this.vendorConsentData.maxVendorId = Math.max(maxVendorId,
-			...vendors.map(({id}) => id),
-			...Array.from(selectedVendorIds));
+		this.vendorConsentData.maxVendorId = Math.max(
+			maxVendorId,
+			...vendors.map(({ id }) => id),
+			...Array.from(selectedVendorIds)
+		);
 		this.vendorList = vendorList;
 		this.storeUpdate();
 	};
 
 	updateCustomPurposeList = customPurposeList => {
-		const {created} = this.publisherConsentData;
+		const { created } = this.publisherConsentData;
 
 		// If publisher consent has never been persisted set the default selected status
 		if (!created) {
-			const {purposes = [],} = customPurposeList || {};
+			const { purposes = [] } = customPurposeList || {};
 			this.publisherConsentData.selectedCustomPurposeIds = new Set(purposes.map(p => p.id));
 		}
 
-		const {version = 1} = customPurposeList || {};
+		const { version = 1 } = customPurposeList || {};
 		this.publisherConsentData.publisherPurposeVersion = version;
 
 		this.customPurposeList = customPurposeList;
