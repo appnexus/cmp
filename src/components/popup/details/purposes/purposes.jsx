@@ -162,13 +162,13 @@ export default class Purposes extends Component {
 				});
 				initialVendorsRejection();
 			}
-			if (!publisherConsentCreated) {
+			/*if (!publisherConsentCreated) {
 				allPurposes.forEach((purpose, index) => {
 					if (!purposeIsTechnical(purpose)) {
 						this.handleSelectPurpose({isSelected: false, dataId: index}, true);
 					}
 				});
-			}
+			}*/
 		}
 
 		return (

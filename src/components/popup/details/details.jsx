@@ -143,7 +143,6 @@ export default class Details extends Component {
 						/>
 						<Vendors
 							selectedVendorIds={vendorConsents}
-							selectedVendorIds={selectedVendorIds}
 							selectVendorLegitimateInterest={selectVendorLegitimateInterest}
 							selectedLegitimateInterestsIds={this.state.selectedLegitimateInterestsIds}
 							selectVendors={selectVendors}
