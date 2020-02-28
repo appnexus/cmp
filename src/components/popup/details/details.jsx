@@ -29,23 +29,19 @@ export default class Details extends Component {
 	};
 
 	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [] } = {}) => {
-		console.log('filter vendors');
 		return this.getVendors().filter(vendor => {
-			console.log(vendor);
 
-			console.log(isCustom);
 			if (isCustom !== null && (isCustom && vendor.external_id || !isCustom && !vendor.external_id)) {
 				return false;
 			}
 
 			const vendorPurposeIds = new Set([...(vendor.purposes || []), ...(vendor.legIntPurposes || [])]);
-			console.log(vendorPurposeIds);
+
 			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
 				return false;
 			}
 
 			const vendorFeatureIds = new Set(vendor.features || []);
-			console.log(vendorFeatureIds);
 			if (!featureIds.every(featureId => vendorFeatureIds.has(featureId))) {
 				return false;
 			}
@@ -55,8 +51,6 @@ export default class Details extends Component {
 	};
 
 	handleShowVendors = (filter) => {
-		console.log(this.filterVendors(filter));
-
 		this.setState({
 			vendors: this.filterVendors(filter)
 		});
@@ -73,8 +67,6 @@ export default class Details extends Component {
 	};
 
 	render(props, state) {
-		console.log('details render');
-
 		const {
 			onSaveOrClose,
 			store
@@ -95,9 +87,6 @@ export default class Details extends Component {
 
 			selectPublisherPurpose,
 			selectPublisherLegitimateInterest,
-			selectPublisherCustomPurpose,
-			selectPublisherCustomLegitimateInterest,
-
 
 			persistedConsentData = {},
 			subsection
@@ -109,9 +98,6 @@ export default class Details extends Component {
 			publisherCustomConsents,
 			vendorConsents,
 		} = tcModel;
-
-		console.log('details ');
-		console.log(vendorList);
 
 		const { created: consentCreated } = persistedConsentData;
 		const { purposes = {}, specialPurposes = {}, features = {}, specialFeatures = {}} = vendorList;
@@ -136,15 +122,14 @@ export default class Details extends Component {
 							specialFeatures={Object.values(specialFeatures)}
 							customPurposes={customPurposes}
 							selectedPurposeIds={purposeConsents}
-							selectedStandardPurposeIds={publisherConsents}
-							selectedCustomPurposeIds={publisherCustomConsents}
+							selectedPublisherPurposeIds={publisherConsents}
+							selectedPublisherCustomPurposeIds={publisherCustomConsents}
 							selectPurpose={selectPurpose}
 							selectPurposeLegitimateInterest={selectPurposeLegitimateInterest}
 							selectSpecialFeature={selectSpecialFeature}
 							initialVendorsRejection={initialVendorsRejection}
 							selectPublisherPurpose={selectPublisherPurpose}
 							selectPublisherLegitimateInterest={selectPublisherLegitimateInterest}
-							selectPublisherCustomPurpose={selectPublisherCustomPurpose}
 							onShowVendors={this.handleShowVendors}
 							persistedConsentData={persistedConsentData}
 						/>

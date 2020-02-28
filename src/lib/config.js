@@ -40,8 +40,6 @@ class Config {
 				return acc;
 			}, { validUpdates: {}, invalidKeys: [] });
 
-			console.log(validUpdates);
-
 			Object.assign(this, validUpdates);
 			if (invalidKeys.length) {
 				log.warn(`Invalid CMP config values not applied: ${invalidKeys.join(', ')}`);

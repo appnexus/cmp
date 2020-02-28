@@ -54,7 +54,6 @@ export default class Cmp {
 		 * @param {Array} vendorIds Array of vendor IDs to retrieve.  If empty return all vendors.
 		 */
 		getVendorConsents: (vendorIds, callback = () => {}) => {
-			console.log('getVendorConsents');
 			const consent = {
 				metadata: this.generateConsentString(),
 				gdprApplies: config.gdprApplies,

@@ -36,14 +36,9 @@ export default class Store {
 		vendorList,
 		cmpApi
 	} = {}) {
-
-		console.log('config');
-		console.log(config);
 		// Keep track of data that has already been persisted
 		consentData = consentData || {};
 		this.persistedConsentData = copyData(consentData);
-		// console.log(this.persistedConsentData);
-
 		const consentLanguage = findLocale().substr(0, 2).toUpperCase();
 		const tcModel = new TCModel();
 		tcModel.cmpId = cmpId;
@@ -68,8 +63,6 @@ export default class Store {
 	}
 
 	isAllSetTrue = obj => {
-		console.log(obj);
-		console.log('isAllSetTrue');
 		return Object.keys(obj).map(key => obj[key]).every((value) => value === true);
 	};
 
@@ -268,38 +261,35 @@ export default class Store {
 	 * Build consent fields object from data that has already been persisted.
 	 */
 	getConsentFieldsObject = () => {
-		// console.log('getConsentFieldsObject');
-		// const {
-		// 	persistedConsentData = {},
-		// 	tcModel
-		// } = this;
-		//
-		// const {
-		// 	version_: cookieVersion,
-		// 	created,
-		// 	lastUpdated,
-		// 	cmpId_: cmpId,
-		// 	cmpVersion_: cmpVersion,
-		// 	consentScreen_: consentScreen,
-		// 	consentLanguage_: consentLanguage,
-		// 	vendorListVersion_: vendorListVersion,
-		// 	globalVendorListVersion,
-		// } = {
-		// 	...tcModel,
-		// 	persistedConsentData
-		// };
-		//
-		// return {
-		// 	cmpId,
-		// 	cmpVersion,
-		// 	consentLanguage,
-		// 	consentScreen,
-		// 	cookieVersion,
-		// 	created,
-		// 	globalVendorListVersion,
-		// 	vendorListVersion,
-		// 	lastUpdated,
-		// };
+		const {
+			tcModel
+		} = this;
+
+		const consentObject = TCString.decode(TCString.encode(tcModel));
+
+		const {
+			created,
+			lastUpdated,
+			cmpId,
+			cmpVersion,
+			consentScreen,
+			consentLanguage,
+			vendorListVersion,
+			globalVendorListVersion,
+			version
+		} = consentObject;
+
+		return {
+			cmpId,
+			cmpVersion,
+			consentLanguage,
+			consentScreen,
+			created,
+			globalVendorListVersion,
+			vendorListVersion,
+			lastUpdated,
+			version
+		};
 	};
 	/**
 	 * Persist all consent data to the cookie.  This data will NOT be filtered
@@ -342,10 +332,6 @@ export default class Store {
 		}
 
 		this.persistedConsentData = TCString.decode(encodedConsent);
-
-
-		console.log(JSON.parse(JSON.stringify(this.tcModel)));
-		console.log(JSON.parse(JSON.stringify(this.persistedConsentData)));
 
 		// Notify of date changes
 		this.storeUpdate();
@@ -533,7 +519,6 @@ export default class Store {
 
 	toggleFooterShowing = (isShown) => {
 		const vendorConsentsObject = this.getVendorConsentsObject();
-		const publisherConsentsObject = this.getPublisherConsentsObject();
 
 		if (this.isAllSetTrue(vendorConsentsObject.purposeConsents)) {
 			let vendorConsents;
@@ -567,7 +552,6 @@ export default class Store {
 	};
 
 	updateVendorList = (vendorList) => {
-		console.log('updateVendorList');
 		const {
 			created,
 		} = this.persistedConsentData || {};

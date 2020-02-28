@@ -26,7 +26,7 @@ export default class Purposes extends Component {
 		features: [],
 		customPurposes: [],
 		selectedPurposeIds: new Set(),
-		selectedStandardPurposeIds: new Set(),
+		selectedPublisherPurposeIds: new Set(),
 		selectedCustomPurposeIds: new Set()
 	};
 
@@ -38,14 +38,13 @@ export default class Purposes extends Component {
 		};
 	};
 
-	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false) => {
+	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false, isLegInt = false) => {
 		const {
 			selectPurpose,
+			selectPurposeLegitimateInterest,
 			selectPublisherPurpose,
 			selectPublisherCustomPurpose
 		} = this.props;
-
-		console.log('handleSelectPurpose');
 
 		const allPurposes = this.getAllPurposes();
 		const selectedPurpose = allPurposes[dataId];
@@ -56,8 +55,11 @@ export default class Purposes extends Component {
 			} else if (isPublisher) {
 				selectPublisherPurpose(selectedPurpose.id, isSelected);
 			} else {
-				console.log('should select iab purpose');
-				selectPurpose(selectedPurpose.id, isSelected);
+				if (isLegInt) {
+					selectPurposeLegitimateInterest(selectedPurpose.id, isSelected);
+				} else {
+					selectPurpose(selectedPurpose.id, isSelected);
+				}
 			}
 		}
 	};
@@ -106,14 +108,12 @@ export default class Purposes extends Component {
 
 		const {
 			selectedPurposeIds,
-			selectedStandardPurposeIds,
+			selectedPublisherPurposeIds,
 			selectedCustomPurposeIds,
 			purposes,
 			specialPurposes,
 			features,
 			specialFeatures,
-			persistedVendorConsentData,
-			persistedPublisherConsentData,
 			persistedConsentData,
 			initialVendorsRejection
 		} = props;
@@ -130,7 +130,7 @@ export default class Purposes extends Component {
 		const purposeIsActive = (purpose, isPublisher = false) => purpose && (
 			purpose.custom ?
 			selectedCustomPurposeIds.has(purpose.id) :
-			(isPublisher ? selectedStandardPurposeIds : selectedPurposeIds).has(purpose.id)
+			(isPublisher ? selectedPublisherPurposeIds : selectedPurposeIds).has(purpose.id)
 		);
 
 		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
@@ -140,24 +140,22 @@ export default class Purposes extends Component {
 
 		if (selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
 			renderedTabIndices.add(selectedTab);
-			console.log('consent created? ' + consentCreated);
 			if (!consentCreated) {
-				console.log('should unselect all iab purposes');
 				purposes.forEach((purpose, index) => {
+					// iab purposes
 					this.handleSelectPurpose({isSelected: false, dataId: index});
+
+					// iab leg ints
+					this.handleSelectPurpose({isSelected: false, dataId: index}, false, true);
+
+					// publisher purposes
+					this.handleSelectPurpose({isSelected: false, dataId: index}, true, false);
 				});
 				specialFeatures.forEach((specialFeature, index) => {
-					this.handleSelectSpecialFeature({isSelected:false, dataId: index})
+					this.handleSelectSpecialFeature({isSelected:false, dataId: index+1})
 				});
 				initialVendorsRejection();
 			}
-			// if (!publisherConsentCreated) {
-			// 	allPurposes.forEach((purpose, index) => {
-			// 		if (!purposeIsTechnical(purpose)) {
-			// 			this.handleSelectPurpose({isSelected: false, dataId: index}, true);
-			// 		}
-			// 	});
-			// }
 		}
 
 		return (
