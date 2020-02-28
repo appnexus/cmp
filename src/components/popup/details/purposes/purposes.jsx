@@ -41,22 +41,29 @@ export default class Purposes extends Component {
 	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false) => {
 		const {
 			selectPurpose,
-			selectStandardPurpose,
-			selectCustomPurpose
+			selectPublisherPurpose,
+			selectPublisherCustomPurpose
 		} = this.props;
+
+		console.log('handleSelectPurpose');
 
 		const allPurposes = this.getAllPurposes();
 		const selectedPurpose = allPurposes[dataId];
 
 		if (selectedPurpose) {
 			if (selectedPurpose.custom) {
-				selectCustomPurpose(selectedPurpose.id, isSelected);
+				selectPublisherCustomPurpose(selectedPurpose.id, isSelected);
 			} else if (isPublisher) {
-				selectStandardPurpose(selectedPurpose.id, isSelected);
+				selectPublisherPurpose(selectedPurpose.id, isSelected);
 			} else {
+				console.log('should select iab purpose');
 				selectPurpose(selectedPurpose.id, isSelected);
 			}
 		}
+	};
+
+	handleSelectSpecialFeature = ({isSelected, dataId}) => {
+		this.props.selectSpecialFeature(dataId, isSelected);
 	};
 
 	createHandleSelectPurpose = (isPublisher) => {
@@ -102,14 +109,16 @@ export default class Purposes extends Component {
 			selectedStandardPurposeIds,
 			selectedCustomPurposeIds,
 			purposes,
+			specialPurposes,
 			features,
+			specialFeatures,
 			persistedVendorConsentData,
 			persistedPublisherConsentData,
+			persistedConsentData,
 			initialVendorsRejection
 		} = props;
 
-		const {created: vendorConsentCreated} = persistedVendorConsentData;
-		const {created: publisherConsentCreated} = persistedPublisherConsentData;
+		const { created: consentCreated } = persistedConsentData;
 
 		const {
 			selectedTab,
@@ -131,19 +140,24 @@ export default class Purposes extends Component {
 
 		if (selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
 			renderedTabIndices.add(selectedTab);
-			if (!vendorConsentCreated) {
+			console.log('consent created? ' + consentCreated);
+			if (!consentCreated) {
+				console.log('should unselect all iab purposes');
 				purposes.forEach((purpose, index) => {
 					this.handleSelectPurpose({isSelected: false, dataId: index});
 				});
+				specialFeatures.forEach((specialFeature, index) => {
+					this.handleSelectSpecialFeature({isSelected:false, dataId: index})
+				});
 				initialVendorsRejection();
 			}
-			if (!publisherConsentCreated) {
-				allPurposes.forEach((purpose, index) => {
-					if (!purposeIsTechnical(purpose)) {
-						this.handleSelectPurpose({isSelected: false, dataId: index}, true);
-					}
-				});
-			}
+			// if (!publisherConsentCreated) {
+			// 	allPurposes.forEach((purpose, index) => {
+			// 		if (!purposeIsTechnical(purpose)) {
+			// 			this.handleSelectPurpose({isSelected: false, dataId: index}, true);
+			// 		}
+			// 	});
+			// }
 		}
 
 		return (

@@ -1,16 +1,19 @@
 import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
+// do zaorania
 import Cmp, { CMP_GLOBAL_NAME } from './cmp';
-import { readVendorConsentCookie, readPublisherConsentCookie, decodeVendorConsentData, decodePublisherConsentData } from './cookie/cookie';
-import { fetchPubVendorList, fetchGlobalVendorList, fetchPurposeList } from './vendor';
+import {Vector} from '@iabtcf/core';
+import {CmpApi} from '@iabtcf/cmpapi';
+import { fetchGlobalVendorList } from './vendor';
+import { decodeConsentData, readConsentCookie } from './cookie/cookie';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
 
-const CMP_VERSION = 1;
+const CMP_VERSION = 2;
 const CMP_ID = 280;
-const COOKIE_VERSION = 1;
+const COOKIE_VERSION = 2;
 
 function readExternalConsentData(config) {
 	return new Promise((resolve, reject) => {
@@ -20,11 +23,7 @@ function readExternalConsentData(config) {
 					reject(err);
 				} else {
 					try {
-						resolve([
-							data.vendor && decodeVendorConsentData(data.vendor) || undefined,
-							undefined,
-							data.publisher && decodePublisherConsentData(data.publisher) || undefined
-						]);
+						resolve(data.vendor && decodeConsentData(data.vendor) || undefined);
 					} catch (err) {
 						reject(err);
 					}
@@ -36,47 +35,36 @@ function readExternalConsentData(config) {
 	});
 }
 
-function readInternalConsentData() {
-	return Promise.all([
-		[
-			readVendorConsentCookie(),
-			fetchPubVendorList(),
-			readPublisherConsentCookie()
-		]
-	]);
-}
-
-function readGlobalAndExternalConsentData(config) {
-	return Promise.all([
-		readExternalConsentData(config),
-		readVendorConsentCookie()
-	]);
-}
-
 export function init(configUpdates) {
 	config.update(configUpdates);
 	log.debug('Using configuration:', config);
 
 	// Fetch the current vendor consent before initializing
-	return ((config.getConsentData) ? readGlobalAndExternalConsentData(config) : readInternalConsentData())
-		.then(([[vendorConsentData, pubVendorsList, publisherConsentData], globalVendorConsentData]) => {
-			const {vendors} = pubVendorsList || {};
+	return ((config.getConsentData) ? readExternalConsentData(config) : readConsentCookie())
+		.then((consentData) => {
+			const { vendorConsents = new Vector() } = consentData || {};
 
-			// Check config for allowedVendorIds then the pubVendorList
-			const {allowedVendorIds: configVendorIds} = config;
-			const allowedVendorIds = configVendorIds instanceof Array && configVendorIds.length ? configVendorIds :
-				vendors && vendors.map(vendor => vendor.id);
+			// console.log(consentData);
+			//
+			// // Check config for allowedVendorIds then the pubVendorList
+			// const {allowedVendorIds: configVendorIds} = config;
+			//
+			// const vendorIdsPresentOnList = [];
+			// vendorConsents && vendorConsents.forEach((hasConsent, vendorId) => {
+			// 	vendorIdsPresentOnList.push(vendorId);
+			// });
+			//
+			// const allowedVendorIds = configVendorIds instanceof Array && configVendorIds.length ? configVendorIds : vendorIdsPresentOnList;
+
+			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION);
 
 			// Initialize the store with all of our consent data
 			const store = new Store({
 				cmpVersion: CMP_VERSION,
 				cmpId: CMP_ID,
 				cookieVersion: COOKIE_VERSION,
-				vendorConsentData,
-				globalVendorConsentData,
-				publisherConsentData,
-				pubVendorsList,
-				allowedVendorIds
+				consentData,
+				cmpApi
 			});
 
 			// Pull queued command from __cmp stub
@@ -112,15 +100,8 @@ export function init(configUpdates) {
 			// Request lists
 			return Promise.all([
 				store,
-				fetchGlobalVendorList().then(store.updateVendorList),
-				fetchPurposeList().then(store.updateCustomPurposeList)
+				fetchGlobalVendorList().then(store.updateVendorList)
 			]).then((params) => {
-				//Update consent data if cookie on global domain exists
-				if (store.persistedGlobalVendorConsentData) {
-					store.mergeVendorConsentsFromGlobalCookie();
-					store.mergePurposeConsentsFromGlobalCookie();
-				}
-
 				cmp.cmpReady = true;
 				cmp.notify('cmpReady');
 				return params[0];

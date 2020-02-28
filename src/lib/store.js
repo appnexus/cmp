@@ -1,7 +1,8 @@
-import { writePublisherConsentCookie, writeVendorConsentCookie, encodePublisherConsentData, encodeVendorConsentData } from "./cookie/cookie";
+import { writeConsentCookie } from "./cookie/cookie";
 import config from './config';
 import { findLocale } from './localize';
 import log from './log';
+import {TCString, Vector, GVL, TCModel} from '@iabtcf/core';
 const arrayFrom = require('core-js/library/fn/array/from');
 
 export const SECTION_INTRO = 0;
@@ -29,28 +30,28 @@ function copyData(dataObject) {
 export default class Store {
 	constructor({
 		cmpId = 1,
-		cmpVersion = 1,
-		cookieVersion = 1,
-		vendorConsentData,
-		globalVendorConsentData,
-		publisherConsentData,
+		cmpVersion = 2,
+		cookieVersion = 2,
+		consentData,
 		vendorList,
-		customPurposeList,
-		pubVendorsList,
-		allowedVendorIds
+		cmpApi
 	} = {}) {
+
+		console.log('config');
+		console.log(config);
 		// Keep track of data that has already been persisted
-		this.persistedVendorConsentData = copyData(vendorConsentData);
-		this.persistedPublisherConsentData = copyData(publisherConsentData);
-		this.persistedGlobalVendorConsentData = copyData(globalVendorConsentData);
+		consentData = consentData || {};
+		this.persistedConsentData = copyData(consentData);
+		// console.log(this.persistedConsentData);
 
 		const consentLanguage = findLocale().substr(0, 2).toUpperCase();
-		this.vendorConsentData = Object.assign(
-			{
-				selectedPurposeIds: new Set(),
-				selectedVendorIds: new Set()
-			},
-			vendorConsentData,
+		const tcModel = new TCModel();
+		tcModel.cmpId = cmpId;
+		tcModel.cmpVersion = cmpVersion;
+
+		this.tcModel = Object.assign(
+			tcModel,
+			consentData,
 			{
 				cookieVersion,
 				cmpId,
@@ -58,44 +59,19 @@ export default class Store {
 				consentLanguage
 			});
 
-		this.globalVendorConsentData = Object.assign(
-			{
-				selectedPurposeIds: new Set(),
-				selectedVendorIds: new Set()
-			},
-			globalVendorConsentData,
-			{
-				cookieVersion,
-				cmpId,
-				cmpVersion,
-				consentLanguage
-			}
-		);
-
-		this.publisherConsentData = Object.assign(
-			{
-				selectedStandardPurposeIds: new Set(),
-				selectedCustomPurposeIds: new Set()
-			},
-			publisherConsentData,
-			{
-				cookieVersion,
-				cmpId
-			});
-		this.globalVendorIdsPresentOnList = new Map();
-		this.pubVendorsList = pubVendorsList;
-		this.allowedVendorIds = new Set(allowedVendorIds);
-		this.isConsentToolShowing = false;
+		this.cmpApi = cmpApi;
+		this.isConsentToolShowing = this.cmpApi.uiVisible = false;
 		this.isFooterShowing = false;
 		this.section = SECTION_INTRO;
 		this.subsection = SECTION_PURPOSES;
 		this.hasInitialVendorsRejectionOccured = false;
-
-		this.updateVendorList(vendorList);
-		this.updateCustomPurposeList(customPurposeList);
 	}
 
-	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);
+	isAllSetTrue = obj => {
+		console.log(obj);
+		console.log('isAllSetTrue');
+		return Object.keys(obj).map(key => obj[key]).every((value) => value === true);
+	};
 
 	/**
 	 * Build vendor consent object from data that has already been persisted. This
@@ -105,58 +81,84 @@ export default class Store {
 	getVendorConsentsObject = (vendorIds) => {
 		const {
 			vendorList = {},
-			persistedVendorConsentData = {},
-			pubVendorsList = {},
-			allowedVendorIds,
+			persistedConsentData,
 		} = this;
 
 		const {
-			publisherVendorsVersion,
-			globalVendorListVersion
-		} = pubVendorsList;
-
-		const {
-			cookieVersion,
+			version_: cookieVersion,
 			created,
 			lastUpdated,
-			cmpId,
-			cmpVersion,
-			consentScreen,
-			consentLanguage,
-			vendorListVersion,
-			maxVendorId = 0,
-			selectedVendorIds = new Set(),
-			selectedPurposeIds = new Set()
-		} = persistedVendorConsentData;
+			cmpId_: cmpId,
+			cmpVersion_: cmpVersion,
+			consentScreen_: consentScreen,
+			consentLanguage_: consentLanguage,
+			vendorListVersion_: vendorListVersion,
+			vendorConsents = new Vector(),
+			purposeConsents = new Vector(),
+			purposeLegitimateInterest = new Vector(),
+			vendorLegitimateInterest = new Vector(),
+			specialFeatureOptIns = new Vector()
 
-		const {purposes = [], vendors = []} = vendorList;
+		} = persistedConsentData;
+
+		const {purposes = {}, vendors = {}, specialFeatures={}} = vendorList;
+		const maxVendorId = vendorConsents.maxId;
+		const maxPurposeId = purposeConsents.maxId;
+		const maxLegIntId = purposeLegitimateInterest.maxId;
+		const maxSpecialFeatureOptInsId = specialFeatureOptIns.maxId;
 
 		// Map requested vendorIds
 		const vendorMap = {};
+		const vendorLegIntMap = {};
+
+
 		if (vendorIds && vendorIds.length) {
-			vendorIds.forEach(id => vendorMap[id] = selectedVendorIds.has(id) && (!allowedVendorIds.size || allowedVendorIds.has(id)));
-		}
-		else {
+			vendorIds.forEach(id => {
+				vendorMap[id] = vendorConsents.has(id);
+				vendorLegIntMap[id] = vendorLegitimateInterest.has(id);
+			});
+		} else {
 			// In case the vendor list has not been loaded yet find the highest
 			// vendor ID to map any consent data we already have
 			const lastVendorId = Math.max(maxVendorId,
-				...vendors.map(({id}) => id),
-				...arrayFrom(selectedVendorIds));
+				...Object.values(vendors).map(({id}) => id)
+			);
 
 			// Map all IDs up to the highest vendor ID found
 			for (let i = 1; i <= lastVendorId; i++) {
-				vendorMap[i] = selectedVendorIds.has(i) && (!allowedVendorIds.size || allowedVendorIds.has(i));
+				vendorMap[i] = vendorConsents.has(i);
+				vendorLegIntMap[i] = vendorLegitimateInterest.has(i);
 			}
 		}
 
-		// Map all purpose IDs
 		const lastPurposeId = Math.max(
-			...purposes.map(({id}) => id),
-			...arrayFrom(selectedPurposeIds));
+			...[maxPurposeId],
+			...Object.values(purposes).map(({id}) => id),
+		);
 
 		const purposeMap = {};
 		for (let i = 1; i <= lastPurposeId; i++) {
-			purposeMap[i] = selectedPurposeIds.has(i);
+			purposeMap[i] = purposeConsents.has(i);
+		}
+
+		const lastLegIntId = Math.max(
+			...[maxLegIntId],
+			...Object.values(purposes).map(({id}) => id),
+		);
+
+		const legIntMap = {};
+		for (let i = 1; i <= lastLegIntId; i++) {
+			legIntMap[i] = purposeLegitimateInterest.has(i);
+		}
+
+		const lastSpecialFeatureOptInsId = Math.max(
+			...[maxSpecialFeatureOptInsId],
+			...Object.values(specialFeatures).map(({id}) => id),
+		);
+
+		const specialFeatureOptInsMap = {};
+		for (let i = 1; i <= lastSpecialFeatureOptInsId; i++) {
+			specialFeatureOptInsMap[i] = specialFeatureOptIns.has(i);
 		}
 
 		return {
@@ -167,12 +169,12 @@ export default class Store {
 			cmpVersion,
 			consentScreen,
 			consentLanguage,
-			publisherVendorsVersion,
-			globalVendorListVersion,
 			vendorListVersion,
-			maxVendorId,
 			purposeConsents: purposeMap,
-			vendorConsents: vendorMap
+			purposeLegitimateInterest: legIntMap,
+			specialFeatureOptIns: specialFeatureOptInsMap,
+			vendorConsents: vendorMap,
+			vendorLegitimateInterest: vendorLegIntMap
 		};
 	};
 
@@ -183,40 +185,70 @@ export default class Store {
 	getPublisherConsentsObject = () => {
 		const {
 			vendorList = {},
-			customPurposeList = {},
-			persistedPublisherConsentData = {}
+			persistedConsentData = {}
 		} = this;
 
 		const {
-			cookieVersion,
+			version_: cookieVersion,
 			created,
 			lastUpdated,
-			cmpId,
-			vendorListVersion,
-			publisherPurposeVersion,
-			selectedStandardPurposeIds = new Set(),
-			selectedCustomPurposeIds = new Set()
-		} = persistedPublisherConsentData;
+			cmpId_: cmpId,
+			vendorListVersion_: vendorListVersion,
+			publisherConsents = new Vector(),
+			publisherLegitimateInterest = new Vector(),
+			publisherCustomConsents = new Vector(),
+			publisherCustomLegitimateInterest = new Vector(),
+		} = persistedConsentData;
 
-		const {purposes = []} = vendorList;
-		const {purposes: customPurposes = []} = customPurposeList;
+		const {purposes = {}} = vendorList;
+		let publisherCustomPurposesMap = {};
+		let publisherCustomLegIntMap = {};
 
-		const lastStandardPurposeId = Math.max(
-			...purposes.map(({id}) => id),
-			...arrayFrom(selectedStandardPurposeIds));
+		const maxPersistedPublisherPurposeId = publisherConsents.maxId;
+		const maxPersistedPublisherLegIntId = publisherLegitimateInterest.maxId;
 
-		const lastCustomPurposeId = Math.max(
-			...customPurposes.map(({id}) => id),
-			...arrayFrom(selectedStandardPurposeIds));
+		const lastPublisherPurposeId = Math.max(
+			...Object.values(purposes).map(({id}) => id),
+			...[maxPersistedPublisherPurposeId]);
 
-		// Map all purpose IDs
-		const standardPurposeMap = {};
-		for (let i = 1; i <= lastStandardPurposeId; i++) {
-			standardPurposeMap[i] = selectedStandardPurposeIds.has(i);
+		const publisherPurposesMap = {};
+		for (let i = 1; i <= lastPublisherPurposeId; i++) {
+			publisherPurposesMap[i] = publisherConsents.has(i);
 		}
-		const customPurposeMap = {};
-		for (let i = 1; i <= lastCustomPurposeId; i++) {
-			customPurposeMap[i] = selectedCustomPurposeIds.has(i);
+
+		const lastPublisherLegIntId = Math.max(
+			...Object.values(purposes).map(({id}) => id),
+			...[maxPersistedPublisherLegIntId]);
+
+		const publisherLegIntMap= {};
+		for (let i = 1; i <= lastPublisherLegIntId; i++) {
+			publisherLegIntMap[i] = publisherLegitimateInterest.has(i);
+		}
+
+		if (publisherCustomConsents.size) {
+			const maxPersistedPublisherCustomPurposeId = publisherCustomConsents.maxId;
+
+			const lastPublisherCustomPurposeId = Math.max(
+				...Object.values(purposes).map(({id}) => id),
+				...[maxPersistedPublisherCustomPurposeId]);
+
+			publisherCustomPurposesMap = {};
+			for (let i = 1; i <= lastPublisherCustomPurposeId; i++) {
+				publisherCustomPurposesMap[i] = publisherCustomConsents.has(i);
+			}
+		}
+
+		if (publisherCustomLegitimateInterest.size) {
+			const maxPersistedPublisherCustomLegIntId = publisherCustomLegitimateInterest.maxId;
+
+			const lastPublisherCustomLegIntId = Math.max(
+				...Object.values(purposes).map(({id}) => id),
+				...[maxPersistedPublisherCustomLegIntId]);
+
+			publisherCustomLegIntMap = {};
+			for (let i = 1; i <= lastPublisherCustomLegIntId; i++) {
+				publisherCustomLegIntMap[i] = publisherCustomLegitimateInterest.has(i);
+			}
 		}
 
 		return {
@@ -225,9 +257,10 @@ export default class Store {
 			lastUpdated,
 			cmpId,
 			vendorListVersion,
-			publisherPurposeVersion,
-			standardPurposes: standardPurposeMap,
-			customPurposes: customPurposeMap
+			publisherConsents: publisherPurposesMap,
+			publisherLegitimateInterest: publisherLegIntMap,
+			publisherCustomConsents: publisherCustomPurposesMap,
+			publisherCustomLegitimateInterest: publisherCustomLegIntMap
 		};
 	};
 
@@ -235,37 +268,38 @@ export default class Store {
 	 * Build consent fields object from data that has already been persisted.
 	 */
 	getConsentFieldsObject = () => {
-		const {
-			persistedVendorConsentData = {},
-			vendorConsentData = {}
-		} = this;
-		const {
-			cmpId,
-			cmpVersion,
-			consentLanguage,
-			consentScreen = 0,
-			cookieVersion,
-			created,
-			globalVendorListVersion,
-			lastUpdated,
-			publisherVendorsVersion,
-			vendorListVersion
-		} = {
-			...vendorConsentData,
-			...persistedVendorConsentData
-		};
-		return {
-			cmpId,
-			cmpVersion,
-			consentLanguage,
-			consentScreen,
-			cookieVersion,
-			created,
-			globalVendorListVersion,
-			vendorListVersion,
-			lastUpdated,
-			publisherVendorsVersion
-		};
+		// console.log('getConsentFieldsObject');
+		// const {
+		// 	persistedConsentData = {},
+		// 	tcModel
+		// } = this;
+		//
+		// const {
+		// 	version_: cookieVersion,
+		// 	created,
+		// 	lastUpdated,
+		// 	cmpId_: cmpId,
+		// 	cmpVersion_: cmpVersion,
+		// 	consentScreen_: consentScreen,
+		// 	consentLanguage_: consentLanguage,
+		// 	vendorListVersion_: vendorListVersion,
+		// 	globalVendorListVersion,
+		// } = {
+		// 	...tcModel,
+		// 	persistedConsentData
+		// };
+		//
+		// return {
+		// 	cmpId,
+		// 	cmpVersion,
+		// 	consentLanguage,
+		// 	consentScreen,
+		// 	cookieVersion,
+		// 	created,
+		// 	globalVendorListVersion,
+		// 	vendorListVersion,
+		// 	lastUpdated,
+		// };
 	};
 	/**
 	 * Persist all consent data to the cookie.  This data will NOT be filtered
@@ -274,47 +308,26 @@ export default class Store {
 	 */
 	persist = () => {
 		const {
-			vendorConsentData,
-			globalVendorConsentData,
-			publisherConsentData,
 			vendorList,
-			customPurposeList
+			tcModel
 		} = this;
 
 		const {
 			vendorListVersion = 1,
-			globalVendorListVersion = 1
 		} = vendorList || {};
 
-		// Update modification dates and write the cookies
 		const now = new Date();
-		vendorConsentData.created = vendorConsentData.created || now;
-		vendorConsentData.lastUpdated = now;
-		globalVendorConsentData.created = globalVendorConsentData.created || now;
-		globalVendorConsentData.lastUpdated = now;
+		tcModel.created = tcModel.created || now;
+		tcModel.lastUpdated = now;
+		tcModel.vendorListVersion = vendorListVersion;
 
-		// Update version of list to one we are using
-		vendorConsentData.vendorListVersion = vendorListVersion;
-		globalVendorConsentData.vendorListVersion = globalVendorListVersion;
-		publisherConsentData.vendorListVersion = vendorListVersion;
+		let encodedConsent = TCString.encode(this.tcModel);
 
-		publisherConsentData.created = publisherConsentData.created || now;
-		publisherConsentData.lastUpdated = now;
-
-		const vendorConsents = {...vendorConsentData, vendorList};
-		const publisherConsents = {
-			...vendorConsentData,
-			...publisherConsentData,
-			vendorList,
-			customPurposeList
-		};
 		if (config.setConsentData) {
 			let consentData = {
-				vendor: encodeVendorConsentData(vendorConsents)
+				vendor: encodedConsent,
+				publisher: 'aaa'
 			};
-			if (config.storePublisherData) {
-				consentData.publisher = encodePublisherConsentData(publisherConsents);
-			}
 			try {
 				config.setConsentData(consentData, err => {
 					if (err) {
@@ -324,27 +337,15 @@ export default class Store {
 			} catch (err) {
 				log.error('Failed writing external consent data', err);
 			}
-			// Write vendor cookie to appropriate domain
-			this.mergeVendorConsentsToGlobalCookie();
-			this.mergePurposeConsentsToGlobalCookie();
-
-			const globalVendorConsents = {...globalVendorConsentData, vendorList};
-			writeVendorConsentCookie(globalVendorConsents);
-
-			this.persistedGlobalVendorConsentData = copyData(globalVendorConsentData);
 		} else  {
-			// Write vendor cookie to appropriate domain
-			writeVendorConsentCookie(vendorConsents);
-
-			// Write publisher cookie if enabled
-			if (config.storePublisherData) {
-				writePublisherConsentCookie(publisherConsents);
-			}
+			writeConsentCookie(encodedConsent)
 		}
 
-		// Store the persisted data
-		this.persistedVendorConsentData = copyData(vendorConsentData);
-		this.persistedPublisherConsentData = copyData(publisherConsentData);
+		this.persistedConsentData = TCString.decode(encodedConsent);
+
+
+		console.log(JSON.parse(JSON.stringify(this.tcModel)));
+		console.log(JSON.parse(JSON.stringify(this.persistedConsentData)));
 
 		// Notify of date changes
 		this.storeUpdate();
@@ -362,38 +363,54 @@ export default class Store {
 
 	storeUpdate = () => {
 		this.listeners.forEach(callback => callback(this));
+		this.cmpApi.tcModel = this.tcModel;
 	};
 
 	selectVendor = (vendorId, isSelected) => {
-		const {selectedVendorIds} = this.vendorConsentData;
+		const {vendorConsents} = this.tcModel;
 		if (isSelected) {
-			selectedVendorIds.add(vendorId);
+			vendorConsents.set(vendorId);
 		}
 		else {
-			selectedVendorIds.delete(vendorId);
+			vendorConsents.unset(vendorId);
 		}
 		this.storeUpdate();
 	};
 
 	selectVendors = (vendorIds, isSelected) => {
-		const {selectedVendorIds} = this.vendorConsentData;
+		const {vendorConsents} = this.tcModel;
 		if (isSelected) {
 			vendorIds.forEach(id => {
-				selectedVendorIds.add(id);
+				vendorConsents.set(id);
 			});
-		}
-		else {
+		} else {
 			vendorIds.forEach(id => {
-				selectedVendorIds.delete(id);
+				vendorConsents.unset(id);
 			});
 		}
 		this.storeUpdate();
 	};
 
 	selectAllVendors = (isSelected) => {
-		const {vendors = []} = this.vendorList || {};
-		const operation = isSelected ? 'add' : 'delete';
-		vendors.forEach(({id}) => this.vendorConsentData.selectedVendorIds[operation](id));
+		const operation = isSelected ? 'setAllVendorConsents' : 'unsetAllVendorConsents';
+		this.tcModel[operation]();
+		this.storeUpdate();
+	};
+
+	selectVendorLegitimateInterest = (vendorId, isSelected) => {
+		const {vendorLegitimateInterest} = this.tcModel;
+		if (isSelected) {
+			vendorLegitimateInterest.set(vendorId);
+		}
+		else {
+			vendorLegitimateInterest.unset(vendorId);
+		}
+		this.storeUpdate();
+	};
+
+	selectAllVendorsLegitimateInterest = (isSelected) => {
+		const operation = isSelected ? 'setAllVendorLegitimateInterest' : 'unsetAllVendorLegitimateInterest';
+		this.tcModel[operation]();
 		this.storeUpdate();
 	};
 
@@ -407,72 +424,122 @@ export default class Store {
 	};
 
 	selectPurpose = (purposeId, isSelected) => {
-		const {selectedPurposeIds} = this.vendorConsentData;
+		const {purposeConsents} = this.tcModel;
 		if (isSelected) {
-			selectedPurposeIds.add(purposeId);
+			purposeConsents.set(purposeId);
 		}
 		else {
-			selectedPurposeIds.delete(purposeId);
+			purposeConsents.unset(purposeId);
 		}
 		this.storeUpdate();
 	};
 
 	selectAllPurposes = (isSelected) => {
-		const {purposes = []} = this.vendorList || {};
-		const operation = isSelected ? 'add' : 'delete';
-		purposes.forEach(({id}) => this.vendorConsentData.selectedPurposeIds[operation](id));
+		const operation = isSelected ? 'setAllPurposeConsents' : 'unsetAllPurposeConsents';
+		this.tcModel[operation]();
 		this.storeUpdate();
 	};
 
-	selectStandardPurpose = (purposeId, isSelected) => {
-		const {selectedStandardPurposeIds} = this.publisherConsentData;
+	selectPurposeLegitimateInterest = (purposeId, isSelected) => {
+		const {purposeLegitimateInterest} = this.tcModel;
 		if (isSelected) {
-			selectedStandardPurposeIds.add(purposeId);
+			purposeLegitimateInterest.set(purposeId);
 		}
 		else {
-			selectedStandardPurposeIds.delete(purposeId);
+			purposeLegitimateInterest.unset(purposeId);
 		}
 		this.storeUpdate();
 	};
 
-	selectAllStandardPurposes = (isSelected) => {
-		const {purposes = []} = this.vendorList || {};
-		const operation = isSelected ? 'add' : 'delete';
-		purposes.forEach(({id}) => this.publisherConsentData.selectedStandardPurposeIds[operation](id));
+	selectAllPurposesLegitimateInterest = (isSelected) => {
+		const operation = isSelected ? 'setAllPurposeLegitimateInterest' : 'unsetAllPurposeLegitimateInterest';
+		this.tcModel[operation]();
 		this.storeUpdate();
 	};
 
-	selectCustomPurpose = (purposeId, isSelected) => {
-		const {selectedCustomPurposeIds} = this.publisherConsentData;
+	selectSpecialFeature = (specialFeatureId, isSelected) => {
+		const { specialFeatureOptIns } = this.tcModel;
 		if (isSelected) {
-			selectedCustomPurposeIds.add(purposeId);
+			specialFeatureOptIns.set(specialFeatureId);
+		} else {
+			specialFeatureOptIns.unset(specialFeatureId);
+		}
+	};
+
+	selectAllSpecialFeaturesOptIns = (isSelected) => {
+		const operation = isSelected ? 'setAllSpecialFeatureOptIns' : 'unsetAllSpecialFeatureOptIns';
+		this.tcModel[operation]();
+		this.storeUpdate();
+	};
+
+	selectPublisherPurpose = (purposeId, isSelected) => {
+		const {publisherConsents} = this.tcModel;
+		if (isSelected) {
+			publisherConsents.set(purposeId);
 		}
 		else {
-			selectedCustomPurposeIds.delete(purposeId);
+			publisherConsents.unset(purposeId);
 		}
 		this.storeUpdate();
 	};
 
-	selectAllCustomPurposes = (isSelected) => {
-		const {purposes = []} = this.customPurposeList || {};
-		const operation = isSelected ? 'add' : 'delete';
-		purposes.forEach(({id}) => this.publisherConsentData.selectedCustomPurposeIds[operation](id));
+	selectAllPublisherPurposes = (isSelected) => {
+		const {purposes = {}} = this.vendorList || {};
+		const operation = isSelected ? 'set' : 'unset';
+		const {legIntPurposeIds, contractPurposeIds} = config;
+		const publisherLegitimateInterests = [...legIntPurposeIds, ...contractPurposeIds];
+		const availablePurposes = Object.values(purposes).map(({id}) => id).filter((purposeId) => !publisherLegitimateInterests.includes(purposeId));
+
+		Object.values(purposes).forEach(({id}) => {
+			if (availablePurposes.includes(id)) {
+				this.tcModel.publisherConsents[operation](id);
+			}
+		});
+
+		this.storeUpdate();
+	};
+
+	selectPublisherLegitimateInterest = (purposeId, isSelected) => {
+		const {publisherLegitimateInterest} = this.tcModel;
+		if (isSelected) {
+			publisherLegitimateInterest.set(purposeId);
+		}
+		else {
+			publisherLegitimateInterest.unset(purposeId);
+		}
+		this.storeUpdate();
+	};
+
+	selectAllPublisherLegitimateInterests = (isSelected) => {
+		const {purposes = {}} = this.vendorList || {};
+		const {legIntPurposeIds, contractPurposeIds} = config;
+		const operation = isSelected ? 'set' : 'unset';
+		const publisherLegitimateInterests = [...legIntPurposeIds, ...contractPurposeIds];
+
+		Object.values(purposes).forEach(({id}) => {
+			if (publisherLegitimateInterests.includes(id)) {
+				this.tcModel.publisherLegitimateInterest[operation](id)
+			}
+		});
+
 		this.storeUpdate();
 	};
 
 	toggleConsentToolShowing = (isShown) => {
-		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		this.isConsentToolShowing = this.cmpApi.uiVisible = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
 
 	toggleFooterShowing = (isShown) => {
 		const vendorConsentsObject = this.getVendorConsentsObject();
+		const publisherConsentsObject = this.getPublisherConsentsObject();
+
 		if (this.isAllSetTrue(vendorConsentsObject.purposeConsents)) {
 			let vendorConsents;
 			if (this.vendorList) {
 				const {vendors = {}} = this.vendorList;
-				const vendorIds = new Set(vendors.map(({id}) => id));
+				const vendorIds = new Set(Object.values(vendors).map(({id}) => id));
 				vendorConsents = {};
 				Object.keys(vendorConsentsObject.vendorConsents).filter(id => vendorIds.has(Number(id))).forEach(id => {
 					vendorConsents[id] = vendorConsentsObject.vendorConsents[id];
@@ -485,7 +552,7 @@ export default class Store {
 			}
 		}
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
-		this.isConsentToolShowing = false;
+		this.isConsentToolShowing = this.cmpApi.uiVisible = false;
 		this.storeUpdate();
 	};
 
@@ -499,124 +566,41 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	updateVendorList = vendorList => {
-		const {
-			pubVendorsList = {},
-			allowedVendorIds
-		} = this;
-
+	updateVendorList = (vendorList) => {
+		console.log('updateVendorList');
 		const {
 			created,
-			maxVendorId = 0
-		} = this.vendorConsentData;
+		} = this.persistedConsentData || {};
 
-		if (vendorList) {
-			// Filter vendors in vendorList by allowedVendorIds
-			if (vendorList.vendors && allowedVendorIds.size) {
-				vendorList.vendors = vendorList.vendors.filter(({id}) => allowedVendorIds.has(id));
-			}
-
-			// If a pubVendorList is applied make the vendor list version = 0
-			const { publisherVendorsVersion } = pubVendorsList;
-			vendorList.vendorListVersion = publisherVendorsVersion ? 0 : vendorList.vendorListVersion;
-		}
+		const persistedMaxVendorId = this.persistedConsentData.vendorConsents && this.persistedConsentData.vendorConsents.maxId || 0;
 
 		const {
-			vendors = [],
-			purposes = [],
+			vendors = {},
 		} = vendorList || {};
 
-		//collection of global and local vendor ids [global id, local id]
-		this.globalVendorIdsPresentOnList = new Map(vendors.filter(vendor => vendor.external_id).map(
-			vendor => [vendor.external_id, vendor.id]
-		));
+		const gvl = new GVL(vendorList);
+		this.tcModel.gvl = gvl;
+		this.vendorList = vendorList;
 
-		// If vendor consent data has never been persisted set default selected status
+		// If vendor and publisher consent data has never been persisted set default selected status
 		if (!created) {
-			this.vendorConsentData.selectedPurposeIds = new Set(purposes.map(p => p.id));
-			this.vendorConsentData.selectedVendorIds = new Set(vendors.map(v => v.id));
-		}
+			this.selectAllPurposes(true);
+			this.selectAllVendors(true);
+			this.selectAllVendorsLegitimateInterest(true);
+			this.selectAllSpecialFeaturesOptIns(true);
 
+			this.selectAllPublisherPurposes(true);
+			this.selectAllPublisherLegitimateInterests(true);
+		}
 		// If vendor consent data has already been persisted set default selected status only for new vendors
 		else {
-			vendors.forEach(v => {
-				if (v.id > this.persistedVendorConsentData.maxVendorId) {
-					this.vendorConsentData.selectedVendorIds.add(v.id);
+			Object.values(vendors).forEach(v => {
+				if (v.id > persistedMaxVendorId) {
+					this.tcModel.vendorConsents.set(v.id);
 				}
 			});
 		}
 
-		const {created: publisherConsentCreated} = this.publisherConsentData;
-
-		// If publisher consent has never been persisted set the default selected status
-		if (!publisherConsentCreated) {
-			this.publisherConsentData.selectedStandardPurposeIds = new Set(purposes.map(p => p.id));
-		}
-
-		const {selectedVendorIds = new Set()} = this.vendorConsentData;
-		const {
-			selectedVendorIds : selectedGlobalVendorIds = new Set(),
-			maxVendorId : maxGlobalVendorId = 0 } = this.globalVendorConsentData;
-
-		//Find the maxVendorId for globalVendor
-		this.globalVendorConsentData.maxVendorId = Math.max(maxGlobalVendorId,
-			...vendors.map(({external_id}) => external_id || 0),
-			...arrayFrom(selectedGlobalVendorIds));
-
-		// Find the maxVendorId out of the vendor list and selectedVendorIds
-		this.vendorConsentData.maxVendorId = Math.max(maxVendorId,
-			...vendors.map(({id}) => id),
-			...arrayFrom(selectedVendorIds));
-		this.vendorList = vendorList;
 		this.storeUpdate();
-	};
-
-	updateCustomPurposeList = customPurposeList => {
-		const {created} = this.publisherConsentData;
-
-		// If publisher consent has never been persisted set the default selected status
-		if (!created) {
-			const {purposes = []} = customPurposeList || {};
-			this.publisherConsentData.selectedCustomPurposeIds = new Set(purposes.map(p => p.id));
-		}
-
-		const {version = 1} = customPurposeList || {};
-		this.publisherConsentData.publisherPurposeVersion = version;
-
-		this.customPurposeList = customPurposeList;
-		this.storeUpdate();
-	};
-
-	mergeVendorConsentsFromGlobalCookie = () => {
-		const globalCookieMaxVendorId = this.persistedGlobalVendorConsentData.maxVendorId;
-
-		this.globalVendorIdsPresentOnList.forEach( (id, externalId) => {
-			if (this.globalVendorConsentData.selectedVendorIds.has(externalId)) {
-				this.vendorConsentData.selectedVendorIds.add(id);
-			} else if (this.vendorConsentData.selectedVendorIds.has(id) && externalId <= globalCookieMaxVendorId) {
-				this.vendorConsentData.selectedVendorIds.delete(id);
-			}
-		});
-	};
-
-	mergeVendorConsentsToGlobalCookie = () => {
-		this.globalVendorIdsPresentOnList.forEach( (localId, globalId) => {
-			if (this.vendorConsentData.selectedVendorIds.has(localId)) {
-				this.globalVendorConsentData.selectedVendorIds.add(globalId);
-			} else {
-				this.globalVendorConsentData.selectedVendorIds.delete(globalId);
-			}
-		});
-	};
-
-	mergePurposeConsentsFromGlobalCookie = () => {
-		const selectedPurposeIds = arrayFrom(this.vendorConsentData.selectedPurposeIds);
-		this.vendorConsentData.selectedPurposeIds = new Set(selectedPurposeIds.filter( id => (
-			this.globalVendorConsentData.selectedPurposeIds.has(id) || config.legIntPurposeIds.includes(id)
-		)));
-	};
-
-	mergePurposeConsentsToGlobalCookie = () => {
-		this.globalVendorConsentData.selectedPurposeIds = this.vendorConsentData.selectedPurposeIds;
 	};
 }

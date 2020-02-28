@@ -90,6 +90,8 @@
     "webpack-dev-server": "^2.4.4"
   },
   "dependencies": {
+    "@iabtcf/cmpapi": "^1.0.0-beta.8",
+    "@iabtcf/core": "^1.0.0-beta.8",
     "classnames": "^2.2.5",
     "codemirror": "^5.34.0",
     "core-js": "^2.5.3",
