@@ -21,7 +21,9 @@ export default class Vendor extends Component {
 			policyUrl,
 			purposes,
 			legIntPurposes,
-			features
+			features,
+			specialPurposes,
+			specialFeatures
 		} = this.props;
 
 		return <div>
@@ -41,10 +43,20 @@ export default class Vendor extends Component {
 					<LocalLabel localizeKey='legitimateInterestPurposes'>Legitimate interest purposes</LocalLabel>{': '}
 					{legIntPurposes}{'. '}
 				</span>}
+				{specialPurposes && !!specialPurposes.length &&
+				<span>
+					<LocalLabel localizeKey='specialPurposes'>Special purposes</LocalLabel>{': '}
+					{specialPurposes}{'. '}
+				</span>}
 				{features && !!features.length &&
 				<span>
 					<LocalLabel localizeKey='features'>Features</LocalLabel>{': '}
 					{features}{'. '}
+				</span>}
+				{specialFeatures && !!specialFeatures.length &&
+				<span>
+					<LocalLabel localizeKey='specialFeatures'>Special features</LocalLabel>{': '}
+					{specialFeatures}{'. '}
 				</span>}
 			</div>
 		</div>

@@ -30,25 +30,35 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
+			specialPurposes={[
+				{id: 1, name: 'Special Purpose 1'},
+				{id: 2, name: 'Special Purpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'Special Feature 1'},
+				{id: 2, name: 'Special Feature 2'},
+			]}
 		/>, scratch);
 
 		const vendorRows = vendors.querySelectorAll(`.${style.vendorContent} tr`);
 		expect(vendorRows.length).to.equal(4);
 	});
 
-	it('should render vendor with purposes, legIntPurposes and features', () => {
+	it('should render vendor with purposes, special purposes, legIntPurposes, features and special features', () => {
 		const vendor = render(<Vendor
 			name={'Vendor 1'}
 			policyUrl={'www.example.com'}
 			purposes={[<Label localizeKey={'purposes.title'}>Purpose 1</Label>]}
 			legIntPurposes={[<Label localizeKey={'purposes.title'}>Purpose 2</Label>]}
 			features={[<Label localizeKey={'features.title'}>Feature 1</Label>]}
+			specialPurposes={[<Label localizeKey={'specialPurposes.title'}>Purpose 1</Label>]}
+			specialFeatures={[<Label localizeKey={'specialFeatures.title'}>Feature 1</Label>]}
 		/>, scratch);
 
 		const vendorRows = vendor.querySelectorAll(`div`);
 		const vendorDescriptionRecords = vendor.querySelectorAll(`div > span > span`);
 		expect(vendorRows.length).to.equal(2);
-		expect(vendorDescriptionRecords.length).to.equal(6);
+		expect(vendorDescriptionRecords.length).to.equal(10);
 	});
 
 	it('should render vendor without features', () => {

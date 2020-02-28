@@ -17,13 +17,17 @@ class LocalLabel extends Label {
 export default class Purposes extends Component {
 	state = {
 		selectedTab: TAB_PUBLISHER_INFO,
-		renderedTabIndices: new Set()
+		renderedTabIndices: new Set(),
+		// TODO - MOCK - to be reworked
+		legitInterestList: [true,true,true,true,true,true,true,true,true,true]
 	};
 
 	static defaultProps = {
 		onShowVendors: () => {},
 		purposes: [],
 		features: [],
+		specialPurposes: [],
+		specialFeatures: [],
 		customPurposes: [],
 		selectedPurposeIds: new Set(),
 		selectedStandardPurposeIds: new Set(),
@@ -61,6 +65,14 @@ export default class Purposes extends Component {
 
 	createHandleSelectPurpose = (isPublisher) => {
 		return (data) => this.handleSelectPurpose(data, isPublisher);
+	};
+
+	handleSelectLegitInterest = ({dataId}) => {
+		let legitList = this.state.legitInterestList;
+		if(legitList[dataId]) {legitList[dataId] =!legitList[dataId]} else legitList[dataId] = true;
+		this.setState({
+			legitInterestList: legitList
+		});
 	};
 
 	getAllPurposes = () => {
@@ -103,6 +115,8 @@ export default class Purposes extends Component {
 			selectedCustomPurposeIds,
 			purposes,
 			features,
+			specialPurposes,
+			specialFeatures,
 			persistedVendorConsentData,
 			persistedPublisherConsentData,
 			initialVendorsRejection
@@ -123,6 +137,8 @@ export default class Purposes extends Component {
 			selectedCustomPurposeIds.has(purpose.id) :
 			(isPublisher ? selectedStandardPurposeIds : selectedPurposeIds).has(purpose.id)
 		);
+
+		const isLegitimateInterestActive = (id) => !!this.state.legitInterestList[id];
 
 		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
 			config.contractPurposeIds &&
@@ -210,10 +226,24 @@ export default class Purposes extends Component {
 																		   index={index}
 																		   purpose={purpose}
 																		   isActive={purposeIsActive(purpose)}
+																		   isLegitimateInterestActive={isLegitimateInterestActive(index)}
 																		   isTechnical={false}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		   onToggleLegitInterest={this.handleSelectLegitInterest.bind(this)}
 																		   onToggle={this.createHandleSelectPurpose()}/>)}
 							</div>
+							{specialPurposes && !!specialPurposes.length && <div>
+								<LocalLabel className={style.header} prefix="specialPurposes" localizeKey={`title`}>Special purposes</LocalLabel>
+								{specialPurposes.map((purpose, index) => <Purpose key={index}
+																		   index={index}
+																		   purpose={purpose}
+																		   isActive={purposeIsActive(purpose)}
+																		   isLegitimateInterestActive={isLegitimateInterestActive(index)}
+																		   isTechnical={false}
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		   onToggleLegitInterest={this.handleSelectLegitInterest.bind(this)}
+																		   onToggle={this.createHandleSelectPurpose()}/>)}
+							</div>}
 							<div>
 								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}>Features</LocalLabel>
 								{features.map((feature, index) => <Feature key={index}
@@ -221,6 +251,13 @@ export default class Purposes extends Component {
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>
 								)}
 							</div>
+							{specialFeatures && !!specialFeatures.length && <div>
+								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}>Special features</LocalLabel>
+								{specialFeatures.map((feature, index) => <Feature key={index}
+																		   feature={feature}
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>
+								)}
+							</div>}
 						</div>
 					</div>
 				)}

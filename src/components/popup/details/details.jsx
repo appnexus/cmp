@@ -18,7 +18,8 @@ export default class Details extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			vendors: this.getVendors()
+			vendors: this.getVendors(),
+			selectedLegitimateInterestsIds: new Set()
 		};
 	}
 
@@ -80,6 +81,7 @@ export default class Details extends Component {
 			selectCustomPurpose,
 			selectVendors,
 			selectVendor,
+			selectVendorLegitimateInterest,
 			initialVendorsRejection,
 			persistedVendorConsentData = {},
 			persistedPublisherConsentData = {},
@@ -88,9 +90,8 @@ export default class Details extends Component {
 		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
 		const { selectedStandardPurposeIds, selectedCustomPurposeIds } = publisherConsentData;
 		const { created: vendorConsentCreated } = persistedVendorConsentData;
-		const { purposes = [], features = [] } = vendorList;
+		const { purposes = [], features = [], specialPurposes = [], specialFeatures = [] } = vendorList;
 		const { purposes: customPurposes = [] } = customPurposeList;
-
 
 		return (
 			<div class={style.details}>
@@ -117,9 +118,13 @@ export default class Details extends Component {
 							onShowVendors={this.handleShowVendors}
 							persistedVendorConsentData={persistedVendorConsentData}
 							persistedPublisherConsentData={persistedPublisherConsentData}
+							specialPurposes={specialPurposes}
+							specialFeatures={specialFeatures}
 						/>
 						<Vendors
 							selectedVendorIds={selectedVendorIds}
+							selectVendorLegitimateInterest={selectVendorLegitimateInterest}
+							selectedLegitimateInterestsIds={this.state.selectedLegitimateInterestsIds}
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
 							initialVendorsRejection={initialVendorsRejection}

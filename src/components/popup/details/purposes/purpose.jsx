@@ -15,7 +15,9 @@ const Purpose = (props) => {
 		purpose,
 		index,
 		isActive,
+		isLegitimateInterestActive,
 		onToggle,
+		onToggleLegitInterest,
 		createOnShowVendors,
 		isTechnical,
 		isPublisherPurpose = false
@@ -43,12 +45,11 @@ const Purpose = (props) => {
 						<div className={style.switch}>
 							<LocalLabel>Uzasadniony interes</LocalLabel>
 							<Switch
-								isSelected={!isActive}
+								isSelected={isLegitimateInterestActive}
 								dataId={index}
-								onClick={onToggle}
+								onClick={onToggleLegitInterest}
 							/>
 						</div>
-
 
 					</div>
 				}

@@ -40,6 +40,10 @@ export default class Vendors extends Component {
 		this.props.selectVendor(dataId, isSelected);
 	};
 
+	handleLegitInterest = ({ dataId, isSelected }) => {
+		this.props.selectVendorLegitimateInterest(dataId, isSelected);
+	};
+
 	handleMoreChoices = () => {
 		const {vendorConsentCreated, initialVendorsRejection} = this.props;
 		if (!vendorConsentCreated) {
@@ -74,6 +78,7 @@ export default class Vendors extends Component {
 		const {
 			vendors,
 			selectedVendorIds,
+			selectedLegitimateInterestsIds,
 			purposes,
 			features
 		} = props;
@@ -104,9 +109,10 @@ export default class Vendors extends Component {
 						<tr>
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
 							{editingConsents &&
-							<span>
-							<th><LocalLabel localizeKey='offOn'>Allow</LocalLabel></th>
+							<span class={style.vendorCenterSmall}>
+							<th><LocalLabel>Uzasadniony interes prawny</LocalLabel></th>
 							<th>
+								<LocalLabel localizeKey='offOn'>Allow</LocalLabel>
 								<Switch
 									isSelected={this.isFullVendorsConsentChosen()}
 									onClick={this.handleFullConsentChange}
@@ -121,34 +127,34 @@ export default class Vendors extends Component {
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-						{vendors.map(({ id, name, policyUrl, purposeIds=[], legIntPurposeIds=[], featureIds=[] }, index) => (
+						{vendors.map(({ id, name, policyUrl, purposeIds=[], legIntPurposeIds=[],
+										  featureIds=[], specialPurposes=[], specialFeatures=[] }, index) => (
 							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
 								<td>
 									<Vendor name={name}
 											policyUrl={policyUrl}
 											purposes={this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}
 											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}
-											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}/>
+											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}
+											specialPurposes={this.getActiveAttributesNameElements(specialPurposes, specialPurposes, 'specialPurposes.purpose')}
+											specialFeatures={this.getActiveAttributesNameElements(specialFeatures, specialFeatures, 'specialFeatures.feature')}/>
 								</td>
-								{editingConsents && id%2 === 0 &&
-									<td>
-										<LocalLabel>Reject</LocalLabel>
+								{editingConsents && legIntPurposeIds.length &&
+									<td class={style.vendorCenterSmall}>
+										<LocalLabel localizeKey='legitimateButton'>UIP</LocalLabel>
+										<Switch
+											dataId={id}
+											isSelected={selectedLegitimateInterestsIds.has(id)}
+											onClick={this.handleLegitInterest}
+										/>
+									</td> || <td/>}
+								{editingConsents &&
+									<td class={style.vendorCenterSmall}>
+										<LocalLabel localizeKey='acceptButton'>Zgoda</LocalLabel>
 										<Switch
 											dataId={id}
 											isSelected={selectedVendorIds.has(id)}
 											onClick={this.handleSelectVendor}
-										/>
-									</td>
-									||
-									<td/>
-								}
-								{editingConsents &&
-									<td>
-										<LocalLabel>Consent</LocalLabel>
-										<Switch
-											dataId={id}
-											isSelected={selectedVendorIds.has(id)}
-											//onClick={this.handleSelectVendor}
 										/>
 									</td>
 								}

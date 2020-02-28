@@ -124,4 +124,30 @@ describe('Purposes and Features', () => {
 		};
 		purposes.handleSelectTab(1)();
 	});
+
+	it('should deselect default selection of legitimate interest', () => {
+		const isLegitimateInterestActive = true;
+		const onToggleLegitInterest = jest.fn();
+		let persistedVendorConsentData = {};
+		let persistedPublisherConsentData = {};
+
+		let purposes;
+		render(<Purposes
+			ref={ref => purposes = ref}
+			purposes={[
+				{ id: 1, name: 'Purpose 1' },
+				{ id: 2, name: 'Purpose 2' }
+			]}
+			isLegitimateInterestActive={isLegitimateInterestActive}
+			onToggleLegitInterest={onToggleLegitInterest}
+			persistedVendorConsentData={persistedVendorConsentData}
+			persistedPublisherConsentData={persistedPublisherConsentData}
+		/>, scratch);
+
+		purposes.handleSelectLegitInterest({isSelected: false, dataId: 2});
+		purposes.handleSelectLegitInterest({isSelected: false, dataId: 1});
+
+		expect(purposes.state.legitInterestList[1]).to.equal(false);
+		expect(purposes.state.legitInterestList[2]).to.equal(false);
+	});
 });

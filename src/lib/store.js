@@ -345,7 +345,6 @@ export default class Store {
 		// Store the persisted data
 		this.persistedVendorConsentData = copyData(vendorConsentData);
 		this.persistedPublisherConsentData = copyData(publisherConsentData);
-
 		// Notify of date changes
 		this.storeUpdate();
 	};
@@ -374,6 +373,20 @@ export default class Store {
 		}
 		this.storeUpdate();
 	};
+
+	 selectVendorLegitimateInterest = (id) => {
+	 	console.log('vendor legit', id);
+		// const {vendorLegitimateInterest} = this.tcModel;
+		// vendorLegitimateInterest.set(id);
+		// vendorLegitimateInterest.unset(id);
+	 };
+
+	 /*selectPurposeLegitimateInterest = (id) => {
+	 	console.log('vendor legit', id);
+		// const {purposeLegitimateInterest} = this.tcModel;
+		// purposeLegitimateInterest.set(id);
+		// purposeLegitimateInterest.unset(id);
+	 };*/
 
 	selectVendors = (vendorIds, isSelected) => {
 		const {selectedVendorIds} = this.vendorConsentData;
