@@ -35,7 +35,6 @@ export default class Details extends Component {
 			}
 
 			const vendorPurposeIds = new Set([...(vendor.purposeIds || []), ...(vendor.legIntPurposeIds || [])]);
-
 			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
 				return false;
 			}
