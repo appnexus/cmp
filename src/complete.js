@@ -8,7 +8,7 @@ import log from './lib/log';
 import { init } from './lib/init';
 import { CMP_GLOBAL_NAME } from "./lib/cmp";
 import configuration from "./lib/config";
-import {TCString} from "@iabtcf/core";
+import { TCString } from "@iabtcf/core";
 
 function handleConsentResult(cmp, {isConsentToolShowing}, {vendorListVersion: listVersion, tcfPolicyVersion: listPolicyVersion} = {}, {created, vendorListVersion, policyVersion: consentPolicyVersion} = {}) {
 	if (!created) {

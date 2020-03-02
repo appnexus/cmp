@@ -2,8 +2,8 @@ import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
 import Cmp, { CMP_GLOBAL_NAME } from './cmp';
-import {Vector} from '@iabtcf/core';
-import {CmpApi} from '@iabtcf/cmpapi';
+import { Vector } from '@iabtcf/core';
+import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
 import { decodeConsentData, readConsentCookie } from './cookie/cookie';
 import log from './log';
@@ -41,20 +41,6 @@ export function init(configUpdates) {
 	// Fetch the current vendor consent before initializing
 	return ((config.getConsentData) ? readExternalConsentData(config) : readConsentCookie())
 		.then((consentData) => {
-			const { vendorConsents = new Vector() } = consentData || {};
-
-			// console.log(consentData);
-			//
-			// // Check config for allowedVendorIds then the pubVendorList
-			// const {allowedVendorIds: configVendorIds} = config;
-			//
-			// const vendorIdsPresentOnList = [];
-			// vendorConsents && vendorConsents.forEach((hasConsent, vendorId) => {
-			// 	vendorIdsPresentOnList.push(vendorId);
-			// });
-			//
-			// const allowedVendorIds = configVendorIds instanceof Array && configVendorIds.length ? configVendorIds : vendorIdsPresentOnList;
-
 			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION);
 
 			// Initialize the store with all of our consent data

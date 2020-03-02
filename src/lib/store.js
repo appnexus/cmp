@@ -2,8 +2,7 @@ import { writeConsentCookie } from "./cookie/cookie";
 import config from './config';
 import { findLocale } from './localize';
 import log from './log';
-import {TCString, Vector, GVL, TCModel} from '@iabtcf/core';
-const arrayFrom = require('core-js/library/fn/array/from');
+import { TCString, Vector, GVL, TCModel } from '@iabtcf/core';
 
 export const SECTION_INTRO = 0;
 export const SECTION_DETAILS = 1;
