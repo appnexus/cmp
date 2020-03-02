@@ -2,7 +2,6 @@ import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
 import Cmp, { CMP_GLOBAL_NAME } from './cmp';
-import { Vector } from '@iabtcf/core';
 import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
 import { decodeConsentData, readConsentCookie } from './cookie/cookie';
