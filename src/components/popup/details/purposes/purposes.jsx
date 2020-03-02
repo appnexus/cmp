@@ -41,7 +41,7 @@ export default class Purposes extends Component {
 	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false, isLegInt = false) => {
 		const {
 			selectPurpose,
-			selectPurposeLegitimateInterest,
+			selectPurposeLegitimateInterests,
 			selectPublisherPurpose,
 			selectPublisherCustomPurpose
 		} = this.props;
@@ -56,7 +56,7 @@ export default class Purposes extends Component {
 				selectPublisherPurpose(selectedPurpose.id, isSelected);
 			} else {
 				if (isLegInt) {
-					selectPurposeLegitimateInterest(selectedPurpose.id, isSelected);
+					selectPurposeLegitimateInterests(selectedPurpose.id, isSelected);
 				} else {
 					selectPurpose(selectedPurpose.id, isSelected);
 				}

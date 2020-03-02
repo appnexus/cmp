@@ -76,15 +76,15 @@ export default class Details extends Component {
 			tcModel,
 
 			selectPurpose,
-			selectPurposeLegitimateInterest,
+			selectPurposeLegitimateInterests,
 			selectSpecialFeature,
 			selectVendors,
 			selectVendor,
-			selectVendorLegitimateInterest,
+			selectVendorLegitimateInterests,
 			initialVendorsRejection,
 
 			selectPublisherPurpose,
-			selectPublisherLegitimateInterest,
+			selectPublisherLegitimateInterests,
 
 			persistedConsentData = {},
 			subsection
@@ -123,11 +123,11 @@ export default class Details extends Component {
 							selectedPublisherPurposeIds={publisherConsents}
 							selectedPublisherCustomPurposeIds={publisherCustomConsents}
 							selectPurpose={selectPurpose}
-							selectPurposeLegitimateInterest={selectPurposeLegitimateInterest}
+							selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
 							selectSpecialFeature={selectSpecialFeature}
 							initialVendorsRejection={initialVendorsRejection}
 							selectPublisherPurpose={selectPublisherPurpose}
-							selectPublisherLegitimateInterest={selectPublisherLegitimateInterest}
+							selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
 							onShowVendors={this.handleShowVendors}
 							persistedConsentData={persistedConsentData}
 						/>
@@ -135,7 +135,7 @@ export default class Details extends Component {
 							selectedVendorIds={vendorConsents}
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
-							selectVendorLegitimateInterest={selectVendorLegitimateInterest}
+							selectVendorLegitimateInterests={selectVendorLegitimateInterests}
 							initialVendorsRejection={initialVendorsRejection}
 							vendors={state.vendors}
 							purposes={Object.values(purposes)}

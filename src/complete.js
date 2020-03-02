@@ -20,7 +20,7 @@ function handleConsentResult(cmp, {isConsentToolShowing}, {vendorListVersion: li
 		log.debug(`Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`);
 		configuration.autoDisplay && cmp('showConsentTool');
 	} else if (consentPolicyVersion !== listPolicyVersion) {
-		log.debug(`Consent found for policy ${consentPolicyVersion}, but received vendor list with policy ${policyVersion}. Showing consent tool`);
+		log.debug(`Consent found for policy ${consentPolicyVersion}, but received vendor list with policy ${consentPolicyVersion}. Showing consent tool`);
 		configuration.autoDisplay && cmp('showConsentTool');
 	} else {
 		log.debug('Consent found. Not showing consent tool. Show footer when not all consents set to true');
