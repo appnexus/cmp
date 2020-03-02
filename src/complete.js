@@ -10,7 +10,7 @@ import { CMP_GLOBAL_NAME } from "./lib/cmp";
 import configuration from "./lib/config";
 import { TCString } from "@iabtcf/core";
 
-function handleConsentResult(cmp, {isConsentToolShowing}, {vendorListVersion: listVersion, tcfPolicyVersion: listPolicyVersion} = {}, {created, vendorListVersion, policyVersion: consentPolicyVersion} = {}) {
+function handleConsentResult(cmp, {isConsentToolShowing}, {vendorListVersion: listVersion, tcfPolicyVersion: listPolicyVersion = 1} = {}, {created, vendorListVersion, policyVersion: consentPolicyVersion = 1} = {}) {
 	if (!created) {
 		log.debug('No consent data found. Showing consent tool');
 		configuration.autoDisplay && cmp('showConsentTool');
