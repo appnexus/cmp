@@ -32,7 +32,6 @@ export default class Store {
 		cmpVersion = 2,
 		cookieVersion = 2,
 		consentData,
-		vendorList,
 		cmpApi
 	} = {}) {
 		// Keep track of data that has already been persisted
