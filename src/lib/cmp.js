@@ -69,8 +69,6 @@ export default class Cmp {
 		 */
 		getConsentFields: (params = {}, callback = () => {}) => {
 			const data = this.store.getConsentFieldsObject();
-			console.log('cmp.getConsentFields.data');
-			console.log(data);
 			const now = new Date();
 			const consent = {
 				metadata: this.generateConsentString({

@@ -1,7 +1,6 @@
 import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
-// do zaorania
 import Cmp, { CMP_GLOBAL_NAME } from './cmp';
 import {Vector} from '@iabtcf/core';
 import {CmpApi} from '@iabtcf/cmpapi';
