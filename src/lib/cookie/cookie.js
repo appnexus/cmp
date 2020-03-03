@@ -1,6 +1,6 @@
 import Promise from 'promise-polyfill';
 import log from '../log';
-import {TCString} from '@iabtcf/core';
+import { TCString } from '@iabtcf/core';
 
 const CONSENT_COOKIE = 'adpconsent';
 const CONSENT_COOKIE_MAX_AGE = 33696000;
