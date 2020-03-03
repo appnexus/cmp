@@ -80,7 +80,9 @@ export default class Vendors extends Component {
 			selectedVendorIds,
 			selectedLegitimateInterestsIds,
 			purposes,
-			features
+			features,
+			specialPurposes,
+			specialFeatures
 		} = props;
 		const { editingConsents } = this.state;
 
@@ -127,8 +129,9 @@ export default class Vendors extends Component {
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-						{vendors.map(({ id, name, policyUrl, purposeIds=[], legIntPurposeIds=[],
-										  featureIds=[], specialPurposes=[], specialFeatures=[] }, index) => (
+						{vendors.map(({ id, name, policyUrl, purposes: purposeIds=[], legIntPurposeIds=[],
+										 features: featureIds=[], specialPurposes: specialPurposeIds=[],
+										  specialFeatures: specialFeatureIds=[] }, index) => (
 							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
 								<td>
 									<Vendor name={name}
@@ -136,8 +139,8 @@ export default class Vendors extends Component {
 											purposes={this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}
 											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}
 											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}
-											specialPurposes={this.getActiveAttributesNameElements(specialPurposes, specialPurposes, 'specialPurposes.purpose')}
-											specialFeatures={this.getActiveAttributesNameElements(specialFeatures, specialFeatures, 'specialFeatures.feature')}/>
+											specialPurposes={this.getActiveAttributesNameElements(specialPurposes, specialPurposeIds, 'specialPurposes.purpose')}
+											specialFeatures={this.getActiveAttributesNameElements(specialFeatures, specialFeatureIds, 'specialFeatures.feature')}/>
 								</td>
 								{editingConsents && legIntPurposeIds.length &&
 									<td class={style.vendorCenterSmall}>

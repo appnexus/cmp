@@ -36,13 +36,13 @@ export default class Details extends Component {
 			}
 
 			const vendorPurposeIds = new Set([...(vendor.purposes || []), ...(vendor.legIntPurposes || [])]);
-			console.log(vendorPurposeIds);
+
 			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
 				return false;
 			}
 
 			const vendorFeatureIds = new Set(vendor.features || []);
-			console.log(vendorFeatureIds);
+
 			if (!featureIds.every(featureId => vendorFeatureIds.has(featureId))) {
 				return false;
 			}
@@ -91,6 +91,8 @@ export default class Details extends Component {
 			selectPublisherCustomPurpose,
 			selectPublisherCustomLegitimateInterest,
 
+			purposeLegitimateInterest,
+			vendorLegitimateInterest,
 
 			persistedConsentData = {},
 			subsection
@@ -102,9 +104,6 @@ export default class Details extends Component {
 			publisherCustomConsents,
 			vendorConsents,
 		} = tcModel;
-
-		console.log('details ');
-		console.log(vendorList);
 
 		const { created: consentCreated } = persistedConsentData;
 		const { purposes = {}, specialPurposes = {}, features = {}, specialFeatures = {}} = vendorList;
@@ -141,10 +140,11 @@ export default class Details extends Component {
 							onShowVendors={this.handleShowVendors}
 							persistedConsentData={persistedConsentData}
 						/>
+						{console.log('vendorLegitimateInterest', vendorLegitimateInterest)}
 						<Vendors
 							selectedVendorIds={vendorConsents}
 							selectVendorLegitimateInterest={selectVendorLegitimateInterest}
-							selectedLegitimateInterestsIds={this.state.selectedLegitimateInterestsIds}
+							selectedLegitimateInterestsIds={vendorLegitimateInterest}
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
 							initialVendorsRejection={initialVendorsRejection}
@@ -152,6 +152,7 @@ export default class Details extends Component {
 							purposes={Object.values(purposes)}
 							features={Object.values(features)}
 							specialFeatures={Object.values(specialFeatures)}
+							specialPurposes={Object.values(specialPurposes)}
 							consentCreated={consentCreated}
 						/>
 					</Panel>
