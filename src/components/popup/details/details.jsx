@@ -18,8 +18,7 @@ export default class Details extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			vendors: this.getVendors(),
-			selectedLegitimateInterestsIds: new Set()
+			vendors: this.getVendors()
 		};
 	}
 
@@ -96,12 +95,14 @@ export default class Details extends Component {
 			publisherConsents,
 			publisherCustomConsents,
 			vendorConsents,
+			vendorLegitimateInterests,
+			purposeLegitimateInterests,
+			publisherLegitimateInterests
 		} = tcModel;
 
 		const { created: consentCreated } = persistedConsentData;
 		const { purposes = {}, specialPurposes = {}, features = {}, specialFeatures = {}} = vendorList;
 		const { purposes: customPurposes = [] } = customPurposeList;
-
 
 		return (
 			<div class={style.details}>
@@ -125,16 +126,18 @@ export default class Details extends Component {
 							selectedPublisherCustomPurposeIds={publisherCustomConsents}
 							selectPurpose={selectPurpose}
 							selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
+							selectedPurposeLegitimateInterests={purposeLegitimateInterests}
 							selectSpecialFeature={selectSpecialFeature}
 							initialVendorsRejection={initialVendorsRejection}
 							selectPublisherPurpose={selectPublisherPurpose}
 							selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
+							selectedPublisherLegitimateInterests={publisherLegitimateInterests}
 							onShowVendors={this.handleShowVendors}
 							persistedConsentData={persistedConsentData}
 						/>
 						<Vendors
 							selectedVendorIds={vendorConsents}
-							selectedLegitimateInterestsIds={[]}
+							selectedLegitimateInterestsIds={vendorLegitimateInterests}
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
 							selectVendorLegitimateInterests={selectVendorLegitimateInterests}

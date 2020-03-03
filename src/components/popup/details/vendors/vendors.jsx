@@ -41,7 +41,7 @@ export default class Vendors extends Component {
 	};
 
 	handleLegitInterest = ({ dataId, isSelected }) => {
-		this.props.selectVendorLegitimateInterest(dataId, isSelected);
+		this.props.selectVendorLegitimateInterests(dataId, isSelected);
 	};
 
 	handleMoreChoices = () => {
