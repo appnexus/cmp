@@ -20,7 +20,13 @@ function writeCookie(name, value, maxAgeSeconds, path = '/') {
 }
 
 function decodeConsentData (encoded) {
-	return TCString.decode(encoded);
+	let decoded;
+	try {
+		decoded = TCString.decode(encoded);
+	} catch (e) {
+		log.debug('Consent string not compatible with TCF v2.0')
+	}
+	return decoded;
 }
 
 function encodeConsentData (decoded) {
