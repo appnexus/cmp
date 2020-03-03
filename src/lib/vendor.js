@@ -1,7 +1,6 @@
 import Promise from 'promise-polyfill';
 import config from './config';
 import log from './log';
-import vendorList from './vendors-mock';
 
 function fetch(url) {
 	return new Promise((resolve, reject) => {
@@ -35,9 +34,7 @@ function fetchGlobalVendorList() {
 						reject(err);
 					} else {
 						try {
-							console.log('fetchGlobalVendorList resolve');
-							resolve(vendorList);
-							// resolve(data);
+							resolve(data);
 						} catch (err) {
 							reject(err);
 						}
@@ -47,7 +44,7 @@ function fetchGlobalVendorList() {
 				reject(err);
 			}
 		}).catch(err => {
-			log.error(`Failed to load global vendor list ftrom configuration`, err);
+			log.error(`Failed to load global vendor list from configuration`, err);
 		});
 	}
 	return (globalVendorListLocation ?

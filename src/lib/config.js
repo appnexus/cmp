@@ -6,7 +6,7 @@ const defaultConfig = {
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: false,
 	storePublisherData: false,
-	logging: true,
+	logging: false,
 	localization: {},
 	forceLocale: null,
 	gdprApplies: true,
@@ -39,8 +39,6 @@ class Config {
 				}
 				return acc;
 			}, { validUpdates: {}, invalidKeys: [] });
-
-			console.log(validUpdates);
 
 			Object.assign(this, validUpdates);
 			if (invalidKeys.length) {

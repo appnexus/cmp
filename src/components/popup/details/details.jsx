@@ -35,14 +35,12 @@ export default class Details extends Component {
 				return false;
 			}
 
-			const vendorPurposeIds = new Set([...(vendor.purposes || []), ...(vendor.legIntPurposes || [])]);
-
+			const vendorPurposeIds = new Set([...(vendor.purposeIds || []), ...(vendor.legIntPurposeIds || [])]);
 			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
 				return false;
 			}
 
-			const vendorFeatureIds = new Set(vendor.features || []);
-
+			const vendorFeatureIds = new Set(vendor.featureIds || []);
 			if (!featureIds.every(featureId => vendorFeatureIds.has(featureId))) {
 				return false;
 			}
@@ -79,20 +77,15 @@ export default class Details extends Component {
 			tcModel,
 
 			selectPurpose,
-			selectPurposeLegitimateInterest,
+			selectPurposeLegitimateInterests,
 			selectSpecialFeature,
 			selectVendors,
 			selectVendor,
-			selectVendorLegitimateInterest,
+			selectVendorLegitimateInterests,
 			initialVendorsRejection,
 
 			selectPublisherPurpose,
-			selectPublisherLegitimateInterest,
-			selectPublisherCustomPurpose,
-			selectPublisherCustomLegitimateInterest,
-
-			purposeLegitimateInterest,
-			vendorLegitimateInterest,
+			selectPublisherLegitimateInterests,
 
 			persistedConsentData = {},
 			subsection
@@ -128,25 +121,23 @@ export default class Details extends Component {
 							specialFeatures={Object.values(specialFeatures)}
 							customPurposes={customPurposes}
 							selectedPurposeIds={purposeConsents}
-							selectedStandardPurposeIds={publisherConsents}
-							selectedCustomPurposeIds={publisherCustomConsents}
+							selectedPublisherPurposeIds={publisherConsents}
+							selectedPublisherCustomPurposeIds={publisherCustomConsents}
 							selectPurpose={selectPurpose}
-							selectPurposeLegitimateInterest={selectPurposeLegitimateInterest}
+							selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
 							selectSpecialFeature={selectSpecialFeature}
 							initialVendorsRejection={initialVendorsRejection}
 							selectPublisherPurpose={selectPublisherPurpose}
-							selectPublisherLegitimateInterest={selectPublisherLegitimateInterest}
-							selectPublisherCustomPurpose={selectPublisherCustomPurpose}
+							selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
 							onShowVendors={this.handleShowVendors}
 							persistedConsentData={persistedConsentData}
 						/>
-						{console.log('vendorLegitimateInterest', vendorLegitimateInterest)}
 						<Vendors
 							selectedVendorIds={vendorConsents}
-							selectVendorLegitimateInterest={selectVendorLegitimateInterest}
 							selectedLegitimateInterestsIds={vendorLegitimateInterest}
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
+							selectVendorLegitimateInterests={selectVendorLegitimateInterests}
 							initialVendorsRejection={initialVendorsRejection}
 							vendors={state.vendors}
 							purposes={Object.values(purposes)}
