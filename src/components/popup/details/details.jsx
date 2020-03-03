@@ -134,7 +134,7 @@ export default class Details extends Component {
 						/>
 						<Vendors
 							selectedVendorIds={vendorConsents}
-							selectedLegitimateInterestsIds={vendorLegitimateInterest}
+							selectedLegitimateInterestsIds={[]}
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
 							selectVendorLegitimateInterests={selectVendorLegitimateInterests}

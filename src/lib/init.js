@@ -88,7 +88,6 @@ function readExternalConsentData(config) {
 export function init(configUpdates) {
 	config.update(configUpdates);
 	log.debug('Using configuration:', config);
-
 	// Fetch the current vendor consent before initializing
 	return ((config.getConsentData) ? readExternalConsentData(config) : readConsentCookie())
 		.then((consentData) => {
@@ -116,7 +115,6 @@ export function init(configUpdates) {
 			log.debug(`Successfully loaded CMP version: ${pack.version}`);
 			cmp.isLoaded = true;
 			cmp.notify('isLoaded');
-
 			// Render the UI
 			const App = require('../components/app').default;
 			render(<App store={store} notify={cmp.notify} />, document.body);
@@ -132,7 +130,6 @@ export function init(configUpdates) {
 					cmp.notify('onToggleConsentToolShowing', isConsentToolShowing);
 				}
 			});
-
 			// Request lists
 			return Promise.all([
 				store,
