@@ -129,7 +129,7 @@ export default class Vendors extends Component {
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-						{vendors.map(({ id, name, policyUrl, purposes: purposeIds=[], legIntPurposeIds=[],
+						{vendors.map(({ id, name, policyUrl, purposes: purposeIds=[], legIntPurposes=[],
 										 features: featureIds=[], specialPurposes: specialPurposeIds=[],
 										  specialFeatures: specialFeatureIds=[] }, index) => (
 							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
@@ -137,12 +137,12 @@ export default class Vendors extends Component {
 									<Vendor name={name}
 											policyUrl={policyUrl}
 											purposes={this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}
-											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}
+											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposes, 'purposes.purpose')}
 											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}
 											specialPurposes={this.getActiveAttributesNameElements(specialPurposes, specialPurposeIds, 'specialPurposes.purpose')}
 											specialFeatures={this.getActiveAttributesNameElements(specialFeatures, specialFeatureIds, 'specialFeatures.feature')}/>
 								</td>
-								{editingConsents && legIntPurposeIds.length &&
+								{editingConsents && legIntPurposes.length &&
 									<td class={style.vendorCenterSmall}>
 										<LocalLabel localizeKey='legitimateButton'>UIP</LocalLabel>
 										<Switch

@@ -28,8 +28,31 @@ export default class Details extends Component {
 		return Object.values(vendors);
 	};
 
-	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [] } = {}) => {
-		return this.getVendors().filter(vendor => {
+	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [], specialPurpose=null, specialFeature=null } = {}) => {
+		const { gvl } = this.props.store.tcModel;
+
+		console.log('isCustom', isCustom, 'purposeIds', purposeIds, 'featureIds', featureIds,
+			'specialPurpose', specialPurpose, 'specialFeature', specialFeature);
+
+		if(isCustom) {
+
+		} else {
+			if(!!purposeIds.length) {
+				if(specialPurpose) {
+					return Object.values(gvl.getVendorsWithSpecialPurpose(purposeIds))
+				} else {
+					return Object.values(gvl.getVendorsWithConsentPurpose(purposeIds))
+				}
+			} else if(!!featureIds.length) {
+				if(specialFeature) {
+					return Object.values(gvl.getVendorsWithSpecialFeature(featureIds))
+				} else {
+					return Object.values(gvl.getVendorsWithFeature(featureIds))
+				}
+			}
+		}
+
+		/*return this.getVendors().filter(vendor => {
 			if (isCustom !== null && (isCustom && vendor.external_id || !isCustom && !vendor.external_id)) {
 				return false;
 			}
@@ -45,7 +68,7 @@ export default class Details extends Component {
 			}
 
 			return true;
-		});
+		});*/
 	};
 
 	handleShowVendors = (filter) => {

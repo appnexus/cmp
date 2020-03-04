@@ -166,6 +166,7 @@ export default class Purposes extends Component {
 					this.handleSelectSpecialFeature({isSelected:false, dataId: index+1})
 				});
 				initialVendorsRejection();
+				// TODO - initialLegitInterestsAccept()
 			}
 		}
 
@@ -247,6 +248,7 @@ export default class Purposes extends Component {
 																		   isActive={purposeIsActive(purpose)}
 																		   isLegitimateInterestActive={isPurposeLegitimateInterestActive(index)}
 																		   isTechnical={false}
+																		   specialPurpose={true}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		   onToggleLegitInterest={this.handleSelectLegitInterest.bind(this)}
 																		   onToggle={this.createHandleSelectPurpose()}/>)}
@@ -262,6 +264,7 @@ export default class Purposes extends Component {
 								<LocalLabel className={style.header} prefix="specialFeatures" localizeKey={`title`}>Special features</LocalLabel>
 								{specialFeatures.map((feature, index) => <Feature key={index}
 																		   feature={feature}
+																		   specialFeature={true}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>
 								)}
 							</div>}
