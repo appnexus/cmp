@@ -157,7 +157,7 @@ export default class Purposes extends Component {
 					this.handleSelectPurpose({isSelected: false, dataId: index});
 
 					// iab leg ints
-					this.handleSelectPurpose({isSelected: false, dataId: index}, false, true);
+					this.handleSelectPurpose({isSelected: true, dataId: index}, false, true);
 
 					// publisher purposes
 					this.handleSelectPurpose({isSelected: false, dataId: index}, true, false);
@@ -219,6 +219,17 @@ export default class Purposes extends Component {
 																		  isTechnical={purposeIsTechnical(purpose)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		  onToggle={this.createHandleSelectPurpose(true)}/>)}
+							{specialPurposes && !!specialPurposes.length && <div>
+								<LocalLabel className={style.header} prefix="specialPurposes" localizeKey={`title`}>Special purposes</LocalLabel>
+								{specialPurposes.map((purpose, index) => <Purpose key={index}
+																		  index={index}
+																		  isPublisherPurpose={true}
+																		  purpose={purpose}
+																		  isActive={purposeIsActive(purpose, true)}
+																		  isTechnical={true}
+																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		  onToggle={this.createHandleSelectPurpose(true)}/>)}
+							</div>}
 						</div>
 						<div className={style.purposesSection}>
 							<div className={style.sectionInfo}>
@@ -245,9 +256,9 @@ export default class Purposes extends Component {
 								{specialPurposes.map((purpose, index) => <Purpose key={index}
 																		   index={index}
 																		   purpose={purpose}
-																		   isActive={purposeIsActive(purpose)}
-																		   isLegitimateInterestActive={isPurposeLegitimateInterestActive(index)}
-																		   isTechnical={false}
+																		   isActive={false}
+																		   isLegitimateInterestActive={false}
+																		   isTechnical={true}
 																		   specialPurpose={true}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		   onToggleLegitInterest={this.handleSelectLegitInterest.bind(this)}

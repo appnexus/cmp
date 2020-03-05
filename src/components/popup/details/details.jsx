@@ -31,12 +31,7 @@ export default class Details extends Component {
 	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [], specialPurpose=null, specialFeature=null } = {}) => {
 		const { gvl } = this.props.store.tcModel;
 
-		console.log('isCustom', isCustom, 'purposeIds', purposeIds, 'featureIds', featureIds,
-			'specialPurpose', specialPurpose, 'specialFeature', specialFeature);
-
 		if(isCustom) {
-
-		} else {
 			if(!!purposeIds.length) {
 				if(specialPurpose) {
 					return Object.values(gvl.getVendorsWithSpecialPurpose(purposeIds))
@@ -50,6 +45,8 @@ export default class Details extends Component {
 					return Object.values(gvl.getVendorsWithFeature(featureIds))
 				}
 			}
+		} else {
+
 		}
 
 		/*return this.getVendors().filter(vendor => {
