@@ -149,6 +149,9 @@ export default class Purposes extends Component {
 			purpose && !purpose.custom &&
 			(config.legIntPurposeIds.indexOf(purpose.id) >= 0 || config.contractPurposeIds.indexOf(purpose.id) >= 0);
 
+		const selectedSpecialPurposes = config.specialPurposes && !!config.specialPurposes.length &&
+			specialPurposes.filter((purpose, index) => config.specialPurposes.indexOf(index+1) !== -1);
+
 		if (selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
 			renderedTabIndices.add(selectedTab);
 			if (!consentCreated) {
@@ -166,7 +169,6 @@ export default class Purposes extends Component {
 					this.handleSelectSpecialFeature({isSelected:false, dataId: index+1})
 				});
 				initialVendorsRejection();
-				// TODO - initialLegitInterestsAccept()
 			}
 		}
 
@@ -219,9 +221,9 @@ export default class Purposes extends Component {
 																		  isTechnical={purposeIsTechnical(purpose)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		  onToggle={this.createHandleSelectPurpose(true)}/>)}
-							{specialPurposes && !!specialPurposes.length && <div>
+							{selectedSpecialPurposes && !!selectedSpecialPurposes.length && <div>
 								<LocalLabel className={style.header} prefix="specialPurposes" localizeKey={`title`}>Special purposes</LocalLabel>
-								{specialPurposes.map((purpose, index) => <Purpose key={index}
+								{selectedSpecialPurposes.map((purpose, index) => <Purpose key={index}
 																		  index={index}
 																		  isPublisherPurpose={true}
 																		  purpose={purpose}

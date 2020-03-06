@@ -16,7 +16,8 @@ const defaultConfig = {
 	legIntPurposeIds: [],
 	contractPurposeIds: [],
 	autoDisplay: true,
-	allowedVendorIds: null
+	allowedVendorIds: null,
+	specialPurposes: []
 };
 
 class Config {
