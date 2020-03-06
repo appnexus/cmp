@@ -30,24 +30,26 @@ export default class Details extends Component {
 
 	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [], specialPurpose=null, specialFeature=null } = {}) => {
 		const { gvl } = this.props.store.tcModel;
+		let vendList;
+
+		if(!!purposeIds.length) {
+			if(specialPurpose) {
+				vendList = Object.values(gvl.getVendorsWithSpecialPurpose(purposeIds))
+			} else {
+				vendList = Object.values(gvl.getVendorsWithConsentPurpose(purposeIds))
+			}
+		} else if(!!featureIds.length) {
+			if(specialFeature) {
+				vendList = Object.values(gvl.getVendorsWithSpecialFeature(featureIds))
+			} else {
+				vendList = Object.values(gvl.getVendorsWithFeature(featureIds))
+			}
+		}
 
 		if(isCustom) {
-			if(!!purposeIds.length) {
-				if(specialPurpose) {
-					return Object.values(gvl.getVendorsWithSpecialPurpose(purposeIds))
-				} else {
-					return Object.values(gvl.getVendorsWithConsentPurpose(purposeIds))
-				}
-			} else if(!!featureIds.length) {
-				if(specialFeature) {
-					return Object.values(gvl.getVendorsWithSpecialFeature(featureIds))
-				} else {
-					return Object.values(gvl.getVendorsWithFeature(featureIds))
-				}
-			}
-		} else {
-
+			vendList = vendList.filter(vendor => !!vendor.globalId)
 		}
+		return vendList;
 	};
 
 	handleShowVendors = (filter) => {
