@@ -329,6 +329,7 @@ export default class Store {
 		}
 
 		this.persistedConsentData = TCString.decode(encodedConsent);
+		this.cmpApi.tcModel = this.tcModel;
 
 		// Notify of date changes
 		this.storeUpdate();
@@ -346,7 +347,6 @@ export default class Store {
 
 	storeUpdate = () => {
 		this.listeners.forEach(callback => callback(this));
-		this.cmpApi.tcModel = this.tcModel;
 	};
 
 	selectVendor = (vendorId, isSelected) => {
@@ -560,6 +560,7 @@ export default class Store {
 		const persistedMaxVendorId = this.persistedConsentData.vendorConsents && this.persistedConsentData.vendorConsents.maxId || 0;
 
 		this.tcModel.gvl = new GVL(vendorList);
+		this.cmpApi.tcModel = this.tcModel;
 		this.vendorList = vendorList;
 
 		// If vendor and publisher consent data has never been persisted set default selected status

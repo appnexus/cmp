@@ -59,7 +59,7 @@ function checkConsent(cmp, store) {
 							handleConsentResult(cmp, store, vendorList, tcStringDecoded)
 						}
 					}
-			})
+				})
 			}
 		});
 	}
