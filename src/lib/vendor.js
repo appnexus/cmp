@@ -1,7 +1,6 @@
 import Promise from 'promise-polyfill';
 import config from './config';
 import log from './log';
-import vendorList from './vendor-list'
 
 function fetch(url) {
 	return new Promise((resolve, reject) => {
@@ -35,7 +34,7 @@ function fetchGlobalVendorList() {
 						reject(err);
 					} else {
 						try {
-							resolve(vendorList);
+							resolve(data);
 						} catch (err) {
 						}
 					}
