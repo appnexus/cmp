@@ -123,6 +123,12 @@ export default class CmpApi extends Component {
 							<span class={style.argumentDescription}>Default is set true. If true  <span class={style.highlight}>autoDisplay: true</span> when initialize CMP the consent tool UI may be displayed automatically according to user's current consents.
 							If is set false <span class={style.highlight}>autoDisplay: false</span> the consent tool UI will never be displayed when initialize CMP</span>
 						</span>
+						<span className={style.argument}>
+							<span className={style.argumentType}>specialPurposes (Array)</span>:
+							<span className={style.argumentDescription}>
+								List of Ids allowing to display custom special purposes in Publishers purposes description
+							</span>
+						</span>
 					</div>
 			</div>
 		);
