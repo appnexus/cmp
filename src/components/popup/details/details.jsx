@@ -48,24 +48,6 @@ export default class Details extends Component {
 		} else {
 
 		}
-
-		/*return this.getVendors().filter(vendor => {
-			if (isCustom !== null && (isCustom && vendor.external_id || !isCustom && !vendor.external_id)) {
-				return false;
-			}
-
-			const vendorPurposeIds = new Set([...(vendor.purposeIds || []), ...(vendor.legIntPurposeIds || [])]);
-			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
-				return false;
-			}
-
-			const vendorFeatureIds = new Set(vendor.featureIds || []);
-			if (!featureIds.every(featureId => vendorFeatureIds.has(featureId))) {
-				return false;
-			}
-
-			return true;
-		});*/
 	};
 
 	handleShowVendors = (filter) => {
