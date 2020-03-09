@@ -93,8 +93,6 @@ export function init(configUpdates) {
 	// Fetch the current vendor consent before initializing
 	return ((config.getConsentData) ? readExternalConsentData(config) : readConsentCookie())
 		.then((consentData) => {
-			// const customCommands = CommandsCreator(config.getVendorList);
-
 			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION);
 
 			// Initialize the store with all of our consent data
