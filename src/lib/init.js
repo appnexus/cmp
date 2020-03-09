@@ -6,7 +6,7 @@ import { TCString } from "@iabtcf/core";
 import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
 import { decodeConsentData, readConsentCookie } from './cookie/cookie';
-import CommandsFactory from './commands';
+import createCommands from './commands';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
@@ -104,7 +104,7 @@ export function init(configUpdates) {
 				cmpApi
 			});
 
-			cmpApi.customCommands = CommandsFactory(store);
+			cmpApi.customCommands = createCommands(store);
 
 			// Pull queued command from __cmp stub
 			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};

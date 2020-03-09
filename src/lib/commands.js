@@ -4,7 +4,7 @@ const COOKIE_VERSION = 2;
 const CMP_ID = 280;
 const CMP_VERSION = 2;
 
-const CommandsFactory = (store) => {
+const createCommands = (store) => {
 	const getConsentObject = (callback, data) => {
 		const {
 			vendorListVersion,
@@ -63,4 +63,4 @@ const CommandsFactory = (store) => {
 	}
 };
 
-export default CommandsFactory;
+export default createCommands;
