@@ -6,10 +6,10 @@ import { TCString } from "@iabtcf/core";
 import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
 import { decodeConsentData, readConsentCookie } from './cookie/cookie';
-import createCommands from './commands';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
+import createCommands from "./commands";
 
 const CMP_VERSION = 2;
 const CMP_ID = 280;
@@ -104,8 +104,6 @@ export function init(configUpdates) {
 				cmpApi
 			});
 
-			cmpApi.customCommands = createCommands(store);
-
 			// Pull queued command from __cmp stub
 			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};
 
@@ -141,6 +139,7 @@ export function init(configUpdates) {
 				store,
 				fetchGlobalVendorList().then(store.updateVendorList)
 			]).then((params) => {
+				cmpApi.customCommands = createCommands(store);
 				cmp.cmpReady = true;
 				cmp.notify('cmpReady');
 				return params[0];

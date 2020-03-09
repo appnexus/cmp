@@ -421,8 +421,6 @@ export default class Store {
 
 	selectPurposeLegitimateInterests = (purposeId, isSelected) => {
 		const {purposeLegitimateInterests} = this.tcModel;
-		console.log(this.tcModel);
-		console.log(purposeId);
 		if (isSelected) {
 			purposeLegitimateInterests.set(purposeId);
 		}

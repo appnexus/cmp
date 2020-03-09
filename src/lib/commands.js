@@ -11,7 +11,8 @@ const createCommands = (store) => {
 			...tcModelFields
 		} = data;
 
-		const { vendorList, persistedConsentData } = store;
+		const vendorList = JSON.parse(JSON.stringify(store.vendorList));
+		const { persistedConsentData } = store;
 		const { vendors } = vendorList;
 		const globalVendorsObject = {};
 
