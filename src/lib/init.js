@@ -15,7 +15,9 @@ const CMP_VERSION = 2;
 const CMP_ID = 280;
 const COOKIE_VERSION = 2;
 
-function handleConsentResult(cmp, {isConsentToolShowing}, {vendorListVersion: listVersion, tcfPolicyVersion: listPolicyVersion = 1} = {}, {created, vendorListVersion, policyVersion: consentPolicyVersion = 1} = {}) {
+function handleConsentResult(cmp, {isConsentToolShowing},
+							 {vendorListVersion: listVersion, tcfPolicyVersion: listPolicyVersion = 1} = {},
+							 {created, vendorListVersion, policyVersion: consentPolicyVersion = 1} = {}) {
 	if (!created) {
 		log.debug('No consent data found. Showing consent tool');
 		config.autoDisplay && cmp('showConsentTool');
