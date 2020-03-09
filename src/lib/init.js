@@ -6,6 +6,7 @@ import { TCString } from "@iabtcf/core";
 import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
 import { decodeConsentData, readConsentCookie } from './cookie/cookie';
+import CommandsFactory from './commands';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
@@ -47,6 +48,8 @@ function checkConsent(cmp, store) {
 				}, 100);
 
 				__tcfapi('getTCData', 2, (tcData, success) => {
+					console.log('getTcData');
+					console.log(tcData);
 					if (success) {
 						let tcStringDecoded;
 
@@ -56,10 +59,10 @@ function checkConsent(cmp, store) {
 							// error ocurred during decoding TCString
 						} finally {
 							clearTimeout(timeout);
-							handleConsentResult(cmp, store, vendorList, tcStringDecoded)
+							handleConsentResult(cmp, store, vendorList, tcStringDecoded);
 						}
 					}
-				})
+				});
 			}
 		});
 	}
@@ -92,6 +95,8 @@ export function init(configUpdates) {
 	// Fetch the current vendor consent before initializing
 	return ((config.getConsentData) ? readExternalConsentData(config) : readConsentCookie())
 		.then((consentData) => {
+			// const customCommands = CommandsCreator(config.getVendorList);
+
 			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION);
 
 			// Initialize the store with all of our consent data
@@ -102,6 +107,8 @@ export function init(configUpdates) {
 				consentData,
 				cmpApi
 			});
+
+			cmpApi.customCommands = CommandsFactory(store);
 
 			// Pull queued command from __cmp stub
 			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};

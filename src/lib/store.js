@@ -41,6 +41,8 @@ export default class Store {
 		const tcModel = new TCModel();
 		tcModel.cmpId = cmpId;
 		tcModel.cmpVersion = cmpVersion;
+		tcModel.isServiceSpecific = true;
+		tcModel.supportOOB = false;
 
 		this.tcModel = Object.assign(
 			tcModel,
@@ -325,7 +327,7 @@ export default class Store {
 				log.error('Failed writing external consent data', err);
 			}
 		} else  {
-			writeConsentCookie(encodedConsent)
+			writeConsentCookie(encodedConsent);
 		}
 
 		this.persistedConsentData = TCString.decode(encodedConsent);
@@ -503,7 +505,7 @@ export default class Store {
 
 		Object.values(purposes).forEach(({id}) => {
 			if (publisherLegitimateInterests.includes(id)) {
-				this.tcModel.publisherLegitimateInterests[operation](id)
+				this.tcModel.publisherLegitimateInterests[operation](id);
 			}
 		});
 
