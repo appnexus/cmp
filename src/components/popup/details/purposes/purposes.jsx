@@ -146,7 +146,7 @@ export default class Purposes extends Component {
 					this.handleSelectPurpose({isSelected: false, dataId: index});
 
 					// iab leg ints
-					this.handleSelectPurpose({isSelected: false, dataId: index}, false, true);
+					this.handleSelectPurpose({isSelected: true, dataId: index}, false, true);
 
 					// publisher purposes
 					this.handleSelectPurpose({isSelected: false, dataId: index}, true, false);
