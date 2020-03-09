@@ -46,7 +46,7 @@ const CommandsFactory = (store) => {
 		tcModel.supportOOB = false;
 
 		for (let key of Object.keys(tcModelFields)) {
-			tcModel[key].set(data[key]);
+			tcModel[key] && tcModel[key].set(data[key]);
 		}
 
 		const encoded = TCString.encode(tcModel);
