@@ -62,9 +62,7 @@ export default class Store {
 		this.hasInitialVendorsRejectionOccured = false;
 	}
 
-	isAllSetTrue = obj => {
-		return Object.keys(obj).map(key => obj[key]).every((value) => value === true);
-	};
+	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);
 
 	/**
 	 * Build vendor consent object from data that has already been persisted. This
@@ -261,22 +259,19 @@ export default class Store {
 	 */
 	getConsentFieldsObject = () => {
 		const {
-			tcModel
+			persistedConsentData
 		} = this;
-
-		const consentObject = TCString.decode(TCString.encode(tcModel));
 
 		const {
 			created,
 			lastUpdated,
-			cmpId,
-			cmpVersion,
-			consentScreen,
-			consentLanguage,
-			vendorListVersion,
-			globalVendorListVersion,
-			version
-		} = consentObject;
+			cmpId_: cmpId,
+			cmpVersion_: cmpVersion,
+			consentScreen_: consentScreen,
+			consentLanguage_: consentLanguage,
+			vendorListVersion_: vendorListVersion,
+			version_: version
+		} = persistedConsentData;
 
 		return {
 			cmpId,
@@ -284,7 +279,6 @@ export default class Store {
 			consentLanguage,
 			consentScreen,
 			created,
-			globalVendorListVersion,
 			vendorListVersion,
 			lastUpdated,
 			version

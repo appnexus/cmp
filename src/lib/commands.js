@@ -4,14 +4,15 @@ const COOKIE_VERSION = 2;
 const CMP_ID = 280;
 const CMP_VERSION = 2;
 
-const CommandsFactory = (store) => {
+const createCommands = (store) => {
 	const getConsentObject = (callback, data) => {
 		const {
 			vendorListVersion,
 			...tcModelFields
 		} = data;
 
-		const { vendorList, persistedConsentData } = store;
+		const vendorList = JSON.parse(JSON.stringify(store.vendorList));
+		const { persistedConsentData } = store;
 		const { vendors } = vendorList;
 		const globalVendorsObject = {};
 
@@ -46,7 +47,7 @@ const CommandsFactory = (store) => {
 		tcModel.supportOOB = false;
 
 		for (let key of Object.keys(tcModelFields)) {
-			tcModel[key].set(data[key]);
+			tcModel[key] && tcModel[key].set(data[key]);
 		}
 
 		const encoded = TCString.encode(tcModel);
@@ -63,4 +64,4 @@ const CommandsFactory = (store) => {
 	}
 };
 
-export default CommandsFactory;
+export default createCommands;
