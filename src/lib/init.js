@@ -48,8 +48,6 @@ function checkConsent(cmp, store) {
 				}, 100);
 
 				__tcfapi('getTCData', 2, (tcData, success) => {
-					console.log('getTcData');
-					console.log(tcData);
 					if (success) {
 						let tcStringDecoded;
 
