@@ -100,6 +100,14 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
+			]}
 			selectVendor={selectVendor}
 			initialVendorsRejection={initialVendorsRejection}
 		/>, scratch);
@@ -131,6 +139,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
 			]}
 			selectVendors={selectVendors}
 			initialVendorsRejection={initialVendorsRejection}
@@ -164,6 +180,14 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
+			]}
 			initialVendorsRejection={initialVendorsRejection}
 			selectVendors={selectVendors}
 		/>, scratch);
@@ -195,6 +219,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
 			]}
 			initialVendorsRejection={initialVendorsRejection}
 			selectVendors={selectVendors}
@@ -228,6 +260,14 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
+			]}
 			initialVendorsRejection={initialVendorsRejection}
 			selectVendors={selectVendors}
 		/>, scratch);
@@ -258,6 +298,14 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
+			]}
 			selectedVendorIds={new Set([1, 2, 3, 4])}
 			initialVendorsRejection={jest.fn()}
 		/>, scratch);
@@ -284,6 +332,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
 			]}
 			selectedVendorIds={new Set([1])}
 			initialVendorsRejection={jest.fn()}
