@@ -92,14 +92,14 @@ const createCommands = (store) => {
 				const decoded = TCString.decode(encoded);
 
 				const {
-					cmpId_: cmpId,
-					cmpVersion_: cmpVersion,
-					policyVersion_: tcfPolicyVersion,
-					supportOOB_: supportOOB,
-					vendorListVersion_: vendorListVersion,
-					isServiceSpecific_: isServiceSpecific,
-					useNonStandardStacks_: useNonStandardStacks,
-					publisherCountryCode_: publisherCC,
+					cmpId,
+					cmpVersion,
+					policyVersion: tcfPolicyVersion,
+					supportOOB,
+					vendorListVersion,
+					isServiceSpecific,
+					useNonStandardStacks,
+					publisherCountryCode: publisherCC,
 					purposeConsents,
 					purposeLegitimateInterests,
 					publisherConsents,
@@ -112,7 +112,6 @@ const createCommands = (store) => {
 					created,
 					lastUpdated
 				} = decoded;
-
 
 				callback({
 					tcString: encoded,
