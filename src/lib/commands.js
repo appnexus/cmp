@@ -46,7 +46,6 @@ const createCommands = (store) => {
 				callback({}, false)
 			}
 			if (vendorList) {
-				vendorList = JSON.parse(JSON.stringify(vendorList));
 				const {
 					vendorListVersion: consentsVendorListVersion,
 					...tcModelFields
