@@ -2,6 +2,16 @@ import Promise from 'promise-polyfill';
 import log from '../log';
 import { TCString } from '@iabtcf/core';
 
+import {
+	padRight,
+	encodeVendorCookieValue,
+	decodeVendorCookieValue,
+	encodePublisherCookieValue,
+	decodePublisherCookieValue
+} from './cookieutils';
+const arrayFrom = require('core-js/library/fn/array/from');
+
+
 const CONSENT_COOKIE = 'adpconsent';
 const CONSENT_COOKIE_MAX_AGE = 33696000;
 
@@ -46,10 +56,81 @@ function writeConsentCookie(encodedConsent) {
 	return Promise.resolve(writeCookie(CONSENT_COOKIE, encodedConsent, CONSENT_COOKIE_MAX_AGE, '/'));
 }
 
+function encodePurposeIdsToBits(purposes, selectedPurposeIds = new Set()) {
+	const maxPurposeId = Math.max(0,
+		...Object.values(purposes).map(({id}) => id),
+		...arrayFrom(selectedPurposeIds));
+	let purposeString = '';
+	for (let id = 1; id <= maxPurposeId; id++) {
+		purposeString += (selectedPurposeIds.has(id) ? '1' : '0');
+	}
+	return purposeString;
+}
+
+function encodeVendorIdsToBits(maxVendorId, selectedVendorIds = new Set()) {
+	let vendorString = '';
+	for (let id = 1; id <= maxVendorId; id++) {
+		vendorString += (selectedVendorIds.has(id) ? '1' : '0');
+	}
+	return padRight(vendorString, Math.max(0, maxVendorId - vendorString.length));
+}
+
+function convertVendorsToRanges(maxVendorId, selectedIds) {
+	let range = [];
+	const ranges = [];
+	for (let id = 1; id <= maxVendorId; id++) {
+		if (selectedIds.has(id)) {
+			range.push(id);
+		}
+
+		// If the range has ended or at the end of vendors add entry to the list
+		if ((!selectedIds.has(id) || id === maxVendorId) && range.length) {
+			const startVendorId = range.shift();
+			const endVendorId = range.pop();
+			range = [];
+			ranges.push({
+				isRange: typeof endVendorId === 'number',
+				startVendorId,
+				endVendorId
+			});
+		}
+	}
+	return ranges;
+}
+
+function encodeVendorConsentData (vendorData) {
+	const {vendorList = {}, selectedPurposeIds, selectedVendorIds, maxVendorId} = vendorData;
+	const purposes = Object.values(vendorList.purposes);
+
+
+	// Encode the data with and without ranges and return the smallest encoded payload
+	const noRangesData = encodeVendorCookieValue({
+		...vendorData,
+		maxVendorId,
+		purposeIdBitString: encodePurposeIdsToBits(purposes, selectedPurposeIds),
+		isRange: false,
+		vendorIdBitString: encodeVendorIdsToBits(maxVendorId, selectedVendorIds)
+	});
+
+	const vendorRangeList = convertVendorsToRanges(maxVendorId, selectedVendorIds);
+	const rangesData = encodeVendorCookieValue({
+		...vendorData,
+		maxVendorId,
+		purposeIdBitString: encodePurposeIdsToBits(purposes, selectedPurposeIds),
+		isRange: true,
+		defaultConsent: false,
+		numEntries: vendorRangeList.length,
+		vendorRangeList
+	});
+
+	return noRangesData.length < rangesData.length ? noRangesData : rangesData;
+}
+
 export {
 	writeCookie,
 	decodeConsentData,
 	encodeConsentData,
 	readConsentCookie,
 	writeConsentCookie,
+	encodeVendorConsentData
 };

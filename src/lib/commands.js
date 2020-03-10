@@ -1,5 +1,7 @@
 import { TCModel, GVL, TCString } from "@iabtcf/core";
 import config from "./config";
+import { encodeVendorConsentData } from "./cookie/cookie";
+const arrayFrom = require('core-js/library/fn/array/from');
 
 const COOKIE_VERSION = 2;
 const CMP_ID = 280;
@@ -40,16 +42,63 @@ const createCommands = (store) => {
 		return obj;
 	};
 
-	const getConsentObject = (callback, consents) => {
+	const generateConsentStringV1 = (data = {}, callback) => {
+
 		getVendorList((vendorList, err) => {
 			if (err) {
 				callback({}, false)
 			}
 			if (vendorList) {
 				const {
-					vendorListVersion: consentsVendorListVersion,
+					persistedConsentData,
+				} = store;
+
+				const allowedVendorIds = new Set(Object.keys(vendorList.vendors).map(v => parseInt(v, 10)));
+
+				let selectedVendorIds = new Set();
+				persistedConsentData.vendorConsents.forEach((hasConsent, id) => {
+					if (hasConsent) {
+						selectedVendorIds.add(id);
+					}
+				});
+
+				let selectedPurposeIds = new Set();
+				persistedConsentData.purposeConsents.forEach((hasConsent, id) => {
+					if (hasConsent) {
+						selectedPurposeIds.add(id);
+					}
+				});
+
+				selectedVendorIds = data.selectedVendorIds ? data.selectedVendorIds : selectedVendorIds;
+				selectedPurposeIds = data.selectedPurposeIds ? data.selectedPurposeIds : selectedPurposeIds;
+
+				const consentData = {
+					// ...persistedVendorConsentData,
+					vendorList,
+					...data,
+					selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))),
+					selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds))
+				};
+
+				const valid = (data = {}) => [
+					'cmpId', 'cmpVersion', 'consentLanguage', 'consentScreen', 'cookieVersion', 'created', 'lastUpdated',
+					'maxVendorId', 'selectedPurposeIds', 'selectedVendorIds', 'vendorListVersion'
+				].every(prop => data.hasOwnProperty(prop));
+
+				callback(valid(consentData) ? encodeVendorConsentData(consentData) : undefined);
+			}});
+	};
+
+	const getConsentObject = (callback, params) => {
+		getVendorList((vendorList, err) => {
+			if (err) {
+				callback({}, false)
+			}
+			if (vendorList) {
+				const {
+					vendorListVersion: paramsVendorListVersion,
 					...tcModelFields
-				} = consents;
+				} = params;
 				const {persistedConsentData} = store;
 				const {vendors} = vendorList;
 				const globalVendorsObject = {};
@@ -72,7 +121,7 @@ const createCommands = (store) => {
 				}
 
 				vendorList.vendors = globalVendorsObject;
-				vendorList.vendorListVersion = consentsVendorListVersion;
+				vendorList.vendorListVersion = paramsVendorListVersion;
 
 				const tcModel = new TCModel(new GVL(vendorList));
 				tcModel.cookieVersion = COOKIE_VERSION;
@@ -80,12 +129,12 @@ const createCommands = (store) => {
 				tcModel.cmpVersion = CMP_VERSION;
 				tcModel.created = persistedConsentData && persistedConsentData.created || new Date();
 				tcModel.lastUpdated = persistedConsentData && persistedConsentData.lastUpdated || new Date();
-				tcModel.vendorListVersion = tcModel.vendorListVersion_ = consentsVendorListVersion;
+				tcModel.vendorListVersion = tcModel.vendorListVersion_ = paramsVendorListVersion;
 				tcModel.isServiceSpecific = true;
 				tcModel.supportOOB = false;
 
 				for (let key of Object.keys(tcModelFields)) {
-					tcModel[key] && tcModel[key].set(consents[key]);
+					tcModel[key] && tcModel[key].set(params[key]);
 				}
 
 				const encoded = TCString.encode(tcModel);
@@ -125,6 +174,7 @@ const createCommands = (store) => {
 					publisherCC,
 					created,
 					lastUpdated,
+					gdprApplies: config.gdprApplies,
 					outOfBand: {
 						allowedVendors: vectorToObject(vendorsAllowed),
 						disclosedVendors: vectorToObject(vendorsDisclosed)
@@ -147,8 +197,31 @@ const createCommands = (store) => {
 		})
 	};
 
+	const getConsentFieldsV1 = (callback, params) => {
+		const data = store.getConsentFieldsObject();
+		const now = new Date();
+
+		generateConsentStringV1({
+				created: now,
+				lastUpdated: now,
+				...data,
+				...params
+			}, (metadata) => {
+
+			const consent = {
+				metadata: metadata,
+				gdprApplies: config.gdprApplies,
+				hasGlobalScope: config.storeConsentGlobally,
+				...data
+			};
+
+			callback(consent, true);
+		})
+	};
+
 	return {
-		getConsentObject
+		getConsentObject,
+		getConsentFieldsV1
 	}
 };
 
