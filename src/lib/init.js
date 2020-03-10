@@ -105,6 +105,8 @@ export function init(configUpdates) {
 				cmpApi
 			});
 
+			cmpApi.customCommands = createCommands(store);
+
 			// Pull queued command from __cmp stub
 			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};
 
@@ -138,7 +140,6 @@ export function init(configUpdates) {
 				store,
 				fetchGlobalVendorList().then(store.updateVendorList)
 			]).then((params) => {
-				cmpApi.customCommands = createCommands(store);
 				cmp.cmpReady = true;
 				cmp.notify('cmpReady');
 				return params[0];
