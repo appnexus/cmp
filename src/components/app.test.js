@@ -25,18 +25,18 @@ describe('App', () => {
 
 
 	it('should render app content', () => {
-		render(<App store={new Store()} />, scratch);
+		render(<App store={new Store({cmpId: 280, cmpApi: {}})} />, scratch);
 		expect(scratch.innerHTML).to.contain(style.gdpr);
 	});
 
 	it('add a listener to the store to receive updates', () => {
-		const store = new Store();
+		const store = new Store({cmpId: 280, cmpApi: {}});
 		render(<App store={store} />, scratch);
 		expect(store.listeners.size).to.equal(1);
 	});
 
 	it('persist state on save', () => {
-		const store = new Store();
+		const store = new Store({cmpId: 280, cmpApi: {}});
 		const notify = jest.fn();
 		store.persist = jest.fn();
 		store.toggleConsentToolShowing = jest.fn();
@@ -56,7 +56,7 @@ describe('App', () => {
 	});
 
 	it('updates local state when store changes', () => {
-		const store = new Store();
+		const store = new Store({cmpId: 280, cmpApi: {}});
 
 		let app;
 		render(<App
@@ -65,8 +65,8 @@ describe('App', () => {
 			ref={ref => app = ref}
 		/>, scratch);
 
-		expect(app.state.store.vendorConsentData.selectedVendorIds).to.deep.equal(new Set());
+		expect(app.state.store.tcModel.vendorConsents.maxId).to.equal(0);
 		store.selectVendor(1, true);
-		expect(app.state.store.vendorConsentData.selectedVendorIds).to.deep.equal(new Set([1]));
+		expect(app.state.store.tcModel.vendorConsents.maxId).to.equal(1);
 	});
 });

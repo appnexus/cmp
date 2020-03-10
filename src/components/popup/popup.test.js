@@ -13,25 +13,28 @@ describe('Popup', () => {
 	});
 
 	it('should render with overlay hidden', () => {
-		const store = new Store();
+		const store = new Store({cmpId: 280, cmpApi: {}});
 		store.isConsentToolShowing = false;
 		const popup = <Popup store={store} />;
 		expect(popup).to.contain('display: none');
 	});
 
 	it('should render with overlay visible', () => {
-		const store = new Store();
+		const store = new Store({cmpId: 280, cmpApi: {}});
 		store.isConsentToolShowing = true;
 		const popup = <Popup store={store} />;
 		expect(popup).to.contain('display: flex');
 	});
 
 	it('should handle accept all', (done) => {
-		const store = new Store();
+		const store = new Store({cmpId: 280, cmpApi: {}});
+
 		store.selectAllVendors = jest.fn();
+		store.selectAllVendorLegitimateInterests = jest.fn();
 		store.selectAllPurposes = jest.fn();
-		store.selectAllStandardPurposes = jest.fn();
-		store.selectAllCustomPurposes = jest.fn();
+		store.selectAllPurposesLegitimateInterests = jest.fn();
+		store.selectAllSpecialFeatureOptIns = jest.fn();
+		store.selectAllPublisherPurposes = jest.fn();
 
 		let popup;
 		render(<Popup
@@ -39,9 +42,11 @@ describe('Popup', () => {
 			ref={ref => popup = ref}
 			onSave={() => {
 				expect(store.selectAllVendors.mock.calls[0][0]).to.equal(true);
+				expect(store.selectAllVendorLegitimateInterests.mock.calls[0][0]).to.equal(true);
 				expect(store.selectAllPurposes.mock.calls[0][0]).to.equal(true);
-				expect(store.selectAllStandardPurposes.mock.calls[0][0]).to.equal(true);
-				expect(store.selectAllCustomPurposes.mock.calls[0][0]).to.equal(true);
+				expect(store.selectAllPurposesLegitimateInterests.mock.calls[0][0]).to.equal(true);
+				expect(store.selectAllSpecialFeatureOptIns.mock.calls[0][0]).to.equal(true);
+				expect(store.selectAllPublisherPurposes.mock.calls[0][0]).to.equal(true);
 				done();
 			}}
 		/>, scratch);
@@ -50,7 +55,7 @@ describe('Popup', () => {
 	});
 
 	it('should switch between panel states', () => {
-		const store = new Store();
+		const store = new Store({cmpId: 280, cmpApi: {}});
 
 		let popup;
 		render(<Popup
