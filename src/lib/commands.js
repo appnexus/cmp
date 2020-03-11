@@ -21,17 +21,17 @@ const createCommands = (store) => {
 			vendorList = JSON.parse(JSON.stringify(store.vendorList));
 			callback(vendorList);
 		} else {
-			const {getVendorList} = config;
+			const { getVendorList } = config;
 
 			if (getVendorList) {
 				getVendorList((err, data) => {
 					if (err) {
-						callback({}, err)
+						callback({}, err);
 					} else {
 						vendorList = data;
-						callback(vendorList)
+						callback(vendorList);
 					}
-				})
+				});
 			}
 		}
 	};
@@ -40,7 +40,7 @@ const createCommands = (store) => {
 		let obj = {};
 
 		set.forEach((hasConsent, id) => {
-			obj[id] = hasConsent
+			obj[id] = hasConsent;
 		});
 
 		return obj;
@@ -79,7 +79,7 @@ const createCommands = (store) => {
 
 		getVendorList((vendorList, err) => {
 			if (err) {
-				callback({}, false)
+				callback({}, false);
 			}
 			if (vendorList) {
 				const {
@@ -133,27 +133,27 @@ const createCommands = (store) => {
 		const now = new Date();
 
 		generateConsentStringV1({
-				created: now,
-				lastUpdated: now,
+			created: now,
+			lastUpdated: now,
+			...data,
+			...params
+		}, (metadata) => {
+			const consent = {
+				metadata,
+				gdprApplies: config.gdprApplies,
+				hasGlobalScope: config.storeConsentGlobally,
 				...data,
-				...params
-			}, (metadata) => {
-				const consent = {
-					metadata: metadata,
-					gdprApplies: config.gdprApplies,
-					hasGlobalScope: config.storeConsentGlobally,
-					...data,
-					vendorListVersion: params.vendorListVersion
-				};
+				vendorListVersion: params.vendorListVersion
+			};
 
-				callback(consent, true);
-		})
+			callback(consent, true);
+		});
 	};
 
 	const getConsentObject = (callback, params) => {
 		getVendorList((vendorList, err) => {
 			if (err) {
-				callback({}, false)
+				callback({}, false);
 			}
 			if (vendorList) {
 				const {
@@ -178,7 +178,7 @@ const createCommands = (store) => {
 						legIntPurposes: vendor.legIntPurposes,
 						features: vendor.features,
 						specialFeatures: vendor.specialFeatures
-					}
+					};
 				}
 
 				vendorList.vendors = globalVendorsObject;
@@ -261,13 +261,13 @@ const createCommands = (store) => {
 					listenerId: undefined
 				}, true);
 			}
-		})
+		});
 	};
 
 	return {
 		getConsentObject,
 		getConsentFieldsV1
-	}
+	};
 };
 
 export default createCommands;

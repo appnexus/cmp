@@ -281,10 +281,7 @@ export default class Store {
 		let encodedConsent = encodeConsentData(this.tcModel);
 
 		if (config.setConsentData) {
-			let consentData = {
-				vendor: encodedConsent,
-				publisher: 'aaa'
-			};
+			let consentData = encodedConsent;
 			try {
 				config.setConsentData(consentData, err => {
 					if (err) {

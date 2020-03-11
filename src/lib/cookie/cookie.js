@@ -30,7 +30,7 @@ function decodeConsentData (encoded) {
 	try {
 		decoded = TCString.decode(encoded);
 	} catch (e) {
-		log.debug('Consent string not compatible with TCF v2.0')
+		log.debug('Consent string not compatible with TCF v2.0');
 	}
 	return decoded;
 }

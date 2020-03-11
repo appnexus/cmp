@@ -22,7 +22,7 @@ function readExternalConsentData(config) {
 					reject(err);
 				} else {
 					try {
-						resolve(data.vendor && decodeConsentData(data.vendor) || undefined);
+						resolve(data.consent && decodeConsentData(data.consent) || undefined);
 					} catch (err) {
 						reject(err);
 					}
