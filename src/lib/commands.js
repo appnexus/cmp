@@ -1,6 +1,10 @@
-import { TCModel, GVL, TCString } from "@iabtcf/core";
+import { TCModel, GVL } from "@iabtcf/core";
 import config from "./config";
-import { encodeVendorConsentData } from "./cookie/cookie";
+import {
+	encodeVendorConsentData,
+	encodeConsentData,
+	decodeConsentData
+} from "./cookie/cookie";
 const arrayFrom = require('core-js/library/fn/array/from');
 
 const COOKIE_VERSION = 2;
@@ -194,8 +198,8 @@ const createCommands = (store) => {
 					tcModel[key] && tcModel[key].set(params[key]);
 				}
 
-				const encoded = TCString.encode(tcModel);
-				const decoded = TCString.decode(encoded);
+				const encoded = encodeConsentData(tcModel);
+				const decoded = decodeConsentData(encoded);
 
 				const {
 					cmpId,
@@ -248,7 +252,13 @@ const createCommands = (store) => {
 					publisher: {
 						consents: vectorToObject(publisherConsents),
 						legitimateInterests: vectorToObject(publisherLegitimateInterests)
-					}
+					},
+					customPurposes: {
+						purposes: {},
+						legitimateInterests: {}
+					},
+					restrictions: {},
+					listenerId: undefined
 				}, true);
 			}
 		})

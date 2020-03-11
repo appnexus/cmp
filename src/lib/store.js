@@ -1,8 +1,12 @@
-import { writeConsentCookie } from "./cookie/cookie";
+import {
+	writeConsentCookie,
+	decodeConsentData,
+	encodeConsentData
+} from "./cookie/cookie";
 import config from './config';
 import { findLocale } from './localize';
 import log from './log';
-import { GVL, TCModel, TCString, Vector } from '@iabtcf/core';
+import { GVL, TCModel, Vector } from '@iabtcf/core';
 
 export const SECTION_INTRO = 0;
 export const SECTION_DETAILS = 1;
@@ -274,7 +278,7 @@ export default class Store {
 		tcModel.lastUpdated = now;
 		tcModel.vendorListVersion = vendorListVersion;
 
-		let encodedConsent = TCString.encode(this.tcModel);
+		let encodedConsent = encodeConsentData(this.tcModel);
 
 		if (config.setConsentData) {
 			let consentData = {
@@ -294,7 +298,7 @@ export default class Store {
 			writeConsentCookie(encodedConsent);
 		}
 
-		this.persistedConsentData = TCString.decode(encodedConsent);
+		this.persistedConsentData = decodeConsentData(encodedConsent);
 		this.cmpApi.tcModel = this.tcModel;
 
 		// Notify of date changes
