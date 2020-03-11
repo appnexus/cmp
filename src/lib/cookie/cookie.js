@@ -1,19 +1,15 @@
 import Promise from 'promise-polyfill';
 import log from '../log';
 import { TCString } from '@iabtcf/core';
-
 import {
 	padRight,
 	encodeVendorCookieValue,
-	decodeVendorCookieValue,
-	encodePublisherCookieValue,
-	decodePublisherCookieValue
 } from './cookieutils';
 const arrayFrom = require('core-js/library/fn/array/from');
 
-
 const CONSENT_COOKIE = 'adpconsent';
 const CONSENT_COOKIE_MAX_AGE = 33696000;
+const MAX_PURPOSE_V1_ID = 5;
 
 function readCookie(name) {
 	const value = `; ${document.cookie}`;
@@ -56,10 +52,10 @@ function writeConsentCookie(encodedConsent) {
 	return Promise.resolve(writeCookie(CONSENT_COOKIE, encodedConsent, CONSENT_COOKIE_MAX_AGE, '/'));
 }
 
-function encodePurposeIdsToBits(purposes, selectedPurposeIds = new Set()) {
+function encodePurposeIdsToBits(selectedPurposeIds = new Set()) {
 	const maxPurposeId = Math.max(0,
-		...Object.values(purposes).map(({id}) => id),
-		...arrayFrom(selectedPurposeIds));
+		...arrayFrom(selectedPurposeIds),
+		MAX_PURPOSE_V1_ID);
 	let purposeString = '';
 	for (let id = 1; id <= maxPurposeId; id++) {
 		purposeString += (selectedPurposeIds.has(id) ? '1' : '0');
@@ -99,15 +95,13 @@ function convertVendorsToRanges(maxVendorId, selectedIds) {
 }
 
 function encodeVendorConsentData (vendorData) {
-	const {vendorList = {}, selectedPurposeIds, selectedVendorIds, maxVendorId} = vendorData;
-	const purposes = Object.values(vendorList.purposes);
-
+	const { selectedPurposeIds, selectedVendorIds, maxVendorId } = vendorData;
 
 	// Encode the data with and without ranges and return the smallest encoded payload
 	const noRangesData = encodeVendorCookieValue({
 		...vendorData,
 		maxVendorId,
-		purposeIdBitString: encodePurposeIdsToBits(purposes, selectedPurposeIds),
+		purposeIdBitString: encodePurposeIdsToBits(selectedPurposeIds),
 		isRange: false,
 		vendorIdBitString: encodeVendorIdsToBits(maxVendorId, selectedVendorIds)
 	});
@@ -116,7 +110,7 @@ function encodeVendorConsentData (vendorData) {
 	const rangesData = encodeVendorCookieValue({
 		...vendorData,
 		maxVendorId,
-		purposeIdBitString: encodePurposeIdsToBits(purposes, selectedPurposeIds),
+		purposeIdBitString: encodePurposeIdsToBits(selectedPurposeIds),
 		isRange: true,
 		defaultConsent: false,
 		numEntries: vendorRangeList.length,
