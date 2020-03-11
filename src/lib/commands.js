@@ -251,13 +251,13 @@ const createCommands = (store) => {
 					specialFeatureOptins: vectorToObject(specialFeatureOptIns),
 					publisher: {
 						consents: vectorToObject(publisherConsents),
-						legitimateInterests: vectorToObject(publisherLegitimateInterests)
+						legitimateInterests: vectorToObject(publisherLegitimateInterests),
+						customPurposes: {
+							purposes: {},
+							legitimateInterests: {}
+						},
+						restrictions: {},
 					},
-					customPurposes: {
-						purposes: {},
-						legitimateInterests: {}
-					},
-					restrictions: {},
 					listenerId: undefined
 				}, true);
 			}
