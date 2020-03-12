@@ -348,4 +348,44 @@ describe('Vendors', () => {
 		const result = vendors.isFullVendorsConsentChosen();
 		expect(result).to.equal(false);
 	});
+
+	it('should handle deselecting a legitimate interest', () => {
+		const selectVendorLegitimateInterests = jest.fn();
+		const initialVendorsRejection = jest.fn();
+
+		let vendors;
+		render(<Vendors
+			ref={ref => vendors = ref}
+			vendors={[
+				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
+				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
+				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
+				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+			]}
+			purposes={[
+				{id: 1, name: 'Purpose 1'},
+				{id: 2, name: 'Purpose 2'},
+			]}
+			features={[
+				{id: 1, name: 'Feature 1'},
+				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
+			]}
+			selectVendorLegitimateInterests={selectVendorLegitimateInterests}
+			initialVendorsRejection={initialVendorsRejection}
+
+		/>, scratch);
+
+		vendors.handleMoreChoices();
+		vendors.handleLegitInterest({dataId: 2, isSelected: false});
+		expect(selectVendorLegitimateInterests.mock.calls[0][0]).to.equal(2);
+		expect(selectVendorLegitimateInterests.mock.calls[0][1]).to.equal(false);
+	});
 });
