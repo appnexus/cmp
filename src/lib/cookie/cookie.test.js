@@ -1,73 +1,207 @@
-/* eslint-disable max-nested-callbacks */
+// /* eslint-disable max-nested-callbacks */
 import { expect } from 'chai';
-import customPurposeList from '../../docs/assets/purposes.json';
-import config from '../config';
 
 import {
 	writeCookie,
-	encodeVendorConsentData,
-	decodeVendorConsentData,
-	encodePublisherConsentData,
-	decodePublisherConsentData,
-	writeVendorConsentCookie,
-	writePublisherConsentCookie,
-	readPublisherConsentCookie,
-	readVendorConsentCookie,
 	convertVendorsToRanges,
-	PUBLISHER_CONSENT_COOKIE_NAME,
-	VENDOR_CONSENT_COOKIE_NAME
+	decodeConsentData,
+	encodeConsentData,
+	writeConsentCookie,
+	readConsentCookie,
+	CONSENT_COOKIE
 } from './cookie';
+import { GVL, TCModel } from "@iabtcf/core";
+import Promise from "promise-polyfill";
 
 jest.mock('../portal');
 const mockPortal = require('../portal');
 
 const vendorList = {
-	"version": 1,
-	"origin": "http://ib.adnxs.com/vendors.json",
-	"purposes": [
-		{
+    "gvlSpecificationVersion": 2,
+    "vendorListVersion": 100,
+    "globalVendorListVersion": 27,
+    "tcfPolicyVersion": 2,
+    "lastUpdated": "2020-03-03T15:37:46.511752+00:00",
+    "purposes": {
+        "1": {
+            "id": 1,
+            "name": "Store and/or access information on a device",
+            "description": "Cookies, device identifiers, or other information can be stored or accessed on your device for the purposes presented to you.",
+            "descriptionLegal": "Vendors can: \\n* Store and access information on the device such as cookies and device identifiers presented to a user."
+        },
+        "2": {
+            "id": 2,
+            "name": "Select basic ads",
+            "description": "Ads can be shown to you based on the content you\u2019re viewing, the app you\u2019re using, your approximate location, or your device type.",
+            "descriptionLegal": "To do basic ad selection vendors can:\\n* Use real-time information about the context in which the ad will be shown, to show the ad, including information about the content and the device, such as: device type and capabilities, user agent, URL, IP address\\n* Use a user\u2019s non-precise geolocation data\\n* Control the frequency of ads shown to a user.\\n* Sequence the order in which ads are shown to a user.\\n* Prevent an ad from serving in an unsuitable editorial (brand-unsafe) context\\nVendors cannot:\\n* Create a personalised ads profile using this information for the selection of future ads.\\n* N.B. Non-precise means only an approximate location involving at least a radius of 500 meters is permitted."
+        },
+        "3": {
+            "id": 3,
+            "name": "Create a personalised ads profile",
+            "description": "A profile can be built about you and your interests to show you personalised ads that are relevant to you.",
+            "descriptionLegal": "To create a personalised ads profile vendors can:\\n* Collect information about a user, including a user's activity, interests, demographic information, or location, to create or edit a user profile for use in personalised advertising.\\n* Combine this information with other information previously collected, including from across websites and apps, to create or edit a user profile for use in personalised advertising."
+        },
+        "4": {
+            "id": 4,
+            "name": "Select personalised ads",
+            "description": "Personalised ads can be shown to you based on a profile about you.",
+            "descriptionLegal": "To select personalised ads vendors can:\\n* Select personalised ads based on a user profile or other historical user data, including a user\u2019s prior activity, interests, visits to sites or apps, location, or demographic information."
+        },
+        "5": {
+            "id": 5,
+            "name": "Create a personalised content profile",
+            "description": "A profile can be built about you and your interests to show you personalised content that is relevant to you.",
+            "descriptionLegal": "To create a personalised content profile vendors can:\\n* Collect information about a user, including a user's activity, interests, visits to sites or apps, demographic information, or location, to create or edit a user profile for personalising content.\\n* Combine this information with other information previously collected, including from across websites and apps, to create or edit a user profile for use in personalising content."
+        },
+        "6": {
+            "id": 6,
+            "name": "Select personalised content",
+            "description": "Personalised content can be shown to you based on a profile about you.",
+            "descriptionLegal": "To select personalised content vendors can:\\n* Select personalised content based on a user profile or other historical user data, including a user\u2019s prior activity, interests, visits to sites or apps, location, or demographic information."
+        },
+        "7": {
+            "id": 7,
+            "name": "Measure ad performance",
+            "description": "The performance and effectiveness of ads that you see or interact with can be measured.",
+            "descriptionLegal": "To measure ad performance vendors can:\\n* Measure whether and how ads were delivered to and interacted with by a user\\n* Provide reporting about ads including their effectiveness and performance\\n* Provide reporting about users who interacted with ads using data observed during the course of the user's interaction with that ad\\n* Provide reporting to publishers about the ads displayed on their property\\n* Measure whether an ad is serving in a suitable editorial environment (brand-safe) context\\n* Determine the percentage of the ad that had the opportunity to be seen and the duration of that opportunity\\n* Combine this information with other information previously collected, including from across websites and apps\\nVendors cannot:\\n*Apply panel- or similarly-derived audience insights data to ad measurement data without a Legal Basis to apply market research to generate audience insights (Purpose 9)"
+        },
+        "8": {
+            "id": 8,
+            "name": "Measure content performance",
+            "description": "The performance and effectiveness of content that you see or interact with can be measured.",
+            "descriptionLegal": "To measure content performance vendors can:\\n* Measure and report on how content was delivered to and interacted with by users.\\n* Provide reporting, using directly measurable or known information, about users who interacted with the content\\n* Combine this information with other information previously collected, including from across websites and apps.\\nVendors cannot:\\n* Measure whether and how ads (including native ads) were delivered to and interacted with by a user.\\n* Apply panel- or similarly derived audience insights data to ad measurement data without a Legal Basis to apply market research to generate audience insights (Purpose 9)"
+        },
+        "9": {
+            "id": 9,
+            "name": "Apply market research to generate audience insights",
+            "description": "Market research can be used to learn more about the audiences who visit sites/apps and view ads.",
+            "descriptionLegal": "To apply market research to generate audience insights vendors can:\\n* Provide aggregate reporting to advertisers or their representatives about the audiences reached by their ads, through panel-based and similarly derived insights.\\n* Provide aggregate reporting to publishers about the audiences that were served or interacted with content and/or ads on their property by applying panel-based and similarly derived insights.\\n* Associate offline data with an online user for the purposes of market research to generate audience insights if vendors have declared to match and combine offline data sources (Feature 1)\\n* Combine this information with other information previously collected including from across websites and apps. \\nVendors cannot:\\n* Measure the performance and effectiveness of ads that a specific user was served or interacted with, without a Legal Basis to measure ad performance.\\n* Measure which content a specific user was served and how they interacted with it, without a Legal Basis to measure content performance."
+        },
+        "10": {
+            "id": 10,
+            "name": "Develop and improve products",
+            "description": "Your data can be used to improve existing systems and software, and to develop new products",
+            "descriptionLegal": "To develop new products and improve products vendors can:\\n* Use information to improve their existing products with new features and to develop new products\\n* Create new models and algorithms through machine learning\\nVendors cannot:\\n* Conduct any other data processing operation allowed under a different purpose under this purpose"
+        }
+    },
+    "specialPurposes": {
+        "1": {
+            "id": 1,
+            "name": "Match and combine offline data sources",
+            "description": "Data from offline data sources can be combined with your online activity in support of one or more purposes",
+            "descriptionLegal": "To ensure security, prevent fraud and debug vendors can:\\n* Ensure data are securely transmitted\\n* Detect and prevent malicious, fraudulent, invalid, or illegal activity.\\n* Ensure correct and efficient operation of systems and processes, including to monitor and enhance the performance of systems and processes engaged in permitted purposes\\nVendors cannot:\\n* Conduct any other data processing operation allowed under a different purpose under this purpose."
+        },
+        "2": {
+            "id": 2,
+            "name": "Link different devices",
+            "description": "Different devices can be determined as belonging to you or your household in support of one or more of purposes.",
+            "descriptionLegal": "To deliver information and respond to technical requests vendors can:\\n* Use a user\u2019s IP address to deliver an ad over the internet\\n* Respond to a user\u2019s interaction with an ad by sending the user to a landing page\\n* Use a user\u2019s IP address to deliver content over the internet\\n* Respond to a user\u2019s interaction with content by sending the user to a landing page\\n* Use information about the device type and capabilities for delivering ads or content, for example, to deliver the right size ad creative or video file in a format supported by the device\\nVendors cannot:\\n* Conduct any other data processing operation allowed under a different purpose under this purpose"
+        }
+    },
+    "features": {
+        "1": {
+            "id": 1,
+            "name": "Match and combine offline data sources",
+            "description": "Data from offline data sources can be combined with your online activity in support of one or more purposes",
+            "descriptionLegal": "Vendors can:\\n* Combine data obtained offline with data collected online in support of one or more Purposes or Special Purposes."
+        },
+        "2": {
+            "id": 2,
+            "name": "Link different devices",
+            "description": "Different devices can be determined as belonging to you or your household in support of one or more of purposes.",
+            "descriptionLegal": "Vendors can:\\n* Deterministically determine that two or more devices belong to the same user or household\\n* Probabilistically determine that two or more devices belong to the same user or household\\n* Actively scan device characteristics for identification for probabilistic identification if users have allowed vendors to actively scan device characteristics for identification (Special Feature 2)"
+        },
+        "3": {
+            "id": 3,
+            "name": "Receive and use automatically-sent device characteristics for identification",
+            "description": "Your device might be distinguished from other devices based on information it automatically sends, such as IP address or browser type.",
+            "descriptionLegal": "Vendors can:\\n* Create an identifier using data collected automatically from a device for specific characteristics, e.g. IP address, user-agent string.\\n* Use such an identifier to attempt to re-identify a device.\\nVendors cannot:\\n* Create an identifier using data collected via actively scanning a device for specific characteristics, e.g. installed font or screen resolution without users\u2019 separate opt-in to actively scanning device characteristics for identification.\\n* Use such an identifier to re-identify a device."
+        }
+    },
+    "specialFeatures": {
+        "1": {
+            "id": 1,
+            "name": "Use precise geolocation data",
+            "description": "Your precise geolocation data can be used in support of one or more purposes. This means your location can be accurate to within several meters.",
+            "descriptionLegal": "Vendors can:\\n* Collect and process precise geolocation data in support of one or more purposes.\\nN.B. Precise geolocation means that there are no restrictions on the precision of a user\u2019s location; this can be accurate to within several meters."
+        },
+        "2": {
+            "id": 2,
+            "name": "Actively scan device characteristics for identification",
+            "description": "Your device can be identified based on a scan of your device's unique combination of characteristics.",
+            "descriptionLegal": "Vendors can:\\n* Create an identifier using data collected via actively scanning a device for specific characteristics, e.g. installed fonts or screen resolution.\\n* Use such an identifier to re-identify a device"
+        }
+    },
+	"vendors": {
+		"1": {
 			"id": 1,
-			"name": "Accessing a Device or Browser"
+			"name": "Globex",
+			"purposes": [ 1, 2, 3, 4],
+			"legIntPurposes": [7, 9, 10],
+				"flexiblePurposes": [
+				2
+				],
+			"specialPurposes": [],
+			"features": [2],
+			"specialFeatures": [ ],
+			"policyUrl": "http://www.captify.co.uk/privacy-policy/"
 		},
-		{
+		"2": {
 			"id": 2,
-			"name": "Advertising Personalisation"
+			"name": "Initech",
+			"purposes": [1, 2, 3, 4, 7, 10],
+			"legIntPurposes": [],
+			"flexiblePurposes": [],
+			"specialPurposes": [1, 2],
+			"features": [3],
+			"specialFeatures": [ ],
+			"policyUrl": "http://www.captify.co.uk/privacy-policy/"
 		},
-		{
+		"3": {
 			"id": 3,
-			"name": "Analytics"
+			"name": "CRS",
+			"purposes": [ 1, 3, 4],
+			"legIntPurposes": [2, 7, 9, 10],
+			"flexiblePurposes": [2, 9],
+			"specialPurposes": [1, 2],
+			"features": [1, 2],
+			"specialFeatures": [1, 2],
+			"policyUrl": "http://www.captify.co.uk/privacy-policy/"
 		},
-		{
+		"4": {
 			"id": 4,
-			"name": "Content Personalisation"
-		}
-	],
-	"vendors": [
-		{
-			"id": 1,
-			"name": "Globex"
+			"name": "Umbrella",
+			"purposes": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+			"legIntPurposes": [],
+			"flexiblePurposes": [],
+			"specialPurposes": [],
+			"features": [3],
+			"specialFeatures": [1],
+			"policyUrl": "http://www.captify.co.uk/privacy-policy/"
 		},
-		{
-			"id": 2,
-			"name": "Initech"
-		},
-		{
-			"id": 3,
-			"name": "CRS"
-		},
-		{
-			"id": 4,
-			"name": "Umbrella"
-		},
-		{
+		"10": {
 			"id": 10,
-			"name": "Pierce and Pierce"
+			"name": "Pierce and Pierce",
+			"purposes": [ 1, 2, 3, 4, 7],
+			"legIntPurposes": [],
+			"flexiblePurposes": [],
+			"specialPurposes": [2],
+			"features": [1, 3],
+			"specialFeatures": [1],
+			"policyUrl": "http://www.captify.co.uk/privacy-policy/"
 		},
-		{
+		"8": {
 			"id": 8,
-			"name": "Aperture"
+			"name": "Aperture",
+			"purposes": [ 1, 3, 4, 5, 6, 8, 9, 10],
+			"legIntPurposes": [2, 7],
+			"flexiblePurposes": [],
+			"specialPurposes": [1, 2],
+			"features": [2],
+			"specialFeatures": [],
+			"policyUrl": "http://www.captify.co.uk/privacy-policy/"
 		}
-	]
+	}
 };
 
 describe('cookie', () => {
@@ -86,169 +220,133 @@ describe('cookie', () => {
 		mockPortal.sendPortalCommand = jest.fn().mockImplementation(() => Promise.resolve());
 	});
 
-	it('encodes and decodes the vendor cookie object back to original value', () => {
-		const vendorConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			cmpVersion: 1,
-			consentScreen: 2,
-			consentLanguage: 'DE',
-			vendorListVersion: 1,
-			maxVendorId: vendorList.vendors[vendorList.vendors.length - 1].id,
-			created: aDate,
-			lastUpdated: aDate,
-			selectedPurposeIds: new Set([1, 2]),
-			selectedVendorIds: new Set([1, 2, 4])
-		};
+	it('encodes and decodes the vendor cookie object back to original value', (done) => {
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(vendorList);
 
-		const encodedString = encodeVendorConsentData({...vendorConsentData, vendorList});
-		const decoded = decodeVendorConsentData(encodedString);
+		setTimeout(() => {
+			tcModel.purposeConsents.set([1, 3, 5, 7, 9]);
+			tcModel.purposeLegitimateInterests.set([2, 4, 6, 8, 10]);
+			tcModel.vendorConsents.set([1, 2, 3, 4, 8, 10]);
+			tcModel.vendorLegitimateInterests.set([1, 2, 3, 4]);
+			tcModel.publisherConsents.set([2, 4, 6, 8, 10]);
+			tcModel.publisherLegitimateInterests.set([1, 3, 5, 7, 9]);
+			tcModel.specialFeatureOptIns.set([1, 2, 3]);
 
-		expect(decoded).to.deep.equal(vendorConsentData);
+			const encoded = encodeConsentData(tcModel);
+			const decoded = decodeConsentData(encoded);
+
+			const {
+				supportOOB,
+				isServiceSpecific,
+				useNonStandardStacks,
+				purposeOneTreatment,
+				publisherCountryCode,
+				version,
+				consentLanguage,
+				cmpId,
+				cmpVersion,
+				vendorListVersion,
+				purposeConsents,
+				purposeLegitimateInterests,
+				vendorConsents,
+				vendorLegitimateInterests,
+				publisherConsents,
+				publisherLegitimateInterests,
+				specialFeatureOptIns
+			} = decoded;
+
+			expect(supportOOB).to.equal(tcModel.supportOOB);
+			expect(isServiceSpecific).to.equal(tcModel.isServiceSpecific);
+			expect(useNonStandardStacks).to.equal(tcModel.useNonStandardStacks);
+			expect(purposeOneTreatment).to.equal(tcModel.purposeOneTreatment);
+			expect(publisherCountryCode).to.equal(tcModel.publisherCountryCode);
+			expect(version).to.equal(tcModel.version);
+			expect(consentLanguage).to.equal(tcModel.consentLanguage);
+			expect(cmpId).to.equal(tcModel.cmpId);
+			expect(cmpVersion).to.equal(tcModel.cmpVersion);
+			expect(vendorListVersion).to.equal(tcModel.vendorListVersion);
+			expect(purposeConsents.maxId).to.equal(9);
+			expect(purposeLegitimateInterests.maxId).to.equal(10);
+			expect(vendorConsents.maxId).to.equal(10);
+			expect(vendorLegitimateInterests.maxId).to.equal(4);
+			expect(publisherConsents.maxId).to.equal(10);
+			expect(publisherLegitimateInterests.maxId).to.equal(9);
+			expect(specialFeatureOptIns.maxId).to.equal(3);
+			done();
+		}, 0);
 	});
 
-	it('encodes and decodes the publisher cookie object back to original value', () => {
-		const vendorConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
+	it('writes and reads the local cookie when globalConsent = false', (done) => {
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(vendorList);
 
-		const publisherConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			publisherPurposeVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-			selectedStandardPurposeIds: new Set([1, 4, 5]),
-			selectedCustomPurposeIds: new Set([2, 3])
-		};
+		setTimeout(() => {
+			tcModel.purposeConsents.set([1, 3, 5, 7, 9]);
+			tcModel.purposeLegitimateInterests.set([2, 4, 6, 8, 10]);
+			tcModel.vendorConsents.set([1, 2, 3, 4, 8, 10]);
+			tcModel.vendorLegitimateInterests.set([1, 2, 3, 4]);
+			tcModel.publisherConsents.set([2, 4, 6, 8, 10]);
+			tcModel.publisherLegitimateInterests.set([1, 3, 5, 7, 9]);
+			tcModel.specialFeatureOptIns.set([1, 2, 3]);
 
-		const encodedString = encodePublisherConsentData({
-			...vendorConsentData, ...publisherConsentData,
-			vendorList,
-			customPurposeList
-		});
-		const decoded = decodePublisherConsentData(encodedString);
+			const encoded = encodeConsentData(tcModel);
 
-		expect(decoded).to.deep.equal({...vendorConsentData, ...publisherConsentData});
-	});
+			return writeConsentCookie(encoded).then(() => {
+				const cookie = readConsentCookie();
+				expect(document.cookie).to.contain(CONSENT_COOKIE);
 
-	it('writes and reads the local cookie when globalConsent = false', () => {
-		config.update({
-			storeConsentGlobally: false
-		});
+				const decoded = decodeConsentData(encoded);
 
-		const vendorConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
+				const {
+					supportOOB,
+					isServiceSpecific,
+					useNonStandardStacks,
+					purposeOneTreatment,
+					publisherCountryCode,
+					version,
+					consentLanguage,
+					cmpId,
+					cmpVersion,
+					vendorListVersion,
+					purposeConsents,
+					purposeLegitimateInterests,
+					vendorConsents,
+					vendorLegitimateInterests,
+					publisherConsents,
+					publisherLegitimateInterests,
+					specialFeatureOptIns
+				} = decoded;
 
-		return writeVendorConsentCookie(vendorConsentData).then(() => {
-			return readVendorConsentCookie().then(fromCookie => {
-				expect(document.cookie).to.contain(VENDOR_CONSENT_COOKIE_NAME);
-				expect(fromCookie).to.deep.include(vendorConsentData);
+				expect(supportOOB).to.equal(tcModel.supportOOB);
+				expect(isServiceSpecific).to.equal(tcModel.isServiceSpecific);
+				expect(useNonStandardStacks).to.equal(tcModel.useNonStandardStacks);
+				expect(purposeOneTreatment).to.equal(tcModel.purposeOneTreatment);
+				expect(publisherCountryCode).to.equal(tcModel.publisherCountryCode);
+				expect(version).to.equal(tcModel.version);
+				expect(consentLanguage).to.equal(tcModel.consentLanguage);
+				expect(cmpId).to.equal(tcModel.cmpId);
+				expect(cmpVersion).to.equal(tcModel.cmpVersion);
+				expect(vendorListVersion).to.equal(tcModel.vendorListVersion);
+				expect(purposeConsents.maxId).to.equal(9);
+				expect(purposeLegitimateInterests.maxId).to.equal(10);
+				expect(vendorConsents.maxId).to.equal(10);
+				expect(vendorLegitimateInterests.maxId).to.equal(4);
+				expect(publisherConsents.maxId).to.equal(10);
+				expect(publisherLegitimateInterests.maxId).to.equal(9);
+				expect(specialFeatureOptIns.maxId).to.equal(3);
+				done()
 			});
-		});
+		}, 0)
 	});
 
-	it('writes the global cookie when globalConsent = true', () => {
-		config.update({
-			storeConsentGlobally: true
-		});
-
-		const vendorConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
-
-		return writeVendorConsentCookie(vendorConsentData).then(() => {
-			expect(document.cookie).to.not.contain(VENDOR_CONSENT_COOKIE_NAME);
-			expect(mockPortal.sendPortalCommand.mock.calls[0][0].command).to.deep.equal('writeVendorConsent');
-		});
-	});
-
-	it('reads the global cookie when globalConsent = true', () => {
-		config.update({
-			storeConsentGlobally: true
-		});
-
-		const vendorConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
-
-		return readVendorConsentCookie(vendorConsentData).then(() => {
-			expect(mockPortal.sendPortalCommand.mock.calls[0][0].command).to.deep.equal('readVendorConsent');
-		});
-	});
-
-	it('writes and reads the publisher consent cookie', () => {
-		config.update({
-			storeConsentGlobally: false,
-			storePublisherData: true
-		});
-
-		const publisherConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			publisherPurposeVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
-
-		writePublisherConsentCookie(publisherConsentData);
-		const fromCookie = readPublisherConsentCookie();
-
-		expect(document.cookie).to.contain(PUBLISHER_CONSENT_COOKIE_NAME);
-		expect(fromCookie).to.deep.include(publisherConsentData);
-	});
-
-	it('converts selected vendor list to a range', () => {
-		const maxVendorId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
-		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 4]));
-
-		expect(ranges).to.deep.equal([{
-			isRange: true,
-			startVendorId: 2,
-			endVendorId: 4
-		}]);
-	});
-
-
-	it('converts selected vendor list to multiple ranges', () => {
-		const maxVendorId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
-		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 5, 6, 10]));
-
-		expect(ranges).to.deep.equal([
-			{
-				isRange: true,
-				startVendorId: 2,
-				endVendorId: 3
-			},
-			{
-				isRange: true,
-				startVendorId: 5,
-				endVendorId: 6
-			},
-			{
-				isRange: false,
-				startVendorId: 10,
-				endVendorId: undefined
-			}
-		]);
+	it('It should return undefined when decoding v1 cookie', () => {
+		const cookie_v1 = 'BOEFEAyOEFEAyAHABDENAI4AAAB9vABAASA';
+		const decoded = decodeConsentData(cookie_v1);
+		expect(decoded).to.be.undefined;
 	});
 });
