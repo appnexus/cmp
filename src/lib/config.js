@@ -17,7 +17,7 @@ const defaultConfig = {
 	contractPurposeIds: [],
 	autoDisplay: true,
 	allowedVendorIds: null,
-	specialPurposes: []
+	specialPurposes: [1,2]
 };
 
 class Config {
@@ -41,11 +41,12 @@ class Config {
 				return acc;
 			}, { validUpdates: {}, invalidKeys: [] });
 
+validUpdates.legIntPurposeIds = [2,3,4,5,6,7,8,9,10];
+
 			Object.assign(this, validUpdates);
 			if (invalidKeys.length) {
 				log.warn(`Invalid CMP config values not applied: ${invalidKeys.join(', ')}`);
 			}
-
 		}
 	};
 }

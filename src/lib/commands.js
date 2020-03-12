@@ -1,6 +1,10 @@
-import { TCModel, GVL, TCString } from "@iabtcf/core";
+import { TCModel, GVL } from "@iabtcf/core";
 import config from "./config";
-import { encodeVendorConsentData } from "./cookie/cookie";
+import {
+	encodeVendorConsentData,
+	encodeConsentData,
+	decodeConsentData
+} from "./cookie/cookie";
 const arrayFrom = require('core-js/library/fn/array/from');
 
 const COOKIE_VERSION = 2;
@@ -42,6 +46,35 @@ const createCommands = (store) => {
 		return obj;
 	};
 
+	 /**
+	 * Build consent fields object v1 from data that has already been persisted.
+	 */
+	const getConsentFieldsObject = () => {
+		const {
+			persistedConsentData
+		} = store;
+
+		const {
+			created = new Date(),
+			lastUpdated = new Date(),
+			cmpId_: cmpId = store.tcModel.cmpId,
+			cmpVersion_: cmpVersion = 1,
+			consentScreen_: consentScreen = store.tcModel.consentScreen,
+			consentLanguage_: consentLanguage = store.tcModel.consentLanguage,
+			vendorListVersion_: vendorListVersion,
+		} = persistedConsentData;
+
+		return {
+			cmpId,
+			cmpVersion,
+			consentLanguage,
+			consentScreen,
+			created,
+			vendorListVersion,
+			lastUpdated,
+		};
+	};
+
 	const generateConsentStringV1 = (data = {}, callback) => {
 
 		getVendorList((vendorList, err) => {
@@ -53,30 +86,36 @@ const createCommands = (store) => {
 					persistedConsentData,
 				} = store;
 
-				const allowedVendorIds = new Set(Object.keys(vendorList.vendors).map(v => parseInt(v, 10)));
+				const {
+					created,
+					lastUpdated,
+					consentLanguage_: consentLanguage,
+					consentScreen_: consentScreen,
+					version_: version = 1,
+					cmpId_: cmpId = 280
+				} = persistedConsentData;
 
-				let selectedVendorIds = new Set();
-				persistedConsentData.vendorConsents.forEach((hasConsent, id) => {
-					if (hasConsent) {
-						selectedVendorIds.add(id);
-					}
-				});
-
-				let selectedPurposeIds = new Set();
-				persistedConsentData.purposeConsents.forEach((hasConsent, id) => {
-					if (hasConsent) {
-						selectedPurposeIds.add(id);
-					}
-				});
-
-				selectedVendorIds = data.selectedVendorIds ? data.selectedVendorIds : selectedVendorIds;
-				selectedPurposeIds = data.selectedPurposeIds ? data.selectedPurposeIds : selectedPurposeIds;
+				const {
+					selectedVendorIds = [],
+					selectedPurposeIds = [],
+					maxVendorId,
+					cookieVersion,
+					vendorListVersion,
+					cmpVersion
+				} = data;
 
 				const consentData = {
-					// ...persistedVendorConsentData,
-					vendorList,
-					...data,
-					selectedVendorIds: new Set(arrayFrom(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))),
+					cmpId,
+					maxVendorId,
+					cookieVersion,
+					cmpVersion,
+					vendorListVersion,
+					created,
+					lastUpdated,
+					consentLanguage,
+					consentScreen,
+					version,
+					selectedVendorIds: new Set(arrayFrom(selectedVendorIds)),
 					selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds))
 				};
 
@@ -87,6 +126,28 @@ const createCommands = (store) => {
 
 				callback(valid(consentData) ? encodeVendorConsentData(consentData) : undefined);
 			}});
+	};
+
+	const getConsentFieldsV1 = (callback, params) => {
+		const data = getConsentFieldsObject();
+		const now = new Date();
+
+		generateConsentStringV1({
+				created: now,
+				lastUpdated: now,
+				...data,
+				...params
+			}, (metadata) => {
+				const consent = {
+					metadata: metadata,
+					gdprApplies: config.gdprApplies,
+					hasGlobalScope: config.storeConsentGlobally,
+					...data,
+					vendorListVersion: params.vendorListVersion
+				};
+
+				callback(consent, true);
+		})
 	};
 
 	const getConsentObject = (callback, params) => {
@@ -137,8 +198,8 @@ const createCommands = (store) => {
 					tcModel[key] && tcModel[key].set(params[key]);
 				}
 
-				const encoded = TCString.encode(tcModel);
-				const decoded = TCString.decode(encoded);
+				const encoded = encodeConsentData(tcModel);
+				const decoded = decodeConsentData(encoded);
 
 				const {
 					cmpId,
@@ -190,32 +251,16 @@ const createCommands = (store) => {
 					specialFeatureOptins: vectorToObject(specialFeatureOptIns),
 					publisher: {
 						consents: vectorToObject(publisherConsents),
-						legitimateInterests: vectorToObject(publisherLegitimateInterests)
-					}
+						legitimateInterests: vectorToObject(publisherLegitimateInterests),
+						customPurposes: {
+							purposes: {},
+							legitimateInterests: {}
+						},
+						restrictions: {},
+					},
+					listenerId: undefined
 				}, true);
 			}
-		})
-	};
-
-	const getConsentFieldsV1 = (callback, params) => {
-		const data = store.getConsentFieldsObject();
-		const now = new Date();
-
-		generateConsentStringV1({
-				created: now,
-				lastUpdated: now,
-				...data,
-				...params
-			}, (metadata) => {
-
-			const consent = {
-				metadata: metadata,
-				gdprApplies: config.gdprApplies,
-				hasGlobalScope: config.storeConsentGlobally,
-				...data
-			};
-
-			callback(consent, true);
 		})
 	};
 

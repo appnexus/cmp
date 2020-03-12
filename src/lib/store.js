@@ -1,8 +1,12 @@
-import { writeConsentCookie } from "./cookie/cookie";
+import {
+	writeConsentCookie,
+	decodeConsentData,
+	encodeConsentData
+} from "./cookie/cookie";
 import config from './config';
 import { findLocale } from './localize';
 import log from './log';
-import { GVL, TCModel, TCString, Vector } from '@iabtcf/core';
+import { GVL, TCModel, Vector } from '@iabtcf/core';
 
 export const SECTION_INTRO = 0;
 export const SECTION_DETAILS = 1;
@@ -255,36 +259,6 @@ export default class Store {
 	};
 
 	/**
-	 * Build consent fields object from data that has already been persisted.
-	 */
-	getConsentFieldsObject = () => {
-		const {
-			persistedConsentData
-		} = this;
-
-		const {
-			created,
-			lastUpdated,
-			cmpId_: cmpId,
-			cmpVersion_: cmpVersion,
-			consentScreen_: consentScreen,
-			consentLanguage_: consentLanguage,
-			vendorListVersion_: vendorListVersion,
-			version_: version
-		} = persistedConsentData;
-
-		return {
-			cmpId,
-			cmpVersion,
-			consentLanguage,
-			consentScreen,
-			created,
-			vendorListVersion,
-			lastUpdated,
-			version
-		};
-	};
-	/**
 	 * Persist all consent data to the cookie.  This data will NOT be filtered
 	 * by the vendorList and will include global consents set no matter what
 	 * was allowed by the list.
@@ -304,7 +278,7 @@ export default class Store {
 		tcModel.lastUpdated = now;
 		tcModel.vendorListVersion = vendorListVersion;
 
-		let encodedConsent = TCString.encode(this.tcModel);
+		let encodedConsent = encodeConsentData(this.tcModel);
 
 		if (config.setConsentData) {
 			let consentData = {
@@ -324,7 +298,7 @@ export default class Store {
 			writeConsentCookie(encodedConsent);
 		}
 
-		this.persistedConsentData = TCString.decode(encodedConsent);
+		this.persistedConsentData = decodeConsentData(encodedConsent);
 		this.cmpApi.tcModel = this.tcModel;
 
 		// Notify of date changes
