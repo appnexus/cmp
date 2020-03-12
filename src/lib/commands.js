@@ -3,7 +3,6 @@ import config from "./config";
 import {
 	encodeVendorConsentData,
 	encodeConsentData,
-	decodeConsentData
 } from "./cookie/cookie";
 const arrayFrom = require('core-js/library/fn/array/from');
 
@@ -199,7 +198,6 @@ const createCommands = (store) => {
 				}
 
 				const encoded = encodeConsentData(tcModel);
-				const decoded = decodeConsentData(encoded);
 
 				const {
 					cmpId,
@@ -221,7 +219,7 @@ const createCommands = (store) => {
 					specialFeatureOptIns,
 					created,
 					lastUpdated
-				} = decoded;
+				} = tcModel;
 
 				callback({
 					tcString: encoded,
