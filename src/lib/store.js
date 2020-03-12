@@ -23,8 +23,8 @@ function copyData(dataObject) {
 	}
 	const copy = {...dataObject};
 	for (let key in copy) {
-		if (copy.hasOwnProperty(key) && copy[key] instanceof Set) {
-			copy[key] = new Set(copy[key]);
+		if (copy.hasOwnProperty(key) && copy[key] instanceof Vector) {
+			copy[key] = new Vector(copy[key]);
 		}
 	}
 	return copy;
