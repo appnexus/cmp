@@ -50,7 +50,6 @@ export default class Store {
 		this.hasInitialVendorsRejectionOccured = false;
 
 		if (vendorList) {
-			console.log('vendor list exists');
 			this.updateVendorList(vendorList);
 		}
 	}
