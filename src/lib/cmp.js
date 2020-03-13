@@ -2,6 +2,7 @@ import log from './log';
 import config from './config';
 import {
 	encodeVendorConsentData,
+	encodePublisherConsentData
 } from './cookie/cookie';
 import {
 	SECTION_DETAILS,
