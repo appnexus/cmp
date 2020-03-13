@@ -1,7 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 
 import { expect } from 'chai';
-
 import {
 	writeCookie,
 	decodeConsentData,
@@ -10,7 +9,6 @@ import {
 	readConsentCookie,
 	CONSENT_COOKIE
 } from './cookie';
-
 import {
 	PURPOSE_CONSENTS,
 	PURPOSE_LEGITIMATE_INTERESTS,
@@ -20,8 +18,7 @@ import {
 	PUBLISHER_LEGITIMATE_INTERESTS,
 	SPECIAL_FEATURE_OPT_INS,
 	VENDOR_LIST
-} from "../../../test/constants"
-
+} from "../../../test/constants";
 import { GVL, TCModel } from "@iabtcf/core";
 import Promise from "promise-polyfill";
 

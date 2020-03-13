@@ -264,7 +264,7 @@ export default class Store {
 		const now = new Date();
 		tcModel.created = tcModel.created || now;
 		tcModel.lastUpdated = now;
-		tcModel.vendorListVersion = vendorListVersion;
+		tcModel.vendorListVersion = tcModel.vendorListVersion_ = vendorListVersion;
 
 		let encodedConsent = encodeConsentData(this.tcModel);
 

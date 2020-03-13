@@ -68,7 +68,7 @@ function checkConsent(cmp, store) {
 								clearTimeout(timeout);
 								handleConsentResult(cmp, store, vendorList, tcStringDecoded);
 							}
-						})
+						});
 					}
 				}
 			});

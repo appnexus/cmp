@@ -43,6 +43,10 @@ export function init (configUpdates) {
 		.then((consentData) => {
 			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION);
 
+			if (config.decoratePageCallHandler) {
+				config.decoratePageCallHandler(CmpApi, cmpApi);
+			}
+
 			// Initialize the store with all of our consent data
 			const store = new Store({
 				cmpVersion: CMP_VERSION,

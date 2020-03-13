@@ -144,7 +144,7 @@ const commonConfig = {
 	node: {
 		global: true,
 		process: false,
-		Buffer: false,
+		Buffer: true,
 		__filename: false,
 		__dirname: false,
 		setImmediate: false
