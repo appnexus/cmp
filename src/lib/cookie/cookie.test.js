@@ -10,9 +10,20 @@ import {
 	readConsentCookie,
 	CONSENT_COOKIE
 } from './cookie';
+
+import {
+	PURPOSE_CONSENTS,
+	PURPOSE_LEGITIMATE_INTERESTS,
+	VENDOR_CONSENTS,
+	VENDOR_LEGITIMATE_INTERESTS,
+	PUBLISHER_CONSENTS,
+	PUBLISHER_LEGITIMATE_INTERESTS,
+	SPECIAL_FEATURE_OPT_INS,
+	VENDOR_LIST
+} from "../../../test/constants"
+
 import { GVL, TCModel } from "@iabtcf/core";
 import Promise from "promise-polyfill";
-import vendorList from "../../../test/vendorListMock.json";
 
 jest.mock('../portal');
 const mockPortal = require('../portal');
@@ -34,16 +45,16 @@ describe('cookie', () => {
 		const tcModel = new TCModel();
 		tcModel.cmpId = 280;
 		tcModel.cmpVersion = 2;
-		tcModel.gvl = new GVL(vendorList);
+		tcModel.gvl = new GVL(VENDOR_LIST);
 
 		setTimeout(() => {
-			tcModel.purposeConsents.set([1, 3, 5, 7, 9]);
-			tcModel.purposeLegitimateInterests.set([2, 4, 6, 8, 10]);
-			tcModel.vendorConsents.set([1, 2, 3, 4, 8, 10]);
-			tcModel.vendorLegitimateInterests.set([1, 2, 3, 4]);
-			tcModel.publisherConsents.set([2, 4, 6, 8, 10]);
-			tcModel.publisherLegitimateInterests.set([1, 3, 5, 7, 9]);
-			tcModel.specialFeatureOptIns.set([1, 2, 3]);
+			tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+			tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+			tcModel.vendorConsents.set(VENDOR_CONSENTS);
+			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+			tcModel.specialFeatureOptIns.set(SPECIAL_FEATURE_OPT_INS);
 
 			const encoded = encodeConsentData(tcModel);
 			const decoded = decodeConsentData(encoded);
@@ -78,13 +89,13 @@ describe('cookie', () => {
 			expect(cmpId).to.equal(tcModel.cmpId);
 			expect(cmpVersion).to.equal(tcModel.cmpVersion);
 			expect(vendorListVersion).to.equal(tcModel.vendorListVersion);
-			expect(purposeConsents.maxId).to.equal(9);
-			expect(purposeLegitimateInterests.maxId).to.equal(10);
-			expect(vendorConsents.maxId).to.equal(10);
-			expect(vendorLegitimateInterests.maxId).to.equal(4);
-			expect(publisherConsents.maxId).to.equal(10);
-			expect(publisherLegitimateInterests.maxId).to.equal(9);
-			expect(specialFeatureOptIns.maxId).to.equal(3);
+			expect(purposeConsents.maxId).to.equal(Math.max(...PURPOSE_CONSENTS));
+			expect(purposeLegitimateInterests.maxId).to.equal(Math.max(...PURPOSE_LEGITIMATE_INTERESTS));
+			expect(vendorConsents.maxId).to.equal(Math.max(...VENDOR_CONSENTS));
+			expect(vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
+			expect(publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
+			expect(publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
+			expect(specialFeatureOptIns.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
 			done();
 		}, 0);
 	});
@@ -93,16 +104,16 @@ describe('cookie', () => {
 		const tcModel = new TCModel();
 		tcModel.cmpId = 280;
 		tcModel.cmpVersion = 2;
-		tcModel.gvl = new GVL(vendorList);
+		tcModel.gvl = new GVL(VENDOR_LIST);
 
 		setTimeout(() => {
-			tcModel.purposeConsents.set([1, 3, 5, 7, 9]);
-			tcModel.purposeLegitimateInterests.set([2, 4, 6, 8, 10]);
-			tcModel.vendorConsents.set([1, 2, 3, 4, 8, 10]);
-			tcModel.vendorLegitimateInterests.set([1, 2, 3, 4]);
-			tcModel.publisherConsents.set([2, 4, 6, 8, 10]);
-			tcModel.publisherLegitimateInterests.set([1, 3, 5, 7, 9]);
-			tcModel.specialFeatureOptIns.set([1, 2, 3]);
+			tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+			tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+			tcModel.vendorConsents.set(VENDOR_CONSENTS);
+			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+			tcModel.specialFeatureOptIns.set(SPECIAL_FEATURE_OPT_INS);
 
 			const encoded = encodeConsentData(tcModel);
 
@@ -140,13 +151,13 @@ describe('cookie', () => {
 					expect(cmpId).to.equal(tcModel.cmpId);
 					expect(cmpVersion).to.equal(tcModel.cmpVersion);
 					expect(vendorListVersion).to.equal(tcModel.vendorListVersion);
-					expect(purposeConsents.maxId).to.equal(9);
-					expect(purposeLegitimateInterests.maxId).to.equal(10);
-					expect(vendorConsents.maxId).to.equal(10);
-					expect(vendorLegitimateInterests.maxId).to.equal(4);
-					expect(publisherConsents.maxId).to.equal(10);
-					expect(publisherLegitimateInterests.maxId).to.equal(9);
-					expect(specialFeatureOptIns.maxId).to.equal(3);
+					expect(purposeConsents.maxId).to.equal(Math.max(...PURPOSE_CONSENTS));
+					expect(purposeLegitimateInterests.maxId).to.equal(Math.max(...PURPOSE_LEGITIMATE_INTERESTS));
+					expect(vendorConsents.maxId).to.equal(Math.max(...VENDOR_CONSENTS));
+					expect(vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
+					expect(publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
+					expect(publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
+					expect(specialFeatureOptIns.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
 					done();
 				});
 			});
