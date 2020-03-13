@@ -13,34 +13,18 @@ export const SECTION_DETAILS = 1;
 export const SECTION_PURPOSES = 0;
 export const SECTION_VENDORS = 1;
 
-/**
- * Copy a data object and make sure to replace references
- * of Set objects with new ones.
- */
-function copyData(dataObject) {
-	if (typeof dataObject !== 'object') {
-		return dataObject;
-	}
-	const copy = {...dataObject};
-	for (let key in copy) {
-		if (copy.hasOwnProperty(key) && copy[key] instanceof Vector) {
-			copy[key] = new Vector(copy[key]);
-		}
-	}
-	return copy;
-}
-
 export default class Store {
 	constructor({
-		cmpId = 1,
+		cmpId = 280,
 		cmpVersion = 2,
 		cookieVersion = 2,
+		vendorList,
 		consentData,
 		cmpApi
 	} = {}) {
 		// Keep track of data that has already been persisted
 		consentData = consentData || {};
-		this.persistedConsentData = copyData(consentData);
+		this.persistedConsentData = consentData;
 		const consentLanguage = findLocale().substr(0, 2).toUpperCase();
 		const tcModel = new TCModel();
 		tcModel.cmpId = cmpId;
@@ -64,6 +48,11 @@ export default class Store {
 		this.section = SECTION_INTRO;
 		this.subsection = SECTION_PURPOSES;
 		this.hasInitialVendorsRejectionOccured = false;
+
+		if (vendorList) {
+			console.log('vendor list exists');
+			this.updateVendorList(vendorList);
+		}
 	}
 
 	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);
@@ -94,6 +83,9 @@ export default class Store {
 			vendorLegitimateInterests = new Vector(),
 			specialFeatureOptIns = new Vector()
 		} = persistedConsentData;
+
+
+		console.log(persistedConsentData);
 
 		const {purposes = {}, vendors = {}, specialFeatures={}} = vendorList;
 		const maxVendorId = vendorConsents.maxId;
@@ -281,6 +273,8 @@ export default class Store {
 		let encodedConsent = encodeConsentData(this.tcModel);
 
 		if (config.setConsentData) {
+			console.log('setConsentData');
+			console.log(encodedConsent);
 			let consentData = encodedConsent;
 			try {
 				config.setConsentData(consentData, err => {
@@ -296,6 +290,9 @@ export default class Store {
 		}
 
 		this.persistedConsentData = decodeConsentData(encodedConsent);
+		console.log(JSON.parse(JSON.stringify(this.persistedConsentData)));
+
+		console.log(JSON.parse(JSON.stringify(this.tcModel)));
 		this.cmpApi.tcModel = this.tcModel;
 
 		// Notify of date changes
@@ -484,6 +481,10 @@ export default class Store {
 	toggleFooterShowing = (isShown) => {
 		const vendorConsentsObject = this.getVendorConsentsObject();
 
+		console.log(vendorConsentsObject);
+
+		console.log(this.isAllSetTrue(vendorConsentsObject.purposeConsents));
+
 		if (this.isAllSetTrue(vendorConsentsObject.purposeConsents)) {
 			let vendorConsents;
 			if (this.vendorList) {
@@ -516,6 +517,8 @@ export default class Store {
 	};
 
 	updateVendorList = (vendorList) => {
+		console.log('updateVendorList');
+		console.log(vendorList);
 		const {
 			created,
 		} = this.persistedConsentData || {};
