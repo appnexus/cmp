@@ -42,7 +42,7 @@ function encodeConsentData (decoded) {
 function readConsentCookie () {
 	const cookie = readCookie(CONSENT_COOKIE);
 	log.debug('Read consent data from local cookie', cookie);
-    return Promise.resolve(cookie && decodeConsentData(cookie));
+	return Promise.resolve(cookie && decodeConsentData(cookie));
 }
 
 function writeConsentCookie(encodedConsent) {
