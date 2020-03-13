@@ -83,9 +83,6 @@ export default class Store {
 			specialFeatureOptIns = new Vector()
 		} = persistedConsentData;
 
-
-		console.log(persistedConsentData);
-
 		const {purposes = {}, vendors = {}, specialFeatures={}} = vendorList;
 		const maxVendorId = vendorConsents.maxId;
 		const maxPurposeId = purposeConsents.maxId;
@@ -272,8 +269,6 @@ export default class Store {
 		let encodedConsent = encodeConsentData(this.tcModel);
 
 		if (config.setConsentData) {
-			console.log('setConsentData');
-			console.log(encodedConsent);
 			let consentData = encodedConsent;
 			try {
 				config.setConsentData(consentData, err => {
@@ -289,9 +284,6 @@ export default class Store {
 		}
 
 		this.persistedConsentData = decodeConsentData(encodedConsent);
-		console.log(JSON.parse(JSON.stringify(this.persistedConsentData)));
-
-		console.log(JSON.parse(JSON.stringify(this.tcModel)));
 		this.cmpApi.tcModel = this.tcModel;
 
 		// Notify of date changes
@@ -480,10 +472,6 @@ export default class Store {
 	toggleFooterShowing = (isShown) => {
 		const vendorConsentsObject = this.getVendorConsentsObject();
 
-		console.log(vendorConsentsObject);
-
-		console.log(this.isAllSetTrue(vendorConsentsObject.purposeConsents));
-
 		if (this.isAllSetTrue(vendorConsentsObject.purposeConsents)) {
 			let vendorConsents;
 			if (this.vendorList) {
@@ -516,8 +504,6 @@ export default class Store {
 	};
 
 	updateVendorList = (vendorList) => {
-		console.log('updateVendorList');
-		console.log(vendorList);
 		const {
 			created,
 		} = this.persistedConsentData || {};
