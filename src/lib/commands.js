@@ -77,56 +77,49 @@ const createCommands = (store, tcfManager) => {
 	};
 
 	const generateConsentStringV1 = (data = {}, callback) => {
+		const {
+			persistedConsentData,
+		} = store;
 
-		getVendorList((vendorList, err) => {
-			if (err) {
-				callback({}, false);
-			}
-			if (vendorList) {
-				const {
-					persistedConsentData,
-				} = store;
+		const {
+			created,
+			lastUpdated,
+			consentLanguage_: consentLanguage,
+			consentScreen_: consentScreen,
+			version_: version = COOKIE_VERSION,
+			cmpId_: cmpId = CMP_ID
+		} = persistedConsentData;
 
-				const {
-					created,
-					lastUpdated,
-					consentLanguage_: consentLanguage,
-					consentScreen_: consentScreen,
-					version_: version = 1,
-					cmpId_: cmpId = 280
-				} = persistedConsentData;
+		const {
+			selectedVendorIds = [],
+			selectedPurposeIds = [],
+			maxVendorId,
+			cookieVersion,
+			vendorListVersion,
+			cmpVersion
+		} = data;
 
-				const {
-					selectedVendorIds = [],
-					selectedPurposeIds = [],
-					maxVendorId,
-					cookieVersion,
-					vendorListVersion,
-					cmpVersion
-				} = data;
+		const consentData = {
+			cmpId,
+			maxVendorId,
+			cookieVersion,
+			cmpVersion,
+			vendorListVersion,
+			created,
+			lastUpdated,
+			consentLanguage,
+			consentScreen,
+			version,
+			selectedVendorIds: new Set(arrayFrom(selectedVendorIds)),
+			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds))
+		};
 
-				const consentData = {
-					cmpId,
-					maxVendorId,
-					cookieVersion,
-					cmpVersion,
-					vendorListVersion,
-					created,
-					lastUpdated,
-					consentLanguage,
-					consentScreen,
-					version,
-					selectedVendorIds: new Set(arrayFrom(selectedVendorIds)),
-					selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds))
-				};
+		const valid = (data = {}) => [
+			'cmpId', 'cmpVersion', 'consentLanguage', 'consentScreen', 'cookieVersion', 'created', 'lastUpdated',
+			'maxVendorId', 'selectedPurposeIds', 'selectedVendorIds', 'vendorListVersion'
+		].every(prop => data.hasOwnProperty(prop));
 
-				const valid = (data = {}) => [
-					'cmpId', 'cmpVersion', 'consentLanguage', 'consentScreen', 'cookieVersion', 'created', 'lastUpdated',
-					'maxVendorId', 'selectedPurposeIds', 'selectedVendorIds', 'vendorListVersion'
-				].every(prop => data.hasOwnProperty(prop));
-
-				callback(valid(consentData) ? encodeVendorConsentData(consentData) : undefined);
-			}});
+		callback(valid(consentData) ? encodeVendorConsentData(consentData) : undefined);
 	};
 
 	const getConsentFieldsV1 = (callback, params) => {
