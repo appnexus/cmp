@@ -18,9 +18,7 @@ export default class Store {
 		cmpId = 280,
 		cmpVersion = 2,
 		cookieVersion = 2,
-		vendorList,
-		consentData,
-		cmpApi
+		consentData
 	} = {}) {
 		// Keep track of data that has already been persisted
 		consentData = consentData || {};
@@ -42,16 +40,16 @@ export default class Store {
 				consentLanguage
 			});
 
-		this.cmpApi = cmpApi;
-		this.isConsentToolShowing = this.cmpApi.uiVisible = false;
+		this.isConsentToolShowing = false;
 		this.isFooterShowing = false;
 		this.section = SECTION_INTRO;
 		this.subsection = SECTION_PURPOSES;
 		this.hasInitialVendorsRejectionOccured = false;
+	}
 
-		if (vendorList) {
-			this.updateVendorList(vendorList);
-		}
+	setCmpApi (cmpApi) {
+		this.cmpApi = cmpApi;
+		this.cmpApi.uiVisible = this.isConsentToolShowing;
 	}
 
 	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);

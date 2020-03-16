@@ -41,22 +41,20 @@ export function init (configUpdates) {
 	// Fetch the current vendor consent before initializing
 	return ((config.getConsentData) ? readExternalConsentData(config) : readConsentCookie())
 		.then((consentData) => {
-			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION);
-
-			if (config.decoratePageCallHandler) {
-				config.decoratePageCallHandler(CmpApi, cmpApi);
-			}
-
-			// Initialize the store with all of our consent data
 			const store = new Store({
 				cmpVersion: CMP_VERSION,
 				cmpId: CMP_ID,
 				cookieVersion: COOKIE_VERSION,
 				consentData,
-				cmpApi
 			});
 
-			cmpApi.customCommands = createCommands(store);
+			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store));
+
+			store.setCmpApi(cmpApi);
+
+			if (config.decoratePageCallHandler) {
+				config.decoratePageCallHandler(CmpApi, cmpApi);
+			}
 
 			// Pull queued command from __cmp stub
 			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};
