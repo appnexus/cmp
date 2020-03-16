@@ -1,8 +1,9 @@
-import { expect } from 'chai';
+/* eslint-disable max-nested-callbacks */
+import { expect, use } from 'chai';
+import datetime from 'chai-datetime'
 import Store from './store';
 import { CmpApi } from "@iabtcf/cmpapi";
 import { decodeConsentData, encodeConsentData } from "./cookie/cookie";
-// import Promise from "promise-polyfill";
 import {GVL, TCModel} from "@iabtcf/core";
 
 import {
@@ -15,6 +16,8 @@ import {
 	SPECIAL_FEATURE_OPT_INS,
 	VENDOR_LIST
 } from "../../test/constants";
+
+use(datetime);
 
 describe('store', () => {
 	let cmpApi;
@@ -37,9 +40,11 @@ describe('store', () => {
 
 	it('initializes with vendorList', () => {
 		const store = new Store({
-			vendorList: VENDOR_LIST,
 			cmpApi
 		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
 
 		expect(store.vendorList).to.deep.equal(VENDOR_LIST);
 		expect(store.tcModel.vendorConsents.size).to.equal(Object.keys(VENDOR_LIST.vendors).length);
@@ -64,10 +69,11 @@ describe('store', () => {
 			const encoded = encodeConsentData(tcModel);
 
 			const store = new Store({
-				vendorList: VENDOR_LIST,
 				consentData: decodeConsentData(encoded),
-				cmpApi
 			});
+
+			store.setCmpApi(cmpApi);
+			store.updateVendorList(VENDOR_LIST);
 
 			// check if consents were applied to current state of tcModel
 			expect(store.tcModel.purposeConsents.maxId).to.equal(Math.max(...PURPOSE_CONSENTS));
@@ -108,9 +114,9 @@ describe('store', () => {
 
 			const store = new Store({
 				consentData: decoded,
-				cmpApi
 			});
 
+			store.setCmpApi(cmpApi);
 			store.updateVendorList(vendorList);
 
 			expect(store.tcModel.vendorConsents.size).to.equal(6);
@@ -139,10 +145,11 @@ describe('store', () => {
 			const decoded = decodeConsentData(encoded);
 
 			const store = new Store({
-				vendorList: VENDOR_LIST,
 				consentData: decoded,
-				cmpApi
 			});
+
+			store.setCmpApi(cmpApi);
+			store.updateVendorList(VENDOR_LIST);
 
 			const vendorConsentsObject = store.getVendorConsentsObject();
 			const vendorsWithoutConsentCount = Object.values(vendorConsentsObject.vendorConsents).filter(consent => !consent).length;
@@ -165,295 +172,229 @@ describe('store', () => {
 		});
 	});
 
-	it('selects vendor IDs', (done) => {
+	it('selects vendor IDs', () => {
+		const store = new Store({
+			cmpApi
+		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectVendor(2, false);
+		store.selectVendor(3, true);
+		store.persist();
+
+		const vendorConsentObject = store.getVendorConsentsObject();
+		expect(vendorConsentObject.vendorConsents['3']).to.be.true;
+
+	});
+
+	it('selects ALL vendor IDs', () => {
+		const store = new Store({
+			cmpApi
+		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllVendors(true);
+		store.persist();
+
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const vendorConsents = Object.keys(vendorConsentObject.vendorConsents).filter(key => vendorConsentObject.vendorConsents[key]);
+
+		expect(vendorConsents.length).to.equal(Object.values(VENDOR_LIST.vendors).length);
+	});
+
+	it('selects purpose IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectPurpose(1, false);
+		store.selectPurpose(2, false);
+		store.selectPurpose(3, true);
+		store.persist();
+
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const purposeConsents = Object.keys(vendorConsentObject.purposeConsents).filter(key => vendorConsentObject.purposeConsents[key]);
+
+		expect(purposeConsents.length).to.equal(Object.values(VENDOR_LIST.purposes).length - 2);
+	});
+
+	it('selects ALL purpose IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllPurposes(false);
+		store.persist();
+
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const purposeConsents = Object.keys(vendorConsentObject.purposeConsents).filter(key => vendorConsentObject.purposeConsents[key]);
+
+		expect(purposeConsents.length).to.equal(0);
+	});
+
+	it('selects legitimate interests IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectPurposeLegitimateInterests(1, false);
+		store.selectPurposeLegitimateInterests(2, false);
+		store.selectPurposeLegitimateInterests(3, true);
+		store.persist();
+
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const legIntConsents = Object.keys(vendorConsentObject.purposeLegitimateInterests).filter(key => vendorConsentObject.purposeLegitimateInterests[key]);
+
+		expect(legIntConsents.length).to.equal(Object.values(VENDOR_LIST.purposes).length - 2);
+	});
+
+	it('selects ALL legitimate interests IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllPurposesLegitimateInterests(false);
+		store.persist();
+
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const legIntConsents = Object.keys(vendorConsentObject.purposeLegitimateInterests).filter(key => vendorConsentObject.purposeLegitimateInterests[key]);
+
+		expect(legIntConsents.length).to.equal(0);
+	});
+
+	it('selects special feature opt ins IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectSpecialFeature(1, true);
+		store.selectSpecialFeature(2, false);
+		store.persist();
+
+		const vendorConsentsObject = store.getVendorConsentsObject();
+		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptIns).filter(key => vendorConsentsObject.specialFeatureOptIns[key]);
+
+		expect(specialFeatureConsents.length).to.equal(Object.keys(VENDOR_LIST.specialFeatures).length - 1);
+		expect(vendorConsentsObject.specialFeatureOptIns['2']).to.be.false;
+	});
+
+	it('selects ALL special feature opt ins IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllSpecialFeatureOptIns(false);
+		store.persist();
+
+		const vendorConsentsObject = store.getVendorConsentsObject();
+		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptIns).filter(key => vendorConsentsObject.specialFeatureOptIns[key]);
+
+		expect(specialFeatureConsents.length).to.equal(0);
+	});
+
+	it('selects publisher purpose IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectPublisherPurpose(1, false);
+		store.selectPublisherPurpose(3, false);
+
+
+		store.persist();
+
+		const publisherConsentObject = store.getPublisherConsentsObject();
+		const publisherConsents = Object.keys(publisherConsentObject.publisherConsents).filter(key => publisherConsentObject.publisherConsents[key]);
+
+		expect(publisherConsents.length).to.equal(Object.keys(VENDOR_LIST.purposes).length - 2);
+		expect(publisherConsentObject.publisherConsents['1']).to.be.false;
+		expect(publisherConsentObject.publisherConsents['3']).to.be.false;
+});
+
+	it('selects ALL publisher purpose IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllPublisherPurposes(true);
+		store.persist();
+
+		const publisherConsentObject = store.getPublisherConsentsObject();
+		const publisherConsents = Object.keys(publisherConsentObject.publisherConsents).filter(key => publisherConsentObject.publisherConsents[key]);
+
+		expect(publisherConsents.length).to.equal(Object.keys(VENDOR_LIST.purposes).length);
+	});
+
+	it('toggle the consent modal', () => {
+		const store = new Store();
+		store.setCmpApi(cmpApi);
+		expect(store.isConsentToolShowing).to.be.false;
+		store.toggleConsentToolShowing();
+		expect(store.isConsentToolShowing).to.be.true;
+	});
+
+	it('calls event listeners on update', (done) => {
+		const store = new Store();
+
+		store.subscribe(() => {
+			done();
+		});
+		store.storeUpdate();
+	});
+
+	it('removes event listeners', () => {
+		const store = new Store();
+
+		const event = () => {};
+		store.subscribe(event);
+		store.unsubscribe(event);
+
+		expect(store.listeners).to.be.empty;
+	});
+
+	it('updates timestamps on persist', (done) => {
 		const tcModel = new TCModel();
 		tcModel.cmpId = 280;
 		tcModel.cmpVersion = 2;
 		tcModel.gvl = new GVL(VENDOR_LIST);
 
+		const created = tcModel.created;
+		const lastUpdated = created;
+
 		setTimeout(() => {
+			tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+			tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+			tcModel.vendorConsents.set(VENDOR_CONSENTS);
+			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+			tcModel.specialFeatureOptIns.set(SPECIAL_FEATURE_OPT_INS);
+
+			const encoded = encodeConsentData(tcModel);
+
 			const store = new Store({
-				vendorList: VENDOR_LIST,
-				cmpApi
+				consentData: decodeConsentData(encoded),
 			});
 
-			store.selectVendor(2, false);
-			store.selectVendor(3, true);
+			store.setCmpApi(cmpApi);
+			store.updateVendorList(VENDOR_LIST);
 			store.persist();
 
-			const vendorConsentObject = store.getVendorConsentsObject();
-			expect(vendorConsentObject.vendorConsents['3']).to.be.true;
+			expect(store.persistedConsentData.created).to.equalDate(created);
+			expect(store.persistedConsentData.lastUpdated).to.equalDate(lastUpdated);
 			done();
-		}, 0);
+		}, 5)
 	});
-	//
-	// it('selects ALL vendor IDs', () => {
-	// 	const store = new Store({
-	// 		vendorList,
-	// 		vendorConsentData: {
-	// 			created: new Date(),
-	// 			selectedVendorIds: new Set([2, 4]),
-	// 		}
-	// 	});
-	//
-	// 	store.selectAllVendors(true);
-	// 	store.persist();
-	//
-	// 	const vendorObject = store.getVendorConsentsObject();
-	// 	const selectedVendorIds = Object.keys(vendorObject.vendorConsents).filter(key => vendorObject.vendorConsents[key]);
-	//
-	// 	expect(selectedVendorIds.length).to.equal(vendorList.vendors.length);
-	// });
-	//
-	// it('selects purpose IDs', () => {
-	// 	const store = new Store({
-	// 		vendorList,
-	// 		vendorConsentData: {
-	// 			created: new Date(),
-	// 			selectedPurposeIds: new Set([0, 1, 2]),
-	// 		}
-	// 	});
-	//
-	//
-	// 	store.selectPurpose(0, false);
-	// 	store.selectPurpose(4, true);
-	// 	store.persist();
-	//
-	// 	const vendorObject = store.getVendorConsentsObject();
-	// 	const selectedPurposeIds = Object.keys(vendorObject.purposeConsents).filter(key => vendorObject.purposeConsents[key]);
-	//
-	// 	expect(selectedPurposeIds).to.deep.equal(['1', '2', '4']);
-	// });
-	//
-	// it('selects ALL purpose IDs', () => {
-	// 	const store = new Store({
-	// 		vendorList,
-	// 		vendorConsentData: {
-	// 			created: new Date(),
-	// 			selectedPurposeIds: new Set([0, 1, 2]),
-	// 		}
-	// 	});
-	//
-	//
-	// 	store.selectAllPurposes(true);
-	// 	store.persist();
-	//
-	// 	const vendorObject = store.getVendorConsentsObject();
-	// 	const selectedPurposeIds = Object.keys(vendorObject.purposeConsents).filter(key => vendorObject.purposeConsents[key]);
-	//
-	// 	expect(selectedPurposeIds.length).to.equal(vendorList.purposes.length);
-	// });
-	//
-	// it('selects standard purpose IDs', () => {
-	// 	const store = new Store({
-	// 		vendorList,
-	// 		publisherConsentData: {
-	// 			created: new Date(),
-	// 			selectedStandardPurposeIds: new Set([0, 2]),
-	// 		}
-	// 	});
-	//
-	// 	store.selectStandardPurpose(0, false);
-	// 	store.selectStandardPurpose(3, true);
-	// 	store.persist();
-	//
-	// 	const publisherObject = store.getPublisherConsentsObject();
-	// 	const selectedStandardPurposeIds = Object.keys(publisherObject.standardPurposes).filter(key => publisherObject.standardPurposes[key]);
-	//
-	// 	expect(selectedStandardPurposeIds).to.deep.equal(['2', '3']);
-	// });
-	//
-	// it('selects ALL standard purpose IDs', () => {
-	// 	const store = new Store({
-	// 		vendorList,
-	// 		publisherConsentData: {
-	// 			created: new Date(),
-	// 			selectedStandardPurposeIds: new Set([0, 2]),
-	// 		}
-	// 	});
-	//
-	// 	store.selectAllStandardPurposes(true);
-	// 	store.persist();
-	//
-	// 	const publisherObject = store.getPublisherConsentsObject();
-	// 	const selectedStandardPurposeIds = Object.keys(publisherObject.standardPurposes).filter(key => publisherObject.standardPurposes[key]);
-	//
-	// 	expect(selectedStandardPurposeIds.length).to.equal(vendorList.purposes.length);
-	// });
-	//
-	// it('selects custom purpose IDs', () => {
-	// 	const store = new Store({
-	// 		customPurposeList,
-	// 		publisherConsentData: {
-	// 			created: new Date(),
-	// 			selectedCustomPurposeIds: new Set([0, 2]),
-	// 		}
-	// 	});
-	//
-	// 	store.selectCustomPurpose(0, false);
-	// 	store.selectCustomPurpose(3, true);
-	// 	store.persist();
-	//
-	// 	const publisherObject = store.getPublisherConsentsObject();
-	// 	const selectedCustomPurposeIds = Object.keys(publisherObject.customPurposes).filter(key => publisherObject.customPurposes[key]);
-	//
-	// 	expect(selectedCustomPurposeIds).to.deep.equal(['2', '3']);
-	// });
-	//
-	// it('selects ALL custom purpose IDs', () => {
-	// 	const store = new Store({
-	// 		customPurposeList,
-	// 		publisherConsentData: {
-	// 			created: new Date(),
-	// 			selectedCustomPurposeIds: new Set([0, 2]),
-	// 		}
-	// 	});
-	//
-	// 	store.selectAllCustomPurposes(true);
-	// 	store.persist();
-	//
-	// 	const publisherObject = store.getPublisherConsentsObject();
-	// 	const selectedCustomPurposeIds = Object.keys(publisherObject.customPurposes).filter(key => publisherObject.customPurposes[key]);
-	//
-	// 	expect(selectedCustomPurposeIds.length).to.equal(customPurposeList.purposes.length);
-	// });
-	//
-	// it('toggle the consent modal', () => {
-	// 	const store = new Store();
-	//
-	// 	expect(store.isConsentToolShowing).to.be.false;
-	// 	store.toggleConsentToolShowing();
-	// 	expect(store.isConsentToolShowing).to.be.true;
-	// });
-	//
-	// it('calls event listeners on update', (done) => {
-	// 	const store = new Store();
-	//
-	// 	store.subscribe(() => {
-	// 		done();
-	// 	});
-	// 	store.storeUpdate();
-	// });
-	//
-	// it('removes event listeners', () => {
-	// 	const store = new Store();
-	//
-	// 	const event = () => {};
-	// 	store.subscribe(event);
-	// 	store.unsubscribe(event);
-	//
-	// 	expect(store.listeners).to.be.empty;
-	// });
-	//
-	// it('updates timestamps on persist', () => {
-	// 	const created = new Date('2018-01-01');
-	// 	const lastUpdated = created;
-	//
-	// 	const store = new Store({
-	// 		vendorConsentData: {
-	// 			created,
-	// 			lastUpdated
-	// 		},
-	// 		publisherConsentData: {
-	// 			created,
-	// 			lastUpdated
-	// 		}
-	// 	});
-	//
-	// 	store.persist();
-	//
-	// 	expect(store.vendorConsentData.created).to.equal(created);
-	// 	expect(store.vendorConsentData.lastUpdated).to.be.above(lastUpdated);
-	// });
-	//
-	// it('merge vendor consent from global cookie when consents are same', () => {
-	// 	const store = new Store({
-	// 		vendorConsentData: {
-	// 			selectedVendorIds: new Set([1, 2, 3, 4, 5, 6]),
-	// 		},
-	// 		globalVendorConsentData: {
-	// 			maxVendorId: 6,
-	// 			selectedVendorIds: new Set([1, 2, 3, 4, 5, 6]),
-	// 		},
-	// 	});
-	// 	store.globalVendorIdsPresentOnList = new Map([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]);
-	//
-	// 	store.mergeVendorConsentsFromGlobalCookie();
-	// 	expect(Array.from(store.vendorConsentData.selectedVendorIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedVendorIds));
-	// });
-	//
-	// it('merge vendor consent from global cookie when consents differ', () => {
-	// 	const store = new Store({
-	// 		vendorConsentData: {
-	// 			selectedVendorIds: new Set([1, 2, 3]),
-	// 		},
-	// 		globalVendorConsentData: {
-	// 			maxVendorId: 6,
-	// 			selectedVendorIds: new Set([3, 4, 5, 6]),
-	// 		},
-	// 	});
-	// 	store.globalVendorIdsPresentOnList = new Map([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]);
-	//
-	// 	store.mergeVendorConsentsFromGlobalCookie();
-	// 	expect(Array.from(store.vendorConsentData.selectedVendorIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedVendorIds));
-	// });
-	//
-	// it('merge vendor consent to global cookie', () => {
-	// 	const store = new Store({
-	// 		vendorConsentData: {
-	// 			selectedVendorIds: new Set([1, 2, 3, 4, 5]),
-	// 		},
-	// 		globalVendorConsentData: {
-	// 			selectedVendorIds: new Set([1, 2]),
-	// 		},
-	// 	});
-	// 	store.globalVendorIdsPresentOnList = new Map([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]);
-	//
-	// 	store.mergeVendorConsentsToGlobalCookie();
-	// 	expect(Array.from(store.globalVendorConsentData.selectedVendorIds)).to.deep.equal(Array.from(store.vendorConsentData.selectedVendorIds));
-	// });
-	//
-	// it('merge purpose consent from global cookie when consents are same', () => {
-	// 	const store = new Store({
-	// 		vendorList,
-	// 		vendorConsentData: {
-	// 			selectedPurposeIds: new Set([1, 2, 3, 4]),
-	// 		},
-	// 		globalVendorConsentData: {
-	// 			selectedPurposeIds: new Set([1, 2, 3, 4]),
-	// 		},
-	// 	});
-	//
-	// 	store.mergePurposeConsentsFromGlobalCookie();
-	// 	expect(Array.from(store.vendorConsentData.selectedPurposeIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedPurposeIds));
-	// });
-	//
-	// it('merge purpose consent from global cookie when consents differ', () => {
-	// 	const store = new Store({
-	// 		vendorList,
-	// 		vendorConsentData: {
-	// 			selectedPurposeIds: new Set([1, 2]),
-	// 		},
-	// 		globalVendorConsentData: {
-	// 			selectedPurposeIds: new Set([2, 3, 4]),
-	// 		},
-	// 	});
-	//
-	// 	store.mergePurposeConsentsFromGlobalCookie();
-	// 	expect(Array.from(store.vendorConsentData.selectedPurposeIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedPurposeIds));
-	// });
-	//
-	// it('merge purpose consent to global cookie', () => {
-	// 	const store = new Store({
-	// 		vendorList,
-	// 		vendorConsentData: {
-	// 			selectedPurposeIds: new Set([1, 2, 4]),
-	// 		},
-	// 		globalVendorConsentData: {
-	// 			selectedPurposeIds: new Set([2, 3]),
-	// 		},
-	// 	});
-	//
-	// 	store.mergePurposeConsentsToGlobalCookie();
-	// 	expect(Array.from(store.globalVendorConsentData.selectedPurposeIds)).to.deep.equal(Array.from(store.vendorConsentData.selectedPurposeIds));	});
 });

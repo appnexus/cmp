@@ -49,7 +49,6 @@ export default class Store {
 
 	setCmpApi (cmpApi) {
 		this.cmpApi = cmpApi;
-		this.cmpApi.uiVisible = this.isConsentToolShowing;
 	}
 
 	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);
@@ -363,8 +362,7 @@ export default class Store {
 		const {purposeConsents} = this.tcModel;
 		if (isSelected) {
 			purposeConsents.set(purposeId);
-		}
-		else {
+		} else {
 			purposeConsents.unset(purposeId);
 		}
 		this.storeUpdate();
@@ -380,8 +378,7 @@ export default class Store {
 		const {purposeLegitimateInterests} = this.tcModel;
 		if (isSelected) {
 			purposeLegitimateInterests.set(purposeId);
-		}
-		else {
+		} else {
 			purposeLegitimateInterests.unset(purposeId);
 		}
 		this.storeUpdate();
