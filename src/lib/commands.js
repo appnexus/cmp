@@ -23,7 +23,7 @@ const createCommands = (store) => {
 			const { getVendorList } = config;
 
 			if (getVendorList) {
-				getVendorList((err, data) => {
+				getVendorList((data, err) => {
 					if (err) {
 						callback({}, err);
 					} else {

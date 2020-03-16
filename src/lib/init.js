@@ -48,13 +48,11 @@ export function init (configUpdates) {
 				consentData,
 			});
 
+			config.decoratePageCallHandler(CmpApi);
 			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store));
+			config.setPageCallHandlerContext(cmpApi);
 
 			store.setCmpApi(cmpApi);
-
-			if (config.decoratePageCallHandler) {
-				config.decoratePageCallHandler(CmpApi, cmpApi);
-			}
 
 			// Pull queued command from __cmp stub
 			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};

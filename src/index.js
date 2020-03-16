@@ -53,7 +53,7 @@ function checkConsent(cmp, store) {
 		const { getVendorList, getTCData } = config;
 
 		if (getVendorList) {
-			getVendorList((err, vendorList) => {
+			getVendorList((vendorList, err) => {
 				if (err) {
 					log.error('Failed to get vendor list');
 				} else {
