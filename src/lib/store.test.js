@@ -5,7 +5,6 @@ import Store from './store';
 import { CmpApi } from "@iabtcf/cmpapi";
 import { decodeConsentData, encodeConsentData } from "./cookie/cookie";
 import {GVL, TCModel} from "@iabtcf/core";
-
 import {
 	PURPOSE_CONSENTS,
 	PURPOSE_LEGITIMATE_INTERESTS,
