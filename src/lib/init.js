@@ -22,6 +22,7 @@ function readExternalConsentData(config) {
 					reject(err);
 				} else {
 					try {
+						console.log(data.consent);
 						resolve(data.consent && decodeConsentData(data.consent) || undefined);
 					} catch (err) {
 						reject(err);
@@ -48,39 +49,30 @@ export function init (configUpdates) {
 				consentData,
 			});
 
+			// Replace the __cmp with our implementation
+			const tcfManager = new Cmp(store);
+
 			config.decoratePageCallHandler(CmpApi);
-			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store));
+			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store, tcfManager));
 			config.setPageCallHandlerContext(cmpApi);
 
 			store.setCmpApi(cmpApi);
 
-			// Pull queued command from __cmp stub
-			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};
-
-			// Replace the __cmp with our implementation
-			const cmp = new Cmp(store);
-
-			// Expose `processCommand` as the CMP implementation
-			window[CMP_GLOBAL_NAME] = cmp.processCommand;
-
 			// Notify listeners that the CMP is loaded
 			log.debug(`Successfully loaded CMP version: ${pack.version}`);
-			cmp.isLoaded = true;
-			cmp.notify('isLoaded');
+			tcfManager.isLoaded = true;
+			tcfManager.notify('isLoaded');
 
 			// Render the UI
 			const App = require('../components/app').default;
-			render(<App store={store} notify={cmp.notify} />, document.body);
-
-			// Execute any previously queued command
-			cmp.commandQueue = commandQueue;
-			cmp.processCommandQueue();
+			render(<App store={store} notify={tcfManager.notify} />, document.body);
 
 			let isConsentToolShowing = store.isConsentToolShowing;
 			store.subscribe(store => {
 				if (store.isConsentToolShowing !== isConsentToolShowing) {
 					isConsentToolShowing = store.isConsentToolShowing;
-					cmp.notify('onToggleConsentToolShowing', isConsentToolShowing);
+					// tcfManager.notify('onToggleConsentToolShowing', isConsentToolShowing);
+					isConsentToolShowing && config.onConsentToolShowing();
 				}
 			});
 
@@ -89,8 +81,8 @@ export function init (configUpdates) {
 				store,
 				fetchGlobalVendorList().then(store.updateVendorList)
 			]).then((params) => {
-				cmp.cmpReady = true;
-				cmp.notify('cmpReady');
+				tcfManager.cmpReady = true;
+				tcfManager.notify('cmpReady');
 				return params[0];
 			}).catch(err => {
 				log.error('Failed to load lists. CMP not ready', err);

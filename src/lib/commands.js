@@ -4,13 +4,14 @@ import {
 	encodeVendorConsentData,
 	encodeConsentData,
 } from "./cookie/cookie";
+import {SECTION_DETAILS, SECTION_VENDORS} from "./store";
 const arrayFrom = require('core-js/library/fn/array/from');
 
 const COOKIE_VERSION = 2;
 const CMP_ID = 280;
 const CMP_VERSION = 2;
 
-const createCommands = (store) => {
+const createCommands = (store, tcfManager) => {
 	let vendorList;
 
 	const getVendorList = (callback) => {
@@ -262,9 +263,61 @@ const createCommands = (store) => {
 		});
 	};
 
+
+	/**
+	 * Trigger the consent tool UI to be shown
+	 */
+	const showConsentTool =  (callback = () => {}) => {
+		store.updateSection();
+		store.toggleConsentToolShowing(true);
+
+		tcfManager.openConsentTool = true;
+		tcfManager.notify('openConsentTool', { section: 'intro' });
+
+		callback(true);
+	};
+
+	/**
+	 * Trigger the consent tool UI to be shown on Detail View
+	 */
+	const showConsentDetailView = (callback = () => {}) => {
+		store.updateSection(SECTION_DETAILS);
+		store.toggleConsentToolShowing(true);
+
+		tcfManager.openConsentTool = true;
+		tcfManager.notify('openConsentTool', { section: 'details' });
+
+		callback(true);
+	};
+
+	/**
+	 * Trigger the vendors UI to be shown
+	 */
+	const showVendors = (callback = () => {}) => {
+		store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
+		store.toggleConsentToolShowing(true);
+
+		tcfManager.openConsentTool = true;
+		tcfManager.notify('openConsentTool', { section: 'details' });
+
+		callback(true);
+	};
+
+	/**
+	 * Trigger the footer UI to be shown
+	 * */
+	const showFooter = (callback = () => {}) => {
+		store.toggleFooterShowing(true);
+		callback(true);
+	};
+
 	return {
 		getConsentObject,
-		getConsentFieldsV1
+		getConsentFieldsV1,
+		showConsentTool,
+		showConsentDetailView,
+		showVendors,
+		showFooter
 	};
 };
 

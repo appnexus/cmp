@@ -11,7 +11,7 @@ import { decodeConsentData } from "./lib/cookie/cookie";
 
 const TCF_CONFIG = '__tcfConfig';
 
-function handleConsentResult(cmp, store = {}, vendorList, consentData = {}) {
+function handleConsentResult(tcfApi, store = {}, vendorList, consentData = {}) {
 	const { isConsentToolShowing } = store;
 
 	const {
@@ -25,25 +25,29 @@ function handleConsentResult(cmp, store = {}, vendorList, consentData = {}) {
 		policyVersion: consentPolicyVersion = 1
 	} = consentData;
 
+	const tcfApiCall = (command) => {
+		tcfApi(command, 2, () => {});
+	};
+
 	if (!created) {
 		log.debug('No consent data found. Showing consent tool');
-		config.autoDisplay && cmp('showConsentTool');
+		config.autoDisplay && tcfApiCall('showConsentTool');
 	} else if (!listVersion) {
 		log.debug('Could not determine vendor list version. Not showing consent tool');
 	} else if (vendorListVersion !== listVersion) {
 		log.debug(`Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`);
-		config.autoDisplay && cmp('showConsentTool');
+		config.autoDisplay && tcfApiCall('showConsentTool');
 	} else if (consentPolicyVersion !== listPolicyVersion) {
 		log.debug(`Consent found for policy ${consentPolicyVersion}, but received vendor list with policy ${consentPolicyVersion}. Showing consent tool`);
-		config.autoDisplay && cmp('showConsentTool');
+		config.autoDisplay && tcfApiCall('showConsentTool');
 	} else {
 		log.debug('Consent found. Not showing consent tool. Show footer when not all consents set to true');
-		!isConsentToolShowing && config.autoDisplay && cmp('showFooter');
+		!isConsentToolShowing && config.autoDisplay && tcfApiCall('showFooter');
 	}
 }
 
-function checkConsent(cmp, store) {
-	if (!cmp) {
+function checkConsent(tcfApi, store) {
+	if (!tcfApi) {
 		log.error('CMP failed to load');
 	}
 	else if (!window.navigator.cookieEnabled) {
@@ -58,15 +62,15 @@ function checkConsent(cmp, store) {
 					log.error('Failed to get vendor list');
 				} else {
 					const timeout = setTimeout(() => {
-						handleConsentResult(cmp, store, vendorList);
+						handleConsentResult(tcfApi, store, vendorList);
 					}, 100);
 
 					if (getTCData) {
-						getTCData((tcData, success) => {
+						config.getTCData((tcData, success) => {
 							if (success) {
 								let tcStringDecoded = decodeConsentData(tcData.tcString);
 								clearTimeout(timeout);
-								handleConsentResult(cmp, store, vendorList, tcStringDecoded);
+								handleConsentResult(tcfApi, store, vendorList, tcStringDecoded);
 							}
 						});
 					}
@@ -85,7 +89,7 @@ function start() {
 		...config
 	};
 
-	init(configUpdates).then((store) => checkConsent(window.__cmp, store));
+	init(configUpdates).then((store) => checkConsent(window.__tcfapi, store));
 }
 
 start();

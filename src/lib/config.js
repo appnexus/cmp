@@ -19,7 +19,8 @@ const defaultConfig = {
 	legIntPurposeIds: [],
 	contractPurposeIds: [],
 	autoDisplay: true,
-	allowedVendorIds: null
+	allowedVendorIds: null,
+	onConsentToolShowing: null
 };
 
 class Config {
