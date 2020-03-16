@@ -10,7 +10,9 @@ import {
 	COOKIE_VERSION
 } from "./init";
 import {SECTION_DETAILS, SECTION_VENDORS} from "./store";
+
 const arrayFrom = require('core-js/library/fn/array/from');
+const COOKIE_VERSION_V1 = 1;
 
 const createCommands = (store, tcfManager) => {
 	let vendorList;
@@ -86,7 +88,7 @@ const createCommands = (store, tcfManager) => {
 			lastUpdated,
 			consentLanguage_: consentLanguage,
 			consentScreen_: consentScreen,
-			version_: version = COOKIE_VERSION,
+			version_: version = COOKIE_VERSION_V1,
 			cmpId_: cmpId = CMP_ID
 		} = persistedConsentData;
 
