@@ -1,7 +1,7 @@
 import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
-import Cmp, { CMP_GLOBAL_NAME } from './cmp';
+import Cmp from './cmp';
 import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
 import { decodeConsentData, readConsentCookie } from './cookie/cookie';
@@ -10,9 +10,9 @@ import pack from '../../package.json';
 import config from './config';
 import createCommands from "./commands";
 
-const CMP_VERSION = 2;
-const CMP_ID = 280;
-const COOKIE_VERSION = 2;
+export const CMP_VERSION = 2;
+export const CMP_ID = 280;
+export const COOKIE_VERSION = 2;
 
 function readExternalConsentData(config) {
 	return new Promise((resolve, reject) => {

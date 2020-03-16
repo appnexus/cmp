@@ -4,12 +4,13 @@ import {
 	encodeVendorConsentData,
 	encodeConsentData,
 } from "./cookie/cookie";
+import {
+	CMP_VERSION,
+	CMP_ID,
+	COOKIE_VERSION
+} from "./init";
 import {SECTION_DETAILS, SECTION_VENDORS} from "./store";
 const arrayFrom = require('core-js/library/fn/array/from');
-
-const COOKIE_VERSION = 2;
-const CMP_ID = 280;
-const CMP_VERSION = 2;
 
 const createCommands = (store, tcfManager) => {
 	let vendorList;
@@ -55,8 +56,8 @@ const createCommands = (store, tcfManager) => {
 		} = store;
 
 		const {
-			created = new Date(),
-			lastUpdated = new Date(),
+			created,
+			lastUpdated,
 			cmpId_: cmpId = store.tcModel.cmpId,
 			cmpVersion_: cmpVersion = 1,
 			consentScreen_: consentScreen = store.tcModel.consentScreen,
@@ -130,11 +131,8 @@ const createCommands = (store, tcfManager) => {
 
 	const getConsentFieldsV1 = (callback, params) => {
 		const data = getConsentFieldsObject();
-		const now = new Date();
 
 		generateConsentStringV1({
-			created: now,
-			lastUpdated: now,
 			...data,
 			...params
 		}, (metadata) => {
