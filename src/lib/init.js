@@ -48,9 +48,7 @@ export function init (configUpdates) {
 				consentData,
 			});
 
-			// Replace the __cmp with our implementation
-			const tcfManager = new Cmp(store);
-
+			const tcfManager = new Cmp();
 			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store, tcfManager));
 			config.decoratePageCallHandler(cmpApi);
 

@@ -305,8 +305,7 @@ export default class Store {
 		const {vendorConsents} = this.tcModel;
 		if (isSelected) {
 			vendorConsents.set(vendorId);
-		}
-		else {
+		} else {
 			vendorConsents.unset(vendorId);
 		}
 		this.storeUpdate();
@@ -336,8 +335,7 @@ export default class Store {
 		const {vendorLegitimateInterests} = this.tcModel;
 		if (isSelected) {
 			vendorLegitimateInterests.set(vendorId);
-		}
-		else {
+		} else {
 			vendorLegitimateInterests.unset(vendorId);
 		}
 		this.storeUpdate();
@@ -409,8 +407,7 @@ export default class Store {
 		const {publisherConsents} = this.tcModel;
 		if (isSelected) {
 			publisherConsents.set(purposeId);
-		}
-		else {
+		} else {
 			publisherConsents.unset(purposeId);
 		}
 		this.storeUpdate();
