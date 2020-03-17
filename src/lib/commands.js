@@ -131,6 +131,9 @@ const createCommands = (store) => {
 	 * Generates consent object based on input params: consents and vendor list
 	 */
 	const getConsentObject = (callback, consents, vendorList) => {
+		if (!consents || !vendorList) {
+			return callback({}, false);
+		}
 
 		const { persistedConsentData } = store;
 

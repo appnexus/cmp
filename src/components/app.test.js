@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import { h, render } from 'preact';
+import { Vector} from "@iabtcf/core";
 import { expect } from 'chai';
 import style from './app.less';
 import Store from '../lib/store';
@@ -65,8 +66,8 @@ describe('App', () => {
 			ref={ref => app = ref}
 		/>, scratch);
 
-		expect(app.state.store.vendorConsentData.selectedVendorIds).to.deep.equal(new Set());
+		expect(app.state.store.tcModel.vendorConsents).to.deep.equal(new Vector());
 		store.selectVendor(1, true);
-		expect(app.state.store.vendorConsentData.selectedVendorIds).to.deep.equal(new Set([1]));
+		expect(app.state.store.tcModel.vendorConsents.has(1)).to.be.true;
 	});
 });
