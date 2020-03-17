@@ -29,7 +29,7 @@ function fetchGlobalVendorList() {
 	if (getVendorList) {
 		return new Promise((resolve, reject) => {
 			try {
-				getVendorList((data, err) => {
+				getVendorList((err, data) => {
 					if (err) {
 						reject(err);
 					} else {

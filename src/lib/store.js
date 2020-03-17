@@ -436,8 +436,7 @@ export default class Store {
 		const {publisherLegitimateInterests} = this.tcModel;
 		if (isSelected) {
 			publisherLegitimateInterests.set(purposeId);
-		}
-		else {
+		} else {
 			publisherLegitimateInterests.unset(purposeId);
 		}
 		this.storeUpdate();
@@ -459,7 +458,10 @@ export default class Store {
 	};
 
 	toggleConsentToolShowing = (isShown) => {
-		this.isConsentToolShowing = this.cmpApi.uiVisible = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		if (this.isConsentToolShowing) {
+			this.cmpApi.uiVisible = true;
+		}
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
@@ -484,7 +486,7 @@ export default class Store {
 			}
 		}
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
-		this.isConsentToolShowing = this.cmpApi.uiVisible = false;
+		this.isConsentToolShowing = false;
 		this.storeUpdate();
 	};
 

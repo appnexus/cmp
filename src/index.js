@@ -26,7 +26,7 @@ function handleConsentResult(tcfApi, store = {}, vendorList, consentData = {}) {
 	} = consentData;
 
 	const tcfApiCall = (command) => {
-		tcfApi(command, 2, () => {});
+		tcfApi(command, 2, () => {log.debug(`${command} command was called`)});
 	};
 
 	if (!created) {
@@ -54,10 +54,10 @@ function checkConsent(tcfApi, store) {
 		log.warn('Cookies are disabled. Ignoring CMP consent check');
 	}
 	else {
-		const { getVendorList, getTCData } = config;
+		const { getVendorList } = config;
 
 		if (getVendorList) {
-			getVendorList((vendorList, err) => {
+			getVendorList((err, vendorList) => {
 				if (err) {
 					log.error('Failed to get vendor list');
 				} else {
@@ -65,15 +65,13 @@ function checkConsent(tcfApi, store) {
 						handleConsentResult(tcfApi, store, vendorList);
 					}, 100);
 
-					if (getTCData) {
-						config.getTCData((tcData, success) => {
-							if (success) {
-								let tcStringDecoded = decodeConsentData(tcData.tcString);
-								clearTimeout(timeout);
-								handleConsentResult(tcfApi, store, vendorList, tcStringDecoded);
-							}
-						});
-					}
+					tcfApi('getTCData',2, (tcData, success) => {
+						if (success) {
+							let tcStringDecoded = decodeConsentData(tcData.tcString);
+							clearTimeout(timeout);
+							handleConsentResult(tcfApi, store, vendorList, tcStringDecoded);
+						}
+					}, undefined, true);
 				}
 			});
 		}

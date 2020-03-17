@@ -22,7 +22,6 @@ function readExternalConsentData(config) {
 					reject(err);
 				} else {
 					try {
-						console.log(data.consent);
 						resolve(data.consent && decodeConsentData(data.consent) || undefined);
 					} catch (err) {
 						reject(err);
@@ -52,9 +51,8 @@ export function init (configUpdates) {
 			// Replace the __cmp with our implementation
 			const tcfManager = new Cmp(store);
 
-			config.decoratePageCallHandler(CmpApi);
 			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store, tcfManager));
-			config.setPageCallHandlerContext(cmpApi);
+			config.decoratePageCallHandler(cmpApi);
 
 			store.setCmpApi(cmpApi);
 

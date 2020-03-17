@@ -27,12 +27,12 @@ const createCommands = (store, tcfManager) => {
 			const { getVendorList } = config;
 
 			if (getVendorList) {
-				getVendorList((data, err) => {
+				getVendorList((err, data) => {
 					if (err) {
-						callback({}, err);
+						callback(err, {});
 					} else {
 						vendorList = data;
-						callback(vendorList);
+						callback(err, vendorList);
 					}
 				});
 			}
