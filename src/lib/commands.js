@@ -2,7 +2,7 @@ import { TCModel, GVL } from "@iabtcf/core";
 import config from "./config";
 import {
 	encodeVendorConsentData,
-	encodeConsentData,
+	encodeConsentData
 } from "./cookie/cookie";
 import {
 	CMP_VERSION,
@@ -10,6 +10,7 @@ import {
 	COOKIE_VERSION
 } from "./init";
 import {SECTION_DETAILS, SECTION_VENDORS} from "./store";
+import log from "./log";
 
 const arrayFrom = require('core-js/library/fn/array/from');
 const COOKIE_VERSION_V1 = 1;
@@ -220,8 +221,7 @@ const createCommands = (store, tcfManager) => {
 		store.updateSection();
 		store.toggleConsentToolShowing(true);
 
-		tcfManager.openConsentTool = true;
-		tcfManager.notify('openConsentTool', { section: 'intro' });
+		log.info(`Notify event: openConsentTool`);
 
 		callback(true);
 	};
@@ -233,8 +233,7 @@ const createCommands = (store, tcfManager) => {
 		store.updateSection(SECTION_DETAILS);
 		store.toggleConsentToolShowing(true);
 
-		tcfManager.openConsentTool = true;
-		tcfManager.notify('openConsentTool', { section: 'details' });
+		log.info(`Notify event: showConsentTool`);
 
 		callback(true);
 	};
@@ -246,8 +245,7 @@ const createCommands = (store, tcfManager) => {
 		store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
 		store.toggleConsentToolShowing(true);
 
-		tcfManager.openConsentTool = true;
-		tcfManager.notify('openConsentTool', { section: 'details' });
+		log.info(`Notify event: showVendors`);
 
 		callback(true);
 	};

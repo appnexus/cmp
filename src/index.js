@@ -26,7 +26,7 @@ function handleConsentResult(tcfApi, store = {}, vendorList, consentData = {}) {
 	} = consentData;
 
 	const tcfApiCall = (command) => {
-		tcfApi(command, 2, () => {log.debug(`${command} command was called`)});
+		tcfApi(command, 2, () => log.debug(`${command} command was called`));
 	};
 
 	if (!created) {

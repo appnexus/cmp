@@ -1,7 +1,6 @@
 import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
-import Cmp from './cmp';
 import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
 import { decodeConsentData, readConsentCookie } from './cookie/cookie';
@@ -48,20 +47,18 @@ export function init (configUpdates) {
 				consentData,
 			});
 
-			const tcfManager = new Cmp();
-			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store, tcfManager));
+			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store));
 			config.decoratePageCallHandler(cmpApi);
 
 			store.setCmpApi(cmpApi);
 
 			// Notify listeners that the CMP is loaded
 			log.debug(`Successfully loaded CMP version: ${pack.version}`);
-			tcfManager.isLoaded = true;
-			tcfManager.notify('isLoaded');
+			log.info('isLoaded');
 
 			// Render the UI
 			const App = require('../components/app').default;
-			render(<App store={store} notify={tcfManager.notify} />, document.body);
+			render(<App store={store} notify={log.info} />, document.body);
 
 			let isConsentToolShowing = store.isConsentToolShowing;
 			store.subscribe(store => {
@@ -77,8 +74,7 @@ export function init (configUpdates) {
 				store,
 				fetchGlobalVendorList().then(store.updateVendorList)
 			]).then((params) => {
-				tcfManager.cmpReady = true;
-				tcfManager.notify('cmpReady');
+				log.info('cmpReady');
 				return params[0];
 			}).catch(err => {
 				log.error('Failed to load lists. CMP not ready', err);
