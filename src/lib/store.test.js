@@ -1,6 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 import { expect, use } from 'chai';
-import datetime from 'chai-datetime'
+import datetime from 'chai-datetime';
 import Store from './store';
 import { CmpApi } from "@iabtcf/cmpapi";
 import { decodeConsentData, encodeConsentData } from "./cookie/cookie";
@@ -30,7 +30,7 @@ describe('store', () => {
 	});
 
 	it('initializes with default data', () => {
-		const store = new Store({ cmpApi });
+		const store = new Store();
 
 		expect(store.isConsentToolShowing).to.equal(false);
 		expect(store.tcModel.cookieVersion).to.equal(2);
@@ -319,7 +319,7 @@ describe('store', () => {
 		expect(publisherConsents.length).to.equal(Object.keys(VENDOR_LIST.purposes).length - 2);
 		expect(publisherConsentObject.publisherConsents['1']).to.be.false;
 		expect(publisherConsentObject.publisherConsents['3']).to.be.false;
-});
+	});
 
 	it('selects ALL publisher purpose IDs', () => {
 		const store = new Store();
@@ -394,6 +394,6 @@ describe('store', () => {
 			expect(store.persistedConsentData.created).to.equalDate(created);
 			expect(store.persistedConsentData.lastUpdated).to.equalDate(lastUpdated);
 			done();
-		}, 5)
+		}, 5);
 	});
 });

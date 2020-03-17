@@ -15,7 +15,7 @@ import log from "./log";
 const arrayFrom = require('core-js/library/fn/array/from');
 const COOKIE_VERSION_V1 = 1;
 
-const createCommands = (store, tcfManager) => {
+const createCommands = (store) => {
 
 	/**
 	 * Converts vector to consent object
