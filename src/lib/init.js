@@ -9,9 +9,9 @@ import pack from '../../package.json';
 import config from './config';
 import createCommands from "./commands";
 
-export const CMP_VERSION = 2;
-export const CMP_ID = 280;
-export const COOKIE_VERSION = 2;
+export const CMP_VERSION = parseInt(process.env.CMP_VERSION,10);
+export const CMP_ID = parseInt(process.env.CMP_ID, 10);
+export const COOKIE_VERSION = parseInt(process.env.COOKIE_VERSION, 10);
 
 function readExternalConsentData(config) {
 	return new Promise((resolve, reject) => {
