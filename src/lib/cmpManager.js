@@ -1,11 +1,10 @@
 import log from './log';
 
 export default class CmpManager {
-	constructor(store) {
+	constructor () {
 		this.isLoaded = false;
 		this.cmpReady = false;
 		this.eventListeners = {};
-		this.store = store;
 	}
 
 	/**

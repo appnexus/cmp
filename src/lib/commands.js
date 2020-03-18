@@ -9,8 +9,10 @@ import {
 	CMP_ID,
 	COOKIE_VERSION
 } from "./init";
-import { SECTION_DETAILS, SECTION_VENDORS } from "./store";
-import log from "./log";
+import {
+	SECTION_DETAILS,
+	SECTION_VENDORS
+} from "./store";
 
 const arrayFrom = require('core-js/library/fn/array/from');
 

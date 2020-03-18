@@ -48,7 +48,7 @@ export function init (configUpdates) {
 				consentData,
 			});
 
-			const cmpManager = new CmpManager(store);
+			const cmpManager = new CmpManager();
 			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store, cmpManager));
 			config.decoratePageCallHandler(cmpApi);
 
