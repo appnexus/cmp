@@ -30,16 +30,16 @@ export default class Details extends Component {
 
 	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [] } = {}) => {
 		return this.getVendors().filter(vendor => {
-			if (isCustom !== null && (isCustom && vendor.external_id || !isCustom && !vendor.external_id)) {
+			if (isCustom !== null && (isCustom && vendor.globalId || !isCustom && !vendor.globalId)) {
 				return false;
 			}
 
-			const vendorPurposeIds = new Set([...(vendor.purposeIds || []), ...(vendor.legIntPurposeIds || [])]);
+			const vendorPurposeIds = new Set([...(vendor.purposes || []), ...(vendor.legIntPurposes || [])]);
 			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
 				return false;
 			}
 
-			const vendorFeatureIds = new Set(vendor.featureIds || []);
+			const vendorFeatureIds = new Set(vendor.features|| []);
 			if (!featureIds.every(featureId => vendorFeatureIds.has(featureId))) {
 				return false;
 			}
@@ -69,6 +69,8 @@ export default class Details extends Component {
 			onSaveOrClose,
 			store
 		} = props;
+
+		console.log(this.state.vendors);
 
 		const {
 			vendorList = {},
