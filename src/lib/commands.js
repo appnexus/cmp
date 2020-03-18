@@ -41,10 +41,9 @@ const createCommands = (store) => {
 			created,
 			lastUpdated,
 			cmpId_: cmpId = store.tcModel.cmpId,
-			cmpVersion_: cmpVersion,
-			consentScreen_: consentScreen,
+			cmpVersion_: cmpVersion = store.tcModel.cmpVersion,
+			consentScreen_: consentScreen = store.tcModel.consentScreen,
 			consentLanguage_: consentLanguage = store.tcModel.consentLanguage,
-			vendorListVersion_: vendorListVersion,
 		} = persistedConsentData;
 
 		return {
@@ -53,7 +52,6 @@ const createCommands = (store) => {
 			consentLanguage,
 			consentScreen,
 			created,
-			vendorListVersion,
 			lastUpdated,
 		};
 	};
