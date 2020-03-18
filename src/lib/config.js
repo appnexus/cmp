@@ -6,7 +6,7 @@ const defaultConfig = {
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: false,
 	storePublisherData: false,
-	logging: false,
+	logging: true,
 	localization: {},
 	forceLocale: null,
 	gdprApplies: true,
@@ -17,7 +17,6 @@ const defaultConfig = {
 	legIntPurposeIds: [],
 	contractPurposeIds: [],
 	autoDisplay: true,
-	allowedVendorIds: null,
 	onConsentToolShowing: null
 };
 

@@ -14,8 +14,7 @@ import log from "./log";
 
 const arrayFrom = require('core-js/library/fn/array/from');
 
-const createCommands = (store) => {
-
+const createCommands = (store, cmpManager) => {
 	/**
 	 * Converts vector to consent object
 	 */
@@ -224,7 +223,8 @@ const createCommands = (store) => {
 		store.updateSection();
 		store.toggleConsentToolShowing(true);
 
-		log.info(`Notify event: openConsentTool`);
+		cmpManager.openConsentTool = true;
+		cmpManager.notify('openConsentTool', { section: 'intro' });
 
 		callback(true);
 	};
@@ -236,7 +236,8 @@ const createCommands = (store) => {
 		store.updateSection(SECTION_DETAILS);
 		store.toggleConsentToolShowing(true);
 
-		log.info(`Notify event: showConsentTool`);
+		cmpManager.openConsentTool = true;
+		cmpManager.notify('openConsentTool', { section: 'details' });
 
 		callback(true);
 	};
@@ -248,7 +249,8 @@ const createCommands = (store) => {
 		store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
 		store.toggleConsentToolShowing(true);
 
-		log.info(`Notify event: showVendors`);
+		cmpManager.openConsentTool = true;
+		cmpManager.notify('openConsentTool', { section: 'details' });
 
 		callback(true);
 	};
@@ -261,13 +263,23 @@ const createCommands = (store) => {
 		callback(true);
 	};
 
+	const registerEventListener = (callback, event) => {
+		cmpManager.addEventListener(event, callback);
+	};
+
+	const unregisterEventListener = (callback, event) => {
+		cmpManager.removeEventListener(event, callback);
+	};
+
 	return {
 		getConsentObject,
 		getConsentFieldsV1,
 		showConsentTool,
 		showConsentDetailView,
 		showVendors,
-		showFooter
+		showFooter,
+		registerEventListener,
+		unregisterEventListener
 	};
 };
 

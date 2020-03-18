@@ -34,7 +34,7 @@ export default class Store {
 			tcModel,
 			consentData,
 			{
-				cookieVersion,
+				version: cookieVersion,
 				cmpId,
 				cmpVersion,
 				consentLanguage
