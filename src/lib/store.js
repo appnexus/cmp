@@ -77,14 +77,14 @@ export default class Store {
 			purposeConsents = new Vector(),
 			purposeLegitimateInterests = new Vector(),
 			vendorLegitimateInterests = new Vector(),
-			specialFeatureOptIns = new Vector()
+			specialFeatureOptins = new Vector()
 		} = persistedConsentData;
 
 		const {purposes = {}, vendors = {}, specialFeatures={}} = vendorList;
 		const maxVendorId = vendorConsents.maxId;
 		const maxPurposeId = purposeConsents.maxId;
 		const maxLegIntId = purposeLegitimateInterests.maxId;
-		const maxSpecialFeatureOptInsId = specialFeatureOptIns.maxId;
+		const maxSpecialFeatureOptInsId = specialFeatureOptins.maxId;
 
 		// Map requested vendorIds
 		const vendorMap = {};
@@ -135,9 +135,9 @@ export default class Store {
 			...Object.values(specialFeatures).map(({id}) => id),
 		);
 
-		const specialFeatureOptInsMap = {};
+		const specialFeatureOptinsMap = {};
 		for (let i = 1; i <= lastSpecialFeatureOptInsId; i++) {
-			specialFeatureOptInsMap[i] = specialFeatureOptIns.has(i);
+			specialFeatureOptinsMap[i] = specialFeatureOptins.has(i);
 		}
 
 		return {
@@ -151,7 +151,7 @@ export default class Store {
 			vendorListVersion,
 			purposeConsents: purposeMap,
 			purposeLegitimateInterests: legIntMap,
-			specialFeatureOptIns: specialFeatureOptInsMap,
+			specialFeatureOptins: specialFeatureOptinsMap,
 			vendorConsents: vendorMap,
 			vendorLegitimateInterests: vendorLegIntMap
 		};
@@ -389,16 +389,16 @@ export default class Store {
 	};
 
 	selectSpecialFeature = (specialFeatureId, isSelected) => {
-		const { specialFeatureOptIns } = this.tcModel;
+		const { specialFeatureOptins } = this.tcModel;
 		if (isSelected) {
-			specialFeatureOptIns.set(specialFeatureId);
+			specialFeatureOptins.set(specialFeatureId);
 		} else {
-			specialFeatureOptIns.unset(specialFeatureId);
+			specialFeatureOptins.unset(specialFeatureId);
 		}
 	};
 
 	selectAllSpecialFeatureOptIns = (isSelected) => {
-		const operation = isSelected ? 'setAllSpecialFeatureOptIns' : 'unsetAllSpecialFeatureOptIns';
+		const operation = isSelected ? 'setAllSpecialFeatureOptins' : 'unsetAllSpecialFeatureOptins';
 		this.tcModel[operation]();
 		this.storeUpdate();
 	};

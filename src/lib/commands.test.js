@@ -5,7 +5,7 @@ import createCommands from "./commands";
 import {VENDOR_LIST} from "../../test/constants";
 import {decodeConsentData} from "./cookie/cookie";
 
-describe('cmp', () => {
+describe('commands', () => {
 	let store, commands;
 
 	beforeEach(() => {

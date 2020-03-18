@@ -9,11 +9,10 @@ import {
 	CMP_ID,
 	COOKIE_VERSION
 } from "./init";
-import {SECTION_DETAILS, SECTION_VENDORS} from "./store";
+import { SECTION_DETAILS, SECTION_VENDORS } from "./store";
 import log from "./log";
 
 const arrayFrom = require('core-js/library/fn/array/from');
-const COOKIE_VERSION_V1 = 1;
 
 const createCommands = (store) => {
 
@@ -42,8 +41,8 @@ const createCommands = (store) => {
 			created,
 			lastUpdated,
 			cmpId_: cmpId = store.tcModel.cmpId,
-			cmpVersion_: cmpVersion = 1,
-			consentScreen_: consentScreen = store.tcModel.consentScreen,
+			cmpVersion_: cmpVersion,
+			consentScreen_: consentScreen,
 			consentLanguage_: consentLanguage = store.tcModel.consentLanguage,
 			vendorListVersion_: vendorListVersion,
 		} = persistedConsentData;
@@ -69,7 +68,7 @@ const createCommands = (store) => {
 			lastUpdated,
 			consentLanguage_: consentLanguage,
 			consentScreen_: consentScreen,
-			version_: version = COOKIE_VERSION_V1,
+			cmpVersion_: cmpVersion,
 			cmpId_: cmpId = CMP_ID
 		} = persistedConsentData;
 
@@ -77,9 +76,8 @@ const createCommands = (store) => {
 			selectedVendorIds = [],
 			selectedPurposeIds = [],
 			maxVendorId,
-			cookieVersion,
 			vendorListVersion,
-			cmpVersion
+			cookieVersion
 		} = data;
 
 		const consentData = {
@@ -92,7 +90,6 @@ const createCommands = (store) => {
 			lastUpdated,
 			consentLanguage,
 			consentScreen,
-			version,
 			selectedVendorIds: new Set(arrayFrom(selectedVendorIds)),
 			selectedPurposeIds: new Set(arrayFrom(selectedPurposeIds))
 		};
@@ -109,6 +106,10 @@ const createCommands = (store) => {
 	 * Generates v1.1 compatible TC String
 	 */
 	const getConsentFieldsV1 = (callback, params) => {
+		if (!params.hasOwnProperty('cookieVersion') || !params.hasOwnProperty('vendorListVersion')) {
+			return callback ({}, false);
+		}
+
 		const data = getConsentFieldsObject();
 
 		generateConsentStringV1({
@@ -120,6 +121,7 @@ const createCommands = (store) => {
 				gdprApplies: config.gdprApplies,
 				hasGlobalScope: config.storeConsentGlobally,
 				...data,
+				cookieVersion: params.cookieVersion,
 				vendorListVersion: params.vendorListVersion
 			};
 
@@ -172,7 +174,7 @@ const createCommands = (store) => {
 			vendorLegitimateInterests,
 			vendorsDisclosed,
 			vendorsAllowed,
-			specialFeatureOptIns,
+			specialFeatureOptins,
 			created,
 			lastUpdated
 		} = tcModel;
@@ -202,7 +204,7 @@ const createCommands = (store) => {
 				consents: vectorToObject(vendorConsents),
 				legitimateInterests: vectorToObject(vendorLegitimateInterests)
 			},
-			specialFeatureOptins: vectorToObject(specialFeatureOptIns),
+			specialFeatureOptins: vectorToObject(specialFeatureOptins),
 			publisher: {
 				consents: vectorToObject(publisherConsents),
 				legitimateInterests: vectorToObject(publisherLegitimateInterests),

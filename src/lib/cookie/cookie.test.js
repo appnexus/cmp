@@ -51,7 +51,7 @@ describe('cookie', () => {
 			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
 			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
-			tcModel.specialFeatureOptIns.set(SPECIAL_FEATURE_OPT_INS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
 			const encoded = encodeConsentData(tcModel);
 			const decoded = decodeConsentData(encoded);
@@ -73,7 +73,7 @@ describe('cookie', () => {
 				vendorLegitimateInterests,
 				publisherConsents,
 				publisherLegitimateInterests,
-				specialFeatureOptIns
+				specialFeatureOptins
 			} = decoded;
 
 			expect(supportOOB).to.equal(tcModel.supportOOB);
@@ -92,7 +92,7 @@ describe('cookie', () => {
 			expect(vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
 			expect(publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
 			expect(publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
-			expect(specialFeatureOptIns.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
+			expect(specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
 			done();
 		}, 0);
 	});
@@ -110,7 +110,7 @@ describe('cookie', () => {
 			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
 			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
-			tcModel.specialFeatureOptIns.set(SPECIAL_FEATURE_OPT_INS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
 			const encoded = encodeConsentData(tcModel);
 
@@ -135,7 +135,7 @@ describe('cookie', () => {
 						vendorLegitimateInterests,
 						publisherConsents,
 						publisherLegitimateInterests,
-						specialFeatureOptIns
+						specialFeatureOptins
 					} = fromCookie;
 
 					expect(supportOOB).to.equal(tcModel.supportOOB);
@@ -154,7 +154,7 @@ describe('cookie', () => {
 					expect(vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
 					expect(publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
 					expect(publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
-					expect(specialFeatureOptIns.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
+					expect(specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
 					done();
 				});
 			});

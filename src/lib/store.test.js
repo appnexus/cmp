@@ -38,9 +38,7 @@ describe('store', () => {
 	});
 
 	it('initializes with vendorList', () => {
-		const store = new Store({
-			cmpApi
-		});
+		const store = new Store();
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -63,7 +61,7 @@ describe('store', () => {
 			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
 			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
-			tcModel.specialFeatureOptIns.set(SPECIAL_FEATURE_OPT_INS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
 			const encoded = encodeConsentData(tcModel);
 
@@ -81,7 +79,7 @@ describe('store', () => {
 			expect(store.tcModel.vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
 			expect(store.tcModel.publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
 			expect(store.tcModel.publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
-			expect(store.tcModel.specialFeatureOptIns.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
+			expect(store.tcModel.specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
 			done();
 		}, 0);
 	});
@@ -105,7 +103,7 @@ describe('store', () => {
 			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
 			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
-			tcModel.specialFeatureOptIns.set(SPECIAL_FEATURE_OPT_INS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
 
 			const encoded = encodeConsentData(tcModel);
@@ -138,7 +136,7 @@ describe('store', () => {
 			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
 			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
-			tcModel.specialFeatureOptIns.set(SPECIAL_FEATURE_OPT_INS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
 			const encoded = encodeConsentData(tcModel);
 			const decoded = decodeConsentData(encoded);
@@ -280,10 +278,10 @@ describe('store', () => {
 		store.persist();
 
 		const vendorConsentsObject = store.getVendorConsentsObject();
-		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptIns).filter(key => vendorConsentsObject.specialFeatureOptIns[key]);
+		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptins).filter(key => vendorConsentsObject.specialFeatureOptins[key]);
 
 		expect(specialFeatureConsents.length).to.equal(Object.keys(VENDOR_LIST.specialFeatures).length - 1);
-		expect(vendorConsentsObject.specialFeatureOptIns['2']).to.be.false;
+		expect(vendorConsentsObject.specialFeatureOptins['2']).to.be.false;
 	});
 
 	it('selects ALL special feature opt ins IDs', () => {
@@ -296,7 +294,7 @@ describe('store', () => {
 		store.persist();
 
 		const vendorConsentsObject = store.getVendorConsentsObject();
-		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptIns).filter(key => vendorConsentsObject.specialFeatureOptIns[key]);
+		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptins).filter(key => vendorConsentsObject.specialFeatureOptins[key]);
 
 		expect(specialFeatureConsents.length).to.equal(0);
 	});
@@ -379,7 +377,7 @@ describe('store', () => {
 			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
 			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
-			tcModel.specialFeatureOptIns.set(SPECIAL_FEATURE_OPT_INS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
 			const encoded = encodeConsentData(tcModel);
 
