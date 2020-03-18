@@ -70,8 +70,6 @@ export default class Details extends Component {
 			store
 		} = props;
 
-		console.log(this.state.vendors);
-
 		const {
 			vendorList = {},
 			customPurposeList = {},
