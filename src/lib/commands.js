@@ -41,10 +41,10 @@ const createCommands = (store, cmpManager) => {
 		const {
 			created,
 			lastUpdated,
-			cmpId_: cmpId = store.tcModel.cmpId,
-			cmpVersion_: cmpVersion = store.tcModel.cmpVersion,
-			consentScreen_: consentScreen = store.tcModel.consentScreen,
-			consentLanguage_: consentLanguage = store.tcModel.consentLanguage,
+			cmpId = store.tcModel.cmpId,
+			cmpVersion = store.tcModel.cmpVersion,
+			consentScreen = store.tcModel.consentScreen,
+			consentLanguage = store.tcModel.consentLanguage,
 		} = persistedConsentData;
 
 		return {
@@ -65,10 +65,10 @@ const createCommands = (store, cmpManager) => {
 		const {
 			created,
 			lastUpdated,
-			consentLanguage_: consentLanguage,
-			consentScreen_: consentScreen,
-			cmpVersion_: cmpVersion,
-			cmpId_: cmpId = CMP_ID
+			consentLanguage,
+			consentScreen,
+			cmpVersion,
+			cmpId = CMP_ID
 		} = persistedConsentData;
 
 		const {
@@ -144,7 +144,7 @@ const createCommands = (store, cmpManager) => {
 		tcModel.cmpVersion = CMP_VERSION;
 		tcModel.created = persistedConsentData && persistedConsentData.created || new Date();
 		tcModel.lastUpdated = persistedConsentData && persistedConsentData.lastUpdated || new Date();
-		tcModel.vendorListVersion = tcModel.vendorListVersion_ = vendorList.vendorListVersion;
+		tcModel.vendorListVersion = vendorList.vendorListVersion;
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
 

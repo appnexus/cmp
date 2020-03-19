@@ -65,14 +65,14 @@ export default class Store {
 		} = this;
 
 		const {
-			version_: cookieVersion,
+			version: cookieVersion,
 			created,
 			lastUpdated,
-			cmpId_: cmpId,
-			cmpVersion_: cmpVersion,
-			consentScreen_: consentScreen,
-			consentLanguage_: consentLanguage,
-			vendorListVersion_: vendorListVersion,
+			cmpId,
+			cmpVersion,
+			consentScreen,
+			consentLanguage,
+			vendorListVersion,
 			vendorConsents = new Vector(),
 			purposeConsents = new Vector(),
 			purposeLegitimateInterests = new Vector(),
@@ -168,11 +168,11 @@ export default class Store {
 		} = this;
 
 		const {
-			version_: cookieVersion,
+			version: cookieVersion,
 			created,
 			lastUpdated,
-			cmpId_: cmpId,
-			vendorListVersion_: vendorListVersion,
+			cmpId,
+			vendorListVersion,
 			publisherConsents = new Vector(),
 			publisherLegitimateInterests = new Vector(),
 			publisherCustomConsents = new Vector(),
@@ -261,9 +261,9 @@ export default class Store {
 		const now = new Date();
 		tcModel.created = tcModel.created || now;
 		tcModel.lastUpdated = now;
-		tcModel.vendorListVersion = tcModel.vendorListVersion_ = vendorListVersion;
+		tcModel.vendorListVersion = vendorListVersion;
 
-		let encodedConsent = encodeConsentData(this.tcModel);
+		let encodedConsent = encodeConsentData(tcModel);
 
 		if (config.setConsentData) {
 			let consentData = encodedConsent;
@@ -465,6 +465,8 @@ export default class Store {
 
 	toggleFooterShowing = (isShown) => {
 		const vendorConsentsObject = this.getVendorConsentsObject();
+
+		console.log(vendorConsentsObject);
 
 		if (this.isAllSetTrue(vendorConsentsObject.purposeConsents)) {
 			let vendorConsents;
