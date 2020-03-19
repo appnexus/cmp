@@ -68,7 +68,6 @@ export function init (configUpdates) {
 				if (store.isConsentToolShowing !== isConsentToolShowing) {
 					isConsentToolShowing = store.isConsentToolShowing;
 					cmpManager.notify('onToggleConsentToolShowing', isConsentToolShowing);
-					isConsentToolShowing && config.onConsentToolShowing();
 				}
 			});
 
