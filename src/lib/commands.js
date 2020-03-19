@@ -265,11 +265,11 @@ const createCommands = (store, cmpManager) => {
 		callback(true);
 	};
 
-	const registerEventListener = (callback, event) => {
+	const registerEventListener = (callback, {event}) => {
 		cmpManager.addEventListener(event, callback);
 	};
 
-	const unregisterEventListener = (callback, event) => {
+	const unregisterEventListener = (callback, {event}) => {
 		cmpManager.removeEventListener(event, callback);
 	};
 
