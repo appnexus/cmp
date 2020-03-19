@@ -308,15 +308,11 @@ describe('store', () => {
 		store.selectPublisherPurpose(1, false);
 		store.selectPublisherPurpose(3, false);
 
-
 		store.persist();
 
-		const publisherConsentObject = store.getPublisherConsentsObject();
-		const publisherConsents = Object.keys(publisherConsentObject.publisherConsents).filter(key => publisherConsentObject.publisherConsents[key]);
-
-		expect(publisherConsents.length).to.equal(Object.keys(VENDOR_LIST.purposes).length - 2);
-		expect(publisherConsentObject.publisherConsents['1']).to.be.false;
-		expect(publisherConsentObject.publisherConsents['3']).to.be.false;
+		expect(store.persistedConsentData.publisherConsents.size).to.equal(Object.keys(VENDOR_LIST.purposes).length - 2);
+		expect(store.persistedConsentData.publisherConsents.has(1)).to.be.false;
+		expect(store.persistedConsentData.publisherConsents.has(3)).to.be.false;
 	});
 
 	it('selects ALL publisher purpose IDs', () => {
@@ -328,10 +324,7 @@ describe('store', () => {
 		store.selectAllPublisherPurposes(true);
 		store.persist();
 
-		const publisherConsentObject = store.getPublisherConsentsObject();
-		const publisherConsents = Object.keys(publisherConsentObject.publisherConsents).filter(key => publisherConsentObject.publisherConsents[key]);
-
-		expect(publisherConsents.length).to.equal(Object.keys(VENDOR_LIST.purposes).length);
+		expect(store.persistedConsentData.publisherConsents.size).to.equal(Object.keys(VENDOR_LIST.purposes).length);
 	});
 
 	it('toggle the consent modal', () => {
