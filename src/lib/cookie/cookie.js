@@ -4,6 +4,7 @@ import { TCString } from '@iabtcf/core';
 import {
 	padRight,
 	encodeVendorCookieValue,
+	decodeVendorCookieValue
 } from './cookieutils';
 const arrayFrom = require('core-js/library/fn/array/from');
 
@@ -118,6 +119,71 @@ function encodeVendorConsentData (vendorData) {
 	return noRangesData.length < rangesData.length ? noRangesData : rangesData;
 }
 
+
+function decodeBitsToIds(bitString) {
+	return bitString.split('').reduce((acc, bit, index) => {
+		if (bit === '1') {
+			acc.add(index + 1);
+		}
+		return acc;
+	}, new Set());
+}
+
+function decodeVendorConsentData(cookieValue) {
+	const {
+		cookieVersion,
+		cmpId,
+		cmpVersion,
+		consentScreen,
+		consentLanguage,
+		vendorListVersion,
+		purposeIdBitString,
+		maxVendorId,
+		created,
+		lastUpdated,
+		isRange,
+		defaultConsent,
+		vendorIdBitString,
+		vendorRangeList
+	} = decodeVendorCookieValue(cookieValue);
+
+	const cookieData = {
+		cookieVersion,
+		cmpId,
+		cmpVersion,
+		consentScreen,
+		consentLanguage,
+		vendorListVersion,
+		selectedPurposeIds: decodeBitsToIds(purposeIdBitString),
+		maxVendorId,
+		created,
+		lastUpdated
+	};
+
+	if (isRange) {
+		const idMap = vendorRangeList.reduce((acc, {isRange, startVendorId, endVendorId}) => {
+			const lastVendorId = isRange ? endVendorId : startVendorId;
+			for (let i = startVendorId; i <= lastVendorId; i++) {
+				acc[i] = true;
+			}
+			return acc;
+		}, {});
+
+		cookieData.selectedVendorIds = new Set();
+		for (let i = 0; i <= maxVendorId; i++) {
+			if ((defaultConsent && !idMap[i]) ||
+				(!defaultConsent && idMap[i])) {
+				cookieData.selectedVendorIds.add(i);
+			}
+		}
+	}
+	else {
+		cookieData.selectedVendorIds = decodeBitsToIds(vendorIdBitString);
+	}
+
+	return cookieData;
+}
+
 export {
 	writeCookie,
 	decodeConsentData,
@@ -125,5 +191,7 @@ export {
 	readConsentCookie,
 	writeConsentCookie,
 	encodeVendorConsentData,
+	convertVendorsToRanges,
+	decodeVendorConsentData,
 	CONSENT_COOKIE
 };

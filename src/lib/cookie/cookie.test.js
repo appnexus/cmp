@@ -7,6 +7,9 @@ import {
 	encodeConsentData,
 	writeConsentCookie,
 	readConsentCookie,
+	convertVendorsToRanges,
+	encodeVendorConsentData,
+	decodeVendorConsentData,
 	CONSENT_COOKIE
 } from './cookie';
 import {
@@ -38,7 +41,7 @@ describe('cookie', () => {
 		mockPortal.sendPortalCommand = jest.fn().mockImplementation(() => Promise.resolve());
 	});
 
-	it('encodes and decodes the vendor cookie object back to original value', (done) => {
+	it('encodes and decodes consent cookie object back to original value', (done) => {
 		const tcModel = new TCModel();
 		tcModel.cmpId = 280;
 		tcModel.cmpVersion = 2;
@@ -165,5 +168,62 @@ describe('cookie', () => {
 		const cookie_v1 = 'BOEFEAyOEFEAyAHABDENAI4AAAB9vABAASA';
 		const decoded = decodeConsentData(cookie_v1);
 		expect(decoded).to.be.undefined;
+	});
+
+	it('encodes and decodes the vendor cookie object back to original value', () => {
+
+		const aDate = new Date('2018-07-15 PDT');
+		const vendorConsentData = {
+			cookieVersion: 1,
+			cmpId: 1,
+			cmpVersion: 1,
+			consentScreen: 2,
+			consentLanguage: 'DE',
+			vendorListVersion: 1,
+			maxVendorId: Math.max(...Object.values(VENDOR_LIST.vendors).map(vendor => vendor.id)),
+			created: aDate,
+			lastUpdated: aDate,
+			selectedPurposeIds: new Set([1, 2]),
+			selectedVendorIds: new Set([1, 2, 4])
+		};
+
+		const encodedString = encodeVendorConsentData({...vendorConsentData, VENDOR_LIST});
+		const decoded = decodeVendorConsentData(encodedString);
+
+		expect(decoded).to.deep.equal(vendorConsentData);
+	});
+
+	it('converts selected vendor list to a range', () => {
+		const maxVendorId = Math.max(...Object.values(VENDOR_LIST.vendors).map(vendor => vendor.id));
+		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 4]));
+
+		expect(ranges).to.deep.equal([{
+			isRange: true,
+			startVendorId: 2,
+			endVendorId: 4
+		}]);
+	});
+
+	it('converts selected vendor list to multiple ranges', () => {
+		const maxVendorId = Math.max(...Object.values(VENDOR_LIST.vendors).map(vendor => vendor.id));
+		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 5, 6, 10]));
+
+		expect(ranges).to.deep.equal([
+			{
+				isRange: true,
+				startVendorId: 2,
+				endVendorId: 3
+			},
+			{
+				isRange: true,
+				startVendorId: 5,
+				endVendorId: 6
+			},
+			{
+				isRange: false,
+				startVendorId: 10,
+				endVendorId: undefined
+			}
+		]);
 	});
 });
