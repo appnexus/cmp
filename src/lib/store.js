@@ -302,13 +302,14 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	selectSpecialFeature = (specialFeatureId, isSelected) => {
+	selectSpecialFeatureOptins = (specialFeatureId, isSelected) => {
 		const { specialFeatureOptins } = this.tcModel;
 		if (isSelected) {
 			specialFeatureOptins.set(specialFeatureId);
 		} else {
 			specialFeatureOptins.unset(specialFeatureId);
 		}
+		this.storeUpdate();
 	};
 
 	selectAllSpecialFeatureOptins = (isSelected) => {

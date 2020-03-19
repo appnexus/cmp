@@ -77,7 +77,7 @@ export default class Details extends Component {
 
 			selectPurpose,
 			selectPurposeLegitimateInterests,
-			selectSpecialFeature,
+			selectSpecialFeatureOptins,
 			selectVendors,
 			selectVendor,
 			selectVendorLegitimateInterests,
@@ -124,7 +124,7 @@ export default class Details extends Component {
 							selectedPublisherCustomPurposeIds={publisherCustomConsents}
 							selectPurpose={selectPurpose}
 							selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
-							selectSpecialFeature={selectSpecialFeature}
+							selectSpecialFeatureOptins={selectSpecialFeatureOptins}
 							initialVendorsRejection={initialVendorsRejection}
 							selectPublisherPurpose={selectPublisherPurpose}
 							selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
