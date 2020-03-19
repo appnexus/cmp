@@ -290,7 +290,7 @@ describe('store', () => {
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
 
-		store.selectAllSpecialFeatureOptIns(false);
+		store.selectAllSpecialFeatureOptins(false);
 		store.persist();
 
 		const vendorConsentsObject = store.getVendorConsentsObject();

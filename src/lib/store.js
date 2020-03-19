@@ -397,7 +397,7 @@ export default class Store {
 		}
 	};
 
-	selectAllSpecialFeatureOptIns = (isSelected) => {
+	selectAllSpecialFeatureOptins = (isSelected) => {
 		const operation = isSelected ? 'setAllSpecialFeatureOptins' : 'unsetAllSpecialFeatureOptins';
 		this.tcModel[operation]();
 		this.storeUpdate();
@@ -466,8 +466,6 @@ export default class Store {
 	toggleFooterShowing = (isShown) => {
 		const vendorConsentsObject = this.getVendorConsentsObject();
 
-		console.log(vendorConsentsObject);
-
 		if (this.isAllSetTrue(vendorConsentsObject.purposeConsents)) {
 			let vendorConsents;
 			if (this.vendorList) {
@@ -520,7 +518,7 @@ export default class Store {
 			this.selectAllPurposesLegitimateInterests(true);
 			this.selectAllVendors(true);
 			this.selectAllVendorLegitimateInterests(true);
-			this.selectAllSpecialFeatureOptIns(true);
+			this.selectAllSpecialFeatureOptins(true);
 
 			this.selectAllPublisherPurposes(true);
 			this.selectAllPublisherLegitimateInterests(true);

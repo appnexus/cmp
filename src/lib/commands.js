@@ -105,7 +105,7 @@ const createCommands = (store, cmpManager) => {
 	 * Generates v1.1 compatible TC String
 	 */
 	const getConsentFieldsV1 = (callback, params) => {
-		if (!params.hasOwnProperty('cookieVersion') || !params.hasOwnProperty('vendorListVersion')) {
+		if (!params || !params.hasOwnProperty('cookieVersion') || !params.hasOwnProperty('vendorListVersion')) {
 			return callback ({}, false);
 		}
 
