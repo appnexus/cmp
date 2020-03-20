@@ -82,6 +82,7 @@ export default class Details extends Component {
 			selectPurpose,
 			selectPurposeLegitimateInterests,
 			selectSpecialFeatureOptins,
+			selectSpecialFeature,
 			selectVendors,
 			selectVendor,
 			selectVendorLegitimateInterests,
