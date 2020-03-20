@@ -16,14 +16,18 @@ describe('Popup', () => {
 	});
 
 	it('should render with overlay hidden', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 		store.isConsentToolShowing = false;
 		const popup = <Popup store={store} />;
 		expect(popup).to.contain('display: none');
 	});
 
 	it('should render with overlay visible', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 		store.isConsentToolShowing = true;
 		const popup = <Popup store={store} />;
 		expect(popup).to.contain('display: flex');
@@ -31,7 +35,9 @@ describe('Popup', () => {
 
 	it('should handle accept all', (done) => {
 		const cmpApi = new CmpApi(CMP_ID, CMP_VERSION);
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
 		store.selectAllVendors = jest.fn();
@@ -64,7 +70,9 @@ describe('Popup', () => {
 	});
 
 	it('should switch between panel states', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID,
+		});
 
 		let popup;
 		render(<Popup
