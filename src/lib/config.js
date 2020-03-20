@@ -13,6 +13,7 @@ const defaultConfig = {
 	getConsentData: null,
 	setConsentData: null,
 	getVendorList: null,
+	decoratePageCallHandler: null,
 	legIntPurposeIds: [],
 	contractPurposeIds: [],
 	autoDisplay: true,

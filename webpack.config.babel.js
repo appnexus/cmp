@@ -144,7 +144,7 @@ const commonConfig = {
 	node: {
 		global: true,
 		process: false,
-		Buffer: false,
+		Buffer: true,
 		__filename: false,
 		__dirname: false,
 		setImmediate: false
@@ -182,7 +182,10 @@ module.exports = [
 		plugins: ([
 			new webpack.NoEmitOnErrorsPlugin(),
 			new webpack.DefinePlugin({
-				'process.env.NODE_ENV': JSON.stringify(ENV)
+				'process.env.NODE_ENV': JSON.stringify(ENV),
+				'process.env.CMP_VERSION': JSON.stringify('2'),
+				'process.env.CMP_ID': JSON.stringify('280'),
+				'process.env.COOKIE_VERSION': JSON.stringify('2')
 			}),
 			new webpack.ProvidePlugin({
 				'Promise': 'promise-polyfill'

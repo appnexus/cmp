@@ -1,7 +1,6 @@
 import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
-import Cmp, { CMP_GLOBAL_NAME } from './cmp';
 import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
 import { decodeConsentData, readConsentCookie } from './cookie/cookie';
@@ -9,10 +8,11 @@ import log from './log';
 import pack from '../../package.json';
 import config from './config';
 import createCommands from "./commands";
+import CmpManager from "./cmpManager";
 
-const CMP_VERSION = 2;
-const CMP_ID = 280;
-const COOKIE_VERSION = 2;
+export const CMP_VERSION = parseInt(process.env.CMP_VERSION,10);
+export const CMP_ID = parseInt(process.env.CMP_ID, 10);
+export const COOKIE_VERSION = parseInt(process.env.COOKIE_VERSION, 10);
 
 function readExternalConsentData(config) {
 	return new Promise((resolve, reject) => {
@@ -22,7 +22,7 @@ function readExternalConsentData(config) {
 					reject(err);
 				} else {
 					try {
-						resolve(data.vendor && decodeConsentData(data.vendor) || undefined);
+						resolve(data.consent && decodeConsentData(data.consent) || undefined);
 					} catch (err) {
 						reject(err);
 					}
@@ -41,46 +41,33 @@ export function init (configUpdates) {
 	// Fetch the current vendor consent before initializing
 	return ((config.getConsentData) ? readExternalConsentData(config) : readConsentCookie())
 		.then((consentData) => {
-			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION);
-
-			// Initialize the store with all of our consent data
 			const store = new Store({
 				cmpVersion: CMP_VERSION,
 				cmpId: CMP_ID,
 				cookieVersion: COOKIE_VERSION,
 				consentData,
-				cmpApi
 			});
 
-			cmpApi.customCommands = createCommands(store);
+			const cmpManager = new CmpManager();
+			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store, cmpManager));
+			config.decoratePageCallHandler(cmpApi);
 
-			// Pull queued command from __cmp stub
-			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};
-
-			// Replace the __cmp with our implementation
-			const cmp = new Cmp(store);
-
-			// Expose `processCommand` as the CMP implementation
-			window[CMP_GLOBAL_NAME] = cmp.processCommand;
+			store.setCmpApi(cmpApi);
 
 			// Notify listeners that the CMP is loaded
 			log.debug(`Successfully loaded CMP version: ${pack.version}`);
-			cmp.isLoaded = true;
-			cmp.notify('isLoaded');
+			cmpManager.isLoaded = true;
+			cmpManager.notify('isLoaded');
 
 			// Render the UI
 			const App = require('../components/app').default;
-			render(<App store={store} notify={cmp.notify} />, document.body);
-
-			// Execute any previously queued command
-			cmp.commandQueue = commandQueue;
-			cmp.processCommandQueue();
+			render(<App store={store} notify={cmpManager.notify} />, document.body);
 
 			let isConsentToolShowing = store.isConsentToolShowing;
 			store.subscribe(store => {
 				if (store.isConsentToolShowing !== isConsentToolShowing) {
 					isConsentToolShowing = store.isConsentToolShowing;
-					cmp.notify('onToggleConsentToolShowing', isConsentToolShowing);
+					cmpManager.notify('onToggleConsentToolShowing', isConsentToolShowing);
 				}
 			});
 
@@ -89,8 +76,8 @@ export function init (configUpdates) {
 				store,
 				fetchGlobalVendorList().then(store.updateVendorList)
 			]).then((params) => {
-				cmp.cmpReady = true;
-				cmp.notify('cmpReady');
+				cmpManager.cmpReady = true;
+				cmpManager.notify('cmpReady');
 				return params[0];
 			}).catch(err => {
 				log.error('Failed to load lists. CMP not ready', err);

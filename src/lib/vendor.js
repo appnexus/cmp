@@ -25,7 +25,7 @@ function fetch(url) {
  * Fetch the global vendor list if the location is configured
  */
 function fetchGlobalVendorList() {
-	const {globalVendorListLocation, getVendorList} = config;
+	const { globalVendorListLocation, getVendorList } = config;
 	if (getVendorList) {
 		return new Promise((resolve, reject) => {
 			try {
@@ -35,8 +35,8 @@ function fetchGlobalVendorList() {
 					} else {
 						try {
 							resolve(data);
-						} catch (err) {
-							reject(err);
+						} catch (error) {
+							reject(error);
 						}
 					}
 				});

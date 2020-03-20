@@ -81,7 +81,7 @@ export default class Details extends Component {
 
 			selectPurpose,
 			selectPurposeLegitimateInterests,
-			selectSpecialFeature,
+			selectSpecialFeatureOptins,
 			selectVendors,
 			selectVendor,
 			selectVendorLegitimateInterests,
@@ -108,6 +108,7 @@ export default class Details extends Component {
 		const { purposes = {}, specialPurposes = {}, features = {}, specialFeatures = {}} = vendorList;
 		const { purposes: customPurposes = [] } = customPurposeList;
 
+
 		return (
 			<div class={style.details}>
 				<CloseButton
@@ -132,6 +133,7 @@ export default class Details extends Component {
 							selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
 							selectedPurposeLegitimateInterests={purposeLegitimateInterests}
 							selectSpecialFeature={selectSpecialFeature}
+							selectSpecialFeatureOptins={selectSpecialFeatureOptins}
 							initialVendorsRejection={initialVendorsRejection}
 							selectPublisherPurpose={selectPublisherPurpose}
 							selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}

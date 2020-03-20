@@ -1,317 +1,336 @@
-import { expect } from 'chai';
-import customPurposeList from '../docs/assets/purposes.json';
-
+/* eslint-disable max-nested-callbacks */
+import { expect, use } from 'chai';
+import datetime from 'chai-datetime';
 import Store from './store';
+import { CmpApi } from "@iabtcf/cmpapi";
+import { decodeConsentData, encodeConsentData } from "./cookie/cookie";
+import {GVL, TCModel} from "@iabtcf/core";
+import {
+	PURPOSE_CONSENTS,
+	PURPOSE_LEGITIMATE_INTERESTS,
+	VENDOR_CONSENTS,
+	VENDOR_LEGITIMATE_INTERESTS,
+	PUBLISHER_CONSENTS,
+	PUBLISHER_LEGITIMATE_INTERESTS,
+	SPECIAL_FEATURE_OPT_INS,
+	VENDOR_LIST
+} from "../../test/constants";
 
-
-const vendorList = {
-	"version": 1,
-	"origin": "http://ib.adnxs.com/vendors.json",
-	"purposes": [
-		{
-			"id": 1,
-			"name": "Accessing a Device or Browser"
-		},
-		{
-			"id": 2,
-			"name": "Advertising Personalisation"
-		},
-		{
-			"id": 3,
-			"name": "Analytics"
-		},
-		{
-			"id": 4,
-			"name": "Content Personalisation"
-		}
-	],
-	"vendors": [
-		{
-			"id": 1,
-			"external_id": 1,
-			"name": "Globex"
-		},
-		{
-			"id": 2,
-			"external_id": 2,
-			"name": "Initech"
-		},
-		{
-			"id": 3,
-			"external_id": 3,
-			"name": "CRS"
-		},
-		{
-			"id": 4,
-			"external_id": 4,
-			"name": "Umbrella"
-		},
-		{
-			"id": 5,
-			"external_id": 5,
-			"name": "Aperture"
-		},
-		{
-			"id": 6,
-			"external_id": 6,
-			"name": "Pierce and Pierce"
-		}
-	]
-};
+use(datetime);
 
 describe('store', () => {
+	let cmpApi;
+
+	beforeEach(() => {
+		cmpApi = new CmpApi(280, 2);
+	});
+
+	afterEach(() => {
+		cmpApi = undefined;
+	});
 
 	it('initializes with default data', () => {
-
 		const store = new Store();
 
 		expect(store.isConsentToolShowing).to.equal(false);
-
-		expect(store.vendorConsentData.cookieVersion).to.equal(1);
-		expect(store.vendorConsentData.cmpId).to.equal(1);
-
-		expect(store.publisherConsentData.cookieVersion).to.equal(1);
-		expect(store.publisherConsentData.cmpId).to.equal(1);
+		expect(store.tcModel.version).to.equal(2);
+		expect(store.tcModel.cmpId).to.equal(280);
 	});
-
 
 	it('initializes with vendorList', () => {
-		const store = new Store({ vendorList });
+		const store = new Store();
 
-		expect(store.vendorList).to.deep.equal(vendorList);
-		expect(store.vendorConsentData.selectedVendorIds.size).to.equal(vendorList.vendors.length);
-		expect(store.vendorConsentData.selectedPurposeIds.size).to.equal(vendorList.purposes.length);
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		expect(store.vendorList).to.deep.equal(VENDOR_LIST);
+		expect(store.tcModel.vendorConsents.size).to.equal(Object.keys(VENDOR_LIST.vendors).length);
+		expect(store.tcModel.purposeConsents.size).to.equal(Object.keys(VENDOR_LIST.purposes).length);
 	});
 
-	it('initializes with customPurposeList', () => {
-		const store = new Store({ customPurposeList });
-		expect(store.customPurposeList).to.deep.equal(customPurposeList);
-		expect(store.publisherConsentData.selectedCustomPurposeIds.size).to.equal(customPurposeList.purposes.length);
+	it('initializes with consent data', (done) => {
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(VENDOR_LIST);
+
+		setTimeout(() => {
+			tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+			tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+			tcModel.vendorConsents.set(VENDOR_CONSENTS);
+			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
+
+			const encoded = encodeConsentData(tcModel);
+
+			const store = new Store({
+				consentData: decodeConsentData(encoded),
+			});
+
+			store.setCmpApi(cmpApi);
+			store.updateVendorList(VENDOR_LIST);
+
+			// check if consents were applied to current state of tcModel
+			expect(store.tcModel.purposeConsents.maxId).to.equal(Math.max(...PURPOSE_CONSENTS));
+			expect(store.tcModel.purposeLegitimateInterests.maxId).to.equal(Math.max(...PURPOSE_LEGITIMATE_INTERESTS));
+			expect(store.tcModel.vendorConsents.maxId).to.equal(Math.max(...VENDOR_CONSENTS));
+			expect(store.tcModel.vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
+			expect(store.tcModel.publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
+			expect(store.tcModel.publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
+			expect(store.tcModel.specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
+			done();
+		}, 0);
 	});
 
-	it('initializes with selected IDs', () => {
-		const selectedVendorIds = new Set([1, 2]);
-		const selectedPurposeIds = new Set([234]);
-		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				created: new Date(),
-				selectedVendorIds,
-				selectedPurposeIds
-			}
+	it('initializes with new vendor list', (done) => {
+		const vendorList = JSON.parse(JSON.stringify(VENDOR_LIST));
+		vendorList.vendorListVersion = 101;
+		const deprecated = JSON.parse(JSON.stringify(VENDOR_LIST));
+		delete deprecated.vendors["10"];
+
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(deprecated);
+		const deprecatedVendorConsents = [...VENDOR_CONSENTS].slice(0,-1);
+
+		setTimeout(() => {
+			tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+			tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+			tcModel.vendorConsents.set(deprecatedVendorConsents);
+			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
+
+
+			const encoded = encodeConsentData(tcModel);
+			const decoded = decodeConsentData(encoded);
+
+			const store = new Store({
+				consentData: decoded,
+			});
+
+			store.setCmpApi(cmpApi);
+			store.updateVendorList(vendorList);
+
+			expect(store.tcModel.vendorConsents.size).to.equal(6);
+			expect(store.tcModel.vendorConsents.maxId).to.equal(10);
+			expect(store.tcModel.vendorConsents.has(10)).to.be.true;
+			expect(store.tcModel.vendorLegitimateInterests.has(10)).to.be.true;
+			done();
+		}, 0);
+	});
+
+	it('build correct vendor consents object', (done) => {
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(VENDOR_LIST);
+
+		setTimeout(() => {
+			tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+			tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+			tcModel.vendorConsents.set(VENDOR_CONSENTS);
+			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
+
+			const encoded = encodeConsentData(tcModel);
+			const decoded = decodeConsentData(encoded);
+
+			const store = new Store({
+				consentData: decoded,
+			});
+
+			store.setCmpApi(cmpApi);
+			store.updateVendorList(VENDOR_LIST);
+
+			const vendorConsentsObject = store.getVendorConsentsObject();
+			const vendorsWithoutConsentCount = Object.values(vendorConsentsObject.vendorConsents).filter(consent => !consent).length;
+
+			expect(vendorsWithoutConsentCount).to.equal(Object.keys(VENDOR_LIST.vendors).length - 2);
+			expect(vendorConsentsObject.vendorConsents['4']).to.be.true;
+			expect(vendorConsentsObject.vendorConsents['5']).to.be.false;
+
+			expect(vendorConsentsObject.purposeConsents['1']).to.be.true;
+			expect(vendorConsentsObject.purposeConsents['3']).to.be.true;
+			expect(vendorConsentsObject.purposeConsents['2']).to.be.false;
+			expect(vendorConsentsObject.purposeConsents['4']).to.be.false;
+
+			expect(vendorConsentsObject.purposeLegitimateInterests['2']).to.be.true;
+			expect(vendorConsentsObject.purposeLegitimateInterests['4']).to.be.true;
+			expect(vendorConsentsObject.purposeLegitimateInterests['1']).to.be.false;
+			expect(vendorConsentsObject.purposeLegitimateInterests['3']).to.be.false;
+
+			done();
 		});
-
-		expect(store.vendorConsentData.selectedVendorIds).to.deep.equal(selectedVendorIds);
-		expect(store.vendorConsentData.selectedPurposeIds).to.deep.equal(selectedPurposeIds);
-	});
-
-	it('initializes with new vendor list', () => {
-		const expected = new Set(vendorList.vendors.map(v => v.id));
-		const selectedVendorIds = new Set([1, 2]);
-		const store = new Store({
-			vendorConsentData: {
-				created: new Date(),
-				selectedVendorIds,
-				maxVendorId:2
-			}
-		});
-		store.updateVendorList(vendorList);
-		expect(store.vendorConsentData.selectedVendorIds).to.deep.equal(expected);
-	});
-
-	it('build correct vendor consents object', () => {
-		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				selectedVendorIds: new Set([4, 5]),
-				selectedPurposeIds: new Set([1, 4])
-			}
-		});
-
-		const vendorObject = store.getVendorConsentsObject();
-		const noConsentVendorCount = Object.keys(vendorObject.vendorConsents).filter(key => !vendorObject.vendorConsents[key]).length;
-
-		expect(noConsentVendorCount).to.equal(vendorList.vendors.length - 2);
-		expect(vendorObject.vendorConsents['4']).to.be.true;
-		expect(vendorObject.vendorConsents['5']).to.be.true;
-
-		expect(vendorObject.purposeConsents['1']).to.be.true;
-		expect(vendorObject.purposeConsents['4']).to.be.true;
-	});
-
-	it('returns consent=false for vendors that are not in the allowedVendors', () => {
-		const store = new Store({
-			vendorList,
-			allowedVendorIds: [1,2,3,4,5,6],
-			vendorConsentData: {
-				selectedVendorIds: new Set([4, 5, 7, 8]),
-				selectedPurposeIds: new Set([1, 4])
-			}
-		});
-
-		const vendorObject = store.getVendorConsentsObject();
-
-
-		expect(vendorObject.vendorConsents['4']).to.be.true;
-		expect(vendorObject.vendorConsents['5']).to.be.true;
-
-		expect(vendorObject.vendorConsents['7']).to.be.false;
-		expect(vendorObject.vendorConsents['8']).to.be.false;
 	});
 
 	it('selects vendor IDs', () => {
 		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				created: new Date(),
-				selectedVendorIds: new Set([2, 4]),
-			}
+			cmpApi
 		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
 
 		store.selectVendor(2, false);
 		store.selectVendor(3, true);
 		store.persist();
 
-		const vendorObject = store.getVendorConsentsObject();
-		const selectedVendorIds = Object.keys(vendorObject.vendorConsents).filter(key => vendorObject.vendorConsents[key]);
+		const vendorConsentObject = store.getVendorConsentsObject();
+		expect(vendorConsentObject.vendorConsents['3']).to.be.true;
 
-		expect(selectedVendorIds).to.deep.equal(['3', '4']);
 	});
 
 	it('selects ALL vendor IDs', () => {
 		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				created: new Date(),
-				selectedVendorIds: new Set([2, 4]),
-			}
+			cmpApi
 		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
 
 		store.selectAllVendors(true);
 		store.persist();
 
-		const vendorObject = store.getVendorConsentsObject();
-		const selectedVendorIds = Object.keys(vendorObject.vendorConsents).filter(key => vendorObject.vendorConsents[key]);
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const vendorConsents = Object.keys(vendorConsentObject.vendorConsents).filter(key => vendorConsentObject.vendorConsents[key]);
 
-		expect(selectedVendorIds.length).to.equal(vendorList.vendors.length);
+		expect(vendorConsents.length).to.equal(Object.values(VENDOR_LIST.vendors).length);
 	});
 
 	it('selects purpose IDs', () => {
-		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				created: new Date(),
-				selectedPurposeIds: new Set([0, 1, 2]),
-			}
-		});
+		const store = new Store();
 
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
 
-		store.selectPurpose(0, false);
-		store.selectPurpose(4, true);
+		store.selectPurpose(1, false);
+		store.selectPurpose(2, false);
+		store.selectPurpose(3, true);
 		store.persist();
 
-		const vendorObject = store.getVendorConsentsObject();
-		const selectedPurposeIds = Object.keys(vendorObject.purposeConsents).filter(key => vendorObject.purposeConsents[key]);
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const purposeConsents = Object.keys(vendorConsentObject.purposeConsents).filter(key => vendorConsentObject.purposeConsents[key]);
 
-		expect(selectedPurposeIds).to.deep.equal(['1', '2', '4']);
+		expect(purposeConsents.length).to.equal(Object.values(VENDOR_LIST.purposes).length - 2);
 	});
 
 	it('selects ALL purpose IDs', () => {
-		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				created: new Date(),
-				selectedPurposeIds: new Set([0, 1, 2]),
-			}
-		});
+		const store = new Store();
 
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
 
-		store.selectAllPurposes(true);
+		store.selectAllPurposes(false);
 		store.persist();
 
-		const vendorObject = store.getVendorConsentsObject();
-		const selectedPurposeIds = Object.keys(vendorObject.purposeConsents).filter(key => vendorObject.purposeConsents[key]);
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const purposeConsents = Object.keys(vendorConsentObject.purposeConsents).filter(key => vendorConsentObject.purposeConsents[key]);
 
-		expect(selectedPurposeIds.length).to.equal(vendorList.purposes.length);
+		expect(purposeConsents.length).to.equal(0);
 	});
 
-	it('selects standard purpose IDs', () => {
-		const store = new Store({
-			vendorList,
-			publisherConsentData: {
-				created: new Date(),
-				selectedStandardPurposeIds: new Set([0, 2]),
-			}
-		});
+	it('selects legitimate interests IDs', () => {
+		const store = new Store();
 
-		store.selectStandardPurpose(0, false);
-		store.selectStandardPurpose(3, true);
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectPurposeLegitimateInterests(1, false);
+		store.selectPurposeLegitimateInterests(2, false);
+		store.selectPurposeLegitimateInterests(3, true);
 		store.persist();
 
-		const publisherObject = store.getPublisherConsentsObject();
-		const selectedStandardPurposeIds = Object.keys(publisherObject.standardPurposes).filter(key => publisherObject.standardPurposes[key]);
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const legIntConsents = Object.keys(vendorConsentObject.purposeLegitimateInterests).filter(key => vendorConsentObject.purposeLegitimateInterests[key]);
 
-		expect(selectedStandardPurposeIds).to.deep.equal(['2', '3']);
+		expect(legIntConsents.length).to.equal(Object.values(VENDOR_LIST.purposes).length - 2);
 	});
 
-	it('selects ALL standard purpose IDs', () => {
-		const store = new Store({
-			vendorList,
-			publisherConsentData: {
-				created: new Date(),
-				selectedStandardPurposeIds: new Set([0, 2]),
-			}
-		});
+	it('selects ALL legitimate interests IDs', () => {
+		const store = new Store();
 
-		store.selectAllStandardPurposes(true);
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllPurposesLegitimateInterests(false);
 		store.persist();
 
-		const publisherObject = store.getPublisherConsentsObject();
-		const selectedStandardPurposeIds = Object.keys(publisherObject.standardPurposes).filter(key => publisherObject.standardPurposes[key]);
+		const vendorConsentObject = store.getVendorConsentsObject();
+		const legIntConsents = Object.keys(vendorConsentObject.purposeLegitimateInterests).filter(key => vendorConsentObject.purposeLegitimateInterests[key]);
 
-		expect(selectedStandardPurposeIds.length).to.equal(vendorList.purposes.length);
+		expect(legIntConsents.length).to.equal(0);
 	});
 
-	it('selects custom purpose IDs', () => {
-		const store = new Store({
-			customPurposeList,
-			publisherConsentData: {
-				created: new Date(),
-				selectedCustomPurposeIds: new Set([0, 2]),
-			}
-		});
+	it('selects special feature opt ins IDs', () => {
+		const store = new Store();
 
-		store.selectCustomPurpose(0, false);
-		store.selectCustomPurpose(3, true);
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectSpecialFeatureOptins(1, true);
+		store.selectSpecialFeatureOptins(2, false);
 		store.persist();
 
-		const publisherObject = store.getPublisherConsentsObject();
-		const selectedCustomPurposeIds = Object.keys(publisherObject.customPurposes).filter(key => publisherObject.customPurposes[key]);
+		const vendorConsentsObject = store.getVendorConsentsObject();
+		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptins).filter(key => vendorConsentsObject.specialFeatureOptins[key]);
 
-		expect(selectedCustomPurposeIds).to.deep.equal(['2', '3']);
+		expect(specialFeatureConsents.length).to.equal(Object.keys(VENDOR_LIST.specialFeatures).length - 1);
+		expect(vendorConsentsObject.specialFeatureOptins['2']).to.be.false;
 	});
 
-	it('selects ALL custom purpose IDs', () => {
-		const store = new Store({
-			customPurposeList,
-			publisherConsentData: {
-				created: new Date(),
-				selectedCustomPurposeIds: new Set([0, 2]),
-			}
-		});
+	it('selects ALL special feature opt ins IDs', () => {
+		const store = new Store();
 
-		store.selectAllCustomPurposes(true);
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllSpecialFeatureOptins(false);
 		store.persist();
 
-		const publisherObject = store.getPublisherConsentsObject();
-		const selectedCustomPurposeIds = Object.keys(publisherObject.customPurposes).filter(key => publisherObject.customPurposes[key]);
+		const vendorConsentsObject = store.getVendorConsentsObject();
+		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptins).filter(key => vendorConsentsObject.specialFeatureOptins[key]);
 
-		expect(selectedCustomPurposeIds.length).to.equal(customPurposeList.purposes.length);
+		expect(specialFeatureConsents.length).to.equal(0);
+	});
+
+	it('selects publisher purpose IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectPublisherPurpose(1, false);
+		store.selectPublisherPurpose(3, false);
+
+		store.persist();
+
+		expect(store.persistedConsentData.publisherConsents.size).to.equal(Object.keys(VENDOR_LIST.purposes).length - 2);
+		expect(store.persistedConsentData.publisherConsents.has(1)).to.be.false;
+		expect(store.persistedConsentData.publisherConsents.has(3)).to.be.false;
+	});
+
+	it('selects ALL publisher purpose IDs', () => {
+		const store = new Store();
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllPublisherPurposes(true);
+		store.persist();
+
+		expect(store.persistedConsentData.publisherConsents.size).to.equal(Object.keys(VENDOR_LIST.purposes).length);
 	});
 
 	it('toggle the consent modal', () => {
 		const store = new Store();
-
+		store.setCmpApi(cmpApi);
 		expect(store.isConsentToolShowing).to.be.false;
 		store.toggleConsentToolShowing();
 		expect(store.isConsentToolShowing).to.be.true;
@@ -336,115 +355,37 @@ describe('store', () => {
 		expect(store.listeners).to.be.empty;
 	});
 
-	it('updates timestamps on persist', () => {
-		const created = new Date('2018-01-01');
+	it('updates timestamps on persist', (done) => {
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(VENDOR_LIST);
+
+		const created = tcModel.created;
 		const lastUpdated = created;
 
-		const store = new Store({
-			vendorConsentData: {
-				created,
-				lastUpdated
-			},
-			publisherConsentData: {
-				created,
-				lastUpdated
-			}
-		});
+		setTimeout(() => {
+			tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+			tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+			tcModel.vendorConsents.set(VENDOR_CONSENTS);
+			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
-		store.persist();
+			const encoded = encodeConsentData(tcModel);
 
-		expect(store.vendorConsentData.created).to.equal(created);
-		expect(store.vendorConsentData.lastUpdated).to.be.above(lastUpdated);
+			const store = new Store({
+				consentData: decodeConsentData(encoded),
+			});
+
+			store.setCmpApi(cmpApi);
+			store.updateVendorList(VENDOR_LIST);
+			store.persist();
+
+			expect(store.persistedConsentData.created).to.equalDate(created);
+			expect(store.persistedConsentData.lastUpdated).to.equalDate(lastUpdated);
+			done();
+		}, 5);
 	});
-
-	it('merge vendor consent from global cookie when consents are same', () => {
-		const store = new Store({
-			vendorConsentData: {
-				selectedVendorIds: new Set([1, 2, 3, 4, 5, 6]),
-			},
-			globalVendorConsentData: {
-				maxVendorId: 6,
-				selectedVendorIds: new Set([1, 2, 3, 4, 5, 6]),
-			},
-		});
-		store.globalVendorIdsPresentOnList = new Map([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]);
-
-		store.mergeVendorConsentsFromGlobalCookie();
-		expect(Array.from(store.vendorConsentData.selectedVendorIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedVendorIds));
-	});
-
-	it('merge vendor consent from global cookie when consents differ', () => {
-		const store = new Store({
-			vendorConsentData: {
-				selectedVendorIds: new Set([1, 2, 3]),
-			},
-			globalVendorConsentData: {
-				maxVendorId: 6,
-				selectedVendorIds: new Set([3, 4, 5, 6]),
-			},
-		});
-		store.globalVendorIdsPresentOnList = new Map([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]);
-
-		store.mergeVendorConsentsFromGlobalCookie();
-		expect(Array.from(store.vendorConsentData.selectedVendorIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedVendorIds));
-	});
-
-	it('merge vendor consent to global cookie', () => {
-		const store = new Store({
-			vendorConsentData: {
-				selectedVendorIds: new Set([1, 2, 3, 4, 5]),
-			},
-			globalVendorConsentData: {
-				selectedVendorIds: new Set([1, 2]),
-			},
-		});
-		store.globalVendorIdsPresentOnList = new Map([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]);
-
-		store.mergeVendorConsentsToGlobalCookie();
-		expect(Array.from(store.globalVendorConsentData.selectedVendorIds)).to.deep.equal(Array.from(store.vendorConsentData.selectedVendorIds));
-	});
-
-	it('merge purpose consent from global cookie when consents are same', () => {
-		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				selectedPurposeIds: new Set([1, 2, 3, 4]),
-			},
-			globalVendorConsentData: {
-				selectedPurposeIds: new Set([1, 2, 3, 4]),
-			},
-		});
-
-		store.mergePurposeConsentsFromGlobalCookie();
-		expect(Array.from(store.vendorConsentData.selectedPurposeIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedPurposeIds));
-	});
-
-	it('merge purpose consent from global cookie when consents differ', () => {
-		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				selectedPurposeIds: new Set([1, 2]),
-			},
-			globalVendorConsentData: {
-				selectedPurposeIds: new Set([2, 3, 4]),
-			},
-		});
-
-		store.mergePurposeConsentsFromGlobalCookie();
-		expect(Array.from(store.vendorConsentData.selectedPurposeIds)).to.deep.equal(Array.from(store.globalVendorConsentData.selectedPurposeIds));
-	});
-
-	it('merge purpose consent to global cookie', () => {
-		const store = new Store({
-			vendorList,
-			vendorConsentData: {
-				selectedPurposeIds: new Set([1, 2, 4]),
-			},
-			globalVendorConsentData: {
-				selectedPurposeIds: new Set([2, 3]),
-			},
-		});
-
-		store.mergePurposeConsentsToGlobalCookie();
-		expect(Array.from(store.globalVendorConsentData.selectedPurposeIds)).to.deep.equal(Array.from(store.vendorConsentData.selectedPurposeIds));	});
 });

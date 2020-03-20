@@ -66,8 +66,8 @@ export default class Purposes extends Component {
 		}
 	};
 
-	handleSelectSpecialFeature = ({isSelected, dataId}) => {
-		this.props.selectSpecialFeature(dataId, isSelected);
+	handleSelectSpecialFeatureOptins = ({isSelected, dataId}) => {
+		this.props.selectSpecialFeatureOptins(dataId, isSelected);
 	};
 
 	createHandleSelectPurpose = (isPublisher) => {
@@ -166,7 +166,7 @@ export default class Purposes extends Component {
 					this.handleSelectPurpose({isSelected: false, dataId: index}, true, false);
 				});
 				specialFeatures.forEach((specialFeature, index) => {
-					this.handleSelectSpecialFeature({isSelected:false, dataId: index+1})
+					this.handleSelectSpecialFeatureOptins({isSelected:false, dataId: index+1})
 				});
 				initialVendorsRejection();
 			}

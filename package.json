@@ -58,6 +58,7 @@
     "babel-register": "^6.24.0",
     "babel-runtime": "^6.11.6",
     "chai": "^4.0.2",
+    "chai-datetime": "^1.5.0",
     "copy-webpack-plugin": "^4.3.1",
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.0",
@@ -90,8 +91,8 @@
     "webpack-dev-server": "^2.4.4"
   },
   "dependencies": {
-    "@iabtcf/cmpapi": "^1.0.0-beta.13",
-    "@iabtcf/core": "^1.0.0-beta.13",
+    "@iabtcf/cmpapi": "^1.0.0-beta.20",
+    "@iabtcf/core": "^1.0.0-beta.20",
     "classnames": "^2.2.5",
     "codemirror": "^5.34.0",
     "core-js": "^2.5.3",
