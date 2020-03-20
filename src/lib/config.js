@@ -17,7 +17,7 @@ const defaultConfig = {
 	contractPurposeIds: [],
 	autoDisplay: true,
 	allowedVendorIds: null,
-	specialPurposes: [1,2]
+	specialPurposes: []
 };
 
 class Config {
@@ -40,8 +40,6 @@ class Config {
 				}
 				return acc;
 			}, { validUpdates: {}, invalidKeys: [] });
-
-validUpdates.legIntPurposeIds = [2,3,4,5,6,7,8,9,10];
 
 			Object.assign(this, validUpdates);
 			if (invalidKeys.length) {
