@@ -1,8 +1,10 @@
 import Example from '../example';
 
 const execute =
-`window.__cmp('getConsentData', 'vendorConsents', function(result){
-	myLogger('getConsentData callback result: ' + JSON.stringify(result,null,2));
+`window.__tcfapi('getTCData', 2, function (tcData, success) {
+	if (success) {
+		myLogger('getTCData callback result: ' + JSON.stringify(tcData));
+	}
 });`;
 
 export default class ConsentData extends Example {

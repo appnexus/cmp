@@ -7,7 +7,7 @@ import {
 	encodeField,
 	encodeDataToBits,
 	encodeCookieValue
-} from '../../../lib/cookie/cookieDecodeHelpers';
+} from '../../../lib/cookie/cookieEncodeHelpers';
 
 
 export default class CookieEncoder extends Component {

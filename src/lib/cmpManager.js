@@ -4,6 +4,7 @@ export default class CmpManager {
 	constructor () {
 		this.isLoaded = false;
 		this.cmpReady = false;
+		this.openConsentTool = false;
 		this.eventListeners = {};
 	}
 
@@ -48,6 +49,9 @@ export default class CmpManager {
 		if (event === 'cmpReady' && this.cmpReady) {
 			callback({event});
 		}
+		if (event === 'openConsentTool' && this.openConsentTool) {
+			callback({event});
+		}
 	};
 
 	/**
@@ -59,7 +63,12 @@ export default class CmpManager {
 		log.info(`Notify event: ${event}`);
 		const eventSet = this.eventListeners[event] || new Set();
 		eventSet.forEach(listener => {
-			listener({event, data});
+			try {
+				listener({event, data});
+			} catch (err) {
+				log.error(err);
+			}
 		});
+
 	};
 }

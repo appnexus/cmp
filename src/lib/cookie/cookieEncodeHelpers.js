@@ -156,5 +156,8 @@ export {
 	encodeBoolToBits,
 	encodeDateToBits,
 	encode6BitCharacters,
+	encodeField,
+	encodeDataToBits,
+	encodeCookieValue,
 	SIX_BIT_ASCII_OFFSET
 };

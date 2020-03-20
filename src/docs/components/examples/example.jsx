@@ -42,7 +42,7 @@ export default class Example extends Component {
 
 	componentWillMount() {
 		// Always clear ALL event listeners before setting up the example
-		window.__cmp && window.__cmp('removeEventListener');
+		window.__tcfapi && window.__tcfapi('unregisterEventListener', 2, function () {}, {event: undefined});
 	}
 
 	componentDidMount() {
