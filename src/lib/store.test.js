@@ -119,6 +119,7 @@ describe('store', () => {
 			expect(store.tcModel.vendorConsents.size).to.equal(6);
 			expect(store.tcModel.vendorConsents.maxId).to.equal(10);
 			expect(store.tcModel.vendorConsents.has(10)).to.be.true;
+			expect(store.tcModel.vendorLegitimateInterests.has(10)).to.be.true;
 			done();
 		}, 0);
 	});

@@ -328,7 +328,7 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	selectAllPublisherPurposes = (isSelected) => {
+	selectAllPublisherPurposes = (isSelected, update = true) => {
 		const {purposes = {}} = this.vendorList || {};
 		const operation = isSelected ? 'set' : 'unset';
 		const {legIntPurposeIds, contractPurposeIds} = config;
@@ -341,7 +341,9 @@ export default class Store {
 			}
 		});
 
-		this.storeUpdate();
+		if (update) {
+			this.storeUpdate();
+		}
 	};
 
 	selectPublisherLegitimateInterests = (purposeId, isSelected) => {
@@ -354,7 +356,7 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	selectAllPublisherLegitimateInterests = (isSelected) => {
+	selectAllPublisherLegitimateInterests = (isSelected, update) => {
 		const {purposes = {}} = this.vendorList || {};
 		const {legIntPurposeIds, contractPurposeIds} = config;
 		const operation = isSelected ? 'set' : 'unset';
@@ -366,7 +368,9 @@ export default class Store {
 			}
 		});
 
-		this.storeUpdate();
+		if (update) {
+			this.storeUpdate();
+		}
 	};
 
 	toggleConsentToolShowing = (isShown) => {
@@ -429,20 +433,28 @@ export default class Store {
 
 		// If vendor and publisher consent data has never been persisted set default selected status
 		if (!created) {
-			this.selectAllPurposes(true);
-			this.selectAllPurposesLegitimateInterests(true);
-			this.selectAllVendors(true);
-			this.selectAllVendorLegitimateInterests(true);
-			this.selectAllSpecialFeatureOptins(true);
+			const getIds = (object) => Object.keys(object)
+				.filter(key => object[key].id)
+				.map(key => object[key].id);
 
-			this.selectAllPublisherPurposes(true);
-			this.selectAllPublisherLegitimateInterests(true);
+			const purposesIds = getIds(vendorList.purposes);
+			const vendorsIds = getIds(vendorList.vendors);
+			const specialFeatureIds = getIds(vendorList.specialFeatures);
+
+			this.tcModel.purposeConsents.set(purposesIds);
+			this.tcModel.purposeLegitimateInterests.set(purposesIds);
+			this.tcModel.vendorConsents.set(vendorsIds);
+			this.tcModel.vendorLegitimateInterests.set(vendorsIds);
+			this.tcModel.specialFeatureOptins.set(specialFeatureIds);
+			this.selectAllPublisherPurposes(true, false);
+			this.selectAllPublisherLegitimateInterests(true, false);
 		}
 		// If vendor consent data has already been persisted set default selected status only for new vendors
 		else {
 			Object.values(vendors).forEach(v => {
 				if (v.id > persistedMaxVendorId) {
 					this.tcModel.vendorConsents.set(v.id);
+					this.tcModel.vendorLegitimateInterests.set(v.id);
 				}
 			});
 		}
