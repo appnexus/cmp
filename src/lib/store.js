@@ -15,7 +15,7 @@ export const SECTION_VENDORS = 1;
 
 export default class Store {
 	constructor({
-		cmpId = 280,
+		cmpId,
 		cmpVersion = 2,
 		cookieVersion = 2,
 		consentData
@@ -255,10 +255,23 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	selectAllVendorLegitimateInterests = (isSelected) => {
-		const operation = isSelected ? 'setAllVendorLegitimateInterests' : 'unsetAllVendorLegitimateInterests';
-		this.tcModel[operation]();
-		this.storeUpdate();
+	selectAllVendorLegitimateInterests = (isSelected, update = true) => {
+		const {vendorLegitimateInterests} = this.tcModel;
+		const vendorsWithLegIntsIds = Object.keys(this.vendorList.vendors)
+			.filter(key => this.vendorList.vendors[key].legIntPurposes.length > 0)
+			.map(key => this.vendorList.vendors[key].id);
+
+		vendorsWithLegIntsIds.forEach(id => {
+			if (isSelected) {
+				vendorLegitimateInterests.set(id);
+			} else {
+				vendorLegitimateInterests.unset(id);
+			}
+		});
+
+		if (update) {
+			this.storeUpdate();
+		}
 	};
 
 	initialVendorsRejection = () => {
@@ -444,7 +457,7 @@ export default class Store {
 			this.tcModel.purposeConsents.set(purposesIds);
 			this.tcModel.purposeLegitimateInterests.set(purposesIds);
 			this.tcModel.vendorConsents.set(vendorsIds);
-			this.tcModel.vendorLegitimateInterests.set(vendorsIds);
+			this.selectAllVendorLegitimateInterests(true, false);
 			this.tcModel.specialFeatureOptins.set(specialFeatureIds);
 			this.selectAllPublisherPurposes(true, false);
 			this.selectAllPublisherLegitimateInterests(true, false);

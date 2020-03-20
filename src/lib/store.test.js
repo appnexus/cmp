@@ -15,6 +15,7 @@ import {
 	SPECIAL_FEATURE_OPT_INS,
 	VENDOR_LIST
 } from "../../test/constants";
+import {CMP_ID} from "./init";
 
 use(datetime);
 
@@ -30,7 +31,9 @@ describe('store', () => {
 	});
 
 	it('initializes with default data', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		expect(store.isConsentToolShowing).to.equal(false);
 		expect(store.tcModel.version).to.equal(2);
@@ -38,7 +41,9 @@ describe('store', () => {
 	});
 
 	it('initializes with vendorList', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -66,6 +71,7 @@ describe('store', () => {
 			const encoded = encodeConsentData(tcModel);
 
 			const store = new Store({
+				cmpId: CMP_ID,
 				consentData: decodeConsentData(encoded),
 			});
 
@@ -110,6 +116,7 @@ describe('store', () => {
 			const decoded = decodeConsentData(encoded);
 
 			const store = new Store({
+				cmpId: CMP_ID,
 				consentData: decoded,
 			});
 
@@ -143,6 +150,7 @@ describe('store', () => {
 			const decoded = decodeConsentData(encoded);
 
 			const store = new Store({
+				cmpId: 280,
 				consentData: decoded,
 			});
 
@@ -172,7 +180,7 @@ describe('store', () => {
 
 	it('selects vendor IDs', () => {
 		const store = new Store({
-			cmpApi
+			cmpId: CMP_ID,
 		});
 
 		store.setCmpApi(cmpApi);
@@ -189,7 +197,7 @@ describe('store', () => {
 
 	it('selects ALL vendor IDs', () => {
 		const store = new Store({
-			cmpApi
+			cmpId: CMP_ID
 		});
 
 		store.setCmpApi(cmpApi);
@@ -205,7 +213,9 @@ describe('store', () => {
 	});
 
 	it('selects purpose IDs', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -222,7 +232,9 @@ describe('store', () => {
 	});
 
 	it('selects ALL purpose IDs', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -237,7 +249,9 @@ describe('store', () => {
 	});
 
 	it('selects legitimate interests IDs', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -254,7 +268,9 @@ describe('store', () => {
 	});
 
 	it('selects ALL legitimate interests IDs', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -269,7 +285,9 @@ describe('store', () => {
 	});
 
 	it('selects special feature opt ins IDs', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -286,7 +304,9 @@ describe('store', () => {
 	});
 
 	it('selects ALL special feature opt ins IDs', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -301,7 +321,9 @@ describe('store', () => {
 	});
 
 	it('selects publisher purpose IDs', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -317,7 +339,9 @@ describe('store', () => {
 	});
 
 	it('selects ALL publisher purpose IDs', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
@@ -329,7 +353,9 @@ describe('store', () => {
 	});
 
 	it('toggle the consent modal', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 		store.setCmpApi(cmpApi);
 		expect(store.isConsentToolShowing).to.be.false;
 		store.toggleConsentToolShowing();
@@ -337,7 +363,9 @@ describe('store', () => {
 	});
 
 	it('calls event listeners on update', (done) => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		store.subscribe(() => {
 			done();
@@ -346,7 +374,9 @@ describe('store', () => {
 	});
 
 	it('removes event listeners', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		const event = () => {};
 		store.subscribe(event);
@@ -376,6 +406,7 @@ describe('store', () => {
 			const encoded = encodeConsentData(tcModel);
 
 			const store = new Store({
+				cmpId: CMP_ID,
 				consentData: decodeConsentData(encoded),
 			});
 

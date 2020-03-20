@@ -27,7 +27,9 @@ describe('commands', () => {
 	let store, commands, cmpManager;
 
 	beforeEach(() => {
-		store = new Store();
+		store = new Store({
+			cmpId: CMP_ID
+		});
 		cmpManager = new CmpManager();
 		commands = createCommands(store, cmpManager);
 	});
@@ -218,6 +220,7 @@ describe('commands', () => {
 				// creating consent
 				const encoded = encodeConsentData(tcModel);
 				const localStore = new Store({
+					cmpId: CMP_ID,
 					consentData: decodeConsentData(encoded)
 				});
 				const localCommands = createCommands(localStore);
@@ -342,6 +345,7 @@ describe('commands', () => {
 				// creating consent
 				const encoded = encodeConsentData(tcModel);
 				const localStore = new Store({
+					cmpId: CMP_ID,
 					consentData: decodeConsentData(encoded)
 				});
 				const localCommands = createCommands(localStore);
@@ -376,7 +380,9 @@ describe('commands', () => {
 		let callbackExecuted, store, cmpManager, commands;
 
 		beforeEach(() => {
-			store = new Store();
+			store = new Store({
+				cmpId: CMP_ID
+			});
 			cmpManager = new CmpManager();
 			commands = createCommands(store, cmpManager);
 			callbackExecuted = false;

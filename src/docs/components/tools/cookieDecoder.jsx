@@ -5,7 +5,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2';
 import {
 	decodeCookieValue,
 	decodeCookieBitValue
-} from '../../../lib/cookie/cookieutils';
+} from '../../../lib/cookie/cookieDecodeHelpers';
 
 export default class CookieDecoder extends Component {
 	constructor(props) {

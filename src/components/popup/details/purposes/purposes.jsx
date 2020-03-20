@@ -120,7 +120,7 @@ export default class Purposes extends Component {
 			specialPurposes,
 			features,
 			specialFeatures,
-			persistedConsentData,
+			persistedConsentData = {},
 			initialVendorsRejection,
 			selectedPublisherLegitimateInterests,
 			selectedPurposeLegitimateInterests

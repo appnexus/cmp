@@ -170,6 +170,7 @@ module.exports = [
 	{
 		entry: {
 			cmp: './index.js',
+			cookie: './lib/cookie/cookieDecodeHelpers.js',
 			portal: './docs/assets/portal.js'
 		},
 

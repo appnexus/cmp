@@ -3,9 +3,8 @@ import log from '../log';
 import { TCString } from '@iabtcf/core';
 import {
 	padRight,
-	encodeVendorCookieValue,
-	decodeVendorCookieValue
-} from './cookieutils';
+	encodeVendorCookieValue
+} from './cookieEncodeHelpers';
 const arrayFrom = require('core-js/library/fn/array/from');
 
 const CONSENT_COOKIE = 'adpconsent';
@@ -36,22 +35,22 @@ function decodeConsentData (encoded) {
 	return decoded;
 }
 
-function encodeConsentData (decoded) {
+const encodeConsentData = (decoded) => {
 	return TCString.encode(decoded);
-}
+};
 
-function readConsentCookie () {
+const readConsentCookie = () => {
 	const cookie = readCookie(CONSENT_COOKIE);
 	log.debug('Read consent data from local cookie', cookie);
 	return Promise.resolve(cookie && decodeConsentData(cookie));
-}
+};
 
-function writeConsentCookie(encodedConsent) {
+const writeConsentCookie = (encodedConsent) => {
 	log.debug('Write consent data to local cookie');
 	return Promise.resolve(writeCookie(CONSENT_COOKIE, encodedConsent, CONSENT_COOKIE_MAX_AGE, '/'));
-}
+};
 
-function encodePurposeIdsToBits(selectedPurposeIds = new Set()) {
+const encodePurposeIdsToBits = (selectedPurposeIds = new Set()) => {
 	const maxPurposeId = Math.max(0,
 		...arrayFrom(selectedPurposeIds),
 		MAX_PURPOSE_V1_ID);
@@ -60,17 +59,17 @@ function encodePurposeIdsToBits(selectedPurposeIds = new Set()) {
 		purposeString += (selectedPurposeIds.has(id) ? '1' : '0');
 	}
 	return purposeString;
-}
+};
 
-function encodeVendorIdsToBits(maxVendorId, selectedVendorIds = new Set()) {
+const encodeVendorIdsToBits = (maxVendorId, selectedVendorIds = new Set()) => {
 	let vendorString = '';
 	for (let id = 1; id <= maxVendorId; id++) {
 		vendorString += (selectedVendorIds.has(id) ? '1' : '0');
 	}
 	return padRight(vendorString, Math.max(0, maxVendorId - vendorString.length));
-}
+};
 
-function convertVendorsToRanges(maxVendorId, selectedIds) {
+const convertVendorsToRanges = (maxVendorId, selectedIds) => {
 	let range = [];
 	const ranges = [];
 	for (let id = 1; id <= maxVendorId; id++) {
@@ -91,9 +90,9 @@ function convertVendorsToRanges(maxVendorId, selectedIds) {
 		}
 	}
 	return ranges;
-}
+};
 
-function encodeVendorConsentData (vendorData) {
+const encodeVendorConsentData = (vendorData) => {
 	const { selectedPurposeIds, selectedVendorIds, maxVendorId } = vendorData;
 
 	// Encode the data with and without ranges and return the smallest encoded payload
@@ -117,81 +116,14 @@ function encodeVendorConsentData (vendorData) {
 	});
 
 	return noRangesData.length < rangesData.length ? noRangesData : rangesData;
-}
-
-
-function decodeBitsToIds(bitString) {
-	return bitString.split('').reduce((acc, bit, index) => {
-		if (bit === '1') {
-			acc.add(index + 1);
-		}
-		return acc;
-	}, new Set());
-}
-
-function decodeVendorConsentData(cookieValue) {
-	const {
-		cookieVersion,
-		cmpId,
-		cmpVersion,
-		consentScreen,
-		consentLanguage,
-		vendorListVersion,
-		purposeIdBitString,
-		maxVendorId,
-		created,
-		lastUpdated,
-		isRange,
-		defaultConsent,
-		vendorIdBitString,
-		vendorRangeList
-	} = decodeVendorCookieValue(cookieValue);
-
-	const cookieData = {
-		cookieVersion,
-		cmpId,
-		cmpVersion,
-		consentScreen,
-		consentLanguage,
-		vendorListVersion,
-		selectedPurposeIds: decodeBitsToIds(purposeIdBitString),
-		maxVendorId,
-		created,
-		lastUpdated
-	};
-
-	if (isRange) {
-		const idMap = vendorRangeList.reduce((acc, {isRange, startVendorId, endVendorId}) => {
-			const lastVendorId = isRange ? endVendorId : startVendorId;
-			for (let i = startVendorId; i <= lastVendorId; i++) {
-				acc[i] = true;
-			}
-			return acc;
-		}, {});
-
-		cookieData.selectedVendorIds = new Set();
-		for (let i = 0; i <= maxVendorId; i++) {
-			if ((defaultConsent && !idMap[i]) ||
-				(!defaultConsent && idMap[i])) {
-				cookieData.selectedVendorIds.add(i);
-			}
-		}
-	}
-	else {
-		cookieData.selectedVendorIds = decodeBitsToIds(vendorIdBitString);
-	}
-
-	return cookieData;
-}
+};
 
 export {
-	writeCookie,
 	decodeConsentData,
 	encodeConsentData,
 	readConsentCookie,
 	writeConsentCookie,
 	encodeVendorConsentData,
 	convertVendorsToRanges,
-	decodeVendorConsentData,
 	CONSENT_COOKIE
 };
