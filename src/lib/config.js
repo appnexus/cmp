@@ -1,11 +1,9 @@
 import log from './log';
 
 const defaultConfig = {
-	customPurposeListLocation: './purposes.json',
 	globalVendorListLocation: 'https://vendorlist.consensu.org/v2/vendor-list.json',
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: false,
-	storePublisherData: false,
 	logging: false,
 	localization: {},
 	forceLocale: null,

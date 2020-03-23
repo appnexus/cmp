@@ -195,7 +195,7 @@ export default class Store {
 		}
 
 		this.persistedConsentData = decodeConsentData(encodedConsent);
-		this.cmpApi.tcModel = this.tcModel;
+		this.cmpApi.update(encodedConsent);
 
 		// Notify of date changes
 		this.storeUpdate();
@@ -389,7 +389,7 @@ export default class Store {
 	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
 		if (this.isConsentToolShowing) {
-			this.cmpApi.uiVisible = true;
+			this.cmpApi.update(encodeConsentData(this.tcModel), true);
 		}
 		this.isFooterShowing = false;
 		this.storeUpdate();
@@ -441,7 +441,6 @@ export default class Store {
 		const persistedMaxVendorId = this.persistedConsentData.vendorConsents && this.persistedConsentData.vendorConsents.maxId || 0;
 
 		this.tcModel.gvl = new GVL(vendorList);
-		this.cmpApi.tcModel = this.tcModel;
 		this.vendorList = vendorList;
 
 		// If vendor and publisher consent data has never been persisted set default selected status

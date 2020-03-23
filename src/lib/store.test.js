@@ -357,6 +357,7 @@ describe('store', () => {
 			cmpId: CMP_ID
 		});
 		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
 		expect(store.isConsentToolShowing).to.be.false;
 		store.toggleConsentToolShowing();
 		expect(store.isConsentToolShowing).to.be.true;

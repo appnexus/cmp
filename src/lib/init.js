@@ -50,7 +50,6 @@ export function init (configUpdates) {
 
 			const cmpManager = new CmpManager();
 			const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, createCommands(store, cmpManager));
-
 			if (config.decoratePageCallHandler) {
 				config.decoratePageCallHandler(cmpApi);
 			}
