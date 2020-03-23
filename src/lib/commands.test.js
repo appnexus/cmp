@@ -221,7 +221,7 @@ describe('commands', () => {
 				const encoded = encodeConsentData(tcModel);
 				const localStore = new Store({
 					cmpId: CMP_ID,
-					consentData: decodeConsentData(encoded)
+					consentString: encoded
 				});
 				const localCommands = createCommands(localStore);
 				const cmpApi = new CmpApi(280, 2, localCommands);
@@ -346,7 +346,7 @@ describe('commands', () => {
 				const encoded = encodeConsentData(tcModel);
 				const localStore = new Store({
 					cmpId: CMP_ID,
-					consentData: decodeConsentData(encoded)
+					consentString: encoded
 				});
 				const localCommands = createCommands(localStore);
 				const cmpApi = new CmpApi(280, 2, localCommands);

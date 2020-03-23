@@ -34,18 +34,24 @@ const createCommands = (store, cmpManager) => {
 	 * Build consent fields object v1 from data that has already been persisted.
 	 */
 	const getConsentFieldsObject = () => {
+		let created, lastUpdated;
+
 		const {
-			persistedConsentData
+			persistedConsentData,
+			persistedConsentString
 		} = store;
 
 		const {
-			created,
-			lastUpdated,
 			cmpId = store.tcModel.cmpId,
 			cmpVersion = store.tcModel.cmpVersion,
 			consentScreen = store.tcModel.consentScreen,
 			consentLanguage = store.tcModel.consentLanguage,
 		} = persistedConsentData;
+
+		if (persistedConsentString) {
+			created = persistedConsentData.created;
+			lastUpdated = persistedConsentData.lastUpdated;
+		}
 
 		return {
 			cmpId,

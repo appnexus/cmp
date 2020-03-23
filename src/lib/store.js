@@ -18,21 +18,37 @@ export default class Store {
 		cmpId,
 		cmpVersion = 2,
 		cookieVersion = 2,
-		consentData
+		consentString
 	} = {}) {
 		// Keep track of data that has already been persisted
-		consentData = consentData || {};
-		this.persistedConsentData = consentData;
 		const consentLanguage = findLocale().substr(0, 2).toUpperCase();
 		const tcModel = new TCModel();
 		tcModel.cmpId = cmpId;
 		tcModel.cmpVersion = cmpVersion;
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
+		const persistedTcModel = new TCModel();
+		persistedTcModel.cmpId = cmpId;
+		persistedTcModel.cmpVersion = cmpVersion;
+		persistedTcModel.isServiceSpecific = true;
+		persistedTcModel.supportOOB = false;
+
+		this.persistedConsentString = consentString;
+		this.persistedConsentData = decodeConsentData(consentString) || {};
 
 		this.tcModel = Object.assign(
 			tcModel,
-			consentData,
+			this.persistedConsentData,
+			{
+				version: cookieVersion,
+				cmpId,
+				cmpVersion,
+				consentLanguage
+			});
+
+		this.persistedConsentData = Object.assign(
+			persistedTcModel,
+			this.persistedConsentData,
 			{
 				version: cookieVersion,
 				cmpId,
@@ -194,6 +210,7 @@ export default class Store {
 			writeConsentCookie(encodedConsent);
 		}
 
+		this.persistedConsentString = encodedConsent;
 		this.persistedConsentData = decodeConsentData(encodedConsent);
 		this.cmpApi.update(encodedConsent);
 
@@ -389,7 +406,7 @@ export default class Store {
 	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
 		if (this.isConsentToolShowing) {
-			this.cmpApi.update(encodeConsentData(this.tcModel), true);
+			this.cmpApi.update(encodeConsentData(this.persistedConsentData), true);
 		}
 		this.isFooterShowing = false;
 		this.storeUpdate();
@@ -431,20 +448,23 @@ export default class Store {
 
 	updateVendorList = (vendorList) => {
 		const {
-			created,
-		} = this.persistedConsentData || {};
-
-		const {
 			vendors = {},
 		} = vendorList || {};
 
-		const persistedMaxVendorId = this.persistedConsentData.vendorConsents && this.persistedConsentData.vendorConsents.maxId || 0;
+		const persistedMaxVendorId = this.persistedConsentString &&
+			this.persistedConsentData.vendorConsents && this.persistedConsentData.vendorConsents.maxId || 0;
 
-		this.tcModel.gvl = new GVL(vendorList);
+		const gvl = new GVL(vendorList);
+		this.tcModel.gvl = gvl;
+
+		if (!this.persistedConsentString) {
+			this.persistedConsentData.gvl = gvl;
+		}
+
 		this.vendorList = vendorList;
 
 		// If vendor and publisher consent data has never been persisted set default selected status
-		if (!created) {
+		if (!this.persistedConsentString) {
 			const getIds = (object) => Object.keys(object)
 				.filter(key => object[key].id)
 				.map(key => object[key].id);

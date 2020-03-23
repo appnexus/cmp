@@ -3,7 +3,7 @@ import Promise from 'promise-polyfill';
 import Store from './store';
 import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
-import { decodeConsentData, readConsentCookie } from './cookie/cookie';
+import { readConsentCookie } from './cookie/cookie';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
@@ -22,7 +22,7 @@ function readExternalConsentData(config) {
 					reject(err);
 				} else {
 					try {
-						resolve(data.consent && decodeConsentData(data.consent) || undefined);
+						resolve(data.consent && data.consent || undefined);
 					} catch (err) {
 						reject(err);
 					}
@@ -40,12 +40,12 @@ export function init (configUpdates) {
 
 	// Fetch the current vendor consent before initializing
 	return ((config.getConsentData) ? readExternalConsentData(config) : readConsentCookie())
-		.then((consentData) => {
+		.then((consentString) => {
 			const store = new Store({
 				cmpVersion: CMP_VERSION,
 				cmpId: CMP_ID,
 				cookieVersion: COOKIE_VERSION,
-				consentData,
+				consentString,
 			});
 
 			const cmpManager = new CmpManager();

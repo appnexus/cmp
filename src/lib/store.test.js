@@ -3,7 +3,7 @@ import { expect, use } from 'chai';
 import datetime from 'chai-datetime';
 import Store from './store';
 import { CmpApi } from "@iabtcf/cmpapi";
-import { decodeConsentData, encodeConsentData } from "./cookie/cookie";
+import { encodeConsentData } from "./cookie/cookie";
 import {GVL, TCModel} from "@iabtcf/core";
 import {
 	PURPOSE_CONSENTS,
@@ -72,7 +72,7 @@ describe('store', () => {
 
 			const store = new Store({
 				cmpId: CMP_ID,
-				consentData: decodeConsentData(encoded),
+				consentString: encoded,
 			});
 
 			store.setCmpApi(cmpApi);
@@ -111,13 +111,11 @@ describe('store', () => {
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
 			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
-
 			const encoded = encodeConsentData(tcModel);
-			const decoded = decodeConsentData(encoded);
 
 			const store = new Store({
 				cmpId: CMP_ID,
-				consentData: decoded,
+				consentString: encoded,
 			});
 
 			store.setCmpApi(cmpApi);
@@ -147,11 +145,10 @@ describe('store', () => {
 			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
 			const encoded = encodeConsentData(tcModel);
-			const decoded = decodeConsentData(encoded);
 
 			const store = new Store({
 				cmpId: 280,
-				consentData: decoded,
+				consentString: encoded,
 			});
 
 			store.setCmpApi(cmpApi);
@@ -408,7 +405,7 @@ describe('store', () => {
 
 			const store = new Store({
 				cmpId: CMP_ID,
-				consentData: decodeConsentData(encoded),
+				consentString: encoded
 			});
 
 			store.setCmpApi(cmpApi);
