@@ -3,7 +3,7 @@ import { expect, use } from 'chai';
 import datetime from 'chai-datetime';
 import Store from './store';
 import { CmpApi } from "@iabtcf/cmpapi";
-import { decodeConsentData, encodeConsentData } from "./cookie/cookie";
+import { encodeConsentData } from "./cookie/cookie";
 import {GVL, TCModel} from "@iabtcf/core";
 import {
 	PURPOSE_CONSENTS,
@@ -72,7 +72,7 @@ describe('store', () => {
 
 			const store = new Store({
 				cmpId: CMP_ID,
-				consentData: decodeConsentData(encoded),
+				consentString: encoded,
 			});
 
 			store.setCmpApi(cmpApi);
@@ -86,6 +86,35 @@ describe('store', () => {
 			expect(store.tcModel.publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
 			expect(store.tcModel.publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
 			expect(store.tcModel.specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
+			done();
+		}, 0);
+	});
+
+	it('initializes with consent string v1.1', (done) => {
+		const oldConsentString = 'BOwkm8VOwkm8VEYABAPL89-AAAAzR__7_98t_TlDfLj99f7v_zf37_2___r_BgwV__3v__r_____5_93__-______f_7_________________________________________________________________________4A';
+
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(VENDOR_LIST);
+
+		setTimeout(() => {
+			const store = new Store({
+				cmpId: CMP_ID,
+				consentString: oldConsentString,
+			});
+
+			store.setCmpApi(cmpApi);
+
+			expect(store.persistedConsentString.length).to.equal(0);
+			expect(store.persistedConsentData).to.deep.equal({});
+			expect(store.tcModel.purposeConsents.maxId).to.equal(0);
+			expect(store.tcModel.purposeLegitimateInterests.maxId).to.equal(0);
+			expect(store.tcModel.vendorConsents.maxId).to.equal(0);
+			expect(store.tcModel.vendorLegitimateInterests.maxId).to.equal(0);
+			expect(store.tcModel.publisherConsents.maxId).to.equal(0);
+			expect(store.tcModel.publisherLegitimateInterests.maxId).to.equal(0);
+			expect(store.tcModel.specialFeatureOptins.maxId).to.equal(0);
 			done();
 		}, 0);
 	});
@@ -111,13 +140,11 @@ describe('store', () => {
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
 			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
-
 			const encoded = encodeConsentData(tcModel);
-			const decoded = decodeConsentData(encoded);
 
 			const store = new Store({
 				cmpId: CMP_ID,
-				consentData: decoded,
+				consentString: encoded,
 			});
 
 			store.setCmpApi(cmpApi);
@@ -147,11 +174,10 @@ describe('store', () => {
 			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
 			const encoded = encodeConsentData(tcModel);
-			const decoded = decodeConsentData(encoded);
 
 			const store = new Store({
 				cmpId: 280,
-				consentData: decoded,
+				consentString: encoded,
 			});
 
 			store.setCmpApi(cmpApi);
@@ -357,6 +383,7 @@ describe('store', () => {
 			cmpId: CMP_ID
 		});
 		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
 		expect(store.isConsentToolShowing).to.be.false;
 		store.toggleConsentToolShowing();
 		expect(store.isConsentToolShowing).to.be.true;
@@ -407,7 +434,7 @@ describe('store', () => {
 
 			const store = new Store({
 				cmpId: CMP_ID,
-				consentData: decodeConsentData(encoded),
+				consentString: encoded
 			});
 
 			store.setCmpApi(cmpApi);

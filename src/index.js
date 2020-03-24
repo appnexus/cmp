@@ -7,7 +7,8 @@ import 'core-js/fn/set';
 import {init} from './lib/init';
 import log from "./lib/log";
 import config from "./lib/config";
-import { decodeConsentData } from "./lib/cookie/cookie";
+import { decodeConsentData, readConsentCookie } from "./lib/cookie/cookie";
+import {fetchGlobalVendorList} from "./lib/vendor";
 
 const TCF_CONFIG = '__tcfConfig';
 
@@ -54,6 +55,11 @@ function checkConsent(tcfApi, store) {
 		log.warn('Cookies are disabled. Ignoring CMP consent check');
 	}
 	else {
+		const resolve = (timeout, consentData = {}, vendorList) => {
+			clearTimeout(timeout);
+			handleConsentResult(tcfApi, store, vendorList, consentData);
+		};
+
 		const { getVendorList, getConsentData } = config;
 		if (getVendorList) {
 			getVendorList((err, vendorList) => {
@@ -64,26 +70,38 @@ function checkConsent(tcfApi, store) {
 						handleConsentResult(tcfApi, store, vendorList);
 					}, 100);
 
-					const resolve = (consentData = {}) => {
-						clearTimeout(timeout);
-						handleConsentResult(tcfApi, store, vendorList, consentData);
-					};
-
 					if (getConsentData) {
 						getConsentData((err, data) => {
 							if (err) {
-								resolve();
+								resolve(timeout);
 							} else {
 								try {
 									const tcStringDecoded = decodeConsentData(data.consent);
-									resolve(tcStringDecoded);
+									resolve(timeout, tcStringDecoded, vendorList);
 								} catch (e) {
-									resolve();
+									resolve(timeout);
 								}
 							}
 						});
 					}
 				}
+			});
+		} else {
+			fetchGlobalVendorList().then((vendorList) => {
+				const timeout = setTimeout(() => {
+					handleConsentResult(tcfApi, store, vendorList);
+				}, 100);
+
+				readConsentCookie().then((cookie) => {
+					if (cookie) {
+						try {
+							const tcStringDecoded = decodeConsentData(cookie);
+							resolve(timeout, tcStringDecoded, vendorList);
+						} catch (e) {
+							resolve(timeout);
+						}
+					}
+				});
 			});
 		}
 	}

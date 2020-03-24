@@ -18,20 +18,20 @@ export default class Setup extends Component {
 			storePublisherData: false
 		};
 
-		const bookmarkScript = `javascript:(function(){
-			${buildScript(config, `//${CURRENT_LOCATION}../cmp.bundle.js`)}
-			window.__cmp('showConsentTool');
-		}());`.replace(/}\n/g, '};');
+		// const bookmarkScript = `javascript:(function(){
+		// 	${buildScript(config, `//${CURRENT_LOCATION}../cmp.bundle.js`)}
+		// 	window.__cmp('showConsentTool');
+		// }());`.replace(/}\n/g, '};');
 
 		this.setState({
-			bookmarklet: bookmarkScript,
+			// bookmarklet: bookmarkScript,
 			tag: beautify(`<head><script>${buildScript()}</script></head>`),
 		});
 	}
 
 	render(props, state) {
 
-		const { tag, bookmarklet} = state;
+		const { tag } = state;
 
 		return (
 			<div>
@@ -41,9 +41,9 @@ export default class Setup extends Component {
 					immediately after the script include. When the full implementation is loaded any queued commands
 					will be executed in the order they were received.
 				</p>
-				<div class={style.bookmarklet}>
-					Run this on any site by creating a bookmark of <a href={bookmarklet}>this link</a>
-				</div>
+				{/*<div class={style.bookmarklet}>*/}
+				{/*	Run this on any site by creating a bookmark of <a href={bookmarklet}>this link</a>*/}
+				{/*</div>*/}
 				<CodeMirror
 					className={style.code}
 					value={tag}

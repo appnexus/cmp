@@ -221,7 +221,7 @@ describe('commands', () => {
 				const encoded = encodeConsentData(tcModel);
 				const localStore = new Store({
 					cmpId: CMP_ID,
-					consentData: decodeConsentData(encoded)
+					consentString: encoded
 				});
 				const localCommands = createCommands(localStore);
 				const cmpApi = new CmpApi(280, 2, localCommands);
@@ -346,7 +346,7 @@ describe('commands', () => {
 				const encoded = encodeConsentData(tcModel);
 				const localStore = new Store({
 					cmpId: CMP_ID,
-					consentData: decodeConsentData(encoded)
+					consentString: encoded
 				});
 				const localCommands = createCommands(localStore);
 				const cmpApi = new CmpApi(280, 2, localCommands);
@@ -372,6 +372,46 @@ describe('commands', () => {
 					}, consents, VENDOR_LIST);
 				}, 100);
 
+			}, 0);
+		});
+
+
+		it('getVendorListVersion - should return null if transparency was not established', () => {
+			commands.getVendorListVersion((vendorListVersion) => {
+				expect(vendorListVersion).to.be.null;
+			});
+		});
+
+		it('getVendorListVersion - should return vendor list version if transparency was established', () => {
+			const tcModel = new TCModel();
+			tcModel.cmpId = 280;
+			tcModel.cmpVersion = 2;
+			tcModel.gvl = new GVL(VENDOR_LIST);
+
+			setTimeout(() => {
+				tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+				tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+				tcModel.vendorConsents.set(VENDOR_CONSENTS);
+				tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+				tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+				tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+				tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
+
+				// creating consent
+				const encoded = encodeConsentData(tcModel);
+				const localStore = new Store({
+					cmpId: CMP_ID,
+					consentString: encoded
+				});
+
+				const localCommands = createCommands(localStore);
+				const cmpApi = new CmpApi(280, 2, localCommands);
+				store.setCmpApi(cmpApi);
+				store.updateVendorList(VENDOR_LIST);
+
+				localCommands.getVendorListVersion((vendorListVersion) => {
+					expect(vendorListVersion).to.equal(100);
+				});
 			}, 0);
 		});
 	});

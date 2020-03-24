@@ -1,24 +1,11 @@
 import Example from "../example";
 
 const setup =
-`myLogger('Add eventListener "isLoaded"');
-window.__cmp('addEventListener', 'isLoaded', function(result){
-	myLogger('Event "isLoaded" called: ' + JSON.stringify(result));
-});
-
-myLogger('Add eventListener "cmpReady"');
-window.__cmp('addEventListener', 'cmpReady', function(result){
-	myLogger('Event "cmpReady" called: ' + JSON.stringify(result));
-});
-
-myLogger('Add eventListener "openConsentTool"');
-window.__cmp('addEventListener', 'openConsentTool', function(result){
-	myLogger('Event "openConsentTool" called: ' + JSON.stringify(result));
-});
-
-myLogger('Add eventListener "onSubmit"');
-window.__cmp('addEventListener', 'onSubmit', function(result){
-	myLogger('Event "onSubmit" called: ' + JSON.stringify(result));
+`myLogger('Add eventListener');
+window.__tcfapi('addEventListener', 2, function (tcData, success) {
+	if (success && tcData.eventStatus === 'tcloaded') {
+		myLogger('Event status is ' + JSON.stringify(tcData.eventStatus));
+	}
 });
 `;
 

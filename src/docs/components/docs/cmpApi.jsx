@@ -4,55 +4,66 @@ import style from './docs.less';
 
 const commands = [
 	{
-		command: 'getVendorConsents',
-		parameter: {
+		command: 'getTCData',
+		parameters: [{
 			type: '[parameter] (Array)',
 			description: 'Array of vendor IDs. Omitting the parameter returns all vendor consents'
-		},
+		}],
 		callback: {
-			resultType: 'result (Object)',
+			resultType: 'result (Object, Boolean)',
 			resultDescription: 'Object containing consent data for vendor IDs requested'
 		}
 	},
 	{
-		command: 'getPublisherConsents',
-		parameter: {
-			type: '[parameter]',
-			description: '(ignored)'
-		},
+		command: 'getConsentObject',
+		parameters: [{
+			type: 'parameter (Object)',
+			description: 'Object that contains established consents'
+		}, {
+			type: 'parameter (Object)',
+			description: 'Valid vendor list'
+		}],
 		callback: {
-			resultType: 'result (Object)',
-			resultDescription: 'Object containing all purpose consent data'
+			resultType: 'result (Object, Boolean)',
+			resultDescription: 'Object containing consent data for vendor IDs requested'
 		}
 	},
 	{
-		command: 'getConsentData',
-		parameter: {
-			type: '[parameter]',
-			description: '(ignored)'
-		},
+		command: 'getConsentFieldsV1',
+		parameters: [{
+			type: 'parameter (Object)',
+			description: 'Object that contains established consents'
+		}],
 		callback: {
-			resultType: 'result (String)',
-			resultDescription: 'Base64 encoded string containing all vendor consent data'
+			resultType: 'result (Object, Boolean)',
+			resultDescription: 'Object containing consent data in TCF v1.1 format'
 		}
 	},
 	{
 		command: 'getVendorList',
-		parameter: {
-			type: '[parameter]',
-			description: '(ignored)'
-		},
+		parameters: [{
+			type: 'int or string',
+			description: 'vendorListVersion'
+		}],
 		callback: {
-			resultType: 'result (Object)',
+			resultType: 'result (Object, Boolean)',
 			resultDescription: 'Object containing the entire vendor list of IDs and names'
 		}
 	},
 	{
+		command: 'getVendorListVersion',
+		parameters: [],
+		callback: {
+			resultType: 'result (Integer)',
+			resultDescription: 'Vendor list version when transparency was established, null otherwise.'
+		}
+	},
+	{
 		command: 'showConsentTool',
-		parameter: {
+		parameters: [{
 			type: '[parameter]',
 			description: '(ignored)'
-		},
+		}],
 		callback: {
 			resultType: 'result (Boolean)',
 			resultDescription: 'true'
@@ -60,10 +71,10 @@ const commands = [
 	},
 	{
 		command: 'showConsentDetailView',
-		parameter: {
+		parameters: [{
 			type: '[parameter]',
 			description: '(ignored)'
-		},
+		}],
 		callback: {
 			resultType: 'result (Boolean)',
 			resultDescription: 'true'
@@ -71,10 +82,10 @@ const commands = [
 	},
 	{
 		command: 'showVendors',
-		parameter: {
+		parameters: [{
 			type: '[parameter]',
 			description: '(ignored)'
-		},
+		}],
 		callback: {
 			resultType: 'result (Boolean)',
 			resultDescription: 'true'
@@ -82,10 +93,10 @@ const commands = [
 	},
     {
 		command: 'showFooter',
-		parameter: {
+		parameters: [{
 			type: '[parameter]',
 			description: '(ignored)'
-		},
+		}],
 		callback: {
 			resultType: 'result (Boolean)',
 			resultDescription: 'true'
@@ -93,25 +104,49 @@ const commands = [
 	},
 	{
 		command: 'addEventListener',
-		parameter: {
-			type: 'parameter (String)',
-			description: 'Name of the event to listen to'
-		},
+		parameters: [{
+			type: 'parameter',
+			description: '(ignored)'
+		}],
 		callback: {
 			description: 'Function to execute when the event is fired',
+			resultType: 'result (Object, Boolean)',
+			resultDescription: 'Object containing the event name and any data the event may return'
+		}
+	},
+	{
+		command: 'registerEventListener',
+		parameters: [{
+			type: 'parameter (Object)',
+			description: 'Object with \'event\' property'
+		}],
+		callback: {
+			description: 'Callback function to remove as a listener',
 			resultType: 'result (Object)',
 			resultDescription: 'Object containing the event name and any data the event may return'
 		}
 	},
 	{
 		command: 'removeEventListener',
-		parameter: {
-			type: 'parameter (String)',
-			description: 'Name of the event to listen to'
-		},
+		parameters: [{
+			type: 'parameter',
+			description: '(ignored)'
+		}],
 		callback: {
 			description: 'Callback function to remove as a listener',
-			resultType: 'result (Object)',
+			resultType: 'result (Object, Boolean)',
+			resultDescription: 'Object containing the event name and any data the event may return'
+		},
+	},
+	{
+		command: 'unregisterEventListener',
+		parameters: [{
+			type: 'parameter (Object)',
+			description: 'Object with \'event\' property'
+		}],
+		callback: {
+			description: 'Callback function to remove as a listener',
+			resultType: 'result (Object, boolean)',
 			resultDescription: 'Object containing the event name and any data the event may return'
 		}
 	}
@@ -146,29 +181,33 @@ export default class CmpApi extends Component {
 		return (
 			<div className={style.api}>
 				<span className={style.header}>CMP API</span>
-				<div className={style.function}>__cmp(command, [parameter], [callback])</div>
+				<div className={style.function}>__tcfapi(command, 2, [callback], [parameter])</div>
 				<div className={style.functionSection}>
 					<span className={style.functionSectionTitle}>Arguments</span>
 					<span className={style.argument}>
 						<span className={style.argumentType}>command (String)</span>: <span>Name of the command to execute</span>
 					</span>
 					<span className={style.argument}>
-						<span className={style.argumentType}>[parameter] (*)</span>: <span>Parameter to be passed to the command function</span>
+						<span className={style.argumentType}>[callback] (Function)</span>: <span>Function to be executed with the result of the command</span>
 					</span>
 					<span className={style.argument}>
-						<span className={style.argumentType}>[callback] (Function)</span>: <span>Function to be executed with the result of the command</span>
+						<span className={style.argumentType}>[parameter] (*)</span>: <span>Parameter to be passed to the command function</span>
 					</span>
 				</div>
 				<span className={style.functionSectionTitle}>Commands</span>
 				<div className={style.commands}>
-					{commands.map(({command, parameter, callback}) => (
+					{commands.map(({command, parameters, callback}) => (
 						<div className={style.functionSection}>
 							<div className={style.option}>{command}</div>
 							<span className={style.argument}>
 								<span className={style.argumentType}>command</span>: <span>"{command}"</span>
 							</span>
 							<span className={style.argument}>
-								<span className={style.argumentType}>{parameter.type}</span>: <span>{parameter.description}</span>
+								{parameters.map(parameter => (
+									<div>
+										<span className={style.argumentType}>{parameter.type}</span>: <span>{parameter.description}</span>
+									</div>
+								))}
 							</span>
 							<span className={style.argument}>
 								<span className={style.argumentType}>[callback(result)]</span>: <span>{callback.description || 'Function to be executed with the result of the command'}</span>

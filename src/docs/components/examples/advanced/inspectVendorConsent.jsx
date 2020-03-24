@@ -2,18 +2,18 @@ import Example from '../example';
 
 const setup = `
 myLogger('Add eventListener "onSubmit"');
-window.__cmp('addEventListener', 'onSubmit', function(result){
+window.__tcfapi('registerEventListener', 2, function (result) {
 	myLogger('Consent submitted');
 	inspectVendorConsents();
-});
+}, {event: 'onSubmit'});
 
 function inspectVendorConsents() {
 	myLogger('Request vendor consents');
-	window.__cmp('getVendorConsents', null, function(result){
+	window.__tcfapi('getTCData', 2, function (tcData, success) {
 		// Determine when the cookie information was first written
-		if (result.created) {
-			myLogger('Consents first persisted on: ' + result.created);
-			var vendors = result.vendorConsents;
+		if (success && tcData.eventStatus === 'useractioncomplete') {
+			myLogger('Consents was persisted before');
+			var vendors = tcData.vendor.consents;
 			var allowed = 0;
 			var total = 0;
 			var key;
@@ -29,14 +29,6 @@ function inspectVendorConsents() {
 		} else {
 			myLogger('Consents have never been persisted');
 		}
-		
-		// Determine when the cookie information was last updated
-		if (result.lastUpdated) {
-			myLogger('Consents last updated on: ' + result.lastUpdated);
-		} else {
-			myLogger('Consents have never been updated');
-		}
-		
 		// Show the consent tool
 		myLogger('Show consent tool');
 	});
@@ -46,7 +38,7 @@ inspectVendorConsents();
 
 const execute =
 	`
-window.__cmp('showConsentTool');
+window.__tcfapi('showConsentTool', 2, function () {});
 `;
 
 export default class InspectVendorData extends Example {

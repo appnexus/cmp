@@ -18,11 +18,9 @@ export default class Store {
 		cmpId,
 		cmpVersion = 2,
 		cookieVersion = 2,
-		consentData
+		consentString
 	} = {}) {
 		// Keep track of data that has already been persisted
-		consentData = consentData || {};
-		this.persistedConsentData = consentData;
 		const consentLanguage = findLocale().substr(0, 2).toUpperCase();
 		const tcModel = new TCModel();
 		tcModel.cmpId = cmpId;
@@ -30,9 +28,13 @@ export default class Store {
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
 
+		// decoding to check if string is compatible
+		this.persistedConsentString = decodeConsentData(consentString) ? consentString : '';
+		this.persistedConsentData = decodeConsentData(consentString) || {};
+
 		this.tcModel = Object.assign(
 			tcModel,
-			consentData,
+			this.persistedConsentData,
 			{
 				version: cookieVersion,
 				cmpId,
@@ -49,6 +51,9 @@ export default class Store {
 
 	setCmpApi (cmpApi) {
 		this.cmpApi = cmpApi;
+		if (this.persistedConsentString) {
+			this.cmpApi.update(this.persistedConsentString, false);
+		}
 	}
 
 	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);
@@ -194,8 +199,9 @@ export default class Store {
 			writeConsentCookie(encodedConsent);
 		}
 
+		this.persistedConsentString = encodedConsent;
 		this.persistedConsentData = decodeConsentData(encodedConsent);
-		this.cmpApi.tcModel = this.tcModel;
+		this.cmpApi.update(encodedConsent);
 
 		// Notify of date changes
 		this.storeUpdate();
@@ -389,7 +395,7 @@ export default class Store {
 	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
 		if (this.isConsentToolShowing) {
-			this.cmpApi.uiVisible = true;
+			this.cmpApi.update(this.persistedConsentString, true);
 		}
 		this.isFooterShowing = false;
 		this.storeUpdate();
@@ -431,17 +437,15 @@ export default class Store {
 
 	updateVendorList = (vendorList) => {
 		const {
-			created,
-		} = this.persistedConsentData || {};
+			created
+		} = this.persistedConsentData;
 
 		const {
 			vendors = {},
 		} = vendorList || {};
 
 		const persistedMaxVendorId = this.persistedConsentData.vendorConsents && this.persistedConsentData.vendorConsents.maxId || 0;
-
 		this.tcModel.gvl = new GVL(vendorList);
-		this.cmpApi.tcModel = this.tcModel;
 		this.vendorList = vendorList;
 
 		// If vendor and publisher consent data has never been persisted set default selected status

@@ -2,27 +2,27 @@ import Example from '../example';
 
 const setup = `
 myLogger('Add eventListener "onSubmit"');
-window.__cmp('addEventListener', 'onSubmit', function(result){
+window.__tcfapi('registerEventListener', 2, function (result) {
 	myLogger('Consent submitted');
-	window.__cmp('getVendorConsents', [0,1,2], function(result){
-		if (result.vendorConsents[1] === true) {
+	window.__tcfapi('getTCData', 2, function (tcData, success) {
+		if (success && tcData.vendor.consents['1'] === true) {
 			myLogger('Received consent for vendor ID: 1');
 		} else {
 			myLogger('Did NOT receive consent for vendor ID: 1');
 		}
-	});
-});
+	}, [1,2,3]);
+}, { event: 'onSubmit' });
 `;
 
 const execute =
 	`
-window.__cmp('getVendorConsents', [0,1,2], function(result){
+window.__tcfapi('getTCData', 2, function (tcData, success) {
 	// Determine if we want to show the consent tool
-	// if (result.vendorConsents[1] === true)
-	
+	// if (success && tcData.vendor.consents['1'] === true)
+
 	myLogger('Requesting consent');
-	window.__cmp('showConsentTool');
-});
+	window.__tcfapi('showConsentTool', 2, function () {});
+}, [1,2,3]);
 `;
 
 export default class ConsentData extends Example {

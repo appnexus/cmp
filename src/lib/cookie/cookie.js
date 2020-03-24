@@ -36,13 +36,19 @@ function decodeConsentData (encoded) {
 }
 
 const encodeConsentData = (decoded) => {
-	return TCString.encode(decoded);
+	let encoded;
+	try {
+		encoded = TCString.encode(decoded);
+	} catch (e) {
+		log.debug('Invalid consent data - unable to encode');
+	}
+	return encoded;
 };
 
 const readConsentCookie = () => {
 	const cookie = readCookie(CONSENT_COOKIE);
 	log.debug('Read consent data from local cookie', cookie);
-	return Promise.resolve(cookie && decodeConsentData(cookie));
+	return Promise.resolve(cookie);
 };
 
 const writeConsentCookie = (encodedConsent) => {
