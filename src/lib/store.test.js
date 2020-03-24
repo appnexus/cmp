@@ -90,6 +90,35 @@ describe('store', () => {
 		}, 0);
 	});
 
+	it('initializes with consent string v1.1', (done) => {
+		const oldConsentString = 'BOwkm8VOwkm8VEYABAPL89-AAAAzR__7_98t_TlDfLj99f7v_zf37_2___r_BgwV__3v__r_____5_93__-______f_7_________________________________________________________________________4A';
+
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(VENDOR_LIST);
+
+		setTimeout(() => {
+			const store = new Store({
+				cmpId: CMP_ID,
+				consentString: oldConsentString,
+			});
+
+			store.setCmpApi(cmpApi);
+
+			expect(store.persistedConsentString.length).to.equal(0);
+			expect(store.persistedConsentData).to.deep.equal({});
+			expect(store.tcModel.purposeConsents.maxId).to.equal(0);
+			expect(store.tcModel.purposeLegitimateInterests.maxId).to.equal(0);
+			expect(store.tcModel.vendorConsents.maxId).to.equal(0);
+			expect(store.tcModel.vendorLegitimateInterests.maxId).to.equal(0);
+			expect(store.tcModel.publisherConsents.maxId).to.equal(0);
+			expect(store.tcModel.publisherLegitimateInterests.maxId).to.equal(0);
+			expect(store.tcModel.specialFeatureOptins.maxId).to.equal(0);
+			done();
+		}, 0);
+	});
+
 	it('initializes with new vendor list', (done) => {
 		const vendorList = JSON.parse(JSON.stringify(VENDOR_LIST));
 		vendorList.vendorListVersion = 101;

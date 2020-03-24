@@ -28,7 +28,8 @@ export default class Store {
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
 
-		this.persistedConsentString = consentString || '';
+		// decoding to check if string is compatible
+		this.persistedConsentString = decodeConsentData(consentString) ? consentString : '';
 		this.persistedConsentData = decodeConsentData(consentString) || {};
 
 		this.tcModel = Object.assign(
