@@ -1,7 +1,7 @@
 import Example from '../example';
 
 const execute =
-`window.__tcfapi('ping', 2, function(result){
+`window.__tcfapi('ping', 2, function (result){
 	myLogger('ping callback result: ' + JSON.stringify(result,null,2));
 });`;
 

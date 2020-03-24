@@ -51,21 +51,28 @@ export const navItems = [
 			{ to: '/basic/list', title: 'Get Vendor List', component: VendorList },
 		]
 	},
-	{
-		title: 'IFrame Examples',
-		items: [
-			{ to: '/iframe/show', title: 'Show Consent Tool', component: () => <IFrame iframeId='showConsentTool'/>},
-			{ to: '/iframe/events', title: 'Event Listeners', component: () => <IFrame iframeId='addEventListeners'/>},
-			{ to: '/iframe/vendor', title: 'Get Vendor Consents', component: () => <IFrame iframeId='getVendorConsents'/>},
-			{ to: '/iframe/data', title: 'Get Consent Data', component: () => <IFrame iframeId='getConsentData'/>},
-		]
-	},
+	// {
+	// 	title: 'IFrame Examples',
+	// 	items: [
+	// 		{ to: '/iframe/show', title: 'Show Consent Tool', component: () => <IFrame iframeId='showConsentTool'/>},
+	// 		{ to: '/iframe/events', title: 'Event Listeners', component: () => <IFrame iframeId='addEventListeners'/>},
+	// 		{ to: '/iframe/vendor', title: 'Get Vendor Consents', component: () => <IFrame iframeId='getVendorConsents'/>},
+	// 		{ to: '/iframe/data', title: 'Get Consent Data', component: () => <IFrame iframeId='getConsentData'/>},
+	// 	]
+	// },
 	{
 		title: 'Advanced Examples',
 		items: [
 			{ to: '/advanced/require-consent', title: 'Require Consent', component: RequireConsent },
 			{ to: '/advanced/inspect-vendor-consent', title: 'Inspect Vendor Consent', component: InspectVendorConsent },
 			{ to: '/advanced/ad-after-consent', title: 'Load Ad After Consent', component: AdAfterConsent },
+		]
+	},
+	{
+		title: 'Tools (TCF v2.0)',
+		items: [
+			{to: '/tools/v2/encode', title: 'Encode Consent Cookie ', component: () => <IabToolRedirect encode={true}/>},
+			{to: '/tools/v2/decode', title: 'Decode Consent Cookie ', component: () => <IabToolRedirect encode={false}/>},
 		]
 	},
 	{
@@ -76,13 +83,6 @@ export const navItems = [
 			{to: '/tools/vendor-cookie-decoder', title: 'Decode Vendor Cookie', component: VendorCookieDecoder},
 			{to: '/tools/publisher-cookie-encoder', title: 'Encode Publisher Cookie', component: PublisherCookieEncoder},
 			{to: '/tools/publisher-cookie-decoder', title: 'Decode Publisher Cookie', component: PublisherCookieDecoder}
-		]
-	},
-	{
-		title: 'Tools (TCF v2.0)',
-		items: [
-			{to: '/tools/v2/encode', title: 'Encode Consent Cookie ', component: () => <IabToolRedirect encode={true}/>},
-			{to: '/tools/v2/decode', title: 'Decode Consent Cookie ', component: () => <IabToolRedirect encode={false}/>},
 		]
 	}
 ];

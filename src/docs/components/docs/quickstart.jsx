@@ -82,11 +82,9 @@ export default class Setup extends Component {
 						The consent tool presents the user with lists of purposes and vendors that they
 						can individually consent to.  These lists are controlled by a JSON file configured
 						by <span className={style.highlight}>config.globalVendorListLocation</span> (default
-						location: https://vendorlist.consensu.org/vendorlist.json). You can modify this
+						location: https://vendorlist.consensu.org/v2/vendor-list.json). You can modify this
 						value to point to your own custom list (NOTE: the location must serve the appropriate
 						CORS headers).
-
-						You can generate a file using this <Link to='/tools/vendor-list-builder'>tool</Link>.
 					</p>
 				</section>
 				<section>

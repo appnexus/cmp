@@ -1,7 +1,7 @@
 import Example from '../example';
 
 const execute =
-`window.__tcfapi('showConsentTool', 2, function(result){
+`window.__tcfapi('showConsentTool', 2, function (result){
 	myLogger('showConsentTool callback');
 });`;
 

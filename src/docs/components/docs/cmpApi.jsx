@@ -51,6 +51,14 @@ const commands = [
 		}
 	},
 	{
+		command: 'getVendorListVersion',
+		parameters: [],
+		callback: {
+			resultType: 'result (Integer)',
+			resultDescription: 'Vendor list version when transparency was established, null otherwise.'
+		}
+	},
+	{
 		command: 'showConsentTool',
 		parameters: [{
 			type: '[parameter]',

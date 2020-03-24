@@ -54,7 +54,9 @@ export default class Example extends Component {
 		});
 
 		if (setup) {
-			eval(setup);
+			setTimeout(() => {
+				eval(setup);
+			}, 500)
 		}
 	}
 

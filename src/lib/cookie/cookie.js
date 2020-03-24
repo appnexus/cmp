@@ -48,7 +48,7 @@ const encodeConsentData = (decoded) => {
 const readConsentCookie = () => {
 	const cookie = readCookie(CONSENT_COOKIE);
 	log.debug('Read consent data from local cookie', cookie);
-	return Promise.resolve(cookie && decodeConsentData(cookie));
+	return Promise.resolve(cookie);
 };
 
 const writeConsentCookie = (encodedConsent) => {

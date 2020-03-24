@@ -157,6 +157,7 @@ describe('cookie', () => {
 
 			return writeConsentCookie(encoded).then(() => {
 				return readConsentCookie().then(fromCookie => {
+					const cookie = decodeConsentData(fromCookie);
 					expect(document.cookie).to.contain(CONSENT_COOKIE);
 
 					const {
@@ -177,7 +178,7 @@ describe('cookie', () => {
 						publisherConsents,
 						publisherLegitimateInterests,
 						specialFeatureOptins
-					} = fromCookie;
+					} = cookie;
 
 					expect(supportOOB).to.equal(tcModel.supportOOB);
 					expect(isServiceSpecific).to.equal(tcModel.isServiceSpecific);
