@@ -27,27 +27,12 @@ export default class Store {
 		tcModel.cmpVersion = cmpVersion;
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
-		const persistedTcModel = new TCModel();
-		persistedTcModel.cmpId = cmpId;
-		persistedTcModel.cmpVersion = cmpVersion;
-		persistedTcModel.isServiceSpecific = true;
-		persistedTcModel.supportOOB = false;
 
-		this.persistedConsentString = consentString;
+		this.persistedConsentString = consentString || '';
 		this.persistedConsentData = decodeConsentData(consentString) || {};
 
 		this.tcModel = Object.assign(
 			tcModel,
-			this.persistedConsentData,
-			{
-				version: cookieVersion,
-				cmpId,
-				cmpVersion,
-				consentLanguage
-			});
-
-		this.persistedConsentData = Object.assign(
-			persistedTcModel,
 			this.persistedConsentData,
 			{
 				version: cookieVersion,
@@ -409,10 +394,7 @@ export default class Store {
 	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
 		if (this.isConsentToolShowing) {
-			const encodedString = this.persistedConsentString ?
-				this.persistedConsentString :
-				encodeConsentData(this.persistedConsentData);
-			this.cmpApi.update(encodedString, true);
+			this.cmpApi.update(this.persistedConsentString, true);
 		}
 		this.isFooterShowing = false;
 		this.storeUpdate();
@@ -454,23 +436,19 @@ export default class Store {
 
 	updateVendorList = (vendorList) => {
 		const {
+			created
+		} = this.persistedConsentData;
+
+		const {
 			vendors = {},
 		} = vendorList || {};
 
-		const persistedMaxVendorId = this.persistedConsentString &&
-			this.persistedConsentData.vendorConsents && this.persistedConsentData.vendorConsents.maxId || 0;
-
-		const gvl = new GVL(vendorList);
-		this.tcModel.gvl = gvl;
-
-		if (!this.persistedConsentString) {
-			this.persistedConsentData.gvl = gvl;
-		}
-
+		const persistedMaxVendorId = this.persistedConsentData.vendorConsents && this.persistedConsentData.vendorConsents.maxId || 0;
+		this.tcModel.gvl = new GVL(vendorList);
 		this.vendorList = vendorList;
 
 		// If vendor and publisher consent data has never been persisted set default selected status
-		if (!this.persistedConsentString) {
+		if (!created) {
 			const getIds = (object) => Object.keys(object)
 				.filter(key => object[key].id)
 				.map(key => object[key].id);

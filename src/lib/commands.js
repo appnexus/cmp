@@ -279,9 +279,22 @@ const createCommands = (store, cmpManager) => {
 		cmpManager.removeEventListener(event, callback);
 	};
 
+	const getVendorListVersion = (callback = () => {})=> {
+		const {
+			persistedConsentData
+		} = store;
+
+		const {
+			vendorListVersion = null
+		} = persistedConsentData;
+
+		callback(vendorListVersion);
+	};
+
 	return {
 		getConsentObject,
 		getConsentFieldsV1,
+		getVendorListVersion,
 		showConsentTool,
 		showConsentDetailView,
 		showVendors,
