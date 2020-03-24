@@ -1,6 +1,6 @@
 import Example from "../example";
 
-const execute =
+const setup =
 `myLogger('Add eventListener');
 window.__tcfapi('addEventListener', 2, function (tcData, success) {
 	if (success && tcData.eventStatus === 'tcloaded') {
@@ -14,7 +14,7 @@ export default class EventListeners extends Example {
 		super(props);
 		this.state = {
 			title: 'Event Listeners',
-			execute
+			setup
 		};
 	}
 }

@@ -1,6 +1,6 @@
 import Example from "../example";
 
-const execute =
+const setup =
 `myLogger('Add custom eventListener "isLoaded"');
 window.__tcfapi('registerEventListener', 2, function (result) {
 	myLogger('Event "isLoaded" called: ' + JSON.stringify(result));
@@ -27,7 +27,7 @@ export default class CustomEventListeners extends Example {
 		super(props);
 		this.state = {
 			title: 'Custom Event Listeners',
-			execute
+			setup
 		};
 	}
 }
