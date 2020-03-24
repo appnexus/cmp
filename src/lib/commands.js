@@ -281,12 +281,8 @@ const createCommands = (store, cmpManager) => {
 
 	const getVendorListVersion = (callback = () => {})=> {
 		const {
-			persistedConsentData
-		} = store;
-
-		const {
 			vendorListVersion = null
-		} = persistedConsentData;
+		} = store.persistedConsentData;
 
 		callback(vendorListVersion);
 	};

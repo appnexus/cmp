@@ -379,7 +379,7 @@ describe('commands', () => {
 		it('getVendorListVersion - should return null if transparency was not established', () => {
 			commands.getVendorListVersion((vendorListVersion) => {
 				expect(vendorListVersion).to.be.null;
-			})
+			});
 		});
 
 		it('getVendorListVersion - should return vendor list version if transparency was established', () => {
