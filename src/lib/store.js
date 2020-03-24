@@ -65,6 +65,9 @@ export default class Store {
 
 	setCmpApi (cmpApi) {
 		this.cmpApi = cmpApi;
+		if (this.persistedConsentString) {
+			this.cmpApi.update(this.persistedConsentString, false);
+		}
 	}
 
 	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);
