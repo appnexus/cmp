@@ -28,28 +28,28 @@ export default class Details extends Component {
 		return Object.values(vendors);
 	};
 
-	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [], specialPurpose=null, specialFeature=null } = {}) => {
+	filterVendors = ({ isCustom = null, purposeId, featureId, specialPurpose, specialFeature} = {}) => {
 		const { gvl } = this.props.store.tcModel;
-		let vendList;
+		let filteredVendors;
 
-		if(!!purposeIds.length) {
+		if(purposeId) {
 			if(specialPurpose) {
-				vendList = Object.values(gvl.getVendorsWithSpecialPurpose(purposeIds))
+				filteredVendors = Object.values(gvl.getVendorsWithSpecialPurpose(purposeId))
 			} else {
-				vendList = Object.values(gvl.getVendorsWithConsentPurpose(purposeIds))
+				filteredVendors = Object.values(gvl.getVendorsWithConsentPurpose(purposeId))
 			}
-		} else if(!!featureIds.length) {
+		} else if(featureId) {
 			if(specialFeature) {
-				vendList = Object.values(gvl.getVendorsWithSpecialFeature(featureIds))
+				filteredVendors = Object.values(gvl.getVendorsWithSpecialFeature(featureId))
 			} else {
-				vendList = Object.values(gvl.getVendorsWithFeature(featureIds))
+				filteredVendors = Object.values(gvl.getVendorsWithFeature(featureId))
 			}
 		}
 
 		if(isCustom) {
-			vendList = vendList.filter(vendor => !!vendor.globalId)
+			filteredVendors = vendList.filter(vendor => !!vendor.globalId)
 		}
-		return vendList;
+		return filteredVendors ;
 	};
 
 	handleShowVendors = (filter) => {

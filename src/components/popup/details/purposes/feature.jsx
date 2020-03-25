@@ -26,13 +26,13 @@ const Feature = (props) => {
 				<LocalLabel localizeKey={`feature${feature.id}.description`}>{feature.description}</LocalLabel>
 				<div>
 					<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: false,
-						featureIds: [feature.id], specialFeature})}>
+						featureId: feature.id, specialFeature})}>
 						<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
 					</a>
 				</div>
 				<div>
 					<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: true,
-						featureIds: [feature.id], specialFeature})}>
+						featureId: feature.id, specialFeature})}>
 						<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 					</a>
 				</div>
