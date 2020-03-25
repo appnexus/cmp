@@ -29,8 +29,9 @@ export default class Store {
 		tcModel.supportOOB = false;
 
 		// decoding to check if string is compatible
-		this.persistedConsentString = decodeConsentData(consentString) ? consentString : '';
-		this.persistedConsentData = decodeConsentData(consentString) || {};
+		const decodedConsentString = decodeConsentData(consentString);
+		this.persistedConsentString = decodedConsentString ? consentString : '';
+		this.persistedConsentData = decodedConsentString || {};
 
 		this.tcModel = Object.assign(
 			tcModel,
