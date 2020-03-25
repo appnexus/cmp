@@ -253,16 +253,12 @@ export default class Store {
 
 	selectVendorLegitimateInterests = (vendorId, isSelected) => {
 		const {vendorLegitimateInterests} = this.tcModel;
-		const hasLegInts = this.vendorList.vendors[vendorId].legIntPurposes.length > 0;
-
-		if (hasLegInts) {
-			if (isSelected) {
-				vendorLegitimateInterests.set(vendorId);
-			} else {
-				vendorLegitimateInterests.unset(vendorId);
-			}
-			this.storeUpdate();
+		if (isSelected) {
+			vendorLegitimateInterests.set(vendorId);
+		} else {
+			vendorLegitimateInterests.unset(vendorId);
 		}
+		this.storeUpdate();
 	};
 
 	selectAllVendorLegitimateInterests = (isSelected, update = true) => {
@@ -475,7 +471,9 @@ export default class Store {
 			Object.values(vendors).forEach(v => {
 				if (v.id > persistedMaxVendorId) {
 					this.tcModel.vendorConsents.set(v.id);
-					this.selectVendorLegitimateInterests(v.id, true);
+					if (v.legIntPurposes.length > 0) {
+						this.tcModel.vendorLegitimateInterests.set(v.id);
+					}
 				}
 			});
 		}
