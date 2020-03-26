@@ -47,7 +47,7 @@ export default class Details extends Component {
 		}
 
 		if(isCustom) {
-			filteredVendors = vendList.filter(vendor => !!vendor.globalId)
+			filteredVendors = filteredVendors.filter(vendor => !!vendor.globalId)
 		}
 		return filteredVendors ;
 	};
