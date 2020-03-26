@@ -6,6 +6,7 @@ import 'core-js/fn/array/filter';
 import 'core-js/fn/set';
 import 'core-js/fn/number/is-integer';
 import 'core-js/es6/symbol';
+import 'core-js/fn/string/repeat';
 import {init} from './lib/init';
 import log from "./lib/log";
 import config from "./lib/config";
@@ -120,5 +121,7 @@ function start() {
 
 	init(configUpdates).then((store) => checkConsent(window.__tcfapi, store));
 }
+
+console.log('maaaaciek');
 
 start();
