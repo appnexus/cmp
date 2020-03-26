@@ -4,6 +4,7 @@ import 'core-js/fn/array/map';
 import 'core-js/fn/array/for-each';
 import 'core-js/fn/array/filter';
 import 'core-js/fn/set';
+import 'core-js/fn/number/is-integer';
 import 'core-js/es6/symbol';
 import {init} from './lib/init';
 import log from "./lib/log";
