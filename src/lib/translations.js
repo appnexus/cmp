@@ -167,7 +167,9 @@ export default {
 			features: 'Funkcje',
 			legitimateInterest: 'Uzasadniony interes prawny',
 			legitimateButton: 'UIP',
-			acceptButton: 'Zgoda'
+			acceptButton: 'Zgoda',
+			specialPurposes: 'Cele specjalne',
+			specialFeatures: 'Funkcje specjalne'
 		},
 		footer: {
 			message: 'Zmień swoje ustawienia prywatności klikając',
