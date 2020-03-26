@@ -122,6 +122,4 @@ function start() {
 	init(configUpdates).then((store) => checkConsent(window.__tcfapi, store));
 }
 
-console.log('maaaaciek');
-
 start();
