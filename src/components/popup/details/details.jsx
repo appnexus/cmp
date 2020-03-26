@@ -101,7 +101,7 @@ export default class Details extends Component {
 			vendorConsents,
 			vendorLegitimateInterests,
 			purposeLegitimateInterests,
-			publisherLegitimateInterests
+			specialFeatureOptins
 		} = tcModel;
 
 		const { created: consentCreated } = persistedConsentData;
@@ -133,10 +133,10 @@ export default class Details extends Component {
 							selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
 							selectedPurposeLegitimateInterests={purposeLegitimateInterests}
 							selectSpecialFeatureOptins={selectSpecialFeatureOptins}
+							specialFeatureOptins={specialFeatureOptins}
 							initialVendorsRejection={initialVendorsRejection}
 							selectPublisherPurpose={selectPublisherPurpose}
 							selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
-							selectedPublisherLegitimateInterests={publisherLegitimateInterests}
 							onShowVendors={this.handleShowVendors}
 							persistedConsentData={persistedConsentData}
 						/>

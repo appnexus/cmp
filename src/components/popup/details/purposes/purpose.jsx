@@ -24,7 +24,7 @@ const Purpose = (props) => {
 		isPublisherPurpose = false
 	} = props;
 
-	const prefix = purpose.custom ? `customPurpose${purpose.id}` : `purpose${purpose.id}`;
+	const prefix = `purpose${purpose.id}`;
 
 	return (
 		<div className={style.purposeDetail}>

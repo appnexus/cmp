@@ -67,7 +67,7 @@ export default class Purposes extends Component {
 	};
 
 	handleSelectSpecialFeatureOptins = ({isSelected, dataId}) => {
-		this.props.selectSpecialFeatureOptins(dataId, isSelected);
+		this.props.selectSpecialFeatureOptins(dataId+1, isSelected);
 	};
 
 	createHandleSelectPurpose = (isPublisher) => {
@@ -121,8 +121,8 @@ export default class Purposes extends Component {
 			specialFeatures,
 			persistedConsentData = {},
 			initialVendorsRejection,
-			selectedPublisherLegitimateInterests,
-			selectedPurposeLegitimateInterests
+			selectedPurposeLegitimateInterests,
+			specialFeatureOptins
 		} = props;
 
 		const { created: consentCreated } = persistedConsentData;
@@ -138,7 +138,7 @@ export default class Purposes extends Component {
 			(isPublisher ? selectedPublisherPurposeIds : selectedPurposeIds).has(purpose.id)
 		);
 
-		const isPublisherLegitimateInterestActive = (id) => selectedPublisherLegitimateInterests.has(id);
+		const isSpecialFeatureOptinsActive = (id) => specialFeatureOptins.has(id+1);
 		const isPurposeLegitimateInterestActive = (id) => selectedPurposeLegitimateInterests.has(id+1);
 
 		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
@@ -258,9 +258,8 @@ export default class Purposes extends Component {
 																		   isLegitimateInterestActive={false}
 																		   isTechnical={true}
 																		   specialPurpose={true}
-																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
-																		   onToggleLegitInterest={this.handleSelectLegitInterest.bind(this)}
-																		   onToggle={this.createHandleSelectPurpose()}/>)}
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>)}
+
 							</div>}
 							<div>
 								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}>Features</LocalLabel>
@@ -272,9 +271,12 @@ export default class Purposes extends Component {
 							{specialFeatures && !!specialFeatures.length && <div>
 								<LocalLabel className={style.header} prefix="specialFeatures" localizeKey={`title`}>Special features</LocalLabel>
 								{specialFeatures.map((feature, index) => <Feature key={index}
+																		   index={index}
 																		   feature={feature}
 																		   specialFeature={true}
-																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>
+																		   isActive={isSpecialFeatureOptinsActive(index)}
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		   onToggle={this.handleSelectSpecialFeatureOptins.bind(this)}/>
 								)}
 							</div>}
 						</div>

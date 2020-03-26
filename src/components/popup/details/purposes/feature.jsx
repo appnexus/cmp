@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import style from "./purposes.less";
 import Label from "../../../label/label";
+import Switch from "../../../switch/switch";
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -12,7 +13,11 @@ const Feature = (props) => {
 	const {
 		feature,
 		specialFeature,
-		createOnShowVendors
+		createOnShowVendors,
+
+		index,
+		isActive,
+		onToggle
 	} = props;
 
 	return (
@@ -22,6 +27,18 @@ const Feature = (props) => {
 					<LocalLabel localizeKey={`feature${feature.id}.title`}>{feature.name}</LocalLabel>
 				</div>
 			</div>
+				{specialFeature &&
+					<div className={style.active}>
+						<div className={style.switch}>
+							<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
+							<Switch
+								isSelected={isActive}
+								dataId={index}
+								onClick={onToggle}
+							/>
+						</div>
+					</div>}
+
 			<div className={style.body}>
 				<LocalLabel localizeKey={`feature${feature.id}.description`}>{feature.description}</LocalLabel>
 				<div>
