@@ -1,92 +1,217 @@
 /* eslint-disable max-nested-callbacks */
 import { expect } from 'chai';
-import customPurposeList from '../../docs/assets/purposes.json';
-import config from '../config';
-
 import {
-	writeCookie,
-	encodeVendorConsentData,
-	decodeVendorConsentData,
-	encodePublisherConsentData,
-	decodePublisherConsentData,
-	writeVendorConsentCookie,
-	writePublisherConsentCookie,
-	readPublisherConsentCookie,
-	readVendorConsentCookie,
+	decodeConsentData,
+	encodeConsentData,
+	writeConsentCookie,
+	readConsentCookie,
 	convertVendorsToRanges,
-	PUBLISHER_CONSENT_COOKIE_NAME,
-	VENDOR_CONSENT_COOKIE_NAME
+	encodeVendorConsentData,
+	CONSENT_COOKIE
 } from './cookie';
+import {
+	PURPOSE_CONSENTS,
+	PURPOSE_LEGITIMATE_INTERESTS,
+	VENDOR_CONSENTS,
+	VENDOR_LEGITIMATE_INTERESTS,
+	PUBLISHER_CONSENTS,
+	PUBLISHER_LEGITIMATE_INTERESTS,
+	SPECIAL_FEATURE_OPT_INS,
+	VENDOR_LIST
+} from "../../../test/constants";
+import { GVL, TCModel } from "@iabtcf/core";
+import {decodeVendorCookieValue, decodeBitsToIds, decodePublisherCookieValue} from "./cookieDecodeHelpers";
+import {encodePublisherCookieValue, encodeVendorCookieValue} from "./cookieEncodeHelpers";
 
-jest.mock('../portal');
-const mockPortal = require('../portal');
+function decodeVendorConsentData(cookieValue) {
+	const {
+		cookieVersion,
+		cmpId,
+		cmpVersion,
+		consentScreen,
+		consentLanguage,
+		vendorListVersion,
+		purposeIdBitString,
+		maxVendorId,
+		created,
+		lastUpdated,
+		isRange,
+		defaultConsent,
+		vendorIdBitString,
+		vendorRangeList
+	} = decodeVendorCookieValue(cookieValue);
 
-const vendorList = {
-	"version": 1,
-	"origin": "http://ib.adnxs.com/vendors.json",
-	"purposes": [
-		{
-			"id": 1,
-			"name": "Accessing a Device or Browser"
-		},
-		{
-			"id": 2,
-			"name": "Advertising Personalisation"
-		},
-		{
-			"id": 3,
-			"name": "Analytics"
-		},
-		{
-			"id": 4,
-			"name": "Content Personalisation"
+	const cookieData = {
+		cookieVersion,
+		cmpId,
+		cmpVersion,
+		consentScreen,
+		consentLanguage,
+		vendorListVersion,
+		selectedPurposeIds: decodeBitsToIds(purposeIdBitString),
+		maxVendorId,
+		created,
+		lastUpdated
+	};
+
+	if (isRange) {
+		const idMap = vendorRangeList.reduce((acc, {isRange, startVendorId, endVendorId}) => {
+			const lastVendorId = isRange ? endVendorId : startVendorId;
+			for (let i = startVendorId; i <= lastVendorId; i++) {
+				acc[i] = true;
+			}
+			return acc;
+		}, {});
+
+		cookieData.selectedVendorIds = new Set();
+		for (let i = 0; i <= maxVendorId; i++) {
+			if ((defaultConsent && !idMap[i]) ||
+				(!defaultConsent && idMap[i])) {
+				cookieData.selectedVendorIds.add(i);
+			}
 		}
-	],
-	"vendors": [
-		{
-			"id": 1,
-			"name": "Globex"
-		},
-		{
-			"id": 2,
-			"name": "Initech"
-		},
-		{
-			"id": 3,
-			"name": "CRS"
-		},
-		{
-			"id": 4,
-			"name": "Umbrella"
-		},
-		{
-			"id": 10,
-			"name": "Pierce and Pierce"
-		},
-		{
-			"id": 8,
-			"name": "Aperture"
-		}
-	]
-};
+	}
+	else {
+		cookieData.selectedVendorIds = decodeBitsToIds(vendorIdBitString);
+	}
+
+	return cookieData;
+}
 
 describe('cookie', () => {
+	it('encodes and decodes consent cookie object back to original value', (done) => {
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(VENDOR_LIST);
 
-	const aDate = new Date('2018-07-15 PDT');
+		setTimeout(() => {
+			tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+			tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+			tcModel.vendorConsents.set(VENDOR_CONSENTS);
+			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
-	beforeEach(() => {
-		// Remove all cookies
-		const value = document.cookie.split(';');
-		value.forEach(cookie => {
-			const parts = cookie.trim().split('=');
-			if (parts.length === 2) {
-				writeCookie(parts[0], '', 0);
-			}
-		});
-		mockPortal.sendPortalCommand = jest.fn().mockImplementation(() => Promise.resolve());
+			const encoded = encodeConsentData(tcModel);
+			const decoded = decodeConsentData(encoded);
+
+			const {
+				supportOOB,
+				isServiceSpecific,
+				useNonStandardStacks,
+				purposeOneTreatment,
+				publisherCountryCode,
+				version,
+				consentLanguage,
+				cmpId,
+				cmpVersion,
+				vendorListVersion,
+				purposeConsents,
+				purposeLegitimateInterests,
+				vendorConsents,
+				vendorLegitimateInterests,
+				publisherConsents,
+				publisherLegitimateInterests,
+				specialFeatureOptins
+			} = decoded;
+
+			expect(supportOOB).to.equal(tcModel.supportOOB);
+			expect(isServiceSpecific).to.equal(tcModel.isServiceSpecific);
+			expect(useNonStandardStacks).to.equal(tcModel.useNonStandardStacks);
+			expect(purposeOneTreatment).to.equal(tcModel.purposeOneTreatment);
+			expect(publisherCountryCode).to.equal(tcModel.publisherCountryCode);
+			expect(version).to.equal(tcModel.version);
+			expect(consentLanguage).to.equal(tcModel.consentLanguage);
+			expect(cmpId).to.equal(tcModel.cmpId);
+			expect(cmpVersion).to.equal(tcModel.cmpVersion);
+			expect(vendorListVersion).to.equal(tcModel.vendorListVersion);
+			expect(purposeConsents.maxId).to.equal(Math.max(...PURPOSE_CONSENTS));
+			expect(purposeLegitimateInterests.maxId).to.equal(Math.max(...PURPOSE_LEGITIMATE_INTERESTS));
+			expect(vendorConsents.maxId).to.equal(Math.max(...VENDOR_CONSENTS));
+			expect(vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
+			expect(publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
+			expect(publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
+			expect(specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
+			done();
+		}, 0);
+	});
+
+	it('writes and reads the local cookie when globalConsent = false', (done) => {
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(VENDOR_LIST);
+
+		setTimeout(() => {
+			tcModel.purposeConsents.set(PURPOSE_CONSENTS);
+			tcModel.purposeLegitimateInterests.set(PURPOSE_LEGITIMATE_INTERESTS);
+			tcModel.vendorConsents.set(VENDOR_CONSENTS);
+			tcModel.vendorLegitimateInterests.set(VENDOR_LEGITIMATE_INTERESTS);
+			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
+			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
+			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
+
+			const encoded = encodeConsentData(tcModel);
+
+			return writeConsentCookie(encoded).then(() => {
+				return readConsentCookie().then(fromCookie => {
+					const cookie = decodeConsentData(fromCookie);
+					expect(document.cookie).to.contain(CONSENT_COOKIE);
+
+					const {
+						supportOOB,
+						isServiceSpecific,
+						useNonStandardStacks,
+						purposeOneTreatment,
+						publisherCountryCode,
+						version,
+						consentLanguage,
+						cmpId,
+						cmpVersion,
+						vendorListVersion,
+						purposeConsents,
+						purposeLegitimateInterests,
+						vendorConsents,
+						vendorLegitimateInterests,
+						publisherConsents,
+						publisherLegitimateInterests,
+						specialFeatureOptins
+					} = cookie;
+
+					expect(supportOOB).to.equal(tcModel.supportOOB);
+					expect(isServiceSpecific).to.equal(tcModel.isServiceSpecific);
+					expect(useNonStandardStacks).to.equal(tcModel.useNonStandardStacks);
+					expect(purposeOneTreatment).to.equal(tcModel.purposeOneTreatment);
+					expect(publisherCountryCode).to.equal(tcModel.publisherCountryCode);
+					expect(version).to.equal(tcModel.version);
+					expect(consentLanguage).to.equal(tcModel.consentLanguage);
+					expect(cmpId).to.equal(tcModel.cmpId);
+					expect(cmpVersion).to.equal(tcModel.cmpVersion);
+					expect(vendorListVersion).to.equal(tcModel.vendorListVersion);
+					expect(purposeConsents.maxId).to.equal(Math.max(...PURPOSE_CONSENTS));
+					expect(purposeLegitimateInterests.maxId).to.equal(Math.max(...PURPOSE_LEGITIMATE_INTERESTS));
+					expect(vendorConsents.maxId).to.equal(Math.max(...VENDOR_CONSENTS));
+					expect(vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
+					expect(publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
+					expect(publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
+					expect(specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
+					done();
+				});
+			});
+		}, 0);
+	});
+
+	it('It should return undefined when decoding v1 cookie', () => {
+		const cookie_v1 = 'BOEFEAyOEFEAyAHABDENAI4AAAB9vABAASA';
+		const decoded = decodeConsentData(cookie_v1);
+		expect(decoded).to.be.undefined;
 	});
 
 	it('encodes and decodes the vendor cookie object back to original value', () => {
+
+		const aDate = new Date('2018-07-15 PDT');
 		const vendorConsentData = {
 			cookieVersion: 1,
 			cmpId: 1,
@@ -94,131 +219,21 @@ describe('cookie', () => {
 			consentScreen: 2,
 			consentLanguage: 'DE',
 			vendorListVersion: 1,
-			maxVendorId: vendorList.vendors[vendorList.vendors.length - 1].id,
+			maxVendorId: Math.max(...Object.values(VENDOR_LIST.vendors).map(vendor => vendor.id)),
 			created: aDate,
 			lastUpdated: aDate,
 			selectedPurposeIds: new Set([1, 2]),
 			selectedVendorIds: new Set([1, 2, 4])
 		};
 
-		const encodedString = encodeVendorConsentData({...vendorConsentData, vendorList});
+		const encodedString = encodeVendorConsentData({...vendorConsentData, VENDOR_LIST});
 		const decoded = decodeVendorConsentData(encodedString);
 
 		expect(decoded).to.deep.equal(vendorConsentData);
 	});
 
-	it('encodes and decodes the publisher cookie object back to original value', () => {
-		const vendorConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
-
-		const publisherConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			publisherPurposeVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-			selectedStandardPurposeIds: new Set([1, 4, 5]),
-			selectedCustomPurposeIds: new Set([2, 3])
-		};
-
-		const encodedString = encodePublisherConsentData({
-			...vendorConsentData, ...publisherConsentData,
-			vendorList,
-			customPurposeList
-		});
-		const decoded = decodePublisherConsentData(encodedString);
-
-		expect(decoded).to.deep.equal({...vendorConsentData, ...publisherConsentData});
-	});
-
-	it('writes and reads the local cookie when globalConsent = false', () => {
-		config.update({
-			storeConsentGlobally: false
-		});
-
-		const vendorConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
-
-		return writeVendorConsentCookie(vendorConsentData).then(() => {
-			return readVendorConsentCookie().then(fromCookie => {
-				expect(document.cookie).to.contain(VENDOR_CONSENT_COOKIE_NAME);
-				expect(fromCookie).to.deep.include(vendorConsentData);
-			});
-		});
-	});
-
-	it('writes the global cookie when globalConsent = true', () => {
-		config.update({
-			storeConsentGlobally: true
-		});
-
-		const vendorConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
-
-		return writeVendorConsentCookie(vendorConsentData).then(() => {
-			expect(document.cookie).to.not.contain(VENDOR_CONSENT_COOKIE_NAME);
-			expect(mockPortal.sendPortalCommand.mock.calls[0][0].command).to.deep.equal('writeVendorConsent');
-		});
-	});
-
-	it('reads the global cookie when globalConsent = true', () => {
-		config.update({
-			storeConsentGlobally: true
-		});
-
-		const vendorConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
-
-		return readVendorConsentCookie(vendorConsentData).then(() => {
-			expect(mockPortal.sendPortalCommand.mock.calls[0][0].command).to.deep.equal('readVendorConsent');
-		});
-	});
-
-	it('writes and reads the publisher consent cookie', () => {
-		config.update({
-			storeConsentGlobally: false,
-			storePublisherData: true
-		});
-
-		const publisherConsentData = {
-			cookieVersion: 1,
-			cmpId: 1,
-			vendorListVersion: 1,
-			publisherPurposeVersion: 1,
-			created: aDate,
-			lastUpdated: aDate,
-		};
-
-		writePublisherConsentCookie(publisherConsentData);
-		const fromCookie = readPublisherConsentCookie();
-
-		expect(document.cookie).to.contain(PUBLISHER_CONSENT_COOKIE_NAME);
-		expect(fromCookie).to.deep.include(publisherConsentData);
-	});
-
 	it('converts selected vendor list to a range', () => {
-		const maxVendorId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
+		const maxVendorId = Math.max(...Object.values(VENDOR_LIST.vendors).map(vendor => vendor.id));
 		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 4]));
 
 		expect(ranges).to.deep.equal([{
@@ -228,9 +243,8 @@ describe('cookie', () => {
 		}]);
 	});
 
-
 	it('converts selected vendor list to multiple ranges', () => {
-		const maxVendorId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
+		const maxVendorId = Math.max(...Object.values(VENDOR_LIST.vendors).map(vendor => vendor.id));
 		const ranges = convertVendorsToRanges(maxVendorId, new Set([2, 3, 5, 6, 10]));
 
 		expect(ranges).to.deep.equal([
@@ -250,5 +264,131 @@ describe('cookie', () => {
 				endVendorId: undefined
 			}
 		]);
+	});
+});
+
+describe('cookie common', () => {
+	it('encodes and decodes the vendor cookie value with ranges back to original value', () => {
+
+		const aDate = new Date('2018-07-15 PDT');
+
+		const consentData = {
+			cookieVersion: 1,
+			created: aDate,
+			lastUpdated: aDate,
+			cmpId: 1,
+			cmpVersion: 1,
+			consentScreen: 1,
+			consentLanguage: 'EN',
+			vendorListVersion: 1,
+			purposeIdBitString: '111000001010101010001101',
+			maxVendorId: 5,
+			isRange: true,
+			defaultConsent: false,
+			numEntries: 2,
+			vendorRangeList: [
+				{
+					isRange: true,
+					startVendorId: 2,
+					endVendorId: 4
+				},
+				{
+					isRange: false,
+					startVendorId: 1
+				}
+			]
+		};
+
+		const bitString = encodeVendorCookieValue(consentData);
+		const decoded = decodeVendorCookieValue(bitString);
+
+		expect(decoded).to.deep.equal(consentData);
+	});
+
+	it('encodes and decodes the vendor cookie value with range ranges back to original value', () => {
+
+		const aDate = new Date('2018-07-15 PDT');
+
+		const consentData = {
+			cookieVersion: 1,
+			created: aDate,
+			lastUpdated: aDate,
+			cmpId: 1,
+			cmpVersion: 1,
+			consentScreen: 1,
+			consentLanguage: 'EN',
+			vendorListVersion: 1,
+			purposeIdBitString: '111000001010101010001101',
+			maxVendorId: 5,
+			isRange: true,
+			defaultConsent: false,
+			numEntries: 2,
+			vendorRangeList: [
+				{
+					isRange: false,
+					startVendorId: 2
+				},
+				{
+					isRange: false,
+					startVendorId: 1
+				}
+			]
+		};
+
+		const bitString = encodeVendorCookieValue(consentData);
+		const decoded = decodeVendorCookieValue(bitString);
+
+		expect(decoded).to.deep.equal(consentData);
+	});
+
+	it('encodes and decodes the vendor cookie value without ranges back to original value', () => {
+
+		const aDate = new Date('2018-07-15 PDT');
+
+		const consentData = {
+			cookieVersion: 1,
+			created: aDate,
+			lastUpdated: aDate,
+			cmpId: 1,
+			cmpVersion: 1,
+			consentScreen: 1,
+			consentLanguage: 'EN',
+			vendorListVersion: 1,
+			purposeIdBitString: '000000001010101010001100',
+			maxVendorId: 5,
+			isRange: false,
+			vendorIdBitString: '10011',
+		};
+
+		const bitString = encodeVendorCookieValue(consentData);
+		const decoded = decodeVendorCookieValue(bitString);
+
+		expect(decoded).to.deep.equal(consentData);
+	});
+
+
+	it('encodes and decodes the publisher cookie value without ranges back to original value', () => {
+
+		const aDate = new Date('2018-07-15 PDT');
+
+		const consentData = {
+			cookieVersion: 1,
+			created: aDate,
+			lastUpdated: aDate,
+			cmpId: 1,
+			cmpVersion: 0,
+			consentScreen: 0,
+			consentLanguage: 'AA',
+			vendorListVersion: 1,
+			publisherPurposeVersion: 1,
+			numCustomPurposes: 4,
+			standardPurposeIdBitString: '000000001010101010001100',
+			customPurposeIdBitString: '1011',
+		};
+
+		const bitString = encodePublisherCookieValue(consentData);
+		const decoded = decodePublisherCookieValue(bitString);
+
+		expect(decoded).to.deep.equal(consentData);
 	});
 });

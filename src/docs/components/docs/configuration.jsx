@@ -5,12 +5,10 @@ import {js_beautify as beautify} from 'js-beautify';
 
 
 const script = beautify(`
-window.__cmp.config = {
-	globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
+window.__tcfConfig = {
+	globalVendorListLocation: 'https://vendorlist.consensu.org/v2/vendor-list.json',
 	globalConsentLocation: './portal.html',
-	customPurposeListLocation: './purposes.json',
 	storeConsentGlobally: true,
-	storePublisherData: true,
 	logging: 'debug'
 }
 `);
@@ -50,21 +48,9 @@ export default class CmpApi extends Component {
 								domain. See: <span class={style.highlight}>/src/docs/assets/portal.js</span></span>
 						</span>
 						<span class={style.argument}>
-							<span class={style.argumentType}>customPurposeListLocation (String)</span>:
-							<span class={style.argumentDescription}>Location of the JSON file that holds a list of custom purposes a user can select. This file
-								must be able to be requested from the domain that the CMP is loaded on.
-								See: <span class={style.highlight}>/src/docs/assets/purposes.json</span></span>
-						</span>
-						<span class={style.argument}>
 							<span class={style.argumentType}>storeConsentGlobally (Boolean)</span>:
 							<span class={style.argumentDescription}>If true then the the consent data is written to a cookie on the <span class={style.highlight}>globalConsentLocation</span> domain.
 							If false then the consent data will be written to a cookie on the domain that the CMP is loaded from.</span>
-						</span>
-						<span class={style.argument}>
-							<span class={style.argumentType}>storePublisherData (Boolean)</span>:
-							<span class={style.argumentDescription}>If true then custom purposes will be loaded from <span class={style.highlight}>customPurposeListLocation</span> and a the purpose consent information will be
-							written into a cookie on the domain that the CMP is loaded from. This cookie is unique from the vendor consent cookie. If false
-								then the <span class={style.highlight}>customPurposeListLocation</span> will not be requested and no cookie will be written with purpose consent data.</span>
 						</span>
 						<span class={style.argument}>
 							<span class={style.argumentType}>logging (String|Boolean)</span>:
@@ -122,6 +108,10 @@ export default class CmpApi extends Component {
 							<span class={style.argumentType}>autoDisplay (Boolean)</span>:
 							<span class={style.argumentDescription}>Default is set true. If true  <span class={style.highlight}>autoDisplay: true</span> when initialize CMP the consent tool UI may be displayed automatically according to user's current consents.
 							If is set false <span class={style.highlight}>autoDisplay: false</span> the consent tool UI will never be displayed when initialize CMP</span>
+						</span>
+						<span className={style.argument}>
+							<span className={style.argumentType}>decoratePageCallHandler (function)</span>
+							<span className={style.argumentDescription}>Custom function to overwrite default behaviour pageCallHandler function.</span>
 						</span>
 					</div>
 			</div>

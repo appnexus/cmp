@@ -41,8 +41,8 @@ export default class Vendors extends Component {
 	};
 
 	handleMoreChoices = () => {
-		const {vendorConsentCreated, initialVendorsRejection} = this.props;
-		if (!vendorConsentCreated) {
+		const {consentCreated, initialVendorsRejection} = this.props;
+		if (!consentCreated) {
 			initialVendorsRejection();
 		}
 

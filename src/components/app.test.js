@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-no-bind */
 import { h, render } from 'preact';
+import { Vector} from "@iabtcf/core";
 import { expect } from 'chai';
 import style from './app.less';
 import Store from '../lib/store';
 
 import App from './app';
+import {CMP_ID} from "../lib/init";
 
 describe('App', () => {
 	let scratch;
@@ -25,18 +27,22 @@ describe('App', () => {
 
 
 	it('should render app content', () => {
-		render(<App store={new Store()} />, scratch);
+		render(<App store={new Store({cmpId: CMP_ID})} />, scratch);
 		expect(scratch.innerHTML).to.contain(style.gdpr);
 	});
 
 	it('add a listener to the store to receive updates', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 		render(<App store={store} />, scratch);
 		expect(store.listeners.size).to.equal(1);
 	});
 
 	it('persist state on save', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 		const notify = jest.fn();
 		store.persist = jest.fn();
 		store.toggleConsentToolShowing = jest.fn();
@@ -56,7 +62,9 @@ describe('App', () => {
 	});
 
 	it('updates local state when store changes', () => {
-		const store = new Store();
+		const store = new Store({
+			cmpId: CMP_ID
+		});
 
 		let app;
 		render(<App
@@ -65,8 +73,8 @@ describe('App', () => {
 			ref={ref => app = ref}
 		/>, scratch);
 
-		expect(app.state.store.vendorConsentData.selectedVendorIds).to.deep.equal(new Set());
+		expect(app.state.store.tcModel.vendorConsents).to.deep.equal(new Vector());
 		store.selectVendor(1, true);
-		expect(app.state.store.vendorConsentData.selectedVendorIds).to.deep.equal(new Set([1]));
+		expect(app.state.store.tcModel.vendorConsents.has(1)).to.be.true;
 	});
 });

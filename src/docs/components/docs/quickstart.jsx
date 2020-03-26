@@ -6,7 +6,7 @@ import Url from 'url';
 import JSCode from 'codemirror/mode/htmlmixed/htmlmixed'; // eslint-disable-line no-unused-vars
 
 const {host, pathname} = window.location;
-const SCRIPT_PATH = Url.resolve(`//${host}${pathname}`, '../cmp.complete.bundle.js');
+const SCRIPT_PATH = Url.resolve(`//${host}${pathname}`, '../cmp.bundle.js');
 
 const basicInclude = `
 <html>
@@ -19,7 +19,7 @@ const basicInclude = `
 const enableLogging = `
 <html>
 	<body>
-		<script>window.__cmp = {config: {logging: 'debug'}}</script>
+		<script>window.__tcfConfig = {logging: 'debug'}</script>
 		<script src="${SCRIPT_PATH}" async></script>
 	</body>
 </html>
@@ -28,7 +28,7 @@ const enableLogging = `
 const manualShow = `
 <html>
 	<body>
-		<button onclick="window.__cmp('showConsentTool')">My Consent Settings</button>
+		<button onclick="window.__tcfapi('showConsentTool', 2, function () {})">My Consent Settings</button>
 	</body>
 </html>
 `.trim();
@@ -82,11 +82,9 @@ export default class Setup extends Component {
 						The consent tool presents the user with lists of purposes and vendors that they
 						can individually consent to.  These lists are controlled by a JSON file configured
 						by <span className={style.highlight}>config.globalVendorListLocation</span> (default
-						location: https://vendorlist.consensu.org/vendorlist.json). You can modify this
+						location: https://vendorlist.consensu.org/v2/vendor-list.json). You can modify this
 						value to point to your own custom list (NOTE: the location must serve the appropriate
 						CORS headers).
-
-						You can generate a file using this <Link to='/tools/vendor-list-builder'>tool</Link>.
 					</p>
 				</section>
 				<section>

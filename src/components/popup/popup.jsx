@@ -9,9 +9,12 @@ export default class Popup extends Component {
 	onAcceptAll = () => {
 		const { store, onSave } = this.props;
 		store.selectAllVendors(true);
+		store.selectAllVendorLegitimateInterests(true);
 		store.selectAllPurposes(true);
-		store.selectAllStandardPurposes(true);
-		store.selectAllCustomPurposes(true);
+		store.selectAllPurposesLegitimateInterests(true);
+		store.selectAllSpecialFeatureOptins(true);
+		store.selectAllPublisherPurposes(true);
+		store.selectAllPublisherLegitimateInterests(true);
 		onSave();
 	};
 

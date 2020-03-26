@@ -1,11 +1,9 @@
 import log from './log';
 
 const defaultConfig = {
-	customPurposeListLocation: './purposes.json',
-	globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
+	globalVendorListLocation: 'https://vendorlist.consensu.org/v2/vendor-list.json',
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: false,
-	storePublisherData: false,
 	logging: false,
 	localization: {},
 	forceLocale: null,
@@ -13,10 +11,10 @@ const defaultConfig = {
 	getConsentData: null,
 	setConsentData: null,
 	getVendorList: null,
+	decoratePageCallHandler: null,
 	legIntPurposeIds: [],
 	contractPurposeIds: [],
-	autoDisplay: true,
-	allowedVendorIds: null
+	autoDisplay: true
 };
 
 class Config {

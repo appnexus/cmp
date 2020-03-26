@@ -26,7 +26,7 @@ export default class Purposes extends Component {
 		features: [],
 		customPurposes: [],
 		selectedPurposeIds: new Set(),
-		selectedStandardPurposeIds: new Set(),
+		selectedPublisherPurposeIds: new Set(),
 		selectedCustomPurposeIds: new Set()
 	};
 
@@ -38,11 +38,12 @@ export default class Purposes extends Component {
 		};
 	};
 
-	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false) => {
+	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false, isLegInt = false) => {
 		const {
 			selectPurpose,
-			selectStandardPurpose,
-			selectCustomPurpose
+			selectPurposeLegitimateInterests,
+			selectPublisherPurpose,
+			selectPublisherCustomPurpose
 		} = this.props;
 
 		const allPurposes = this.getAllPurposes();
@@ -50,13 +51,21 @@ export default class Purposes extends Component {
 
 		if (selectedPurpose) {
 			if (selectedPurpose.custom) {
-				selectCustomPurpose(selectedPurpose.id, isSelected);
+				selectPublisherCustomPurpose(selectedPurpose.id, isSelected);
 			} else if (isPublisher) {
-				selectStandardPurpose(selectedPurpose.id, isSelected);
+				selectPublisherPurpose(selectedPurpose.id, isSelected);
 			} else {
-				selectPurpose(selectedPurpose.id, isSelected);
+				if (isLegInt) {
+					selectPurposeLegitimateInterests(selectedPurpose.id, isSelected);
+				} else {
+					selectPurpose(selectedPurpose.id, isSelected);
+				}
 			}
 		}
+	};
+
+	handleSelectSpecialFeatureOptins = ({isSelected, dataId}) => {
+		this.props.selectSpecialFeatureOptins(dataId, isSelected);
 	};
 
 	createHandleSelectPurpose = (isPublisher) => {
@@ -99,17 +108,17 @@ export default class Purposes extends Component {
 
 		const {
 			selectedPurposeIds,
-			selectedStandardPurposeIds,
+			selectedPublisherPurposeIds,
 			selectedCustomPurposeIds,
 			purposes,
+			specialPurposes,
 			features,
-			persistedVendorConsentData,
-			persistedPublisherConsentData,
+			specialFeatures,
+			persistedConsentData = {},
 			initialVendorsRejection
 		} = props;
 
-		const {created: vendorConsentCreated} = persistedVendorConsentData;
-		const {created: publisherConsentCreated} = persistedPublisherConsentData;
+		const { created: consentCreated } = persistedConsentData;
 
 		const {
 			selectedTab,
@@ -121,7 +130,7 @@ export default class Purposes extends Component {
 		const purposeIsActive = (purpose, isPublisher = false) => purpose && (
 			purpose.custom ?
 			selectedCustomPurposeIds.has(purpose.id) :
-			(isPublisher ? selectedStandardPurposeIds : selectedPurposeIds).has(purpose.id)
+			(isPublisher ? selectedPublisherPurposeIds : selectedPurposeIds).has(purpose.id)
 		);
 
 		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
@@ -131,18 +140,21 @@ export default class Purposes extends Component {
 
 		if (selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
 			renderedTabIndices.add(selectedTab);
-			if (!vendorConsentCreated) {
+			if (!consentCreated) {
 				purposes.forEach((purpose, index) => {
+					// iab purposes
 					this.handleSelectPurpose({isSelected: false, dataId: index});
+
+					// iab leg ints
+					this.handleSelectPurpose({isSelected: true, dataId: index}, false, true);
+
+					// publisher purposes
+					this.handleSelectPurpose({isSelected: false, dataId: index}, true, false);
+				});
+				specialFeatures.forEach((specialFeature, index) => {
+					this.handleSelectSpecialFeatureOptins({isSelected:false, dataId: index+1})
 				});
 				initialVendorsRejection();
-			}
-			if (!publisherConsentCreated) {
-				allPurposes.forEach((purpose, index) => {
-					if (!purposeIsTechnical(purpose)) {
-						this.handleSelectPurpose({isSelected: false, dataId: index}, true);
-					}
-				});
 			}
 		}
 
