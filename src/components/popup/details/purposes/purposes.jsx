@@ -115,7 +115,6 @@ export default class Purposes extends Component {
 		const {
 			selectedPurposeIds,
 			selectedPublisherPurposeIds,
-			selectedCustomPurposeIds,
 			purposes,
 			specialPurposes,
 			features,
@@ -136,8 +135,6 @@ export default class Purposes extends Component {
 		const allPurposes = this.getAllPurposes();
 
 		const purposeIsActive = (purpose, isPublisher = false) => purpose && (
-			purpose.custom ?
-			selectedCustomPurposeIds.has(purpose.id) :
 			(isPublisher ? selectedPublisherPurposeIds : selectedPurposeIds).has(purpose.id)
 		);
 
@@ -149,7 +146,7 @@ export default class Purposes extends Component {
 			purpose && !purpose.custom &&
 			(config.legIntPurposeIds.indexOf(purpose.id) >= 0 || config.contractPurposeIds.indexOf(purpose.id) >= 0);
 
-		const selectedSpecialPurposes = config.specialPurposes && !!config.specialPurposes.length &&
+		const publisherSpecialPurposes = config.specialPurposes && !!config.specialPurposes.length &&
 			specialPurposes.filter((purpose, index) => config.specialPurposes.indexOf(index+1) !== -1);
 
 		if (selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
@@ -221,16 +218,15 @@ export default class Purposes extends Component {
 																		  isTechnical={purposeIsTechnical(purpose)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		  onToggle={this.createHandleSelectPurpose(true)}/>)}
-							{selectedSpecialPurposes && !!selectedSpecialPurposes.length && <div>
+							{publisherSpecialPurposes && !!publisherSpecialPurposes.length && <div>
 								<LocalLabel className={style.header} prefix="specialPurposes" localizeKey={`title`}>Special purposes</LocalLabel>
-								{selectedSpecialPurposes.map((purpose, index) => <Purpose key={index}
+								{publisherSpecialPurposes.map((purpose, index) => <Purpose key={index}
 																		  index={index}
 																		  isPublisherPurpose={true}
 																		  purpose={purpose}
 																		  isActive={purposeIsActive(purpose, true)}
 																		  isTechnical={true}
-																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
-																		  onToggle={this.createHandleSelectPurpose(true)}/>)}
+																		  createOnShowVendors={this.createOnShowVendors.bind(this)}/>)}
 							</div>}
 						</div>
 						<div className={style.purposesSection}>
