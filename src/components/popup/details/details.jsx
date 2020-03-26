@@ -76,7 +76,6 @@ export default class Details extends Component {
 
 		const {
 			vendorList = {},
-			customPurposeList = {},
 			tcModel,
 
 			selectPurpose,
@@ -106,8 +105,6 @@ export default class Details extends Component {
 
 		const { created: consentCreated } = persistedConsentData;
 		const { purposes = {}, specialPurposes = {}, features = {}, specialFeatures = {}} = vendorList;
-		const { purposes: customPurposes = [] } = customPurposeList;
-
 
 		return (
 			<div class={style.details}>
@@ -125,7 +122,6 @@ export default class Details extends Component {
 							specialPurposes={Object.values(specialPurposes)}
 							features={Object.values(features)}
 							specialFeatures={Object.values(specialFeatures)}
-							customPurposes={customPurposes}
 							selectedPurposeIds={purposeConsents}
 							selectedPublisherPurposeIds={publisherConsents}
 							selectedPublisherCustomPurposeIds={publisherCustomConsents}

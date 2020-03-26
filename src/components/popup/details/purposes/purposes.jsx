@@ -26,7 +26,6 @@ export default class Purposes extends Component {
 		features: [],
 		specialPurposes: [],
 		specialFeatures: [],
-		customPurposes: [],
 		selectedPurposeIds: new Set(),
 		selectedPublisherPurposeIds: new Set(),
 		selectedCustomPurposeIds: new Set()
@@ -79,10 +78,7 @@ export default class Purposes extends Component {
 	};
 
 	getAllPurposes = () => {
-		const {
-			purposes,
-			customPurposes
-		} = this.props;
+		const { purposes } = this.props;
 		let allPurposes = [];
 
 		(purposes || []).forEach(purpose => {
@@ -91,15 +87,6 @@ export default class Purposes extends Component {
 				name: purpose.name,
 				description: purpose.description,
 				custom: false
-			});
-		});
-
-		(customPurposes || []).forEach(purpose => {
-			allPurposes.push({
-				id: purpose.id,
-				name: purpose.name,
-				description: purpose.description,
-				custom: true
 			});
 		});
 
