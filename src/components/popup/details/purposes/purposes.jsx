@@ -129,8 +129,7 @@ export default class Purposes extends Component {
 		const isPurposeLegitimateInterestActive = (id) => selectedPurposeLegitimateInterests.has(id+1);
 
 		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
-			config.contractPurposeIds &&
-			purpose && !purpose.custom &&
+			config.contractPurposeIds && purpose &&
 			(config.legIntPurposeIds.indexOf(purpose.id) >= 0 || config.contractPurposeIds.indexOf(purpose.id) >= 0);
 
 		const publisherSpecialPurposes = config.specialPurposes && !!config.specialPurposes.length &&

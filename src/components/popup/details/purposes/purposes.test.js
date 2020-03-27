@@ -64,38 +64,6 @@ describe('Purposes and Features', () => {
 		expect(selectCustomPurpose.mock.calls).to.be.empty;
 	});
 
-	it('should select publisher custom purpose', () => {
-		const selectPurpose = jest.fn();
-		const selectPublisherCustomPurpose = jest.fn();
-		const selectPublisherPurpose = jest.fn();
-
-
-		let purposes;
-		let persistedConsentData = {};
-		render(<Purposes
-			ref={ref => purposes = ref}
-			purposes={[
-				{ id: 1, name: 'Purpose 1' },
-				{ id: 2, name: 'Purpose 2' }
-			]}
-			customPurposes={[
-				{ id: 1, name: 'Custom Purpose 1' },
-			]}
-			selectPurpose={selectPurpose}
-			selectPublisherCustomPurpose={selectPublisherCustomPurpose}
-			selectPublisherPurpose={selectPublisherPurpose}
-
-			persistedConsentData={persistedConsentData}
-		/>, scratch);
-
-		purposes.handleSelectPurpose({isSelected: true, dataId: 2}, true, false);
-		purposes.handleSelectPurpose({isSelected: true, dataId: 1}, true, false);
-
-		expect(selectPublisherCustomPurpose.mock.calls[0][0]).to.equal(1);
-		expect(selectPublisherCustomPurpose.mock.calls[0][1]).to.equal(true);
-		expect(selectPurpose.mock.calls).to.be.empty;
-	});
-
 	it('after selecting group of purposes with index 1, consent for those purposes should be withdrawn', () => {
 		const selectPurpose = jest.fn();
 		const selectPublisherCustomPurpose = jest.fn();
