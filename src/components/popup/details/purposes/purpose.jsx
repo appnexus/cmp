@@ -44,7 +44,7 @@ const Purpose = (props) => {
 						</div>
 
 						<div className={style.switch}>
-							<LocalLabel localizeKey={'legitimateInterest'}>legitimate interest</LocalLabel>
+							<LocalLabel localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
 							<Switch
 								isSelected={isLegitimateInterestActive}
 								dataId={index}

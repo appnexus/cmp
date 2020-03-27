@@ -112,7 +112,7 @@ export default class Vendors extends Component {
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
 							{editingConsents &&
 							<span class={style.vendorCenterSmall}>
-							<th><LocalLabel localizeKey='legitimateInterest2'>Uzasadniony interes prawny</LocalLabel></th>
+							<th><LocalLabel localizeKey='legitimateInterest2'>Legitimate interest</LocalLabel></th>
 							<th>
 								<LocalLabel localizeKey='offOn'>Allow</LocalLabel>
 								<Switch
@@ -144,7 +144,7 @@ export default class Vendors extends Component {
 								</td>
 								{editingConsents && legIntPurposes.length &&
 									<td class={style.vendorCenterSmall}>
-										<LocalLabel localizeKey='legitimateButton'>UIP</LocalLabel>
+										<LocalLabel localizeKey='legitimateButton'>LegInt</LocalLabel>
 										<Switch
 											dataId={id}
 											isSelected={selectedLegitimateInterestsIds.has(id)}
@@ -153,7 +153,7 @@ export default class Vendors extends Component {
 									</td> || <td/>}
 								{editingConsents &&
 									<td class={style.vendorCenterSmall}>
-										<LocalLabel localizeKey='acceptButton'>Zgoda</LocalLabel>
+										<LocalLabel localizeKey='acceptButton'>Consent</LocalLabel>
 										<Switch
 											dataId={id}
 											isSelected={selectedVendorIds.has(id)}
