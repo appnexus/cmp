@@ -35,24 +35,18 @@ export default class Details extends Component {
 		if(purposeId) {
 			if(isSpecial) {
 				filteredVendors = Object.values(gvl.getVendorsWithSpecialPurpose(purposeId))
-				console.log('getVendorsWithSpecialPurpose', purposeId, filteredVendors);
 			} else {
 				filteredVendors = Object.values(gvl.getVendorsWithConsentPurpose(purposeId))
-				console.log('getVendorsWithConsentPurpose', purposeId, filteredVendors);
 			}
 		} else if(featureId) {
 			if(isSpecial) {
 				filteredVendors = Object.values(gvl.getVendorsWithSpecialFeature(featureId))
-				console.log('getVendorsWithSpecialFeature', featureId, filteredVendors);
 			} else {
 				filteredVendors = Object.values(gvl.getVendorsWithFeature(featureId))
-				console.log('getVendorsWithFeature', featureId, filteredVendors);
 			}
 		}
 
-		filteredVendors = filteredVendors.filter(vendor => isCustom ? !vendor.globalId : !!vendor.globalId);
-
-		return filteredVendors;
+		return filteredVendors.filter(vendor => isCustom ? !vendor.globalId : !!vendor.globalId);;
 	};
 
 	handleShowVendors = (filter) => {
