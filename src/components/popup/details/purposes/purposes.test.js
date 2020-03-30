@@ -13,8 +13,7 @@ describe('Purposes and Features', () => {
 	});
 
 	it('should render all standard, custom purposes for publisher and purposes and features for vendors', () => {
-		let persistedVendorConsentData = {};
-		let persistedPublisherConsentData = {};
+		let persistedConsentData = {};
 		const selectPurpose = jest.fn();
 		let purposesRef;
 		const purposes = render(<Purposes
@@ -30,8 +29,7 @@ describe('Purposes and Features', () => {
 			customPurposes = {[
 				{ id: 1, name: 'Custom Purpose 1' },
 			]}
-			persistedVendorConsentData={persistedVendorConsentData}
-			persistedPublisherConsentData={persistedPublisherConsentData}
+			persistedConsentData={persistedConsentData}
 			selectPurpose={selectPurpose}
 		/>, scratch);
 
@@ -46,8 +44,7 @@ describe('Purposes and Features', () => {
 	it('should select a standard purpose', () => {
 		const selectPurpose = jest.fn();
 		const selectCustomPurpose = jest.fn();
-		let persistedVendorConsentData = {};
-		let persistedPublisherConsentData = {};
+		let persistedConsentData = {};
 		let purposes;
 		render(<Purposes
 			ref={ref => purposes = ref}
@@ -57,8 +54,7 @@ describe('Purposes and Features', () => {
 			]}
 			selectPurpose={selectPurpose}
 			selectCustomPurpose={selectCustomPurpose}
-			persistedVendorConsentData={persistedVendorConsentData}
-			persistedPublisherConsentData={persistedPublisherConsentData}
+			persistedConsentData={persistedConsentData}
 		/>, scratch);
 
 		purposes.handleSelectPurpose({isSelected: true, dataId: 0});
