@@ -132,9 +132,9 @@ describe('Purposes and Features', () => {
 
 		/>, scratch);
 
-		purposes.handleSelectSpecialFeatureOptins({isSelected: true, dataId: 0});
+		purposes.handleSelectSpecialFeatureOptins({isSelected: true, dataId: 1});
 
-		expect(selectSpecialFeatureOptins.mock.calls[0][0]).to.equal(1);
+		expect(selectSpecialFeatureOptins.mock.calls[0][0]).to.equal(2);
 		expect(selectSpecialFeatureOptins.mock.calls[0][1]).to.equal(true);
 	});
 });
