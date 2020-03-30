@@ -239,7 +239,7 @@ export default class Purposes extends Component {
 																		   isActive={false}
 																		   isLegitimateInterestActive={false}
 																		   isTechnical={true}
-																		   specialPurpose={true}
+																		   isSpecial={true}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>)}
 
 							</div>}
@@ -255,7 +255,7 @@ export default class Purposes extends Component {
 								{specialFeatures.map((feature, index) => <Feature key={index}
 																		   index={index}
 																		   feature={feature}
-																		   specialFeature={true}
+																		   isSpecial={true}
 																		   isActive={isSpecialFeatureOptinsActive(index)}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		   onToggle={this.handleSelectSpecialFeatureOptins.bind(this)}/>

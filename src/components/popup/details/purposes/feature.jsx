@@ -12,7 +12,7 @@ class LocalLabel extends Label {
 const Feature = (props) => {
 	const {
 		feature,
-		specialFeature,
+		isSpecial,
 		createOnShowVendors,
 
 		index,
@@ -27,7 +27,7 @@ const Feature = (props) => {
 					<LocalLabel localizeKey={`feature${feature.id}.title`}>{feature.name}</LocalLabel>
 				</div>
 			</div>
-				{specialFeature &&
+				{isSpecial &&
 					<div className={style.active}>
 						<div className={style.switch}>
 							<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
@@ -43,13 +43,13 @@ const Feature = (props) => {
 				<LocalLabel localizeKey={`feature${feature.id}.description`}>{feature.description}</LocalLabel>
 				<div>
 					<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: false,
-						featureId: feature.id, specialFeature})}>
+						featureId: feature.id, isSpecial})}>
 						<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
 					</a>
 				</div>
 				<div>
 					<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: true,
-						featureId: feature.id, specialFeature})}>
+						featureId: feature.id, isSpecial})}>
 						<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 					</a>
 				</div>

@@ -20,7 +20,7 @@ const Purpose = (props) => {
 		onToggleLegitInterest,
 		createOnShowVendors,
 		isTechnical,
-		specialPurpose,
+		isSpecial,
 		isPublisherPurpose = false
 	} = props;
 
@@ -61,13 +61,13 @@ const Purpose = (props) => {
 					<div>
 						<div>
 							<a className={style.vendorLink}
-							onClick={createOnShowVendors({isCustom: false, purposeId: purpose.id, specialPurpose})}>
+							onClick={createOnShowVendors({isCustom: false, purposeId: purpose.id, isSpecial})}>
 								<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
 							</a>
 						</div>
 						<div>
 							<a className={style.vendorLink}
-							onClick={createOnShowVendors({isCustom: true, purposeId: purpose.id, specialPurpose})}>
+							onClick={createOnShowVendors({isCustom: true, purposeId: purpose.id, isSpecial})}>
 								<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 							</a>
 						</div>
