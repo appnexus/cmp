@@ -46,7 +46,7 @@ export default class Details extends Component {
 			}
 		}
 
-		return filteredVendors.filter(vendor => isCustom ? !vendor.globalId : !!vendor.globalId);;
+		return filteredVendors.filter(vendor => isCustom ? !vendor.globalId : !!vendor.globalId);
 	};
 
 	handleShowVendors = (filter) => {
