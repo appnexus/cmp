@@ -49,7 +49,7 @@ export default class Details extends Component {
 		if(isCustom) {
 			filteredVendors = filteredVendors.filter(vendor => !!vendor.globalId)
 		}
-		return filteredVendors ;
+		return filteredVendors;
 	};
 
 	handleShowVendors = (filter) => {
