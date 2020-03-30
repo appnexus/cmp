@@ -66,10 +66,8 @@ describe('Purposes and Features', () => {
 
 	it('after selecting group of purposes with index 1, consent for those purposes should be withdrawn', () => {
 		const selectPurpose = jest.fn();
-		const selectPublisherCustomPurpose = jest.fn();
 
 		let purposes;
-		let persistedConsentData = {};
 
 		render(<Purposes
 			ref={ref => purposes = ref}
@@ -78,16 +76,12 @@ describe('Purposes and Features', () => {
 				{ id: 2, name: 'Purpose 2' }
 			]}
 			selectPurpose={selectPurpose}
-			selectPublisherCustomPurpose={selectPublisherCustomPurpose}
-
-			persistedConsentData={persistedConsentData}
 
 		/>, scratch);
 
 		purposes.componentDidUpdate = () => {
 			expect(selectPurpose.mock.calls[1][0]).to.equal(2);
 			expect(selectPurpose.mock.calls[1][1]).to.equal(false);
-			expect(selectPublisherCustomPurpose.mock.calls).to.be.empty;
 		};
 		purposes.handleSelectTab(1)();
 	});

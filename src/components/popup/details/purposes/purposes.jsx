@@ -27,8 +27,7 @@ export default class Purposes extends Component {
 		specialPurposes: [],
 		specialFeatures: [],
 		selectedPurposeIds: new Set(),
-		selectedPublisherPurposeIds: new Set(),
-		selectedCustomPurposeIds: new Set()
+		selectedPublisherPurposeIds: new Set()
 	};
 
 	handleSelectTab = tab => {
@@ -43,17 +42,14 @@ export default class Purposes extends Component {
 		const {
 			selectPurpose,
 			selectPurposeLegitimateInterests,
-			selectPublisherPurpose,
-			selectPublisherCustomPurpose
+			selectPublisherPurpose
 		} = this.props;
 
 		const allPurposes = this.getAllPurposes();
 		const selectedPurpose = allPurposes[dataId];
 
 		if (selectedPurpose) {
-			if (selectedPurpose.custom) {
-				selectPublisherCustomPurpose(selectedPurpose.id, isSelected);
-			} else if (isPublisher) {
+			if (isPublisher) {
 				selectPublisherPurpose(selectedPurpose.id, isSelected);
 			} else {
 				if (isLegInt) {
