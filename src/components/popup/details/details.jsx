@@ -28,18 +28,18 @@ export default class Details extends Component {
 		return Object.values(vendors);
 	};
 
-	filterVendors = ({ isCustom = null, purposeId, featureId, specialPurpose, specialFeature} = {}) => {
+	filterVendors = ({ isCustom = null, purposeId, featureId, isSpecial} = {}) => {
 		const { gvl } = this.props.store.tcModel;
 		let filteredVendors;
 
 		if(purposeId) {
-			if(specialPurpose) {
+			if(isSpecial) {
 				filteredVendors = Object.values(gvl.getVendorsWithSpecialPurpose(purposeId))
 			} else {
 				filteredVendors = Object.values(gvl.getVendorsWithConsentPurpose(purposeId))
 			}
 		} else if(featureId) {
-			if(specialFeature) {
+			if(isSpecial) {
 				filteredVendors = Object.values(gvl.getVendorsWithSpecialFeature(featureId))
 			} else {
 				filteredVendors = Object.values(gvl.getVendorsWithFeature(featureId))
