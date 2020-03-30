@@ -113,7 +113,7 @@ describe('Purposes and Features', () => {
 		expect(selectPurposeLegitimateInterests.mock.calls[1][1]).to.equal(false);
 	});
 
-	it('should render special features and select its consent, ids are incremented by one since set can not hold zeroId', () => {
+	it('should render special features and select its consent', () => {
 		let persistedConsentData = {};
 		let selectSpecialFeatureOptins = jest.fn();
 
@@ -125,16 +125,18 @@ describe('Purposes and Features', () => {
 				{ id: 2, name: 'Purpose 2' }
 			]}
 			specialFeatures={[
-				{ id: 1, name: 'Special feature 1' }
+				{ id: 1, name: 'Special feature 1' },
+				{ id: 2, name: 'Special feature 2' }
 			]}
 			selectSpecialFeatureOptins={selectSpecialFeatureOptins}
 			persistedConsentData={persistedConsentData}
 
 		/>, scratch);
 
+		purposes.handleSelectSpecialFeatureOptins({isSelected: true, dataId: 2});
 		purposes.handleSelectSpecialFeatureOptins({isSelected: true, dataId: 1});
 
-		expect(selectSpecialFeatureOptins.mock.calls[0][0]).to.equal(2);
 		expect(selectSpecialFeatureOptins.mock.calls[0][1]).to.equal(true);
+		expect(selectSpecialFeatureOptins.mock.calls[1][1]).to.equal(true);
 	});
 });

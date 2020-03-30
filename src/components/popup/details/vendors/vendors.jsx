@@ -112,7 +112,7 @@ export default class Vendors extends Component {
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
 							{editingConsents &&
 							<span class={style.vendorCenterSmall}>
-							<th><LocalLabel localizeKey='legitimateInterest2'>Legitimate interest</LocalLabel></th>
+							<th><LocalLabel localizeKey='legitimateInterest'>Legitimate interest</LocalLabel></th>
 							<th>
 								<LocalLabel localizeKey='offOn'>Allow</LocalLabel>
 								<Switch

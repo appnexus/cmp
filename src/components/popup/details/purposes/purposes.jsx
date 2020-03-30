@@ -145,7 +145,7 @@ export default class Purposes extends Component {
 					this.handleSelectPurpose({isSelected: false, dataId: index}, true, false);
 				});
 				specialFeatures.forEach((specialFeature, index) => {
-					this.handleSelectSpecialFeatureOptins({isSelected:false, dataId: index+1})
+					this.handleSelectSpecialFeatureOptins({isSelected:false, dataId: index})
 				});
 				initialVendorsRejection();
 			}
