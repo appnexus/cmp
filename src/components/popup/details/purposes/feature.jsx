@@ -14,7 +14,6 @@ const Feature = (props) => {
 		feature,
 		isSpecial,
 		createOnShowVendors,
-
 		index,
 		isActive,
 		onToggle
