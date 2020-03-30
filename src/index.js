@@ -15,7 +15,7 @@ import {fetchGlobalVendorList} from "./lib/vendor";
 
 const TCF_CONFIG = '__tcfConfig';
 
-const handleConsentResult = (tcfApi, vendorList, consentData = {}) => {
+const handleConsentResult = (vendorList, consentData = {}) => {
 	const {
 		vendorListVersion: listVersion,
 		tcfPolicyVersion: listPolicyVersion = 1
@@ -35,39 +35,35 @@ const handleConsentResult = (tcfApi, vendorList, consentData = {}) => {
 
 	if (!created) {
 		log.debug('No consent data found. Showing consent tool');
-		displayOptions = {display: true, fn: 'showConsentTool'};
+		displayOptions = {display: true, command: 'showConsentTool'};
 	} else if (!listVersion) {
 		log.debug('Could not determine vendor list version. Not showing consent tool');
 		displayOptions = { display: false };
 	} else if (vendorListVersion !== listVersion) {
 		log.debug(`Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`);
-		displayOptions = {display: true, fn: 'showConsentTool'};
+		displayOptions = {display: true, command: 'showConsentTool'};
 	} else if (consentPolicyVersion !== listPolicyVersion) {
 		log.debug(`Consent found for policy ${consentPolicyVersion}, but received vendor list with policy ${consentPolicyVersion}. Showing consent tool`);
-		displayOptions = {display: true, fn: 'showConsentTool'};
+		displayOptions = {display: true, command: 'showConsentTool'};
 	} else {
 		log.debug('Consent found. Not showing consent tool. Show footer when not all consents set to true');
-		displayOptions = {display: false, fn: 'showFooter'};
+		displayOptions = {display: false, command: 'showFooter'};
 	}
 
 	return  displayOptions;
 };
 
 
-const shouldDisplay = (tcfApi) => {
+const shouldDisplay = () => {
 	return new Promise((resolve, reject) => {
-		if (!tcfApi) {
-			const msg = 'CMP failed to load';
-			log.error(msg);
-			reject(msg);
-		} else if (!window.navigator.cookieEnabled) {
+		if (!window.navigator.cookieEnabled) {
 			const msg = 'Cookies are disabled. Ignoring CMP consent check';
 			log.warn(msg);
 			reject(msg);
 		} else {
 			const finish = (timeout, consentData = {}, vendorList) => {
 				clearTimeout(timeout);
-				const result = handleConsentResult(tcfApi, vendorList, consentData);
+				const result = handleConsentResult(vendorList, consentData);
 				resolve(result);
 			};
 
@@ -79,7 +75,7 @@ const shouldDisplay = (tcfApi) => {
 						reject(err);
 					} else {
 						const timeout = setTimeout(() => {
-							handleConsentResult(tcfApi, vendorList);
+							handleConsentResult(vendorList);
 						}, 100);
 
 						if (getConsentData) {
@@ -101,7 +97,7 @@ const shouldDisplay = (tcfApi) => {
 			} else {
 				fetchGlobalVendorList().then((vendorList) => {
 					const timeout = setTimeout(() => {
-						handleConsentResult(tcfApi, vendorList);
+						handleConsentResult(vendorList);
 					}, 100);
 
 					readConsentCookie().then((cookie) => {
@@ -122,16 +118,16 @@ const shouldDisplay = (tcfApi) => {
 
 const displayUI = (tcfApi, result, store) => {
 	const { isConsentToolShowing } = store;
-	let { display, fn } = result;
+	let { display, command } = result;
 
 	const tcfApiCall = (command) => {
 		tcfApi(command, 2, () => log.debug(`${command} command was called`));
 	};
 
 	if (display) {
-		tcfApiCall(fn);
-	} else if (fn === 'showFooter') {
-		!isConsentToolShowing && tcfApiCall(fn);
+		tcfApiCall(command);
+	} else if (command === 'showFooter') {
+		!isConsentToolShowing && tcfApiCall(command);
 	}
 };
 
@@ -146,7 +142,7 @@ function start() {
 
 	config.update(configUpdates);
 
-	shouldDisplay(window.__tcfapi)
+	shouldDisplay()
 		.then(result => {
 			initializeStore(result.display)
 				.then(store => {
