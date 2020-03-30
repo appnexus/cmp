@@ -74,7 +74,6 @@ export default {
 			active: 'Aktywna',
 			inactive: 'Nieaktywna',
 			legitimateInterest: 'Uzasadniony interes',
-			legitimateInterest2: 'Uzasadniony interes prawny',
 			showVendors: 'Pokaż listę Zaufanych Partnerów IAB',
 			showCustomVendors: 'Pokaż listę Zaufanych Partnerów',
 			title: 'Cele',
