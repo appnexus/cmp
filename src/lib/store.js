@@ -29,8 +29,9 @@ export default class Store {
 		tcModel.supportOOB = false;
 
 		// decoding to check if string is compatible
-		this.persistedConsentString = decodeConsentData(consentString) ? consentString : '';
-		this.persistedConsentData = decodeConsentData(consentString) || {};
+		const decodedConsentString = decodeConsentData(consentString);
+		this.persistedConsentString = decodedConsentString ? consentString : '';
+		this.persistedConsentData = decodedConsentString || {};
 
 		this.tcModel = Object.assign(
 			tcModel,
@@ -251,14 +252,21 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	selectVendorLegitimateInterests = (vendorId, isSelected) => {
+	selectVendorLegitimateInterests = (vendorId, isSelected, update = true) => {
 		const {vendorLegitimateInterests} = this.tcModel;
-		if (isSelected) {
-			vendorLegitimateInterests.set(vendorId);
-		} else {
-			vendorLegitimateInterests.unset(vendorId);
+		const hasLegInts = this.vendorList.vendors[vendorId].legIntPurposes.length > 0;
+
+		if (hasLegInts) {
+			if (isSelected) {
+				vendorLegitimateInterests.set(vendorId);
+			} else {
+				vendorLegitimateInterests.unset(vendorId);
+			}
 		}
-		this.storeUpdate();
+
+		if (update) {
+			this.storeUpdate();
+		}
 	};
 
 	selectAllVendorLegitimateInterests = (isSelected, update = true) => {
@@ -471,7 +479,7 @@ export default class Store {
 			Object.values(vendors).forEach(v => {
 				if (v.id > persistedMaxVendorId) {
 					this.tcModel.vendorConsents.set(v.id);
-					this.tcModel.vendorLegitimateInterests.set(v.id);
+					this.selectVendorLegitimateInterests(v.id, true, false);
 				}
 			});
 		}

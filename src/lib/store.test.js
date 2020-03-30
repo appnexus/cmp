@@ -153,7 +153,7 @@ describe('store', () => {
 			expect(store.tcModel.vendorConsents.size).to.equal(6);
 			expect(store.tcModel.vendorConsents.maxId).to.equal(10);
 			expect(store.tcModel.vendorConsents.has(10)).to.be.true;
-			expect(store.tcModel.vendorLegitimateInterests.has(10)).to.be.true;
+			expect(store.tcModel.vendorLegitimateInterests.has(10)).to.be.false;
 			done();
 		}, 0);
 	});
@@ -236,6 +236,22 @@ describe('store', () => {
 		const vendorConsents = Object.keys(vendorConsentObject.vendorConsents).filter(key => vendorConsentObject.vendorConsents[key]);
 
 		expect(vendorConsents.length).to.equal(Object.values(VENDOR_LIST.vendors).length);
+	});
+
+	it('selects vendor leg ints IDs', () => {
+		const store = new Store({
+			cmpId: CMP_ID,
+		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectVendorLegitimateInterests(2, false);
+		store.persist();
+
+		const vendorConsentObject = store.getVendorConsentsObject();
+		expect(vendorConsentObject.vendorLegitimateInterests['2']).to.be.false;
+
 	});
 
 	it('selects purpose IDs', () => {

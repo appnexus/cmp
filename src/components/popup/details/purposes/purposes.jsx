@@ -15,9 +15,13 @@ class LocalLabel extends Label {
 }
 
 export default class Purposes extends Component {
-	state = {
-		selectedTab: TAB_PUBLISHER_INFO,
-		renderedTabIndices: new Set()
+	constructor(props) {
+		super(props);
+		this.state = {
+			selectedTab: TAB_PUBLISHER_INFO,
+			renderedTabIndices: new Set(),
+			allPurposes: this.getAllPurposes()
+		}
 	};
 
 	static defaultProps = {
@@ -45,7 +49,10 @@ export default class Purposes extends Component {
 			selectPublisherPurpose
 		} = this.props;
 
-		const allPurposes = this.getAllPurposes();
+		const {
+			allPurposes
+		} = this.state;
+
 		const selectedPurpose = allPurposes[dataId];
 
 		if (selectedPurpose) {
@@ -112,10 +119,9 @@ export default class Purposes extends Component {
 
 		const {
 			selectedTab,
-			renderedTabIndices
+			renderedTabIndices,
+			allPurposes
 		} = state;
-
-		const allPurposes = this.getAllPurposes();
 
 		const purposeIsActive = (purpose, isPublisher = false) => purpose && (
 			(isPublisher ? selectedPublisherPurposeIds : selectedPurposeIds).has(purpose.id)
