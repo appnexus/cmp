@@ -62,7 +62,8 @@ const shouldDisplay = () => {
 		if (!window.navigator.cookieEnabled) {
 			const msg = 'Cookies are disabled. Ignoring CMP consent check';
 			log.warn(msg);
-			handleConsentResult();
+			const result = handleConsentResult();
+			resolve(result);
 		} else {
 			const finish = (timeout, vendorList, consentData) => {
 				clearTimeout(timeout);
@@ -75,7 +76,8 @@ const shouldDisplay = () => {
 				getVendorList((err, vendorList) => {
 					if (err) {
 						log.error('Failed to get vendor list');
-						handleConsentResult();
+						const result = handleConsentResult();
+						resolve(result);
 					} else {
 						const timeout = setTimeout(() => {
 							const result = handleConsentResult(vendorList, undefined);
@@ -117,7 +119,10 @@ const shouldDisplay = () => {
 							finish(timeout, vendorList);
 						}
 					});
-				}).catch(() => handleConsentResult());
+				}).catch(() => {
+					const result = handleConsentResult();
+					resolve(result);
+				});
 			}
 		}
 	});

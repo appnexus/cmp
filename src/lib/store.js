@@ -400,6 +400,9 @@ export default class Store {
 
 	toggleConsentToolShowing = (isShown) => {
 		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		if (this.isConsentToolShowing) {
+			this.cmpApi.update(this.persistedConsentString, true);
+		}
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
