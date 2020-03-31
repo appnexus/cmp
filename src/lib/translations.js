@@ -131,6 +131,8 @@ export default {
 		},
 		features: {
 			title: 'Funkcje',
+			active: 'Aktywna',
+			inactive: 'Nieaktywna',
 			feature1: {
 				title: 'Dopasowanie i połączenie źródeł danych offline',
 				description: '<p>Dane ze źródeł danych offline mogą być łączone z aktywnością użytkownika online w ramach realizacji co najmniej jednego celu.</p>'
