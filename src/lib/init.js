@@ -27,6 +27,22 @@ export function init (consentString, shouldDisplayCmpUI) {
 
 		const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, true, commands);
 
+		cmpApi.callResponder.purgeQueuedCalls = function () {
+			if (this.queuedCalls) {
+				const apiCall = this.apiCall.bind(this);
+				const queuedCalls = this.queuedCalls;
+				this.queuedCalls = [];
+				queuedCalls.forEach(args => {
+					const [command, version, callback, params] = args;
+					if (params !== undefined) {
+						apiCall(command, version, callback, ...params);
+					} else {
+						apiCall(command, version, callback);
+					}
+				});
+			}
+		};
+
 		if (config.decoratePageCallHandler) {
 			config.decoratePageCallHandler(cmpApi);
 		}

@@ -399,7 +399,11 @@ export default class Store {
 	};
 
 	toggleConsentToolShowing = (isShown) => {
-		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		const isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		if (isConsentToolShowing && !this.isConsentToolShowing) {
+			this.cmpApi.update(this.persistedConsentString, true);
+		}
+		this.isConsentToolShowing = isConsentToolShowing;
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
