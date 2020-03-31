@@ -99,7 +99,6 @@ const shouldDisplay = () => {
 					}
 				});
 			} else {
-				console.log('now');
 				fetchGlobalVendorList().then((vendorList) => {
 					const timeout = setTimeout(() => {
 						const result = handleConsentResult(vendorList, undefined);
