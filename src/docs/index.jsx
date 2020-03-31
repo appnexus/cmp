@@ -6,7 +6,8 @@ import './style';
 function init() {
 	eval(buildScript({
 		logging: 'debug',
-		storePublisherData: true
+		storePublisherData: true,
+		globalVendorListLocation: './assets/vendorlist.json'
 	})); // eslint-disable-line no-eval
 
 	let App = require('./components/app').default;

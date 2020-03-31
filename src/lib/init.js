@@ -3,7 +3,6 @@ import Promise from 'promise-polyfill';
 import Store from './store';
 import { CmpApi } from '@iabtcf/cmpapi';
 import { fetchGlobalVendorList } from './vendor';
-import { readConsentCookie } from './cookie/cookie';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
@@ -14,81 +13,54 @@ export const CMP_VERSION = parseInt(process.env.CMP_VERSION,10);
 export const CMP_ID = parseInt(process.env.CMP_ID, 10);
 export const COOKIE_VERSION = parseInt(process.env.COOKIE_VERSION, 10);
 
-function readExternalConsentData(config) {
+export function init (consentString, shouldDisplayCmpUI) {
 	return new Promise((resolve, reject) => {
-		try {
-			config.getConsentData((err, data) => {
-				if (err) {
-					reject(err);
-				} else {
-					try {
-						resolve(data.consent && data.consent || undefined);
-					} catch (err) {
-						reject(err);
-					}
-				}
-			});
-		} catch (err) {
-			reject(err);
+		const store = new Store({
+			cmpVersion: CMP_VERSION,
+			cmpId: CMP_ID,
+			cookieVersion: COOKIE_VERSION,
+			consentString,
+		});
+
+		const cmpManager = new CmpManager();
+		const commands = createCommands(store, cmpManager);
+
+		const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, true, commands);
+
+		if (config.decoratePageCallHandler) {
+			config.decoratePageCallHandler(cmpApi);
 		}
-	});
-}
 
-export function init (shouldDisplayCmpUI) {
-	return new Promise((resolve, reject) => {
-		(config.getConsentData ? readExternalConsentData(config) : readConsentCookie())
-			.then((consentString) => {
-				const store = new Store({
-					cmpVersion: CMP_VERSION,
-					cmpId: CMP_ID,
-					cookieVersion: COOKIE_VERSION,
-					consentString,
-				});
+		store.setCmpApi(cmpApi, shouldDisplayCmpUI);
 
-				const cmpManager = new CmpManager();
-				const commands = createCommands(store, cmpManager);
+		// Notify listeners that the CMP is loaded
+		log.debug(`Successfully loaded CMP version: ${pack.version}`);
+		cmpManager.isLoaded = true;
+		cmpManager.notify('isLoaded');
 
-				const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, true, commands);
+		// Render the UI
+		const App = require('../components/app').default;
+		render(<App store={store} notify={cmpManager.notify} />, document.body);
 
-				if (config.decoratePageCallHandler) {
-					config.decoratePageCallHandler(cmpApi);
-				}
+		let isConsentToolShowing = store.isConsentToolShowing;
+		store.subscribe(store => {
+			if (store.isConsentToolShowing !== isConsentToolShowing) {
+				isConsentToolShowing = store.isConsentToolShowing;
+				cmpManager.notify('onToggleConsentToolShowing', isConsentToolShowing);
+			}
+		});
 
-				store.setCmpApi(cmpApi, shouldDisplayCmpUI);
-
-				// Notify listeners that the CMP is loaded
-				log.debug(`Successfully loaded CMP version: ${pack.version}`);
-				cmpManager.isLoaded = true;
-				cmpManager.notify('isLoaded');
-
-				// Render the UI
-				const App = require('../components/app').default;
-				render(<App store={store} notify={cmpManager.notify} />, document.body);
-
-				let isConsentToolShowing = store.isConsentToolShowing;
-				store.subscribe(store => {
-					if (store.isConsentToolShowing !== isConsentToolShowing) {
-						isConsentToolShowing = store.isConsentToolShowing;
-						cmpManager.notify('onToggleConsentToolShowing', isConsentToolShowing);
-					}
-				});
-
-				// Request lists
-				return Promise.all([
-					store,
-					fetchGlobalVendorList().then(store.updateVendorList)
-				]).then((params) => {
-					cmpManager.cmpReady = true;
-					cmpManager.notify('cmpReady');
-					resolve(params[0]);
-				}).catch(err => {
-					log.error('Failed to load lists. CMP not ready', err);
-					reject(err);
-				});
-			})
-			.catch((e) => {
-				log.error('Failed to load consent data');
-				reject(e);
-			});
+		// Request lists
+		return Promise.all([
+			store,
+			fetchGlobalVendorList().then(store.updateVendorList)
+		]).then((params) => {
+			cmpManager.cmpReady = true;
+			cmpManager.notify('cmpReady');
+			resolve(params[0]);
+		}).catch(err => {
+			log.error('Failed to load lists. CMP not ready', err);
+			reject(err);
+		});
 	});
 }

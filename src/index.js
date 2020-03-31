@@ -12,10 +12,17 @@ import log from "./lib/log";
 import config from "./lib/config";
 import { decodeConsentData, readConsentCookie } from "./lib/cookie/cookie";
 import {fetchGlobalVendorList} from "./lib/vendor";
+import Promise from "promise-polyfill";
 
 const TCF_CONFIG = '__tcfConfig';
 
-const handleConsentResult = (vendorList, consentData = {}) => {
+const handleConsentResult = (...args) => {
+	if (args.length < 2 || !config.autoDisplay) {
+		return { display: false };
+	}
+
+	const [vendorList = {}, consentData = {}] = args;
+
 	const {
 		vendorListVersion: listVersion,
 		tcfPolicyVersion: listPolicyVersion = 1
@@ -27,11 +34,7 @@ const handleConsentResult = (vendorList, consentData = {}) => {
 		policyVersion: consentPolicyVersion = 1
 	} = consentData;
 
-	let displayOptions = {};
-
-	if (!config.autoDisplay) {
-		return { display: false };
-	}
+	let displayOptions;
 
 	if (!created) {
 		log.debug('No consent data found. Showing consent tool');
@@ -50,18 +53,18 @@ const handleConsentResult = (vendorList, consentData = {}) => {
 		displayOptions = {display: false, command: 'showFooter'};
 	}
 
-	return  displayOptions;
+	return displayOptions;
 };
 
 
 const shouldDisplay = () => {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		if (!window.navigator.cookieEnabled) {
 			const msg = 'Cookies are disabled. Ignoring CMP consent check';
 			log.warn(msg);
-			reject(msg);
+			handleConsentResult();
 		} else {
-			const finish = (timeout, consentData = {}, vendorList) => {
+			const finish = (timeout, vendorList, consentData) => {
 				clearTimeout(timeout);
 				const result = handleConsentResult(vendorList, consentData);
 				resolve(result);
@@ -72,22 +75,23 @@ const shouldDisplay = () => {
 				getVendorList((err, vendorList) => {
 					if (err) {
 						log.error('Failed to get vendor list');
-						reject(err);
+						handleConsentResult();
 					} else {
 						const timeout = setTimeout(() => {
-							handleConsentResult(vendorList);
+							const result = handleConsentResult(vendorList, undefined);
+							resolve(result);
 						}, 100);
 
 						if (getConsentData) {
 							getConsentData((err, data) => {
 								if (err) {
-									resolve(timeout);
+									finish(timeout, vendorList);
 								} else {
 									try {
 										const tcStringDecoded = decodeConsentData(data.consent);
-										finish(timeout, tcStringDecoded, vendorList);
+										finish(timeout, vendorList, tcStringDecoded);
 									} catch (e) {
-										finish(timeout);
+										finish(timeout, vendorList);
 									}
 								}
 							});
@@ -95,28 +99,36 @@ const shouldDisplay = () => {
 					}
 				});
 			} else {
+				console.log('now');
 				fetchGlobalVendorList().then((vendorList) => {
 					const timeout = setTimeout(() => {
-						handleConsentResult(vendorList);
+						const result = handleConsentResult(vendorList, undefined);
+						resolve(result);
 					}, 100);
 
 					readConsentCookie().then((cookie) => {
 						if (cookie) {
 							try {
 								const tcStringDecoded = decodeConsentData(cookie);
-								finish(timeout, tcStringDecoded, vendorList);
+								finish(timeout, vendorList, tcStringDecoded);
 							} catch (e) {
-								finish(timeout);
+								finish(timeout, vendorList);
 							}
+						} else {
+							finish(timeout, vendorList);
 						}
 					});
-				});
+				}).catch(() => handleConsentResult());
 			}
 		}
 	});
 };
 
 const displayUI = (tcfApi, result, store) => {
+	if (!tcfApi) {
+		return;
+	}
+
 	const { isConsentToolShowing } = store;
 	let { display, command } = result;
 
@@ -131,6 +143,26 @@ const displayUI = (tcfApi, result, store) => {
 	}
 };
 
+function readExternalConsentData(config) {
+	return new Promise((resolve, reject) => {
+		try {
+			config.getConsentData((err, data) => {
+				if (err) {
+					reject(err);
+				} else {
+					try {
+						resolve(data.consent && data.consent || undefined);
+					} catch (err) {
+						reject(err);
+					}
+				}
+			});
+		} catch (err) {
+			reject(err);
+		}
+	});
+}
+
 function start() {
 	// Preserve any config options already set
 	const tcfConfig = window[TCF_CONFIG] || {};
@@ -142,18 +174,18 @@ function start() {
 
 	config.update(configUpdates);
 
-	shouldDisplay()
-		.then(result => {
-			initializeStore(result.display)
-				.then(store => {
-					displayUI(window.__tcfapi, result, store);
-				}).catch(e => {
-					log.debug(e);
-				});
-		})
-		.catch((e) => {
-			log.debug(e);
+	Promise.all([
+		shouldDisplay(),
+		config.getConsentData ? readExternalConsentData(config) : readConsentCookie()
+	]).then(([displayOptions, consentString]) => {
+		initializeStore(consentString, displayOptions.display).then(store => {
+			displayUI(window.__tcfapi, displayOptions, store);
+		}).catch(err => {
+			log.error('Failed to initialize CMP store', err);
 		});
+	}).catch(err => {
+		log.error('Failed to load CMP', err);
+	});
 }
 
 start();
