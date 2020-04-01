@@ -50,11 +50,9 @@ export default class Store {
 		this.hasInitialVendorsRejectionOccured = false;
 	}
 
-	setCmpApi (cmpApi) {
+	setCmpApi (cmpApi, shouldDisplayCmpUI) {
 		this.cmpApi = cmpApi;
-		if (this.persistedConsentString) {
-			this.cmpApi.update(this.persistedConsentString, false);
-		}
+		this.cmpApi.update(this.persistedConsentString, shouldDisplayCmpUI);
 	}
 
 	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);
@@ -401,10 +399,11 @@ export default class Store {
 	};
 
 	toggleConsentToolShowing = (isShown) => {
-		this.isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
-		if (this.isConsentToolShowing) {
+		const isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
+		if (isConsentToolShowing && !this.isConsentToolShowing) {
 			this.cmpApi.update(this.persistedConsentString, true);
 		}
+		this.isConsentToolShowing = isConsentToolShowing;
 		this.isFooterShowing = false;
 		this.storeUpdate();
 	};
