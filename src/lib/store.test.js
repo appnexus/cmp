@@ -462,4 +462,21 @@ describe('store', () => {
 			done();
 		}, 5);
 	});
+
+	it('selects ALL vendors legitimate interests', () => {
+		const store = new Store({
+			cmpId: CMP_ID
+		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllVendorLegitimateInterests(false);
+		store.persist();
+
+		const vendorConsentsObject = store.getVendorConsentsObject();
+		const vendorLegIntConsents = Object.keys(vendorConsentsObject.vendorLegitimateInterests).filter(key => vendorConsentsObject.vendorLegitimateInterests[key]);
+
+		expect(vendorLegIntConsents.length).to.equal(0);
+	});
 });

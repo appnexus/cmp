@@ -269,14 +269,14 @@ export default class Store {
 		}
 	};
 
-	getVendorsWithLegints = () => Object.keys(this.vendorList.vendors)
+	getVendorsWithLegIntsIds = () => Object.keys(this.vendorList.vendors)
 			.filter(key => this.vendorList.vendors[key].legIntPurposes.length > 0)
 			.map(key => this.vendorList.vendors[key].id);
 
 
 	selectAllVendorLegitimateInterests = (isSelected, update = true) => {
 		const {vendorLegitimateInterests} = this.tcModel;
-		const vendorsWithLegIntsIds = this.getVendorsWithLegints();
+		const vendorsWithLegIntsIds = this.getVendorsWithLegIntsIds();
 
 		vendorsWithLegIntsIds.forEach(id => {
 			if (isSelected) {

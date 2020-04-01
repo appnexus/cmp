@@ -86,7 +86,7 @@ export default class Details extends Component {
 
 			selectPublisherPurpose,
 			selectPublisherLegitimateInterests,
-			getVendorsWithLegints,
+			getVendorsWithLegIntsIds,
 			persistedConsentData = {},
 			subsection
 		} = store;
@@ -138,7 +138,7 @@ export default class Details extends Component {
 							selectedVendorIds={vendorConsents}
 							selectedLegitimateInterestsIds={vendorLegitimateInterests}
 							selectAllVendorLegitimateInterests={selectAllVendorLegitimateInterests}
-							vendorsWithLegints={getVendorsWithLegints()}
+							vendorsWithLegints={getVendorsWithLegIntsIds()}
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
 							selectVendorLegitimateInterests={selectVendorLegitimateInterests}
