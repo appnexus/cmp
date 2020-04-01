@@ -65,6 +65,18 @@ export default class Vendors extends Component {
 		isSelected ? this.handleAcceptAll() : this.handleRejectAll();
 	};
 
+	isFullLegitimateInterestChosen = () => {
+		const {vendorsWithLegints, selectedLegitimateInterestsIds} = this.props;
+		const isSelected = (el) => selectedLegitimateInterestsIds.has(el);
+		return vendorsWithLegints.every(isSelected);
+	};
+
+	handleFullLegIntChange = ({isSelected}) => {
+		 this.props.selectAllVendorLegitimateInterests(isSelected);
+		/*const {vendors, selectVendorLegitimateInterests} = this.props;
+		selectVendorLegitimateInterests(vendors.map(({id}) => id), isSelected);*/
+	};
+
 	getActiveAttributesNameElements = (setOfAttributes, idsOfActiveAttributes, translationPrefix = '') => {
 		const activeAttributes = setOfAttributes
 			.filter(attribute => idsOfActiveAttributes.indexOf(attribute['id']) !== -1)
@@ -112,7 +124,11 @@ export default class Vendors extends Component {
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
 							{editingConsents &&
 							<span class={style.vendorCenterSmall}>
-							<th><LocalLabel localizeKey='legitimateInterest'>Legitimate interest</LocalLabel></th>
+							<th><LocalLabel localizeKey='legitimateInterest'>LegInt</LocalLabel>
+							<Switch
+									isSelected={this.isFullLegitimateInterestChosen()}
+									onClick={this.handleFullLegIntChange}
+								/></th>
 							<th>
 								<LocalLabel localizeKey='offOn'>Allow</LocalLabel>
 								<Switch
@@ -136,6 +152,7 @@ export default class Vendors extends Component {
 								<td>
 									<Vendor name={name}
 											policyUrl={policyUrl}
+											editingConsents={editingConsents}
 											purposes={this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}
 											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposes, 'purposes.purpose')}
 											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}
@@ -144,7 +161,7 @@ export default class Vendors extends Component {
 								</td>
 								{editingConsents && legIntPurposes.length &&
 									<td class={style.vendorCenterSmall}>
-										<LocalLabel localizeKey='legitimateButton'>LegInt</LocalLabel>
+										<LocalLabel localizeKey='legitimateInterest'>LegInt</LocalLabel>
 										<Switch
 											dataId={id}
 											isSelected={selectedLegitimateInterestsIds.has(id)}

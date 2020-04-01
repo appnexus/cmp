@@ -11,14 +11,15 @@ class LocalLabel extends Label {
 }
 
 export default class Vendor extends Component {
-	shouldComponentUpdate() {
-		return false;
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.editingConsents !== nextState.editingConsents;
 	}
 
 	render() {
 		const {
 			name,
 			policyUrl,
+			editingConsents,
 			purposes,
 			legIntPurposes,
 			features,
@@ -32,7 +33,7 @@ export default class Vendor extends Component {
 				{policyUrl &&
 				<a href={policyUrl} className={style.policy} target='_blank'><ExternalLinkIcon/></a>}
 			</div>
-			<div class={style.vendorDescription}>
+			<div class={editingConsents && !legIntPurposes.length ? style.vendorDescriptionNoConsent : style.vendorDescription}>
 				{purposes && !!purposes.length &&
 				<span>
 					<b><LocalLabel localizeKey='purposes'>Purposes</LocalLabel></b>{': '}

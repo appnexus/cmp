@@ -166,8 +166,7 @@ export default {
 			purposes: 'Cele przetwarzania',
 			legitimateInterestPurposes: 'Cele przetwarzania na podstawie uzasadnionego interesu',
 			features: 'Funkcje',
-			legitimateInterest: 'Uzasadniony interes prawny',
-			legitimateButton: 'UIP',
+			legitimateInterest: 'UIP',
 			acceptButton: 'Zgoda',
 			specialPurposes: 'Cele specjalne',
 			specialFeatures: 'Funkcje specjalne'
