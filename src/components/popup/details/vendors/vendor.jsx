@@ -13,7 +13,7 @@ class LocalLabel extends Label {
 export default class Vendor extends Component {
 	shouldComponentUpdate() {
 		return false
-	}
+	};
 
 	render() {
 		const {
