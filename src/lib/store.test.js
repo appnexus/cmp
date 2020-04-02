@@ -493,5 +493,4 @@ describe('store', () => {
 		expect(legIntIds.length).to.equal(3);
 		expect(legIntIds[0]).to.equal(1);
 	});
-
 });

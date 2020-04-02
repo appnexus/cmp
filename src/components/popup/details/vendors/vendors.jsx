@@ -148,7 +148,6 @@ export default class Vendors extends Component {
 								<td>
 									<Vendor name={name}
 											policyUrl={policyUrl}
-											editingConsents={editingConsents}
 											purposes={this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}
 											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposes, 'purposes.purpose')}
 											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}
@@ -163,7 +162,7 @@ export default class Vendors extends Component {
 											isSelected={selectedLegitimateInterestsIds.has(id)}
 											onClick={this.handleLegitInterest}
 										/>
-									</td> || <td/>}
+									</td> || <td class={style.vendorCenterSmall}/>}
 								{editingConsents &&
 									<td class={style.vendorCenterSmall}>
 										<LocalLabel localizeKey='acceptButton'>Consent</LocalLabel>
