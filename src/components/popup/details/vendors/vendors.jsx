@@ -66,9 +66,9 @@ export default class Vendors extends Component {
 	};
 
 	isFullLegitimateInterestChosen = () => {
-		const {vendorsWithLegints, selectedLegitimateInterestsIds} = this.props;
+		const {vendorsWithLegIntsIds, selectedLegitimateInterestsIds} = this.props;
 		const isSelected = (el) => selectedLegitimateInterestsIds.has(el);
-		return vendorsWithLegints.every(isSelected);
+		return vendorsWithLegIntsIds.every(isSelected);
 	};
 
 	handleFullLegIntChange = ({isSelected}) => this.props.selectAllVendorLegitimateInterests(isSelected);
