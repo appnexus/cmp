@@ -479,4 +479,19 @@ describe('store', () => {
 
 		expect(vendorLegIntConsents.length).to.equal(0);
 	});
+
+	it('filters vendors to obtain ids of those with legitimate interest', () => {
+		const store = new Store({
+			cmpId: CMP_ID
+		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		const legIntIds = store.getVendorsWithLegIntsIds();
+
+		expect(legIntIds.length).to.equal(3);
+		expect(legIntIds[0]).to.equal(1);
+	});
+
 });
