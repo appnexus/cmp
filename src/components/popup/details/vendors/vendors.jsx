@@ -71,7 +71,10 @@ export default class Vendors extends Component {
 		return vendorsWithLegIntsIds.every(isSelected);
 	};
 
-	handleFullLegIntChange = ({isSelected}) => this.props.selectAllVendorLegitimateInterests(isSelected);
+	handleFullLegIntChange = ({isSelected}) => {
+		const {vendors, selectVendorLegitimateInterests} = this.props;
+		vendors.forEach(el => selectVendorLegitimateInterests(el.id, isSelected));
+	};
 
 	getActiveAttributesNameElements = (setOfAttributes, idsOfActiveAttributes, translationPrefix = '') => {
 		const activeAttributes = setOfAttributes
