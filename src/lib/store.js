@@ -268,8 +268,8 @@ export default class Store {
 	};
 
 	getVendorsWithLegIntsIds = () => Object.keys(this.vendorList.vendors)
-			.filter(key => this.vendorList.vendors[key].legIntPurposes.length > 0)
-			.map(key => this.vendorList.vendors[key].id);
+		.filter(key => this.vendorList.vendors[key].legIntPurposes.length > 0)
+		.map(key => this.vendorList.vendors[key].id);
 
 
 	selectAllVendorLegitimateInterests = (isSelected, update = true) => {
