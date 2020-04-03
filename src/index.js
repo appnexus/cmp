@@ -133,6 +133,7 @@ const displayUI = (tcfApi, result) => {
 		return;
 	}
 
+	const { shouldDisplayFooter } = config;
 	let { display, command } = result;
 
 	const tcfApiCall = (command) => {
@@ -142,11 +143,13 @@ const displayUI = (tcfApi, result) => {
 	if (display) {
 		tcfApiCall(command);
 	} else if (command === 'showFooter') {
-		config.shouldDisplayFooter((result) => {
-			if (result) {
-				tcfApiCall(command);
-			}
-		});
+		if (shouldDisplayFooter) {
+			shouldDisplayFooter((result) => {
+				if (result) {
+					tcfApiCall(command);
+				}
+			});
+		}
 	}
 };
 
@@ -185,7 +188,7 @@ function start() {
 		shouldDisplay(),
 		config.getConsentData ? readExternalConsentData(config) : readConsentCookie()
 	]).then(([displayOptions, consentString]) => {
-		initializeStore(consentString, displayOptions.display).then(store => {
+		initializeStore(consentString, displayOptions.display).then(() => {
 			displayUI(window.__tcfapi, displayOptions);
 		}).catch(err => {
 			log.error('Failed to initialize CMP store', err);
