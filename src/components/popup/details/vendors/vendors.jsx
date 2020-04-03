@@ -66,7 +66,7 @@ export default class Vendors extends Component {
 			.filter(attribute => idsOfActiveAttributes.indexOf(attribute['id']) !== -1)
 			.map(attribute => <Label localizeKey={`${translationPrefix}${attribute['id']}.title`}>{attribute['name']}</Label>);
 
-		return activeAttributes.length ? activeAttributes.reduce((prev, curr) => [...prev, ', ', curr]) : [];
+		return activeAttributes.length > 1 ? activeAttributes.reduce((prev, curr) => [...prev, ', ', curr]) : activeAttributes;
 	};
 
 	render(props, state) {
