@@ -17,10 +17,10 @@ describe('Vendors', () => {
 	it('should render the vendor list', () => {
 		const vendors = render(<Vendors
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -87,10 +87,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -127,10 +127,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -167,10 +167,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -207,10 +207,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -247,10 +247,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -285,10 +285,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -320,10 +320,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -357,10 +357,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -397,10 +397,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: []},
-				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: []},
-				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1]},
-				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialFeatures: [1]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'}

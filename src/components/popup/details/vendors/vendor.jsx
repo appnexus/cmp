@@ -11,6 +11,16 @@ class LocalLabel extends Label {
 }
 
 export default class Vendor extends Component {
+	static defaultProps = {
+		name: '',
+		policyUrl: '',
+		purposes: [],
+		legIntPurposes: [],
+		specialPurposes: [],
+		features: [],
+		specialFeatures: []
+	};
+
 	shouldComponentUpdate() {
 		return false;
 	}
