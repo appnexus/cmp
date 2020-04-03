@@ -183,22 +183,27 @@ describe('store', () => {
 			store.setCmpApi(cmpApi);
 			store.updateVendorList(VENDOR_LIST);
 
-			const vendorConsentsObject = store.getVendorConsentsObject();
-			const vendorsWithoutConsentCount = Object.values(vendorConsentsObject.vendorConsents).filter(consent => !consent).length;
+			const persistedConsentData = store.persistedConsentData;
+			let vendorsWithoutConsentCount = 0;
+			persistedConsentData.vendorConsents.forEach((consent) => {
+				if (!consent) {
+					vendorsWithoutConsentCount++;
+				}
+			});
 
 			expect(vendorsWithoutConsentCount).to.equal(Object.keys(VENDOR_LIST.vendors).length - 2);
-			expect(vendorConsentsObject.vendorConsents['4']).to.be.true;
-			expect(vendorConsentsObject.vendorConsents['5']).to.be.false;
+			expect(persistedConsentData.vendorConsents.has(4)).to.be.true;
+			expect(persistedConsentData.vendorConsents.has(5)).to.be.false;
 
-			expect(vendorConsentsObject.purposeConsents['1']).to.be.true;
-			expect(vendorConsentsObject.purposeConsents['3']).to.be.true;
-			expect(vendorConsentsObject.purposeConsents['2']).to.be.false;
-			expect(vendorConsentsObject.purposeConsents['4']).to.be.false;
+			expect(persistedConsentData.purposeConsents.has(1)).to.be.true;
+			expect(persistedConsentData.purposeConsents.has(3)).to.be.true;
+			expect(persistedConsentData.purposeConsents.has(2)).to.be.false;
+			expect(persistedConsentData.purposeConsents.has(4)).to.be.false;
 
-			expect(vendorConsentsObject.purposeLegitimateInterests['2']).to.be.true;
-			expect(vendorConsentsObject.purposeLegitimateInterests['4']).to.be.true;
-			expect(vendorConsentsObject.purposeLegitimateInterests['1']).to.be.false;
-			expect(vendorConsentsObject.purposeLegitimateInterests['3']).to.be.false;
+			expect(persistedConsentData.purposeLegitimateInterests.has(2)).to.be.true;
+			expect(persistedConsentData.purposeLegitimateInterests.has(4)).to.be.true;
+			expect(persistedConsentData.purposeLegitimateInterests.has(1)).to.be.false;
+			expect(persistedConsentData.purposeLegitimateInterests.has(3)).to.be.false;
 
 			done();
 		});
@@ -216,8 +221,8 @@ describe('store', () => {
 		store.selectVendor(3, true);
 		store.persist();
 
-		const vendorConsentObject = store.getVendorConsentsObject();
-		expect(vendorConsentObject.vendorConsents['3']).to.be.true;
+		const persistedConsentData = store.persistedConsentData;
+		expect(persistedConsentData.vendorConsents.has(3)).to.be.true;
 
 	});
 
@@ -232,10 +237,15 @@ describe('store', () => {
 		store.selectAllVendors(true);
 		store.persist();
 
-		const vendorConsentObject = store.getVendorConsentsObject();
-		const vendorConsents = Object.keys(vendorConsentObject.vendorConsents).filter(key => vendorConsentObject.vendorConsents[key]);
+		const persistedConsentData = store.persistedConsentData;
+		let vendorsWithConsentCount = 0;
+		persistedConsentData.vendorConsents.forEach((consent) => {
+			if (consent) {
+				vendorsWithConsentCount++;
+			}
+		});
 
-		expect(vendorConsents.length).to.equal(Object.values(VENDOR_LIST.vendors).length);
+		expect(vendorsWithConsentCount).to.equal(Object.values(VENDOR_LIST.vendors).length);
 	});
 
 	it('selects vendor leg ints IDs', () => {
@@ -249,8 +259,8 @@ describe('store', () => {
 		store.selectVendorLegitimateInterests(2, false);
 		store.persist();
 
-		const vendorConsentObject = store.getVendorConsentsObject();
-		expect(vendorConsentObject.vendorLegitimateInterests['2']).to.be.false;
+		const persistedConsentData = store.persistedConsentData;
+		expect(persistedConsentData.vendorLegitimateInterests.has(2)).to.be.false;
 
 	});
 
@@ -267,10 +277,15 @@ describe('store', () => {
 		store.selectPurpose(3, true);
 		store.persist();
 
-		const vendorConsentObject = store.getVendorConsentsObject();
-		const purposeConsents = Object.keys(vendorConsentObject.purposeConsents).filter(key => vendorConsentObject.purposeConsents[key]);
+		const persistedConsentData = store.persistedConsentData;
+		let positiveConsentsCount = 0 ;
+		persistedConsentData.purposeConsents.forEach(consent => {
+			if (consent) {
+				positiveConsentsCount++;
+			}
+		});
 
-		expect(purposeConsents.length).to.equal(Object.values(VENDOR_LIST.purposes).length - 2);
+		expect(positiveConsentsCount).to.equal(Object.values(VENDOR_LIST.purposes).length - 2);
 	});
 
 	it('selects ALL purpose IDs', () => {
@@ -284,10 +299,15 @@ describe('store', () => {
 		store.selectAllPurposes(false);
 		store.persist();
 
-		const vendorConsentObject = store.getVendorConsentsObject();
-		const purposeConsents = Object.keys(vendorConsentObject.purposeConsents).filter(key => vendorConsentObject.purposeConsents[key]);
+		const persistedConsentData = store.persistedConsentData;
+		let positiveConsentsCount = 0 ;
+		persistedConsentData.purposeConsents.forEach(consent => {
+			if (consent) {
+				positiveConsentsCount++;
+			}
+		});
 
-		expect(purposeConsents.length).to.equal(0);
+		expect(positiveConsentsCount).to.equal(0);
 	});
 
 	it('selects legitimate interests IDs', () => {
@@ -303,10 +323,15 @@ describe('store', () => {
 		store.selectPurposeLegitimateInterests(3, true);
 		store.persist();
 
-		const vendorConsentObject = store.getVendorConsentsObject();
-		const legIntConsents = Object.keys(vendorConsentObject.purposeLegitimateInterests).filter(key => vendorConsentObject.purposeLegitimateInterests[key]);
+		const persistedConsentData = store.persistedConsentData;
+		let positiveConsentsCount = 0 ;
+		persistedConsentData.purposeLegitimateInterests.forEach(consent => {
+			if (consent) {
+				positiveConsentsCount++;
+			}
+		});
 
-		expect(legIntConsents.length).to.equal(Object.values(VENDOR_LIST.purposes).length - 2);
+		expect(positiveConsentsCount).to.equal(Object.values(VENDOR_LIST.purposes).length - 2);
 	});
 
 	it('selects ALL legitimate interests IDs', () => {
@@ -320,10 +345,15 @@ describe('store', () => {
 		store.selectAllPurposesLegitimateInterests(false);
 		store.persist();
 
-		const vendorConsentObject = store.getVendorConsentsObject();
-		const legIntConsents = Object.keys(vendorConsentObject.purposeLegitimateInterests).filter(key => vendorConsentObject.purposeLegitimateInterests[key]);
+		const persistedConsentData = store.persistedConsentData;
+		let positiveConsentsCount = 0 ;
+		persistedConsentData.purposeLegitimateInterests.forEach(consent => {
+			if (consent) {
+				positiveConsentsCount++;
+			}
+		});
 
-		expect(legIntConsents.length).to.equal(0);
+		expect(positiveConsentsCount).to.equal(0);
 	});
 
 	it('selects special feature opt ins IDs', () => {
@@ -338,11 +368,16 @@ describe('store', () => {
 		store.selectSpecialFeatureOptins(2, false);
 		store.persist();
 
-		const vendorConsentsObject = store.getVendorConsentsObject();
-		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptins).filter(key => vendorConsentsObject.specialFeatureOptins[key]);
+		const persistedConsentData = store.persistedConsentData;
+		let positiveConsentsCount = 0 ;
+		persistedConsentData.specialFeatureOptins.forEach(consent => {
+			if (consent) {
+				positiveConsentsCount++;
+			}
+		});
 
-		expect(specialFeatureConsents.length).to.equal(Object.keys(VENDOR_LIST.specialFeatures).length - 1);
-		expect(vendorConsentsObject.specialFeatureOptins['2']).to.be.false;
+		expect(positiveConsentsCount).to.equal(Object.keys(VENDOR_LIST.specialFeatures).length - 1);
+		expect(persistedConsentData.specialFeatureOptins.has(2)).to.be.false;
 	});
 
 	it('selects ALL special feature opt ins IDs', () => {
@@ -356,10 +391,15 @@ describe('store', () => {
 		store.selectAllSpecialFeatureOptins(false);
 		store.persist();
 
-		const vendorConsentsObject = store.getVendorConsentsObject();
-		const specialFeatureConsents = Object.keys(vendorConsentsObject.specialFeatureOptins).filter(key => vendorConsentsObject.specialFeatureOptins[key]);
+		const persistedConsentData = store.persistedConsentData;
+		let positiveConsentsCount = 0 ;
+		persistedConsentData.specialFeatureOptins.forEach(consent => {
+			if (consent) {
+				positiveConsentsCount++;
+			}
+		});
 
-		expect(specialFeatureConsents.length).to.equal(0);
+		expect(positiveConsentsCount).to.equal(0);
 	});
 
 	it('selects publisher purpose IDs', () => {
@@ -403,6 +443,31 @@ describe('store', () => {
 		expect(store.isConsentToolShowing).to.be.false;
 		store.toggleConsentToolShowing();
 		expect(store.isConsentToolShowing).to.be.true;
+	});
+
+	it('should toggle the footer', () => {
+		const store = new Store({
+			cmpId: CMP_ID
+		});
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+		expect(store.isFooterShowing).to.be.false;
+		const footerShown = store.toggleFooterShowing(true);
+		expect(store.isFooterShowing).to.be.true;
+		expect(footerShown).to.be.true;
+	});
+
+	it('should not toggle the footer', () => {
+		const store = new Store({
+			cmpId: CMP_ID
+		});
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+		store.isConsentToolShowing = true;
+		expect(store.isFooterShowing).to.be.false;
+		const footerShown = store.toggleFooterShowing(true);
+		expect(store.isFooterShowing).to.be.false;
+		expect(footerShown).to.be.false;
 	});
 
 	it('calls event listeners on update', (done) => {

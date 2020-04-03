@@ -110,8 +110,24 @@ export default class CmpApi extends Component {
 							If is set false <span class={style.highlight}>autoDisplay: false</span> the consent tool UI will never be displayed when initialize CMP</span>
 						</span>
 						<span className={style.argument}>
-							<span className={style.argumentType}>decoratePageCallHandler (function)</span>
-							<span className={style.argumentDescription}>Custom function to overwrite default behaviour pageCallHandler function.</span>
+							<span className={style.argumentType}>decoratePageCallHandler(Object) (Function)</span>:
+							<span className={style.argumentDescription}>
+								Custom function to overwrite default behaviour pageCallHandler function.
+								<span className={style.functionSectionTitle}>Arguments</span>
+								<span className={style.argument}>
+									<span className={style.argumentType}>cmpApi (Object)</span>: <span>Instance of CmpApi class.</span>
+								</span>
+							</span>
+						</span>
+						<span className={style.argument}>
+							<span className={style.argumentType}>shouldDisplayFooter(callback) (Function)</span>:
+							<span className={style.argumentDescription}>
+								Function that determines if CMP UI footer should be shown
+								<span className={style.functionSectionTitle}>Arguments</span>
+								<span className={style.argument}>
+									<span className={style.argumentType}>callback(result) (Function)</span>: <span>Callback to be executed with value returned from function.</span>
+								</span>
+							</span>
 						</span>
 					</div>
 			</div>

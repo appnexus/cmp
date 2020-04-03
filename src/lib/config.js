@@ -14,7 +14,8 @@ const defaultConfig = {
 	decoratePageCallHandler: null,
 	legIntPurposeIds: [],
 	contractPurposeIds: [],
-	autoDisplay: true
+	autoDisplay: true,
+	shouldDisplayFooter: null
 };
 
 class Config {

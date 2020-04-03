@@ -128,12 +128,11 @@ const shouldDisplay = () => {
 	});
 };
 
-const displayUI = (tcfApi, result, store) => {
+const displayUI = (tcfApi, result) => {
 	if (!tcfApi) {
 		return;
 	}
 
-	const { isConsentToolShowing } = store;
 	let { display, command } = result;
 
 	const tcfApiCall = (command) => {
@@ -143,7 +142,11 @@ const displayUI = (tcfApi, result, store) => {
 	if (display) {
 		tcfApiCall(command);
 	} else if (command === 'showFooter') {
-		!isConsentToolShowing && tcfApiCall(command);
+		config.shouldDisplayFooter((result) => {
+			if (result) {
+				tcfApiCall(command);
+			}
+		});
 	}
 };
 
