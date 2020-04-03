@@ -84,6 +84,8 @@ export default class Vendors extends Component {
 		return activeAttributes.length ? activeAttributes.reduce((prev, curr) => [...prev, ', ', curr]) : [];
 	};
 
+	showGlobalLegIntSwitch = (vendors) => vendors.some(el => !!el.legIntPurposes.length);
+
 	render(props, state) {
 
 		const {
@@ -123,11 +125,13 @@ export default class Vendors extends Component {
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
 							{editingConsents &&
 							<span class={style.vendorCenterSmall}>
-							<th><LocalLabel localizeKey='legitimateInterest'>LegInt</LocalLabel>
-							<Switch
-									isSelected={this.isFullLegitimateInterestChosen()}
-									onClick={this.handleFullLegIntChange}
-								/></th>
+								{this.showGlobalLegIntSwitch(vendors) &&
+									<th><LocalLabel localizeKey='legitimateInterest'>LegInt</LocalLabel>
+									<Switch
+										isSelected={this.isFullLegitimateInterestChosen()}
+										onClick={this.handleFullLegIntChange}
+									/></th>
+								}
 							<th>
 								<LocalLabel localizeKey='offOn'>Allow</LocalLabel>
 								<Switch
@@ -165,7 +169,7 @@ export default class Vendors extends Component {
 											isSelected={selectedVendorsLegitimateInterestsIds.has(id)}
 											onClick={this.handleLegitInterest}
 										/>
-									</td> || <td class={style.vendorCenterSmall}/>}
+									</td> || <td/>}
 								{editingConsents &&
 									<td class={style.vendorCenterSmall}>
 										<LocalLabel localizeKey='acceptButton'>Consent</LocalLabel>
