@@ -186,7 +186,7 @@ function start() {
 		config.getConsentData ? readExternalConsentData(config) : readConsentCookie()
 	]).then(([displayOptions, consentString]) => {
 		initializeStore(consentString, displayOptions.display).then(store => {
-			displayUI(window.__tcfapi, displayOptions, store);
+			displayUI(window.__tcfapi, displayOptions);
 		}).catch(err => {
 			log.error('Failed to initialize CMP store', err);
 		});
