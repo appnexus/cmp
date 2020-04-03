@@ -18,10 +18,10 @@ describe('Vendors', () => {
 	it('should render the vendor list', () => {
 		const vendors = render(<Vendors
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
-				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
-				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
-				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -30,6 +30,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'Special Purpose 1'},
+				{id: 2, name: 'Special Purpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'Special Feature 1'},
+				{id: 2, name: 'Special Feature 2'},
 			]}
 		/>, scratch);
 
@@ -109,20 +117,21 @@ describe('Vendors', () => {
 		expect(featuresToRender.length).to.equal(3);
 	});
 
-
-	it('should render vendor with purposes, legIntPurposes and features', () => {
+	it('should render vendor with purposes, special purposes, legIntPurposes, features and special features', () => {
 		const vendor = render(<Vendor
 			name={'Vendor 1'}
 			policyUrl={'www.example.com'}
 			purposes={[<Label localizeKey={'purposes.title'}>Purpose 1</Label>]}
-			legIntPurposes={[<Label localizeKey={'purposes.title'}>Purpose 2</Label>]}
+			legIntPurposes={[<Label localizeKey={'purposes.title'}>LegIntPurpose 1</Label>]}
 			features={[<Label localizeKey={'features.title'}>Feature 1</Label>]}
+			specialPurposes={[<Label localizeKey={'specialPurposes.title'}>specPurpose 1</Label>]}
+			specialFeatures={[<Label localizeKey={'specialFeatures.title'}>specFeature 1</Label>]}
 		/>, scratch);
 
 		const vendorRows = vendor.querySelectorAll(`div`);
 		const vendorDescriptionRecords = vendor.querySelectorAll(`div > span > span`);
 		expect(vendorRows.length).to.equal(2);
-		expect(vendorDescriptionRecords.length).to.equal(6);
+		expect(vendorDescriptionRecords.length).to.equal(5);
 	});
 
 	it('should render vendor without features', () => {
@@ -131,16 +140,16 @@ describe('Vendors', () => {
 			policyUrl={'www.example.com'}
 			purposes={[
 				<Label localizeKey={'purposes.title'}>Purpose 1</Label>,
-				<Label localizeKey={'purposes.title'}>Purpose 1</Label>
+				<Label localizeKey={'purposes.title'}>Purpose 2</Label>
 			]}
-			legIntPurposes={[<Label localizeKey={'purposes.title'}>Purpose 2</Label>]}
+			legIntPurposes={[<Label localizeKey={'purposes.title'}>Purpose 3</Label>]}
 			features={[]}
 		/>, scratch);
 
 		const vendorRows = vendor.querySelectorAll(`div`);
 		const vendorDescriptionRecords = vendor.querySelectorAll(`div > span > span`);
 		expect(vendorRows.length).to.equal(2);
-		expect(vendorDescriptionRecords.length).to.equal(5);
+		expect(vendorDescriptionRecords.length).to.equal(3);
 	});
 
 	it('should handle selecting a vendor', () => {
@@ -151,10 +160,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
-				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
-				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
-				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -163,6 +172,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
 			]}
 			selectVendor={selectVendor}
 			initialVendorsRejection={initialVendorsRejection}
@@ -183,10 +200,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
-				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
-				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
-				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -195,6 +212,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
 			]}
 			selectVendors={selectVendors}
 			initialVendorsRejection={initialVendorsRejection}
@@ -215,10 +240,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
-				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
-				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
-				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -227,6 +252,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
 			]}
 			initialVendorsRejection={initialVendorsRejection}
 			selectVendors={selectVendors}
@@ -247,10 +280,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
-				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
-				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
-				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -259,6 +292,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
 			]}
 			initialVendorsRejection={initialVendorsRejection}
 			selectVendors={selectVendors}
@@ -279,10 +320,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
-				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
-				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
-				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -291,6 +332,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
 			]}
 			initialVendorsRejection={initialVendorsRejection}
 			selectVendors={selectVendors}
@@ -309,10 +358,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
-				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
-				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
-				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -321,6 +370,14 @@ describe('Vendors', () => {
 			features={[
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
 			]}
 			selectedVendorIds={new Set([1, 2, 3, 4])}
 			initialVendorsRejection={jest.fn()}
@@ -336,10 +393,10 @@ describe('Vendors', () => {
 		render(<Vendors
 			ref={ref => vendors = ref}
 			vendors={[
-				{id: 1, name: 'Vendor 1', purposeIds: [1], legIntPurposeIds: [2], featureIds: []},
-				{id: 2, name: 'Vendor 2', purposeIds: [], legIntPurposeIds: [1], featureIds: []},
-				{id: 3, name: 'Vendor 3', purposeIds: [1], legIntPurposeIds: [2], featureIds: [1]},
-				{id: 4, name: 'Vendor 4', purposeIds: [2], legIntPurposeIds: [1], featureIds: [1, 2]}
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
 			]}
 			purposes={[
 				{id: 1, name: 'Purpose 1'},
@@ -349,11 +406,96 @@ describe('Vendors', () => {
 				{id: 1, name: 'Feature 1'},
 				{id: 2, name: 'Feature 2'},
 			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
+			]}
 			selectedVendorIds={new Set([1])}
 			initialVendorsRejection={jest.fn()}
 		/>, scratch);
 
 		const result = vendors.isFullVendorsConsentChosen();
 		expect(result).to.equal(false);
+	});
+
+	it('should handle deselecting a legitimate interest', () => {
+		const selectVendorLegitimateInterests = jest.fn();
+		const initialVendorsRejection = jest.fn();
+
+		let vendors;
+		render(<Vendors
+			ref={ref => vendors = ref}
+			vendors={[
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
+			]}
+			purposes={[
+				{id: 1, name: 'Purpose 1'},
+				{id: 2, name: 'Purpose 2'},
+			]}
+			features={[
+				{id: 1, name: 'Feature 1'},
+				{id: 2, name: 'Feature 2'},
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'},
+				{id: 2, name: 'sPurpose 2'},
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'},
+				{id: 2, name: 'sFeature 2'},
+			]}
+			selectVendorLegitimateInterests={selectVendorLegitimateInterests}
+			initialVendorsRejection={initialVendorsRejection}
+
+		/>, scratch);
+
+		vendors.handleMoreChoices();
+		vendors.handleLegitInterest({dataId: 2, isSelected: false});
+		expect(selectVendorLegitimateInterests.mock.calls[0][0]).to.equal(2);
+		expect(selectVendorLegitimateInterests.mock.calls[0][1]).to.equal(false);
+	});
+
+	it('should handle deselecting all vendors legitimate interest', () => {
+		const selectVendorLegitimateInterests = jest.fn();
+		const initialVendorsRejection = jest.fn();
+
+		let vendors;
+		render(<Vendors
+			ref={ref => vendors = ref}
+			vendors={[
+				{id: 1, name: 'Vendor 1', purposes: [1], legIntPurposes: [2], features: [], specialPurposes: [1], specialFeatures: [1]},
+				{id: 2, name: 'Vendor 2', purposes: [], legIntPurposes: [1], features: [], specialPurposes: [], specialFeatures: [1]},
+				{id: 3, name: 'Vendor 3', purposes: [1], legIntPurposes: [2], features: [1], specialPurposes: [1], specialFeatures: []},
+				{id: 4, name: 'Vendor 4', purposes: [2], legIntPurposes: [1], features: [1, 2], specialPurposes: [], specialFeatures: []}
+			]}
+			purposes={[
+				{id: 1, name: 'Purpose 1'}
+			]}
+			features={[
+				{id: 1, name: 'Feature 1'}
+			]}
+			specialPurposes={[
+				{id: 1, name: 'sPurpose 1'}
+			]}
+			specialFeatures={[
+				{id: 1, name: 'sFeature 1'}
+			]}
+			selectVendorLegitimateInterests={selectVendorLegitimateInterests}
+			initialVendorsRejection={initialVendorsRejection}
+
+		/>, scratch);
+
+		vendors.handleMoreChoices();
+		vendors.handleFullLegIntChange({isSelected: false});
+		expect(selectVendorLegitimateInterests.mock.calls.length).to.equal(4);
+		expect(selectVendorLegitimateInterests.mock.calls[0][1]).to.equal(false);
+		expect(selectVendorLegitimateInterests.mock.calls[1][1]).to.equal(false);
 	});
 });

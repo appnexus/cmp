@@ -434,6 +434,42 @@ describe('store', () => {
 		expect(store.persistedConsentData.publisherConsents.size).to.equal(Object.keys(VENDOR_LIST.purposes).length);
 	});
 
+	it('selects ALL vendors legitimate interests', () => {
+		const store = new Store({
+			cmpId: CMP_ID
+		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllVendorLegitimateInterests(false);
+		store.persist();
+
+		const persistedConsentData = store.persistedConsentData;
+		let positiveConsentsCount = 0 ;
+
+		persistedConsentData.vendorLegitimateInterests.forEach(consent => {
+			if (consent) {
+				positiveConsentsCount++;
+			}
+		});
+		expect(positiveConsentsCount).to.equal(0);
+	});
+
+	it('filters vendors to obtain ids of those with legitimate interest', () => {
+		const store = new Store({
+			cmpId: CMP_ID
+		});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		const legIntIds = store.getVendorsWithLegIntsIds();
+
+		expect(legIntIds.length).to.equal(3);
+		expect(legIntIds[0]).to.equal(1);
+	});
+
 	it('toggle the consent modal', () => {
 		const store = new Store({
 			cmpId: CMP_ID

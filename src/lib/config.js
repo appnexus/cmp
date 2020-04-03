@@ -14,6 +14,7 @@ const defaultConfig = {
 	decoratePageCallHandler: null,
 	legIntPurposeIds: [],
 	contractPurposeIds: [],
+	specialPurposes: [],
 	autoDisplay: true,
 	shouldDisplayFooter: null
 };
@@ -43,7 +44,6 @@ class Config {
 			if (invalidKeys.length) {
 				log.warn(`Invalid CMP config values not applied: ${invalidKeys.join(', ')}`);
 			}
-
 		}
 	};
 }

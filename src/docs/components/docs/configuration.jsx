@@ -129,6 +129,12 @@ export default class CmpApi extends Component {
 								</span>
 							</span>
 						</span>
+						<span className={style.argument}>
+							<span className={style.argumentType}>specialPurposes (Array)</span>:
+							<span className={style.argumentDescription}>
+								List of Ids allowing to display custom special purposes in Publishers purposes description
+							</span>
+						</span>
 					</div>
 			</div>
 		);

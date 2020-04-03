@@ -11,6 +11,16 @@ class LocalLabel extends Label {
 }
 
 export default class Vendor extends Component {
+	static defaultProps = {
+		name: '',
+		policyUrl: '',
+		purposes: [],
+		legIntPurposes: [],
+		specialPurposes: [],
+		features: [],
+		specialFeatures: []
+	};
+
 	shouldComponentUpdate() {
 		return false;
 	}
@@ -21,7 +31,9 @@ export default class Vendor extends Component {
 			policyUrl,
 			purposes,
 			legIntPurposes,
-			features
+			features,
+			specialPurposes,
+			specialFeatures
 		} = this.props;
 
 		return <div>
@@ -33,18 +45,28 @@ export default class Vendor extends Component {
 			<div class={style.vendorDescription}>
 				{purposes && !!purposes.length &&
 				<span>
-					<LocalLabel localizeKey='purposes'>Purposes</LocalLabel>{': '}
+					<b><LocalLabel localizeKey='purposes'>Purposes</LocalLabel></b>{': '}
 					{purposes}{'. '}
 				</span>}
 				{legIntPurposes && !!legIntPurposes.length &&
 				<span>
-					<LocalLabel localizeKey='legitimateInterestPurposes'>Legitimate interest purposes</LocalLabel>{': '}
+					<b><LocalLabel localizeKey='legitimateInterestPurposes'>Legitimate interest purposes</LocalLabel></b>{': '}
 					{legIntPurposes}{'. '}
+				</span>}
+				{specialPurposes && !!specialPurposes.length &&
+				<span>
+					<b><LocalLabel localizeKey='specialPurposes'>Special purposes</LocalLabel></b>{': '}
+					{specialPurposes}{'. '}
 				</span>}
 				{features && !!features.length &&
 				<span>
-					<LocalLabel localizeKey='features'>Features</LocalLabel>{': '}
+					<b><LocalLabel localizeKey='features'>Features</LocalLabel></b>{': '}
 					{features}{'. '}
+				</span>}
+				{specialFeatures && !!specialFeatures.length &&
+				<span>
+					<b><LocalLabel localizeKey='specialFeatures'>Special features</LocalLabel></b>{': '}
+					{specialFeatures}{'. '}
 				</span>}
 			</div>
 		</div>

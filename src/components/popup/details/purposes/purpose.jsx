@@ -15,13 +15,16 @@ const Purpose = (props) => {
 		purpose,
 		index,
 		isActive,
+		isLegitimateInterestActive,
 		onToggle,
+		onToggleLegitInterest,
 		createOnShowVendors,
 		isTechnical,
+		isSpecial,
 		isPublisherPurpose = false
 	} = props;
 
-	const prefix = purpose.custom ? `customPurpose${purpose.id}` : `purpose${purpose.id}`;
+	const prefix = `purpose${purpose.id}`;
 
 	return (
 		<div className={style.purposeDetail}>
@@ -31,12 +34,24 @@ const Purpose = (props) => {
 				</div>
 				{!isTechnical &&
 					<div className={style.active}>
-						<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
-						<Switch
-							isSelected={isActive}
-							dataId={index}
-							onClick={onToggle}
-						/>
+						<div className={style.switch}>
+							<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
+							<Switch
+								isSelected={isActive}
+								dataId={index}
+								onClick={onToggle}
+							/>
+						</div>
+
+						<div className={style.switch}>
+							<LocalLabel localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
+							<Switch
+								isSelected={isLegitimateInterestActive}
+								dataId={index}
+								onClick={onToggleLegitInterest}
+							/>
+						</div>
+
 					</div>
 				}
 			</div>
@@ -46,13 +61,13 @@ const Purpose = (props) => {
 					<div>
 						<div>
 							<a className={style.vendorLink}
-							onClick={createOnShowVendors({isCustom: false, purposeIds: [purpose.id]})}>
+							onClick={createOnShowVendors({isCustom: false, purposeId: purpose.id, isSpecial})}>
 								<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
 							</a>
 						</div>
 						<div>
 							<a className={style.vendorLink}
-							onClick={createOnShowVendors({isCustom: true, purposeIds: [purpose.id]})}>
+							onClick={createOnShowVendors({isCustom: true, purposeId: purpose.id, isSpecial})}>
 								<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 							</a>
 						</div>
