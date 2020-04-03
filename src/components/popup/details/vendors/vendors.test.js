@@ -390,7 +390,7 @@ describe('Vendors', () => {
 	});
 
 	it('should handle deselecting all vendors legitimate interest', () => {
-		const selectAllVendorLegitimateInterests = jest.fn();
+		const selectVendorLegitimateInterests = jest.fn();
 		const initialVendorsRejection = jest.fn();
 
 		let vendors;
@@ -414,13 +414,15 @@ describe('Vendors', () => {
 			specialFeatures={[
 				{id: 1, name: 'sFeature 1'}
 			]}
-			selectAllVendorLegitimateInterests={selectAllVendorLegitimateInterests}
+			selectVendorLegitimateInterests={selectVendorLegitimateInterests}
 			initialVendorsRejection={initialVendorsRejection}
 
 		/>, scratch);
 
 		vendors.handleMoreChoices();
 		vendors.handleFullLegIntChange({isSelected: false});
-		expect(selectAllVendorLegitimateInterests.mock.calls[0][0]).to.equal(false);
+		expect(selectVendorLegitimateInterests.mock.calls.length).to.equal(4);
+		expect(selectVendorLegitimateInterests.mock.calls[0][1]).to.equal(false);
+		expect(selectVendorLegitimateInterests.mock.calls[1][1]).to.equal(false);
 	});
 });
