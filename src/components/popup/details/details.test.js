@@ -6,6 +6,7 @@ import purposesStyle from './purposes/purposes';
 
 import Details from './details';
 import {CMP_ID} from "../../../lib/init";
+import {VENDOR_LIST} from "../../../../test/constants";
 
 describe('Details', () => {
 	let scratch;
@@ -24,9 +25,10 @@ describe('Details', () => {
 				]
 			}
 		});
+		store.updateVendorList(VENDOR_LIST);
 		store.isConsentToolShowing = false;
 		const details = <Details store={store} />;
-		expect(details).to.contain(purposesStyle.purposes);
+		expect(details).to.contain(purposesStyle.allPurposes);
 	});
 
 
@@ -40,6 +42,7 @@ describe('Details', () => {
 				]
 			}
 		});
+		store.updateVendorList(VENDOR_LIST);
 
 		let details;
 		render(<Details
