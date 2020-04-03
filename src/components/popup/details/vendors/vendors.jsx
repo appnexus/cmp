@@ -40,6 +40,10 @@ export default class Vendors extends Component {
 		this.props.selectVendor(dataId, isSelected);
 	};
 
+	handleLegitInterest = ({ dataId, isSelected }) => {
+		this.props.selectVendorLegitimateInterests(dataId, isSelected);
+	};
+
 	handleMoreChoices = () => {
 		const {consentCreated, initialVendorsRejection} = this.props;
 		if (!consentCreated) {
@@ -61,6 +65,17 @@ export default class Vendors extends Component {
 		isSelected ? this.handleAcceptAll() : this.handleRejectAll();
 	};
 
+	isFullLegitimateInterestChosen = () => {
+		const {vendorsWithLegIntsIds, selectedVendorsLegitimateInterestsIds} = this.props;
+		const isSelected = (el) => selectedVendorsLegitimateInterestsIds.has(el);
+		return vendorsWithLegIntsIds.every(isSelected);
+	};
+
+	handleFullLegIntChange = ({isSelected}) => {
+		const {vendors, selectVendorLegitimateInterests} = this.props;
+		vendors.forEach(el => selectVendorLegitimateInterests(el.id, isSelected));
+	};
+
 	getActiveAttributesNameElements = (setOfAttributes, idsOfActiveAttributes, translationPrefix = '') => {
 		const activeAttributes = setOfAttributes
 			.filter(attribute => idsOfActiveAttributes.indexOf(attribute['id']) !== -1)
@@ -74,10 +89,15 @@ export default class Vendors extends Component {
 		const {
 			vendors,
 			selectedVendorIds,
+			selectedVendorsLegitimateInterestsIds,
 			purposes,
-			features
+			features,
+			specialPurposes,
+			specialFeatures
 		} = props;
 		const { editingConsents } = this.state;
+
+		let isLegIntSwitchVisible = vendors.some(el => !!el.legIntPurposes.length);
 
 		return (
 			<div class={style.vendors}>
@@ -104,9 +124,16 @@ export default class Vendors extends Component {
 						<tr>
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
 							{editingConsents &&
-							<span>
-							<th><LocalLabel localizeKey='offOn'>Allow</LocalLabel></th>
+							<span class={style.vendorCenterSmall}>
+								{isLegIntSwitchVisible &&
+									<th><LocalLabel localizeKey='legitimateInterest'>LegInt</LocalLabel>
+									<Switch
+										isSelected={this.isFullLegitimateInterestChosen()}
+										onClick={this.handleFullLegIntChange}
+									/></th>
+								}
 							<th>
+								<LocalLabel localizeKey='offOn'>Allow</LocalLabel>
 								<Switch
 									isSelected={this.isFullVendorsConsentChosen()}
 									onClick={this.handleFullConsentChange}
@@ -121,23 +148,37 @@ export default class Vendors extends Component {
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-						{vendors.map(({ id, name, policyUrl, purposeIds=[], legIntPurposeIds=[], featureIds=[] }, index) => (
+						{vendors.map(({ id, name, policyUrl, purposes: purposeIds=[], legIntPurposes=[],
+										 features: featureIds=[], specialPurposes: specialPurposeIds=[],
+										  specialFeatures: specialFeatureIds=[] }, index) => (
 							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
 								<td>
 									<Vendor name={name}
 											policyUrl={policyUrl}
 											purposes={this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}
-											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposeIds, 'purposes.purpose')}
-											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}/>
+											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposes, 'purposes.purpose')}
+											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}
+											specialPurposes={this.getActiveAttributesNameElements(specialPurposes, specialPurposeIds, 'specialPurposes.purpose')}
+											specialFeatures={this.getActiveAttributesNameElements(specialFeatures, specialFeatureIds, 'specialFeatures.feature')}/>
 								</td>
+								{editingConsents && legIntPurposes.length &&
+									<td class={style.vendorCenterSmall}>
+										<LocalLabel localizeKey='legitimateInterest'>LegInt</LocalLabel>
+										<Switch
+											dataId={id}
+											isSelected={selectedVendorsLegitimateInterestsIds.has(id)}
+											onClick={this.handleLegitInterest}
+										/>
+									</td> || <td/>}
 								{editingConsents &&
-								<td>
-									<Switch
-										dataId={id}
-										isSelected={selectedVendorIds.has(id)}
-										onClick={this.handleSelectVendor}
-									/>
-								</td>
+									<td class={style.vendorCenterSmall}>
+										<LocalLabel localizeKey='acceptButton'>Consent</LocalLabel>
+										<Switch
+											dataId={id}
+											isSelected={selectedVendorIds.has(id)}
+											onClick={this.handleSelectVendor}
+										/>
+									</td>
 								}
 							</tr>
 						))}

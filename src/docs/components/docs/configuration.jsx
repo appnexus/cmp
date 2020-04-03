@@ -113,6 +113,12 @@ export default class CmpApi extends Component {
 							<span className={style.argumentType}>decoratePageCallHandler (function)</span>
 							<span className={style.argumentDescription}>Custom function to overwrite default behaviour pageCallHandler function.</span>
 						</span>
+						<span className={style.argument}>
+							<span className={style.argumentType}>specialPurposes (Array)</span>:
+							<span className={style.argumentDescription}>
+								List of Ids allowing to display custom special purposes in Publishers purposes description
+							</span>
+						</span>
 					</div>
 			</div>
 		);

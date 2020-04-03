@@ -28,24 +28,28 @@ export default class Details extends Component {
 		return Object.values(vendors);
 	};
 
-	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [] } = {}) => {
-		return this.getVendors().filter(vendor => {
-			if (isCustom !== null && (isCustom && vendor.globalId || !isCustom && !vendor.globalId)) {
-				return false;
-			}
+	filterVendors = ({ isCustom = null, purposeId, featureId, isSpecial} = {}) => {
+		const { gvl } = this.props.store.tcModel;
+		let filteredVendors = [];
+		const idSort = (a, b) => a.id - b.id;
 
-			const vendorPurposeIds = new Set([...(vendor.purposes || []), ...(vendor.legIntPurposes || [])]);
-			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
-				return false;
+		if(purposeId) {
+			if(isSpecial) {
+				filteredVendors = Object.values(gvl.getVendorsWithSpecialPurpose(purposeId));
+			} else {
+				filteredVendors = [...Object.values(gvl.getVendorsWithConsentPurpose(purposeId)),
+					...Object.values(gvl.getVendorsWithLegIntPurpose(purposeId))]
+					.sort(idSort);
 			}
-
-			const vendorFeatureIds = new Set(vendor.features|| []);
-			if (!featureIds.every(featureId => vendorFeatureIds.has(featureId))) {
-				return false;
+		} else if(featureId) {
+			if(isSpecial) {
+				filteredVendors = Object.values(gvl.getVendorsWithSpecialFeature(featureId));
+			} else {
+				filteredVendors = Object.values(gvl.getVendorsWithFeature(featureId));
 			}
+		}
 
-			return true;
-		});
+		return filteredVendors.filter(vendor => isCustom ? !vendor.globalId : !!vendor.globalId);
 	};
 
 	handleShowVendors = (filter) => {
@@ -72,7 +76,6 @@ export default class Details extends Component {
 
 		const {
 			vendorList = {},
-			customPurposeList = {},
 			tcModel,
 
 			selectPurpose,
@@ -81,11 +84,12 @@ export default class Details extends Component {
 			selectVendors,
 			selectVendor,
 			selectVendorLegitimateInterests,
+			selectAllVendorLegitimateInterests,
 			initialVendorsRejection,
 
 			selectPublisherPurpose,
 			selectPublisherLegitimateInterests,
-
+			getVendorsWithLegIntsIds,
 			persistedConsentData = {},
 			subsection
 		} = store;
@@ -95,12 +99,13 @@ export default class Details extends Component {
 			publisherConsents,
 			publisherCustomConsents,
 			vendorConsents,
+			vendorLegitimateInterests,
+			purposeLegitimateInterests,
+			specialFeatureOptins
 		} = tcModel;
 
 		const { created: consentCreated } = persistedConsentData;
 		const { purposes = {}, specialPurposes = {}, features = {}, specialFeatures = {}} = vendorList;
-		const { purposes: customPurposes = [] } = customPurposeList;
-
 
 		return (
 			<div class={style.details}>
@@ -118,13 +123,14 @@ export default class Details extends Component {
 							specialPurposes={Object.values(specialPurposes)}
 							features={Object.values(features)}
 							specialFeatures={Object.values(specialFeatures)}
-							customPurposes={customPurposes}
 							selectedPurposeIds={purposeConsents}
 							selectedPublisherPurposeIds={publisherConsents}
 							selectedPublisherCustomPurposeIds={publisherCustomConsents}
 							selectPurpose={selectPurpose}
 							selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
+							selectedPurposeLegitimateInterests={purposeLegitimateInterests}
 							selectSpecialFeatureOptins={selectSpecialFeatureOptins}
+							specialFeatureOptins={specialFeatureOptins}
 							initialVendorsRejection={initialVendorsRejection}
 							selectPublisherPurpose={selectPublisherPurpose}
 							selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
@@ -133,6 +139,9 @@ export default class Details extends Component {
 						/>
 						<Vendors
 							selectedVendorIds={vendorConsents}
+							selectedVendorsLegitimateInterestsIds={vendorLegitimateInterests}
+							selectAllVendorLegitimateInterests={selectAllVendorLegitimateInterests}
+							vendorsWithLegIntsIds={getVendorsWithLegIntsIds()}
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
 							selectVendorLegitimateInterests={selectVendorLegitimateInterests}
@@ -141,6 +150,7 @@ export default class Details extends Component {
 							purposes={Object.values(purposes)}
 							features={Object.values(features)}
 							specialFeatures={Object.values(specialFeatures)}
+							specialPurposes={Object.values(specialPurposes)}
 							consentCreated={consentCreated}
 						/>
 					</Panel>
