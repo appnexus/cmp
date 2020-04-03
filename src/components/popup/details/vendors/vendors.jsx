@@ -66,8 +66,8 @@ export default class Vendors extends Component {
 	};
 
 	isFullLegitimateInterestChosen = () => {
-		const {vendorsWithLegIntsIds, selectedLegitimateInterestsIds} = this.props;
-		const isSelected = (el) => selectedLegitimateInterestsIds.has(el);
+		const {vendorsWithLegIntsIds, selectedVendorsLegitimateInterestsIds} = this.props;
+		const isSelected = (el) => selectedVendorsLegitimateInterestsIds.has(el);
 		return vendorsWithLegIntsIds.every(isSelected);
 	};
 
@@ -89,7 +89,7 @@ export default class Vendors extends Component {
 		const {
 			vendors,
 			selectedVendorIds,
-			selectedLegitimateInterestsIds,
+			selectedVendorsLegitimateInterestsIds,
 			purposes,
 			features,
 			specialPurposes,
@@ -162,7 +162,7 @@ export default class Vendors extends Component {
 										<LocalLabel localizeKey='legitimateInterest'>LegInt</LocalLabel>
 										<Switch
 											dataId={id}
-											isSelected={selectedLegitimateInterestsIds.has(id)}
+											isSelected={selectedVendorsLegitimateInterestsIds.has(id)}
 											onClick={this.handleLegitInterest}
 										/>
 									</td> || <td class={style.vendorCenterSmall}/>}
