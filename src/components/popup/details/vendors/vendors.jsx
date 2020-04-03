@@ -84,8 +84,6 @@ export default class Vendors extends Component {
 		return activeAttributes.length ? activeAttributes.reduce((prev, curr) => [...prev, ', ', curr]) : [];
 	};
 
-	showGlobalLegIntSwitch = (vendors) => vendors.some(el => !!el.legIntPurposes.length);
-
 	render(props, state) {
 
 		const {
@@ -98,6 +96,8 @@ export default class Vendors extends Component {
 			specialFeatures
 		} = props;
 		const { editingConsents } = this.state;
+
+		let isLegIntSwitchVisible = vendors.some(el => !!el.legIntPurposes.length);
 
 		return (
 			<div class={style.vendors}>
@@ -125,7 +125,7 @@ export default class Vendors extends Component {
 							<th><LocalLabel localizeKey='company'>Company</LocalLabel></th>
 							{editingConsents &&
 							<span class={style.vendorCenterSmall}>
-								{this.showGlobalLegIntSwitch(vendors) &&
+								{isLegIntSwitchVisible &&
 									<th><LocalLabel localizeKey='legitimateInterest'>LegInt</LocalLabel>
 									<Switch
 										isSelected={this.isFullLegitimateInterestChosen()}
