@@ -6,6 +6,7 @@ import style from './vendors.less';
 import Vendors from './vendors';
 import Vendor from './vendor';
 import Label from "../../../label/label";
+import {VENDOR_LIST} from "../../../../../test/constants";
 
 describe('Vendors', () => {
 	let scratch;
@@ -42,6 +43,78 @@ describe('Vendors', () => {
 
 		const vendorRows = vendors.querySelectorAll(`.${style.vendorContent} tr`);
 		expect(vendorRows.length).to.equal(4);
+	});
+
+	it('getActiveAttributesNameElements - empty arrays', () => {
+		const purposes = VENDOR_LIST.purposes;
+		const features = VENDOR_LIST.features;
+		const purposeIds = [];
+		const legIntPurposeIds = [];
+		const featureIds = [];
+
+		let vendors;
+		render(<Vendors
+			ref={ref => vendors = ref}
+		>
+			<div/>
+		</Vendors>, scratch);
+
+		const purposesToRender = vendors.getActiveAttributesNameElements(Object.values(purposes), purposeIds, 'purposes.purpose');
+		const legIntsToRender = vendors.getActiveAttributesNameElements(Object.values(purposes), legIntPurposeIds, 'purposes.purpose');
+		const featuresToRender = vendors.getActiveAttributesNameElements(Object.values(features), featureIds, 'features.feature');
+
+		expect(purposesToRender.length).to.equal(0);
+		expect(legIntsToRender.length).to.equal(0);
+		expect(featuresToRender.length).to.equal(0);
+	});
+
+	it('getActiveAttributesNameElements - one element per array', () => {
+		const purposes = VENDOR_LIST.purposes;
+		const features = VENDOR_LIST.features;
+		const purposeIds = [1];
+		const legIntPurposeIds = [2];
+		const featureIds = [1];
+
+		let vendors;
+		render(<Vendors
+			ref={ref => vendors = ref}
+		>
+			<div/>
+		</Vendors>, scratch);
+
+		const purposesToRender = vendors.getActiveAttributesNameElements(Object.values(purposes), purposeIds, 'purposes.purpose');
+		const legIntsToRender = vendors.getActiveAttributesNameElements(Object.values(purposes), legIntPurposeIds, 'purposes.purpose');
+		const featuresToRender = vendors.getActiveAttributesNameElements(Object.values(features), featureIds, 'features.feature');
+
+		expect(purposesToRender.length).to.equal(1);
+		expect(legIntsToRender.length).to.equal(1);
+		expect(featuresToRender.length).to.equal(1);
+	});
+
+	it('getActiveAttributesNameElements - many elements', () => {
+		const purposes = VENDOR_LIST.purposes;
+		const features = VENDOR_LIST.features;
+		const purposeIds = [1,2,3];
+		const legIntPurposeIds = [4,5];
+		const featureIds = [1,2];
+
+		let vendors;
+		render(<Vendors
+			ref={ref => vendors = ref}
+		>
+			<div/>
+		</Vendors>, scratch);
+
+		const purposesToRender = vendors.getActiveAttributesNameElements(Object.values(purposes), purposeIds, 'purposes.purpose');
+		const legIntsToRender = vendors.getActiveAttributesNameElements(Object.values(purposes), legIntPurposeIds, 'purposes.purpose');
+		const featuresToRender = vendors.getActiveAttributesNameElements(Object.values(features), featureIds, 'features.feature');
+
+		// 3 elements + 2 commas
+		expect(purposesToRender.length).to.equal(5);
+		// 2 elements + 1 comma
+		expect(legIntsToRender.length).to.equal(3);
+		// 1 element, no comma
+		expect(featuresToRender.length).to.equal(3);
 	});
 
 	it('should render vendor with purposes, special purposes, legIntPurposes, features and special features', () => {

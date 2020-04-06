@@ -6,7 +6,7 @@ import {
 import config from './config';
 import { findLocale } from './localize';
 import log from './log';
-import { GVL, TCModel, Vector } from '@iabtcf/core';
+import { GVL, TCModel } from '@iabtcf/core';
 
 export const SECTION_INTRO = 0;
 export const SECTION_DETAILS = 1;
@@ -54,112 +54,6 @@ export default class Store {
 		this.cmpApi = cmpApi;
 		this.cmpApi.update(this.persistedConsentString, shouldDisplayCmpUI);
 	}
-
-	isAllSetTrue = obj => Object.keys(obj).map(key => obj[key]).every((value) => value === true);
-
-	/**
-	 * Build vendor consent object from data that has already been persisted. This
-	 * list will only return consent=true for vendors that exist in the current
-	 * vendorList.
-	 */
-	getVendorConsentsObject = (vendorIds) => {
-		const {
-			vendorList = {},
-			persistedConsentData,
-		} = this;
-
-		const {
-			version: cookieVersion,
-			created,
-			lastUpdated,
-			cmpId,
-			cmpVersion,
-			consentScreen,
-			consentLanguage,
-			vendorListVersion,
-			vendorConsents = new Vector(),
-			purposeConsents = new Vector(),
-			purposeLegitimateInterests = new Vector(),
-			vendorLegitimateInterests = new Vector(),
-			specialFeatureOptins = new Vector()
-		} = persistedConsentData;
-
-		const {purposes = {}, vendors = {}, specialFeatures={}} = vendorList;
-		const maxVendorId = vendorConsents.maxId;
-		const maxPurposeId = purposeConsents.maxId;
-		const maxLegIntId = purposeLegitimateInterests.maxId;
-		const maxSpecialFeatureOptInsId = specialFeatureOptins.maxId;
-
-		// Map requested vendorIds
-		const vendorMap = {};
-		const vendorLegIntMap = {};
-
-
-		if (vendorIds && vendorIds.length) {
-			vendorIds.forEach(id => {
-				vendorMap[id] = vendorConsents.has(id);
-				vendorLegIntMap[id] = vendorLegitimateInterests.has(id);
-			});
-		} else {
-			// In case the vendor list has not been loaded yet find the highest
-			// vendor ID to map any consent data we already have
-			const lastVendorId = Math.max(maxVendorId,
-				...Object.values(vendors).map(({id}) => id)
-			);
-
-			// Map all IDs up to the highest vendor ID found
-			for (let i = 1; i <= lastVendorId; i++) {
-				vendorMap[i] = vendorConsents.has(i);
-				vendorLegIntMap[i] = vendorLegitimateInterests.has(i);
-			}
-		}
-
-		const lastPurposeId = Math.max(
-			...[maxPurposeId],
-			...Object.values(purposes).map(({id}) => id),
-		);
-
-		const purposeMap = {};
-		for (let i = 1; i <= lastPurposeId; i++) {
-			purposeMap[i] = purposeConsents.has(i);
-		}
-
-		const lastLegIntId = Math.max(
-			...[maxLegIntId],
-			...Object.values(purposes).map(({id}) => id),
-		);
-
-		const legIntMap = {};
-		for (let i = 1; i <= lastLegIntId; i++) {
-			legIntMap[i] = purposeLegitimateInterests.has(i);
-		}
-
-		const lastSpecialFeatureOptInsId = Math.max(
-			...[maxSpecialFeatureOptInsId],
-			...Object.values(specialFeatures).map(({id}) => id),
-		);
-
-		const specialFeatureOptinsMap = {};
-		for (let i = 1; i <= lastSpecialFeatureOptInsId; i++) {
-			specialFeatureOptinsMap[i] = specialFeatureOptins.has(i);
-		}
-
-		return {
-			cookieVersion,
-			created,
-			lastUpdated,
-			cmpId,
-			cmpVersion,
-			consentScreen,
-			consentLanguage,
-			vendorListVersion,
-			purposeConsents: purposeMap,
-			purposeLegitimateInterests: legIntMap,
-			specialFeatureOptins: specialFeatureOptinsMap,
-			vendorConsents: vendorMap,
-			vendorLegitimateInterests: vendorLegIntMap
-		};
-	};
 
 	/**
 	 * Persist all consent data to the cookie.  This data will NOT be filtered
@@ -412,27 +306,13 @@ export default class Store {
 	};
 
 	toggleFooterShowing = (isShown) => {
-		const vendorConsentsObject = this.getVendorConsentsObject();
-
-		if (this.isAllSetTrue(vendorConsentsObject.purposeConsents)) {
-			let vendorConsents;
-			if (this.vendorList) {
-				const {vendors = {}} = this.vendorList;
-				const vendorIds = new Set(Object.values(vendors).map(({id}) => id));
-				vendorConsents = {};
-				Object.keys(vendorConsentsObject.vendorConsents).filter(id => vendorIds.has(Number(id))).forEach(id => {
-					vendorConsents[id] = vendorConsentsObject.vendorConsents[id];
-				});
-			} else {
-				vendorConsents = vendorConsentsObject.vendorConsents;
-			}
-			if (this.isAllSetTrue(vendorConsents)) {
-				isShown = false;
-			}
+		if (this.isConsentToolShowing) {
+			return false;
 		}
 		this.isFooterShowing = typeof isShown === 'boolean' ? isShown : !this.isFooterShowing;
 		this.isConsentToolShowing = false;
 		this.storeUpdate();
+		return true;
 	};
 
 	updateSection = (section = SECTION_INTRO, subsection = SECTION_PURPOSES) => {

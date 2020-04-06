@@ -267,8 +267,8 @@ const createCommands = (store, cmpManager) => {
 	 * Trigger the footer UI to be shown
 	 * */
 	const showFooter = (callback = () => {}) => {
-		store.toggleFooterShowing(true);
-		callback(true);
+		const footerShown = store.toggleFooterShowing(true);
+		callback(footerShown);
 	};
 
 	const registerEventListener = (callback, {event}) => {

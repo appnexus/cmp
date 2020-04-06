@@ -484,13 +484,25 @@ describe('commands', () => {
 			expect(callbackExecuted).to.be.true;
 		});
 
-		it('showFooter - should execute all inner methods', () => {
-			store.toggleFooterShowing = jest.fn();
-			commands.showFooter(() => {
+		it('showFooter - should show footer', () => {
+			let footerShown = false;
+			commands.showFooter((result) => {
+				footerShown = result;
 				callbackExecuted = true;
 			});
-			expect(store.toggleFooterShowing.mock.calls[0][0]).to.be.true;
 			expect(callbackExecuted).to.be.true;
+			expect(footerShown).to.be.true;
+		});
+
+		it('showFooter - should not show footer because tool is showing', () => {
+			let footerShown = false;
+			store.isConsentToolShowing = true;
+			commands.showFooter((result) => {
+				footerShown = result;
+				callbackExecuted = true;
+			});
+			expect(callbackExecuted).to.be.true;
+			expect(footerShown).to.be.false;
 		});
 
 		it('registerEventListener - should execute all inner methods', () => {

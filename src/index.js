@@ -128,12 +128,12 @@ const shouldDisplay = () => {
 	});
 };
 
-const displayUI = (tcfApi, result, store) => {
+const displayUI = (tcfApi, result) => {
 	if (!tcfApi) {
 		return;
 	}
 
-	const { isConsentToolShowing } = store;
+	const { shouldDisplayFooter } = config;
 	let { display, command } = result;
 
 	const tcfApiCall = (command) => {
@@ -143,7 +143,13 @@ const displayUI = (tcfApi, result, store) => {
 	if (display) {
 		tcfApiCall(command);
 	} else if (command === 'showFooter') {
-		!isConsentToolShowing && tcfApiCall(command);
+		if (shouldDisplayFooter) {
+			shouldDisplayFooter((result) => {
+				if (result) {
+					tcfApiCall(command);
+				}
+			});
+		}
 	}
 };
 
@@ -182,8 +188,8 @@ function start() {
 		shouldDisplay(),
 		config.getConsentData ? readExternalConsentData(config) : readConsentCookie()
 	]).then(([displayOptions, consentString]) => {
-		initializeStore(consentString, displayOptions.display).then(store => {
-			displayUI(window.__tcfapi, displayOptions, store);
+		initializeStore(consentString, displayOptions.display).then(() => {
+			displayUI(window.__tcfapi, displayOptions);
 		}).catch(err => {
 			log.error('Failed to initialize CMP store', err);
 		});
