@@ -38,6 +38,9 @@ function decodeConsentData (encoded) {
 const encodeConsentData = (decoded) => {
 	let encoded;
 	try {
+		if (decoded.gvl) {
+			decoded.vendorConsents.maxId_ = decoded.vendorLegitimateInterests.maxId_ = Math.max.apply(null, Object.keys(decoded.gvl.vendors));
+		}
 		encoded = TCString.encode(decoded, {
 			isForVendors: true
 		});

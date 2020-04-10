@@ -53,9 +53,13 @@ describe('commands', () => {
 			}, undefined, VENDOR_LIST);
 		});
 
-		it('should return consent object without any consents when invoked with empty object', (done) => {
+		it('should return consent object with no consent and no legitimate interest for every vendor on list when invoked with empty object', (done) => {
 			const consents = {};
 
+			const vendors = {};
+			for (let id = 1, maxId = Math.max.apply(null, Object.keys(VENDOR_LIST.vendors)); id <= maxId; id++) {
+				vendors[id] = false;
+			}
 			const blueprint = {
 				cmpId: 280,
 				cmpVersion: 2,
@@ -68,7 +72,7 @@ describe('commands', () => {
 				gdprApplies: true,
 				outOfBand: { allowedVendors: {}, disclosedVendors: {} },
 				purpose: { consents: {}, legitimateInterests: {} },
-				vendor: { consents: {}, legitimateInterests: {} },
+				vendor: { consents: vendors, legitimateInterests: vendors },
 				specialFeatureOptins: {},
 				publisher: {
 					consents: {},
