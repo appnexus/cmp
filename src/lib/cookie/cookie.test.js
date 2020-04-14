@@ -20,7 +20,7 @@ import {
 	SPECIAL_FEATURE_OPT_INS,
 	VENDOR_LIST
 } from "../../../test/constants";
-import { GVL, TCModel } from "@iabtcf/core";
+import { GVL, TCModel, VendorVectorEncoder } from "@iabtcf/core";
 import {decodeVendorCookieValue, decodeBitsToIds, decodePublisherCookieValue} from "./cookieDecodeHelpers";
 import {encodePublisherCookieValue, encodeVendorCookieValue} from "./cookieEncodeHelpers";
 
@@ -96,8 +96,14 @@ function arrayToObject(array, maxId) {
 }
 
 describe('cookie', () => {
+	let decode;
+
 	beforeAll(() => {
-		applyDecodeFix();
+		decode = applyDecodeFix();
+	});
+
+	afterAll(() => {
+		VendorVectorEncoder.decode = decode;
 	});
 
 	it('encodes and decodes consent cookie object back to original value', (done) => {

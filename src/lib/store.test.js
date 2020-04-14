@@ -4,7 +4,7 @@ import datetime from 'chai-datetime';
 import Store from './store';
 import { CmpApi } from "@iabtcf/cmpapi";
 import { encodeConsentData, applyDecodeFix } from "./cookie/cookie";
-import {GVL, TCModel} from "@iabtcf/core";
+import { GVL, TCModel, VendorVectorEncoder } from "@iabtcf/core";
 import {
 	PURPOSE_CONSENTS,
 	PURPOSE_LEGITIMATE_INTERESTS,
@@ -20,10 +20,14 @@ import {CMP_ID} from "./init";
 use(datetime);
 
 describe('store', () => {
-	let cmpApi;
+	let cmpApi, decode;
 
 	beforeAll(() => {
-		applyDecodeFix();
+		decode = applyDecodeFix();
+	});
+
+	afterAll(() => {
+		VendorVectorEncoder.decode = decode;
 	});
 
 	beforeEach(() => {

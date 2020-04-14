@@ -143,6 +143,7 @@ const applyDecodeFix = () => {
 		vector.maxId_ = IntEncoder.decode(value.substr(0, BitLength.maxId), BitLength.maxId);
 		return vector;
 	};
+	return decode;
 };
 
 export {
