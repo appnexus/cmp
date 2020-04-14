@@ -102,7 +102,7 @@ export default class Details extends Component {
 			vendorConsents,
 			vendorLegitimateInterests,
 			purposeLegitimateInterests,
-			specialFeatureOptins,
+			specialFeatureOptins
 		} = tcModel;
 
 		const { created: consentCreated } = persistedConsentData;
