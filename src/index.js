@@ -10,18 +10,9 @@ import 'core-js/fn/string/repeat';
 import { init as initializeStore } from './lib/init';
 import log from "./lib/log";
 import config from "./lib/config";
-import { decodeConsentData, readConsentCookie } from "./lib/cookie/cookie";
+import { decodeConsentData, readConsentCookie, applyDecodeFix } from "./lib/cookie/cookie";
 import {fetchGlobalVendorList} from "./lib/vendor";
 import Promise from "promise-polyfill";
-import { VendorVectorEncoder, IntEncoder, BitLength } from '@iabtcf/core';
-
-const vendorVectorEncoderDecode = VendorVectorEncoder.decode;
-VendorVectorEncoder.decode = function (...args) {
-	const [ value ] = args;
-	const vector = vendorVectorEncoderDecode.apply(this, args);
-	vector.maxId_ = IntEncoder.decode(value.substr(0, BitLength.maxId), BitLength.maxId);
-	return vector;
-};
 
 const TCF_CONFIG = '__tcfConfig';
 
@@ -183,6 +174,8 @@ function readExternalConsentData(config) {
 }
 
 function start() {
+	applyDecodeFix();
+
 	// Preserve any config options already set
 	const tcfConfig = window[TCF_CONFIG] || {};
 

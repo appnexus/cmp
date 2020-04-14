@@ -1,6 +1,6 @@
 import Promise from 'promise-polyfill';
 import log from '../log';
-import { TCString } from '@iabtcf/core';
+import { TCString, VendorVectorEncoder, IntEncoder, BitLength } from '@iabtcf/core';
 import {
 	padRight,
 	encodeVendorCookieValue
@@ -39,7 +39,7 @@ const encodeConsentData = (decoded) => {
 	let encoded;
 	try {
 		if (decoded.gvl) {
-			decoded.vendorConsents.maxId_ = decoded.vendorLegitimateInterests.maxId_ = Math.max.apply(null, Object.keys(decoded.gvl.vendors));
+			decoded.vendorConsents.maxId_ = decoded.vendorLegitimateInterests.maxId_ = Math.max(...Object.keys(decoded.gvl.vendors));
 		}
 		encoded = TCString.encode(decoded, {
 			isForVendors: true
@@ -133,6 +133,18 @@ const encodeVendorConsentData = (vendorData) => {
 	return noRangesData.length < rangesData.length ? noRangesData : rangesData;
 };
 
+const applyDecodeFix = () => {
+	const decode = VendorVectorEncoder.decode;
+	VendorVectorEncoder.decode = function (...args) {
+		const [ value ] = args;
+		const vector = decode.apply(this, args);
+		// Ensure that vendor consents and legitimateInterests values are present in TCData object
+		// for all vendors id up to maxVendorId (which is stored in tcString)
+		vector.maxId_ = IntEncoder.decode(value.substr(0, BitLength.maxId), BitLength.maxId);
+		return vector;
+	};
+};
+
 export {
 	decodeConsentData,
 	encodeConsentData,
@@ -140,5 +152,6 @@ export {
 	writeConsentCookie,
 	encodeVendorConsentData,
 	convertVendorsToRanges,
+	applyDecodeFix,
 	CONSENT_COOKIE
 };

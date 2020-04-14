@@ -57,7 +57,7 @@ describe('commands', () => {
 			const consents = {};
 
 			const vendors = {};
-			for (let id = 1, maxId = Math.max.apply(null, Object.keys(VENDOR_LIST.vendors)); id <= maxId; id++) {
+			for (let id = 1, maxId = Math.max(...Object.keys(VENDOR_LIST.vendors)); id <= maxId; id++) {
 				vendors[id] = false;
 			}
 			const blueprint = {
