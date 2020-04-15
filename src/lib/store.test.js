@@ -3,8 +3,8 @@ import { expect, use } from 'chai';
 import datetime from 'chai-datetime';
 import Store from './store';
 import { CmpApi } from "@iabtcf/cmpapi";
-import { encodeConsentData } from "./cookie/cookie";
-import {GVL, TCModel} from "@iabtcf/core";
+import { encodeConsentData, applyDecodeFix } from "./cookie/cookie";
+import { GVL, TCModel, VendorVectorEncoder } from "@iabtcf/core";
 import {
 	PURPOSE_CONSENTS,
 	PURPOSE_LEGITIMATE_INTERESTS,
@@ -20,7 +20,15 @@ import {CMP_ID} from "./init";
 use(datetime);
 
 describe('store', () => {
-	let cmpApi;
+	let cmpApi, decode;
+
+	beforeAll(() => {
+		decode = applyDecodeFix();
+	});
+
+	afterAll(() => {
+		VendorVectorEncoder.decode = decode;
+	});
 
 	beforeEach(() => {
 		cmpApi = new CmpApi(280, 2);
@@ -68,6 +76,7 @@ describe('store', () => {
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
 			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
+			const maxVendorId = Math.max(...Object.keys(VENDOR_LIST.vendors));
 			const encoded = encodeConsentData(tcModel);
 
 			const store = new Store({
@@ -81,8 +90,8 @@ describe('store', () => {
 			// check if consents were applied to current state of tcModel
 			expect(store.tcModel.purposeConsents.maxId).to.equal(Math.max(...PURPOSE_CONSENTS));
 			expect(store.tcModel.purposeLegitimateInterests.maxId).to.equal(Math.max(...PURPOSE_LEGITIMATE_INTERESTS));
-			expect(store.tcModel.vendorConsents.maxId).to.equal(Math.max(...VENDOR_CONSENTS));
-			expect(store.tcModel.vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
+			expect(store.tcModel.vendorConsents.maxId).to.equal(maxVendorId);
+			expect(store.tcModel.vendorLegitimateInterests.maxId).to.equal(maxVendorId);
 			expect(store.tcModel.publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
 			expect(store.tcModel.publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
 			expect(store.tcModel.specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
@@ -140,6 +149,7 @@ describe('store', () => {
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
 			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
+			const maxVendorId = Math.max(...Object.keys(VENDOR_LIST.vendors));
 			const encoded = encodeConsentData(tcModel);
 
 			const store = new Store({
@@ -150,8 +160,8 @@ describe('store', () => {
 			store.setCmpApi(cmpApi);
 			store.updateVendorList(vendorList);
 
-			expect(store.tcModel.vendorConsents.size).to.equal(6);
-			expect(store.tcModel.vendorConsents.maxId).to.equal(10);
+			expect(store.tcModel.vendorConsents.size).to.equal(VENDOR_CONSENTS.length);
+			expect(store.tcModel.vendorConsents.maxId).to.equal(maxVendorId);
 			expect(store.tcModel.vendorConsents.has(10)).to.be.true;
 			expect(store.tcModel.vendorLegitimateInterests.has(10)).to.be.false;
 			done();
@@ -173,6 +183,7 @@ describe('store', () => {
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
 			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
 
+			const maxVendorId = Math.max(...Object.keys(VENDOR_LIST.vendors));
 			const encoded = encodeConsentData(tcModel);
 
 			const store = new Store({
@@ -191,7 +202,7 @@ describe('store', () => {
 				}
 			});
 
-			expect(vendorsWithoutConsentCount).to.equal(Object.keys(VENDOR_LIST.vendors).length - 2);
+			expect(vendorsWithoutConsentCount).to.equal(maxVendorId - VENDOR_CONSENTS.length);
 			expect(persistedConsentData.vendorConsents.has(4)).to.be.true;
 			expect(persistedConsentData.vendorConsents.has(5)).to.be.false;
 

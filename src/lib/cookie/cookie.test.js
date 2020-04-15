@@ -7,6 +7,7 @@ import {
 	readConsentCookie,
 	convertVendorsToRanges,
 	encodeVendorConsentData,
+	applyDecodeFix,
 	CONSENT_COOKIE
 } from './cookie';
 import {
@@ -19,7 +20,7 @@ import {
 	SPECIAL_FEATURE_OPT_INS,
 	VENDOR_LIST
 } from "../../../test/constants";
-import { GVL, TCModel } from "@iabtcf/core";
+import { GVL, TCModel, VendorVectorEncoder } from "@iabtcf/core";
 import {decodeVendorCookieValue, decodeBitsToIds, decodePublisherCookieValue} from "./cookieDecodeHelpers";
 import {encodePublisherCookieValue, encodeVendorCookieValue} from "./cookieEncodeHelpers";
 
@@ -78,7 +79,33 @@ function decodeVendorConsentData(cookieValue) {
 	return cookieData;
 }
 
+function vectorToObject(set) {
+	let obj = {};
+	set.forEach((hasConsent, id) => {
+		obj[id] = hasConsent;
+	});
+	return obj;
+}
+
+function arrayToObject(array, maxId) {
+	let obj = {};
+	for (let id = 1, set = new Set(array); id <= maxId; id++) {
+		obj[id] = set.has(id);
+	}
+	return obj;
+}
+
 describe('cookie', () => {
+	let decode;
+
+	beforeAll(() => {
+		decode = applyDecodeFix();
+	});
+
+	afterAll(() => {
+		VendorVectorEncoder.decode = decode;
+	});
+
 	it('encodes and decodes consent cookie object back to original value', (done) => {
 		const tcModel = new TCModel();
 		tcModel.cmpId = 280;
@@ -97,6 +124,7 @@ describe('cookie', () => {
 			const encoded = encodeConsentData(tcModel);
 			const decoded = decodeConsentData(encoded);
 
+			const maxVendorId = Math.max(...Object.keys(VENDOR_LIST.vendors));
 			const {
 				supportOOB,
 				isServiceSpecific,
@@ -129,8 +157,10 @@ describe('cookie', () => {
 			expect(vendorListVersion).to.equal(tcModel.vendorListVersion);
 			expect(purposeConsents.maxId).to.equal(Math.max(...PURPOSE_CONSENTS));
 			expect(purposeLegitimateInterests.maxId).to.equal(Math.max(...PURPOSE_LEGITIMATE_INTERESTS));
-			expect(vendorConsents.maxId).to.equal(Math.max(...VENDOR_CONSENTS));
-			expect(vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
+			expect(vendorConsents.maxId).to.equal(maxVendorId);
+			expect(vectorToObject(vendorConsents)).to.deep.equal(arrayToObject(VENDOR_CONSENTS, maxVendorId));
+			expect(vendorLegitimateInterests.maxId).to.equal(maxVendorId);
+			expect(vectorToObject(vendorLegitimateInterests)).to.deep.equal(arrayToObject(VENDOR_LEGITIMATE_INTERESTS, maxVendorId));
 			expect(publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
 			expect(publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
 			expect(specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
@@ -160,6 +190,7 @@ describe('cookie', () => {
 					const cookie = decodeConsentData(fromCookie);
 					expect(document.cookie).to.contain(CONSENT_COOKIE);
 
+					const maxVendorId = Math.max(...Object.keys(VENDOR_LIST.vendors));
 					const {
 						supportOOB,
 						isServiceSpecific,
@@ -192,8 +223,10 @@ describe('cookie', () => {
 					expect(vendorListVersion).to.equal(tcModel.vendorListVersion);
 					expect(purposeConsents.maxId).to.equal(Math.max(...PURPOSE_CONSENTS));
 					expect(purposeLegitimateInterests.maxId).to.equal(Math.max(...PURPOSE_LEGITIMATE_INTERESTS));
-					expect(vendorConsents.maxId).to.equal(Math.max(...VENDOR_CONSENTS));
-					expect(vendorLegitimateInterests.maxId).to.equal(Math.max(...VENDOR_LEGITIMATE_INTERESTS));
+					expect(vendorConsents.maxId).to.equal(maxVendorId);
+					expect(vectorToObject(vendorConsents)).to.deep.equal(arrayToObject(VENDOR_CONSENTS, maxVendorId));
+					expect(vendorLegitimateInterests.maxId).to.equal(maxVendorId);
+					expect(vectorToObject(vendorLegitimateInterests)).to.deep.equal(arrayToObject(VENDOR_LEGITIMATE_INTERESTS, maxVendorId));
 					expect(publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
 					expect(publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
 					expect(specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));

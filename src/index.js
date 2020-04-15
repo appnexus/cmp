@@ -10,7 +10,7 @@ import 'core-js/fn/string/repeat';
 import { init as initializeStore } from './lib/init';
 import log from "./lib/log";
 import config from "./lib/config";
-import { decodeConsentData, readConsentCookie } from "./lib/cookie/cookie";
+import { decodeConsentData, readConsentCookie, applyDecodeFix } from "./lib/cookie/cookie";
 import {fetchGlobalVendorList} from "./lib/vendor";
 import Promise from "promise-polyfill";
 
@@ -174,6 +174,8 @@ function readExternalConsentData(config) {
 }
 
 function start() {
+	applyDecodeFix();
+
 	// Preserve any config options already set
 	const tcfConfig = window[TCF_CONFIG] || {};
 
