@@ -42,15 +42,16 @@ const Purpose = (props) => {
 								onClick={onToggle}
 							/>
 						</div>
-
-						<div className={style.switch}>
-							<LocalLabel localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
-							<Switch
-								isSelected={isLegitimateInterestActive}
-								dataId={index}
-								onClick={onToggleLegitInterest}
-							/>
-						</div>
+						{!isPublisherPurpose &&
+							<div className={style.switch}>
+								<LocalLabel localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
+								<Switch
+									isSelected={isLegitimateInterestActive}
+									dataId={index}
+									onClick={onToggleLegitInterest}
+								/>
+							</div>
+						}
 
 					</div>
 				}
