@@ -80,6 +80,10 @@ export default class Purposes extends Component {
 		this.props.selectPurposeLegitimateInterests(dataId+1, isSelected);
 	};
 
+	handleSelectPublisherLegitimateInterest = ({dataId, isSelected}) => {
+		this.props.selectPublisherLegitimateInterests(dataId+1, isSelected);
+	};
+
 	getAllPurposes = () => {
 		const { purposes } = this.props;
 		let allPurposes = [];
@@ -112,7 +116,8 @@ export default class Purposes extends Component {
 			persistedConsentData = {},
 			initialVendorsRejection,
 			selectedPurposeLegitimateInterests,
-			specialFeatureOptins
+			specialFeatureOptins,
+			selectedPublisherLegitimateInterests
 		} = props;
 
 		const { created: consentCreated } = persistedConsentData;
@@ -129,6 +134,7 @@ export default class Purposes extends Component {
 
 		const isSpecialFeatureOptinsActive = (id) => specialFeatureOptins.has(id+1);
 		const isPurposeLegitimateInterestActive = (id) => selectedPurposeLegitimateInterests.has(id+1);
+		const isPublisherLegIntActive = (id) => selectedPublisherLegitimateInterests.has(id+1);
 
 		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
 			config.contractPurposeIds && purpose &&
@@ -205,7 +211,9 @@ export default class Purposes extends Component {
 																		  isActive={purposeIsActive(purpose, true)}
 																		  isTechnical={purposeIsTechnical(purpose)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
-																		  onToggle={this.createHandleSelectPurpose(true)}/>)}
+																		  onToggle={this.createHandleSelectPurpose(true)}
+																		  onToggleLegitInterest={this.handleSelectPublisherLegitimateInterest.bind(this)}
+																		  isLegitimateInterestActive={isPublisherLegIntActive(index)}/>)}
 							{publisherSpecialPurposes && !!publisherSpecialPurposes.length && <div>
 								<LocalLabel className={style.header} prefix="specialPurposes" localizeKey={`title`}>Special purposes</LocalLabel>
 								{publisherSpecialPurposes.map((purpose, index) => <Purpose key={index}

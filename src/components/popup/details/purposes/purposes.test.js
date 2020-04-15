@@ -113,6 +113,35 @@ describe('Purposes and Features', () => {
 		expect(selectPurposeLegitimateInterests.mock.calls[1][1]).to.equal(false);
 	});
 
+	it('should deselect default selection of publisher\'s legitimate interest', () => {
+		const isPublisherLegIntActive = true;
+		const onTogglePublisherLegitInterest = jest.fn();
+		const selectPublisherLegitimateInterests = jest.fn();
+		let persistedConsentData = {};
+
+		let purposes;
+		render(<Purposes
+			ref={ref => purposes = ref}
+			purposes={[
+				{ id: 1, name: 'Purpose 1' },
+				{ id: 2, name: 'Purpose 2' }
+			]}
+			isLegitimateInterestActive={isPublisherLegIntActive}
+			onToggleLegitInterest={onTogglePublisherLegitInterest}
+			persistedConsentData={persistedConsentData}
+			selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
+		/>, scratch);
+
+		purposes.handleSelectPublisherLegitimateInterest({isSelected: false, dataId: 1});
+		purposes.handleSelectPublisherLegitimateInterest({isSelected: false, dataId: 2});
+
+
+		expect(selectPublisherLegitimateInterests.mock.calls[0][0]).to.equal(2);
+		expect(selectPublisherLegitimateInterests.mock.calls[0][1]).to.equal(false);
+		expect(selectPublisherLegitimateInterests.mock.calls[1][0]).to.equal(3);
+		expect(selectPublisherLegitimateInterests.mock.calls[1][1]).to.equal(false);
+	});
+
 	it('should render special features and select its consent', () => {
 		let persistedConsentData = {};
 		let selectSpecialFeatureOptins = jest.fn();

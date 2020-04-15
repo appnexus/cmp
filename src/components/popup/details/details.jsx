@@ -97,6 +97,7 @@ export default class Details extends Component {
 		const {
 			purposeConsents,
 			publisherConsents,
+			publisherLegitimateInterests,
 			publisherCustomConsents,
 			vendorConsents,
 			vendorLegitimateInterests,
@@ -125,6 +126,7 @@ export default class Details extends Component {
 							specialFeatures={Object.values(specialFeatures)}
 							selectedPurposeIds={purposeConsents}
 							selectedPublisherPurposeIds={publisherConsents}
+							selectedPublisherLegitimateInterests={publisherLegitimateInterests}
 							selectedPublisherCustomPurposeIds={publisherCustomConsents}
 							selectPurpose={selectPurpose}
 							selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
