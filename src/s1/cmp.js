@@ -222,7 +222,6 @@ const handleConsentResult = ({
 			track('CMPOnSubmit', {
 				hasConsented,
 				hasConsentChanged: hasConsented !== hasConsentedCookie,
-				vendorConsentData,
 			});
 		}
 

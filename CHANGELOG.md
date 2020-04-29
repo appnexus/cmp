@@ -1,3 +1,9 @@
+## [1.5.1](https://github.com/openmail/system1-cmp/compare/v1.5.0...v1.5.1) (2020-04-29)
+
+### Fix
+
+- [x] Remove unknown prop from `CMPOnSubmit` event
+
 ## [1.5.0](https://github.com/openmail/system1-cmp/compare/v1.4.3...v1.5.0) (2020-04-29)
 
 ### Feat
