@@ -228,13 +228,15 @@ const createCommands = (store, cmpManager) => {
 	 * Trigger the consent tool UI to be shown
 	 */
 	const showConsentTool =  (callback = () => {}) => {
-		store.updateSection();
-		store.toggleConsentToolShowing(true);
+		cmpManager.addEventListener('cmpReady', () => {
+			store.updateSection();
+			store.toggleConsentToolShowing(true);
 
-		cmpManager.openConsentTool = true;
-		cmpManager.notify('openConsentTool', { section: 'intro' });
+			cmpManager.openConsentTool = true;
+			cmpManager.notify('openConsentTool', { section: 'intro' });
 
-		callback(true);
+			callback(true);
+		});
 	};
 
 	/**
@@ -271,8 +273,10 @@ const createCommands = (store, cmpManager) => {
 	 * Trigger the footer UI to be shown
 	 * */
 	const showFooter = (callback = () => {}) => {
-		const footerShown = store.toggleFooterShowing(true);
-		callback(footerShown);
+		cmpManager.addEventListener('cmpReady', () => {
+			const footerShown = store.toggleFooterShowing(true);
+			callback(footerShown);
+		});
 	};
 
 	const registerEventListener = (callback, {event}) => {

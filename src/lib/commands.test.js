@@ -437,6 +437,9 @@ describe('commands', () => {
 		});
 
 		it('showConsentTool - should execute all inner methods', () => {
+			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
+				callback();
+			});
 			store.updateSection = jest.fn();
 			store.toggleConsentToolShowing = jest.fn();
 			cmpManager.notify = jest.fn();
@@ -496,6 +499,9 @@ describe('commands', () => {
 
 		it('showFooter - should show footer', () => {
 			let footerShown = false;
+			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
+				callback();
+			});
 			commands.showFooter((result) => {
 				footerShown = result;
 				callbackExecuted = true;
@@ -506,6 +512,9 @@ describe('commands', () => {
 
 		it('showFooter - should not show footer because tool is showing', () => {
 			let footerShown = false;
+			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
+				callback();
+			});
 			store.isConsentToolShowing = true;
 			commands.showFooter((result) => {
 				footerShown = result;
