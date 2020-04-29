@@ -454,6 +454,9 @@ describe('commands', () => {
 		});
 
 		it('showConsentDetailView - should execute all inner methods', () => {
+			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
+				callback();
+			});
 			store.updateSection = jest.fn();
 			store.toggleConsentToolShowing = jest.fn();
 			cmpManager.notify = jest.fn();
@@ -471,6 +474,9 @@ describe('commands', () => {
 		});
 
 		it('showVendors - should execute all inner methods', () => {
+			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
+				callback();
+			});
 			store.updateSection = jest.fn();
 			store.toggleConsentToolShowing = jest.fn();
 			cmpManager.notify = jest.fn();
