@@ -9,7 +9,7 @@ import 'core-js/fn/promise';
 
 import cmp from './loader';
 import { init } from '../lib/init';
-import log from '../lib/log';
+import log, { track } from '../lib/log';
 import { readCookie, writeCookie } from '../lib/cookie/cookie';
 
 const GDPR_OPT_IN_COOKIE = 'gdpr_opt_in';
@@ -19,8 +19,14 @@ const defaultConfig = {
 	logging: false,
 	shouldAutoConsent: false,
 	shouldAutoConsentWithFooter: false,
-	shouldAutoUpgradeConsent: true // if user has previously consented, but GVL changes, re-auto-consent with footer
+	shouldAutoUpgradeConsent: true, // if user has previously consented, but GVL changes, re-auto-consent with footer
 };
+
+let performanceTimer;
+
+cmp('addEventListener', 'onShowConsentTool', () => {
+	track('CMPShowConsentTool');
+});
 
 const addLocatorFrame = () => {
 	if (!window.frames['__cmpLocator']) {
@@ -35,8 +41,8 @@ const addLocatorFrame = () => {
 	}
 };
 
-const addPostmessageReceiver = cmp => {
-	const onReceiveMessage = event => {
+const addPostmessageReceiver = (cmp) => {
+	const onReceiveMessage = (event) => {
 		const data = event && event.data && event.data.__cmpCall;
 		if (data) {
 			const { command, parameter } = data;
@@ -53,17 +59,47 @@ const initialize = (config, callback) => {
 	// TODO: check to see if 3rdpartycookies are enabled and force the user into storeConsentLocally if so
 	// https://github.com/mindmup/3rdpartycookiecheck
 
+	performanceTimer = new Date();
+	track('CMPInit', {
+		shouldAutoConsent: config.shouldAutoConsent,
+	});
+
+	const callBackWithTracking = (result) => {
+		const {
+			vendorList: { vendorListVersion = 0 } = {},
+			vendorConsentData: { vendorListVersion: vendorConsentListVersion = 0 } = {},
+		} = result;
+
+		track('CMPInitComplete', {
+			hasConsented: result.hasConsented,
+			hasConsentChanged: result.hasConsented !== result.hasConsentedCookie,
+			errorMessage: result.errorMsg,
+			warningMessage: result.warningMsg,
+			shouldAutoConsent: config.shouldAutoConsent,
+			shouldAutoUpgrade: config.shouldAutoUpgradeConsent,
+			vendorListVersion,
+			vendorConsentVersion: vendorConsentListVersion,
+			timingMs: new Date() - performanceTimer,
+		});
+
+		if (callback && typeof callback === 'function') {
+			callback(result);
+		}
+	};
+
 	init(config, cmp).then(() => {
 		addPostmessageReceiver(cmp);
 		addLocatorFrame();
 
 		cmp('addEventListener', 'onSubmit', () => {
-			checkConsent();
+			checkConsent({
+				isOnSubmit: true,
+			});
 		});
 
 		checkConsent({
-			callback,
-			config
+			callback: callBackWithTracking,
+			config,
 		});
 	});
 };
@@ -72,37 +108,40 @@ const checkHasConsentedAll = ({ vendors = [] }, { allowedVendorIds, purposeConse
 	const filteredVendors =
 		allowedVendorIds && allowedVendorIds.size ? vendors.filter(({ id }) => allowedVendorIds.has(id)) : vendors;
 	const hasAnyVendorsDisabled = filteredVendors.find(({ id }) => vendorConsents[id] === false);
-	const hasAnyPurposeDisabled = Object.keys(purposeConsents).find(key => {
+	const hasAnyPurposeDisabled = Object.keys(purposeConsents).find((key) => {
 		return purposeConsents[key] === false;
 	});
 	return !hasAnyPurposeDisabled && !hasAnyVendorsDisabled;
 };
 
-const checkConsent = ({ callback = () => {}, config, warningMsg = '' } = {}) => {
+const checkConsent = ({ callback = () => {}, config, warningMsg = '', isOnSubmit = false } = {}) => {
 	let errorMsg = '';
 	if (!cmp.isLoaded) {
 		errorMsg = 'CMP failed to load';
 		log.error(errorMsg);
 		handleConsentResult({
 			errorMsg,
-			warningMsg
+			warningMsg,
+			isOnSubmit,
 		});
 	} else if (!window.navigator.cookieEnabled) {
 		errorMsg = 'Cookies are disabled. Ignoring CMP consent check';
 		log.error(errorMsg);
 		handleConsentResult({
 			errorMsg,
-			warningMsg
+			warningMsg,
+			isOnSubmit,
 		});
 	} else {
-		cmp('getVendorList', null, vendorList => {
-			cmp('getVendorConsents', null, vendorConsentData => {
+		cmp('getVendorList', null, (vendorList) => {
+			cmp('getVendorConsents', null, (vendorConsentData) => {
 				handleConsentResult({
 					vendorList,
 					vendorConsentData,
 					callback,
 					config,
-					warningMsg
+					warningMsg,
+					isOnSubmit,
 				});
 			});
 		});
@@ -115,7 +154,8 @@ const handleConsentResult = ({
 	callback,
 	config,
 	warningMsg = '',
-	errorMsg = ''
+	errorMsg = '',
+	isOnSubmit = false,
 }) => {
 	const hasConsentedCookie = Boolean(parseInt(readCookie(GDPR_OPT_IN_COOKIE) || 0, 10));
 	const { vendorListVersion: listVersion } = vendorList;
@@ -128,12 +168,13 @@ const handleConsentResult = ({
 		}
 		checkConsent({
 			callback,
-			warningMsg
+			warningMsg,
 		});
 	};
 
+	const { shouldAutoConsent, shouldAutoConsentWithFooter, shouldAutoUpgradeConsent } = config || {};
+
 	if (!created) {
-		const { shouldAutoConsent, shouldAutoConsentWithFooter } = config || {};
 		if (shouldAutoConsent || shouldAutoConsentWithFooter) {
 			log.debug('CMP: auto-consent to all conditions.');
 			autoConsentFlow(shouldAutoConsentWithFooter);
@@ -141,7 +182,6 @@ const handleConsentResult = ({
 		}
 		errorMsg = 'No consent data found. Show consent tool';
 	} else if (vendorListVersion !== listVersion) {
-		const { shouldAutoUpgradeConsent } = config || {};
 		if (shouldAutoUpgradeConsent) {
 			warningMsg = `Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Consent upgraded, show consent notice`;
 			log.debug(warningMsg);
@@ -167,17 +207,26 @@ const handleConsentResult = ({
 			consentRequired: true,
 			gdprApplies: true,
 			hasConsented,
+			hasConsentedCookie,
 			vendorList,
 			vendorConsentData,
 			errorMsg,
-			warningMsg
+			warningMsg,
 		};
 
 		if (created && hasConsented !== hasConsentedCookie && !errorMsg) {
 			cmp.notify('onConsentChanged', consent);
 		}
 
-		callback.call(this, consent);
+		if (isOnSubmit) {
+			track('CMPOnSubmit', {
+				hasConsented,
+				hasConsentChanged: hasConsented !== hasConsentedCookie,
+				vendorConsentData,
+			});
+		}
+
+		callback(consent);
 	}
 };
 
@@ -195,14 +244,14 @@ const handleConsentResult = ({
 		initialize(
 			{
 				...defaultConfig,
-				...config
+				...config,
 			},
 			callback
 		);
 
 		// 2. initialize call never queued, so initialize with default Config
 	} else {
-		initialize(defaultConfig, result => {
+		initialize(defaultConfig, (result) => {
 			const { errorMsg } = result;
 			if (errorMsg) {
 				log.debug(errorMsg);

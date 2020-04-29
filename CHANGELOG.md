@@ -1,3 +1,9 @@
+## [1.5.0](https://github.com/openmail/system1-cmp/compare/v1.4.3...v1.5.0) (2020-04-29)
+
+### Feat
+
+- [x] Add logging to CMP for health monitoring
+
 ## [1.4.3](https://github.com/openmail/system1-cmp/compare/v1.4.2...v1.4.3) (2020-02-22)
 
 ### Refactor
@@ -6,7 +12,6 @@
 - [x] `pubvendors.json` can now provide custom features
 - [x] Update cached global vendor list to v190.
 - [x] Fix conflicting eslint, prettier, editorconfig settings
-
 
 <a name="1.4.2"></a>
 

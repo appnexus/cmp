@@ -31,7 +31,7 @@ export default class Cmp {
 			const metadata = encodePublisherCookieValue(
 				{
 					...persistedPublisherConsentData,
-					...persistedVendorConsentData
+					...persistedVendorConsentData,
 				},
 				[
 					'cookieVersion',
@@ -42,7 +42,7 @@ export default class Cmp {
 					'consentScreen',
 					'consentLanguage',
 					'vendorListVersion',
-					'publisherPurposeVersion'
+					'publisherPurposeVersion',
 				]
 			);
 
@@ -50,7 +50,7 @@ export default class Cmp {
 				metadata,
 				gdprApplies: config.gdprApplies,
 				hasGlobalScope: config.storeConsentGlobally,
-				...this.store.getPublisherConsentsObject()
+				...this.store.getPublisherConsentsObject(),
 			};
 			callback(consent, true);
 		},
@@ -72,14 +72,14 @@ export default class Cmp {
 					'cmpVersion',
 					'consentScreen',
 					'consentLanguage',
-					'vendorListVersion'
+					'vendorListVersion',
 				]);
 
 			const consent = {
 				metadata,
 				gdprApplies: config.gdprApplies,
 				hasGlobalScope: config.storeConsentGlobally,
-				...this.store.getVendorConsentsObject(vendorIds)
+				...this.store.getVendorConsentsObject(vendorIds),
 			};
 
 			callback(consent, true);
@@ -92,7 +92,7 @@ export default class Cmp {
 			const consentData = {
 				gdprApplies: config.gdprApplies,
 				hasGlobalScope: config.storeConsentGlobally,
-				consentData: this.generateConsentString()
+				consentData: this.generateConsentString(),
 			};
 			callback(consentData, true);
 		},
@@ -113,7 +113,7 @@ export default class Cmp {
 		ping: (_, callback = () => {}) => {
 			const result = {
 				gdprAppliesGlobally: config.gdprAppliesGlobally,
-				cmpLoaded: true
+				cmpLoaded: true,
 			};
 			callback(result, true);
 		},
@@ -164,6 +164,7 @@ export default class Cmp {
 		 * Trigger the consent tool banner to be shown
 		 */
 		showConsentTool: (_, callback = () => {}) => {
+			this.notify('onShowConsentTool');
 			this.store.toggleConsentToolShowing(true);
 			callback(true);
 		},
@@ -179,7 +180,7 @@ export default class Cmp {
 		acceptAllConsents: (_, callback = () => {}) => {
 			this.store.persist();
 			callback();
-		}
+		},
 	};
 
 	generateConsentString = () => {
@@ -193,10 +194,10 @@ export default class Cmp {
 			encodeVendorConsentData({
 				...persistedVendorConsentData,
 				selectedVendorIds: new Set(
-					Array.from(selectedVendorIds).filter(id => !allowedVendorIds.size || allowedVendorIds.has(id))
+					Array.from(selectedVendorIds).filter((id) => !allowedVendorIds.size || allowedVendorIds.has(id))
 				),
 				selectedPurposeIds: new Set(Array.from(selectedPurposeIds)),
-				vendorList
+				vendorList,
 			})
 		);
 	};
@@ -209,14 +210,14 @@ export default class Cmp {
 			queue.forEach(({ callId, command, parameter, callback, event }) => {
 				// If command is queued with an event we will relay its result via postMessage
 				if (event) {
-					this.processCommand(command, parameter, returnValue =>
+					this.processCommand(command, parameter, (returnValue) =>
 						event.source.postMessage(
 							{
 								[CMP_RETURN_NAME]: {
 									callId,
 									command,
-									returnValue
-								}
+									returnValue,
+								},
 							},
 							event.origin
 						)
@@ -236,14 +237,14 @@ export default class Cmp {
 		const { [CMP_CALL_NAME]: cmp } = data;
 		if (cmp) {
 			const { callId, command, parameter } = cmp;
-			this.processCommand(command, parameter, returnValue =>
+			this.processCommand(command, parameter, (returnValue) =>
 				source.postMessage(
 					{
 						[CMP_RETURN_NAME]: {
 							callId,
 							command,
-							returnValue
-						}
+							returnValue,
+						},
 					},
 					origin
 				)
@@ -287,7 +288,7 @@ export default class Cmp {
 	notify = (event, data) => {
 		log.info(`Notify event: ${event}`);
 		const eventSet = this.eventListeners[event] || new Set();
-		eventSet.forEach(listener => {
+		eventSet.forEach((listener) => {
 			listener({ event, data });
 		});
 

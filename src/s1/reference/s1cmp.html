@@ -57,7 +57,7 @@
 				}
 				if (result.errorMsg) {
 					console.log('cmp:init: errorMsg', result.errorMsg);
-					cmp('showConsentTool');
+					// cmp('showConsentTool');
 				} else {
 					// consent achieved
 					if (document.cookie.indexOf("gdpr_opt_in=1") >= 0) {
@@ -70,9 +70,9 @@
 			} else {
 				console.log("cmp:init: consent not required", result);
 			}
-		});
 
-		cmp('showConsentTool')
+			cmp('showConsentTool');
+		});
 
 	</script>
 	<p>
