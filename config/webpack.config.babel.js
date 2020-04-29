@@ -5,7 +5,7 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import path from 'path';
-import { commonConfig, uglifyPlugin } from './common.webpack.config.babel';
+import { commonConfig, uglifyPlugin, version } from './common.webpack.config.babel';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -24,9 +24,9 @@ module.exports = [
 		},
 		...commonConfig,
 		plugins: [
-			// webpack.config.js
 			new webpack.DefinePlugin({
-				__VERSION__: JSON.stringify(require('../package.json').version),
+				'process.env.NODE_ENV': JSON.stringify(ENV),
+				__VERSION__: version,
 			}),
 			new webpack.NoEmitOnErrorsPlugin(),
 			new webpack.DefinePlugin({

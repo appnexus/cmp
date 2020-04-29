@@ -6785,20 +6785,20 @@ nise@^1.5.2:
     lolex "^5.0.1"
     path-to-regexp "^1.7.0"
 
-no-case@3.0.3, no-case@^3.0.3:
-  version "3.0.3"
-  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/no-case/-/no-case-3.0.3.tgz#c21b434c1ffe48b39087e86cfb4d2582e9df18f8"
-  integrity sha1-whtDTB/+SLOQh+hs+00lgunfGPg=
-  dependencies:
-    lower-case "^2.0.1"
-    tslib "^1.10.0"
-
 no-case@^2.2.0:
   version "2.3.2"
   resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/no-case/-/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"
   integrity sha1-YLgTOWvjmz8SiKTB7V0efSi0ZKw=
   dependencies:
     lower-case "^1.1.1"
+
+no-case@^3.0.3:
+  version "3.0.3"
+  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/no-case/-/no-case-3.0.3.tgz#c21b434c1ffe48b39087e86cfb4d2582e9df18f8"
+  integrity sha1-whtDTB/+SLOQh+hs+00lgunfGPg=
+  dependencies:
+    lower-case "^2.0.1"
+    tslib "^1.10.0"
 
 node-abi@^2.7.0:
   version "2.15.0"
