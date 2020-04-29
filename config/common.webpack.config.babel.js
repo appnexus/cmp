@@ -12,7 +12,7 @@ const { version } = packageJson;
 
 const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
 	output: {
-		comments: false
+		comments: false,
 	},
 	compress: {
 		unsafe_comps: true,
@@ -36,8 +36,8 @@ const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
 		if_return: true,
 		join_vars: true,
 		cascade: true,
-		drop_console: false
-	}
+		drop_console: false,
+	},
 });
 
 const commonConfig = {
@@ -49,8 +49,8 @@ const commonConfig = {
 			components: path.resolve(__dirname, '../', 'src/components'), // used for tests
 			style: path.resolve(__dirname, '../', 'src/style'),
 			react: 'preact-compat',
-			'react-dom': 'preact-compat'
-		}
+			'react-dom': 'preact-compat',
+		},
 	},
 
 	module: {
@@ -58,29 +58,29 @@ const commonConfig = {
 			{
 				test: /\.hbs/,
 				exclude: /node_modules/,
-				use: 'handlebars-loader'
+				use: 'handlebars-loader',
 			},
 			{
 				test: /\.jsx?$/,
 				exclude: path.resolve(__dirname, '../', 'src'),
 				enforce: 'pre',
-				use: 'source-map-loader'
+				use: 'source-map-loader',
 			},
 			{
 				test: /\.jsx?$/,
 				exclude: /node_modules/,
-				use: 'babel-loader'
+				use: 'babel-loader',
 			},
 			{
 				// Transform our own .(less|css) files with PostCSS and CSS-modules
 				test: /\.(less|css)$/,
 				include: [
 					path.resolve(__dirname, '../', 'src/components'),
-					path.resolve(__dirname, '../', 'src/docs/components')
+					path.resolve(__dirname, '../', 'src/docs/components'),
 				],
 				use: [
 					{
-						loader: 'style-loader'
+						loader: 'style-loader',
 					},
 					{
 						loader: 'css-loader',
@@ -89,8 +89,8 @@ const commonConfig = {
 							sourceMap: CSS_MAPS,
 							importLoaders: 1,
 							minimize: true,
-							localIdentName: '[name]_[local]--[hash:base64:5]'
-						}
+							localIdentName: '[name]_[local]--[hash:base64:5]',
+						},
 					},
 					{
 						loader: 'postcss-loader',
@@ -98,47 +98,47 @@ const commonConfig = {
 							sourceMap: CSS_MAPS,
 							plugins: () => {
 								autoprefixer({ browsers: ['last 2 versions'] });
-							}
-						}
+							},
+						},
 					},
 					{
 						loader: 'less-loader',
-						options: { sourceMap: CSS_MAPS }
-					}
-				]
+						options: { sourceMap: CSS_MAPS },
+					},
+				],
 			},
 			{
 				test: /\.(less|css)$/,
 				include: [
 					path.resolve(__dirname, '../', 'src/docs/style'),
-					path.resolve(__dirname, '../node_modules/codemirror/lib/codemirror.css')
+					path.resolve(__dirname, '../node_modules/codemirror/lib/codemirror.css'),
 				],
 				use: [
 					{
-						loader: 'style-loader'
+						loader: 'style-loader',
 					},
 					{
-						loader: 'css-loader'
+						loader: 'css-loader',
 					},
 					{
 						loader: 'less-loader',
-						options: { sourceMap: CSS_MAPS }
-					}
-				]
+						options: { sourceMap: CSS_MAPS },
+					},
+				],
 			},
 			{
 				test: /\.json$/,
-				use: 'json-loader'
+				use: 'json-loader',
 			},
 			{
 				test: /\.(xml|txt|md)$/,
-				use: 'raw-loader'
+				use: 'raw-loader',
 			},
 			{
 				test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
-				use: ENV === 'production' ? 'file-loader' : 'url-loader'
-			}
-		]
+				use: ENV === 'production' ? 'file-loader' : 'url-loader',
+			},
+		],
 	},
 
 	stats: { colors: true },
@@ -149,7 +149,7 @@ const commonConfig = {
 		Buffer: false,
 		__filename: false,
 		__dirname: false,
-		setImmediate: false
+		setImmediate: false,
 	},
 
 	devtool: ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
@@ -163,8 +163,8 @@ const commonConfig = {
 		disableHostCheck: true,
 		open: false,
 		openPage: 'docs/',
-		https: false
-	}
+		https: false,
+	},
 };
 
 export { commonConfig, ENV, CSS_MAPS, version, uglifyPlugin };
