@@ -14,28 +14,29 @@ const ENV = process.env.NODE_ENV || 'development';
 const pages = [
 	{
 		id: 's1cmp',
-		filename: 'reference'
+		filename: 'reference',
 	},
 	{
-		id: 'info-acs'
-	}
+		id: 'info-acs',
+	},
 ];
 
 module.exports = [
 	// S1 CMP
 	{
 		entry: {
-			cmp: './s1/cmp.js'
+			cmp: './s1/cmp.js',
 		},
 		...commonConfig,
 		output: {
 			path: path.resolve(__dirname, '../', `dist/${version}`),
 			publicPath: './',
-			filename: 'cmp.js'
+			filename: 'cmp.js',
 		},
 		plugins: [
 			new webpack.DefinePlugin({
-				'process.env.NODE_ENV': JSON.stringify(ENV)
+				'process.env.NODE_ENV': JSON.stringify(ENV),
+				__VERSION__: JSON.stringify(version),
 			}),
 			...pages.map(
 				({ id, filename }) =>
@@ -49,16 +50,16 @@ module.exports = [
 							return {
 								version,
 								date: new Date().toTimeString(),
-								loader: UglifyJS.minify(fs.readFileSync('./src/s1/loader.js', 'utf8')).code
+								loader: UglifyJS.minify(fs.readFileSync('./src/s1/loader.js', 'utf8')).code,
 							};
-						}
+						},
 					})
 			),
 			new CopyWebpackPlugin([
 				{
 					from: './s1/config',
-					to: './config'
-				}
+					to: './config',
+				},
 			]),
 			new CopyWebpackPlugin([
 				{
@@ -67,9 +68,9 @@ module.exports = [
 					transform(content) {
 						// Just want to uglify and copy this file over
 						return Promise.resolve(Buffer.from(UglifyJS.minify(content.toString()).code, 'utf8'));
-					}
-				}
-			])
-		].concat(ENV === 'production' ? uglifyPlugin : [])
-	}
+					},
+				},
+			]),
+		].concat(ENV === 'production' ? uglifyPlugin : []),
+	},
 ];
