@@ -148,6 +148,8 @@ export default {
 		},
 		specialFeatures: {
 			title: 'Funkcje specjalne',
+			active: 'Aktywna',
+			inactive: 'Nieaktywna',
 			feature1: {
 				title: 'Użycie dokładnych danych geolokalizacyjnych',
 				description: '<p>Dokładne dane geolokalizacyjne użytkownika mogą być wykorzystywane na potrzeby realizacji jednego albo większej liczby celów. Oznacza to, że lokalizacja użytkownika może być dokładna do kilku metrów.</p>'
