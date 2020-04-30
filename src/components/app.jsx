@@ -12,7 +12,7 @@ export default class App extends Component {
 
 	onSave = () => {
 		const { store, notify } = this.props;
-		const { shouldDisplayFooter = fn => fn(true) } = config;
+		const { shouldDisplayFooter = fn => fn(false) } = config;
 		store.persist();
 		notify('onSubmit');
 		store.toggleConsentToolShowing(false);
