@@ -43,6 +43,7 @@ export default class Store {
 				consentLanguage
 			});
 
+		this.shouldDisplayCmpUI = false;
 		this.isConsentToolShowing = false;
 		this.isFooterShowing = false;
 		this.section = SECTION_INTRO;
@@ -52,6 +53,7 @@ export default class Store {
 
 	setCmpApi (cmpApi, shouldDisplayCmpUI) {
 		this.cmpApi = cmpApi;
+		this.shouldDisplayCmpUI = shouldDisplayCmpUI;
 		this.cmpApi.update(this.persistedConsentString, shouldDisplayCmpUI);
 	}
 
@@ -297,8 +299,11 @@ export default class Store {
 
 	toggleConsentToolShowing = (isShown) => {
 		const isConsentToolShowing = typeof isShown === 'boolean' ? isShown : !this.isConsentToolShowing;
-		if (isConsentToolShowing && !this.isConsentToolShowing) {
-			this.cmpApi.update(this.persistedConsentString, true);
+		if (isConsentToolShowing) {
+			if (!this.isConsentToolShowing && !this.shouldDisplayCmpUI) {
+				this.cmpApi.update(this.persistedConsentString, true);
+			}
+			this.shouldDisplayCmpUI = false;
 		}
 		this.isConsentToolShowing = isConsentToolShowing;
 		this.isFooterShowing = false;
