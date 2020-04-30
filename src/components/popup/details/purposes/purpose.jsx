@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import style from "./purposes.less";
 import Label from "../../../label/label";
 import Switch from '../../../switch/switch';
@@ -24,18 +23,19 @@ const Purpose = (props) => {
 		isPublisherPurpose = false
 	} = props;
 
-	const prefix = `purpose${purpose.id}`;
+	const purposeKey = `purpose${purpose.id}`;
+	const prefix = isSpecial ? 'specialPurposes' : 'purposes';
 
 	return (
 		<div className={style.purposeDetail}>
 			<div className={style.detailHeader}>
 				<div className={style.title}>
-					<LocalLabel localizeKey={`${prefix}.title`}>{purpose.name}</LocalLabel>
+					<LocalLabel prefix={prefix} localizeKey={`${purposeKey}.title`}>{purpose.name}</LocalLabel>
 				</div>
 				{!isTechnical &&
 					<div className={style.active}>
 						<div className={style.switch}>
-							<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
+							<LocalLabel prefix={prefix} localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
 							<Switch
 								isSelected={isActive}
 								dataId={index}
@@ -44,7 +44,7 @@ const Purpose = (props) => {
 						</div>
 						{!isPublisherPurpose &&
 							<div className={style.switch}>
-								<LocalLabel localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
+								<LocalLabel prefix={prefix} localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
 								<Switch
 									isSelected={isLegitimateInterestActive}
 									dataId={index}
@@ -57,19 +57,19 @@ const Purpose = (props) => {
 				}
 			</div>
 			<div className={style.body}>
-				<LocalLabel localizeKey={`${prefix}.description`}>{purpose.description}</LocalLabel>
+				<LocalLabel prefix={prefix} localizeKey={`${purposeKey}.description`}>{purpose.description}</LocalLabel>
 				{!isPublisherPurpose && (
 					<div>
 						<div>
 							<a className={style.vendorLink}
 							onClick={createOnShowVendors({isCustom: false, purposeId: purpose.id, isSpecial})}>
-								<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
+								<LocalLabel prefix={prefix} localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
 							</a>
 						</div>
 						<div>
 							<a className={style.vendorLink}
 							onClick={createOnShowVendors({isCustom: true, purposeId: purpose.id, isSpecial})}>
-								<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
+								<LocalLabel prefix={prefix} localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 							</a>
 						</div>
 					</div>
