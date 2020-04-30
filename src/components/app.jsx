@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import style from './app.less';
+import config from "../lib/config";
 
 import Popup from './popup/popup';
 import Footer from './footer/footer';
@@ -11,12 +12,12 @@ export default class App extends Component {
 
 	onSave = () => {
 		const { store, notify } = this.props;
+		const { shouldDisplayFooter = fn => fn(true) } = config;
 		store.persist();
 		notify('onSubmit');
 		store.toggleConsentToolShowing(false);
-		store.toggleFooterShowing(true);
+		shouldDisplayFooter(shouldDisplay => store.toggleFooterShowing(shouldDisplay));
 	};
-
 
 	updateState = (store) => {
 		this.setState({ store });
