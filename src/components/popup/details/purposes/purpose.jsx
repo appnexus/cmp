@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import style from "./purposes.less";
 import Label from "../../../label/label";
 import Switch from '../../../switch/switch';
