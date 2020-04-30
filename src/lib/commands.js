@@ -228,47 +228,55 @@ const createCommands = (store, cmpManager) => {
 	 * Trigger the consent tool UI to be shown
 	 */
 	const showConsentTool =  (callback = () => {}) => {
-		store.updateSection();
-		store.toggleConsentToolShowing(true);
+		cmpManager.addEventListener('cmpReady', () => {
+			store.updateSection();
+			store.toggleConsentToolShowing(true);
 
-		cmpManager.openConsentTool = true;
-		cmpManager.notify('openConsentTool', { section: 'intro' });
+			cmpManager.openConsentTool = true;
+			cmpManager.notify('openConsentTool', { section: 'intro' });
 
-		callback(true);
+			callback(true);
+		});
 	};
 
 	/**
 	 * Trigger the consent tool UI to be shown on Detail View
 	 */
 	const showConsentDetailView = (callback = () => {}) => {
-		store.updateSection(SECTION_DETAILS);
-		store.toggleConsentToolShowing(true);
+		cmpManager.addEventListener('cmpReady', () => {
+			store.updateSection(SECTION_DETAILS);
+			store.toggleConsentToolShowing(true);
 
-		cmpManager.openConsentTool = true;
-		cmpManager.notify('openConsentTool', { section: 'details' });
+			cmpManager.openConsentTool = true;
+			cmpManager.notify('openConsentTool', { section: 'details' });
 
-		callback(true);
+			callback(true);
+		});
 	};
 
 	/**
 	 * Trigger the vendors UI to be shown
 	 */
 	const showVendors = (callback = () => {}) => {
-		store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
-		store.toggleConsentToolShowing(true);
+		cmpManager.addEventListener('cmpReady', () => {
+			store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
+			store.toggleConsentToolShowing(true);
 
-		cmpManager.openConsentTool = true;
-		cmpManager.notify('openConsentTool', { section: 'details' });
+			cmpManager.openConsentTool = true;
+			cmpManager.notify('openConsentTool', { section: 'details' });
 
-		callback(true);
+			callback(true);
+		});
 	};
 
 	/**
 	 * Trigger the footer UI to be shown
 	 * */
 	const showFooter = (callback = () => {}) => {
-		const footerShown = store.toggleFooterShowing(true);
-		callback(footerShown);
+		cmpManager.addEventListener('cmpReady', () => {
+			const footerShown = store.toggleFooterShowing(true);
+			callback(footerShown);
+		});
 	};
 
 	const registerEventListener = (callback, {event}) => {
