@@ -16,7 +16,7 @@ const defaultConfig = {
 	contractPurposeIds: [],
 	specialPurposes: [],
 	autoDisplay: true,
-	shouldDisplayFooter: undefined
+	shouldDisplayFooter: null
 };
 
 class Config {
