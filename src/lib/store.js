@@ -31,8 +31,9 @@ export default class Store {
 
 		// decoding to check if string is compatible
 		const decodedConsentString = decodeConsentData(consentString);
-		this.persistedConsentString = decodedConsentString ? consentString : '';
-		this.persistedConsentData = decodedConsentString || {};
+		const isTCFv2Compatible = decodedConsentString && decodedConsentString.version > 1;
+		this.persistedConsentString = isTCFv2Compatible ? consentString : '';
+		this.persistedConsentData = isTCFv2Compatible ? decodedConsentString : {};
 
 		this.tcModel = Object.assign(
 			tcModel,
