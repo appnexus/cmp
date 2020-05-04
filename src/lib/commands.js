@@ -153,6 +153,7 @@ const createCommands = (store, cmpManager) => {
 		tcModel.vendorListVersion = vendorList.vendorListVersion;
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
+		tcModel.publisherCountryCode = config.publisherCountryCode;
 
 		for (let key of Object.keys(consents)) {
 			if (tcModel.hasOwnProperty(key)) {

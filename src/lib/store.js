@@ -27,6 +27,7 @@ export default class Store {
 		tcModel.cmpVersion = cmpVersion;
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
+		tcModel.publisherCountryCode = config.publisherCountryCode;
 
 		// decoding to check if string is compatible
 		const decodedConsentString = decodeConsentData(consentString);

@@ -46,6 +46,7 @@ describe('store', () => {
 		expect(store.isConsentToolShowing).to.equal(false);
 		expect(store.tcModel.version).to.equal(2);
 		expect(store.tcModel.cmpId).to.equal(280);
+		expect(store.tcModel.publisherCountryCode).to.equal('PL');
 	});
 
 	it('initializes with vendorList', () => {
