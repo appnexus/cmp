@@ -10,6 +10,8 @@ class LocalLabel extends Label {
 	};
 }
 
+const purposeOnTreatmentId = 1;
+
 const Purpose = (props) => {
 	const {
 		purpose,
@@ -27,6 +29,9 @@ const Purpose = (props) => {
 	const purposeKey = `purpose${purpose.id}`;
 	const prefix = isSpecial ? 'specialPurposes' : 'purposes';
 
+	// user can't right to object for purpose number 1
+	const canRightToObject = prefix !== 'purposes' || purpose.id != purposeOnTreatmentId;
+
 	return (
 		<div className={style.purposeDetail}>
 			<div className={style.detailHeader}>
@@ -43,7 +48,7 @@ const Purpose = (props) => {
 								onClick={onToggle}
 							/>
 						</div>
-						{!isPublisherPurpose &&
+						{!isPublisherPurpose && canRightToObject &&
 							<div className={style.switch}>
 								<LocalLabel prefix={prefix} localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
 								<Switch
