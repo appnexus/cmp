@@ -16,7 +16,8 @@ const defaultConfig = {
 	contractPurposeIds: [],
 	specialPurposes: [],
 	autoDisplay: true,
-	shouldDisplayFooter: null
+	shouldDisplayFooter: null,
+	publisherCountryCode: 'PL'
 };
 
 class Config {

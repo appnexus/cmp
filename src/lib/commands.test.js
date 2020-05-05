@@ -16,6 +16,7 @@ import {GVL, TCModel} from "@iabtcf/core";
 import {CmpApi} from "@iabtcf/cmpapi";
 import datetime from "chai-datetime";
 import CmpManager from "./cmpManager";
+import config from './config';
 
 use(datetime);
 
@@ -68,7 +69,7 @@ describe('commands', () => {
 				vendorListVersion: 100,
 				isServiceSpecific: true,
 				useNonStandardStacks: false,
-				publisherCC: 'AA',
+				publisherCC: config.publisherCountryCode,
 				gdprApplies: true,
 				outOfBand: { allowedVendors: {}, disclosedVendors: {} },
 				purpose: { consents: {}, legitimateInterests: {} },
@@ -173,6 +174,7 @@ describe('commands', () => {
 				expect(tcData.lastUpdated).not.to.be.undefined;
 				expect(Object.keys(tcData.outOfBand.allowedVendors).length).to.equal(0);
 				expect(Object.keys(tcData.outOfBand.disclosedVendors).length).to.equal(0);
+				expect(tcData.publisherCC).to.equal(config.publisherCountryCode);
 
 				// vendors section
 				const purposeConsents = filter(tcData.purpose.consents);
@@ -245,6 +247,7 @@ describe('commands', () => {
 						expect(tcData.vendorListVersion).to.equal(VENDOR_LIST.vendorListVersion);
 						expect(tcData.created).to.be.beforeTime(now);
 						expect(tcData.lastUpdated).to.be.beforeTime(now);
+						expect(tcData.publisherCC).to.equal(config.publisherCountryCode);
 						done();
 					}, consents, VENDOR_LIST);
 				}, 100);
