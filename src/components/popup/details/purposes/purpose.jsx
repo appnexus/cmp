@@ -10,7 +10,7 @@ class LocalLabel extends Label {
 	};
 }
 
-const purposeOnTreatmentId = 1;
+const purposeOneTreatmentId = 1;
 
 const Purpose = (props) => {
 	const {
@@ -30,7 +30,7 @@ const Purpose = (props) => {
 	const prefix = isSpecial ? 'specialPurposes' : 'purposes';
 
 	// user can't right to object for purpose number 1
-	const canRightToObject = prefix !== 'purposes' || purpose.id != purposeOnTreatmentId;
+	const canRightToObject = prefix !== 'purposes' || purpose.id != purposeOneTreatmentId;
 
 	return (
 		<div className={style.purposeDetail}>
