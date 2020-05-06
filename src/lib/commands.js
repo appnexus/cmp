@@ -45,14 +45,13 @@ const createCommands = (store, cmpManager) => {
 			cmpId = store.tcModel.cmpId,
 			cmpVersion = store.tcModel.cmpVersion,
 			consentScreen = store.tcModel.consentScreen,
-			consentLanguage = store.tcModel.consentLanguage,
 		} = persistedConsentData;
 
 		if (persistedConsentString) {
 			created = persistedConsentData.created;
 			lastUpdated = persistedConsentData.lastUpdated;
 		}
-
+		const consentLanguage = 'PL';
 		return {
 			cmpId,
 			cmpVersion,
@@ -71,7 +70,6 @@ const createCommands = (store, cmpManager) => {
 		const {
 			created,
 			lastUpdated,
-			consentLanguage,
 			consentScreen,
 			cmpVersion,
 			cmpId = CMP_ID
@@ -85,6 +83,7 @@ const createCommands = (store, cmpManager) => {
 			cookieVersion
 		} = data;
 
+		const consentLanguage = 'PL';
 		const consentData = {
 			cmpId,
 			maxVendorId,
