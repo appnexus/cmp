@@ -22,12 +22,12 @@ export default class Store {
 	} = {}) {
 		// Keep track of data that has already been persisted
 		const consentLanguage = findLocale().substr(0, 2).toUpperCase();
+		const publisherCountryCode = config.publisherCountryCode;
 		const tcModel = new TCModel();
 		tcModel.cmpId = cmpId;
 		tcModel.cmpVersion = cmpVersion;
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
-		tcModel.publisherCountryCode = config.publisherCountryCode;
 
 		// decoding to check if string is compatible
 		const decodedConsentString = decodeConsentData(consentString);
@@ -42,7 +42,8 @@ export default class Store {
 				version: cookieVersion,
 				cmpId,
 				cmpVersion,
-				consentLanguage
+				consentLanguage,
+				publisherCountryCode
 			});
 
 		this.shouldDisplayCmpUI = false;
