@@ -77,6 +77,7 @@ describe('store', () => {
 			tcModel.publisherConsents.set(PUBLISHER_CONSENTS);
 			tcModel.publisherLegitimateInterests.set(PUBLISHER_LEGITIMATE_INTERESTS);
 			tcModel.specialFeatureOptins.set(SPECIAL_FEATURE_OPT_INS);
+			tcModel.publisherCountryCode = 'AA';
 
 			const maxVendorId = Math.max(...Object.keys(VENDOR_LIST.vendors));
 			const encoded = encodeConsentData(tcModel);
@@ -97,6 +98,7 @@ describe('store', () => {
 			expect(store.tcModel.publisherConsents.maxId).to.equal(Math.max(...PUBLISHER_CONSENTS));
 			expect(store.tcModel.publisherLegitimateInterests.maxId).to.equal(Math.max(...PUBLISHER_LEGITIMATE_INTERESTS));
 			expect(store.tcModel.specialFeatureOptins.maxId).to.equal(Math.max(...SPECIAL_FEATURE_OPT_INS));
+			expect(store.tcModel.publisherCountryCode).to.equal('PL');
 			done();
 		}, 0);
 	});
