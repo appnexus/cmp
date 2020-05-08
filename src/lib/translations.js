@@ -124,6 +124,8 @@ export default {
 		},
 		specialPurposes: {
 			title: 'Cele specjalne',
+			showVendors: 'Pokaż listę Zaufanych Partnerów IAB',
+			showCustomVendors: 'Pokaż listę Zaufanych Partnerów',
 			purpose1: {
 				title: 'Zapewnienie bezpieczeństwa, zapobieganie oszustwom i usuwanie błędów',
 				description: '<p>Dane użytkownika mogą być wykorzystywane do monitorowania i zapobiegania oszustwom oraz zapewnienia prawidłowego i bezpiecznego działania systemów i procesów.</p>'
@@ -137,6 +139,8 @@ export default {
 			title: 'Funkcje',
 			active: 'Aktywna',
 			inactive: 'Nieaktywna',
+			showVendors: 'Pokaż listę Zaufanych Partnerów IAB',
+			showCustomVendors: 'Pokaż listę Zaufanych Partnerów',
 			feature1: {
 				title: 'Dopasowanie i połączenie źródeł danych offline',
 				description: '<p>Dane ze źródeł danych offline mogą być łączone z aktywnością użytkownika online w ramach realizacji co najmniej jednego celu.</p>'
@@ -154,6 +158,8 @@ export default {
 			title: 'Funkcje specjalne',
 			active: 'Aktywna',
 			inactive: 'Nieaktywna',
+			showVendors: 'Pokaż listę Zaufanych Partnerów IAB',
+			showCustomVendors: 'Pokaż listę Zaufanych Partnerów',
 			feature1: {
 				title: 'Użycie dokładnych danych geolokalizacyjnych',
 				description: '<p>Dokładne dane geolokalizacyjne użytkownika mogą być wykorzystywane na potrzeby realizacji jednego albo większej liczby celów. Oznacza to, że lokalizacja użytkownika może być dokładna do kilku metrów.</p>'
