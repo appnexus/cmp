@@ -75,8 +75,16 @@ div.vendors {
 	 	@media @smartphone {
 			min-width: 65px;
 
-			& > span, & > th > span {
-			  display: inline-block;
+			span:first-child {
+				display: inline-block;
+				width: 100%;
+			}
+
+		   	& > th {
+				span:first-child {
+					display: inline-block;
+					width: 100%;
+				}
 			}
 	  	}
 	}
