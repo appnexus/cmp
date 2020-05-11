@@ -71,8 +71,13 @@ div.vendors {
 	  	font-size: 10px;
 	  	text-align: center;
 	  	min-width: 60px;
+
 	 	@media @smartphone {
 			min-width: 65px;
+
+			& > span, & > th > span {
+			  display: inline-block;
+			}
 	  	}
 	}
 	table {
