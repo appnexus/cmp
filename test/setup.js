@@ -9,3 +9,7 @@ options.functions = false;
 chai.use(assertJsx);
 
 global.sleep = ms => new Promise( resolve => setTimeout(resolve, ms) );
+
+global.process.env.CMP_ID = 280;
+global.process.env.CMP_VERSION = 2;
+global.process.env.COOKIE_VERSION = 2;

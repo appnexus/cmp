@@ -15,19 +15,23 @@ class LocalLabel extends Label {
 }
 
 export default class Purposes extends Component {
-	state = {
-		selectedTab: TAB_PUBLISHER_INFO,
-		renderedTabIndices: new Set()
+	constructor(props) {
+		super(props);
+		this.state = {
+			selectedTab: TAB_PUBLISHER_INFO,
+			renderedTabIndices: new Set(),
+			allPurposes: this.getAllPurposes()
+		}
 	};
 
 	static defaultProps = {
 		onShowVendors: () => {},
 		purposes: [],
 		features: [],
-		customPurposes: [],
+		specialPurposes: [],
+		specialFeatures: [],
 		selectedPurposeIds: new Set(),
-		selectedStandardPurposeIds: new Set(),
-		selectedCustomPurposeIds: new Set()
+		selectedPublisherPurposeIds: new Set()
 	};
 
 	handleSelectTab = tab => {
@@ -38,36 +42,50 @@ export default class Purposes extends Component {
 		};
 	};
 
-	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false) => {
+	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false, isLegInt = false) => {
 		const {
 			selectPurpose,
-			selectStandardPurpose,
-			selectCustomPurpose
+			selectPurposeLegitimateInterests,
+			selectPublisherPurpose
 		} = this.props;
 
-		const allPurposes = this.getAllPurposes();
+		const {
+			allPurposes
+		} = this.state;
+
 		const selectedPurpose = allPurposes[dataId];
 
 		if (selectedPurpose) {
-			if (selectedPurpose.custom) {
-				selectCustomPurpose(selectedPurpose.id, isSelected);
-			} else if (isPublisher) {
-				selectStandardPurpose(selectedPurpose.id, isSelected);
+			if (isPublisher) {
+				selectPublisherPurpose(selectedPurpose.id, isSelected);
 			} else {
-				selectPurpose(selectedPurpose.id, isSelected);
+				if (isLegInt) {
+					selectPurposeLegitimateInterests(selectedPurpose.id, isSelected);
+				} else {
+					selectPurpose(selectedPurpose.id, isSelected);
+				}
 			}
 		}
+	};
+
+	handleSelectSpecialFeatureOptins = ({isSelected, dataId}) => {
+		this.props.selectSpecialFeatureOptins(dataId+1, isSelected);
 	};
 
 	createHandleSelectPurpose = (isPublisher) => {
 		return (data) => this.handleSelectPurpose(data, isPublisher);
 	};
 
+	handleSelectLegitInterest = ({dataId, isSelected}) => {
+		this.props.selectPurposeLegitimateInterests(dataId+1, isSelected);
+	};
+
+	handleSelectPublisherLegitimateInterest = ({dataId, isSelected}) => {
+		this.props.selectPublisherLegitimateInterests(dataId+1, isSelected);
+	};
+
 	getAllPurposes = () => {
-		const {
-			purposes,
-			customPurposes
-		} = this.props;
+		const { purposes } = this.props;
 		let allPurposes = [];
 
 		(purposes || []).forEach(purpose => {
@@ -76,15 +94,6 @@ export default class Purposes extends Component {
 				name: purpose.name,
 				description: purpose.description,
 				custom: false
-			});
-		});
-
-		(customPurposes || []).forEach(purpose => {
-			allPurposes.push({
-				id: purpose.id,
-				name: purpose.name,
-				description: purpose.description,
-				custom: true
 			});
 		});
 
@@ -99,50 +108,58 @@ export default class Purposes extends Component {
 
 		const {
 			selectedPurposeIds,
-			selectedStandardPurposeIds,
-			selectedCustomPurposeIds,
+			selectedPublisherPurposeIds,
 			purposes,
+			specialPurposes,
 			features,
-			persistedVendorConsentData,
-			persistedPublisherConsentData,
-			initialVendorsRejection
+			specialFeatures,
+			persistedConsentData = {},
+			initialVendorsRejection,
+			selectedPurposeLegitimateInterests,
+			specialFeatureOptins,
+			selectedPublisherLegitimateInterests
 		} = props;
 
-		const {created: vendorConsentCreated} = persistedVendorConsentData;
-		const {created: publisherConsentCreated} = persistedPublisherConsentData;
+		const { created: consentCreated } = persistedConsentData;
 
 		const {
 			selectedTab,
-			renderedTabIndices
+			renderedTabIndices,
+			allPurposes
 		} = state;
 
-		const allPurposes = this.getAllPurposes();
-
 		const purposeIsActive = (purpose, isPublisher = false) => purpose && (
-			purpose.custom ?
-			selectedCustomPurposeIds.has(purpose.id) :
-			(isPublisher ? selectedStandardPurposeIds : selectedPurposeIds).has(purpose.id)
+			(isPublisher ? selectedPublisherPurposeIds : selectedPurposeIds).has(purpose.id)
 		);
 
+		const isSpecialFeatureOptinsActive = (id) => specialFeatureOptins.has(id+1);
+		const isPurposeLegitimateInterestActive = (id) => selectedPurposeLegitimateInterests.has(id+1);
+		const isPublisherLegIntActive = (id) => selectedPublisherLegitimateInterests.has(id+1);
+
 		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
-			config.contractPurposeIds &&
-			purpose && !purpose.custom &&
+			config.contractPurposeIds && purpose &&
 			(config.legIntPurposeIds.indexOf(purpose.id) >= 0 || config.contractPurposeIds.indexOf(purpose.id) >= 0);
+
+		const publisherSpecialPurposes = config.specialPurposes && !!config.specialPurposes.length &&
+			specialPurposes.filter((purpose, index) => config.specialPurposes.indexOf(index+1) !== -1);
 
 		if (selectedTab === TAB_CONSENTS && !renderedTabIndices.has(selectedTab)) {
 			renderedTabIndices.add(selectedTab);
-			if (!vendorConsentCreated) {
+			if (!consentCreated) {
 				purposes.forEach((purpose, index) => {
+					// iab purposes
 					this.handleSelectPurpose({isSelected: false, dataId: index});
+
+					// iab leg ints
+					this.handleSelectPurpose({isSelected: true, dataId: index}, false, true);
+
+					// publisher purposes
+					this.handleSelectPurpose({isSelected: false, dataId: index}, true, false);
+				});
+				specialFeatures.forEach((specialFeature, index) => {
+					this.handleSelectSpecialFeatureOptins({isSelected:false, dataId: index})
 				});
 				initialVendorsRejection();
-			}
-			if (!publisherConsentCreated) {
-				allPurposes.forEach((purpose, index) => {
-					if (!purposeIsTechnical(purpose)) {
-						this.handleSelectPurpose({isSelected: false, dataId: index}, true);
-					}
-				});
 			}
 		}
 
@@ -194,7 +211,19 @@ export default class Purposes extends Component {
 																		  isActive={purposeIsActive(purpose, true)}
 																		  isTechnical={purposeIsTechnical(purpose)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
-																		  onToggle={this.createHandleSelectPurpose(true)}/>)}
+																		  onToggle={this.createHandleSelectPurpose(true)}
+																		  onToggleLegitInterest={this.handleSelectPublisherLegitimateInterest.bind(this)}
+																		  isLegitimateInterestActive={isPublisherLegIntActive(index)}/>)}
+							{publisherSpecialPurposes && !!publisherSpecialPurposes.length && <div>
+								<LocalLabel className={style.header} prefix="specialPurposes" localizeKey={`title`}>Special purposes</LocalLabel>
+								{publisherSpecialPurposes.map((purpose, index) => <Purpose key={index}
+																		  index={index}
+																		  isPublisherPurpose={true}
+																		  purpose={purpose}
+																		  isActive={purposeIsActive(purpose, true)}
+																		  isTechnical={true}
+																		  createOnShowVendors={this.createOnShowVendors.bind(this)}/>)}
+							</div>}
 						</div>
 						<div className={style.purposesSection}>
 							<div className={style.sectionInfo}>
@@ -210,10 +239,24 @@ export default class Purposes extends Component {
 																		   index={index}
 																		   purpose={purpose}
 																		   isActive={purposeIsActive(purpose)}
+																		   isLegitimateInterestActive={isPurposeLegitimateInterestActive(index)}
 																		   isTechnical={false}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		   onToggleLegitInterest={this.handleSelectLegitInterest.bind(this)}
 																		   onToggle={this.createHandleSelectPurpose()}/>)}
 							</div>
+							{specialPurposes && !!specialPurposes.length && <div>
+								<LocalLabel className={style.header} prefix="specialPurposes" localizeKey={`title`}>Special purposes</LocalLabel>
+								{specialPurposes.map((purpose, index) => <Purpose key={index}
+																		   index={index}
+																		   purpose={purpose}
+																		   isActive={false}
+																		   isLegitimateInterestActive={false}
+																		   isTechnical={true}
+																		   isSpecial={true}
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>)}
+
+							</div>}
 							<div>
 								<LocalLabel className={style.header} prefix="features" localizeKey={`title`}>Features</LocalLabel>
 								{features.map((feature, index) => <Feature key={index}
@@ -221,6 +264,17 @@ export default class Purposes extends Component {
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>
 								)}
 							</div>
+							{specialFeatures && !!specialFeatures.length && <div>
+								<LocalLabel className={style.header} prefix="specialFeatures" localizeKey={`title`}>Special features</LocalLabel>
+								{specialFeatures.map((feature, index) => <Feature key={index}
+																		   index={index}
+																		   feature={feature}
+																		   isSpecial={true}
+																		   isActive={isSpecialFeatureOptinsActive(index)}
+																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
+																		   onToggle={this.handleSelectSpecialFeatureOptins.bind(this)}/>
+								)}
+							</div>}
 						</div>
 					</div>
 				)}

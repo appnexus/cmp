@@ -2,10 +2,6 @@ import Promise from 'promise-polyfill';
 import config from './config';
 import log from './log';
 
-
-const PUB_VENDOR_LOCATION = '/.well-known/pubvendors.json';
-
-
 function fetch(url) {
 	return new Promise((resolve, reject) => {
 		const xhr = new XMLHttpRequest();
@@ -25,21 +21,11 @@ function fetch(url) {
 	});
 }
 
-
-/**
- * Fetch the pubvendors.json from the local domain
- */
-function fetchPubVendorList() {
-	return fetch(PUB_VENDOR_LOCATION)
-		.then(res => res.json())
-		.catch(() => {});
-}
-
 /**
  * Fetch the global vendor list if the location is configured
  */
 function fetchGlobalVendorList() {
-	const {globalVendorListLocation, getVendorList} = config;
+	const { globalVendorListLocation, getVendorList } = config;
 	if (getVendorList) {
 		return new Promise((resolve, reject) => {
 			try {
@@ -49,8 +35,8 @@ function fetchGlobalVendorList() {
 					} else {
 						try {
 							resolve(data);
-						} catch (err) {
-							reject(err);
+						} catch (error) {
+							reject(error);
 						}
 					}
 				});
@@ -70,20 +56,6 @@ function fetchGlobalVendorList() {
 		});
 }
 
-function fetchPurposeList() {
-	if (!config.storePublisherData || !config.customPurposeListLocation) {
-		return Promise.resolve();
-	}
-
-	return fetch(config.customPurposeListLocation)
-		.then(res => res.json())
-		.catch(err => {
-			log.error(`Failed to load custom purposes list from ${config.customPurposeListLocation}`, err);
-		});
-}
-
 export {
 	fetchGlobalVendorList,
-	fetchPubVendorList,
-	fetchPurposeList
 };

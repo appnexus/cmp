@@ -10,50 +10,72 @@ class LocalLabel extends Label {
 	};
 }
 
+const purposeOneTreatmentId = 1;
+
 const Purpose = (props) => {
 	const {
 		purpose,
 		index,
 		isActive,
+		isLegitimateInterestActive,
 		onToggle,
+		onToggleLegitInterest,
 		createOnShowVendors,
 		isTechnical,
+		isSpecial,
 		isPublisherPurpose = false
 	} = props;
 
-	const prefix = purpose.custom ? `customPurpose${purpose.id}` : `purpose${purpose.id}`;
+	const purposeKey = `purpose${purpose.id}`;
+	const prefix = isSpecial ? 'specialPurposes' : 'purposes';
+
+	// user can't right to object for purpose number 1
+	const canRightToObject = prefix !== 'purposes' || purpose.id != purposeOneTreatmentId;
 
 	return (
 		<div className={style.purposeDetail}>
 			<div className={style.detailHeader}>
 				<div className={style.title}>
-					<LocalLabel localizeKey={`${prefix}.title`}>{purpose.name}</LocalLabel>
+					<LocalLabel prefix={prefix} localizeKey={`${purposeKey}.title`}>{purpose.name}</LocalLabel>
 				</div>
 				{!isTechnical &&
 					<div className={style.active}>
-						<LocalLabel localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
-						<Switch
-							isSelected={isActive}
-							dataId={index}
-							onClick={onToggle}
-						/>
+						<div className={style.switch}>
+							<LocalLabel prefix={prefix} localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
+							<Switch
+								isSelected={isActive}
+								dataId={index}
+								onClick={onToggle}
+							/>
+						</div>
+						{!isPublisherPurpose && canRightToObject &&
+							<div className={style.switch}>
+								<LocalLabel prefix={prefix} localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
+								<Switch
+									isSelected={isLegitimateInterestActive}
+									dataId={index}
+									onClick={onToggleLegitInterest}
+								/>
+							</div>
+						}
+
 					</div>
 				}
 			</div>
 			<div className={style.body}>
-				<LocalLabel localizeKey={`${prefix}.description`}>{purpose.description}</LocalLabel>
+				<LocalLabel prefix={prefix} localizeKey={`${purposeKey}.description`}>{purpose.description}</LocalLabel>
 				{!isPublisherPurpose && (
 					<div>
 						<div>
 							<a className={style.vendorLink}
-							onClick={createOnShowVendors({isCustom: false, purposeIds: [purpose.id]})}>
-								<LocalLabel prefix='purposes' localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
+							onClick={createOnShowVendors({isCustom: false, purposeId: purpose.id, isSpecial})}>
+								<LocalLabel prefix={prefix} localizeKey='showVendors'>Show IAB vendor list</LocalLabel>
 							</a>
 						</div>
 						<div>
 							<a className={style.vendorLink}
-							onClick={createOnShowVendors({isCustom: true, purposeIds: [purpose.id]})}>
-								<LocalLabel prefix='purposes' localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
+							onClick={createOnShowVendors({isCustom: true, purposeId: purpose.id, isSpecial})}>
+								<LocalLabel prefix={prefix} localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 							</a>
 						</div>
 					</div>

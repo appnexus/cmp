@@ -6,12 +6,11 @@ import Setup from '../docs/setup';
 import CmpApi from '../docs/cmpApi';
 import Ping from '../examples/basic/ping';
 import EventListeners from '../examples/basic/eventListeners';
-import VendorConsents from '../examples/basic/vendorConsents';
+import CustomEventListeners from '../examples/basic/customEventListeners';
 import ConsentData from '../examples/basic/consentData';
 import ShowConsent from '../examples/basic/showConsent';
 import IFrame from '../examples/iframe';
 import VendorList from '../examples/basic/vendorList';
-import PublisherPurposes from '../examples/basic/publisherPurposes';
 import RequireConsent from '../examples/advanced/requireConsent';
 import InspectVendorConsent from '../examples/advanced/inspectVendorConsent';
 import AdAfterConsent from '../examples/advanced/adAfterConsent';
@@ -23,6 +22,7 @@ import VendorListBuilder from '../tools/vendorListBuilder/vendorListBuilder';
 import Intro from '../intro/intro';
 import Configration from '../docs/configuration';
 import QuickStart from '../docs/quickstart';
+import IabToolRedirect from '../tools/iabToolRedirect'
 
 export const navItems = [
 	{
@@ -46,21 +46,20 @@ export const navItems = [
 			{ to: '/basic/ping', title: 'Ping', component:  Ping},
 			{ to: '/basic/show', title: 'Show Consent Tool', component:  ShowConsent},
 			{ to: '/basic/events', title: 'Event Listeners', component: EventListeners},
-			{ to: '/basic/vendor', title: 'Get Vendor Consents', component: VendorConsents },
+			{ to: '/basic/custom-events', title: 'Custom Event Listeners', component: CustomEventListeners},
 			{ to: '/basic/data', title: 'Get Consent Data', component: ConsentData },
 			{ to: '/basic/list', title: 'Get Vendor List', component: VendorList },
-			{ to: '/basic/publisher', title: 'Get Publisher Consents', component: PublisherPurposes },
 		]
 	},
-	{
-		title: 'IFrame Examples',
-		items: [
-			{ to: '/iframe/show', title: 'Show Consent Tool', component: () => <IFrame iframeId='showConsentTool'/>},
-			{ to: '/iframe/events', title: 'Event Listeners', component: () => <IFrame iframeId='addEventListeners'/>},
-			{ to: '/iframe/vendor', title: 'Get Vendor Consents', component: () => <IFrame iframeId='getVendorConsents'/>},
-			{ to: '/iframe/data', title: 'Get Consent Data', component: () => <IFrame iframeId='getConsentData'/>},
-		]
-	},
+	// {
+	// 	title: 'IFrame Examples',
+	// 	items: [
+	// 		{ to: '/iframe/show', title: 'Show Consent Tool', component: () => <IFrame iframeId='showConsentTool'/>},
+	// 		{ to: '/iframe/events', title: 'Event Listeners', component: () => <IFrame iframeId='addEventListeners'/>},
+	// 		{ to: '/iframe/vendor', title: 'Get Vendor Consents', component: () => <IFrame iframeId='getVendorConsents'/>},
+	// 		{ to: '/iframe/data', title: 'Get Consent Data', component: () => <IFrame iframeId='getConsentData'/>},
+	// 	]
+	// },
 	{
 		title: 'Advanced Examples',
 		items: [
@@ -70,7 +69,14 @@ export const navItems = [
 		]
 	},
 	{
-		title: 'Tools',
+		title: 'Tools (TCF v2.0)',
+		items: [
+			{to: '/tools/v2/encode', title: 'Encode Consent Cookie ', component: () => <IabToolRedirect encode={true}/>},
+			{to: '/tools/v2/decode', title: 'Decode Consent Cookie ', component: () => <IabToolRedirect encode={false}/>},
+		]
+	},
+	{
+		title: 'Tools (TCF v1.1)',
 		items: [
 			{to: '/tools/vendor-list-builder', title: 'Vendor List Builder', component: VendorListBuilder},
 			{to: '/tools/vendor-cookie-encoder', title: 'Encode Vendor Cookie', component: VendorCookieEncoder},

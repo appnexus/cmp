@@ -53,7 +53,7 @@
 <body>
 <header>GDPR Single Script Solution</header>
 <div class="content">
-	<button onclick="window.__cmp('showConsentTool')">Show Consent Settings</button>
+	<button onclick="window.__tcfapi('showConsentTool', 2, function () {})">Show Consent Settings</button>
 	<div class="logSection">
 		Console Output (debugging enabled):
 		<pre id="log"></pre>
@@ -82,8 +82,9 @@
 	});
 </script>
 <script>
-	window.__cmp = {config: {logging: 'debug'}};
+	window.__tcfConfig = {logging: 'debug'};
 </script>
-<script src="../cmp.complete.bundle.js"></script>
+<script src="../cmp.bundle.js"></script>
+<script src="../cookie.bundle.js"></script>
 </body>
 </html>

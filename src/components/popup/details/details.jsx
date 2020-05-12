@@ -24,28 +24,32 @@ export default class Details extends Component {
 
 	getVendors = () => {
 		const { vendorList = {} } = this.props.store;
-		const { vendors = [] } = vendorList;
-		return vendors;
+		const { vendors = {} } = vendorList;
+		return Object.values(vendors);
 	};
 
-	filterVendors = ({ isCustom = null, purposeIds = [], featureIds = [] } = {}) => {
-		return this.getVendors().filter(vendor => {
-			if (isCustom !== null && (isCustom && vendor.external_id || !isCustom && !vendor.external_id)) {
-				return false;
-			}
+	filterVendors = ({ isCustom = null, purposeId, featureId, isSpecial} = {}) => {
+		const { gvl } = this.props.store.tcModel;
+		let filteredVendors = [];
+		const idSort = (a, b) => a.id - b.id;
 
-			const vendorPurposeIds = new Set([...(vendor.purposeIds || []), ...(vendor.legIntPurposeIds || [])]);
-			if (!purposeIds.every(purposeId => vendorPurposeIds.has(purposeId))) {
-				return false;
+		if(purposeId) {
+			if(isSpecial) {
+				filteredVendors = Object.values(gvl.getVendorsWithSpecialPurpose(purposeId));
+			} else {
+				filteredVendors = [...Object.values(gvl.getVendorsWithConsentPurpose(purposeId)),
+					...Object.values(gvl.getVendorsWithLegIntPurpose(purposeId))]
+					.sort(idSort);
 			}
-
-			const vendorFeatureIds = new Set(vendor.featureIds || []);
-			if (!featureIds.every(featureId => vendorFeatureIds.has(featureId))) {
-				return false;
+		} else if(featureId) {
+			if(isSpecial) {
+				filteredVendors = Object.values(gvl.getVendorsWithSpecialFeature(featureId));
+			} else {
+				filteredVendors = Object.values(gvl.getVendorsWithFeature(featureId));
 			}
+		}
 
-			return true;
-		});
+		return filteredVendors.filter(vendor => isCustom ? !vendor.globalId : !!vendor.globalId);
 	};
 
 	handleShowVendors = (filter) => {
@@ -72,25 +76,37 @@ export default class Details extends Component {
 
 		const {
 			vendorList = {},
-			customPurposeList = {},
-			vendorConsentData,
-			publisherConsentData,
+			tcModel,
+
 			selectPurpose,
-			selectStandardPurpose,
-			selectCustomPurpose,
+			selectPurposeLegitimateInterests,
+			selectSpecialFeatureOptins,
 			selectVendors,
 			selectVendor,
+			selectVendorLegitimateInterests,
+			selectAllVendorLegitimateInterests,
 			initialVendorsRejection,
-			persistedVendorConsentData = {},
-			persistedPublisherConsentData = {},
+
+			selectPublisherPurpose,
+			selectPublisherLegitimateInterests,
+			getVendorsWithLegIntsIds,
+			persistedConsentData = {},
 			subsection
 		} = store;
-		const { selectedPurposeIds, selectedVendorIds } = vendorConsentData;
-		const { selectedStandardPurposeIds, selectedCustomPurposeIds } = publisherConsentData;
-		const { created: vendorConsentCreated } = persistedVendorConsentData;
-		const { purposes = [], features = [] } = vendorList;
-		const { purposes: customPurposes = [] } = customPurposeList;
 
+		const {
+			purposeConsents,
+			publisherConsents,
+			publisherLegitimateInterests,
+			publisherCustomConsents,
+			vendorConsents,
+			vendorLegitimateInterests,
+			purposeLegitimateInterests,
+			specialFeatureOptins
+		} = tcModel;
+
+		const { created: consentCreated } = persistedConsentData;
+		const { purposes = {}, specialPurposes = {}, features = {}, specialFeatures = {}} = vendorList;
 
 		return (
 			<div class={style.details}>
@@ -104,29 +120,40 @@ export default class Details extends Component {
 				<div class={style.body}>
 					<Panel selectedIndex={subsection}>
 						<Purposes
-							purposes={purposes}
-							features={features}
-							customPurposes={customPurposes}
-							selectedPurposeIds={selectedPurposeIds}
-							selectedStandardPurposeIds={selectedStandardPurposeIds}
-							selectedCustomPurposeIds={selectedCustomPurposeIds}
+							purposes={Object.values(purposes)}
+							specialPurposes={Object.values(specialPurposes)}
+							features={Object.values(features)}
+							specialFeatures={Object.values(specialFeatures)}
+							selectedPurposeIds={purposeConsents}
+							selectedPublisherPurposeIds={publisherConsents}
+							selectedPublisherLegitimateInterests={publisherLegitimateInterests}
+							selectedPublisherCustomPurposeIds={publisherCustomConsents}
 							selectPurpose={selectPurpose}
-							selectStandardPurpose={selectStandardPurpose}
-							selectCustomPurpose={selectCustomPurpose}
+							selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
+							selectedPurposeLegitimateInterests={purposeLegitimateInterests}
+							selectSpecialFeatureOptins={selectSpecialFeatureOptins}
+							specialFeatureOptins={specialFeatureOptins}
 							initialVendorsRejection={initialVendorsRejection}
+							selectPublisherPurpose={selectPublisherPurpose}
+							selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
 							onShowVendors={this.handleShowVendors}
-							persistedVendorConsentData={persistedVendorConsentData}
-							persistedPublisherConsentData={persistedPublisherConsentData}
+							persistedConsentData={persistedConsentData}
 						/>
 						<Vendors
-							selectedVendorIds={selectedVendorIds}
+							selectedVendorIds={vendorConsents}
+							selectedVendorsLegitimateInterestsIds={vendorLegitimateInterests}
+							selectAllVendorLegitimateInterests={selectAllVendorLegitimateInterests}
+							vendorsWithLegIntsIds={getVendorsWithLegIntsIds()}
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
+							selectVendorLegitimateInterests={selectVendorLegitimateInterests}
 							initialVendorsRejection={initialVendorsRejection}
 							vendors={state.vendors}
-							purposes={purposes}
-							features={features}
-							vendorConsentCreated={vendorConsentCreated}
+							purposes={Object.values(purposes)}
+							features={Object.values(features)}
+							specialFeatures={Object.values(specialFeatures)}
+							specialPurposes={Object.values(specialPurposes)}
+							consentCreated={consentCreated}
 						/>
 					</Panel>
 				</div>

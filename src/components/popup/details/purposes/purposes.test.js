@@ -13,8 +13,7 @@ describe('Purposes and Features', () => {
 	});
 
 	it('should render all standard, custom purposes for publisher and purposes and features for vendors', () => {
-		let persistedVendorConsentData = {};
-		let persistedPublisherConsentData = {};
+		let persistedConsentData = {};
 		const selectPurpose = jest.fn();
 		let purposesRef;
 		const purposes = render(<Purposes
@@ -30,8 +29,7 @@ describe('Purposes and Features', () => {
 			customPurposes = {[
 				{ id: 1, name: 'Custom Purpose 1' },
 			]}
-			persistedVendorConsentData={persistedVendorConsentData}
-			persistedPublisherConsentData={persistedPublisherConsentData}
+			persistedConsentData={persistedConsentData}
 			selectPurpose={selectPurpose}
 		/>, scratch);
 
@@ -46,8 +44,7 @@ describe('Purposes and Features', () => {
 	it('should select a standard purpose', () => {
 		const selectPurpose = jest.fn();
 		const selectCustomPurpose = jest.fn();
-		let persistedVendorConsentData = {};
-		let persistedPublisherConsentData = {};
+		let persistedConsentData = {};
 		let purposes;
 		render(<Purposes
 			ref={ref => purposes = ref}
@@ -57,8 +54,7 @@ describe('Purposes and Features', () => {
 			]}
 			selectPurpose={selectPurpose}
 			selectCustomPurpose={selectCustomPurpose}
-			persistedVendorConsentData={persistedVendorConsentData}
-			persistedPublisherConsentData={persistedPublisherConsentData}
+			persistedConsentData={persistedConsentData}
 		/>, scratch);
 
 		purposes.handleSelectPurpose({isSelected: true, dataId: 0});
@@ -68,43 +64,11 @@ describe('Purposes and Features', () => {
 		expect(selectCustomPurpose.mock.calls).to.be.empty;
 	});
 
-	it('should select a custom purpose', () => {
-		const selectPurpose = jest.fn();
-		const selectCustomPurpose = jest.fn();
-
-		let purposes;
-		let persistedVendorConsentData = {};
-		let persistedPublisherConsentData = {};
-		render(<Purposes
-			ref={ref => purposes = ref}
-			purposes={[
-				{ id: 1, name: 'Purpose 1' },
-				{ id: 2, name: 'Purpose 2' }
-			]}
-			customPurposes={[
-				{ id: 1, name: 'Custom Purpose 1' },
-			]}
-			selectPurpose={selectPurpose}
-			selectCustomPurpose={selectCustomPurpose}
-			persistedVendorConsentData={persistedVendorConsentData}
-			persistedPublisherConsentData={persistedPublisherConsentData}
-		/>, scratch);
-
-		purposes.handleSelectPurpose({isSelected: true, dataId: 2});
-		purposes.handleSelectPurpose({isSelected: true, dataId: 1});
-
-		expect(selectCustomPurpose.mock.calls[0][0]).to.equal(1);
-		expect(selectCustomPurpose.mock.calls[0][1]).to.equal(true);
-		expect(selectPurpose.mock.calls).not.to.be.empty;
-	});
-
 	it('after selecting group of purposes with index 1, consent for those purposes should be withdrawn', () => {
 		const selectPurpose = jest.fn();
-		const selectCustomPurpose = jest.fn();
 
 		let purposes;
-		let persistedVendorConsentData = {};
-		let persistedPublisherConsentData = {};
+
 		render(<Purposes
 			ref={ref => purposes = ref}
 			purposes={[
@@ -112,16 +76,96 @@ describe('Purposes and Features', () => {
 				{ id: 2, name: 'Purpose 2' }
 			]}
 			selectPurpose={selectPurpose}
-			selectCustomPurpose={selectCustomPurpose}
-			persistedVendorConsentData={persistedVendorConsentData}
-			persistedPublisherConsentData={persistedPublisherConsentData}
+
 		/>, scratch);
 
 		purposes.componentDidUpdate = () => {
 			expect(selectPurpose.mock.calls[1][0]).to.equal(2);
 			expect(selectPurpose.mock.calls[1][1]).to.equal(false);
-			expect(selectCustomPurpose.mock.calls).to.be.empty;
 		};
 		purposes.handleSelectTab(1)();
+	});
+
+	it('should deselect default selection of legitimate interest', () => {
+		const isLegitimateInterestActive = true;
+		const onToggleLegitInterest = jest.fn();
+		const selectPurposeLegitimateInterests = jest.fn();
+		let persistedConsentData = {};
+
+		let purposes;
+		render(<Purposes
+			ref={ref => purposes = ref}
+			purposes={[
+				{ id: 1, name: 'Purpose 1' },
+				{ id: 2, name: 'Purpose 2' }
+			]}
+			isLegitimateInterestActive={isLegitimateInterestActive}
+			onToggleLegitInterest={onToggleLegitInterest}
+			selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
+			persistedConsentData={persistedConsentData}
+
+		/>, scratch);
+
+		purposes.handleSelectLegitInterest({isSelected: false, dataId: 2});
+		purposes.handleSelectLegitInterest({isSelected: false, dataId: 1});
+
+		expect(selectPurposeLegitimateInterests.mock.calls[0][1]).to.equal(false);
+		expect(selectPurposeLegitimateInterests.mock.calls[1][1]).to.equal(false);
+	});
+
+	it('should deselect default selection of publisher\'s legitimate interest', () => {
+		const isPublisherLegIntActive = true;
+		const onTogglePublisherLegitInterest = jest.fn();
+		const selectPublisherLegitimateInterests = jest.fn();
+		let persistedConsentData = {};
+
+		let purposes;
+		render(<Purposes
+			ref={ref => purposes = ref}
+			purposes={[
+				{ id: 1, name: 'Purpose 1' },
+				{ id: 2, name: 'Purpose 2' }
+			]}
+			isLegitimateInterestActive={isPublisherLegIntActive}
+			onToggleLegitInterest={onTogglePublisherLegitInterest}
+			persistedConsentData={persistedConsentData}
+			selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
+		/>, scratch);
+
+		purposes.handleSelectPublisherLegitimateInterest({isSelected: false, dataId: 1});
+		purposes.handleSelectPublisherLegitimateInterest({isSelected: false, dataId: 2});
+
+
+		expect(selectPublisherLegitimateInterests.mock.calls[0][0]).to.equal(2);
+		expect(selectPublisherLegitimateInterests.mock.calls[0][1]).to.equal(false);
+		expect(selectPublisherLegitimateInterests.mock.calls[1][0]).to.equal(3);
+		expect(selectPublisherLegitimateInterests.mock.calls[1][1]).to.equal(false);
+	});
+
+	it('should render special features and select its consent', () => {
+		let persistedConsentData = {};
+		let selectSpecialFeatureOptins = jest.fn();
+
+		let purposes;
+		render(<Purposes
+			ref={ref => purposes = ref}
+			purposes={[
+				{ id: 1, name: 'Purpose 1' },
+				{ id: 2, name: 'Purpose 2' }
+			]}
+			specialFeatures={[
+				{ id: 1, name: 'Special feature 1' },
+				{ id: 2, name: 'Special feature 2' }
+			]}
+			selectSpecialFeatureOptins={selectSpecialFeatureOptins}
+			persistedConsentData={persistedConsentData}
+
+		/>, scratch);
+
+		purposes.handleSelectSpecialFeatureOptins({isSelected: true, dataId: 2});
+		purposes.handleSelectSpecialFeatureOptins({isSelected: true, dataId: 1});
+
+		expect(selectSpecialFeatureOptins.mock.calls[0][1]).to.equal(true);
+		expect(selectSpecialFeatureOptins.mock.calls[1][1]).to.equal(true);
 	});
 });

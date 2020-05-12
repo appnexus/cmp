@@ -1,134 +1,82 @@
 import { h, render } from 'preact';
 import Promise from 'promise-polyfill';
 import Store from './store';
-import Cmp, { CMP_GLOBAL_NAME } from './cmp';
-import { readVendorConsentCookie, readPublisherConsentCookie, decodeVendorConsentData, decodePublisherConsentData } from './cookie/cookie';
-import { fetchPubVendorList, fetchGlobalVendorList, fetchPurposeList } from './vendor';
+import { CmpApi } from '@iabtcf/cmpapi';
+import { fetchGlobalVendorList } from './vendor';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
+import createCommands from "./commands";
+import CmpManager from "./cmpManager";
 
-const CMP_VERSION = 1;
-const CMP_ID = 280;
-const COOKIE_VERSION = 1;
+export const CMP_VERSION = parseInt(process.env.CMP_VERSION,10);
+export const CMP_ID = parseInt(process.env.CMP_ID, 10);
+export const COOKIE_VERSION = parseInt(process.env.COOKIE_VERSION, 10);
 
-function readExternalConsentData(config) {
+export function init (consentString, shouldDisplayCmpUI) {
 	return new Promise((resolve, reject) => {
-		try {
-			config.getConsentData((err, data) => {
-				if (err) {
-					reject(err);
-				} else {
-					try {
-						resolve([
-							data.vendor && decodeVendorConsentData(data.vendor) || undefined,
-							undefined,
-							data.publisher && decodePublisherConsentData(data.publisher) || undefined
-						]);
-					} catch (err) {
-						reject(err);
-					}
-				}
-			});
-		} catch (err) {
-			reject(err);
-		}
-	});
-}
-
-function readInternalConsentData() {
-	return Promise.all([
-		[
-			readVendorConsentCookie(),
-			fetchPubVendorList(),
-			readPublisherConsentCookie()
-		]
-	]);
-}
-
-function readGlobalAndExternalConsentData(config) {
-	return Promise.all([
-		readExternalConsentData(config),
-		readVendorConsentCookie()
-	]);
-}
-
-export function init(configUpdates) {
-	config.update(configUpdates);
-	log.debug('Using configuration:', config);
-
-	// Fetch the current vendor consent before initializing
-	return ((config.getConsentData) ? readGlobalAndExternalConsentData(config) : readInternalConsentData())
-		.then(([[vendorConsentData, pubVendorsList, publisherConsentData], globalVendorConsentData]) => {
-			const {vendors} = pubVendorsList || {};
-
-			// Check config for allowedVendorIds then the pubVendorList
-			const {allowedVendorIds: configVendorIds} = config;
-			const allowedVendorIds = configVendorIds instanceof Array && configVendorIds.length ? configVendorIds :
-				vendors && vendors.map(vendor => vendor.id);
-
-			// Initialize the store with all of our consent data
-			const store = new Store({
-				cmpVersion: CMP_VERSION,
-				cmpId: CMP_ID,
-				cookieVersion: COOKIE_VERSION,
-				vendorConsentData,
-				globalVendorConsentData,
-				publisherConsentData,
-				pubVendorsList,
-				allowedVendorIds
-			});
-
-			// Pull queued command from __cmp stub
-			const {commandQueue = []} = window[CMP_GLOBAL_NAME] || {};
-
-			// Replace the __cmp with our implementation
-			const cmp = new Cmp(store);
-
-			// Expose `processCommand` as the CMP implementation
-			window[CMP_GLOBAL_NAME] = cmp.processCommand;
-
-			// Notify listeners that the CMP is loaded
-			log.debug(`Successfully loaded CMP version: ${pack.version}`);
-			cmp.isLoaded = true;
-			cmp.notify('isLoaded');
-
-			// Render the UI
-			const App = require('../components/app').default;
-			render(<App store={store} notify={cmp.notify} />, document.body);
-
-			// Execute any previously queued command
-			cmp.commandQueue = commandQueue;
-			cmp.processCommandQueue();
-
-			let isConsentToolShowing = store.isConsentToolShowing;
-			store.subscribe(store => {
-				if (store.isConsentToolShowing !== isConsentToolShowing) {
-					isConsentToolShowing = store.isConsentToolShowing;
-					cmp.notify('onToggleConsentToolShowing', isConsentToolShowing);
-				}
-			});
-
-			// Request lists
-			return Promise.all([
-				store,
-				fetchGlobalVendorList().then(store.updateVendorList),
-				fetchPurposeList().then(store.updateCustomPurposeList)
-			]).then((params) => {
-				//Update consent data if cookie on global domain exists
-				if (store.persistedGlobalVendorConsentData) {
-					store.mergeVendorConsentsFromGlobalCookie();
-					store.mergePurposeConsentsFromGlobalCookie();
-				}
-
-				cmp.cmpReady = true;
-				cmp.notify('cmpReady');
-				return params[0];
-			}).catch(err => {
-				log.error('Failed to load lists. CMP not ready', err);
-			});
-		})
-		.catch(err => {
-			log.error('Failed to load CMP', err);
+		const store = new Store({
+			cmpVersion: CMP_VERSION,
+			cmpId: CMP_ID,
+			cookieVersion: COOKIE_VERSION,
+			consentString,
 		});
+
+		const cmpManager = new CmpManager();
+		const commands = createCommands(store, cmpManager);
+
+		const cmpApi = new CmpApi(CMP_ID, CMP_VERSION, true, commands);
+
+		cmpApi.callResponder.purgeQueuedCalls = function () {
+			if (this.queuedCalls) {
+				const apiCall = this.apiCall.bind(this);
+				const queuedCalls = this.queuedCalls;
+				this.queuedCalls = [];
+				queuedCalls.forEach(args => {
+					const [command, version, callback, params] = args;
+					if (params !== undefined) {
+						apiCall(command, version, callback, ...params);
+					} else {
+						apiCall(command, version, callback);
+					}
+				});
+			}
+		};
+
+		if (config.decoratePageCallHandler) {
+			config.decoratePageCallHandler(cmpApi);
+		}
+
+		store.setCmpApi(cmpApi, shouldDisplayCmpUI);
+
+		// Notify listeners that the CMP is loaded
+		log.debug(`Successfully loaded CMP version: ${pack.version}`);
+		cmpManager.isLoaded = true;
+		cmpManager.notify('isLoaded');
+
+		// Render the UI
+		const App = require('../components/app').default;
+		render(<App store={store} notify={cmpManager.notify} />, document.body);
+
+		let isConsentToolShowing = store.isConsentToolShowing;
+		store.subscribe(store => {
+			if (store.isConsentToolShowing !== isConsentToolShowing) {
+				isConsentToolShowing = store.isConsentToolShowing;
+				cmpManager.notify('onToggleConsentToolShowing', isConsentToolShowing);
+			}
+		});
+
+		// Request lists
+		return Promise.all([
+			store,
+			fetchGlobalVendorList().then(store.updateVendorList)
+		]).then((params) => {
+			cmpManager.cmpReady = true;
+			cmpManager.notify('cmpReady');
+			resolve(params[0]);
+		}).catch(err => {
+			log.error('Failed to load lists. CMP not ready', err);
+			reject(err);
+		});
+	});
 }

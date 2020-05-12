@@ -1,11 +1,9 @@
 import log from './log';
 
 const defaultConfig = {
-	customPurposeListLocation: './purposes.json',
-	globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
+	globalVendorListLocation: 'https://vendorlist.consensu.org/v2/vendor-list.json',
 	globalConsentLocation: './portal.html',
 	storeConsentGlobally: false,
-	storePublisherData: false,
 	logging: false,
 	localization: {},
 	forceLocale: null,
@@ -13,10 +11,13 @@ const defaultConfig = {
 	getConsentData: null,
 	setConsentData: null,
 	getVendorList: null,
+	decoratePageCallHandler: null,
 	legIntPurposeIds: [],
 	contractPurposeIds: [],
+	specialPurposes: [],
 	autoDisplay: true,
-	allowedVendorIds: null
+	shouldDisplayFooter: null,
+	publisherCountryCode: 'PL'
 };
 
 class Config {
@@ -44,7 +45,6 @@ class Config {
 			if (invalidKeys.length) {
 				log.warn(`Invalid CMP config values not applied: ${invalidKeys.join(', ')}`);
 			}
-
 		}
 	};
 }

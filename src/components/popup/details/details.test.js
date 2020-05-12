@@ -5,6 +5,8 @@ import Store from '../../../lib/store';
 import purposesStyle from './purposes/purposes';
 
 import Details from './details';
+import {CMP_ID} from "../../../lib/init";
+import {VENDOR_LIST} from "../../../../test/constants";
 
 describe('Details', () => {
 	let scratch;
@@ -15,6 +17,7 @@ describe('Details', () => {
 
 	it('should render with purpose panel initially', () => {
 		const store = new Store({
+			cmpId: CMP_ID,
 			vendorList: {
 				purposes: [
 					{ id: 1, name: 'Purpose 1' },
@@ -22,14 +25,16 @@ describe('Details', () => {
 				]
 			}
 		});
+		store.updateVendorList(VENDOR_LIST);
 		store.isConsentToolShowing = false;
 		const details = <Details store={store} />;
-		expect(details).to.contain(purposesStyle.purposes);
+		expect(details).to.contain(purposesStyle.allPurposes);
 	});
 
 
 	it('should switch between panel states', () => {
 		const store = new Store({
+			cmpId: CMP_ID,
 			vendorList: {
 				purposes: [
 					{ id: 1, name: 'Purpose 1' },
@@ -37,6 +42,7 @@ describe('Details', () => {
 				]
 			}
 		});
+		store.updateVendorList(VENDOR_LIST);
 
 		let details;
 		render(<Details

@@ -65,6 +65,28 @@ div.vendors {
 	}
 	.vendorDescription {
 		font-size: 10px;
+	  	text-align: left;
+	}
+	.vendorCenterSmall {
+	  	font-size: 10px;
+	  	text-align: center;
+	  	min-width: 60px;
+
+	 	@media @smartphone {
+			min-width: 65px;
+
+			span:first-child {
+				display: inline-block;
+				width: 100%;
+			}
+
+		   	& > th {
+				span:first-child {
+					display: inline-block;
+					width: 100%;
+				}
+			}
+	  	}
 	}
 	table {
 		width: 100%;
@@ -80,9 +102,10 @@ div.vendors {
 			min-height: 40px;
 			th {
 				font-weight: bold;
+
 			}
 			td, th {
-				text-align: left;
+				text-align: center;
 				padding: 5px;
 				&:first-child {
 					width: 100%;

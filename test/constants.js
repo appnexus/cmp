@@ -1,4 +1,12 @@
-{
+const PURPOSE_CONSENTS = [1, 3, 5, 7, 9];
+const PURPOSE_LEGITIMATE_INTERESTS = [2, 4, 6, 8, 10];
+const VENDOR_CONSENTS = [1, 2, 3, 4, 8];
+const VENDOR_LEGITIMATE_INTERESTS = [1, 2, 3, 4];
+const PUBLISHER_CONSENTS = [2, 4, 6, 8, 10];
+const PUBLISHER_LEGITIMATE_INTERESTS = [1, 3, 5, 7, 9];
+const SPECIAL_FEATURE_OPT_INS = [1, 2, 3];
+
+const VENDOR_LIST = {
 	"gvlSpecificationVersion": 2,
 	"vendorListVersion": 100,
 	"globalVendorListVersion": 27,
@@ -184,4 +192,15 @@
 			"policyUrl": "http://www.captify.co.uk/privacy-policy/"
 		}
 	}
-}
+};
+
+export {
+	PURPOSE_CONSENTS,
+	PURPOSE_LEGITIMATE_INTERESTS,
+	VENDOR_CONSENTS,
+	VENDOR_LEGITIMATE_INTERESTS,
+	PUBLISHER_CONSENTS,
+	PUBLISHER_LEGITIMATE_INTERESTS,
+	SPECIAL_FEATURE_OPT_INS,
+	VENDOR_LIST
+};
