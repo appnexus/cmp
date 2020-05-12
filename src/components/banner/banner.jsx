@@ -6,13 +6,13 @@ import { SECTION_VENDOR_LIST } from '../popup/details/details';
 
 class LocalLabel extends Label {
 	static defaultProps = {
-		prefix: 'banner'
+		prefix: 'banner',
 	};
 }
 
 class PurposesLabel extends Label {
 	static defaultProps = {
-		prefix: 'purposes'
+		prefix: 'purposes',
 	};
 }
 
@@ -22,9 +22,12 @@ const PANEL_PURPOSE = 1;
 export default class Banner extends Component {
 	constructor(props) {
 		super(props);
+		const {
+			theme: { shouldExpandPurposes = true },
+		} = props;
 		this.state = {
-			isExpanded: true,
-			selectedPanelIndex: 1
+			isExpanded: shouldExpandPurposes,
+			selectedPanelIndex: 1,
 		};
 	}
 
@@ -38,7 +41,7 @@ export default class Banner extends Component {
 		document.removeEventListener('click', this.handleWindowClick);
 	};
 
-	onKeyDown = evt => {
+	onKeyDown = (evt) => {
 		evt = evt || window.event;
 		const { key = '', keyCode = '' } = evt;
 		const isEscape = key === 'Escape' || key === 'Esc' || keyCode === 27;
@@ -70,15 +73,15 @@ export default class Banner extends Component {
 		toggleFooterShowing(false);
 	};
 
-	handleInfo = index => () => {
+	handleInfo = (index) => () => {
 		const { isExpanded, selectedPanelIndex } = this.state;
 		this.setState({
 			selectedPanelIndex: index,
-			isExpanded: index !== selectedPanelIndex || !isExpanded
+			isExpanded: index !== selectedPanelIndex || !isExpanded,
 		});
 	};
 
-	handleWindowClick = e => {
+	handleWindowClick = (e) => {
 		if (this.bannerRef === e.target) {
 			this.onAcceptAll();
 		}
@@ -88,7 +91,7 @@ export default class Banner extends Component {
 		this.handleShowConsent();
 	};
 
-	handlePurposeItemClick = purposeItem => {
+	handlePurposeItemClick = (purposeItem) => {
 		return () => {
 			this.props.onSelectPurpose(purposeItem);
 		};
@@ -111,7 +114,7 @@ export default class Banner extends Component {
 			backgroundColor,
 			textColor,
 			textLightColor,
-			textLinkColor
+			textLinkColor,
 		} = theme;
 
 		const {} = theme;
@@ -128,16 +131,16 @@ export default class Banner extends Component {
 
 		return (
 			<div
-				ref={el => (this.bannerRef = el)}
+				ref={(el) => (this.bannerRef = el)}
 				class={bannerClasses.join(' ')}
 				style={{
 					boxShadow: boxShadow || `0px 0px 5px ${primaryColor}`,
 					backgroundColor,
-					color: textLightColor
+					color: textLightColor,
 				}}
 			>
 				<div class={style.content}>
-					<div class={style.message} ref={el => (this.messageRef = el)}>
+					<div class={style.message} ref={(el) => (this.messageRef = el)}>
 						<div class={style.info}>
 							<div class={style.title} style={{ color: textColor }}>
 								<LocalLabel localizeKey="title">Ads help us run this site</LocalLabel>
@@ -163,7 +166,7 @@ export default class Banner extends Component {
 									style={{
 										backgroundColor: primaryColor,
 										borderColor: primaryColor,
-										color: primaryTextColor
+										color: primaryTextColor,
 									}}
 								>
 									<LocalLabel localizeKey="links.accept">Continue to site</LocalLabel>
@@ -173,7 +176,7 @@ export default class Banner extends Component {
 								<div
 									class={[
 										style.option,
-										selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : ''
+										selectedPanelIndex === PANEL_COLLECTED && isExpanded ? style.expanded : '',
 									].join(' ')}
 								>
 									<a onClick={this.handleInfo(PANEL_COLLECTED)} class={style.detailExpand}>

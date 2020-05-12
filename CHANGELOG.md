@@ -1,3 +1,9 @@
+## [1.5.2](https://github.com/openmail/system1-cmp/compare/v1.5.0...v1.5.1) (2020-05-12)
+
+### Refactor
+
+- [x] Hoist auto-expand purposes accordian to config object
+
 ## [1.5.1](https://github.com/openmail/system1-cmp/compare/v1.5.0...v1.5.1) (2020-04-29)
 
 ### Fix

@@ -126,6 +126,12 @@ const config = {
 	shouldAutoUpgradeConsent: true,
   theme: { //
     isBannerModal: true // OPTIONAL, to enable Banner as a modal or footer component
+    shouldExpandPurposes: true, // true by default, expands purposes on initial Baner
+    primaryColor: '#09f',
+    textLinkColor: '#09f',
+    boxShadow: 'none',
+    secondaryColor: '#869cc0',
+    featuresColor: '#d0d3d7'
   }
 
 }
