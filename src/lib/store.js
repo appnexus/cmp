@@ -114,7 +114,7 @@ export default class Store {
 		const {vendorConsents, vendorLegitimateInterests} = this.tcModel;
 		const availableIds = new Set();
 
-		for (var key in vendors) {
+		for (let key in vendors) {
 			if (vendors.hasOwnProperty(key)) {
 				availableIds.add(vendors[key].id);
 			}
