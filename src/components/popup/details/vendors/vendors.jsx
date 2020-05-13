@@ -7,12 +7,12 @@ import ExternalLinkIcon from '../../../externallinkicon/externallinkicon';
 
 class VendorsLabel extends Label {
 	static defaultProps = {
-		prefix: 'vendors'
+		prefix: 'vendors',
 	};
 }
 class PurposesLabel extends Label {
 	static defaultProps = {
-		prefix: 'purposes'
+		prefix: 'purposes',
 	};
 }
 
@@ -37,7 +37,7 @@ export default class Vendors extends Component {
 		super(props);
 		this.state = {
 			isSelectAll: false,
-			showFeaturesId: null
+			showFeaturesId: null,
 		};
 	}
 
@@ -47,7 +47,7 @@ export default class Vendors extends Component {
 		selectedVendorIds: new Set(),
 		selectVendor: () => {},
 		selectAllVendors: () => {},
-		selectedPurposeDetails: {}
+		selectedPurposeDetails: {},
 	};
 
 	handleToggleAll = () => {
@@ -57,7 +57,7 @@ export default class Vendors extends Component {
 		this.setState({ isSelectAll: !isSelectAll });
 	};
 
-	handleToggleFeatures = id => {
+	handleToggleFeatures = (id) => {
 		const { showFeaturesId } = this.state;
 		if (showFeaturesId === id) {
 			this.setState({ showFeaturesId: null });
@@ -126,7 +126,7 @@ export default class Vendors extends Component {
 			<div class={style.vendors}>
 				<div class={style.header}>
 					<div class={detailsStyle.title} style={{ color: textColor }}>
-						<PurposesLabel localizeKey={`purpose${selectedPurposeId}.title`}>{name}</PurposesLabel>
+						<PurposesLabel localizeKey={`purpose${selectedPurposeId}.menu`}>{name}</PurposesLabel>
 					</div>
 				</div>
 				<div class={detailsStyle.description} style={{ color: textLightColor }}>
@@ -134,7 +134,10 @@ export default class Vendors extends Component {
 						<PurposesLabel localizeKey={`purpose${selectedPurposeId}.description`}>{description}</PurposesLabel>
 					</p>
 					<p>
-						<PurposesLabel localizeKey={`purpose${selectedPurposeId}.optoutDescription`}>
+						<PurposesLabel
+							localizeKey={`purpose${selectedPurposeId}.optoutDescription`}
+							altLocalizeKey="globalOptoutDescription"
+						>
 							{this.renderOptoutDescription(optoutDescription, textLinkColor)}
 						</PurposesLabel>
 					</p>
@@ -164,7 +167,7 @@ export default class Vendors extends Component {
 												<div
 													class={[
 														style.vendorFeaturesBtn,
-														showFeaturesId === id ? style.vendorFeaturesBtnActive : ''
+														showFeaturesId === id ? style.vendorFeaturesBtnActive : '',
 													].join(' ')}
 													style={showFeaturesId === id && featuresColor && { backgroundColor: featuresColor }}
 												>
@@ -197,7 +200,7 @@ export default class Vendors extends Component {
 													class={[index % 2 === 0 ? style.even : '', style.vendorFeatures].join(' ')}
 													style={{ backgroundColor: featuresColor }}
 												>
-													<ul>{featureIds.map(featureId => this.renderFeature(featureId))}</ul>
+													<ul>{featureIds.map((featureId) => this.renderFeature(featureId))}</ul>
 												</div>
 											)}
 										</td>
