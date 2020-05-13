@@ -73,7 +73,12 @@ export default class Store {
 
 		const {
 			vendorListVersion = 1,
+			vendors = null
 		} = vendorList || {};
+
+		if (vendors) {
+			this.filterVendorConsents(vendors);
+		}
 
 		const now = new Date();
 		tcModel.created = tcModel.created || now;
@@ -103,6 +108,24 @@ export default class Store {
 
 		// Notify of date changes
 		this.storeUpdate();
+	};
+
+	filterVendorConsents = (vendors) => {
+		const {vendorConsents, vendorLegitimateInterests} = this.tcModel;
+		const availableIds = new Set();
+
+		for (var key in vendors) {
+			if (vendors.hasOwnProperty(key)) {
+				availableIds.add(vendors[key].id);
+			}
+		}
+
+		const unsetConsents = consents => {
+			consents.forEach((value, id) => availableIds.has(id) || consents.unset(id));
+		};
+
+		unsetConsents(vendorConsents);
+		unsetConsents(vendorLegitimateInterests);
 	};
 
 	listeners = new Set();
