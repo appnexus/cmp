@@ -1,4 +1,10 @@
-## [1.5.2](https://github.com/openmail/system1-cmp/compare/v1.5.0...v1.5.1) (2020-05-12)
+## [1.5.3](https://github.com/openmail/system1-cmp/compare/v1.5.2...v1.5.3) (2020-05-12)
+
+### Refactor
+
+- [x] Hoist up all translatable text
+
+## [1.5.2](https://github.com/openmail/system1-cmp/compare/v1.5.1...v1.5.2) (2020-05-12)
 
 ### Refactor
 
