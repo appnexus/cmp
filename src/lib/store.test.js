@@ -39,6 +39,13 @@ describe('store', () => {
 		cmpApi = undefined;
 	});
 
+	it('cmpApi has required property do decorate them', () => {
+		expect(cmpApi).to.have.property('callResponder');
+		expect(cmpApi.callResponder).to.be.an('object');
+		expect(cmpApi.callResponder).to.have.property('apiCall');
+		expect(cmpApi.callResponder.apiCall).to.be.an('function');
+	});
+
 	it('initializes with default data', () => {
 		const store = new Store({
 			cmpId: CMP_ID
