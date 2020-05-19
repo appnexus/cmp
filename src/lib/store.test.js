@@ -39,6 +39,13 @@ describe('store', () => {
 		cmpApi = undefined;
 	});
 
+	it('cmpApi has required property to decorate them', () => {
+		expect(cmpApi).to.have.property('callResponder');
+		expect(cmpApi.callResponder).to.be.an('object');
+		expect(cmpApi.callResponder).to.have.property('apiCall');
+		expect(cmpApi.callResponder.apiCall).to.be.an('function');
+	});
+
 	it('initializes with default data', () => {
 		const store = new Store({
 			cmpId: CMP_ID
@@ -219,6 +226,40 @@ describe('store', () => {
 			expect(persistedConsentData.purposeLegitimateInterests.has(4)).to.be.true;
 			expect(persistedConsentData.purposeLegitimateInterests.has(1)).to.be.false;
 			expect(persistedConsentData.purposeLegitimateInterests.has(3)).to.be.false;
+
+			done();
+		});
+	});
+
+	it('remove consents for vendors removed from current vendor list while user save consent', (done) => {
+		const tcModel = new TCModel();
+		tcModel.cmpId = 280;
+		tcModel.cmpVersion = 2;
+		tcModel.gvl = new GVL(VENDOR_LIST);
+
+		setTimeout(() => {
+			tcModel.vendorConsents.set([3, 9]);
+			tcModel.vendorLegitimateInterests.set([2, 9]);
+
+			const encoded = encodeConsentData(tcModel);
+
+			const store = new Store({
+				cmpId: 280,
+				consentString: encoded,
+			});
+
+			store.setCmpApi(cmpApi);
+			store.updateVendorList(VENDOR_LIST);
+
+			const persistedConsentData = store.persistedConsentData;
+
+			expect(persistedConsentData.vendorConsents.has(9)).to.be.true;
+			expect(persistedConsentData.vendorLegitimateInterests.has(9)).to.be.true;
+
+			store.persist();
+
+			expect(persistedConsentData.vendorConsents.has(9)).to.be.false;
+			expect(persistedConsentData.vendorLegitimateInterests.has(9)).to.be.false;
 
 			done();
 		});
