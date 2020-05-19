@@ -120,12 +120,12 @@ export default class Store {
 			}
 		}
 
-		const unsetConsents = consents => {
+		const unsetMissingVendors = consents => {
 			consents.forEach((value, id) => availableIds.has(id) || consents.unset(id));
 		};
 
-		unsetConsents(vendorConsents);
-		unsetConsents(vendorLegitimateInterests);
+		unsetMissingVendors(vendorConsents);
+		unsetMissingVendors(vendorLegitimateInterests);
 	};
 
 	listeners = new Set();
