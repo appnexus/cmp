@@ -39,7 +39,7 @@ describe('store', () => {
 		cmpApi = undefined;
 	});
 
-	it('cmpApi has required property do decorate them', () => {
+	it('cmpApi has required property to decorate them', () => {
 		expect(cmpApi).to.have.property('callResponder');
 		expect(cmpApi.callResponder).to.be.an('object');
 		expect(cmpApi.callResponder).to.have.property('apiCall');
