@@ -441,7 +441,7 @@ describe('commands', () => {
 
 		it('showConsentTool - should execute all inner methods', () => {
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: {success: true}});
 			});
 			store.updateSection = jest.fn();
 			store.toggleConsentToolShowing = jest.fn();
@@ -461,7 +461,7 @@ describe('commands', () => {
 
 		it('showConsentDetailView - should execute all inner methods', () => {
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: {success: true}});
 			});
 			store.updateSection = jest.fn();
 			store.toggleConsentToolShowing = jest.fn();
@@ -481,7 +481,7 @@ describe('commands', () => {
 
 		it('showVendors - should execute all inner methods', () => {
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: {success: true}});
 			});
 			store.updateSection = jest.fn();
 			store.toggleConsentToolShowing = jest.fn();
@@ -503,7 +503,7 @@ describe('commands', () => {
 		it('showFooter - should show footer', () => {
 			let footerShown = false;
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: {success: true}});
 			});
 			commands.showFooter((result) => {
 				footerShown = result;
@@ -516,7 +516,7 @@ describe('commands', () => {
 		it('showFooter - should not show footer because tool is showing', () => {
 			let footerShown = false;
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: {success: true}});
 			});
 			store.isConsentToolShowing = true;
 			commands.showFooter((result) => {

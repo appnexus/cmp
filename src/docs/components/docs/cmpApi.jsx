@@ -160,8 +160,8 @@ const events = [
 	},
 	{
 		name: 'cmpReady',
-		description: 'Fired when the full CMP implementation has been loaded AND all vendor list information has been retrieved. If the CMP is ready before an event listener is added the listener will be fired immediately after being added.',
-		result: '{"event":"cmpReady"}'
+		description: 'Fired when the full CMP implementation has been loaded AND all vendor list information has been successfully retrieved or failed. If the CMP is ready before an event listener is added the listener will be fired immediately after being added.',
+		result: '{"event":"cmpReady","data":{"success":true}}'
 	},
 	{
 		name: 'openConsentTool',
