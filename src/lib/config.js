@@ -17,7 +17,8 @@ const defaultConfig = {
 	specialPurposes: [],
 	autoDisplay: true,
 	shouldDisplayFooter: null,
-	publisherCountryCode: 'PL'
+	publisherCountryCode: 'PL',
+	getConsentsTimeout: 500
 };
 
 class Config {
