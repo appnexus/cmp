@@ -71,7 +71,7 @@ const shouldDisplay = () => {
 				resolve(result);
 			};
 
-			const { getVendorList, getConsentData, getConsentsTimeout } = config;
+			const { getVendorList, getConsentData, getConsentDataTimeout } = config;
 			if (getVendorList) {
 				getVendorList((err, vendorList) => {
 					if (err) {
@@ -82,7 +82,7 @@ const shouldDisplay = () => {
 						const timeout = setTimeout(() => {
 							const result = handleConsentResult(vendorList, undefined);
 							resolve(result);
-						}, getConsentsTimeout);
+						}, getConsentDataTimeout);
 
 						if (getConsentData) {
 							getConsentData((err, data) => {
