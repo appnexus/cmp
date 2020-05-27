@@ -110,6 +110,12 @@ export default class CmpApi extends Component {
 							If is set false <span class={style.highlight}>autoDisplay: false</span> the consent tool UI will never be displayed when initialize CMP</span>
 						</span>
 						<span className={style.argument}>
+							<span className={style.argumentType}>getConsentDataTimeout (Number)</span>:
+							<span className={style.argumentDescription}>
+								Default is set 500 (ms). Maximum time to retrieve consents data. If the timeout is reached CMP Api will be initialized without show UI.
+							</span>
+						</span>
+						<span className={style.argument}>
 							<span className={style.argumentType}>decoratePageCallHandler(Object) (Function)</span>:
 							<span className={style.argumentDescription}>
 								Custom function to overwrite default behaviour pageCallHandler function.

@@ -80,8 +80,7 @@ const shouldDisplay = () => {
 						resolve(result);
 					} else {
 						const timeout = setTimeout(() => {
-							const result = handleConsentResult(vendorList, undefined);
-							resolve(result);
+							resolve({ display: false });
 						}, getConsentDataTimeout);
 
 						if (getConsentData) {
