@@ -80,8 +80,7 @@ const shouldDisplay = () => {
 						resolve(result);
 					} else {
 						const timeout = setTimeout(() => {
-							const result = handleConsentResult(vendorList, undefined);
-							resolve(result);
+							resolve({ display: false });
 						}, getConsentDataTimeout);
 
 						if (getConsentData) {
@@ -103,9 +102,8 @@ const shouldDisplay = () => {
 			} else {
 				fetchGlobalVendorList().then((vendorList) => {
 					const timeout = setTimeout(() => {
-						const result = handleConsentResult(vendorList, undefined);
-						resolve(result);
-					}, 100);
+						resolve({ display: false });
+					}, getConsentDataTimeout);
 
 					readConsentCookie().then((cookie) => {
 						if (cookie) {
