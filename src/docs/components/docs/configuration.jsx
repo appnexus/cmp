@@ -112,7 +112,7 @@ export default class CmpApi extends Component {
 						<span className={style.argument}>
 							<span className={style.argumentType}>getConsentDataTimeout (Number)</span>:
 							<span className={style.argumentDescription}>
-								Default is set 500 (ms). Maximum time to retrieve consents data. If the timeout is reached CMP Api will be initialized without show UI.
+								Default is set 500 (ms). Maximum time to retrieve consents data. If the timeout is reached CMP Api will be initialized without showing the UI.
 							</span>
 						</span>
 						<span className={style.argument}>
