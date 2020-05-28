@@ -155,13 +155,13 @@ const commands = [
 const events = [
 	{
 		name: 'isLoaded',
-		description: 'Fired when the full CMP implementation has been loaded and assigned to window.__cmp.  The vendors list from vendors.json is not guaranteed to be loaded. If the CMP is loaded before an event listener is added the listener will be fired immediately after being added.',
+		description: 'Fired when the full CMP implementation has been loaded and assigned to window.__tcfapi. The vendors list from vendors.json is not guaranteed to be loaded. If the CMP is loaded before an event listener is added the listener will be fired immediately after being added.',
 		result: '{"event":"isLoaded"}'
 	},
 	{
 		name: 'cmpReady',
-		description: 'Fired when the full CMP implementation has been loaded AND all vendor list information has been successfully retrieved or failed. If the CMP is ready before an event listener is added the listener will be fired immediately after being added.',
-		result: '{"event":"cmpReady","data":{"success":true}}'
+		description: 'Fired when the full CMP implementation has been loaded AND all vendor list information has been successfully retrieved or failed (see "data" result property). If the CMP is ready before an event listener is added the listener will be fired immediately after being added.',
+		result: '{"event":"cmpReady","data":true}'
 	},
 	{
 		name: 'openConsentTool',
