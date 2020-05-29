@@ -4,6 +4,7 @@ export default class CmpManager {
 	constructor () {
 		this.isLoaded = false;
 		this.cmpReady = false;
+		this.eventData = {};
 		this.openConsentTool = false;
 		this.eventListeners = {};
 	}
@@ -43,14 +44,13 @@ export default class CmpManager {
 		this.eventListeners[event] = eventSet;
 
 		// Trigger load events immediately if they have already occurred
-		if (event === 'isLoaded' && this.isLoaded) {
-			callback({event});
-		}
-		if (event === 'cmpReady' && this.cmpReady) {
-			callback({event});
-		}
-		if (event === 'openConsentTool' && this.openConsentTool) {
-			callback({event});
+		if (
+			event === 'isLoaded' && this.isLoaded ||
+			event === 'cmpReady' && this.cmpReady ||
+			event === 'openConsentTool' && this.openConsentTool
+		) {
+			const data = this.eventData[event];
+			callback({event, data});
 		}
 	};
 
@@ -61,6 +61,7 @@ export default class CmpManager {
 	 */
 	notify = (event, data) => {
 		log.info(`Notify event: ${event}`);
+		this.eventData[event] = data;
 		const eventSet = this.eventListeners[event] || new Set();
 		eventSet.forEach(listener => {
 			try {
