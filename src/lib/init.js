@@ -72,10 +72,12 @@ export function init (consentString, shouldDisplayCmpUI) {
 			fetchGlobalVendorList().then(store.updateVendorList)
 		]).then((params) => {
 			cmpManager.cmpReady = true;
-			cmpManager.notify('cmpReady');
+			cmpManager.notify('cmpReady', true);
 			resolve(params[0]);
 		}).catch(err => {
 			log.error('Failed to load lists. CMP not ready', err);
+			cmpManager.cmpReady = true;
+			cmpManager.notify('cmpReady', false);
 			reject(err);
 		});
 	});

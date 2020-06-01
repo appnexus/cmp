@@ -228,14 +228,16 @@ const createCommands = (store, cmpManager) => {
 	 * Trigger the consent tool UI to be shown
 	 */
 	const showConsentTool =  (callback = () => {}) => {
-		cmpManager.addEventListener('cmpReady', () => {
-			store.updateSection();
-			store.toggleConsentToolShowing(true);
+		cmpManager.addEventListener('cmpReady', ({data}) => {
+			if (data) {
+				store.updateSection();
+				store.toggleConsentToolShowing(true);
 
-			cmpManager.openConsentTool = true;
-			cmpManager.notify('openConsentTool', { section: 'intro' });
+				cmpManager.openConsentTool = true;
+				cmpManager.notify('openConsentTool', { section: 'intro' });
+			}
 
-			callback(true);
+			callback(data);
 		});
 	};
 
@@ -243,14 +245,16 @@ const createCommands = (store, cmpManager) => {
 	 * Trigger the consent tool UI to be shown on Detail View
 	 */
 	const showConsentDetailView = (callback = () => {}) => {
-		cmpManager.addEventListener('cmpReady', () => {
-			store.updateSection(SECTION_DETAILS);
-			store.toggleConsentToolShowing(true);
+		cmpManager.addEventListener('cmpReady', ({data}) => {
+			if (data) {
+				store.updateSection(SECTION_DETAILS);
+				store.toggleConsentToolShowing(true);
 
-			cmpManager.openConsentTool = true;
-			cmpManager.notify('openConsentTool', { section: 'details' });
+				cmpManager.openConsentTool = true;
+				cmpManager.notify('openConsentTool', { section: 'details' });
+			}
 
-			callback(true);
+			callback(data);
 		});
 	};
 
@@ -258,14 +262,16 @@ const createCommands = (store, cmpManager) => {
 	 * Trigger the vendors UI to be shown
 	 */
 	const showVendors = (callback = () => {}) => {
-		cmpManager.addEventListener('cmpReady', () => {
-			store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
-			store.toggleConsentToolShowing(true);
+		cmpManager.addEventListener('cmpReady', ({data}) => {
+			if (data) {
+				store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
+				store.toggleConsentToolShowing(true);
 
-			cmpManager.openConsentTool = true;
-			cmpManager.notify('openConsentTool', { section: 'details' });
+				cmpManager.openConsentTool = true;
+				cmpManager.notify('openConsentTool', { section: 'details' });
+			}
 
-			callback(true);
+			callback(data);
 		});
 	};
 
@@ -273,8 +279,8 @@ const createCommands = (store, cmpManager) => {
 	 * Trigger the footer UI to be shown
 	 * */
 	const showFooter = (callback = () => {}) => {
-		cmpManager.addEventListener('cmpReady', () => {
-			const footerShown = store.toggleFooterShowing(true);
+		cmpManager.addEventListener('cmpReady', ({data}) => {
+			const footerShown = data && store.toggleFooterShowing(true);
 			callback(footerShown);
 		});
 	};

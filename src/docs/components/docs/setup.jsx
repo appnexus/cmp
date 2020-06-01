@@ -20,7 +20,7 @@ export default class Setup extends Component {
 
 		// const bookmarkScript = `javascript:(function(){
 		// 	${buildScript(config, `//${CURRENT_LOCATION}../cmp.bundle.js`)}
-		// 	window.__cmp('showConsentTool');
+		// 	window.__tcfapi('showConsentTool', 2, function(){});
 		// }());`.replace(/}\n/g, '};');
 
 		this.setState({

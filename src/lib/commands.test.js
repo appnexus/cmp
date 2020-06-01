@@ -441,7 +441,7 @@ describe('commands', () => {
 
 		it('showConsentTool - should execute all inner methods', () => {
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: true});
 			});
 			store.updateSection = jest.fn();
 			store.toggleConsentToolShowing = jest.fn();
@@ -459,9 +459,23 @@ describe('commands', () => {
 			expect(callbackExecuted).to.be.true;
 		});
 
+		it('showConsentTool - should not show consent tool because cmpReady has failed', () => {
+			let shown = false;
+			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
+				callback({event, data: false});
+			});
+			store.isConsentToolShowing = true;
+			commands.showConsentTool((result) => {
+				shown = result;
+				callbackExecuted = true;
+			});
+			expect(callbackExecuted).to.be.true;
+			expect(shown).to.be.false;
+		});
+
 		it('showConsentDetailView - should execute all inner methods', () => {
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: true});
 			});
 			store.updateSection = jest.fn();
 			store.toggleConsentToolShowing = jest.fn();
@@ -479,9 +493,23 @@ describe('commands', () => {
 			expect(callbackExecuted).to.be.true;
 		});
 
+		it('showConsentDetailView - should not show consent tool detail view because cmpReady has failed', () => {
+			let shown = false;
+			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
+				callback({event, data: false});
+			});
+			store.isConsentToolShowing = true;
+			commands.showConsentDetailView((result) => {
+				shown = result;
+				callbackExecuted = true;
+			});
+			expect(callbackExecuted).to.be.true;
+			expect(shown).to.be.false;
+		});
+
 		it('showVendors - should execute all inner methods', () => {
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: true});
 			});
 			store.updateSection = jest.fn();
 			store.toggleConsentToolShowing = jest.fn();
@@ -500,23 +528,50 @@ describe('commands', () => {
 			expect(callbackExecuted).to.be.true;
 		});
 
-		it('showFooter - should show footer', () => {
-			let footerShown = false;
+		it('showVendors - should not show vendors because cmpReady has failed', () => {
+			let shown = false;
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: false});
 			});
-			commands.showFooter((result) => {
-				footerShown = result;
+			store.isConsentToolShowing = true;
+			commands.showVendors((result) => {
+				shown = result;
 				callbackExecuted = true;
 			});
 			expect(callbackExecuted).to.be.true;
-			expect(footerShown).to.be.true;
+			expect(shown).to.be.false;
+		});
+
+		it('showFooter - should show footer', () => {
+			let shown = false;
+			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
+				callback({event, data: true});
+			});
+			commands.showFooter((result) => {
+				shown = result;
+				callbackExecuted = true;
+			});
+			expect(callbackExecuted).to.be.true;
+			expect(shown).to.be.true;
+		});
+
+		it('showFooter - should show footer cmpReady has failed', () => {
+			let shown = false;
+			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
+				callback({event, data: false});
+			});
+			commands.showFooter((result) => {
+				shown = result;
+				callbackExecuted = true;
+			});
+			expect(callbackExecuted).to.be.true;
+			expect(shown).to.be.false;
 		});
 
 		it('showFooter - should not show footer because tool is showing', () => {
 			let footerShown = false;
 			cmpManager.addEventListener = jest.fn().mockImplementation((event, callback) => {
-				callback();
+				callback({event, data: true});
 			});
 			store.isConsentToolShowing = true;
 			commands.showFooter((result) => {
