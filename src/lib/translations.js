@@ -271,9 +271,9 @@ export default {
 	},
 	fr: {
 		banner: {
-			title: 'Les cookies nous aident à vous délivrer un service de qualité.',
+			title: 'Utilisation des données',
 			description:
-				'Nos partenaires et nous-même utilisons les cookies afin de proposer du contenu et de la publicité pertinents.',
+				'Nos partenaires et nous utilisons des cookies afin d’adresser des contenus personnalisés et/ou publicités ciblées pour améliorer votre expérience.',
 			links: {
 				data: {
 					title: 'Données utilisées',

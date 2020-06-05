@@ -1,3 +1,9 @@
+## [1.5.4](https://github.com/openmail/system1-cmp/compare/v1.5.3...v1.5.4) (2020-06-04)
+
+### Styles
+
+- [x] Spruce up title spacing
+
 ## [1.5.3](https://github.com/openmail/system1-cmp/compare/v1.5.2...v1.5.3) (2020-05-12)
 
 ### Refactor
