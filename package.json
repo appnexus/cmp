@@ -125,7 +125,7 @@
 	"bundlesize": [
 		{
 			"path": "./dist/[0-9].[0-9].[0-9]/cmp.js",
-			"maxSize": "61.0 kB"
+			"maxSize": "62.0 kB"
 		},
 		{
 			"path": "./dist/[0-9].[0-9].[0-9]/loader.js",
