@@ -1,3 +1,10 @@
+## [1.5.5](https://github.com/openmail/system1-cmp/compare/v1.5.4...v1.5.5) (2020-06-09)
+
+### Translations
+
+- [x] Add translations for ja, sv, pt, nl, zh
+- [x] Update translations for es, it
+
 ## [1.5.4](https://github.com/openmail/system1-cmp/compare/v1.5.3...v1.5.4) (2020-06-04)
 
 ### Styles

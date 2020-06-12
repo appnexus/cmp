@@ -16,6 +16,12 @@ class PurposesLabel extends Label {
 	};
 }
 
+class FeaturesLabel extends Label {
+	static defaultProps = {
+		prefix: 'features',
+	};
+}
+
 class FeaturesButton extends Component {
 	onClick = () => {
 		this.props.handleToggleFeatures(this.props.id);
@@ -76,8 +82,12 @@ export default class Vendors extends Component {
 		return (
 			feature && (
 				<li>
-					<b>{feature.name}</b>
-					<p>{feature.description}</p>
+					<b>
+						<FeaturesLabel localizeKey={`feature${featureId}.name`}>{feature.name}</FeaturesLabel>
+					</b>
+					<p>
+						<FeaturesLabel localizeKey={`feature${featureId}.description`}>{feature.description}</FeaturesLabel>
+					</p>
 				</li>
 			)
 		);
@@ -176,7 +186,7 @@ export default class Vendors extends Component {
 														handleToggleFeatures={this.handleToggleFeatures}
 														style={{ color: textLinkColor }}
 													>
-														Features
+														<FeaturesLabel localizeKey="menu">Features</FeaturesLabel>
 													</FeaturesButton>
 												</div>
 											)}

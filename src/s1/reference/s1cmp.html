@@ -16,6 +16,7 @@
 	<script src="../loader.js"></script>
 	//-->
 	<script>
+		const params = new URLSearchParams(window.location.search);
 		const config = {
 			scriptSrc: window.location.search.indexOf("remote=true") >= 0 ? 'https://s.flocdn.com/cmp/s1.cmp.js' : './cmp.js',
 			// pubVendorListLocation: './assets/info.pubvendors.json',
@@ -27,7 +28,7 @@
 			globalConsentLocation: 'https://s.flocdn.com/cmp/docs/portal.html',
 			storeConsentGlobally: false,
 			// localization: {},
-			// forceLocale: 'es',
+			forceLocale: params.get('forceLocale'),
 			theme: {
 				isBannerModal: false,
 				shouldExpandPurposes: false
