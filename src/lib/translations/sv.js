@@ -28,23 +28,23 @@ export default {
 		links: {
 			data: {
 				title: 'Informationen som kan komma att användas',
-				description: `							
-						<ul>						
-							<li>Typen av webbläsare och dess inställningar</li>					
-							<li>Information om enhetens operativsystem</li>					
-							<li>Cookienformation</li>					
-							<li> Information om andra identifierare som assignats enheten</li>					
-							<li>Den IP-adress från vilken enheten kommer åt en klients webbplats eller					
-								mobilapplikation				
-							</li>					
-							<li>Information om användarens aktivitet på den enheten, inklusive					
-								sidor eller mobila appar som besökts eller använts				
-							</li>					
-							<li>Information om enhetens geografiska plats när den					
-								får åtkomst				
-								till en webbplats eller mobilapplikation.				
-							</li>					
-						</ul>						
+				description: `
+						<ul>
+							<li>Typen av webbläsare och dess inställningar</li>
+							<li>Information om enhetens operativsystem</li>
+							<li>Cookienformation</li>
+							<li> Information om andra identifierare som assignats enheten</li>
+							<li>Den IP-adress från vilken enheten kommer åt en klients webbplats eller
+								mobilapplikation
+							</li>
+							<li>Information om användarens aktivitet på den enheten, inklusive
+								sidor eller mobila appar som besökts eller använts
+							</li>
+							<li>Information om enhetens geografiska plats när den
+								får åtkomst
+								till en webbplats eller mobilapplikation.
+							</li>
+						</ul>
 					`,
 			},
 			purposes: {
@@ -56,13 +56,13 @@ export default {
 	},
 	summary: {
 		title: 'Lär dig mer om hur informationen används?',
-		description: `Vi och utvalda företag kan komma åt och använda din information									
-				för nedanstående ändamål. Du kan anpassa dina val nedan eller								
+		description: `Vi och utvalda företag kan komma åt och använda din information
+				för nedanstående ändamål. Du kan anpassa dina val nedan eller
 				fortsätta att använda vår webbplats om du är OK med syftena.`,
 		detailLink: 'Lär Dig Mer & Ange Preferenser',
 		who: {
 			title: 'Vem använder denna information?',
-			description: `Vi och förvalda företag kommer att använda din information. Du kan se								
+			description: `Vi och förvalda företag kommer att använda din information. Du kan se
 					varje företag i länkarna ovan eller`,
 			link: 'se den kompletta listan här.',
 		},
@@ -80,24 +80,24 @@ export default {
 		title: '',
 		description: '',
 		back: '',
-		globalOptoutDescription: `									
-				<p>								
-					Beroende på vilken typ av data som de samlar in, använder sig av och bearbetar inklusive andra faktorer såsom design integriteten ,							
-					vissa partners förlitar sig på ditt samtycke medan andra kräver att du väljer att aktivt avregistrera dig. För information om varje specifik leverantör och för att							
-					utöva dina val, se nedan. Eller för att avregistrera, besök							
-					<a href="http://optout.networkadvertising.org/?c=1#!/" target="_blank">							
-						NAI						
-					</a>							
-					,							
-					<a href="http://optout.aboutads.info/?c=2#!/" target="_blank">							
-						DAA						
-					</a>							
-					, and							
-					<a href="http://youronlinechoices.eu/" target="_blank">							
-						EDAA						
-					</a>							
-					sites.							
-				</p>								
+		globalOptoutDescription: `
+				<p>
+					Beroende på vilken typ av data som de samlar in, använder sig av och bearbetar inklusive andra faktorer såsom design integriteten ,
+					vissa partners förlitar sig på ditt samtycke medan andra kräver att du väljer att aktivt avregistrera dig. För information om varje specifik leverantör och för att
+					utöva dina val, se nedan. Eller för att avregistrera, besök
+					<a href="http://optout.networkadvertising.org/?c=1#!/" target="_blank">
+						NAI
+					</a>
+					,
+					<a href="http://optout.aboutads.info/?c=2#!/" target="_blank">
+						DAA
+					</a>
+					, and
+					<a href="http://youronlinechoices.eu/" target="_blank">
+						EDAA
+					</a>
+					sites.
+				</p>
 			`,
 		purpose1: {
 			description: 'Tillåt lagring eller åtkomost av information på användarens enhet.',
@@ -105,9 +105,9 @@ export default {
 			optoutDescription: '',
 		},
 		purpose2: {
-			description: `Tillåt behandling av en viss användares data för att tillhandahålla och göra användaren medveten om den personligt skräddarsydda annonseringen (inklusive leverans, mätning och rapportering) baserat på användares preferenser eller intressen vilka är kända eller kan härledas från de data som samlats in på flera webbplatser, appar eller enheter; och/eller komma åt eller lagra information på enheter för just etta ändamå.								
-				Kommer att inkludera följande Funktioner:								
-				<ul>								
+			description: `Tillåt behandling av en viss användares data för att tillhandahålla och göra användaren medveten om den personligt skräddarsydda annonseringen (inklusive leverans, mätning och rapportering) baserat på användares preferenser eller intressen vilka är kända eller kan härledas från de data som samlats in på flera webbplatser, appar eller enheter; och/eller komma åt eller lagra information på enheter för just etta ändamå.
+				Kommer att inkludera följande Funktioner:
+				<ul>
 					<li>${features.feature1.name} – ${features.feature1.description}</li>
 					<li>${features.feature2.name} – ${features.feature2.description}</li>
 					<li>${features.feature3.name} – ${features.feature3.description}</li>
@@ -115,9 +115,9 @@ export default {
 			menu: 'Personalisering',
 		},
 		purpose3: {
-			description: `Tillåt behandling av en viss användares data för att kunna leverera innehåll eller annonser och mäta leveransen av sådant innehåll eller sådana annonser, extrahera användarens insikter och generera rapporter för att kunna förstå hur tjänsten används; och/eller komma åt eller lagra information på enheter för just detta ändamål.								
-				Kommer att inkludera följande Funktioner:								
-				<ul>								
+			description: `Tillåt behandling av en viss användares data för att kunna leverera innehåll eller annonser och mäta leveransen av sådant innehåll eller sådana annonser, extrahera användarens insikter och generera rapporter för att kunna förstå hur tjänsten används; och/eller komma åt eller lagra information på enheter för just detta ändamål.
+				Kommer att inkludera följande Funktioner:
+				<ul>
 					<li>${features.feature1.name} – ${features.feature1.description}</li>
 					<li>${features.feature2.name} – ${features.feature2.description}</li>
 					<li>${features.feature3.name} – ${features.feature3.description}</li>
@@ -125,9 +125,9 @@ export default {
 			menu: 'Annonsval, leverans, rapporteringg',
 		},
 		purpose4: {
-			description: `Tillåt behandling av en användares data för att kunna tillhandahålla och informera om den personliga innehållet (inklusive leverans, mätning och rapportering) baserat på en användares preferenser eller intressen som är kända eller härledda från data som samlats in på flera webbplatser, appar eller enheter, och/eller åtkomst till eller lagring av information på enheter för detta ändamål. Kommer att innehålla följande funktioner.								
-				Kommer att inkludera följande egenskaper:								
-				<ul>								
+			description: `Tillåt behandling av en användares data för att kunna tillhandahålla och informera om den personliga innehållet (inklusive leverans, mätning och rapportering) baserat på en användares preferenser eller intressen som är kända eller härledda från data som samlats in på flera webbplatser, appar eller enheter, och/eller åtkomst till eller lagring av information på enheter för detta ändamål. Kommer att innehålla följande funktioner.
+				Kommer att inkludera följande egenskaper:
+				<ul>
 					<li>${features.feature1.name} – ${features.feature1.description}</li>
 					<li>${features.feature2.name} – ${features.feature2.description}</li>
 					<li>${features.feature3.name} – ${features.feature3.description}</li>
@@ -154,28 +154,28 @@ export default {
 	},
 	features,
 	footer: {
-		message: `									
-				<h2>Vi Värnar Om Din Integritet</h2>								
+		message: `
+				<h2>Vi Värnar Om Din Integritet</h2>
 			`,
-		description: `									
-				<span>								
-					För att hjälpa till att göra denna webbplats ännu bättre samt för att kunna anpassa							
-					förbättra innehållet, både i reklamsyfte och för att analysera							
-					vår trafik så använder vi och våra partners teknik såsom cookies,							
-					pixlar och dylikt för att samla in vissa data. Om du							
-					fortsätter att använda webbplatsen eller klickar på "OK", så samtycker du							
-					till att användning av denna teknik samt insamling av data.							
-				</span>								
+		description: `
+				<span>
+					För att hjälpa till att göra denna webbplats ännu bättre samt för att kunna anpassa
+					förbättra innehållet, både i reklamsyfte och för att analysera
+					vår trafik så använder vi och våra partners teknik såsom cookies,
+					pixlar och dylikt för att samla in vissa data. Om du
+					fortsätter att använda webbplatsen eller klickar på "OK", så samtycker du
+					till att användning av denna teknik samt insamling av data.
+				</span>
 			`,
-		privacyPolicy: `									
-				<span>								
-					Vänligen besök vår							
-					<a target="_blank" href="http://system1.com/terms/privacy.html">							
-						Integritetspolicy						
-					</a>							
-					fför att lära dig mer om hur vi samlar och använder data. Du kan ändra							
-					när du så önskar genom att klicka							
-				</span>								
+		privacyPolicy: `
+				<span>
+					Vänligen besök vår
+					<a target="_blank" href="http://system1.com/terms/privacy.html">
+						Integritetspolicy
+					</a>
+					fför att lära dig mer om hur vi samlar och använder data. Du kan ändra
+					när du så önskar genom att klicka
+				</span>
 			`,
 		privacyPolicyButton: 'Hantera sekretessinställningar',
 		consentLink: 'OK',
