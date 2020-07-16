@@ -91,7 +91,7 @@
     "codemirror": "^5.34.0",
     "core-js": "^2.5.3",
     "js-beautify": "^1.7.5",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "preact": "^8.4.2",
     "preact-compat": "^3.18.4",
     "preact-render-to-string": "^4.1.0",
