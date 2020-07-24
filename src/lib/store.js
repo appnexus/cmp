@@ -87,6 +87,12 @@ export default class Store {
 
 		let encodedConsent = encodeConsentData(tcModel);
 
+		this.persistedConsentString = encodedConsent;
+		this.persistedConsentData = decodeConsentData(encodedConsent);
+		this.cmpApi.update(encodedConsent);
+		// It is very important to call setConsentData after updated cmpApi model
+		// because to set pubConsent with npa value during setConsentData processing
+		// we use data from cmpApi to calculate npa
 		if (config.setConsentData) {
 			let consentData = encodedConsent;
 			try {
@@ -101,10 +107,6 @@ export default class Store {
 		} else  {
 			writeConsentCookie(encodedConsent);
 		}
-
-		this.persistedConsentString = encodedConsent;
-		this.persistedConsentData = decodeConsentData(encodedConsent);
-		this.cmpApi.update(encodedConsent);
 
 		// Notify of date changes
 		this.storeUpdate();
