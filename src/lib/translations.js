@@ -264,10 +264,10 @@ export default {
 		<p style="margin: 25px 0 10px 0; font-weight: 900">Your rights</p>
         <p> You have the following rights in respect of your data and processing of your data by other entities from the RAS Polska Group and by <a onclick="__tcfapi('showVendors', 2, function () {})">Trusted Partners</a>:</p>
 		<br>
-          <p>1. If you granted consent for data processing, you may withdraw it at any time (the withdrawal of consent does not affect the lawfulness of processing based on consent before its withdrawal);</p>
+          <p>1. If you granted consent for data processing, you may withdraw it at any time (the withdrawal of consent does not affect the lawfulness of processing based on consent before its withdrawal).</p>
         <p>2. You also have the right to demand access to your personal data, rectification of data, erasure or restriction of processing, right to transfer data (data portability), right to object to data processing and the right to lodge a complaint with a supervisory authority, being the President of the Personal Data Protection Office in Poland. <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">At this address</a>, you will find additional information about data processing and your rights.
         </p>`,
-			acceptAll: 'Go to The Website',
+			acceptAll: 'Go to Website',
 			showPurposes: 'Advanced settings'
 		},
 		details: {
