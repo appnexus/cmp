@@ -136,9 +136,11 @@ export default class Purposes extends Component {
 		const isPurposeLegitimateInterestActive = (id) => selectedPurposeLegitimateInterests.has(id+1);
 		const isPublisherLegIntActive = (id) => selectedPublisherLegitimateInterests.has(id+1);
 
-		const purposeIsTechnical = (purpose) => config.legIntPurposeIds &&
-			config.contractPurposeIds && purpose &&
+		const isTechnicalPurpose = (purpose) => config.legIntPurposeIds && config.contractPurposeIds && purpose &&
 			(config.legIntPurposeIds.indexOf(purpose.id) >= 0 || config.contractPurposeIds.indexOf(purpose.id) >= 0);
+
+		const isContractPurpose = (purpose) => purpose && config.contractPurposeIds &&
+				(config.contractPurposeIds.indexOf(purpose.id) >= 0);
 
 		const publisherSpecialPurposes = config.specialPurposes && !!config.specialPurposes.length &&
 			specialPurposes.filter((purpose, index) => config.specialPurposes.indexOf(index+1) !== -1);
@@ -209,7 +211,7 @@ export default class Purposes extends Component {
 																		  isPublisherPurpose={true}
 																		  purpose={purpose}
 																		  isActive={purposeIsActive(purpose, true)}
-																		  isTechnical={purposeIsTechnical(purpose)}
+																		  isTechnical={isTechnicalPurpose(purpose)}
 																		  createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		  onToggle={this.createHandleSelectPurpose(true)}
 																		  onToggleLegitInterest={this.handleSelectPublisherLegitimateInterest.bind(this)}
@@ -240,7 +242,7 @@ export default class Purposes extends Component {
 																		   purpose={purpose}
 																		   isActive={purposeIsActive(purpose)}
 																		   isLegitimateInterestActive={isPurposeLegitimateInterestActive(index)}
-																		   isTechnical={false}
+																		   isTechnical={isContractPurpose(purpose)}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}
 																		   onToggleLegitInterest={this.handleSelectLegitInterest.bind(this)}
 																		   onToggle={this.createHandleSelectPurpose()}/>)}
