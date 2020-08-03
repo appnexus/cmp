@@ -223,7 +223,13 @@ export default class Store {
 	};
 
 	selectPurpose = (purposeId, isSelected) => {
+		const {contractPurposeIds} = config;
 		const {purposeConsents} = this.tcModel;
+
+		if (contractPurposeIds.includes(purposeId)) {
+			return;
+		}
+
 		if (isSelected) {
 			purposeConsents.set(purposeId);
 		} else {
@@ -271,7 +277,13 @@ export default class Store {
 	};
 
 	selectPublisherPurpose = (purposeId, isSelected) => {
+		const {contractPurposeIds} = config;
 		const {publisherConsents} = this.tcModel;
+
+		if (contractPurposeIds.includes(purposeId)) {
+			return;
+		}
+
 		if (isSelected) {
 			publisherConsents.set(purposeId);
 		} else {
