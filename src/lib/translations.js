@@ -7,62 +7,14 @@
 export default {
 	pl: {
 		intro: {
-			title: 'Szanowna Użytkowniczko, Szanowny Użytkowniku,',
-			description: `<p> Zanim klikniesz „Przejdź do serwisu” lub zamkniesz to okno, prosimy o przeczytanie tej informacji. Prosimy w niej o Twoją dobrowolną zgodę na przetwarzanie Twoich danych osobowych przez naszych partnerów biznesowych oraz przekazujemy informacje o tzw. cookies i o przetwarzaniu przez nas i przez naszych partnerów biznesowych Twoich danych osobowych. <span style="font-weight: bold">Klikając „Przejdź do serwisu” lub zamykając okno przez kliknięcie w znaczek X, zgadzasz się na poniższe.</span> Możesz też odmówić zgody lub ograniczyć jej zakres.</p>
-    <p style="margin: 25px 0 10px 0; font-weight: 900">Zgoda i inne podstawy przetwarzania danych</p>
-    <p> Jeśli chcesz zgodzić się na przetwarzanie przez <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a> Grupy RAS Polska Twoich danych osobowych, zawierających informacje o odwiedzonych stronach i aplikacjach internetowych, informacje zapisane w plikach cookies w Twoim urządzeniu i jego pamięci podręcznej oraz dane lokalizacyjne generowane przez Twoje urządzenie, w celach marketingowych (obejmujących zautomatyzowaną analizę Twojej aktywności na stronach internetowych i w aplikacjach w celu ustalenia Twoich potencjalnych zainteresowań dla dostosowania reklamy i oferty) w tym na umieszczanie znaczników internetowych (cookies itp.) na Twoich urządzeniach i odczytywanie takich znaczników, kliknij przycisk „Przejdź do serwisu” lub zamknij to okno. </p>
-<p>Jeśli nie chcesz wyrazić zgody lub ograniczyć jej zakres, kliknij „Ustawienia zaawansowane”. </p>
-<p>Wyrażenie zgody jest dobrowolne. Możesz edytować zakres zgody (w tym np. udzielić jej dla danej grupy administratorów lub dla danego rodzaju działań), w tym wycofać ją całkowicie, klikając „Ustawienia zaawansowane” lub przechodząc na naszą stronę
-<a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">polityki prywatności</a>.</p>
-           <p>Powyższa zgoda dotyczy przetwarzania Twoich danych osobowych w celach marketingowych Zaufanych Partnerów. <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufani Partnerzy</a> to firmy z obszaru e-commerce i reklamodawcy oraz działające w ich imieniu domy mediowe i podobne organizacje, z którymi Grupa RAS Polska współpracuje lub które polecane są przez międzynarodowe organizacje branżowe takie jak np. organizacja IAB (Interactive Advertising Bureau). Niektórzy z <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a> mogą przetwarzać Twoje dane w węższym zakresie, niektórzy z nich mogą też przetwarzać te dane w oparciu o inną podstawę niż Twoja zgoda (np. w oparciu o uzasadniony interes administratora). Kompletną listę Zaufanych Partnerów wraz z zakresem danych przetwarzanych przez nich w oparciu o Twoją zgodę lub inną podstawę prawną znajdziesz bezpośrednio pod <a onclick="__tcfapi('showVendors', 2, function () {})">tym linkiem</a>.</p>
-<p>Podmioty z Grupy RAS Polska w ramach udostępnianych przez siebie usług internetowych przetwarzają Twoje dane opisane na wstępie, a także zagregowane informacje o wieku, płci i lokalizacji (wielkości miasta z którego pochodzisz itp.) pochodzące z Twoich kont w usługach świadczonych przez podmioty z Grupy RAS Polska w celach marketingowych w oparciu o prawnie uzasadniony, wspólny interes podmiotów Grupy RAS Polska. Dane te są jednocześnie danymi niezbędnymi do realizacji przez nas umowy zawartej z Tobą, która dotyczy korzystania przez Ciebie z naszych usług i serwisów internetowych, ze względu na właściwości tych usług. Treść tej umowy określa regulamin portalu Onet - <a href="https://polityka-prywatnosci.onet.pl/regulamin.html" target="_blank" rel="noopener">https://polityka-prywatnosci.onet.pl/regulamin.html</a> - lub regulaminy innych usług świadczonych przez podmioty z Grupy RAS Polska.</p>
-<p>Prawnie uzasadniony interes administratora to jedna z podstaw do przetwarzania danych osobowych (obok m.in. zgody czy konieczności realizacji umowy) i obejmuje on przypadki, w których administrator danych z uwagi na zgodne z prawem cele może przetwarzać dane osobowe nie godząc w prawa, wolności, interesy podmiotów danych. Przykładem takiej sytuacji opisanym w obowiązujących przepisach jest m.in. przetwarzanie danych osobowych do celów marketingu bezpośredniego.</p>
-<p>Prawnie uzasadniony interes administratora będzie stanowił podstawę prawną tylko dla takiego przetwarzania danych osobowych, które jest niezbędne dla realizacji celu wynikającego z tego interesu. Istnienie prawnie uzasadnionego interesu oceniane jest w określonym czasie i kontekście, w którym dane są zbierane. Badane jest czy osoba, której dane dotyczą może spodziewać się, że administrator przetwarza jej dane w określonym celu oraz czy jej interesy, prawa podstawowe i wolności pozostają z tym interesem w równowadze.</p>
-<p>Przetwarzanie takie nie wymaga dodatkowej zgody z Twojej strony, ale możesz mu się w każdej chwili sprzeciwić. O ile nie zdecydujesz inaczej, dokonując stosownych zmian ustawień w Twojej przeglądarce, podmioty z Grupy RAS Polska będą również instalować na Twoich urządzeniach pliki cookies i podobne oraz odczytywać informacje z takich plików. Bliższe informacje o cookies znajdziesz w akapicie „Cookies” pod koniec tej informacji.
-</p>
-    <p style="margin: 25px 0 10px 0; font-weight: 900">Administrator danych osobowych</p>
-    <p> Administratorem Twoich danych osobowych jest podmiot z Grupy RAS Polska, z którego serwisu lub aplikacji korzystasz. Naszą nazwę znajdziesz zawsze na samym dole strony po prawej stronie, a logo na planszy zawierającej niniejszą informację. Informację o powołaniu przez nas inspektora ochrony danych i jego danych kontaktowych znajdziesz też na samym dole strony w polityce prywatności. Administratorami Twoich danych osobowych będą także pozostałe podmioty z Grupy RAS Polska, których pełne dane możesz sprawdzić <a href="https://polityka-prywatnosci.onet.pl/grupa-rasp.html" target="_blank" rel="noopener">pod tym linkiem</a>.  Jeżeli wyrazisz zgodę, o którą wyżej prosimy, administratorami Twoich danych osobowych będą także nasi <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufani Partnerzy</a>. Listę Zaufanych Partnerów możesz sprawdzić w każdym momencie na stronie naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">polityki prywatności</a> i tam też zmodyfikować lub cofnąć swoje zgody. Pamiętaj, że cofnięcie zgód uniemożliwi realizację działań, których te zgody dotyczą, a więc np. zamiast otrzymywać treści, które odpowiadają Twoim zainteresowaniom możesz zacząć otrzymywać treści, które nie będą dla Ciebie interesujące.
-</p>
-		<p style="margin: 25px 0 10px 0; font-weight: 900">Podstawa i cel przetwarzania</p>
-	   <p > Twoje dane przetwarzamy w następujących celach:</p>
-        <br>
-        <ul style="list-style-position: inside; list-style-type: disc;">
-            <li style="margin-bottom: 20px">1. Jeśli zawieramy z Tobą umowę o realizację danej usługi (np. usługi zapewniającej Ci możliwość zapoznania się z jednym z naszych serwisów w oparciu o treść regulaminu tego serwisu), to możemy przetwarzać Twoje dane w zakresie niezbędnym do realizacji tej umowy. Gdy zakładasz konto poczty elektronicznej, to umowa o dostarczenie tego konta upoważnia nas do przetwarzania danych niezbędnych do jego zapewnienia (np. danych podanych przez Ciebie w profilu tego konta). Bez tego nie bylibyśmy w stanie zapewnić Ci usługi, a Ty nie mógłbyś z niej korzystać. Niepodanie takich danych uniemożliwi nam zawarcie i wykonanie umowy.</li>
-            <li style="margin-bottom: 20px">2. Zapewnianie bezpieczeństwa usługi (np. sprawdzenie, czy do Twojego konta nie loguje się nieuprawniona osoba), dokonanie pomiarów statystycznych, ulepszanie naszych usług i dopasowanie ich do potrzeb i wygody użytkowników (np. personalizowanie treści w usługach), jak również prowadzenie marketingu <span style="font-weight: bold">bezpośredniego</span> (także na zlecenie reklamodawców) lub promocji własnych usług (np. jeśli interesujesz się historią i oglądasz materiały historyczne w portalu Onet lub na innych stronach internetowych, to możemy Ci wyświetlić reklamę dotyczącą artykułu w serwisie Onet Podróże o historycznych trasach krajoznawczych). Takie przetwarzanie danych to realizacja naszych prawnie uzasadnionych interesów, w takim wypadku zawsze przeprowadzamy też test równowagi pomiędzy naszym uzasadnionym prawnie interesem, a prawami osób, których dane dotyczą.</li>
-            <li>3. Za Twoją zgodą usługi marketingowe dostarczą Ci nasi <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufani Partnerzy</a> oraz my dla podmiotów trzecich. Aby móc pokazać interesujące Cię reklamy (np. produktu, którego możesz potrzebować) reklamodawcy i ich przedstawiciele chcieliby mieć możliwość przetwarzania Twoich danych związanych z odwiedzanymi przez Ciebie stronami internetowymi. Udzielenie takiej zgody jest dobrowolne, nie musisz jej udzielać, nie pozbawi Cię to dostępu do naszych usług. Masz również możliwość ograniczenia zakresu lub zmiany zgody w dowolnym momencie.</li>
-        </ul>
-		<br>
-        <p> Twoje dane przetwarzane będą do czasu istnienia podstawy do ich przetwarzania, czyli w przypadku udzielenia zgody do momentu jej cofnięcia, ograniczenia lub innych działań z Twojej strony ograniczających tę zgodę, w przypadku niezbędności danych do wykonania umowy, przez czas jej wykonywania i ewentualnie okres przedawnienia roszczeń z niej (zwykle nie więcej niż 3 lata, a maksymalnie 6 lat), a w przypadku, gdy podstawą przetwarzania danych jest uzasadniony interes administratora, do czasu zgłoszenia przez Ciebie skutecznego sprzeciwu.</p>
-        <br>
-        <p><a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Pod tym linkiem</a> znajdziesz szczegółowy opis celów przetwarzania danych dla których możesz udzielić zgód (lub selektywnie bądź całościowo je odwołać), a poniżej prezentujemy ich rodzaje:</p>
-        <p style="margin: 25px 0 10px 0; font-weight: 900">Cele:</p>
-        <ul style="list-style-position: inside; list-style-type: disc;">
-            <li style="margin-bottom: 10px">1. Przechowywanie informacji na urządzeniu lub dostęp do nich</li>
-            <li style="margin-bottom: 10px">2. Wybór podstawowych reklam</li>
-            <li style="margin-bottom: 10px">3. Tworzenie profilu spersonalizowanych reklam</li>
-            <li style="margin-bottom: 10px">4. Wybór spersonalizowanych reklam</li>
-            <li style="margin-bottom: 10px">5. Tworzenie profilu spersonalizowanych treści</li>
-            <li style="margin-bottom: 10px">6. Wybór spersonalizowanych treści</li>
-            <li style="margin-bottom: 10px">7. Pomiar wydajności reklam</li>
-            <li style="margin-bottom: 10px">8. Pomiar wydajności treści</li>
-            <li style="margin-bottom: 10px">9. Stosowanie badań rynkowych w celu generowania opinii odbiorców</li>
-            <li style="margin-bottom: 10px">10. Opracowywanie i ulepszanie produktów</li>
-        </ul>
-        <p style="margin: 25px 0 10px 0; font-weight: 900">Funkcje specjalne:</p>
-        <ul style="list-style-position: inside; list-style-type: disc;">
-        	<li style="margin-bottom: 10px">1. Użycie dokładnych danych geolokalizacyjnych</li>
-            <li style="margin-bottom: 10px">2. Aktywne skanowanie charakterystyki urządzenia do celów identyfikacji</li>
-        </ul>
-	  <p style="margin: 25px 0 10px 0; font-weight: 900">Przekazywanie danych</p>
-        <p> Administratorzy danych mogą powierzać Twoje dane podwykonawcom IT, księgowym, agencjom marketingowym etc. Zrobią to jedynie w niezbędnym zakresie i na podstawie umowy o powierzenie przetwarzania danych zobowiązującej taki podmiot do odpowiedniego zabezpieczenia danych i niekorzystania z nich do własnych celów.</p>
-        <p style="margin: 25px 0 10px 0; font-weight: 900">Cookies</p>
-        <p> Na naszych stronach i w aplikacjach używamy znaczników internetowych takich jak pliki np. cookie lub local storage do zbierania i przetwarzania danych osobowych w celu personalizowania treści i reklam oraz analizowania ruchu na stronach, aplikacjach i w Internecie. W ten sposób technologię tę wykorzystują również podmioty z Grupy RAS Polska oraz nasi <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufani Partnerzy</a>, którzy także chcą dopasowywać reklamy do Twoich preferencji. Cookies to dane informatyczne zapisywane w plikach i przechowywane na Twoim urządzeniu końcowym (tj. twój komputer, tablet, smartphone itp.), które przeglądarka wysyła do serwera przy każdorazowym wejściu na stronę z tego urządzenia, podczas gdy odwiedzasz strony w Internecie. Szczegółową informację na temat plików cookie i ich funkcjonowania znajdziesz <a href="https://polityka-prywatnosci.onet.pl/grupa-rasp.html" target="_blank" rel="noopener">pod tym linkiem</a>. Pod tym linkiem znajdziesz także informację o tym jak zmienić ustawienia przeglądarki, aby ograniczyć lub wyłączyć funkcjonowanie plików cookies itp. oraz jak usunąć takie pliki z Twojego urządzenia.</p>
-		<p style="margin: 25px 0 10px 0; font-weight: 900">Twoje uprawnienia</p>
-        <p> Przysługują Ci następujące uprawnienia wobec Twoich danych i ich przetwarzania przez nas, inne podmioty z Grupy RAS Polska i <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a>:</p>
-		<br>
-          <p>1. Jeśli udzieliłeś zgody na przetwarzanie danych możesz ją w każdej chwili wycofać (cofnięcie zgody oczywiście nie uchyli zgodności z prawem przetwarzania już dokonanego na jej podstawie).</p>
-        <p>2. Masz również prawo żądania dostępu do Twoich danych osobowych, ich sprostowania, usunięcia lub ograniczenia przetwarzania, prawo do przeniesienia danych, wyrażenia sprzeciwu wobec przetwarzania danych oraz prawo do wniesienia skargi do organu nadzorczego, którym w Polsce jest Prezes Urzędu Ochrony Danych Osobowych. <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Pod tym adresem</a> znajdziesz dodatkowe informacje dotyczące przetwarzania danych i Twoich uprawnień.
-        </p>`,
+			title: 'DEV - Szanowna Użytkowniczko, Szanowny Użytkowniku,',
+			description: `<p> Zanim klikniesz „Przejdź do serwisu” lub zamkniesz to okno prosimy o przeczytanie do końca tej informacji – dotyczy ona Twoich danych osobowych.</p>
+<p><span style="font-weight: bold">Klikając „Przejdź do serwisu” lub zamykając okno przez kliknięcie w znaczek X, udzielasz zgody na przetwarzanie Twoich danych osobowych</span> dotyczących Twojej aktywności w Internecie przez <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a> w celach marketingowych (w tym dla personalizacji reklam i dokonywania pomiarów). Szczegółowy opis celów i zakresu przetwarzanych danych znajdziesz <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tutaj</a>. Zgoda jest dobrowolna. Możesz jej odmówić lub ograniczyć jej zakres klikając w "Ustawienia zaawansowne".</p>
+<p> Podmioty z <a onclick="__tcfapi('showVendors', 2, function () {})">Grupy RAS Polska</a> jako dostawcy usług internetowych z których korzystasz przetwarzają Twoje dane podane powyżej oraz dane z Twoich kont w tych usługach w ww. celach w oparciu o prawnie uzasadniony, wspólny interes tych podmiotów. Przetwarzanie to nie wymaga zgody z Twojej strony, ale możesz mu się w każdej chwili sprzeciwić.</p>
+<p>Twoje prawa:<br> Udzieloną zgodę możesz wycofać.<br> Możesz żądać dostępu do Twoich danych osobowych, ich sprostowania, usunięcia,  ograniczenia przetwarzania, przeniesienia danych, wyrazić sprzeciw wobec ich przetwarzania i wnieść skargę do Prezesa U.O.D.O.</p>
+<p>Szczegółowe informacje znajdziesz w „Ustawieniach zaawansowanych”.</p>
+<p>Korzystanie z serwisu bez zmiany ustawień przeglądarki oznacza też zgodę na umieszczanie znaczników internetowych (cookies itp.) na Twoich urządzeniach i odczytywanie ich przez podmioty z <a onclick="__tcfapi('showVendors', 2, function () {})">Grupy RAS Polska</a> oraz przez <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a>. Zgody tej możesz odmówić lub ją ograniczyć poprzez zmianę ustawień przeglądarki (szczegółowe informacje znajdziesz <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tutaj</a>).</p>
+`,
 			acceptAll: 'Przejdź do serwisu',
 			showPurposes: 'Ustawienia zaawansowane'
 		},
@@ -75,13 +27,202 @@ export default {
 			tab1: {
 				menu: 'Informacje ogólne',
 				title: 'Szanowna Użytkowniczko, Szanowny Użytkowniku,',
-				description: `<p>Znajdujesz się z szczegółowej sekcji mechanizmu umożliwiającego zarządzanie procesami przetwarzania Twoich danych osobowych na stronach internetowych i innych narzędziach udostępnianych przez podmioty z Grupy Ringier Axel Springer Polska. </p>
+				description: `<p>Znajdujesz się z szczegółowej sekcji mechanizmu umożliwiającego zarządzanie procesami przetwarzania Twoich danych osobowych na stronach internetowych i innych narzędziach udostępnianych przez podmioty z Grupy Ringier Axel Springer Polska.</p>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900">Zgoda i inne podstawy przetwarzania danych</p>
+<p>Jeśli chcesz zgodzić się na przetwarzanie przez <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a> Grupy RAS Polska Twoich danych osobowych, zawierających informacje o odwiedzonych stronach i aplikacjach internetowych, informacje zapisane w plikach cookies w Twoim urządzeniu i jego pamięci podręcznej oraz dane lokalizacyjne generowane przez Twoje urządzenie, w celach marketingowych (obejmujących zautomatyzowaną analizę Twojej aktywności na stronach internetowych i w aplikacjach w celu ustalenia Twoich potencjalnych zainteresowań dla dostosowania reklamy i oferty) w tym na umieszczanie znaczników internetowych (cookies itp.) na Twoich urządzeniach i odczytywanie takich znaczników, kliknij przycisk „Przejdź do serwisu” lub zamknij to okno. Jeśli nie chcesz wyrazić zgody lub ograniczyć jej zakres, kliknij „Ustawienia zaawansowane”. Wyrażenie zgody jest dobrowolne. Możesz edytować zakres zgody (w tym np. udzielić jej dla danej grupy administratorów lub dla danego rodzaju działań), w tym wycofać ją całkowicie, klikając „Ustawienia zaawansowane” lub przechodząc na naszą stronę <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">polityki prywatności</a>.</p>
+<br>
+<p>Powyższa zgoda dotyczy przetwarzania Twoich danych osobowych w celach marketingowych Zaufanych Partnerów. Zaufani Partnerzy to firmy z obszaru e-commerce i reklamodawcy oraz działające w ich imieniu domy mediowe i podobne organizacje, z którymi Grupa RAS Polska współpracuje lub które polecane są przez międzynarodowe organizacje branżowe takie jak np. organizacja IAB (Interactive Advertising Bureau). Niektórzy z Zaufanych Partnerów mogą przetwarzać Twoje dane w węższym zakresie, niektórzy z nich mogą też przetwarzać te dane w oparciu o inną podstawę niż Twoja zgoda (np. w oparciu o uzasadniony interes administratora). Kompletną listę Zaufanych Partnerów wraz z zakresem danych przetwarzanych przez nich w oparciu o Twoją zgodę lub inną podstawę prawną znajdziesz bezpośrednio pod tym linkiem.</p>
+<br>
+<p>Podmioty z Grupy RAS Polska w ramach udostępnianych przez siebie usług internetowych przetwarzają Twoje dane opisane na wstępie, a także zagregowane informacje o wieku, płci i lokalizacji (wielkości miasta z którego pochodzisz itp.) pochodzące z Twoich kont w usługach świadczonych przez podmioty z Grupy RAS Polska w celach marketingowych w oparciu o prawnie uzasadniony, wspólny interes podmiotów Grupy RAS Polska. Dane te są jednocześnie danymi niezbędnymi do realizacji przez nas umowy zawartej z Tobą, która dotyczy korzystania przez Ciebie z naszych usług i serwisów internetowych, ze względu na właściwości tych usług. Treść tej umowy określa regulamin portalu Onet - https://polityka-prywatnosci.onet.pl/regulamin.html - lub regulaminy innych usług świadczonych przez podmioty z Grupy RAS Polska.</p>
+<br>
+<p>Prawnie uzasadniony interes administratora to jedna z podstaw do przetwarzania danych osobowych (obok m.in. zgody czy konieczności realizacji umowy) i obejmuje on przypadki, w których administrator danych z uwagi na zgodne z prawem cele  może przetwarzać dane osobowe nie godząc w prawa, wolności, interesy podmiotów danych. Przykładem takiej sytuacji opisanym w obowiązujących przepisach jest m.in. przetwarzanie danych osobowych do celów marketingu bezpośredniego.</p>
+<p>Prawnie uzasadniony interes administratora będzie stanowił podstawę prawną tylko dla takiego przetwarzania danych osobowych, które jest niezbędne dla realizacji celu wynikającego z tego interesu. Istnienie prawnie uzasadnionego interesu oceniane jest w określonym czasie i kontekście, w którym dane są zbierane. Badane jest czy osoba, której dane dotyczą może spodziewać się, że administrator przetwarza jej dane w określonym celu oraz czy jej interesy, prawa podstawowe i wolności pozostają z tym interesem w równowadze.</p>
+<br>
+<p>Przetwarzanie takie nie wymaga dodatkowej zgody z Twojej strony, ale możesz mu się w każdej chwili sprzeciwić. O ile nie zdecydujesz inaczej, dokonując stosownych zmian ustawień w Twojej przeglądarce, podmioty z Grupy RAS Polska będą również instalować na Twoich urządzeniach pliki cookies i podobne oraz odczytywać informacje z takich plików. Bliższe informacje o cookies znajdziesz w akapicie „Cookies” pod koniec tej informacji.</p>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900">Administrator danych osobowych</p>
+<p>Administratorem Twoich danych osobowych jest podmiot z Grupy RAS Polska, z którego serwisu lub aplikacji korzystasz. Naszą nazwę znajdziesz zawsze na samym dole strony po prawej stronie, a logo na planszy zawierającej niniejszą informację. Informację o powołaniu przez nas inspektora ochrony danych i jego danych kontaktowych znajdziesz też na samym dole strony w polityce prywatności. Administratorami Twoich danych osobowych będą także pozostałe podmioty z Grupy RAS Polska, których pełne dane możesz sprawdzić <a onclick="__tcfapi('showVendors', 2, function () {})">pod tym linkiem</a>. Jeżeli wyrazisz zgodę, o którą wyżej prosimy, administratorami Twoich danych osobowych będą także nasi Zaufani Partnerzy. Listę Zaufanych Partnerów możesz sprawdzić w każdym momencie na stronie naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">polityki prywatności</a> i tam też zmodyfikować lub cofnąć swoje zgody. Pamiętaj, że cofnięcie zgód uniemożliwi realizację działań, których te zgody dotyczą, a więc np. zamiast otrzymywać treści, które odpowiadają Twoim zainteresowaniom możesz zacząć otrzymywać treści, które nie będą dla Ciebie interesujące.</p>
+    
+<p style="margin: 25px 0 10px 0; font-weight: 900">Podstawa i cel przetwarzania</p>
+<p> Twoje dane przetwarzamy w następujących celach:</p>
+<br>
+<ul style="list-style-position: inside; list-style-type: disc;">
+	<li style="margin-bottom: 20px">1. Jeśli zawieramy z Tobą umowę o realizację danej usługi (np. usługi zapewniającej Ci możliwość zapoznania się z jednym z naszych serwisów w oparciu o treść regulaminu tego serwisu), to możemy przetwarzać Twoje dane w zakresie niezbędnym do realizacji tej umowy. Gdy zakładasz konto poczty elektronicznej, to umowa o dostarczenie tego konta upoważnia nas do przetwarzania danych niezbędnych do jego zapewnienia (np. danych podanych przez Ciebie w profilu tego konta). Bez tego nie bylibyśmy w stanie zapewnić Ci usługi, a Ty nie mógłbyś z niej korzystać. Niepodanie takich danych uniemożliwi nam zawarcie i wykonanie umowy.</li>
+	<li style="margin-bottom: 20px">2. Zapewnianie bezpieczeństwa usługi (np. sprawdzenie, czy do Twojego konta nie loguje się nieuprawniona osoba), dokonanie pomiarów statystycznych, ulepszanie naszych usług i dopasowanie ich do potrzeb i wygody użytkowników (np. personalizowanie treści w usługach), jak również prowadzenie marketingu <b>bezpośredniego</b> (także na zlecenie reklamodawców) lub promocji własnych usług (np. jeśli interesujesz się historią i oglądasz materiały historyczne w portalu Onet lub na innych stronach internetowych, to możemy Ci wyświetlić reklamę dotyczącą artykułu w serwisie Onet Podróże o historycznych trasach krajoznawczych). Takie przetwarzanie danych to realizacja naszych prawnie uzasadnionych interesów, w takim wypadku zawsze przeprowadzamy też test równowagi pomiędzy naszym uzasadnionym prawnie interesem, a prawami osób, których dane dotyczą.</li>
+	<li>3. Za Twoją zgodą usługi marketingowe dostarczą Ci nasi Zaufani Partnerzy oraz my dla podmiotów trzecich. Aby móc pokazać interesujące Cię reklamy (np. produktu, którego możesz potrzebować) reklamodawcy i ich przedstawiciele chcieliby mieć możliwość przetwarzania Twoich danych związanych z odwiedzanymi przez Ciebie stronami internetowymi. Udzielenie takiej zgody jest dobrowolne, nie musisz jej udzielać, nie pozbawi Cię to dostępu do naszych usług. Masz również możliwość ograniczenia zakresu lub zmiany zgody w dowolnym momencie.</li>
+</ul>
+<br>
+<p>Twoje dane przetwarzane będą do czasu istnienia podstawy do ich przetwarzania, czyli w przypadku udzielenia zgody do momentu jej cofnięcia, ograniczenia lub innych działań z Twojej strony ograniczających tę zgodę, w przypadku niezbędności danych do wykonania umowy, przez czas jej wykonywania i ewentualnie okres przedawnienia roszczeń z niej (zwykle nie więcej niż 3 lata, a maksymalnie 6 lat), a w przypadku, gdy podstawą przetwarzania danych jest uzasadniony interes administratora, do czasu zgłoszenia przez Ciebie skutecznego sprzeciwu.</p>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900">Przekazywanie danych</p>
+<p>Administratorzy danych mogą powierzać Twoje dane podwykonawcom IT, księgowym, agencjom marketingowym etc. Zrobią to jedynie w niezbędnym zakresie i na podstawie umowy o powierzenie przetwarzania danych zobowiązującej taki podmiot do odpowiedniego zabezpieczenia danych i niekorzystania z nich do własnych celów.</p>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900">Cookies</p>
+<p>Na naszych stronach i w aplikacjach używamy znaczników internetowych takich jak pliki np. cookie lub local storage do zbierania i przetwarzania danych osobowych w celu personalizowania treści i reklam oraz analizowania ruchu na stronach, aplikacjach i w Internecie. W ten sposób technologię tę wykorzystują również podmioty z Grupy RAS Polska oraz nasi Zaufani Partnerzy, którzy także chcą dopasowywać reklamy do Twoich preferencji. Cookies to dane informatyczne zapisywane w plikach i przechowywane na Twoim urządzeniu końcowym (tj. twój komputer, tablet, smartphone itp.), które przeglądarka wysyła do serwera przy każdorazowym wejściu na stronę z tego urządzenia, podczas gdy odwiedzasz strony w Internecie. Szczegółową informację na temat plików cookie i ich funkcjonowania znajdziesz <a href="https://polityka-prywatnosci.onet.pl/grupa-rasp.html" target="_blank" rel="noopener">pod tym linkiem</a>. Pod tym linkiem znajdziesz także informację o tym jak zmienić ustawienia przeglądarki, aby ograniczyć lub wyłączyć funkcjonowanie plików cookies itp. oraz jak usunąć takie pliki z Twojego urządzenia.</p>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900">Twoje uprawnienia</p>
+<p>Przysługują Ci następujące uprawnienia wobec Twoich danych i ich przetwarzania przez nas, inne podmioty z Grupy RAS Polska i Zaufanych Partnerów:</p>
+<br>
+<p>1. Jeśli udzieliłeś zgody na przetwarzanie danych możesz ją w każdej chwili wycofać (cofnięcie zgody oczywiście nie uchyli zgodności z prawem przetwarzania już dokonanego na jej podstawie);</p>
+<p>2. Masz również prawo żądania dostępu do Twoich danych osobowych, ich sprostowania, usunięcia lub ograniczenia przetwarzania, prawo do przeniesienia danych, wyrażenia sprzeciwu wobec przetwarzania danych oraz prawo do wniesienia skargi do organu nadzorczego, którym w Polsce jest Prezes Urzędu Ochrony Danych Osobowych. <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Pod tym adresem</a> znajdziesz dodatkowe informacje dotyczące przetwarzania danych i Twoich uprawnień.</p>
+<br>
 <p style="margin: 25px 0 10px 0">W zakładce widocznej poniżej uzyskasz niezbędne informacje o celach, zakresach i podstawach przetwarzania Twoich danych osobowych, administratorach tych danych oraz będziesz mogła/mógł zarządzić tym przetwarzaniem.</p>
-<p style="margin: 25px 0 10px 0">Możesz w niej określić którym z <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a> chcesz wyrazić zgodę na przetwarzanie Twoich danych osobowych, a także ustalić cele przetwarzania których dotyczyć ma Twoja zgoda – służy do tego suwak oznaczony jako „zgoda”. Pozostawienie suwaka odznaczonego (ma on wtedy kolor szary) oznacza brak zgody, zaś kliknięcie w suwak powodować będzie wyrażenie zgody (suwak zmieni kolor i przestanie być szary), której on dotyczy – jej zakres jest podany przy danym suwaku. Pamiętaj, by potwierdzić Twój wybór klikając po dokonaniu wybranych przez Ciebie ustawień w przycisk <span style="font-weight: bold; display: inline">„Zapisz i zamknij”</span>.</p>\
+<p style="margin: 25px 0 10px 0">Możesz w niej określić którym z Zaufanych Partnerów chcesz wyrazić zgodę na przetwarzanie Twoich danych osobowych, a także ustalić cele przetwarzania których dotyczyć ma Twoja zgoda – służy do tego suwak oznaczony jako „zgoda”. Pozostawienie suwaka odznaczonego (ma on wtedy kolor szary) oznacza brak zgody, zaś kliknięcie w suwak powodować będzie wyrażenie zgody (suwak zmieni kolor i przestanie być szary)której on dotyczy – jej zakres jest podany przy danym suwaku. Pamiętaj, by potwierdzić Twój wybór klikając po dokonaniu wybranych przez Ciebie ustawień w przycisk <b>„Zapisz i zamknij”</b>.</p>
 <p style="margin: 25px 0 10px 0">Niektórzy z <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a> przetwarzać mogą Twoje dane w oparciu o ich uzasadniony interes. W takim wypadku nie udzielasz im zgody na przetwarzanie Twoich danych, ale możesz wyrazić sprzeciw wobec takiego przetwarzania. W tym celu skorzystaj z suwaka oznaczonego jako „UIA”.</p>
-<p style="margin: 25px 0 10px 0">Zgodnie ze standardem wprowadzonym przez IAB Europe udostępniany mechanizm nie zawiera technicznej możliwości wyrażenia sprzeciwu wobec przetwarzania danych w najbardziej podstawowych celach obejmujących: (i) zapewnienie bezpieczeństwa technologicznego, zabezpieczenia przed oszustwami, usuwaniem szkodliwych programów, oraz (ii) techniczne umożliwienie interakcji użytkownika z prezentowaną treścią. Ściśle w celu realizacji zadań opisanych w pkt (i) powyżej i wyłącznie w niezbędnym zakresie mogą być przetwarzane dane geolokalizacyjne i dane będące efektem skanowania urządzenia dla celów identyfikacji. . W odniesieniu do ww. sytuacji zawsze przeprowadzamy test równowagi pomiędzy naszym uzasadnionym prawnie interesem, a prawami osób, których dane dotyczą. Jeżeli masz jakiekolwiek uwagi lub zastrzeżenia w powyższym zakresie lub chciałbyś indywidualnie złożyć sprzeciw, prosimy o kontakt pod adresem <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>.</p>
-<p style="margin: 25px 0 10px 0">Na naszych stronach internetowych i w aplikacjach używamy technologii, takich jak pliki cookie, local storage i podobnych służących do zbierania i przetwarzania danych osobowych oraz danych eksploatacyjnych w celu personalizowania udostępnianych treści i reklam oraz analizowania ruchu na naszych stronach. Te pliki cookie pomagają poprawić jakość treści reklamowych na stronach i w aplikacjach. Dzięki tym technologiom możemy zapewnić Ci lepszą obsługę poprzez serwowanie reklam lepiej dopasowanych do Twoich preferencji i serwowanie treści, które mogą Cię bardziej zainteresować. Pliki te pozwalają nam również lepiej badać i analizować zainteresowanie naszymi stronami i treściami, które Ci serwujemy. Dzięki tym analizom możemy zadbać o jakość serwowanych przez nas treści. Szczegółową informację na temat plików cookie i ich funkcjonowania znajdziesz pod <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tym linkiem</a>. Znajdziesz tam także informację o tym jak zmienić ustawienia przeglądarki, by ograniczyć lub wyłączyć funkcjonowanie plików cookies itp. oraz jak usunąć takie pliki z Twojego urządzenia.</p>
-<p style="margin: 25px 0 10px 0">W razie jakichkolwiek wątpliwości zapraszamy do kontaktu na adres <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>. Pomocne informacje znajdziesz także zawsze w naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Polityce Prywatności</a>.</p>
+<br>
+<p><a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Pod tym linkiem</a> znajdziesz szczegółowy opis celów przetwarzania danych dla których możesz udzielić zgód (lub selektywnie bądź całościowo je odwołać), a poniżej prezentujemy ich rodzaje z opisem stworzonym przez IAB Europe:</p>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900">Cele:</p>
+<ul style="list-style-position: inside; list-style-type: disc;">
+	<li style="margin-bottom: 10px">
+		1. Przechowywanie informacji na urządzeniu lub dostęp do nich
+		<br>
+		(Dostawcy mogą:
+		<br>
+		- przechowywać na urządzeniu informacje, takie jak pliki cookie i identyfikatory urządzenia przedstawiane użytkownikowi, oraz uzyskiwać do nich dostęp)
+	</li>
+	<li style="margin-bottom: 10px">
+		2. Wybór podstawowych reklam
+		<br>
+		(Aby dokonać podstawowego wyboru reklam, dostawcy mogą: 
+		<br>
+		- używać informacji w czasie rzeczywistym na temat kontekstu, w jakim zostanie wyświetlona reklama, aby wyświetlić reklamę, w tym informacji o treści i urządzeniu, takich jak: typ urządzenia i jego parametry, aplikacja klienta, adres URL, adres IP; 
+		<br>
+		- używać nieprecyzyjnych (przybliżona lokalizacja obejmująca co najmniej promień 500 metrów) danych geolokalizacyjnych użytkownika; 
+		<br>
+		- kontrolować częstotliwość reklam wyświetlanych użytkownikowi; 
+		<br>
+		- ustawić kolejność wyświetlania reklam użytkownikowi; 
+		<br>
+		- zapobiec pojawieniu się reklamy w nieodpowiednim kontekście redakcyjnym (niebezpiecznym dla marki). 
+		<br>
+		Dostawcy nie mogą:
+		<br>
+		- tworzyć profilu spersonalizowanych reklam przy użyciu tych informacji do wyboru przyszłych reklam bez osobnej podstawy prawnej do utworzenia profilu spersonalizowanych reklam.)
+	</li>
+	<li style="margin-bottom: 10px">
+		3. Tworzenie profilu spersonalizowanych reklam
+		<br>
+		(Aby stworzyć profil spersonalizowanych reklam, dostawcy mogą:
+		<br>
+		- zbierać informacje o użytkowniku, w tym o działaniach użytkownika, jego zainteresowaniach, wizytach na stronach lub w aplikacjach, dane demograficzne lub lokalizacyjne w celu stworzenia lub edytowania profilu użytkownika w celu personalizacji reklam;
+		<br>
+		- łączyć te informacje z innymi wcześniej zebranymi informacjami, w tym z różnych witryn i aplikacji, w celu stworzenia lub edytowania profilu użytkownika w celu personalizacji reklam.)
+	</li>
+	<li style="margin-bottom: 10px">
+		4. Wybór spersonalizowanych reklam
+		<br>
+		(Aby wybrać spersonalizowane reklamy, dostawcy mogą:
+		<br>
+		- wybrać spersonalizowane reklamy w oparciu o profil użytkownika lub inne historyczne dane użytkownika, w tym wcześniejsze działania użytkownika, zainteresowania, wizyty na stronach lub w aplikacjach, lokalizację lub dane demograficzne.
+	</li>
+	<li style="margin-bottom: 10px">
+		5. Tworzenie profilu spersonalizowanych treści
+		<br>
+		(Aby stworzyć profil spersonalizowanych treści, dostawcy mogą:
+		<br>
+		- zbierać informacje o użytkowniku, w tym działaniach użytkownika, jego zainteresowaniach, wizytach na stronach lub w aplikacjach, dane demograficzne lub lokalizacyjne w celu stworzenia lub edytowania profilu użytkownika w celu personalizacji treści.)
+	</li>
+	<li style="margin-bottom: 10px">
+		6. Wybór spersonalizowanych treści
+		<br>
+		(Aby wybrać spersonalizowane treści, dostawcy mogą:
+		<br>
+		- wybrać spersonalizowane treści w oparciu o profil użytkownika lub inne historyczne dane użytkownika, w tym wcześniejsze działania użytkownika, zainteresowania, wizyty na stronach lub w aplikacjach, lokalizację lub dane demograficzne.)
+	</li>
+	<li style="margin-bottom: 10px">
+		7. Pomiar wydajności reklam
+		<br>
+		(Aby dokonać pomiaru wydajności reklam, dostawcy reklam mogą:
+		<br>
+		- zmierzyć, czy ii w jaki sposób reklamy były dostarczane użytkownikowi i i jaka była jego reakcja;
+		<br>
+		- dostarczać raporty dotyczące reklam, w tym ich skuteczności i wydajności;
+		<br>
+		- dostarczać raporty dotyczące użytkowników, którzy zareagowali na reklamy, z użyciem danych obserwowanych podczas reakcji użytkownika na tę reklamę;
+		<br>
+		- dostarczać raporty wydawcom na temat reklam wyświetlanych na ich powierzchni;
+		<br>
+		- zmierzyć, czy reklama jest obsługiwana w odpowiednim środowisku redakcyjnym (bezpieczeństwo marki);
+		<br>
+		- określić, w jakiej wartości procentowej reklama mogła zostać obejrzana, a także czas trwania tej możliwości obejrzenia. 
+		<br>
+		Dostawcy nie mogą:
+		<br>
+		- stosować danych pochodzących z analizy panelu lub podobnych odbiorców do danych pomiarowych z reklam bez odrębnej podstawy prawnej do zastosowania badań rynku w celu wygenerowania spostrzeżeń odbiorców.)
+	</li>
+	<li style="margin-bottom: 10px">
+		8. Pomiar wydajności treści
+		<br>
+		(Aby dokonać pomiaru wydajności treści, dostawcy mogą:
+		<br>
+		- zmierzyć i sporządzić raport na temat tego, czy treści były dostarczane użytkownikom i jaka była ich reakcja;
+		<br>
+		- dostarczać raporty, używając bezpośrednio mierzalnych lub znanych informacji o użytkownikach, którzy zareagowali na treść.
+		<br>
+		Dostawcy nie mogą:
+		<br>
+		- zmierzyć, czy i w jaki sposób reklamy (w tym reklamy natywne) były dostarczane użytkownikowi i jaka była jego reakcja;
+		<br>
+		-  stosować danych pochodzących z analizy panelu lub podobnych odbiorców do danych pomiarowych z reklam bez odrębnej podstawy prawnej do zastosowania badań rynku w celu wygenerowania spostrzeżeń odbiorców.)
+	</li>
+	<li style="margin-bottom: 10px">
+		9. Stosowanie badań rynkowych w celu generowania opinii odbiorców
+		<br>
+		(Aby zastosować badania rynkowe w celu generowania opinii odbiorców, dostawcy mogą:
+		<br>
+		- dostarczać reklamodawcom lub ich przedstawicielom zbiorcze raporty na temat odbiorców, do których dotarły ich reklamy, poprzez analizę panelową i podobną;
+		<br>
+		- dostarczać zbiorcze raporty wydawcom na temat odbiorców, do których dotarły treści lub reklamy na ich terenie i którzy zareagowali na te treści lub reklamy, poprzez zastosowanie analizy panelowej i podobnej;
+		<br>
+		- powiązać dane offline z użytkownikiem online na cele badań rynkowych w celu wygenerowania spostrzeżeń odbiorców, jeśli dostawcy zdecydowali się na dopasowanie i połączenie źródeł danych offline;
+		<br>
+		- Połączyć tę informację z inną informacją zebraną wcześniej, w tym z różnych witryn i aplikacji.
+		<br>
+		Dostawcy nie mogą: 
+		<br>
+		- mierzyć wydajności i skuteczności reklam, które wyświetlono konkretnemu użytkownikowi i na które on zareagował, bez odrębnej podstawy prawnej do pomiaru wydajności reklam;
+		<br>
+		- mierzyć, jakie treści zaprezentowano konkretnemu użytkownikowi i jak na nie zareagował, bez odrębnej podstawy prawnej do pomiaru wydajności treści.)
+	</li>
+	<li style="margin-bottom: 10px">
+		10. Opracowywanie i ulepszanie produktów
+		<br>
+		( Aby opracowywać nowe produkty i ulepszać istniejące produkty, dostawcy mogą:
+		<br>
+		- wykorzystywać informacje w celu uzupełniania istniejących produktów nowymi funkcjami i opracowywania nowych produktów;
+		<br>
+		- tworzyć nowe modele i algorytmy poprzez uczenie maszynowe.
+		<br>
+		Dostawcy nie mogą:
+		<br>
+		- przeprowadzać w tym celu żadnych innych operacji przetwarzania danych dozwolonych w innym celu.)
+	</li>
+</ul>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900">Funkcje specjalne:</p>
+<ul style="list-style-position: inside; list-style-type: disc;">
+	<li style="margin-bottom: 10px">
+		1. Użycie dokładnych danych geolokalizacyjnych
+		<br>
+		(Dostawcy mogą:
+		<br>
+		- gromadzić i obsługiwać dokładne dane geolokalizacyjne na potrzeby realizacji jednego albo większej liczby celów. Dokładna geolokalizacja oznacza, że nie ma ograniczeń w dokładności lokalizacji użytkownika; może być dokładna do kilku metrów.)
+	</li>
+	<li style="margin-bottom: 10px">
+		2. Aktywne skanowanie charakterystyki urządzenia do celów identyfikacji
+		<br>
+		(Dostawcy mogą:
+		<br>
+		- stworzyć identyfikator przy użyciu danych zebranych poprzez aktywne skanowanie urządzenia w celu uzyskania określonych cech, np. zainstalowanych czcionek lub rozdzielczości ekranu;
+		<br>
+		- użyć takiego identyfikatora, aby ponownie zidentyfikować urządzenie.)	
+	</li>
+</ul>
+
+<p style="margin: 25px 0 10px 0">Zgodnie ze standardem wprowadzonym przez IAB Europe udostępniany mechanizm nie zawiera technicznej możliwości wyrażenia sprzeciwu wobec przetwarzania danych w najbardziej podstawowych celach obejmujących: (i) zapewnienie bezpieczeństwa technologicznego, zabezpieczenia przed oszustwami, usuwaniem szkodliwych programów, oraz (ii) techniczne umożliwienie interakcji użytkownika z prezentowaną treścią. Ściśle w celu realizacji zadań opisanych w pkt (i) powyżej i wyłącznie w niezbędnym zakresie mogą być przetwarzane dane geolokalizacyjne i dane będące efektem skanowania urządzenia dla celów identyfikacji. W odniesieniu do ww. sytuacji zawsze przeprowadzamy test równowagi pomiędzy naszym uzasadnionym prawnie interesem, a prawami osób, których dane dotyczą Jeżeli masz jakiekolwiek uwagi lub zastrzeżenia w powyższym zakresie lub chciałbyś indywidualnie złożyć sprzeciw, prosimy o kontakt pod adresem <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>.</p>
+<p style="margin: 25px 0 10px 0">Na naszych stronach internetowych i w aplikacjach używamy technologii, takich jak pliki cookie, local storage i podobnych służących do zbierania i przetwarzania danych osobowych oraz danych eksploatacyjnych w celu personalizowania udostępnianych treści i reklam oraz analizowania ruchu na naszych stronach. Te pliki cookie pomagają poprawić jakość treści reklamowych na stronach i w aplikacjach. Dzięki tym technologiom możemy zapewnić Ci lepszą obsługę poprzez serwowanie reklam lepiej dopasowanych do Twoich preferencji i serwowanie treści, które mogą Cię bardziej zainteresować. Pliki te pozwalają nam również lepiej badać i analizować zainteresowanie naszymi stronami i treściami, które Ci serwujemy. Dzięki tym analizom możemy zadbać o jakość serwowanych przez nas treści. Szczegółową informację na temat plików cookie i ich funkcjonowania znajdziesz pod <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tym linkiem</a>. Znajdziesz tam także informację o tym jak zmienić ustawienia przeglądarki, by ograniczyć lub wyłączyć funkcjonowanie plików cookies itp. oraz jak usunąć takie pliki z Twojego urządzenia. W razie jakichkolwiek wątpliwości zapraszamy do kontaktu na adres <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>. Pomocne informacje znajdziesz także zawsze w naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Polityce Prywatności</a>.</p>
 `,
 			},
 			tab2: {
@@ -89,7 +230,7 @@ export default {
 			}
 		},
 		publisherConsents: {
-			title: "Podstawy prawne przetwarzania danych przez Wydawcę (Uzasadniony interes administratora)",
+			title: "Podstawy prawne przetwarzania danych przez Wydawcę (Uzasadniony Interes Administratora)",
 		},
 		vendorConsents: {
 			title: "Zgody dla Partnerów",
