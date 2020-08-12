@@ -512,6 +512,47 @@ describe('store', () => {
 		expect(positiveConsentsCount).to.equal(0);
 	});
 
+	it('should initialize contract purposes as consent based', () => {
+		const store = new Store({
+			cmpId: CMP_ID
+		});
+		config.update({contractPurposeIds: [1, 2], legIntPurposeIds: [3, 4 ,5, 6, 7, 8, 9, 10]});
+
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		expect(Array.from(store.tcModel.publisherConsents)).to.deep.equal([[1, true], [2, true]]);
+	});
+
+	it('should not unset contract purpose as publisher purpose when all purposes are rejected (case when user open tab2)', () => {
+		const store = new Store({
+			cmpId: CMP_ID
+		});
+		config.update({contractPurposeIds: [1, 2], legIntPurposeIds: [3, 4 ,5, 6, 7, 8, 9, 10]});
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		store.selectAllPublisherPurposes(false, true);
+		store.selectAllPublisherLegitimateInterests(false, true);
+		store.selectAllPurposes(false, true);
+		config.contractPurposeIds.concat(config.legIntPurposeIds).forEach(id => store.selectPublisherPurpose(id, false));
+
+		expect(Array.from(store.tcModel.publisherConsents)).to.deep.equal([[1, true], [2, true]]);
+	});
+
+	it('should not unset contract purposes as vendor purposes when all purposes are rejected (case when user open tab2)', () => {
+		const store = new Store({
+			cmpId: CMP_ID
+		});
+		config.update({contractPurposeIds: [1, 2], legIntPurposeIds: [3, 4 ,5, 6, 7, 8, 9, 10]});
+		store.setCmpApi(cmpApi);
+		store.updateVendorList(VENDOR_LIST);
+
+		config.contractPurposeIds.concat(config.legIntPurposeIds).forEach(id => store.selectPurpose(id, false));
+
+		expect(Array.from(store.tcModel.purposeConsents)).to.deep.equal([[1, true], [2, true]]);
+	});
+
 	it('filters vendors to obtain ids of those with legitimate interest', () => {
 		const store = new Store({
 			cmpId: CMP_ID
