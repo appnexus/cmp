@@ -228,17 +228,17 @@ export default {
 
 <p style="margin: 25px 0 10px 0">Zgodnie ze standardem wprowadzonym przez IAB Europe udostępniany mechanizm nie zawiera technicznej możliwości wyrażenia sprzeciwu wobec przetwarzania danych w najbardziej podstawowych celach obejmujących: (i) zapewnienie bezpieczeństwa technologicznego, zabezpieczenia przed oszustwami, usuwaniem szkodliwych programów, oraz (ii) techniczne umożliwienie interakcji użytkownika z prezentowaną treścią. Ściśle w celu realizacji zadań opisanych w pkt (i) powyżej i wyłącznie w niezbędnym zakresie mogą być przetwarzane dane geolokalizacyjne i dane będące efektem skanowania urządzenia dla celów identyfikacji. W odniesieniu do ww. sytuacji zawsze przeprowadzamy test równowagi pomiędzy naszym uzasadnionym prawnie interesem, a prawami osób, których dane dotyczą Jeżeli masz jakiekolwiek uwagi lub zastrzeżenia w powyższym zakresie lub chciałbyś indywidualnie złożyć sprzeciw, prosimy o kontakt pod adresem <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>.</p>
 <p style="margin: 25px 0 10px 0">Na naszych stronach internetowych i w aplikacjach używamy technologii, takich jak pliki cookie, local storage i podobnych służących do zbierania i przetwarzania danych osobowych oraz danych eksploatacyjnych w celu personalizowania udostępnianych treści i reklam oraz analizowania ruchu na naszych stronach. Te pliki cookie pomagają poprawić jakość treści reklamowych na stronach i w aplikacjach. Dzięki tym technologiom możemy zapewnić Ci lepszą obsługę poprzez serwowanie reklam lepiej dopasowanych do Twoich preferencji i serwowanie treści, które mogą Cię bardziej zainteresować. Pliki te pozwalają nam również lepiej badać i analizować zainteresowanie naszymi stronami i treściami, które Ci serwujemy. Dzięki tym analizom możemy zadbać o jakość serwowanych przez nas treści. Szczegółową informację na temat plików cookie i ich funkcjonowania znajdziesz pod <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tym linkiem</a>. Znajdziesz tam także informację o tym jak zmienić ustawienia przeglądarki, by ograniczyć lub wyłączyć funkcjonowanie plików cookies itp. oraz jak usunąć takie pliki z Twojego urządzenia. W razie jakichkolwiek wątpliwości zapraszamy do kontaktu na adres <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>. Pomocne informacje znajdziesz także zawsze w naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Polityce Prywatności</a>.</p>
-`,
+`
 			},
 			tab2: {
-				menu: 'Przetwarzanie danych osobowych',
+				menu: 'Przetwarzanie danych osobowych'
 			}
 		},
 		publisherConsents: {
-			title: "Podstawy prawne przetwarzania danych przez Wydawcę (Uzasadniony Interes Administratora)",
+			title: 'Podstawy prawne przetwarzania danych przez Wydawcę (Uzasadniony Interes Administratora)'
 		},
 		vendorConsents: {
-			title: "Zgody dla Partnerów",
+			title: 'Zgody dla Partnerów'
 		},
 		purposes: {
 			active: 'Aktywna',
@@ -578,17 +578,17 @@ export default {
 
 <p style="margin: 25px 0 10px 0">According to the standard introduced by IAB Europe, the provided mechanism does not make it technically possible to object to the processing of data for most basic purposes, including: (i) ensuring technological security, security against fraud, removal of malicious software and (ii) providing the user with the technical ability to interact with the presented content. Strictly for the purposes of performing the tasks described in subsection (i) above and exclusively in the necessary scope, geolocation data and data resulting from scanning an identification device may be subject to processing. With reference to the aforementioned situations, we always carry out balance tests between our legitimate interest and rights of data subjects If you have any comments or objections in the aforementioned scope or wish to lodge an individual objection, please contact us at <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>.</p>
 <p style="margin: 25px 0 10px 0">On our websites and in our apps, we use such technologies as cookies, local storage and other similar for the purpose of collecting and processing personal data as well as service data in order to customize content and advertisements and to analyze traffic on our websites. Those cookies help us improve the quality of advertising content on our websites and in our apps. Thanks to those technologies we are able to provide you with a better service by supplying advertisements that are better aligned with your preference and by providing content that may be of interest to you. Those files also allow us to better research and analyze interest in our websites and content we provide to you. Due to those analyses we are able to ensure the quality of content we provide. More detailed information about cookies and their functionalities may be found <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">here</a>. There, you will find also information about how to change browser settings in order to limit the operation of cookies, etc., and how to remove such files from your device.</p>
-<p style="margin: 25px 0 10px 0">If you have any doubts, please contact us at <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>. Helpful information can also be found in our <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>`,
+<p style="margin: 25px 0 10px 0">If you have any doubts, please contact us at <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>. Helpful information can also be found in our <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>`
 			},
 			tab2: {
-				menu: 'Personal data processing',
+				menu: 'Personal data processing'
 			}
 		},
 		publisherConsents: {
-			title: "Legal grounds of data processing by the Publisher (Controller’s legitimate interest)",
+			title: 'Legal grounds of data processing by the Publisher (Controller’s legitimate interest)'
 		},
 		vendorConsents: {
-			title: "Consents for Partners",
+			title: 'Consents for Partners'
 		},
 		purposes: {
 			active: 'Active',
