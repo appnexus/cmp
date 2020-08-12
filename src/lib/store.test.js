@@ -522,7 +522,6 @@ describe('store', () => {
 		store.updateVendorList(VENDOR_LIST);
 
 		expect(Array.from(store.tcModel.publisherConsents)).to.deep.equal([[1, true], [2, true]]);
-		expect(Array.from(store.tcModel.purposeConsents)).to.deep.equal([[1, true], [2, true]]);
 	});
 
 	it('should not unset contract purpose as publisher purpose when all purposes are rejected (case when user open tab2)', () => {
