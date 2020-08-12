@@ -12,8 +12,13 @@ const COOKIE_WHITELIST = [ADPCONSENT_COOKIE, PUBCONSENT_COOKIE];
 
 
 function readCookie (name) {
-	let coo = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-	return coo ? unescape(coo[2]) : null;
+	const value = '; ' + document.cookie;
+	const parts = value.split('; ' + name + '=');
+	if (parts.length >= 2) {
+		// the first are cookies on a path matching the URL path
+		return parts[1].split(';').shift();
+	}
+	return null;
 }
 
 function writeCookie ({ name, value, path = COOKIE_PATH }) {
