@@ -5,7 +5,7 @@ import {
 	encodeVendorCookieValue,
 	decodeVendorCookieValue,
 	encodePublisherCookieValue,
-	decodePublisherCookieValue
+	decodePublisherCookieValue,
 } from './cookieutils';
 
 import { sendPortalCommand } from '../portal';
@@ -72,7 +72,7 @@ function convertVendorsToRanges(maxVendorId, selectedIds) {
 			ranges.push({
 				isRange: typeof endVendorId === 'number',
 				startVendorId,
-				endVendorId
+				endVendorId,
 			});
 		}
 	}
@@ -89,7 +89,7 @@ function encodeVendorConsentData(vendorData) {
 		maxVendorId,
 		purposeIdBitString: encodePurposeIdsToBits(purposes, selectedPurposeIds),
 		isRange: false,
-		vendorIdBitString: encodeVendorIdsToBits(maxVendorId, selectedVendorIds)
+		vendorIdBitString: encodeVendorIdsToBits(maxVendorId, selectedVendorIds),
 	});
 
 	const vendorRangeList = convertVendorsToRanges(maxVendorId, selectedVendorIds);
@@ -100,7 +100,7 @@ function encodeVendorConsentData(vendorData) {
 		isRange: true,
 		defaultConsent: false,
 		numEntries: vendorRangeList.length,
-		vendorRangeList
+		vendorRangeList,
 	});
 
 	return noRangesData.length < rangesData.length ? noRangesData : rangesData;
@@ -121,7 +121,7 @@ function decodeVendorConsentData(cookieValue) {
 		isRange,
 		defaultConsent,
 		vendorIdBitString,
-		vendorRangeList
+		vendorRangeList,
 	} = decodeVendorCookieValue(cookieValue);
 
 	const cookieData = {
@@ -134,7 +134,7 @@ function decodeVendorConsentData(cookieValue) {
 		selectedPurposeIds: decodeBitsToIds(purposeIdBitString),
 		maxVendorId,
 		created,
-		lastUpdated
+		lastUpdated,
 	};
 
 	if (isRange) {
@@ -168,7 +168,7 @@ function encodePublisherConsentData(publisherData) {
 		...publisherData,
 		numCustomPurposes: customPurposes.length,
 		standardPurposeIdBitString: encodePurposeIdsToBits(purposes, selectedPurposeIds),
-		customPurposeIdBitString: encodePurposeIdsToBits(customPurposes, selectedCustomPurposeIds)
+		customPurposeIdBitString: encodePurposeIdsToBits(customPurposes, selectedCustomPurposeIds),
 	});
 }
 
@@ -180,7 +180,7 @@ function decodePublisherConsentData(cookieValue) {
 		publisherPurposeVersion,
 		created,
 		lastUpdated,
-		customPurposeIdBitString
+		customPurposeIdBitString,
 	} = decodePublisherCookieValue(cookieValue);
 
 	return {
@@ -190,7 +190,7 @@ function decodePublisherConsentData(cookieValue) {
 		publisherPurposeVersion,
 		created,
 		lastUpdated,
-		selectedCustomPurposeIds: decodeBitsToIds(customPurposeIdBitString)
+		selectedCustomPurposeIds: decodeBitsToIds(customPurposeIdBitString),
 	};
 }
 
@@ -199,10 +199,7 @@ function readCookie(name) {
 	const parts = value.split(`; ${name}=`);
 
 	if (parts.length === 2) {
-		return parts
-			.pop()
-			.split(';')
-			.shift();
+		return parts.pop().split(';').shift();
 	}
 }
 
@@ -211,7 +208,8 @@ function writeCookie(name, value, maxAgeSeconds, path = '/') {
 	const expires =
 		maxAgeSeconds === null ? '' : ';expires=' + new Date(new Date() * 1 + maxAgeSeconds * 1000).toUTCString();
 	// System1:start getCookieDomain customized to work as *.somedomain by default
-	const cookie = `${name}=${value}${getCookieDomain()};path=${path}${maxAge}${expires}`;
+	const secure = global.location && global.location.protocol === 'http:' ? ';SameSite=Lax' : ';SameSite=None;secure';
+	const cookie = `${name}=${value}${getCookieDomain()};path=${path}${maxAge}${expires}${secure}`;
 	document.cookie = cookie;
 	return cookie;
 	// System1:end
@@ -247,15 +245,15 @@ function writePublisherConsentCookie(publisherConsentData) {
 function readGlobalVendorConsentCookie() {
 	log.debug('Request consent data from global cookie');
 	return sendPortalCommand({
-		command: 'readVendorConsent'
+		command: 'readVendorConsent',
 	})
-		.then(result => {
+		.then((result) => {
 			log.debug('Read consent data from global cookie', result);
 			if (result) {
 				return decodeVendorConsentData(result);
 			}
 		})
-		.catch(err => {
+		.catch((err) => {
 			log.error('Failed reading global vendor consent cookie', err);
 		});
 }
@@ -272,8 +270,8 @@ function writeGlobalVendorConsentCookie(vendorConsentData) {
 		command: 'writeVendorConsent',
 		encodedValue: encodeVendorConsentData(vendorConsentData),
 		vendorConsentData,
-		cmpVersion: pack.version
-	}).catch(err => {
+		cmpVersion: pack.version,
+	}).catch((err) => {
 		log.error('Failed writing global vendor consent cookie', err);
 	});
 }
@@ -336,5 +334,5 @@ export {
 	readPublisherConsentCookie,
 	writePublisherConsentCookie,
 	PUBLISHER_CONSENT_COOKIE_NAME,
-	VENDOR_CONSENT_COOKIE_NAME
+	VENDOR_CONSENT_COOKIE_NAME,
 };
