@@ -82,6 +82,167 @@ export default {
 <p style="margin: 25px 0 10px 0">Zgodnie ze standardem wprowadzonym przez IAB Europe udostępniany mechanizm nie zawiera technicznej możliwości wyrażenia sprzeciwu wobec przetwarzania danych w najbardziej podstawowych celach obejmujących: (i) zapewnienie bezpieczeństwa technologicznego, zabezpieczenia przed oszustwami, usuwaniem szkodliwych programów, oraz (ii) techniczne umożliwienie interakcji użytkownika z prezentowaną treścią. Ściśle w celu realizacji zadań opisanych w pkt (i) powyżej i wyłącznie w niezbędnym zakresie mogą być przetwarzane dane geolokalizacyjne i dane będące efektem skanowania urządzenia dla celów identyfikacji. . W odniesieniu do ww. sytuacji zawsze przeprowadzamy test równowagi pomiędzy naszym uzasadnionym prawnie interesem, a prawami osób, których dane dotyczą. Jeżeli masz jakiekolwiek uwagi lub zastrzeżenia w powyższym zakresie lub chciałbyś indywidualnie złożyć sprzeciw, prosimy o kontakt pod adresem <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>.</p>
 <p style="margin: 25px 0 10px 0">Na naszych stronach internetowych i w aplikacjach używamy technologii, takich jak pliki cookie, local storage i podobnych służących do zbierania i przetwarzania danych osobowych oraz danych eksploatacyjnych w celu personalizowania udostępnianych treści i reklam oraz analizowania ruchu na naszych stronach. Te pliki cookie pomagają poprawić jakość treści reklamowych na stronach i w aplikacjach. Dzięki tym technologiom możemy zapewnić Ci lepszą obsługę poprzez serwowanie reklam lepiej dopasowanych do Twoich preferencji i serwowanie treści, które mogą Cię bardziej zainteresować. Pliki te pozwalają nam również lepiej badać i analizować zainteresowanie naszymi stronami i treściami, które Ci serwujemy. Dzięki tym analizom możemy zadbać o jakość serwowanych przez nas treści. Szczegółową informację na temat plików cookie i ich funkcjonowania znajdziesz pod <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tym linkiem</a>. Znajdziesz tam także informację o tym jak zmienić ustawienia przeglądarki, by ograniczyć lub wyłączyć funkcjonowanie plików cookies itp. oraz jak usunąć takie pliki z Twojego urządzenia.</p>
 <p style="margin: 25px 0 10px 0">W razie jakichkolwiek wątpliwości zapraszamy do kontaktu na adres <a href="mailto:iod@ringieraxelspringer.pl">iod@ringieraxelspringer.pl</a>. Pomocne informacje znajdziesz także zawsze w naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Polityce Prywatności</a>.</p>
+<p><a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Pod tym linkiem</a> znajdziesz szczegółowy opis celów przetwarzania danych dla których możesz udzielić zgód (lub selektywnie bądź całościowo je odwołać), a poniżej prezentujemy ich rodzaje z opisem stworzonym przez IAB Europe.</p>
+<p style="margin: 25px 0 10px 0; font-weight: 900">Cele:</p>
+<ul style="list-style-position: inside; list-style-type: disc;">
+            <li style="margin-bottom: 10px"><p>1. Przechowywanie informacji na urządzeniu lub dostęp do nich</p>
+				<ul>
+					<li>(Dostawcy mogą: </li>
+					<li>- przechowywać na urządzeniu informacje, takie jak pliki cookie i identyfikatory urządzenia przedstawiane użytkownikowi, oraz uzyskiwać do nich dostęp.)</li>
+				</ul>
+            </li>
+            <li style="margin-bottom: 10px"><p>2. Wybór podstawowych reklam</p>
+            	<ul>
+            		<li>(Aby dokonać podstawowego wyboru reklam, dostawcy mogą:</li>
+            		<li>- używać informacji w czasie rzeczywistym na temat kontekstu, w jakim zostanie wyświetlona reklama, aby wyświetlić reklamę, w tym informacji o treści i urządzeniu, takich jak: typ urządzenia i jego parametry, aplikacja klienta, adres URL, adres IP; </li>
+            		<li>- używać nieprecyzyjnych (przybliżona lokalizacja obejmująca co najmniej promień 500 metrów) danych geolokalizacyjnych użytkownika; </li>
+            		<li>- kontrolować częstotliwość reklam wyświetlanych użytkownikowi;</li>
+            		<li>- ustawić kolejność wyświetlania reklam użytkownikowi;</li>
+            		<li>- zapobiec pojawieniu się reklamy w nieodpowiednim kontekście redakcyjnym (niebezpiecznym dla marki).</li>
+            		<li>Dostawcy nie mogą:</li>
+            		<li>- tworzyć profilu spersonalizowanych reklam przy użyciu tych informacji do wyboru przyszłych reklam bez osobnej podstawy prawnej do utworzenia profilu spersonalizowanych reklam.)</li>
+				</ul>
+            </li>
+            <li style="margin-bottom: 10px"><p>3. Tworzenie profilu spersonalizowanych reklam</p>
+            	<ul>
+            		<li>(Aby stworzyć profil spersonalizowanych reklam, dostawcy mogą:</li>
+            		<li>- zbierać informacje o użytkowniku, w tym o działaniach użytkownika, jego zainteresowaniach, wizytach na stronach lub w aplikacjach, dane demograficzne lub lokalizacyjne w celu stworzenia lub edytowania profilu użytkownika w celu personalizacji reklam;</li>
+            		<li>- łączyć te informacje z innymi wcześniej zebranymi informacjami, w tym z różnych witryn i aplikacji, w celu stworzenia lub edytowania profilu użytkownika w celu personalizacji reklam.)</li>
+				</ul>
+            </li>
+            <li style="margin-bottom: 10px"><p>4. Wybór spersonalizowanych reklam</p>
+            	<ul>
+            		<li>(Aby wybrać spersonalizowane reklamy, dostawcy mogą:</li>
+            		<li>- wybrać spersonalizowane reklamy w oparciu o profil użytkownika lub inne historyczne dane użytkownika, w tym wcześniejsze działania użytkownika, zainteresowania, wizyty na stronach lub w aplikacjach, lokalizację lub dane demograficzne.)</li>
+				</ul>
+            </li>
+            <li style="margin-bottom: 10px"><p>5. Tworzenie profilu spersonalizowanych treści</p>
+            	<ul>
+            		<li>(Aby stworzyć profil spersonalizowanych treści, dostawcy mogą:</li>
+            		<li>- zbierać informacje o użytkowniku, w tym działaniach użytkownika, jego zainteresowaniach, wizytach na stronach lub w aplikacjach, dane demograficzne lub lokalizacyjne w celu stworzenia lub edytowania profilu użytkownika w celu personalizacji treści.)</li>
+				</ul>
+            </li>
+            <li style="margin-bottom: 10px"><p>6. Wybór spersonalizowanych treści</p>
+            	<ul>
+            		<li>(Aby wybrać spersonalizowane treści, dostawcy mogą:</li>
+            		<li>- wybrać spersonalizowane treści w oparciu o profil użytkownika lub inne historyczne dane użytkownika, w tym wcześniejsze działania użytkownika, zainteresowania, wizyty na stronach lub w aplikacjach, lokalizację lub dane demograficzne.)</li>
+				</ul>
+            </li>
+            <li style="margin-bottom: 10px"><p>7. Pomiar wydajności reklam</p>
+            	<ul>
+					<li>(Aby dokonać pomiaru wydajności reklam, dostawcy reklam mogą:</li>
+					<li>- zmierzyć, czy i w jaki sposób reklamy były dostarczane użytkownikowi i i jaka była jego reakcja;</li>
+					<li>- dostarczać raporty dotyczące reklam, w tym ich skuteczności i wydajności;</li>
+					<li>- dostarczać raporty dotyczące użytkowników, którzy zareagowali na reklamy, z użyciem danych obserwowanych podczas reakcji użytkownika na tę reklamę;</li>
+					<li>- dostarczać raporty wydawcom na temat reklam wyświetlanych na ich powierzchni;</li>
+					<li>- zmierzyć, czy reklama jest obsługiwana w odpowiednim środowisku redakcyjnym (bezpieczeństwo marki);</li>
+					<li>- określić, w jakiej wartości procentowej reklama mogła zostać obejrzana, a także czas trwania tej możliwości obejrzenia.</li> 
+					<li>Dostawcy nie mogą:</li>
+					<li>- stosować danych pochodzących z analizy panelu lub podobnych odbiorców do danych pomiarowych z reklam bez odrębnej podstawy prawnej do zastosowania badań rynku w celu wygenerowania spostrzeżeń odbiorców.)</li>
+				</ul>
+            </li>
+            <li style="margin-bottom: 10px"><p>8. Pomiar wydajności treści</p>
+				<ul>
+					<li>(Aby dokonać pomiaru wydajności treści, dostawcy mogą:</li>
+					<li>- zmierzyć i sporządzić raport na temat tego, czy treści były dostarczane użytkownikom i jaka była ich reakcja;</li>
+					<li>- dostarczać raporty, używając bezpośrednio mierzalnych lub znanych informacji o użytkownikach, którzy zareagowali na treść.</li>
+					<li>Dostawcy nie mogą:</li>
+					<li>- zmierzyć, czy i w jaki sposób reklamy (w tym reklamy natywne) były dostarczane użytkownikowi i jaka była jego reakcja;</li>
+					<li>-  stosować danych pochodzących z analizy panelu lub podobnych odbiorców do danych pomiarowych z reklam bez odrębnej podstawy prawnej do zastosowania badań rynku w celu wygenerowania spostrzeżeń odbiorców.)</li>
+				</ul>
+            </li>
+            <li style="margin-bottom: 10px"><p>9. Stosowanie badań rynkowych w celu generowania opinii odbiorców</p>
+            	<ul>
+					<li>(Aby zastosować badania rynkowe w celu generowania opinii odbiorców, dostawcy mogą:</li>
+					<li>- dostarczać reklamodawcom lub ich przedstawicielom zbiorcze raporty na temat odbiorców, do których dotarły ich reklamy, poprzez analizę panelową i podobną;</li>
+					<li>- dostarczać zbiorcze raporty wydawcom na temat odbiorców, do których dotarły treści lub reklamy na ich terenie i którzy zareagowali na te treści lub reklamy, poprzez zastosowanie analizy panelowej i podobnej;</li>
+					<li>- powiązać dane offline z użytkownikiem online na cele badań rynkowych w celu wygenerowania spostrzeżeń odbiorców, jeśli dostawcy zdecydowali się na dopasowanie i połączenie źródeł danych offline;</li>
+					<li>- Połączyć tę informację z inną informacją zebraną wcześniej, w tym z różnych witryn i aplikacji.</li>
+					<li>Dostawcy nie mogą:</li> 
+					<li>- mierzyć wydajności i skuteczności reklam, które wyświetlono konkretnemu użytkownikowi i na które on zareagował, bez odrębnej podstawy prawnej do pomiaru wydajności reklam;</li>
+					<li>- mierzyć, jakie treści zaprezentowano konkretnemu użytkownikowi i jak na nie zareagował, bez odrębnej podstawy prawnej do pomiaru wydajności treści.)</li>
+				</ul>
+            </li>
+            <li style="margin-bottom: 10px"><p>10. Opracowywanie i ulepszanie produktów</p>
+            	<ul>
+					<li>(Aby opracowywać nowe produkty i ulepszać istniejące produkty, dostawcy mogą:</li>
+					<li>- wykorzystywać informacje w celu uzupełniania istniejących produktów nowymi funkcjami i opracowywania nowych produktów;</li>
+					<li>- tworzyć nowe modele i algorytmy poprzez uczenie maszynowe.</li>
+					<li>Dostawcy nie mogą:</li>
+					<li>- przeprowadzać w tym celu żadnych innych operacji przetwarzania danych dozwolonych w innym celu.)</li>
+				</ul>
+            </li>
+        </ul>
+	<p style="margin: 25px 0 10px 0; font-weight: 900">Cele specjalne:</p>
+	<ul style="list-style-position: inside; list-style-type: disc;">
+		<li style="margin-bottom: 10px"><p>1. Zapewnienie bezpieczeństwa, zapobieganie oszustwom i usuwanie błędów</p>
+			<ul>
+				<li>(W celu zapewnienia bezpieczeństwa, zapobiegania oszustwom i usuwania błędów, dostawcy mogą:</li>
+				<li>- upewnić się, że dane są bezpiecznie przesyłane.</li> 
+				<li>- wykrywać złośliwe, nieuczciwe, nieprawidłowe lub nielegalne działania i zapobiegać im.</li>
+				<li>- zapewniać prawidłowe i wydajne działanie systemów i procesów, w tym monitorowanie i usprawnianie wydajności systemów i procesów zaangażowanych w dozwolone cele.</li>
+				<li>Dostawcy nie mogą:</li>
+				<li>-przeprowadzać w tym celu żadnych innych operacji przetwarzania danych dozwolonych w innym celu.</li>
+				<li>Uwaga: Dane zebrane i wykorzystywane w celu zapewnienia bezpieczeństwa, zapobiegania oszustwom i usuwania błędów mogą obejmować automatycznie wysyłaną charakterystykę urządzenia do identyfikacji, precyzyjne dane geolokalizacyjne i dane uzyskane w drodze aktywnego skanowania charakterystyki urządzenia w celu identyfikacji bez odrębnego ujawnienia lub zgody.)</li>
+			</ul>
+		</li>
+		<li style="margin-bottom: 10px"><p>2. Techniczne dostarczanie reklam lub treści</p>
+			<ul>
+				<li>(Aby dostarczać informacje i odpowiadać na pytania techniczne, dostawcy mogą:</li>
+				<li>- użyć adresu IP użytkownika, aby przekazać reklamę przez Internet.</li>
+				<li>- odpowiedzieć na reakcję użytkownika na reklamę, wysyłając użytkownika na stronę docelową.</li> 
+				<li>- użyć adresu IP użytkownika, aby przekazać treści przez Internet.</li> 
+				<li>- odpowiedzieć na reakcję użytkownika na treści, wysyłając użytkownika na stronę docelową.</li>
+				<li>- wykorzystać informacje o rodzaju urządzenia i możliwościach dostarczania reklam lub treści, na przykład w celu dostarczenia pliku reklamowego o odpowiednim rozmiarze lub pliku wideo</li>
+				<li>Dostawcy nie mogą:</li>
+				<li>-przeprowadzać w tym celu żadnych innych operacji przetwarzania danych dozwolonych w innym celu.)</li>
+			</ul>
+		</li>
+	</ul>	
+	<p style="margin: 25px 0 10px 0; font-weight: 900">Funkcje:</p>
+	<ul style="list-style-position: inside; list-style-type: disc;">
+		<li style="margin-bottom: 10px"><p>1. Dopasowanie i połączenie źródeł online</p>
+			<ul>
+				<li>(Dostawcy mogą:</li> 
+				<li>- łączyć dane uzyskane offline z danymi zgromadzonymi online w celu realizacji jednego lub więcej Celów lub Celów specjalnych.)</li>
+			</ul>
+		</li>
+		<li style="margin-bottom: 10px"><p>2. Łączenie różnych urządzeń</p>
+			<ul>
+				<li>(Dostawcy mogą:</li>
+				<li>- deterministycznie określić, że co najmniej dwa urządzenia należą do tego samego użytkownika lub gospodarstwa domowego.</li>
+				<li>- probabilistycznie określić, że co najmniej dwa urządzenia należą do tego samego użytkownika lub gospodarstwa domowego.</li>
+				<li>- Aktywnie skanować charakterystyki urządzenia w celach identyfikacji probabilistycznej, jeśli użytkownicy zezwolili dostawcom na aktywne skanowanie charakterystyki urządzenia w celu identyfikacji (Funkcja specjalna 2).)</li>
+			</ul>
+		</li>
+		<li style="margin-bottom: 10px"><p>3. Odbieranie i wykorzystywanie automatycznie wysłanej charakterystyki urządzeń do identyfikacji</p>
+			<ul>
+				<li>(Dostawcy mogą:</li> 
+				<li>- stworzyć identyfikator za pomocą danych zebranych automatycznie z urządzenia pod względem określonych cech, np. adres IP, ciąg agenta użytkownika.</li>
+				<li>- użyć takiego identyfikatora, aby podjąć próbę ponownej identyfikacji urządzenia.</li>
+				<li>Dostawcy nie mogą:</li>
+				<li>- stworzyć identyfikatora przy użyciu danych zebranych poprzez aktywne skanowanie urządzenia w celu uzyskania określonych cech, np. zainstalowanych czcionek lub rozdzielczości ekranu, bez odrębnej zgody użytkowników na aktywne skanowanie charakterystyki urządzenia do identyfikacji.</li>
+				<li>- użyć takiego identyfikatora, aby ponownie zidentyfikować urządzenie.)</li>
+			</ul>
+		</li>
+	</ul>
+	<p style="margin: 25px 0 10px 0; font-weight: 900">Funkcje specjalne:</p>
+	<ul style="list-style-position: inside; list-style-type: disc;">
+		<li style="margin-bottom: 10px"><p>1. Użycie dokładnych danych geolokalizacyjnych</p>
+			<ul>
+				<li>(Dostawcy mogą:</li>	
+				<li>- gromadzić i obsługiwać dokładne dane geolokalizacyjne na potrzeby realizacji jednego albo większej liczby celów.</li>	
+				<li>Dokładna geolokalizacja oznacza, że nie ma ograniczeń w dokładności lokalizacji użytkownika; może być dokładna do kilku metrów.)</li>	
+			</ul>
+		</li>
+		<li style="margin-bottom: 10px"><p>2. Aktywne skanowanie charakterystyki urządzenia do celów identyfikacji</p>
+			<ul>
+				<li>(Dostawcy mogą:</li>
+				<li>- stworzyć identyfikator przy użyciu danych zebranych poprzez aktywne skanowanie urządzenia w celu uzyskania określonych cech, np. zainstalowanych czcionek lub rozdzielczości ekranu;</li>
+				<li>- użyć takiego identyfikatora, aby ponownie zidentyfikować urządzenie.)</li>
+			</ul>
+		</li>
+	</ul>
 `
 			},
 			tab2: {
