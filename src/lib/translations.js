@@ -10,7 +10,7 @@ export default {
 			title: 'Szanowna Użytkowniczko, Szanowny Użytkowniku,',
 			description: `<p> Zanim klikniesz „Przejdź do serwisu” lub zamkniesz to okno prosimy o przeczytanie do końca tej informacji – dotyczy ona Twoich danych osobowych.</p>
 <br>
-<p> <span style="font-weight: bold; display: inline">Klikając „Przejdź do serwisu” lub zamykając okno przez kliknięcie w znaczek X, udzielasz zgody na przetwarzanie Twoich danych osobowych</span> dotyczących Twojej aktywności w Internecie przez <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a> w celach marketingowych (w tym dla personalizacji reklam i dokonywania pomiarów). Szczegółowy opis celów i zakresu przetwarzanych danych znajdziesz <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tutaj</a>. Zgoda jest dobrowolna. Możesz jej odmówić lub ograniczyć jej zakres klikając w "Ustawienia zaawansowne".</p>
+<p> <span style="font-weight: bold; display: inline">Klikając „Przejdź do serwisu” lub zamykając okno przez kliknięcie w znaczek X, udzielasz zgody na przetwarzanie Twoich danych osobowych</span> dotyczących Twojej aktywności w Internecie (np. identyfikatory urządzenia, adres IP) przez <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów IAB</a> i innych <a onclick="__tcfapi('showCustomVendors', 2, function () { })">Zaufanych Partnerów</a> w celach marketingowych (w tym dla personalizacji reklam i dokonywania pomiarów) i w celu dostosowania dostarczanych treści. Szczegółowy opis celów i zakresu przetwarzanych danych znajdziesz <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tutaj</a> - obejmują one (klasyfikacja wg IAB Europe) m.in.: wybór podstawowych reklam; tworzenie profilu spersonalizowanych reklam; wybór spersonalizowanych reklam; tworzenia profilu spersonalizowanych treści; wybór spersonalizowanych treści; pomiar wydajności reklam; pomiar wydajności treści; stosowanie badań rynkowych w celu generowania opinii odbiorców; opracowywanie i ulepszanie produktów oraz funkcje specjalne takie jak: użycie dokładnych danych geolokalizacyjnych i aktywne skanowanie charakterystyki urządzenia do celów identyfikacji. Zgoda jest dobrowolna. Możesz jej odmówić lub ograniczyć jej zakres klikając w "Ustawienia zaawansowne".</p>
 <br>
 <p> Podmioty z <a href="https://polityka-prywatnosci.onet.pl/grupa-rasp.html" target="_blank" rel="noopener">Grupy RAS Polska</a> jako dostawcy usług internetowych z których korzystasz przetwarzają Twoje dane podane powyżej oraz dane z Twoich kont w tych usługach w ww. celach w oparciu o prawnie uzasadniony, wspólny interes tych podmiotów. Przetwarzanie to nie wymaga zgody z Twojej strony, ale możesz mu się w każdej chwili sprzeciwić.</p>
 <br>
@@ -18,7 +18,7 @@ export default {
 <br>
 <p>Szczegółowe informacje znajdziesz w „Ustawieniach zaawansowanych”.</p>
 <br>
-<p>Korzystanie z serwisu bez zmiany ustawień przeglądarki oznacza też zgodę na umieszczanie znaczników internetowych (cookies itp.) na Twoich urządzeniach i odczytywanie ich przez podmioty z <a href="https://polityka-prywatnosci.onet.pl/grupa-rasp.html" target="_blank" rel="noopener">Grupy RAS Polska</a> oraz przez <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów</a>. Zgody tej możesz odmówić lub ją ograniczyć poprzez zmianę ustawień przeglądarki (szczegółowe informacje znajdziesz <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tutaj</a>).</p>
+<p>Korzystanie z serwisu bez zmiany ustawień przeglądarki oznacza też zgodę na umieszczanie znaczników internetowych (cookies itp.) na Twoich urządzeniach i odczytywanie ich (przechowywanie informacji na urządzeniu lub dostęp do nich) przez podmioty z <a href="https://polityka-prywatnosci.onet.pl/grupa-rasp.html" target="_blank" rel="noopener">Grupy RAS Polska</a> oraz przez <a onclick="__tcfapi('showVendors', 2, function () {})">Zaufanych Partnerów IAB</a> i innych <a onclick="__tcfapi('showCustomVendors', 2, function () { })">Zaufanych Partnerów</a>. Zgody tej możesz odmówić lub ją ograniczyć poprzez zmianę ustawień przeglądarki (szczegółowe informacje znajdziesz <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">tutaj</a>).</p>
 `,
 			acceptAll: 'Przejdź do serwisu',
 			showPurposes: 'Ustawienia zaawansowane'
@@ -48,7 +48,7 @@ export default {
 
 <p style="margin: 25px 0 10px 0; font-weight: 900">Administrator danych osobowych</p>
 <p>Administratorem Twoich danych osobowych jest podmiot z Grupy RAS Polska, z którego serwisu lub aplikacji korzystasz. Naszą nazwę znajdziesz zawsze na samym dole strony po prawej stronie, a logo na planszy zawierającej niniejszą informację. Informację o powołaniu przez nas inspektora ochrony danych i jego danych kontaktowych znajdziesz też na samym dole strony w polityce prywatności. Administratorami Twoich danych osobowych będą także pozostałe podmioty z Grupy RAS Polska, których pełne dane możesz sprawdzić <a onclick="__tcfapi('showVendors', 2, function () {})">pod tym linkiem</a>. Jeżeli wyrazisz zgodę, o którą wyżej prosimy, administratorami Twoich danych osobowych będą także nasi Zaufani Partnerzy. Listę Zaufanych Partnerów możesz sprawdzić w każdym momencie na stronie naszej <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">polityki prywatności</a> i tam też zmodyfikować lub cofnąć swoje zgody. Pamiętaj, że cofnięcie zgód uniemożliwi realizację działań, których te zgody dotyczą, a więc np. zamiast otrzymywać treści, które odpowiadają Twoim zainteresowaniom możesz zacząć otrzymywać treści, które nie będą dla Ciebie interesujące.</p>
-    
+
 <p style="margin: 25px 0 10px 0; font-weight: 900">Podstawa i cel przetwarzania</p>
 <p> Twoje dane przetwarzamy w następujących celach:</p>
 <br>
@@ -90,17 +90,17 @@ export default {
 	<li style="margin-bottom: 10px">
 		2. Wybór podstawowych reklam
 		<br>
-		(Aby dokonać podstawowego wyboru reklam, dostawcy mogą: 
+		(Aby dokonać podstawowego wyboru reklam, dostawcy mogą:
 		<br>
-		- używać informacji w czasie rzeczywistym na temat kontekstu, w jakim zostanie wyświetlona reklama, aby wyświetlić reklamę, w tym informacji o treści i urządzeniu, takich jak: typ urządzenia i jego parametry, aplikacja klienta, adres URL, adres IP; 
+		- używać informacji w czasie rzeczywistym na temat kontekstu, w jakim zostanie wyświetlona reklama, aby wyświetlić reklamę, w tym informacji o treści i urządzeniu, takich jak: typ urządzenia i jego parametry, aplikacja klienta, adres URL, adres IP;
 		<br>
-		- używać nieprecyzyjnych (przybliżona lokalizacja obejmująca co najmniej promień 500 metrów) danych geolokalizacyjnych użytkownika; 
+		- używać nieprecyzyjnych (przybliżona lokalizacja obejmująca co najmniej promień 500 metrów) danych geolokalizacyjnych użytkownika;
 		<br>
-		- kontrolować częstotliwość reklam wyświetlanych użytkownikowi; 
+		- kontrolować częstotliwość reklam wyświetlanych użytkownikowi;
 		<br>
-		- ustawić kolejność wyświetlania reklam użytkownikowi; 
+		- ustawić kolejność wyświetlania reklam użytkownikowi;
 		<br>
-		- zapobiec pojawieniu się reklamy w nieodpowiednim kontekście redakcyjnym (niebezpiecznym dla marki). 
+		- zapobiec pojawieniu się reklamy w nieodpowiednim kontekście redakcyjnym (niebezpiecznym dla marki).
 		<br>
 		Dostawcy nie mogą:
 		<br>
@@ -151,7 +151,7 @@ export default {
 		<br>
 		- zmierzyć, czy reklama jest obsługiwana w odpowiednim środowisku redakcyjnym (bezpieczeństwo marki);
 		<br>
-		- określić, w jakiej wartości procentowej reklama mogła zostać obejrzana, a także czas trwania tej możliwości obejrzenia. 
+		- określić, w jakiej wartości procentowej reklama mogła zostać obejrzana, a także czas trwania tej możliwości obejrzenia.
 		<br>
 		Dostawcy nie mogą:
 		<br>
@@ -185,7 +185,7 @@ export default {
 		<br>
 		- Połączyć tę informację z inną informacją zebraną wcześniej, w tym z różnych witryn i aplikacji.
 		<br>
-		Dostawcy nie mogą: 
+		Dostawcy nie mogą:
 		<br>
 		- mierzyć wydajności i skuteczności reklam, które wyświetlono konkretnemu użytkownikowi i na które on zareagował, bez odrębnej podstawy prawnej do pomiaru wydajności reklam;
 		<br>
@@ -222,7 +222,7 @@ export default {
 		<br>
 		- stworzyć identyfikator przy użyciu danych zebranych poprzez aktywne skanowanie urządzenia w celu uzyskania określonych cech, np. zainstalowanych czcionek lub rozdzielczości ekranu;
 		<br>
-		- użyć takiego identyfikatora, aby ponownie zidentyfikować urządzenie.)	
+		- użyć takiego identyfikatora, aby ponownie zidentyfikować urządzenie.)
 	</li>
 </ul>
 
@@ -391,7 +391,7 @@ export default {
 
 <p style="margin: 25px 0 10px 0; font-weight: 900">Personal data controller</p>
 <p>The Controller of your personal data is an entity from the RAS Polska Group, whose website or app you’re using. Our name can always be found at the bottom of a website, on the right side, and our logo on the board containing this information. Information about appointment of data protection officer and contact data to such officer can be found at the bottom of the page in the privacy policy. Controllers of your personal data are also other entities from the RAS Polska Group, which details can be checked via <a href="https://polityka-prywatnosci.onet.pl/grupa-rasp.html" target="_blank" rel="noopener">this link</a>.   If you grant your consent referred to above, controllers of your personal data will also be our <a onclick="__tcfapi('showVendors', 2, function () {})">Trusted Partners</a>. You can check the list of Trusted Partners at any time in our <a href="https://polityka-prywatnosci.onet.pl/index.html" target="_blank" rel="noopener">Privacy Policy</a> and there you will also be able to modify or withdraw your consent. Please bear in mind that withdrawing consent will prevent us from performing activities to which those consents refer, for example instead of receiving content corresponding to your interests you may start receiving content that is of no interest to you.</p>
-		
+
 <p style="margin: 25px 0 10px 0; font-weight: 900">Grounds and purpose of processing</p>
 <p > Your data will be processed for the following purposes:</p>
 <ul style="list-style-position: inside; list-style-type: disc;">
@@ -433,7 +433,7 @@ export default {
 		<br>
 		To select basic ads vendors can:
 		<br>
-		- Use real-time information about the context in which the ad will be shown, to show the ad, including information about the content and the device, such as: device type and capabilities, user agent, URL, IP address 
+		- Use real-time information about the context in which the ad will be shown, to show the ad, including information about the content and the device, such as: device type and capabilities, user agent, URL, IP address
 		<br>
 		- Use a user’s non-precise geolocation data
 		<br>
@@ -496,7 +496,7 @@ export default {
 		<br>
 		- Measure whether an ad is serving in a suitable editorial environment (brand-safe) context
 		<br>
-		- Determine the percentage of the ad that had the opportunity to be seen and the duration of that opportunity 
+		- Determine the percentage of the ad that had the opportunity to be seen and the duration of that opportunity
 		<br>
 		- Combine this information with other information previously collected, including from across websites and apps
 		<br>
@@ -528,15 +528,15 @@ export default {
 		<br>
 		- Provide aggregate reporting to advertisers or their representatives about the audiences reached by their ads, through panel-based and similarly derived insights.
 		<br>
-		- Provide aggregate reporting to publishers about the audiences that were served or interacted with content and/or ads on their property by applyingpanel-based and similarly derived insights. 
+		- Provide aggregate reporting to publishers about the audiences that were served or interacted with content and/or ads on their property by applyingpanel-based and similarly derived insights.
 		<br>
-		- Associate offline data with an online user for the purposes of market research to generate audience insights if vendors have declared to match and combine offline data sources 
+		- Associate offline data with an online user for the purposes of market research to generate audience insights if vendors have declared to match and combine offline data sources
 		<br>
 		- Combine this information with other information previously collected, including from across websites and apps
 		<br>
-		Vendors cannot: 
+		Vendors cannot:
 		<br>
-		- Measure the performance and effectiveness of ads that a specific user was served or interacted with, without a separate legal basis to measure ad performance. 
+		- Measure the performance and effectiveness of ads that a specific user was served or interacted with, without a separate legal basis to measure ad performance.
 		<br>
 		- Measure which content a specific user was served and how they interacted with it, without a separate legal basis to measure content performance.
 	</li>
@@ -570,7 +570,7 @@ export default {
 		<br>
 		Vendors can:
 		<br>
-		- Create an identifier using data collected via actively scanning a device for specific characteristics, e.g. installed fonts or screen resolution. 
+		- Create an identifier using data collected via actively scanning a device for specific characteristics, e.g. installed fonts or screen resolution.
 		<br>
 		- Use such an identifier to re-identify a device
 	</li>
