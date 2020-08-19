@@ -224,7 +224,13 @@ export default class Store {
 	};
 
 	selectPurpose = (purposeId, isSelected) => {
+		const {contractPurposeIds} = config;
 		const {purposeConsents} = this.tcModel;
+
+		if (contractPurposeIds.includes(purposeId)) {
+			return;
+		}
+
 		if (isSelected) {
 			purposeConsents.set(purposeId);
 		} else {
@@ -272,7 +278,13 @@ export default class Store {
 	};
 
 	selectPublisherPurpose = (purposeId, isSelected) => {
+		const {contractPurposeIds} = config;
 		const {publisherConsents} = this.tcModel;
+
+		if (contractPurposeIds.includes(purposeId)) {
+			return;
+		}
+
 		if (isSelected) {
 			publisherConsents.set(purposeId);
 		} else {
@@ -285,12 +297,28 @@ export default class Store {
 		const {purposes = {}} = this.vendorList || {};
 		const operation = isSelected ? 'set' : 'unset';
 		const {legIntPurposeIds, contractPurposeIds} = config;
-		const publisherLegitimateInterests = [...legIntPurposeIds, ...contractPurposeIds];
-		const availablePurposes = Object.values(purposes).map(({id}) => id).filter((purposeId) => !publisherLegitimateInterests.includes(purposeId));
+		const publisherLegalBasedPurposes = [...legIntPurposeIds, ...contractPurposeIds];
+		const availablePurposes = Object.values(purposes).map(({id}) => id).filter((purposeId) => !publisherLegalBasedPurposes.includes(purposeId));
 
 		Object.values(purposes).forEach(({id}) => {
 			if (availablePurposes.includes(id)) {
 				this.tcModel.publisherConsents[operation](id);
+			}
+		});
+
+		if (update) {
+			this.storeUpdate();
+		}
+	};
+
+	setAllContractPurposes = (update) => {
+		const {purposes = {}} = this.vendorList || {};
+		const {contractPurposeIds} = config;
+
+		Object.values(purposes).forEach(({id}) => {
+			if (contractPurposeIds.includes(id)) {
+				this.tcModel.publisherConsents.set(id);
+				this.tcModel.vendorConsents.set(id);
 			}
 		});
 
@@ -311,12 +339,11 @@ export default class Store {
 
 	selectAllPublisherLegitimateInterests = (isSelected, update) => {
 		const {purposes = {}} = this.vendorList || {};
-		const {legIntPurposeIds, contractPurposeIds} = config;
+		const {legIntPurposeIds} = config;
 		const operation = isSelected ? 'set' : 'unset';
-		const publisherLegitimateInterests = [...legIntPurposeIds, ...contractPurposeIds];
 
 		Object.values(purposes).forEach(({id}) => {
-			if (publisherLegitimateInterests.includes(id)) {
+			if (legIntPurposeIds.includes(id)) {
 				this.tcModel.publisherLegitimateInterests[operation](id);
 			}
 		});
@@ -389,6 +416,7 @@ export default class Store {
 			this.tcModel.specialFeatureOptins.set(specialFeatureIds);
 			this.selectAllPublisherPurposes(true, false);
 			this.selectAllPublisherLegitimateInterests(true, false);
+			this.setAllContractPurposes(false);
 		}
 		// If vendor consent data has already been persisted set default selected status only for new vendors
 		else {
