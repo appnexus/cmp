@@ -19,7 +19,7 @@ export default class Details extends Component {
 		super(props);
 		const { isCustomVendors } = this.props.store;
 		this.state = {
-			vendors: isCustomVendors ? this.getCustomVendors() : this.getVendors()
+			vendors: isCustomVendors ? this.getCustomVendors() : this.getGlobalVendors()
 		};
 	}
 
@@ -30,6 +30,8 @@ export default class Details extends Component {
 	};
 
 	getCustomVendors = () => this.getVendors().filter((vendor) => !vendor.globalId);
+
+	getGlobalVendors = () => this.getVendors().filter((vendor) => !!vendor.globalId);
 
 	filterVendors = ({ isCustom = null, purposeId, featureId, isSpecial} = {}) => {
 		const { gvl } = this.props.store.tcModel;
