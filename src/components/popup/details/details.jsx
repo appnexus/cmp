@@ -17,8 +17,9 @@ class LocalLabel extends Label {
 export default class Details extends Component {
 	constructor(props) {
 		super(props);
+		const { isCustomVendors } = this.props.store;
 		this.state = {
-			vendors: this.getVendors()
+			vendors: isCustomVendors ? this.getCustomVendors() : this.getVendors()
 		};
 	}
 
@@ -28,21 +29,23 @@ export default class Details extends Component {
 		return Object.values(vendors);
 	};
 
+	getCustomVendors = () => this.getVendors().filter((vendor) => !vendor.globalId);
+
 	filterVendors = ({ isCustom = null, purposeId, featureId, isSpecial} = {}) => {
 		const { gvl } = this.props.store.tcModel;
 		let filteredVendors = [];
 		const idSort = (a, b) => a.id - b.id;
 
-		if(purposeId) {
-			if(isSpecial) {
+		if (purposeId) {
+			if (isSpecial) {
 				filteredVendors = Object.values(gvl.getVendorsWithSpecialPurpose(purposeId));
 			} else {
 				filteredVendors = [...Object.values(gvl.getVendorsWithConsentPurpose(purposeId)),
 					...Object.values(gvl.getVendorsWithLegIntPurpose(purposeId))]
 					.sort(idSort);
 			}
-		} else if(featureId) {
-			if(isSpecial) {
+		} else if (featureId) {
+			if (isSpecial) {
 				filteredVendors = Object.values(gvl.getVendorsWithSpecialFeature(featureId));
 			} else {
 				filteredVendors = Object.values(gvl.getVendorsWithFeature(featureId));

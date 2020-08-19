@@ -264,6 +264,25 @@ const createCommands = (store, cmpManager) => {
 	const showVendors = (callback = () => {}) => {
 		cmpManager.addEventListener('cmpReady', ({data}) => {
 			if (data) {
+				store.isCustomVendors = false;
+				store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
+				store.toggleConsentToolShowing(true);
+
+				cmpManager.openConsentTool = true;
+				cmpManager.notify('openConsentTool', { section: 'details' });
+			}
+
+			callback(data);
+		});
+	};
+
+	/**
+	 * Trigger the vendors UI to be shown
+	 */
+	const showCustomVendors = (callback = () => {}) => {
+		cmpManager.addEventListener('cmpReady', ({data}) => {
+			if (data) {
+				store.isCustomVendors = true;
 				store.updateSection(SECTION_DETAILS, SECTION_VENDORS);
 				store.toggleConsentToolShowing(true);
 
@@ -309,6 +328,7 @@ const createCommands = (store, cmpManager) => {
 		showConsentDetailView,
 		showVendors,
 		showFooter,
+		showCustomVendors,
 		registerEventListener,
 		unregisterEventListener
 	};
