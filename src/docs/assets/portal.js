@@ -8,7 +8,11 @@ const COOKIE_PATH = '/' + (window.location.pathname.split('/')[1] || '');
 const COOKIE_MAX_AGE = 33696000; // 13 months (390 days)
 const ADPCONSENT_COOKIE = 'adpconsent';
 const PUBCONSENT_COOKIE = 'pubconsent';
-const COOKIE_WHITELIST = [ADPCONSENT_COOKIE, PUBCONSENT_COOKIE];
+const EUCONSENT_COOKIE = 'euconsent';
+const COOKIE_WHITELIST = [
+	ADPCONSENT_COOKIE,
+	PUBCONSENT_COOKIE,
+	EUCONSENT_COOKIE];
 
 
 function readCookie (name) {
@@ -37,7 +41,8 @@ const commands = {
 	readConsent: () => {
 		return Promise.resolve({
 			adpconsent: readCookie(ADPCONSENT_COOKIE),
-			pubconsent: readCookie(PUBCONSENT_COOKIE)
+			pubconsent: readCookie(PUBCONSENT_COOKIE),
+			euconsent: readCookie(EUCONSENT_COOKIE)
 		});
 	}
 };
