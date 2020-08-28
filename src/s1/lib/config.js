@@ -8,7 +8,7 @@ export const theme = {
 };
 
 export const config = {
-	baseUrl: './config/2.0', // 'https://s.flocdn.com/cmp/test/config/2.0';
+	baseUrl: './config/2.0',
 	business: 'dev',
 	canLog: false, // pixel logs for monitoring
 	canDebug: false, // console.logs
