@@ -1,331 +1,263 @@
+<img align="right" width="50" src="https://s.flocdn.com/@s1/ads-coordinator/reference/fa9924f562bd5be7831df8ca2d285b1f.gif" />
+
 # system1-cmp
 
-System1-CMP is a container around the [appnexus-cmp](https://github.com/appnexus/cmp) that provides additional features for loading the CMP and for providing a complete CMP solution. We would like to customize the CMP but still be able to upgrade the CMP SDK as the upstream [appnexus-cmp](https://github.com/appnexus/cmp) improves over time.
+TCF 2.0 Consent Management Platform (CMP) UI tool. We are in the process of validating this CMP, we will update this repo once it passes TCF 2.0 validation.
+
+[Reference Page and Demo](https://s.flocdn.com/cmp/test/tcf-2.0.html)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
-
-- [Installation](#installation)
-- [CMP Loader API](#cmp-loader-api)
-  - [init](#init)
-    - [init: config](#init-config)
-    - [init: callback](#init-callback)
-  - [Arguments](#arguments)
-  - [Possible Commands](#possible-commands)
-  - [Examples](#examples)
-- [Events](#events)
-  - [Examples](#examples-1)
-- [Build](#build)
-- [Deploy](#deploy)
-- [Upload](#upload)
-- [AppNexus CMP](#appnexus-cmp)
-  - [Installation](#installation-1)
-  - [Build for Production](#build-for-production)
-  - [Documentation](#documentation)
-  - [Development](#development)
-  - [Testing](#testing)
+- [Installation / Use](#installation--use)
+- [API](#api)
+  - [Customized API](#customized-api)
+    - [init](#init)
+  - [onConsentAllChanged](#onconsentallchanged)
+  - [offConsentAllChanged](#offconsentallchanged)
+  - [showConsentTool](#showconsenttool)
+  - [changeLanguage](#changelanguage)
+- [Configuration / Config](#configuration--config)
+  - [theme](#theme)
+- [Background and Resources](#background-and-resources)
+- [TODO](#todo)
+- [Support Matrix](#support-matrix)
+- [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Installation
+## Installation / Use
 
-Check the version you want to use, new versions are opt-in only.
+API signatures have changed from the CMP TCF 1.1, but we've tried to keep the configuration process very similar. See a [working example in codepen](https://codepen.io/potench/pen/GRZZprw).
 
-```
-<html>
-<body>
-  <script type="text/javascript" src="//s.flocdn.com/cmp/1.1.2/loader.js"></script>
-  <script type="text/javascript">
-  const config = {
-    scriptSrc: 'https://s.flocdn.com/cmp/1.1.2/cmp.js',
-    gdprApplies: true,
-    // logging: true,
-    // pubVendorListLocation: '/.well-known/pubvendors.json',
-    // customPurposeListLocation: './purposes.json',
-    // globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
-    // globalConsentLocation: './portal.html',
-    // storeConsentGlobally: false,
-    // storePublisherData: false,
-    // localization: {},
-    // forceLocale: null,
-    // allowedVendorIds: ,
-    // shouldAutoConsent: false,
-	  // shouldAutoConsentWithFooter: false,
-	  // shouldAutoUpgradeConsent: true
-  }
+```html
+<script src="https://s.flocdn.com/cmp/test/tcf-2.0-loader.js"></script>
+<script>
+	__tcfapi('onConsentAllChanged', 2, function (store) {
+		const hasConsented = document.cookie.indexOf('gdpr_opt_in=1') >= 0;
+		if (hasConsented) {
+			console.log('cmp:onConsentAllChanged: all consent achieved', store.tcData.tcString);
+		} else {
+			console.log('cmp:onConsentAllChanged: only some consent achieved', store.tcData.tcString);
+		}
+	});
 
-  function onConsentChanged(result) {
-    if (document.cookie.indexOf("gdpr_opt_in=1") < 0) {
-      console.log("all:consent:failed", result);
-      // window.location.reload();
-    } else {
-      console.log("all:consent:succeeded", result);
-    }
-  }
-
-  cmp('init', config, (result) => {
-    if (result.gdprApplies) {
-      if (result.errorMsg) {
-        cmp('showConsentTool');
-        cmp('addEventListener', 'onConsentChanged', onConsentChanged);
-      } else {
-        // consent achieved
-        if (document.cookie.indexOf("gdpr_opt_in=1") >= 0) {
-          console.log("cmp:init: all consent achieved", result);
-        } else {
-          console.log("cmp:init: only some consent achieved", result);
-        }
-      }
-    } else {
-      console.log("cmp:init: consent not required", result);
-    }
-  });
-  </script>
-</body>
-</html>
+	__tcfapi(
+		'init',
+		2,
+		function (store, error) {
+			console.log('initialization complete', store, error);
+		},
+		{
+			gdprApplies: true,
+			debugging: true, // console logs
+			logging: true, // pixel logs for monitoring
+			baseUrl: 'https://s.flocdn.com/cmp/test/config/2.0', // base url for vendor-lists
+			versionedFilename: 'vendor-list.json', // vendor list json
+			scriptSrc: 'https://s.flocdn.com/cmp/test/tcf-2.0-cmp.js', // cmp SDK
+			publisherCountryCode: 'AA',
+			narrowedVendors: [], // ex [1,2,3,4],
+			theme: {
+				primaryColor: '#0099ff',
+				textLinkColor: '#0099ff',
+				boxShadow: 'none',
+				secondaryColor: '#869cc0',
+				featuresColor: '#d0d3d7',
+			},
+			ccpaApplies: true,
+			gdprApplies: true,
+			consentRequired: true,
+		}
+	);
+</script>
 ```
 
-## API and Configuration
+## API
 
-### init
+Read more about [\_\_tcfapi built-in API](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#cmp-api-v20)
 
-You must call `init` explicitly to start the CMP. Otherwise, the CMP Loader will only queue commands and not initialize the CMP SDK.
+- ping
+- addEventListener
+- removeEventListener
+- getTCData
+- getInAppTCData
+- getVendorList
 
-- `config` is REQUIRED
-- `callback` is OPTIONAL
+### Customized API
 
-```
-cmp('init', config, callback);
-```
+- [init](#init)
+- [onConsentAllChanged](#onConsentAllChanged)
+- [offConsentAllChanged](#offConsentAllChanged)
+- [showConsentTool](#showConsentTool)
+- [changeLanguage](#changeLanguage)
 
-#### init: config
+#### init
 
-`config` is a required argument of `init`. It configures/customizes the CMP.
+Calling `__tcfapi('init', 2, (store) => {})` will trigger the seed-file or loader to async load the larger CMP UI application. Once loaded, the cmp library calls `init` function to load additional dependencies and render the application.
 
-Example Configuration:
+`init` callback should be called regardless of internal errors as errors need to be handled gracefully internally to not disrupt the parent website.
 
-```
-const config = {
-  scriptSrc: '//s.flocdn.com/cmp/0.0.1/cmp.js',
-  gdprApplies: true,
-  pubVendorListLocation: '//s.flocdn.com/cmp/pubvendors.json', // OPTIONAL, whitelists vendors
-  logging: false,
-  customPurposeListLocation: './purposes.json',
-  cookieDomain: '.example.com',
-  globalVendorListLocation: '//vendorlist.consensu.org/vendorlist.json',
-  globalConsentLocation: './portal.html',
-  storeConsentGlobally: false,
-  storePublisherData: false,
-  localization: {},
-  forceLocale: null,
-  allowedVendorIds: null,
-  shouldAutoConsent: false,
-	shouldAutoConsentWithFooter: false,
-	shouldAutoUpgradeConsent: true,
-  theme: { //
-    isBannerModal: true // OPTIONAL, to enable Banner as a modal or footer component
-    shouldExpandPurposes: true, // true by default, expands purposes on initial Baner
-    primaryColor: '#09f',
-    textLinkColor: '#09f',
-    boxShadow: 'none',
-    secondaryColor: '#869cc0',
-    featuresColor: '#d0d3d7'
-  }
-
-}
-cmp('init', config);
+```js
+/**
+ * @param 'init' // required string command
+ * @param apiVersion // required number, 2, version of api in use,
+ * @param callback // required function, called when init completes, called with `store`
+ * @param configurationOptions // optional object, used customize the CMP
+ * @return void
+ */
+__tcfapi('init', apiVersion, callback, configurationOptions);
 ```
 
-- `scriptSrc`: String: Required: location of CMP SDK.
-- `gdprApplies`: Booelan: Enable / disable load of the CMP SDK
-- `pubVendorListLocation`: OPTIONAL: location of pub vendor list
-- `globalVendorListLocation`: OPTIONAL: global vendorList is managed by the IAB.
-- `shouldAutoConsent`: OPTIONAL: false by default, agrees to all consents on behalf of user
-- `shouldAutoConsentWithFooter`: OPTIONAL: false by default, agrees to all consents on behalf of user and displays a notice
-- `shouldAutoUpgradeConsent`: OPTIONAL: true by default, if user previously consented and vendor list changed, automatically upgrade consent and display a notice
-- `theme`: OPTIONAL object to provide style overrides,
-  - `isBannerModal`: OPTIONAL: boolean, false by deafult, true to use Modal on initial CMP banner
-- `cookieDomain`: String: OPTIONAL: domain cookie is written to (used for subdomaining a cookie), (ex: `.example.com` writes a cookie readable by \*.example.com)
+### onConsentAllChanged
 
-#### init: callback
+Calling `__tcfapi('onConsentAllChanged', 2, (store) => {})` triggers the callback whenever the `gdpr_opt_in` cookie changes.
+We track an all-or-nothing `hasConsentedAll` mode so you can more easily toggle an anonymous mode on your website.
 
-Use the callback to determine if you should show the consent tool or not.
-
-- `errorMsg`: STRING // detail on the result CMP initializing
-- `warningMsg`: STRING // detail on the result CMP initializing and automatically handling edge-cases
-- `gdprApplies`: BOOLEAN // true if in EU, false if consent not required
-- `hasConsented`: BOOLEAN // true if use has consented to all permissions
-- `vendorConsents`: OBJECT
-- `vendorList`: OBJECT
-
-Callback Example
-
+```js
+/**
+ * @param 'onConsentAllChanged' // required string command
+ * @param apiVersion // required number, 2, version of api in use,
+ * @param callback // required function, called when gdpr_opt_in value changes from undefined (no consent yet), 1 (contented all), 0 (declined anything)
+ * @return cachedListener // cache the callback if you need to remove this listener later
+ */
+const cachedListener = __tcfapi('onConsentAllChanged', apiVersion, callback);
 ```
-<script type="text/javascript" src="https://s.flocdn.com/cmp/loader.js"></script>
 
-cmp('init', {
-    gdprApplies: true,
-    scriptSrc: '//s.flocdn.com/cmp/0.0.1/cmp.js'
-  }, (result) => {
+### offConsentAllChanged
 
-  // Consent is required and there was an error
-    if (result.gdprApplies && result.errorMsg) {
-    cmp('showConsentTool');
-    }
+Calling `__tcfapi('offConsentAllChanged', 2, cachedListener)` removes the listener setup in `__tcfapi('onConsentAllChanged')`.
 
-  // Consent is required and a user has not consented to all permissions
-  if (result.gdprApplies && !result.hasConsented) {
-  cmp('showConsentTool');
-  }
+```js
+/**
+ * @param 'onConsentAllChanged' // required string command
+ * @param apiVersion // required number, 2, version of api in use,
+ * @param cachedListener // optional function, include to remove a specific listener that was setup with `onConsentAllChanged`
+ * @return void
+ */
+const cachedListener = __tcfapi('onConsentAllChanged', apiVersion, callback);
+__tcfapi('offConsentAllChanged', apiVersion, cachedListener); // remove a specific event listener
+__tcfapi('offConsentAllChanged', apiVersion); // remove all `onConsentAllChanged` event listeners
+```
+
+### showConsentTool
+
+Calling `__tcfapi('showConsentTool', 2, () => {})` will display the CMP UI.
+
+```js
+/**
+ * @param 'showConsentTool' // required string command
+ * @param apiVersion // required number 2
+ * @param callback // required function, called when showConsentTool complete, called with `store`
+ */
+__tcfapi('showConsentTool', 2, (store) => {});
+```
+
+### changeLanguage
+
+Calling `__tcfapi('changeLanguage', 2, () => {}, language)` will use cached version or load language dependencies and re-render the application in the desired language
+
+```js
+/**
+ * @param 'changeLanguage' // required string command
+ * @param apiVersion // required number 2
+ * @param callback // required function, called when changeLanguage completes, called with `store` and result
+ * @param language // required string, 2-letter language-code en,bg,ca,cs,da,de... etc. See constants.js file for supported languages
+ */
+__tcfapi('changeLanguage', 2, (store) => {}, 'pt'); // changes to Portuguese
+```
+
+## Configuration / Config
+
+Set configuration for your CMP during the `init` phase.
+
+```js
+__tcfapi('init', 2, () => {}, {
+	theme: {
+		maxHeightModal: '50vh',
+		primaryColor: '#0099ff',
+	},
+	canLog: true, // pixel logging for monitoring and alerting
+	canDebug: false, // console.logs for dev debugging
+	narrowedVendors: [1, 2, 3, 4, 5], // only show a select numuber of vendors
+	cookieDomain: '', // which domain to set the euconsent and gdpr_opt_in cookie on
 });
 ```
 
-### Arguments
+| Config Property        | Type             | Default                                 | Detail                                                                                                         |
+| ---------------------- | ---------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `canLog`               | optional boolean | `false`                                 | true enables DPL logging for health monitoring. Add `#s1&debug=true` to URL for easy DPL debugging             |
+| `canDebug`             | optional boolean | `false`                                 | true enables internal console logging for debugging                                                            |
+| `baseUrl`              | optional string  | `./config/2.0`                          | relative or absolute url to load the global vendor list. Combines with `versionedFilename` to load vendorlist. |
+| `versionedFilename`    | optional string  | `vendor-list.json`                      | file name of the global vendor list.                                                                           |
+| `languageFilename`     | optional string  | `purposes/purposes-[LANG].json`         | file name template for gvl localized purpose json files                                                        |
+| `translationFilename`  | optional string  | `translations/translations-[LANG].json` | file name template for custom localized json files for UI layer                                                |
+| `cookieDomain`         | optional string  | empty                                   | manage consent across subdomains. Example `.mysite.com`                                                        |
+| `gdprApplies`          | optional boolean | `false`                                 | Please pass `true` if being used on EU traffic where active consent is required                                |
+| `ccpaApplies`          | optional boolean | `false`                                 | Please pass `true` if being used on USA:CA traffic where "Do Not Sell" initiates CMP passively                 |
+| `experimentId`         | optional string  | `control`                               | use to indicate changes / upgrades in your CMP implementation for reporting / monitoring purposes.             |
+| `business`             | optional string  | `dev`                                   | used to correlate CMP events for monitoring across a businessline.                                             |
+| `theme`                | optional object  | [details below](#theme)                 | Override styling choices using the following properties.                                                       |
+| `publisherCountryCode` | optional string  | `US`                                    | String representing country code of parent website business                                                    |
+
+### theme
+
+Override styling choices using the following properties:
+
+- `maxHeightModal`: '50vh'
+- `primaryColor`: '#0099ff'
+- `textLinkColor`: '#0099ff'
+- `secondaryColor`: '#869cc0'
+- `featuresColor`: '#d0d3d7'
+
+## Background and Resources
+
+The UI layer is inspired by this [IAB TCF CMP UI Webinar presentation](https://iabeurope.eu/wp-content/uploads/2020/01/2020-01-21-TCF-v2.0-CMP-UI-Webinar.pdf).
+
+This CMP leverages the [core](https://github.com/InteractiveAdvertisingBureau/iabtcf-es/blob/master/modules/core#iabtcfcore), [cmpapi](https://github.com/InteractiveAdvertisingBureau/iabtcf-es/blob/master/modules/cmpapi#iabtcfcmpapi), and [stub](https://github.com/InteractiveAdvertisingBureau/iabtcf-es/blob/master/modules/stub#iabtcfstub) modules from IAB's official TCF 2.0 JS SDK [iabtcf-es](https://github.com/InteractiveAdvertisingBureau/iabtcf-es).
+
+The component library was forked and edited from the original [TCF 1.0 CMP](https://github.com/appnexus/cmp) by AppNexus.
+
+Following Google's [Additional Consent Mode](https://support.google.com/admanager/answer/9681920?hl=en&ref_topic=9760861) and [Interoperability guidance for vendors](https://support.google.com/admanager/answer/9461778?hl=en) this CMP provides cached versions of the [vendor-list-test-google](https://vendorlist.consensu.org/v2/vendor-list-test-google.json) and standard [vendor-list](https://vendorlist.consensu.org/v2/vendor-list.json) vendor list.
+
+## TODO
+
+- [ ] Write Unit Tests and Integration Tests
+- [ ] Docs
+- [ ] Internal Localization
+- [ ] Layer 2 Purposes
+- [ ] Layer 3 Purpose Details
+- [ ] Layer 2 Vendors
+- [ ] Theming
+- [ ] Auto-consent using [TC-string-passing](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20Consent%20string%20and%20vendor%20list%20formats%20v2.md#full-tc-string-passing)
+- [ ] non-personalized performance and monitoring analytics
+- [ ] Validate using the [TCF 2.0 validator extension](https://cmp-validator.consensu.org/chrome-extension/latest/IAB-Europe-CMP-Validator-User-Guide.pdf)
+- [ ] Separate polyfill bundle, use babelrc instead of manually importing from core-js
+
+## Support Matrix
+
+- `✔ Level 1`: Tested and fully supported, all functional and visual bugs should be fixed.
+- `✢ Level 2`: Untested or Partially tested, functional bugs reported are fixed, visual appearance may differ.
+- `✳ Level 3`: A separate solution or codebase exists to support this browser
+- `✘ Not Supported`: Untested tested, functional bugs expected and not fixed.
+
+| Browser         | ✔ Level 1       | ✢ Level 2            | ✳ Level 3 | ✘ Not Supported   |
+| :-------------- | :-------------- | :------------------- | --------- | ----------------- |
+| Chrome          | ✔ Latest        | ✢ Latest - 2         |           |                   |
+| Safari          | ✔ Latest        | ✢ Latest - 2         |           |                   |
+| Edge            | ✔ Latest        | ✢ Latest - 2 (Win10) |           |                   |
+| IE              | ✔ IE11 (Win8.1) | ✢ IE11(Win7 / Metro) |           | ✘ IE10, IE9,...   |
+| Firefox         | ✔ Latest        | ✢ Latest - 2         |           |                   |
+| iOS Safari      | ✔ Latest        | ✢ Latest - 2         |           |                   |
+| Android Chrome  | ✔ Latest        | ✢ Latest - 2         |           |                   |
+| Android Browser |                 |                      |           | ✘ Default Browser |
+| Opera           |                 |                      |           | ✘                 |
+
+## Contributing
+
+For now the TCF 1.1 and TCF 2.0 CMPs both live in this repository. We will deprecate and remove TCF 1.1 and update all tests against the new 2.0 package. To contribute, make updates to the files in `src/s1`.
 
 ```
-cmp(command, [parameter], [callback])
-```
-
-- `command` (String): Name of the command to execute
-- `[parameter]` (\*): Parameter to be passed to the command function
-- `[callback]` (Function): Function to be executed with the result of the command
-
-### Possible Commands
-
-- `init` REQUIRED, can only be called once
-- `addEventListener`
-- `removeEventListener`
-- `showConsentTool`
-
-- `getVendorConsents`
-- `getPublisherConsents`
-- `getConsentData`
-- `getVendorList`
-
-### Examples
-
-```
-cmp('getVendorConsents', null, (response) => console.log(response));
-cmp('getPublisherConsents', null, (response) => console.log(response));
-cmp('getConsentData', null, (response) => console.log(response));
-cmp('showConsentTool');
-```
-
-## Events
-
-- `onConsentChanged` CUSTOM: triggers whenever consent has changed
-- `isLoaded`
-- `cmpReady`
-- `onSubmit`
-
-### Examples
-
-```
-cmp('addEventListener', 'onConsentChanged', (event) => console.log(event));
-cmp('addEventListener', 'onSubmit', (event) => console.log(event));
-```
-
-## Build
-
-Build the original project and the System1 project:
-
-```
-yarn build          # builds both projects
-yarn build:s1       # builds just the System1 loader and "complete" CMP SDK.
-yarn build:original # builds just the original CMP provided by appnexus
-```
-
-## Deploy
-
-Deploy will build and upload the project files to a System1 S3 bucket for public use
-
-```
-yarn deploy         # builds and uploads both projects
-yarn build:s1       # builds and uploads just the versioned S1 project
-yarn build:original # builds and uploads just the original project
-```
-
-## Upload
-
-The system1-cmp project lives in `dist/{version}` and is immutable, you can't upload it more than once.
-This _should_ be a safe operation to make as you'll just see an error in the terminal telling you the files already exist.
-You will need to bump the `package.json` version in order to publish any changes to S3.
-
-```
-yarn upload:s1
-```
-
-The original project gets deployed to S3, but it's for reference only, it will invalidate automatically, and no one should have a production dependency on it.
-This should be a safe operation as it does not affect production files.
-
-```
-yarn upload:original
-```
-
-[![Build Status](https://travis-ci.org/appnexus/cmp.svg?branch=master)](https://travis-ci.org/appnexus/cmp)
-
-# AppNexus CMP
-
-CMP is a tool for publishers to engage users of their properties and gather & store end user consent.
-
-### Installation
-
-```sh
-git clone https://github.com/appnexus/cmp.git
-cd cmp
-yarn install
-```
-
-## Build for Production
-
-```sh
-yarn build
-```
-
-This produces a production build of the `cmp` script and the docs application:
-
-- `./build/cmp.bundle.js` - CMP script to include on your site
-- `./build/docs/` - Application hosting the documentation
-
-## Documentation
-
-Instructions to install the CMP as well as API docs and examples are available in the `docs`
-application included with the repo.
-
-```sh
-yarn start
-```
-
-The documentation can be viewed at:
-`http://localhost:5000/docs/`
-
-## Development
-
-You can start a development server that will monitor changes to all CMP and docs files with:
-
-```sh
-yarn dev:s1
-```
-
-Development server can be accessed at:
-`http://localhost:8080/reference.html`
-
-## Testing
-
-```sh
-yarn test
-```
-
-## Deployment
-
-- [x] Bump the version in package.json for any new release
-- [x] There are 2 branches, `master` and `modal`.
-  - `master` branch is the latest CMP, it's not used anywhere in production yet. - `modal` branch is the MODAL-based CMP (based on an older version), but it is in use across many sites in production.
-- [x] PR against master or modal depending on your work and get an approval
-- [x] Once approved, you can use `yarn deploy` which will build and upload an immutable version of the System-1 CMP (and non-modified appnexus CMP + docs) to S3.
-
-```sh
-yarn deploy
+yarn
+yarn dev
+# browse to http://localhost:8080/tcf-2.0.html
 ```

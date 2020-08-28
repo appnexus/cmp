@@ -1,0 +1,32 @@
+{
+	"layer1Stacks": {
+		"title": "Integritetsval",
+		"description": "Genom att använda denna webbplats så samtycker du till vår användning av cookies för att tillhandahålla ett mer personligt skräddarsytt innehåll inklusive relaterade annonser samt i syfte att mäta och analysera användningen av webbplatsen. Klicka på \"Lär Dig Mer\" om du vill ändra dina inställningar.",
+		"links": {
+			"manage": "Lär Dig Mer",
+			"accept": "Ok, Jag Förstår",
+			"save": "Spara"
+		},
+		"purposesTitle": "Vi och <a>våra partners</a>:",
+		"stacksTitle": "Vi och <a>våra partners</a> behandlar personuppgifter som IP-adress, unikt ID, bläddrings data för:",
+		"specialFeaturesTitle": "För några av ovanstående syften är vi och <a>våra partners</a>:",
+		"specialPurposesTitle": "Vi behöver ditt samtycke för alla ovanstående ändamål men vi har ett legitimt intresse för dessa ändamål:",
+		"featuresTitle": "För några av ovanstående syften är vi och <a>våra partners</a>:"
+	},
+	"layer3Vendors": {
+		"title": "Vem använder denna information?",
+		"description": "Vi och förvalda företag kommer att använda din information. Du kan se varje företag i länkarna ovan eller.",
+		"partnersTitle": "Partners som ingår i IAB TCF",
+		"privacy": "Sekretesspolicy:",
+		"links": {
+			"back": "Tillbaka",
+			"acceptAll": "Tillåt Alla",
+			"save": "Spara"
+		},
+		"purposesConsent": "Syften (samtycke)",
+		"purposesLegit": "Syften (legitimt intresse)",
+		"specialPurposes": "Speciella Syften",
+		"features": "Funktioner",
+		"specialFeatures": "Speciella Funktioner"
+	}
+}

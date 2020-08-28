@@ -8,7 +8,7 @@ import packageJson from '../package.json';
 
 const ENV = process.env.NODE_ENV || 'development';
 const CSS_MAPS = ENV !== 'production';
-const { version } = packageJson;
+const { name, version } = packageJson;
 
 const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
 	output: {
@@ -76,6 +76,7 @@ const commonConfig = {
 				test: /\.(less|css)$/,
 				include: [
 					path.resolve(__dirname, '../', 'src/components'),
+					path.resolve(__dirname, '../', 'src/s1/components'),
 					path.resolve(__dirname, '../', 'src/docs/components'),
 				],
 				use: [
@@ -167,4 +168,4 @@ const commonConfig = {
 	},
 };
 
-export { commonConfig, ENV, CSS_MAPS, version, uglifyPlugin };
+export { commonConfig, ENV, CSS_MAPS, name, version, uglifyPlugin };

@@ -1,0 +1,32 @@
+{
+	"layer1Stacks": {
+		"title": "Choix en matière de vie privée",
+		"description": "En utilisant ce site, vous acceptez l’utilisation des cookies et des informations nécessaires pour vous fournir un contenu et des publicités personnalisées, ainsi que pour mesurer et analyser l’utilisation du site. Cliquez sur \"En savoir plus\" pour modifier vos paramètres.",
+		"links": {
+			"manage": "En savoir plus",
+			"accept": "OK, j’ai compris",
+			"save": "Enregistrer"
+		},
+		"purposesTitle": "Nous et <a>nos partenaires</a>:",
+		"stacksTitle": "Nous et <a>nos partenaires</a> traitons des données personnelles telles que l'adresse IP, l'identifiant unique, les données de navigation pour:",
+		"specialFeaturesTitle": "Pour certaines des raisons ci-dessus, nous et <a>nos partenaires</a>:",
+		"specialPurposesTitle": "Nous avons besoin de votre consentement pour toutes les fins ci-dessus, mais nous avons un intérêt légitime à ces fins:",
+		"featuresTitle": "Pour certaines des raisons ci-dessus, nous et <a>nos partenaires</a>:"
+	},
+	"layer3Vendors": {
+		"title": "Qui utilise ces informations?",
+		"description": "Nous et les sociétés présélectionnées utiliserons vos informations. Vous pouvez consulter chaque société figurant dans les liens ci-dessus ou",
+		"partnersTitle": "Partenaires faisant partie de l'IAB TCF",
+		"privacy": "Politique de confidentialité:",
+		"links": {
+			"back": "Retour",
+			"acceptAll": "Autoriser tout",
+			"save": "Enregistrer"
+		},
+		"purposesConsent": "Finalités (consentement)",
+		"purposesLegit": "Finalités (intérêt légitime)",
+		"specialPurposes": "Fins Spéciales",
+		"features": "Caractéristiques",
+		"specialFeatures": "Caractéristiques Spéciales"
+	}
+}

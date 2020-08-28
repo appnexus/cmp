@@ -1,0 +1,32 @@
+{
+	"layer1Stacks": {
+		"title": "Privatlivsindstillinger",
+		"description": "Ved at bruge dette websted accepterer du vores brug af cookies og oplysninger til at levere personligt indhold og annoncer samt måle og analysere brugen af webstedet. Klik på \"Lær mere\" for at ændre dine indstillinger.",
+		"links": {
+			"manage": "Lær Mere",
+			"accept": "Ok, Forstået",
+			"save": "Gemme"
+		},
+		"purposesTitle": "Vi og <a>vores partnere</a>:",
+		"stacksTitle": "Vi og <a>vores partnere</a> behandler personlige data såsom IP-adresse, unik ID, gennemsøgningsdata til:",
+		"specialFeaturesTitle": "Til nogle af ovennævnte formål er vi og <a>vores partnere</a>:",
+		"specialPurposesTitle": "Vi har brug for dit samtykke til alle ovenstående formål, men vi har en legitim interesse til disse formål:",
+		"featuresTitle": "Til nogle af ovennævnte formål er vi og <a>vores partnere</a>:"
+	},
+	"layer3Vendors": {
+		"title": "Hvem bruger disse oplysninger?",
+		"description": "Her er den komplette liste over virksomheder, der bruger dine oplysninger. Se deres privatlivspolitik for flere detaljer.",
+		"partnersTitle": "Partnere, der er en del af IAB TCF",
+		"privacy": "Privatlivspolitik:",
+		"links": {
+			"back": "Tilbage",
+			"acceptAll": "Tillad Alle",
+			"save": "Gemme"
+		},
+		"purposesConsent": "Formål (samtykke)",
+		"purposesLegit": "Purposes (Legitimate Interest)",
+		"specialPurposes": "Særlige Formål",
+		"features": "Egenskaber",
+		"specialFeatures": "Særlige Egenskaber"
+	}
+}

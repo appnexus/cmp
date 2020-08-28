@@ -7,7 +7,7 @@ import fs from 'fs';
 import UglifyJS from 'uglify-es';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-import { commonConfig, uglifyPlugin, version } from './common.webpack.config.babel';
+import { commonConfig, name, uglifyPlugin, version } from './common.webpack.config.babel';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -19,6 +19,9 @@ const pages = [
 	{
 		id: 'info-acs',
 	},
+	{
+		id: 'tcf-2.0',
+	},
 ];
 
 module.exports = [
@@ -26,12 +29,16 @@ module.exports = [
 	{
 		entry: {
 			cmp: './s1/cmp.js',
+			polyfills: './s1/polyfills.js',
+			// 'tcf-2.0-loader': './s1/tcf-2.0-loader.js',
+			'tcf-2.0-cmp': './s1/tcf-2.0-cmp.js',
 		},
 		...commonConfig,
 		output: {
 			path: path.resolve(__dirname, '../', `dist/${version}`),
-			publicPath: './',
-			filename: 'cmp.js',
+			filename: '[name].js',
+			publicPath: `https://s.flocdn.com/${name}/${version}/`,
+			// publicPath: './',
 		},
 		plugins: [
 			new webpack.DefinePlugin({
@@ -65,6 +72,16 @@ module.exports = [
 				{
 					from: './s1/loader.js',
 					to: './loader.js',
+					transform(content) {
+						// Just want to uglify and copy this file over
+						return Promise.resolve(Buffer.from(UglifyJS.minify(content.toString()).code, 'utf8'));
+					},
+				},
+			]),
+			new CopyWebpackPlugin([
+				{
+					from: './s1/tcf-2.0-loader.js',
+					to: './tcf-2.0-loader.js',
 					transform(content) {
 						// Just want to uglify and copy this file over
 						return Promise.resolve(Buffer.from(UglifyJS.minify(content.toString()).code, 'utf8'));

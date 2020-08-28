@@ -1,0 +1,32 @@
+{
+	"layer1Stacks": {
+		"title": "Privacykeuzes",
+		"description": "Door deze site te gebruiken, gaat u akkoord met ons gebruik van cookies en informatie om gepersonaliseerde inhoud en advertenties te leveren en het gebruik van de site te meten en te analyseren. Klik op \"Meer informatie\" om uw instellingen te wijzigen.",
+		"links": {
+			"manage": "Meer Leren",
+			"accept": "Ok, Begrepen",
+			"save": "Sparen"
+		},
+		"purposesTitle": "Wij en <a>onze partners</a>:",
+		"stacksTitle": "Wij en <a>onze partners</a> verwerken persoonlijke gegevens zoals IP-adres, unieke ID, browsegegevens voor:",
+		"specialFeaturesTitle": "Voor sommige van de bovenstaande doeleinden zijn wij en <a>onze partners</a>:",
+		"specialPurposesTitle": "We hebben uw toestemming nodig voor alle bovenstaande doeleinden, maar we hebben een legitiem belang voor deze doeleinden:",
+		"featuresTitle": "Voor sommige van de bovenstaande doeleinden zijn wij en <a>onze partners</a>"
+	},
+	"layer3Vendors": {
+		"title": "Wie gebruikt deze informatie?",
+		"description": "Wij en vooraf gekozen bedrijven zullen uw informatie gebruiken. Je kunt elk bedrijf in de links hierboven bekijken of",
+		"partnersTitle": "Partners die deel uitmaken van het IAB TCF",
+		"privacy": "Privacybeleid:",
+		"links": {
+			"back": "Terug",
+			"acceptAll": "Sta toe aan iedereen",
+			"save": "Sparen"
+		},
+		"purposesConsent": "Doeleinden (Toestemming)",
+		"purposesLegit": "Doeleinden (legitiem belang)",
+		"specialPurposes": "Speciale Doeleinden",
+		"features": "Kenmerken",
+		"specialFeatures": "Speciale Kenmerken"
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"layer1Stacks": {
+		"title": "Scelte Privacy",
+		"description": "Utilizando questo sito, acconsenti al nostro uso dei cookie e delle informazioni per fornire contenuto personalizzato e pubblicità e per misurare ed analizzare l'utilizzo del sito. Clicca su \"Maggiori inforrmazioni\" per cambiare le tue impostazioni.",
+		"links": {
+			"manage": "Maggiori informazioni",
+			"accept": "Ok, Capito",
+			"save": "Salva"
+		},
+		"purposesTitle": "Noi e i <a>nostri partner</a>:",
+		"stacksTitle": "Noi ei <a>nostri partner</a> trattiamo dati personali come indirizzo IP, ID univoco, dati di navigazione per:",
+		"specialFeaturesTitle": "Per alcuni degli scopi di cui sopra noi e i <a>nostri partner</a>:",
+		"specialPurposesTitle": "Abbiamo bisogno del tuo consenso per tutti gli scopi di cui sopra, ma abbiamo un interesse legittimo per questi scopi:",
+		"featuresTitle": "Per alcuni degli scopi di cui sopra noi e i <a>nostri partner</a>:"
+	},
+	"layer3Vendors": {
+		"title": "Chi usa queste informazioni?",
+		"description": "Noi e società preselezionate utilizzeremo le tue informazioni. Puoi vedere ogni società nei link qui sopra o.",
+		"partnersTitle": "Partner che fanno parte dello IAB TCF",
+		"privacy": "Informativa sulla Privacy:",
+		"links": {
+			"back": "Indietro",
+			"acceptAll": "Consenti tutto",
+			"save": "Salva"
+		},
+		"purposesConsent": "Finalità (consenso)",
+		"purposesLegit": "Finalità (legittimo interesse)",
+		"specialPurposes": "Scopi Speciali",
+		"features": "Caratteristiche",
+		"specialFeatures": "Scopi Caratteristiche"
+	}
+}

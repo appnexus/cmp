@@ -1,0 +1,32 @@
+{
+	"layer1Stacks": {
+		"title": "Valg for personvern",
+		"description": "Ved å bruke denne siden, aksepterer du vår bruk av informasjonskapsler og informasjon for å levere personalisert innhold og annonser, og til å måle og analysere diebruken. Klikk på \"Les mer\" for å endre innstillingene dine.",
+		"links": {
+			"manage": "Les mer",
+			"accept": "Ok, Jeg forstår",
+			"save": "lagre"
+		},
+		"purposesTitle": "Vi og <a>våre partnere</a>:",
+		"stacksTitle": "Vi og <a>våre partnere</a> behandler personopplysninger som IP-adresse, unik ID, surfedata for:",
+		"specialFeaturesTitle": "For noen av formålene ovenfor er vi og <a>våre partnere</a>:",
+		"specialPurposesTitle": "Vi trenger ditt samtykke til alle formålene ovenfor, men vi har en legitim interesse for disse formålene:",
+		"featuresTitle": "For noen av formålene ovenfor er vi og <a>våre partnere</a>:"
+	},
+	"layer3Vendors": {
+		"title": "Hvem bruker denne informasjonen?",
+		"description": "Her er den komplette listen over selskaper som bruker informasjonen. Les de respektive personvernerklæringene for flere detaljer.",
+		"partnersTitle": "Partnere som er en del av IAB TCF",
+		"privacy": "Personvernerklæing:",
+		"links": {
+			"back": "Tilbake",
+			"acceptAll": "Tillat alt",
+			"save": "lagre"
+		},
+		"purposesConsent": "Formål (samtykke)",
+		"purposesLegit": "Formål (legitim interesse)",
+		"specialPurposes": "Spesielle Formål",
+		"features": "Features",
+		"specialFeatures": "Egenskaper"
+	}
+}

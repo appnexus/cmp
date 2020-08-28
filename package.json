@@ -1,6 +1,6 @@
 {
 	"name": "system1-cmp",
-	"version": "1.5.7",
+	"version": "2.0.0",
 	"description": "System1 Consent Management Platform for TCF 1.1 GDPR Compliance",
 	"scripts": {
 		"clean": "rimraf ./dist",
@@ -16,7 +16,9 @@
 		"upload:original": "cross-var s3-deploy './dist/{*.?(js|html),docs/**}' --cwd './dist' --region us-west-2 --bucket s1-layout-cdn/cmp --gzip --cache 1440 --distId E5JQ1CRXXPTKM --invalidate '/cmp/*.js /cmp/* /cmp/docs/*'",
 		"build:s1": "cross-env NODE_ENV=production webpack --progress --config config/s1.webpack.config.babel.js",
 		"deploy:s1": "yarn build:s1 && yarn upload:s1",
-		"upload:s1": "cross-var s3-deploy './dist/$npm_package_version/**' --cwd './dist/$npm_package_version' --region us-west-2 --bucket s1-layout-cdn/cmp/$npm_package_version --gzip --cache 1440 --distId E5JQ1CRXXPTKM --invalidate '/cmp/$npm_package_version'",
+		"upload:s1": "cross-var s3-deploy './dist/$npm_package_version/**' --cwd './dist/$npm_package_version' --region us-west-2 --bucket s1-layout-cdn/cmp/$npm_package_version --gzip --preventUpdates --immutable",
+		"deploy:test": "yarn build:s1 && yarn upload:test",
+		"upload:test": "cross-var s3-deploy './dist/$npm_package_version/**' --cwd './dist/$npm_package_version' --region us-west-2 --bucket s1-layout-cdn/cmp/test --gzip --cache 1440 --distId E5JQ1CRXXPTKM --invalidate '/cmp/test/* /cmp/test/*.html'",
 		"prebuild": "npm run clean && mkdirp dist",
 		"test": "npm run -s lint && jest --coverage",
 		"test:watch": "npm run -s test -- --watch",
@@ -26,7 +28,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/appnexus/cmp.git"
+		"url": "https://github.com/Openmail/system1-cmp.git"
 	},
 	"license": "Apache-2.0",
 	"author": "AppNexus",
@@ -102,7 +104,9 @@
 		"webpack-dev-server": "^2.4.4"
 	},
 	"dependencies": {
-		"@s1/dpl": "2.3.1",
+		"@iabtcf/cmpapi": "^1.1.0-3",
+		"@iabtcf/core": "^1.1.0-3",
+		"@s1/dpl": "3.0.15",
 		"classnames": "^2.2.5",
 		"codemirror": "^5.34.0",
 		"core-js": "^2.5.3",
@@ -124,12 +128,16 @@
 	},
 	"bundlesize": [
 		{
-			"path": "./dist/[0-9].[0-9].[0-9]/cmp.js",
-			"maxSize": "76.0 kB"
+			"path": "./dist/[0-9].[0-9].[0-9]/tcf-2.0-cmp.js",
+			"maxSize": "50.0 kB"
 		},
 		{
-			"path": "./dist/[0-9].[0-9].[0-9]/loader.js",
+			"path": "./dist/[0-9].[0-9].[0-9]/tcf-2.0-loader.js",
 			"maxSize": "1.0 kB"
+		},
+		{
+			"path": "./dist/[0-9].[0-9].[0-9]/polyfills.js",
+			"maxSize": "15.0 kB"
 		}
 	]
 }

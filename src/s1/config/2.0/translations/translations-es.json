@@ -1,0 +1,32 @@
+{
+	"layer1Stacks": {
+		"title": "Opciones de Privacidad",
+		"description": "Al usar este sitio, usted acepta que usemos cookies e información para suministrarle contenido y anuncios personalizados y medir y analizar el uso del sitio. Haga clic en \"Más información\" para cambiar su configuración",
+		"links": {
+			"manage": "Más Información",
+			"accept": "¡Listo!",
+			"save": "Salvar"
+		},
+		"purposesTitle": "Nosotros y <a>nuestros socios</a>:",
+		"stacksTitle": "Nosotros y <a>nuestros socios</a> procesamos datos personales como dirección IP, identificación única, datos de navegación para:",
+		"specialFeaturesTitle": "Para algunos de los propósitos anteriores, nosotros y <a>nuestros socios</a>:",
+		"specialPurposesTitle": "Necesitamos su consentimiento para todos los fines anteriores, pero tenemos un interés legítimo para estos fines:",
+		"featuresTitle": "Para algunos de los propósitos anteriores, nosotros y <a>nuestros socios</a>:"
+	},
+	"layer3Vendors": {
+		"title": "¿Quién está usando esta información?",
+		"description": "Nosotros y las empresas preseleccionadas usaremos su información. Puede ver cada empresa en los enlaces de arriba o.",
+		"partnersTitle": "Socias que forman parte del IAB TCF",
+		"privacy": "Política de Privacidad:",
+		"links": {
+			"back": "Atrás",
+			"acceptAll": "Aprobar todos",
+			"save": "Salvar"
+		},
+		"purposesConsent": "Finalidades (consentimiento)",
+		"purposesLegit": "Finalidades (interés legítimo)",
+		"specialPurposes": "Propósitos Especiales",
+		"features": "Características",
+		"specialFeatures": "Propósitos Características"
+	}
+}

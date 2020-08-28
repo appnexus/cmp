@@ -1,0 +1,32 @@
+{
+	"layer1Stacks": {
+		"title": "Privacy Choices",
+		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"links": {
+			"manage": "Learn More",
+			"accept": "Ok, Got It",
+			"save": "Save"
+		},
+		"purposesTitle": "We and <a>our partners</a>:",
+		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
+		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
+		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
+		"featuresTitle": "For some of the purposes above we and <a>our partners</a>"
+	},
+	"layer3Vendors": {
+		"title": "Who is using this information?",
+		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
+		"partnersTitle": "Partners who are part of the IAB TCF",
+		"privacy": "Privacy Policy:",
+		"links": {
+			"back": "Back",
+			"acceptAll": "Allow All",
+			"save": "Save"
+		},
+		"purposesConsent": "Purposes (Consent)",
+		"purposesLegit": "Purposes (Legitimate Interest)",
+		"specialPurposes": "Special Purposes",
+		"features": "Features",
+		"specialFeatures": "Special Features"
+	}
+}

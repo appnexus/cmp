@@ -1,0 +1,32 @@
+{
+	"layer1Stacks": {
+		"title": "Datenschutzoptionen",
+		"description": "Wenn Sie diese Website besuchen, erklären Sie sich damit einverstanden, dass wir Cookies und Informationen verwenden, um personalisierte Inhalte und Anzeigen bereitzustellen und die Nutzung der Website zu messen und zu analysieren. Klicken Sie auf \"Erfahren Sie mehr\", um Ihre Einstellungen zu ändern.",
+		"links": {
+			"manage": "Mehr Erfahren",
+			"accept": "Ok, Verstanden",
+			"save": "Sparen"
+		},
+		"purposesTitle": "Wir und <a>unsere Partner</a>:",
+		"stacksTitle": "Wir und <a>unsere Partner</a> verarbeiten personenbezogene Daten wie IP-Adresse, eindeutige ID und Browsing-Daten:",
+		"specialFeaturesTitle": "Für einige der oben genannten Zwecke sind wir und <a>unsere Partner</a>:",
+		"specialPurposesTitle": "Wir benötigen Ihre Zustimmung für alle oben genannten Zwecke, haben jedoch ein berechtigtes Interesse für diese Zwecke:",
+		"featuresTitle": "Für einige der oben genannten Zwecke sind wir und <a>unsere Partner</a>"
+	},
+	"layer3Vendors": {
+		"title": "Wer verwendet diese Informationen?",
+		"description": "Hier ist die vollständige Liste der Unternehmen, die Ihre Informationen verwenden werden. Bitte lesen Sie deren Datenschutzrichtlinien für weitere Details.",
+		"partnersTitle": "Partner, die Teil des IAB TCF sind",
+		"privacy": "Datenschutz:",
+		"links": {
+			"back": "Zurück",
+			"acceptAll": "Alle Erlauben",
+			"save": "Sparen"
+		},
+		"purposesConsent": "Zweck (Zustimmung)",
+		"purposesLegit": "Zweck (Berechtigtes Interesse)",
+		"specialPurposes": "Besondere Zwecke",
+		"features": "Eigenschaften",
+		"specialFeatures": "Besondere Eigenschaften"
+	}
+}
