@@ -969,10 +969,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@s1/dpl@3.0.15":
-  version "3.0.15"
-  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/@s1/dpl/-/@s1/dpl-3.0.15.tgz#b2170d65ddb540c555b00e3c2b129d50392c2344"
-  integrity sha1-shcNZd21QMVVsA48KxKdUDksI0Q=
+"@s1/dpl@3.0.16":
+  version "3.0.16"
+  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/@s1/dpl/-/@s1/dpl-3.0.16.tgz#f135cd8958f05cb15fdc8659364bb4d1a0d2362b"
+  integrity sha1-8TXNiVjwXLFf3IZZNku00aDSNis=
   dependencies:
     "@babel/runtime" "^7.10.5"
     doctoc "^1.4.0"

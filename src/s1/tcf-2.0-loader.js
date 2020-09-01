@@ -32,7 +32,7 @@
 			// 2. create global cmp / __tcfapi request queues
 			return (function (window, document, script, commandQueue, scriptEl, scriptParentEl) {
 				var tcfToCmpMap = function (command, version, callback, parameter) {
-					window[cmp].call(this, command, parameter, callback);
+					window[cmp].call(this, command, parameter, callback || function () {});
 				};
 				var cmpToTcfMap = function (command, parameter, callback) {
 					window[__tcfapi].call(this, command, 2, callback || function () {}, parameter);
@@ -41,68 +41,66 @@
 				// remap tcfapi
 				window[__tcfapi] = window[__tcfapi] || tcfToCmpMap;
 
-				window[cmp] =
-					window[cmp] ||
-					function (command, parameter, callback) {
-						// tcfAPI is loaded already
-						if (window[__tcfapi] !== tcfToCmpMap) {
-							// __tcfapi takes over here
-							window[cmp] = cmpToTcfMap;
-							return window[cmp].apply(this, arguments);
+				window[cmp] = function (command, parameter, callback) {
+					// tcfAPI is loaded already
+					if (window[__tcfapi] !== tcfToCmpMap) {
+						// __tcfapi takes over here
+						window[cmp] = cmpToTcfMap;
+						return window[cmp].apply(this, arguments);
+					}
+
+					if (!command) {
+						return;
+					}
+
+					(window[cmp][commandQueue] = window[cmp][commandQueue] || []).push({
+						command,
+						parameter,
+						callback,
+					});
+
+					// if 'init', then we need to load the seed file
+					if (command === 'init') {
+						if (scriptEl) {
+							return log(parameter[logging], 'CMP Error: Only call init once.');
+						}
+						if (!parameter || !parameter[scriptSrc]) {
+							return log(
+								parameter[logging],
+								// eslint-disable-next-line quotes
+								"CMP Error: Provide src to load CMP. cmp('init', { scriptSrc: './cmp.js'})"
+							);
 						}
 
-						if (!command) {
-							return;
-						}
-
-						(window[cmp][commandQueue] = window[cmp][commandQueue] || []).push({
-							command,
-							parameter,
-							callback,
-						});
-
-						// if 'init', then we need to load the seed file
-						if (command === 'init') {
-							if (scriptEl) {
-								return log(parameter[logging], 'CMP Error: Only call init once.');
+						var loadCmp = function () {
+							scriptEl = document.createElement(script);
+							scriptEl.async = 1;
+							scriptEl.src = parameter[scriptSrc];
+							scriptParentEl = document.getElementsByTagName(script)[0];
+							if (scriptParentEl && scriptParentEl.parentNode) {
+								scriptParentEl.parentNode.insertBefore(scriptEl, scriptParentEl);
+							} else {
+								document.body.appendChild(scriptEl);
 							}
-							if (!parameter || !parameter[scriptSrc]) {
+						};
+
+						if (!shouldPolyfill) {
+							loadCmp();
+						} else {
+							// load polyfills
+							var regex = new RegExp('[^/]+$');
+							var pSrc = parameter[polyfillSrc] || parameter[scriptSrc].replace(regex, 'polyfills.js');
+							if (!pSrc) {
 								return log(
 									parameter[logging],
 									// eslint-disable-next-line quotes
-									"CMP Error: Provide src to load CMP. cmp('init', { scriptSrc: './cmp.js'})"
+									"CMP Error: Provide polyfillSrc to load CMP. cmp('init', { polyfillSrc: './polyfills.js'})"
 								);
 							}
-
-							var loadCmp = function () {
-								scriptEl = document.createElement(script);
-								scriptEl.async = 1;
-								scriptEl.src = parameter[scriptSrc];
-								scriptParentEl = document.getElementsByTagName(script)[0];
-								if (scriptParentEl && scriptParentEl.parentNode) {
-									scriptParentEl.parentNode.insertBefore(scriptEl, scriptParentEl);
-								} else {
-									document.body.appendChild(scriptEl);
-								}
-							};
-
-							if (!shouldPolyfill) {
-								loadCmp();
-							} else {
-								// load polyfills
-								var regex = new RegExp('[^/]+$');
-								var pSrc = parameter[polyfillSrc] || parameter[scriptSrc].replace(regex, 'polyfills.js');
-								if (!pSrc) {
-									return log(
-										parameter[logging],
-										// eslint-disable-next-line quotes
-										"CMP Error: Provide polyfillSrc to load CMP. cmp('init', { polyfillSrc: './polyfills.js'})"
-									);
-								}
-								loadScript(pSrc, loadCmp);
-							}
+							loadScript(pSrc, loadCmp);
 						}
-					};
+					}
+				};
 				// 4. return temporary cmp command queue
 				return window[cmp];
 			})(window, document, 'script', 'commandQueue');

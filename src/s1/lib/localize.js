@@ -2,10 +2,6 @@ import { GVL } from '@iabtcf/core';
 import { DEFAULT_LANGUAGE, LANGUAGES } from '../constants';
 import logger, { EVENTS as LOG_EVENTS } from './logger';
 
-// import translations from '../../lib/translations';
-// import translations from '../config/2.0/custom/en.json';
-
-// const translations = {};
 const translations = {};
 
 export function findLangage(optLang) {
@@ -48,7 +44,7 @@ export const localize = (language) => {
 		.then((json) => flatten(json))
 		.catch((e) => {
 			logger(LOG_EVENTS.CMPError, {
-				errorMessage: `localizeError: ${e}`,
+				message: `localizeError: ${e}`,
 			});
 		});
 };

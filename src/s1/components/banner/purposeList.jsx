@@ -55,7 +55,7 @@ export default class PurposeList extends Component {
 		logger(LOG_EVENTS.CMPClick, {
 			action: 'click',
 			category: 'toggleSpecialFeatures',
-			label: id,
+			label: `${id}`,
 		});
 	}
 
@@ -66,7 +66,7 @@ export default class PurposeList extends Component {
 		logger(LOG_EVENTS.CMPClick, {
 			action: 'click',
 			category: 'togglePurpose',
-			label: id,
+			label: `${id}`, // force string
 		});
 	}
 
@@ -77,7 +77,7 @@ export default class PurposeList extends Component {
 		logger(LOG_EVENTS.CMPClick, {
 			action: 'click',
 			category: 'toggleStack',
-			label: id,
+			label: `${id}`, // force string
 		});
 	}
 

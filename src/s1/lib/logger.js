@@ -24,7 +24,7 @@ export const logger = (logger, payload) => {
 		}
 		logger.log(loggerPayload);
 	} else {
-		debug('logger (isDisabled)', loggerPayload);
+		debug('logger (isDisabled)', logger, loggerPayload);
 	}
 };
 

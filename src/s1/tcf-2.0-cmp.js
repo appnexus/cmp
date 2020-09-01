@@ -68,7 +68,7 @@ export const setup = (configOpt) => {
 		[INIT]: (callback) => {
 			if (!store || !init) {
 				logger(LOG_EVENTS.CMPError, {
-					errorMessage: `initError: ${errorMessage}`,
+					message: `initError: ${errorMessage}`,
 				});
 				callback(init(store), new Error(`CMP: initError: ${errorMessage}`));
 			} else {
@@ -80,7 +80,7 @@ export const setup = (configOpt) => {
 				readyPromise
 					.catch((e) => {
 						logger(LOG_EVENTS.CMPError, {
-							errorMessage: `gvlInitError: ${e}`,
+							message: `gvlInitError: ${e}`,
 						});
 					})
 					.finally(() => {

@@ -12,6 +12,7 @@ export default class App extends Component {
 
 	state = {
 		store: this.props.store,
+		shouldShowModal: false,
 	};
 
 	updateState(store) {
@@ -25,26 +26,39 @@ export default class App extends Component {
 	componentDidMount() {
 		const { store } = this.props;
 		store.subscribe(this.updateState.bind(this));
+		setTimeout(this.componentDidUpdate.bind(this), 100); // delay reveal on first load
+	}
+
+	componentDidUpdate() {
+		const {
+			store: { isModalShowing },
+			shouldShowModal,
+		} = this.state;
+		if (shouldShowModal !== isModalShowing) {
+			this.setState({
+				shouldShowModal: isModalShowing,
+			});
+		}
 	}
 
 	render(props, state) {
-		const { store } = state;
-		const { isModalShowing, tcModel } = store;
+		const { store, shouldShowModal } = state;
+		const { tcModel } = store;
 		const { consentScreen } = tcModel;
 
 		return (
 			<div class={style.gdpr}>
 				{!consentScreen ||
 					(consentScreen === CONSENT_SCREENS.STACKS_LAYER1 && (
-						<BannerStacks store={store} isShowing={isModalShowing && tcModel} />
+						<BannerStacks store={store} isShowing={shouldShowModal && tcModel} />
 					))}
 
 				{consentScreen === CONSENT_SCREENS.PURPOSES_LAYER2 && (
-					<BannerPurposes store={store} isShowing={isModalShowing && tcModel} />
+					<BannerPurposes store={store} isShowing={shouldShowModal && tcModel} />
 				)}
 
 				{consentScreen === CONSENT_SCREENS.VENDORS_LAYER3 && (
-					<BannerVendors store={store} isShowing={isModalShowing && tcModel} />
+					<BannerVendors store={store} isShowing={shouldShowModal && tcModel} />
 				)}
 			</div>
 		);

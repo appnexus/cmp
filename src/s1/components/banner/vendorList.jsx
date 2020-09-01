@@ -42,7 +42,7 @@ export default class VendorList extends Component {
 		logger(LOG_EVENTS.CMPClick, {
 			action: 'click',
 			category: 'toggleVendor',
-			label: id,
+			label: `${id}`, // force string
 		});
 	}
 

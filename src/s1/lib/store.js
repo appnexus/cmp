@@ -33,7 +33,7 @@ export default class Store {
 	listeners = new Set();
 
 	constructor(options) {
-		const { theme, language } = this.config;
+		const { theme } = this.config;
 		Object.assign(this, {
 			...options,
 			theme: {
@@ -41,9 +41,9 @@ export default class Store {
 				...options.theme,
 			},
 		});
+		const { language } = this.config;
 		const { tcfApi, gvl } = options;
 		const { readyPromise } = gvl;
-
 		const localizePromise = localize(language);
 		localizePromise.then((translations) => {
 			this.setState({
@@ -55,7 +55,7 @@ export default class Store {
 			.then(this.onReady.bind(this))
 			.catch((e) => {
 				logger(LOG_EVENTS.CMPError, {
-					errorMessage: `storeReadyError: ${e}`,
+					message: `storeReadyError: ${e}`,
 				});
 			});
 
