@@ -123,7 +123,7 @@ export default class Store {
 	}); // fired after gvl.readyPromise and tcData updated if persisted
 
 	onReady() {
-		const { narrowedVendors, cmpId, cmpVersion, publisherCountryCode } = this.config;
+		const { narrowedVendors, cmpId, cmpVersion, gdprConsentUrlParam, publisherCountryCode } = this.config;
 		const { vendors } = this.gvl;
 
 		if (narrowedVendors && narrowedVendors.length) {
@@ -133,12 +133,17 @@ export default class Store {
 
 		const tcModel = new TCModel(this.gvl);
 		let persistedTcModel;
-		let encodedTCString = cookie.readVendorConsentCookie();
+		const cookieTCString = cookie.readVendorConsentCookie();
+		const encodedTCString = cookieTCString || gdprConsentUrlParam;
 
 		try {
 			persistedTcModel = encodedTCString && TCString.decode(encodedTCString);
 		} catch (e) {
-			console.error('unable to decode tcstring');
+			logger(LOG_EVENTS.CMPError, {
+				message: `storeReadyError: unable to decode TCString from ${
+					gdprConsentUrlParam ? 'consentUrl' : 'consentCookie'
+				}`,
+			});
 		}
 
 		// Merge persisted model into new model in memory
@@ -150,7 +155,7 @@ export default class Store {
 			consentScreen: CONSENT_SCREENS.STACKS_LAYER1,
 		});
 
-		// Handle a return user with persistedConsent vs a user that has not saved preferences
+		// Handle a new user
 		if (!persistedTcModel) {
 			tcModel.setAllVendorLegitimateInterests();
 			tcModel.setAllPurposeLegitimateInterests();
@@ -161,7 +166,11 @@ export default class Store {
 
 			// update internal models, show ui, dont save to cookie
 			this.updateCmp({ tcModel, shouldShowModal: true });
+			this.setDisplayLayer1();
 		} else {
+			// handle a return user
+
+			// Note: commented out because automatic vendor consent management creates unexpected result for user.
 			// update the manually managed vendor consent model set since it's primarily automatically managed
 			// this is a list of vendor consents that were likely manually revoked by the user
 			// const { vendorConsents } = tcModel;
@@ -170,10 +179,16 @@ export default class Store {
 			// 		this.manualVendorConsents.add(parseInt(key, 10));
 			// 	}
 			// });
-			// update internal models, dont show the ui, dont save to cookie
+
+			// update internal models, dont show the ui, save to cookie if persisting from URL
 			this.updateCmp({ tcModel });
+			this.setDisplayLayer1();
+
+			// trigger cookie storage when transfering consent from URL
+			if (gdprConsentUrlParam && !cookieTCString) {
+				this.updateCmp({ tcModel, shouldSaveCookie: true, isConsentByUrl: true });
+			}
 		}
-		this.setDisplayLayer1();
 	}
 
 	onEvent(tcData, success) {
@@ -207,8 +222,9 @@ export default class Store {
 	 * @oaram tcModelOpt - optional ModelObject, updates to the tcModel
 	 * @param shouldShowModal - optional boolean, displays UI if true
 	 * @param shouldSaveCookie - optional boolean, sets gdpr_opt_in and stores tcData.consentString too cookie if true
+	 * @param isConsentByUrl - optional boolean, annotates logs to indicate save of consent transfered from URLParams
 	 */
-	updateCmp = ({ tcModel, shouldShowModal, shouldSaveCookie, shouldShowSave }) => {
+	updateCmp = ({ tcModel, shouldShowModal, shouldSaveCookie, shouldShowSave, isConsentByUrl = false }) => {
 		const tcModelNew = this.autoToggleVendorConsents(tcModel);
 		const isModalShowing = shouldShowModal !== undefined ? shouldShowModal : this.isModalShowing;
 		const isSaveShowing = shouldShowSave !== undefined ? shouldShowSave : this.isSaveShowing;
@@ -267,6 +283,7 @@ export default class Store {
 			logger(LOG_EVENTS.CMPSave, {
 				consentScreen,
 				hasConsentedAll,
+				consentByUrl: isConsentByUrl,
 				declinedStack: this.getStackOptin(stack) ? '' : stack,
 				declinedPurposes: declinedPurposes.join(','),
 				declinedSpecialFeatures: declinedSpecialFeatures.join(','),

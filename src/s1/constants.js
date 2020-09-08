@@ -1,5 +1,9 @@
 /* global __VERSION__ */
-
+export const COOKIES = {
+	VENDOR_CONSENT: 'euconsent-v2',
+	PUBLISHER_CONSENT: 'pubconsent-v2',
+	HAS_CONSENTED_ALL: 'gdpr_opt_in',
+};
 export const CONSENT_SCREENS = {
 	STACKS_LAYER1: 1,
 	PURPOSES_LAYER2: 2,

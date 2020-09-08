@@ -1,11 +1,10 @@
-const PUBLISHER_CONSENT_COOKIE_NAME = 'pubconsent_2.0';
+import { COOKIES } from '../constants';
+
+const { HAS_CONSENTED_ALL, PUBLISHER_CONSENT, VENDOR_CONSENT } = COOKIES;
+
 const PUBLISHER_CONSENT_COOKIE_MAX_AGE = 33696000;
-
-const VENDOR_CONSENT_COOKIE_NAME = 'euconsent_2.0';
 const VENDOR_CONSENT_COOKIE_MAX_AGE = 33696000;
-
-const HAS_CONTENED_ALL = 'gdpr_opt_in';
-const HAS_CONTENED_ALL_MAX_AGE = 33696000;
+const HAS_CONSENTED_ALL_MAX_AGE = 33696000;
 
 const getCookieDomain = (customCookieDomain) => {
 	const hostname = (window && window.location && window.location.hostname) || '';
@@ -36,12 +35,12 @@ function writeCookie({ name, value, maxAgeSeconds, path = '/', domain }) {
 }
 
 function readPublisherConsentCookie() {
-	return readCookie(PUBLISHER_CONSENT_COOKIE_NAME);
+	return readCookie(PUBLISHER_CONSENT);
 }
 
 function writePublisherConsentCookie(value, domain) {
 	writeCookie({
-		name: PUBLISHER_CONSENT_COOKIE_NAME,
+		name: PUBLISHER_CONSENT,
 		value,
 		maxAgeSeconds: PUBLISHER_CONSENT_COOKIE_MAX_AGE,
 		path: '/',
@@ -56,7 +55,7 @@ function writePublisherConsentCookie(value, domain) {
  * @returns Promise resolved with decoded cookie object
  */
 function readLocalVendorConsentCookie() {
-	return readCookie(VENDOR_CONSENT_COOKIE_NAME);
+	return readCookie(VENDOR_CONSENT);
 }
 
 /**
@@ -68,7 +67,7 @@ function readLocalVendorConsentCookie() {
 function writeLocalVendorConsentCookie(value, domain) {
 	return Promise.resolve(
 		writeCookie({
-			name: VENDOR_CONSENT_COOKIE_NAME,
+			name: VENDOR_CONSENT,
 			value,
 			maxAgeSeconds: VENDOR_CONSENT_COOKIE_MAX_AGE,
 			path: '/',
@@ -86,14 +85,14 @@ function writeVendorConsentCookie(value, domain) {
 }
 
 function readConsentedAllCookie() {
-	return readCookie(HAS_CONTENED_ALL);
+	return readCookie(HAS_CONSENTED_ALL);
 }
 
 function writeConsentedAllCookie(value, domain) {
 	writeCookie({
-		name: HAS_CONTENED_ALL,
+		name: HAS_CONSENTED_ALL,
 		value,
-		maxAgeSeconds: HAS_CONTENED_ALL_MAX_AGE,
+		maxAgeSeconds: HAS_CONSENTED_ALL_MAX_AGE,
 		path: '/',
 		domain,
 	});

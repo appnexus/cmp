@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/openmail/system1-cmp/compare/v2.0.1...v2.0.2) (2020-09-02)
+
+### Feat
+
+- [x] Automatically set and persist consent signal if valid TC String present on URLParam `?gdpr_consent`
+- [x] Enforce boolean properties in logger
+
 ## [2.0.1](https://github.com/openmail/system1-cmp/compare/v2.0.0...v2.0.1) (2020-08-31)
 
 ### Refactor

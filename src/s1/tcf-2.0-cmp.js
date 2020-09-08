@@ -28,8 +28,8 @@ export const setup = (configOpt) => {
 		url: global && global.location && global.location.href ? global.location.href.split('?')[0] : 'unknown',
 		experimentId: config.experimentId,
 		business: config.business,
-		ccpaApplies: config.ccpaApplies,
-		gdprApplies: config.gdprApplies,
+		ccpaApplies: config.ccpaApplies === true,
+		gdprApplies: config.gdprApplies === true,
 	};
 
 	logger(LOG_EVENTS.CMPSetupStart || 'CMPSetupStart');

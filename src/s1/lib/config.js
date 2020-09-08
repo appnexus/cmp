@@ -1,3 +1,14 @@
+export const gdprConsentUrlParam = (() => {
+	let gdprConsent = '';
+	if (window && window.location && window.location.search) {
+		const [, gdprConsentParam] = window.location.search.split('gdpr_consent=');
+		if (gdprConsentParam) {
+			gdprConsent = gdprConsentParam.split('&')[0];
+		}
+	}
+	return gdprConsent;
+})();
+
 export const theme = {
 	primaryColor: '#0099ff',
 	textLinkColor: '#0099ff',
@@ -18,6 +29,7 @@ export const config = {
 	ccpaApplies: false,
 	experimentId: 'control',
 	gdprApplies: false,
+	gdprConsentUrlParam,
 	language: 'en',
 	narrowedVendors: [],
 	publisherCountryCode: 'US',

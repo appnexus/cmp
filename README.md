@@ -9,16 +9,18 @@ TCF 2.0 Consent Management Platform (CMP) UI tool. We are in the process of vali
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [Installation / Use](#installation--use)
 - [API](#api)
   - [Customized API](#customized-api)
-    - [init](#init)
+  - [init](#init)
   - [onConsentAllChanged](#onconsentallchanged)
   - [offConsentAllChanged](#offconsentallchanged)
   - [showConsentTool](#showconsenttool)
   - [changeLanguage](#changelanguage)
 - [Configuration / Config](#configuration--config)
   - [theme](#theme)
+- [Initialize from URL Param](#initialize-from-url-param)
 - [Background and Resources](#background-and-resources)
 - [TODO](#todo)
 - [Support Matrix](#support-matrix)
@@ -90,7 +92,7 @@ Read more about [\_\_tcfapi built-in API](https://github.com/InteractiveAdvertis
 - [showConsentTool](#showConsentTool)
 - [changeLanguage](#changeLanguage)
 
-#### init
+### init
 
 Calling `__tcfapi('init', 2, (store) => {})` will trigger the seed-file or loader to async load the larger CMP UI application. Once loaded, the cmp library calls `init` function to load additional dependencies and render the application.
 
@@ -177,7 +179,7 @@ __tcfapi('init', 2, () => {}, {
 	},
 	canLog: true, // pixel logging for monitoring and alerting
 	canDebug: false, // console.logs for dev debugging
-	narrowedVendors: [1, 2, 3, 4, 5], // only show a select numuber of vendors
+	narrowedVendors: [1, 2, 3, 4, 5], // only show a select vendors
 	cookieDomain: '', // which domain to set the euconsent and gdpr_opt_in cookie on
 });
 ```
@@ -188,6 +190,7 @@ __tcfapi('init', 2, () => {}, {
 | `canDebug`             | optional boolean | `false`                                 | true enables internal console logging for debugging                                                            |
 | `baseUrl`              | optional string  | `./config/2.0`                          | relative or absolute url to load the global vendor list. Combines with `versionedFilename` to load vendorlist. |
 | `versionedFilename`    | optional string  | `vendor-list.json`                      | file name of the global vendor list.                                                                           |
+| `narrowedVendors`      | optional array   | `[]`                                    | Only show select vendors. Example [1,4,5,19]                                                                   |
 | `languageFilename`     | optional string  | `purposes/purposes-[LANG].json`         | file name template for gvl localized purpose json files                                                        |
 | `translationFilename`  | optional string  | `translations/translations-[LANG].json` | file name template for custom localized json files for UI layer                                                |
 | `cookieDomain`         | optional string  | empty                                   | manage consent across subdomains. Example `.mysite.com`                                                        |
@@ -208,6 +211,18 @@ Override styling choices using the following properties:
 - `secondaryColor`: '#869cc0'
 - `featuresColor`: '#d0d3d7'
 
+## Initialize from URL Param
+
+We can leverage the spec provided for [URL-based services to process the TC String when it can't execute JavaScript](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20Consent%20string%20and%20vendor%20list%20formats%20v2.md#how-does-a-url-based-service-process-the-tc-string-when-it-cant-execute-javascript) to pass along consent when domains are owned by the same entity.
+
+Using a URLParam `gdpr_consent` you can pass consent to another domain that is using this CMP.
+
+```
+?gdpr_consent=${TC_STRING}
+```
+
+The CMP will use `?gdpr_consent` URLParam to automatically persist consent and trigger consent change-events _if there is not already an existing consent signal stored in the EUConsent cookie_.
+
 ## Background and Resources
 
 The UI layer is inspired by this [IAB TCF CMP UI Webinar presentation](https://iabeurope.eu/wp-content/uploads/2020/01/2020-01-21-TCF-v2.0-CMP-UI-Webinar.pdf).
@@ -227,7 +242,6 @@ Following Google's [Additional Consent Mode](https://support.google.com/admanage
 - [ ] Layer 3 Purpose Details
 - [ ] Layer 2 Vendors
 - [ ] Theming
-- [ ] Auto-consent using [TC-string-passing](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20Consent%20string%20and%20vendor%20list%20formats%20v2.md#full-tc-string-passing)
 - [ ] non-personalized performance and monitoring analytics
 - [ ] Validate using the [TCF 2.0 validator extension](https://cmp-validator.consensu.org/chrome-extension/latest/IAB-Europe-CMP-Validator-User-Guide.pdf)
 - [ ] Separate polyfill bundle, use babelrc instead of manually importing from core-js
