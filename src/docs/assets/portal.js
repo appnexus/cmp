@@ -6,12 +6,12 @@ const parts = host.split('.');
 const COOKIE_DOMAIN = parts.length > 1 ? `;domain=.${parts.slice(-3).join('.')}` : '';
 const COOKIE_PATH = '/' + (window.location.pathname.split('/')[1] || '');
 const COOKIE_MAX_AGE = 33696000; // 13 months (390 days)
-const ADPCONSENT_COOKIE = 'adpconsent';
-const PUBCONSENT_COOKIE = 'pubconsent';
+const CMP_ADPCONSENT_COOKIE = 'cmpadpconsent';
+const CMP_PUBCONSENT_COOKIE = 'cmppubconsent';
 const EUCONSENT_COOKIE = 'euconsent';
 const COOKIE_WHITELIST = [
-	ADPCONSENT_COOKIE,
-	PUBCONSENT_COOKIE,
+	CMP_ADPCONSENT_COOKIE,
+	CMP_PUBCONSENT_COOKIE,
 	EUCONSENT_COOKIE];
 
 
@@ -40,8 +40,8 @@ const commands = {
 	},
 	readConsent: () => {
 		return Promise.resolve({
-			adpconsent: readCookie(ADPCONSENT_COOKIE),
-			pubconsent: readCookie(PUBCONSENT_COOKIE),
+			cmpadpconsent: readCookie(CMP_ADPCONSENT_COOKIE),
+			cmppubconsent: readCookie(CMP_PUBCONSENT_COOKIE),
 			euconsent: readCookie(EUCONSENT_COOKIE)
 		});
 	}
