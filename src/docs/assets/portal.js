@@ -30,7 +30,7 @@ function writeCookie ({ name, value, path = COOKIE_PATH }) {
 const commands = {
 	writeConsent: ({ consent }) => {
 		Object.keys(COOKIES).forEach((name) => {
-			if (name in consent && consent[name]) {
+			if (name in consent) {
 				writeCookie({ name: COOKIES[name], value: consent[name] });
 			}
 		});
