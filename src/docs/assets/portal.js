@@ -6,14 +6,12 @@ const parts = host.split('.');
 const COOKIE_DOMAIN = parts.length > 1 ? `;domain=.${parts.slice(-3).join('.')}` : '';
 const COOKIE_PATH = '/' + (window.location.pathname.split('/')[1] || '');
 const COOKIE_MAX_AGE = 33696000; // 13 months (390 days)
-const CMP_ADPCONSENT_COOKIE = 'cmpadpconsent';
-const CMP_PUBCONSENT_COOKIE = 'cmppubconsent';
-const EUCONSENT_COOKIE = 'euconsent';
-const COOKIE_WHITELIST = [
-	CMP_ADPCONSENT_COOKIE,
-	CMP_PUBCONSENT_COOKIE,
-	EUCONSENT_COOKIE];
 
+const COOKIES = {
+	adpConsent: 'gadpconsent',
+	pubConsent: 'gpubconsent',
+	euConsent: 'euconsent'
+};
 
 function readCookie (name) {
 	const value = '; ' + document.cookie;
@@ -31,18 +29,18 @@ function writeCookie ({ name, value, path = COOKIE_PATH }) {
 
 const commands = {
 	writeConsent: ({ consent }) => {
-		COOKIE_WHITELIST.forEach((name) => {
-			if (name in consent) {
-				writeCookie({ name, value: consent[name] });
+		Object.keys(COOKIES).forEach((name) => {
+			if (name in consent && consent[name]) {
+				writeCookie({ name: COOKIES[name], value: consent[name] });
 			}
 		});
 		return Promise.resolve();
 	},
 	readConsent: () => {
 		return Promise.resolve({
-			cmpadpconsent: readCookie(CMP_ADPCONSENT_COOKIE),
-			cmppubconsent: readCookie(CMP_PUBCONSENT_COOKIE),
-			euconsent: readCookie(EUCONSENT_COOKIE)
+			adpConsent: readCookie(COOKIES.adpConsent),
+			pubConsent: readCookie(COOKIES.pubConsent),
+			euConsent: readCookie(COOKIES.euConsent)
 		});
 	}
 };
