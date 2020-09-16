@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/openmail/system1-cmp/compare/v2.0.2...v2.0.3) (2020-09-15)
+
+### Fix
+
+- [x] tcf-2.0-loader add check for Promise finally.
+- [x] Add more information on localize fetch error log.
+
 ## [2.0.2](https://github.com/openmail/system1-cmp/compare/v2.0.1...v2.0.2) (2020-09-02)
 
 ### Feat

@@ -61,37 +61,3 @@ export const LANGUAGES = [
 ];
 
 export const DEFAULT_LANGUAGE = LANGUAGES[0];
-
-export const LANGUAGES_2 = {
-	en: 'English',
-	bg: 'Bulgarian',
-	ca: 'Catalan',
-	cs: 'Czech',
-	da: 'Danish',
-	de: 'German',
-	el: 'Greek',
-	es: 'Spanish',
-	et: 'Estonian',
-	fi: 'Finnish',
-	fr: 'French',
-	hr: 'Croatian',
-	hu: 'Hungarian',
-	it: 'Italian',
-	ja: 'Japanese',
-	lt: 'Lithuanian',
-	lv: 'Latvian',
-	mt: 'Maltese',
-	nl: 'Dutch',
-	no: 'Norwegian',
-	pl: 'Polish',
-	pt: 'Portuguese',
-	ro: 'Romanian',
-	// 'sr-cyrillic': 'Serbian Cryllic',
-	// 'sr-latin': 'Serbian Latin',
-	ru: 'Russian',
-	sk: 'Slovak',
-	sl: 'Slovenian',
-	sv: 'Swedish',
-	tr: 'Turkish',
-	zh: 'Chinese',
-};

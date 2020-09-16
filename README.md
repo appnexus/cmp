@@ -4,7 +4,7 @@
 
 TCF 2.0 Consent Management Platform (CMP) UI tool. We are in the process of validating this CMP, we will update this repo once it passes TCF 2.0 validation.
 
-[Reference Page and Demo](https://s.flocdn.com/cmp/2.0.0/tcf-2.0.html)
+[Reference Page and Demo](https://s.flocdn.com/cmp/2.0.3/tcf-2.0.html)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -33,7 +33,7 @@ TCF 2.0 Consent Management Platform (CMP) UI tool. We are in the process of vali
 API signatures have changed from the CMP TCF 1.1, but we've tried to keep the configuration process very similar. See a [working example in codepen](https://codepen.io/potench/pen/GRZZprw).
 
 ```html
-<script src="https://s.flocdn.com/cmp/2.0.0/tcf-2.0-loader.js"></script>
+<script src="https://s.flocdn.com/cmp/2.0.3/tcf-2.0-loader.js"></script>
 <script>
 	__tcfapi('onConsentAllChanged', 2, function (store) {
 		const hasConsented = document.cookie.indexOf('gdpr_opt_in=1') >= 0;
@@ -54,8 +54,8 @@ API signatures have changed from the CMP TCF 1.1, but we've tried to keep the co
 			gdprApplies: true,
 			debugging: true, // console logs
 			logging: true, // pixel logs for monitoring
-			baseUrl: 'https://s.flocdn.com/cmp/2.0.0/config/2.0', // base url for vendor-lists and translations
-			scriptSrc: 'https://s.flocdn.com/cmp/2.0.0/tcf-2.0-cmp.js', // cmp SDK
+			baseUrl: 'https://s.flocdn.com/cmp/2.0.3/config/2.0', // base url for vendor-lists and translations
+			scriptSrc: 'https://s.flocdn.com/cmp/2.0.3/tcf-2.0-cmp.js', // cmp SDK
 			publisherCountryCode: 'AA',
 			narrowedVendors: [], // ex [1,2,3,4],
 			theme: {

@@ -44,7 +44,7 @@ export const localize = (language) => {
 		.then((json) => flatten(json))
 		.catch((e) => {
 			logger(LOG_EVENTS.CMPError, {
-				message: `localizeError: ${e}`,
+				message: `localizeError: ${e} ${filename}`,
 			});
 		});
 };
