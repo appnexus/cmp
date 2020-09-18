@@ -1,3 +1,12 @@
+## [2.0.4](https://github.com/openmail/system1-cmp/compare/v2.0.3...v2.0.4) (2020-09-17)
+
+### Styling
+
+- [x] Downsize fonts and spacing mobile
+- [x] Downsize spacing desktop
+- [x] Add scroll bar
+- [x] Auto-position CMP vertically based on purposes
+
 ## [2.0.3](https://github.com/openmail/system1-cmp/compare/v2.0.2...v2.0.3) (2020-09-15)
 
 ### Fix

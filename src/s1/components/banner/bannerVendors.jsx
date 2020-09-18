@@ -11,12 +11,23 @@ class LocalLabel extends Label {
 	static defaultProps = {
 		prefix: 'layer3Vendors',
 		isShowing: false,
+		maxHeightModal: 0, // starting modalHeight
+		onMaxHeightChange: () => {},
 	};
 }
 
 export default class BannerVendors extends Component {
 	constructor(props) {
 		super(props);
+	}
+
+	componentDidMount() {
+		const { store, onMaxHeightChange } = this.props;
+		const { theme } = store;
+		const { maxHeightModal: maxHeightModalTheme } = theme;
+		setTimeout(() => {
+			onMaxHeightChange(maxHeightModalTheme);
+		}, 1);
 	}
 
 	handleBack = () => {
@@ -65,7 +76,7 @@ export default class BannerVendors extends Component {
 	};
 
 	render(props) {
-		const { isShowing, store } = props;
+		const { isShowing, store, maxHeightModal } = props;
 		const {
 			config: { theme },
 			isSaveShowing,
@@ -75,7 +86,7 @@ export default class BannerVendors extends Component {
 		const {
 			isBannerModal,
 			isBannerInline,
-			maxHeightModal,
+			// maxHeightModal,
 			primaryColor,
 			primaryTextColor,
 			backgroundColor,

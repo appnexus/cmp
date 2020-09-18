@@ -128,6 +128,10 @@
 								>System1 CMP Github</a
 							>
 						</li>
+						<li>
+							Autoresize:
+							<input id="domShouldAutoResize" type="checkbox" />
+						</li>
 					</ul>
 				</li>
 			</ul>
@@ -143,6 +147,7 @@
 			const domTcfString = document.querySelector('#domTcfString');
 			const selectLanguage = document.querySelector('#selectLanguage');
 			const selectVendors = document.querySelector('#selectVendors');
+			const domShouldAutoResize = document.querySelector('#domShouldAutoResize');
 
 			const setupQaTools = function (store) {
 				const LANGUAGES = store.LANGUAGES;
@@ -161,9 +166,14 @@
 				domTcfString.value = (store.tcData && store.tcData.tcString) || 'N/A';
 			};
 
+			const shouldAutoResize = function () {
+				return window.location.search.indexOf('resize') >= 0 ? true : false;
+			};
+
 			const config = {
 				theme: {
-					maxHeightModal: '60vh',
+					shouldAutoResizeModal: shouldAutoResize(),
+					maxHeightModal: '40vh',
 				},
 				business: 'reference',
 				gdprApplies: true,
@@ -177,7 +187,7 @@
 				// polyfillSrc: './polyfills.js',
 				publisherCountryCode: 'US',
 				language: 'en', // default
-				narrowedVendors: [1, 2, 3, 4, 5, 6],
+				// narrowedVendors: [1, 2, 3, 4, 5, 6],
 			};
 
 			__tcfapi('addEventListener', 2, function (tcData, success) {
@@ -220,6 +230,11 @@
 					},
 					selectLanguage.value
 				);
+			});
+
+			domShouldAutoResize.checked = shouldAutoResize();
+			domShouldAutoResize.addEventListener('change', function () {
+				window.location.search = domShouldAutoResize.checked ? '?resize=true' : '';
 			});
 		</script>
 	</body>

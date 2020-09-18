@@ -9,7 +9,6 @@ TCF 2.0 Consent Management Platform (CMP) UI tool. We are in the process of vali
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Installation / Use](#installation--use)
 - [API](#api)
   - [Customized API](#customized-api)
@@ -64,6 +63,8 @@ API signatures have changed from the CMP TCF 1.1, but we've tried to keep the co
 				boxShadow: 'none',
 				secondaryColor: '#869cc0',
 				featuresColor: '#d0d3d7',
+				shouldAutoResizeModal: true, // resizes modal on stacks screen to push stacks below fold
+				maxHeightModal: '40vh',
 			},
 			ccpaApplies: true,
 			gdprApplies: true,
@@ -175,6 +176,7 @@ Set configuration for your CMP during the `init` phase.
 __tcfapi('init', 2, () => {}, {
 	theme: {
 		maxHeightModal: '50vh',
+		shouldAutoResizeModal: true,
 		primaryColor: '#0099ff',
 	},
 	canLog: true, // pixel logging for monitoring and alerting
@@ -210,6 +212,8 @@ Override styling choices using the following properties:
 - `textLinkColor`: '#0099ff'
 - `secondaryColor`: '#869cc0'
 - `featuresColor`: '#d0d3d7'
+- `maxHeightModal`: '40vh' // 40vh by default; enforce a maxheight as a %,px,vh
+- `shouldAutoResizeModal`: true // false by default; auto resize modal on stacks screen to push purposes below fold. Works in conjunction with `maxHeightModal`
 
 ## Initialize from URL Param
 
