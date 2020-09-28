@@ -1,19 +1,17 @@
 import { h, Component } from 'preact';
-import debounce from 'lodash.debounce';
 import style from './banner.less';
 
 import PurposeList from './purposeList';
 import Label from '../label/label';
 
 import logger, { EVENTS as LOG_EVENTS } from '../../lib/logger';
+import debounce from '../../lib/debounce';
 import { CONSENT_SCREENS } from '../../constants';
 
 class LocalLabel extends Label {
 	static defaultProps = {
 		prefix: 'layer1Stacks',
 		isShowing: false,
-		maxHeightModal: 0,
-		onMaxHeightChange: () => {},
 	};
 }
 
@@ -23,27 +21,39 @@ export default class BannerStacks extends Component {
 	}
 
 	state = {
-		maxHeightModal: this.getMaxHeightModal(),
+		hasScrolled: false,
 	};
 
 	componentDidMount() {
-		if (window) {
+		const {
+			store: { theme: shouldAutoResizeModal },
+		} = this.props;
+
+		if (window && shouldAutoResizeModal) {
 			window.addEventListener('resize', this.handleResize);
 		}
+
+		if (this.scrollRef) {
+			this.scrollRef.addEventListener('scroll', this.handleScroll);
+		}
+
 		this.handleResize();
 	}
 
 	componentWillUnmount() {
-		if (window) {
+		const {
+			store: { theme: shouldAutoResizeModal },
+		} = this.props;
+
+		if (window && shouldAutoResizeModal) {
 			window.removeEventListener('resize', this.handleResize);
 		}
-	}
 
-	getMaxHeightModal() {
-		if (this.aboveFoldRef && this.aboveFoldRef.clientHeight) {
-			return this.aboveFoldRef.clientHeight + 5;
+		if (this.scrollRef) {
+			this.scrollRef.removeEventListener('scroll', this.handleScroll);
 		}
-		return 0;
+
+		debounce.clear();
 	}
 
 	handleAcceptAll = () => {
@@ -93,32 +103,43 @@ export default class BannerStacks extends Component {
 	};
 
 	handleResize = debounce(() => {
-		const { maxHeightModal } = this.state;
-		const { onMaxHeightChange } = this.props;
-		const newMaxHeightModal = this.getMaxHeightModal();
+		const { store } = this.props;
+		const { maxHeightModal, shouldAutoResizeModal } = store;
 
-		if (newMaxHeightModal !== maxHeightModal) {
-			this.setState({
-				maxHeightModal: newMaxHeightModal,
-			});
-			onMaxHeightChange(newMaxHeightModal);
+		let newMaxHeightModal = maxHeightModal;
+
+		if (shouldAutoResizeModal && this.aboveFoldRef && this.aboveFoldRef.clientHeight) {
+			newMaxHeightModal = this.aboveFoldRef.clientHeight + 100;
 		}
-	}, 200);
+
+		store.toggleAutoResizeModal(shouldAutoResizeModal, newMaxHeightModal);
+	}, 100);
+
+	handleScroll = debounce(() => {
+		this.setState({
+			hasScrolled: true,
+		});
+
+		if (this.scrollRef) {
+			this.scrollRef.removeEventListener('scroll', this.handleScroll);
+		}
+	});
 
 	render(props, state) {
-		const { maxHeightModal } = state;
-		const { isShowing, maxHeightModal: maxHeightModalGlobal, store } = props;
+		const { hasScrolled } = state;
+		const { isShowing, store } = props;
 		const {
 			config: { theme },
 			translations,
 			displayLayer1,
 			isSaveShowing,
+			maxHeightModal,
 		} = store;
 
 		const {
 			isBannerModal,
 			isBannerInline,
-			// maxHeightModal,
+			// maxHeightModal, // handled in store
 			primaryColor,
 			primaryTextColor,
 			backgroundColor,
@@ -143,12 +164,12 @@ export default class BannerStacks extends Component {
 					backgroundColor,
 					color: textLightColor,
 				}}
-				onResize={this.handleResize}
 			>
 				<div
-					class={style.content}
+					class={[style.content, style.layer1, hasScrolled ? style.scrolling : ''].join(' ')}
+					ref={(el) => (this.scrollRef = el)}
 					style={{
-						maxHeight: maxHeightModalGlobal || maxHeightModal,
+						maxHeight: maxHeightModal,
 					}}
 				>
 					<div class={style.message}>
@@ -165,42 +186,6 @@ export default class BannerStacks extends Component {
 										your device and about this site to serve relevant ads or personalized content.
 									</LocalLabel>
 								</div>
-								<div class={style.consent}>
-									<a
-										class={style.learnMore}
-										onClick={this.handleLearnMore}
-										style={{ color: primaryColor, borderColor: primaryColor }}
-									>
-										<LocalLabel localizeKey="links.manage" translations={translations}>
-											Manage Your Choices
-										</LocalLabel>
-									</a>
-									<a
-										class={style.continue}
-										onClick={this.handleAcceptAll}
-										style={{
-											backgroundColor: primaryColor,
-											borderColor: primaryColor,
-											color: primaryTextColor,
-										}}
-									>
-										<LocalLabel localizeKey="links.accept" translations={translations}>
-											Continue to site
-										</LocalLabel>
-									</a>
-									<a
-										class={[style.save, !isSaveShowing ? style.hidden : ''].join(' ')}
-										onClick={this.handleSave}
-										style={{
-											color: primaryColor,
-											borderColor: primaryColor,
-										}}
-									>
-										<LocalLabel localizeKey="links.save" translations={translations}>
-											Save
-										</LocalLabel>
-									</a>
-								</div>
 							</div>
 							<div class={style.optionsContainer}>
 								{!displayLayer1 ? <h1>Loading</h1> : <PurposeList store={store} />}
@@ -208,6 +193,42 @@ export default class BannerStacks extends Component {
 						</div>
 					</div>
 				</div>
+				<navigation class={style.navigation}>
+					<a
+						class={style.learnMore}
+						onClick={this.handleLearnMore}
+						style={{ color: primaryColor, borderColor: primaryColor }}
+					>
+						<LocalLabel localizeKey="links.manage" translations={translations}>
+							Manage Your Choices
+						</LocalLabel>
+					</a>
+					<a
+						class={style.continue}
+						onClick={this.handleAcceptAll}
+						style={{
+							backgroundColor: primaryColor,
+							borderColor: primaryColor,
+							color: primaryTextColor,
+						}}
+					>
+						<LocalLabel localizeKey="links.accept" translations={translations}>
+							Continue to site
+						</LocalLabel>
+					</a>
+					<a
+						class={[style.save, !isSaveShowing ? style.hidden : ''].join(' ')}
+						onClick={this.handleSave}
+						style={{
+							color: primaryColor,
+							borderColor: primaryColor,
+						}}
+					>
+						<LocalLabel localizeKey="links.save" translations={translations}>
+							Save
+						</LocalLabel>
+					</a>
+				</navigation>
 			</div>
 		);
 	}

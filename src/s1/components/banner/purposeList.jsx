@@ -21,6 +21,7 @@ export default class PurposeList extends Component {
 	};
 
 	expandPurposeRow(id) {
+		const { store } = this.props;
 		const { expanded } = this.state;
 		if (expanded.has(id)) {
 			expanded.delete(id);
@@ -31,6 +32,8 @@ export default class PurposeList extends Component {
 		this.setState({
 			expanded,
 		});
+
+		store.toggleAutoResizeModal(false);
 	}
 
 	handleVendorsClick = () => {
@@ -81,13 +84,39 @@ export default class PurposeList extends Component {
 		});
 	}
 
-	renderRow(props, state, { headline, expanded, theme, list, displayPrefix, handleConsent, optIns }) {
+	handleToggleObjection(props, state, { id }) {
+		const { store } = props;
+		store.togglePurposeObjection([id]);
+
+		logger(LOG_EVENTS.CMPClick, {
+			action: 'click',
+			category: 'togglePurposeObjection',
+			label: `${id}`, // force string
+		});
+	}
+
+	renderRow(
+		props,
+		state,
+		{
+			containerClass,
+			headline,
+			expanded,
+			theme,
+			list,
+			displayPrefix,
+			handleConsent,
+			handleObjection,
+			optIns,
+			optInsObjections,
+		}
+	) {
 		return (
-			<li class={style.item}>
+			<li class={[style.item, containerClass ? containerClass : ''].join(' ')}>
 				{headline}
 				<ul class={style.itemPurpose}>
 					{list.map((item) => {
-						const { name, description, id } = item;
+						const { name, description, descriptionLegal, id } = item;
 						const displayId = `${displayPrefix}-${id}`;
 						const isExpanded = expanded.has(displayId);
 
@@ -118,6 +147,22 @@ export default class PurposeList extends Component {
 								) : null}
 								<div className={[style.itemDetails].join(' ')} style={{ color: theme.textLightColor }}>
 									<p>{description}</p>
+									{descriptionLegal ? <p>{descriptionLegal}</p> : null}
+									{handleObjection ? (
+										<div className={style.objectLegitInterest}>
+											<Switch
+												color={theme.primaryColor}
+												class={style.switch}
+												dataId={`objection-${displayId}`}
+												isSelected={!optInsObjections.has(id)}
+												onClick={handleObjection.bind(this, props, state, { id })}
+											>
+												<label className={style.legitInterestLabel}>
+													Add objection to legitimate interest processing.
+												</label>
+											</Switch>
+										</div>
+									) : null}
 								</div>
 							</li>
 						);
@@ -127,7 +172,22 @@ export default class PurposeList extends Component {
 		);
 	}
 
-	renderStack(props, state, { headline, name, description, isConsented, id, displayId, isExpanded, theme }) {
+	renderStack(
+		props,
+		state,
+		{
+			headline,
+			name,
+			description,
+			displayPurposesStackDom,
+			displaySpecialFeaturesStackDom,
+			displayId,
+			id,
+			isConsented,
+			isExpanded,
+			theme,
+		}
+	) {
 		return (
 			<li class={[style.item, isExpanded ? style.expanded : ''].join(' ')}>
 				{headline}
@@ -149,6 +209,12 @@ export default class PurposeList extends Component {
 					/>
 					<div className={[style.itemDetails].join(' ')} style={{ color: theme.textLightColor }}>
 						<p>{description}</p>
+						{displayPurposesStackDom || displaySpecialFeaturesStackDom ? (
+							<ul class={style.stackList}>
+								{displayPurposesStackDom || null}
+								{displaySpecialFeaturesStackDom || null}
+							</ul>
+						) : null}
 					</div>
 				</div>
 			</li>
@@ -172,6 +238,7 @@ export default class PurposeList extends Component {
 			specialFeatures: displaySpecialFeatures = [],
 			specialPurposes: displaySpecialPurposes = [],
 			features: displayFeatures = [],
+			legIntPurposes: displayLegIntPurposes = [],
 		} = displayLayer1;
 		const { expanded } = state;
 
@@ -194,27 +261,80 @@ export default class PurposeList extends Component {
 			displayPrefix: 'purpose-',
 		});
 
-		const stackDisplayId = `stack-${displayStack}`;
-		const displayStackDom = displayStack
-			? this.renderStack(props, state, {
-					headline: (
-						<h3 class={style.rowTitle}>
-							<LocalLabel localizeKey="stacksTitle" translations={translations} onClick={this.handleVendorsClick}>
-								We and{' '}
-								<a style={{ color: theme.textLinkColor }} onClick={this.handleVendorsClick}>
-									our partners
-								</a>{' '}
-								process personal data such as IP address, unique ID, browsing data for:
-							</LocalLabel>
-						</h3>
-					),
-					theme,
-					displayId: stackDisplayId,
-					isExpanded: expanded.has(stackDisplayId),
-					isConsented: store.getStackOptin(displayStack),
-					...stacks[displayStack],
-			  })
-			: null;
+		let displayStackDom = null;
+		if (displayStack && stacks[displayStack]) {
+			const stack = stacks[displayStack];
+			const stackDisplayId = `stack-${displayStack}`;
+			let displayPurposesStackDom = stack.purposes.length
+				? this.renderRow(props, state, {
+						headline: (
+							<h3 class={style.rowTitle}>
+								<LocalLabel
+									localizeKey="stacksPurposesTitle"
+									translations={translations}
+									onClick={this.handleVendorsClick}
+								>
+									Purposes
+								</LocalLabel>
+							</h3>
+						),
+						containerClass: style.stackListItem,
+						theme,
+						expanded,
+						handleConsent: this.handleTogglePurpose,
+						optIns: tcModel.purposeConsents,
+						list: stack.purposes.map((key) => purposes[key]),
+						displayPrefix: 'stack-purpose-',
+				  })
+				: null;
+
+			let displaySpecialFeaturesStackDom = stack.specialFeatures.length
+				? this.renderRow(props, state, {
+						headline: (
+							<h3 class={style.rowTitle}>
+								<LocalLabel
+									localizeKey="stacksSpecialFeaturesTitle"
+									translations={translations}
+									onClick={this.handleVendorsClick}
+								>
+									Special Features
+								</LocalLabel>
+							</h3>
+						),
+						containerClass: style.stackListItem,
+						theme,
+						expanded,
+						handleConsent: this.handleToggleSpecialFeature,
+						optIns: tcModel.specialFeatureOptins,
+						list: stack.specialFeatures.map((key) => specialFeatures[key]),
+						displayPrefix: 'stack-special-feature-',
+				  })
+				: null;
+
+			displayStackDom = this.renderStack(props, state, {
+				headline: (
+					<h3 class={style.rowTitle}>
+						<LocalLabel localizeKey="stacksTitle" translations={translations} onClick={this.handleVendorsClick}>
+							We and{' '}
+							<a style={{ color: theme.textLinkColor }} onClick={this.handleVendorsClick}>
+								our partners
+							</a>{' '}
+							process personal data such as IP address, unique ID, browsing data for:
+						</LocalLabel>
+					</h3>
+				),
+				theme,
+				displayId: stackDisplayId,
+				isExpanded: expanded.has(stackDisplayId),
+				isConsented: store.getStackOptin(displayStack),
+				...stacks[displayStack],
+				displayPurposesStackDom,
+				displaySpecialFeaturesStackDom,
+				specialFeaturesList: stacks[displayStack]
+					? stacks[displayStack].specialFeatures.map((key) => specialFeatures[key])
+					: [],
+			});
+		}
 
 		const displaySpecialFeaturesDom = this.renderRow(props, state, {
 			headline: (
@@ -268,6 +388,26 @@ export default class PurposeList extends Component {
 			displayPrefix: 'features-',
 		});
 
+		const displayLegitInterestPurposesDom = this.renderRow(props, state, {
+			headline: (
+				<h3 class={style.rowTitle}>
+					<LocalLabel localizeKey="legintPurposesTitle" translations={translations} onClick={this.handleVendorsClick}>
+						Some of{' '}
+						<a style={{ color: theme.textLinkColor }} onClick={this.handleVendorsClick}>
+							our partners
+						</a>{' '}
+						have service-specific legitimate interest for these purposes:
+					</LocalLabel>
+				</h3>
+			),
+			theme,
+			expanded,
+			handleObjection: this.handleToggleObjection,
+			optInsObjections: tcModel.purposeLegitimateInterests,
+			list: displayLegIntPurposes.map((key) => purposes[key]),
+			displayPrefix: 'purposes-legit-interest-',
+		});
+
 		return (
 			<ul class={style.purposeList}>
 				{displayPurposesDom}
@@ -275,6 +415,7 @@ export default class PurposeList extends Component {
 				{displaySpecialFeaturesDom}
 				{displaySpecialPurposesDom}
 				{displayFeaturesDom}
+				{displayLegitInterestPurposesDom}
 			</ul>
 		);
 	}

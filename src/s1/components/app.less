@@ -63,4 +63,11 @@
 		background-color: rgba(0, 0, 0, 0.02);
 		border-radius: 8px;
 	}
+
+	/* reset scroll bar appearance for ios */
+	@supports (-webkit-touch-callout: none) {
+		::-webkit-scrollbar {
+			-webkit-appearance: auto;
+		}
+	}
 }

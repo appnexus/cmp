@@ -12,7 +12,7 @@
 	bottom: 0;
 	padding-top: 25px;
 	padding-right: 15px;
-	padding-left: 30px;
+	padding-left: 0px;
 	z-index: 99999;
 	color: @color-textLight;
 	background: white;
@@ -25,7 +25,7 @@
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 	width: calc(100% - 50px);
-	max-width: 1000px;
+	max-width: 750px;
 	margin: auto;
 
 	@media @smartphone {
@@ -81,19 +81,63 @@
 
 	.content {
 		max-height: 60vh;
-		overflow: auto;
-		padding-top: 0px;
-		padding-left: 0px;
+		padding-left: 30px;
 		padding-right: 20px;
-		padding-bottom: 0px;
+		padding-top: 0px;
+		padding-bottom: 20px;
+		margin-bottom: 75px;
+		overflow: auto;
 		-webkit-overflow-scrolling: touch;
 		transition: max-height 350ms ease-in-out;
 
 		@media @smartphone {
-			padding: 0px 5px;
+			padding-top: 0px;
+			padding-left: 5px;
+			padding-right: 5px;
+			padding-bottom: 15px;
+			margin-bottom: 40px;
+
+			&.layer1 {
+				@supports (-webkit-touch-callout: none) {
+					padding-right: 10px;
+
+					&:before {
+						content: '';
+						position: absolute;
+						top: 18px;
+						right: 12px;
+						width: 4px;
+						background: rgba(0, 0, 0, 0.02);
+						border: 1px solid #fff;
+						border-radius: 20px;
+						height: 86%;
+						overflow: hidden;
+					} /* ios only because scrollbar is small */
+
+					&:after {
+						content: '';
+						position: absolute;
+						top: 18px;
+						right: 12px;
+						width: 3px;
+						border: 1px solid #fff;
+						background: rgba(0, 0, 0, 0.1);
+						border-radius: 20px;
+						height: 30%;
+					}
+
+					&.scrolling {
+						&:after {
+							display: none;
+						}
+					}
+				}
+			}
 		}
 
 		.message {
+			padding-bottom: 10px;
+
 			@media @smartphone {
 				display: block;
 			}
@@ -123,97 +167,121 @@
 					}
 				}
 			}
+		}
+	}
 
-			.consent {
-				flex-basis: 100%;
-				text-align: left;
-				margin-top: 20px;
-				padding-bottom: 20px;
-				margin-bottom: 10px;
-				font-size: 20px;
-				display: flex;
+	.navigation {
+		position: absolute;
+		bottom: 0;
+		left: 10px;
+		right: 35px;
+		display: flex;
+		align-items: center;
+		text-align: left;
+		padding-left: 20px;
+		padding-right: 8px;
+		padding-top: 15px;
+		padding-bottom: 15px;
+		border-top-right-radius: 10px;
+		box-shadow: 20px -30px 10px -30px rgba(0, 0, 0, 0.05), -10px -30px 10px -30px rgba(0, 0, 0, 0.05),
+			0px -30px 10px -40px rgba(150, 0, 0, 0.1);
+		background: linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.9) 0%,
+			rgba(255, 255, 255, 1) 20%,
+			rgba(255, 255, 255, 1) 100%
+		);
+		font-size: 18px;
+		display: flex;
 
-				@media @smartphone {
-					display: flex; /* primary flex container */
-					flex-direction: row; /* horizontal alignment of flex items (default value; can be omitted) */
-					align-items: stretch; /* will apply equal heights to flex items (default value; can be omitted) */
-					font-size: 12px;
-					line-height: 12px;
-					text-align: center;
-					padding-top: 15px;
-					padding-bottom: 10px;
-					margin-top: 0;
-					margin-bottom: 10px;
+		@media @smartphone {
+			right: 23px;
+			flex-direction: row; /* horizontal alignment of flex items (default value; can be omitted) */
+			align-items: stretch; /* will apply equal heights to flex items (default value; can be omitted) */
+			font-size: 12px;
+			line-height: 12px;
+			text-align: center;
+			padding-top: 15px;
+			padding-bottom: 10px;
+			padding-left: 5px;
+			padding-right: 5px;
+			margin-top: 0;
+			margin-bottom: 10px;
+			border-top-right-radius: 0px;
+			box-shadow: 25px -30px 10px -30px rgba(0, 0, 0, 0.05), -25px -30px 10px -30px rgba(0, 0, 0, 0.05),
+				0px -15px 10px -15px rgba(0, 0, 0, 0.1);
+
+			@supports (-webkit-touch-callout: none) {
+				right: 18px; /* cant customize scrollbar on iOS */
+			}
+		}
+
+		a {
+			display: inline-block;
+			border: 1px solid @color-primary;
+			text-align: center;
+			transition-property: color, background-color;
+			transition-duration: 500ms;
+			transition-timing-function: ease-in-out;
+			padding: 12px;
+			border-radius: 4px;
+			box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1), 0 3px 5px rgba(0, 0, 0, 0.2);
+			transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+			@media @smartphone {
+				flex: 1;
+			}
+
+			&:hover {
+				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+			}
+
+			&.learnMore {
+				color: @color-primary;
+
+				&:hover {
+					color: @color-secondary;
+					border: 1px solid @color-secondary;
+					background: rgba(@color-primary, 0.2);
+				}
+			}
+
+			&.continue {
+				color: #fff;
+				background: @color-buttonSuccess;
+				border: 1px solid @color-primary;
+				margin-left: 1em;
+				margin-right: 1em;
+
+				&:hover {
+					color: #fff;
+					background: darken(@color-buttonSuccess, 10%);
+					border: 1px solid @color-buttonSuccess;
+				}
+			}
+
+			&.save {
+				margin-right: 0;
+				margin-left: auto;
+				opacity: 1;
+				transform: perspective(1px) scale(1);
+				transition-property: all, transform;
+				transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1), cubic-bezier(0.25, 1, 0.5, 1);
+				transition-duration: 250ms, 200ms;
+				backface-visibility: hidden;
+
+				&.hidden {
+					opacity: 0;
+					transform: perspective(1px) scale(0.9);
+					pointer-events: none;
 				}
 
-				a {
-					display: inline-block;
-					border: 1px solid @color-primary;
-					text-align: center;
-					transition-property: color, background-color;
-					transition-duration: 500ms;
-					transition-timing-function: ease-in-out;
-					padding: 1em;
-					border-radius: 4px;
-					box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1), 0 3px 5px rgba(0, 0, 0, 0.2);
-					transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+				&:hover {
+					background: rgba(@color-primary, 0.2);
+				}
 
-					@media @smartphone {
-						flex: 1;
-					}
-
-					&:hover {
-						box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
-					}
-
-					&.learnMore {
-						color: @color-primary;
-
-						&:hover {
-							color: @color-secondary;
-							border: 1px solid @color-secondary;
-							background: rgba(@color-primary, 0.2);
-						}
-					}
-
-					&.continue {
-						color: #fff;
-						background: @color-buttonSuccess;
-						border: 1px solid @color-primary;
-						margin-left: 1em;
-						margin-right: 1em;
-
-						&:hover {
-							color: #fff;
-							background: darken(@color-buttonSuccess, 10%);
-							border: 1px solid @color-buttonSuccess;
-						}
-					}
-
-					&.save {
-						margin-right: 0;
-						margin-left: auto;
-						opacity: 1;
-						transform: perspective(1px) scale(1);
-						transition-property: all, transform;
-						transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1), cubic-bezier(0.25, 1, 0.5, 1);
-						transition-duration: 250ms, 200ms;
-						backface-visibility: hidden;
-
-						&.hidden {
-							opacity: 0;
-							transform: perspective(1px) scale(0.9);
-							pointer-events: none;
-						}
-
-						&:hover {
-							background: rgba(@color-primary, 0.2);
-						}
-
-						&:active {
-							transform: perspective(1px) scale(1.1);
-						}
-					}
+				&:active {
+					transform: perspective(1px) scale(1.1);
 				}
 			}
 		}

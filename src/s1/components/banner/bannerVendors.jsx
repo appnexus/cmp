@@ -11,8 +11,6 @@ class LocalLabel extends Label {
 	static defaultProps = {
 		prefix: 'layer3Vendors',
 		isShowing: false,
-		maxHeightModal: 0, // starting modalHeight
-		onMaxHeightChange: () => {},
 	};
 }
 
@@ -22,12 +20,10 @@ export default class BannerVendors extends Component {
 	}
 
 	componentDidMount() {
-		const { store, onMaxHeightChange } = this.props;
-		const { theme } = store;
-		const { maxHeightModal: maxHeightModalTheme } = theme;
+		const { store } = this.props;
 		setTimeout(() => {
-			onMaxHeightChange(maxHeightModalTheme);
-		}, 1);
+			store.toggleAutoResizeModal(false);
+		}, 10);
 	}
 
 	handleBack = () => {
@@ -76,22 +72,15 @@ export default class BannerVendors extends Component {
 	};
 
 	render(props) {
-		const { isShowing, store, maxHeightModal } = props;
+		const { isShowing, store } = props;
 		const {
 			config: { theme },
 			isSaveShowing,
 			translations,
+			maxHeightModal,
 		} = store;
 
-		const {
-			isBannerModal,
-			isBannerInline,
-			// maxHeightModal,
-			primaryColor,
-			primaryTextColor,
-			backgroundColor,
-			textLightColor,
-		} = theme;
+		const { isBannerModal, isBannerInline, primaryColor, primaryTextColor, backgroundColor, textLightColor } = theme;
 
 		const bannerClasses = [style.banner];
 		if (!isShowing) {
@@ -115,7 +104,7 @@ export default class BannerVendors extends Component {
 				<div
 					class={style.content}
 					style={{
-						...(maxHeightModal ? { maxHeight: maxHeightModal } : {}),
+						maxHeight: maxHeightModal,
 					}}
 				>
 					<div class={style.message} ref={(el) => (this.messageRef = el)}>
@@ -148,45 +137,45 @@ export default class BannerVendors extends Component {
 									sites.
 								</LocalLabel>
 							</div>
-							<div class={style.consent}>
-								<a
-									class={style.learnMore}
-									onClick={this.handleBack}
-									style={{ color: primaryColor, borderColor: primaryColor }}
-								>
-									<LocalLabel localizeKey="links.back" translations={translations}>
-										Back
-									</LocalLabel>
-								</a>
-								<a
-									class={style.continue}
-									onClick={this.handleAcceptAll}
-									style={{
-										backgroundColor: primaryColor,
-										borderColor: primaryColor,
-										color: primaryTextColor,
-									}}
-								>
-									<LocalLabel localizeKey="links.acceptAll" translations={translations}>
-										Accept All
-									</LocalLabel>
-								</a>
-								<a
-									class={[style.save, !isSaveShowing ? style.hidden : ''].join(' ')}
-									onClick={this.handleSave}
-									style={{
-										color: primaryColor,
-										borderColor: primaryColor,
-									}}
-								>
-									<LocalLabel localizeKey="links.save" translations={translations}>
-										Save
-									</LocalLabel>
-								</a>
-							</div>
 							<div class={style.optionsContainer}>{!store ? <h1>Loading</h1> : <VendorList store={store} />}</div>
 						</div>
 					</div>
+				</div>
+				<div class={style.navigation}>
+					<a
+						class={style.learnMore}
+						onClick={this.handleBack}
+						style={{ color: primaryColor, borderColor: primaryColor }}
+					>
+						<LocalLabel localizeKey="links.back" translations={translations}>
+							Back
+						</LocalLabel>
+					</a>
+					<a
+						class={style.continue}
+						onClick={this.handleAcceptAll}
+						style={{
+							backgroundColor: primaryColor,
+							borderColor: primaryColor,
+							color: primaryTextColor,
+						}}
+					>
+						<LocalLabel localizeKey="links.acceptAll" translations={translations}>
+							Accept All
+						</LocalLabel>
+					</a>
+					<a
+						class={[style.save, !isSaveShowing ? style.hidden : ''].join(' ')}
+						onClick={this.handleSave}
+						style={{
+							color: primaryColor,
+							borderColor: primaryColor,
+						}}
+					>
+						<LocalLabel localizeKey="links.save" translations={translations}>
+							Save
+						</LocalLabel>
+					</a>
 				</div>
 			</div>
 		);

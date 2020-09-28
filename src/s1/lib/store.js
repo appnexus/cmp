@@ -18,6 +18,8 @@ export const mock = {
 export default class Store {
 	config = config;
 	displayLayer1; // stacks
+	maxHeightModal = 0;
+	shouldAutoResizeModal = false;
 	manualVendorConsents = new Set(); // vendor-consent management partially automatic and partially manual depending on the consent screen
 	isModalShowing = false;
 	isSaveShowing = false;
@@ -33,14 +35,14 @@ export default class Store {
 	listeners = new Set();
 
 	constructor(options) {
-		const { theme } = this.config;
+		const { config: { theme = config.theme } = config } = options;
 		Object.assign(this, {
 			...options,
-			theme: {
-				...theme,
-				...options.theme,
-			},
+			theme,
+			shouldAutoResizeModal: theme.shouldAutoResizeModal,
+			maxHeightModal: theme.shouldAutoResizeModal ? 0 : theme.maxHeightModal,
 		});
+
 		const { language } = this.config;
 		const { tcfApi, gvl } = options;
 		const { readyPromise } = gvl;
@@ -66,36 +68,45 @@ export default class Store {
 		let bestMatchingStackCount = 0;
 		let bestMatchingStackId = 0;
 
+		const { shouldUseStacks } = this.config;
 		const { stacks, vendors } = this.gvl;
 		const allPurposes = new Set();
+		const allLegitInterestPurposes = new Set();
 		const allSpecialPurposes = new Set();
 		const allSpecialFeatures = new Set();
 		const allFeatures = new Set();
 
 		Object.keys(vendors).forEach((id) => {
 			const { features, legIntPurposes, purposes, specialFeatures, specialPurposes } = vendors[id];
-			purposes
-				.filter((purpose) => !legIntPurposes.includes(purpose)) // filter out legitInterest
-				// TODO @potench // filter out flexiblePurposes from layer1?
-				// .filter(purpose => !legIntPurposes.includes(purpose))
-				.forEach(allPurposes.add, allPurposes);
+
+			// purposes
+			// 	.filter((purpose) => !legIntPurposes.includes(purpose)) // filter out legitInterest
+			// 	// TODO @potench // filter out flexiblePurposes from layer1?
+			// 	// .filter(purpose => !legIntPurposes.includes(purpose))
+			// 	.forEach(allPurposes.add, allPurposes);
+			purposes.forEach(allPurposes.add, allPurposes);
 			specialFeatures.forEach(allSpecialFeatures.add, allSpecialFeatures);
 			specialPurposes.forEach(allSpecialPurposes.add, allSpecialPurposes);
 			features.forEach(allFeatures.add, allFeatures);
+			legIntPurposes.forEach(allLegitInterestPurposes.add, allLegitInterestPurposes);
 		});
 
-		Object.keys(stacks).forEach((id) => {
-			const stack = stacks[id];
-			const { purposes, specialFeatures } = stack;
-			const purposeMatches = purposes.filter((purpose) => allPurposes.has(purpose));
-			const specialFeatureMatches = specialFeatures.filter((specialFeature) => allSpecialFeatures.has(specialFeature));
-			const totalMatches = purposeMatches.length + specialFeatureMatches.length;
+		if (shouldUseStacks) {
+			Object.keys(stacks).forEach((id) => {
+				const stack = stacks[id];
+				const { purposes, specialFeatures } = stack;
+				const purposeMatches = purposes.filter((purpose) => allPurposes.has(purpose));
+				const specialFeatureMatches = specialFeatures.filter((specialFeature) =>
+					allSpecialFeatures.has(specialFeature)
+				);
+				const totalMatches = purposeMatches.length + specialFeatureMatches.length;
 
-			if (!bestMatchingStackCount || totalMatches > bestMatchingStackCount) {
-				bestMatchingStackId = id;
-				bestMatchingStackCount = totalMatches;
-			}
-		});
+				if (!bestMatchingStackCount || totalMatches > bestMatchingStackCount) {
+					bestMatchingStackId = id;
+					bestMatchingStackCount = totalMatches;
+				}
+			});
+		}
 
 		const filteredStack = stacks[bestMatchingStackId];
 		const filteredPurposes = [...allPurposes].filter(
@@ -106,6 +117,7 @@ export default class Store {
 			displayLayer1: {
 				stack: bestMatchingStackId,
 				purposes: filteredPurposes.sort(),
+				legIntPurposes: [...allLegitInterestPurposes].sort(),
 				specialFeatures: [...allSpecialFeatures].sort(),
 				specialPurposes: [...allSpecialPurposes].sort(),
 				features: [...allFeatures].sort(),
@@ -123,7 +135,14 @@ export default class Store {
 	}); // fired after gvl.readyPromise and tcData updated if persisted
 
 	onReady() {
-		const { narrowedVendors, cmpId, cmpVersion, gdprConsentUrlParam, publisherCountryCode } = this.config;
+		const {
+			narrowedVendors,
+			cmpId,
+			cmpVersion,
+			gdprConsentUrlParam,
+			publisherCountryCode,
+			isServiceSpecific,
+		} = this.config;
 		const { vendors } = this.gvl;
 
 		if (narrowedVendors && narrowedVendors.length) {
@@ -133,6 +152,7 @@ export default class Store {
 
 		const tcModel = new TCModel(this.gvl);
 		let persistedTcModel;
+
 		const cookieTCString = cookie.readVendorConsentCookie();
 		const encodedTCString = cookieTCString || gdprConsentUrlParam;
 
@@ -144,6 +164,7 @@ export default class Store {
 					gdprConsentUrlParam ? 'consentUrl' : 'consentCookie'
 				}`,
 			});
+			console.error(e);
 		}
 
 		// Merge persisted model into new model in memory
@@ -151,6 +172,7 @@ export default class Store {
 			...(persistedTcModel ? persistedTcModel : {}),
 			cmpId,
 			cmpVersion,
+			isServiceSpecific,
 			publisherCountryCode,
 			consentScreen: CONSENT_SCREENS.STACKS_LAYER1,
 		});
@@ -229,6 +251,8 @@ export default class Store {
 		const isModalShowing = shouldShowModal !== undefined ? shouldShowModal : this.isModalShowing;
 		const isSaveShowing = shouldShowSave !== undefined ? shouldShowSave : this.isSaveShowing;
 		const encodedTCString = TCString.encode(tcModelNew);
+		const shouldAutoResizeModal = isSaveShowing ? false : this.shouldAutoResizeModal;
+		const maxHeightModal = shouldAutoResizeModal ? this.maxHeightModal : this.theme.maxHeightModal;
 
 		const { vendorConsents, purposeConsents, specialFeatureOptins } = tcModelNew;
 		const { purposes, specialFeatures, vendors } = this.gvl;
@@ -250,6 +274,8 @@ export default class Store {
 				hasConsentedAll,
 				isSaveShowing,
 				hasSession,
+				shouldAutoResizeModal,
+				maxHeightModal,
 			},
 			true
 		);
@@ -261,6 +287,7 @@ export default class Store {
 			const normalizeHasConsentedAll = hasConsentedAll ? '1' : '0';
 			cookie.writeVendorConsentCookie(encodedTCString, cookieDomain);
 			cookie.writeConsentedAllCookie(hasConsentedAll ? '1' : '0', cookieDomain);
+
 			if (hasConsentedAllCookie !== normalizeHasConsentedAll) {
 				global.dispatchEvent(
 					new CustomEvent(CUSTOM_EVENTS.CONSENT_ALL_CHANGED, {
@@ -279,18 +306,32 @@ export default class Store {
 			const declinedSpecialFeatures = specialFeatures.filter((id) => !specialFeatureOptins.has(id));
 
 			const declinedVendors = Object.keys(vendors).filter((id) => !vendorConsents.has(parseInt(id, 10)));
+			const declinedStack = stack && !this.getStackOptin(stack) ? `${stack}` : '';
 
 			logger(LOG_EVENTS.CMPSave, {
 				consentScreen,
 				hasConsentedAll,
 				consentByUrl: isConsentByUrl,
-				declinedStack: this.getStackOptin(stack) ? '' : stack,
+				declinedStack,
 				declinedPurposes: declinedPurposes.join(','),
 				declinedSpecialFeatures: declinedSpecialFeatures.join(','),
 				declinedVendors: declinedVendors.join(','),
 			});
 		}
 	};
+
+	toggleAutoResizeModal(shouldAutoResizeModal, dynamicMaxHeightModal) {
+		const { theme } = this;
+		const maxHeightModal =
+			shouldAutoResizeModal && dynamicMaxHeightModal ? dynamicMaxHeightModal : theme.maxHeightModal;
+		// only set if there's a change
+		if (shouldAutoResizeModal !== this.shouldAutoResizeModal || maxHeightModal !== this.maxHeightModal) {
+			this.setState({
+				maxHeightModal,
+				shouldAutoResizeModal,
+			});
+		}
+	}
 
 	setState = (state = {}, isQuiet = false) => {
 		Object.assign(this, {
@@ -320,7 +361,7 @@ export default class Store {
 
 	save() {
 		// close the cmp and persist settings
-		this.updateCmp({ shouldShowModal: false, shouldSaveCookie: true, shouldShowSave: false });
+		this.updateCmp({ shouldShowModal: false, shouldSaveCookie: true, shouldShowSave: false, maxHeightModal: 0 });
 	}
 
 	toggleAll() {
@@ -331,6 +372,7 @@ export default class Store {
 		this.updateCmp({
 			tcModel,
 			shouldShowModal: false,
+			maxHeightModal: 0,
 			shouldSaveCookie: true,
 			shouldShowSave: false,
 		});
@@ -427,6 +469,42 @@ export default class Store {
 			}
 		});
 		return tcModel;
+	}
+
+	toggleVendorObjection(ids, shouldObject) {
+		const tcModel = this.tcModel.clone();
+		const { vendorLegitimateInterests } = tcModel;
+
+		ids.forEach((id) => {
+			if (!shouldObject && (vendorLegitimateInterests.has(id) || shouldObject === false)) {
+				vendorLegitimateInterests.unset(id);
+			} else {
+				vendorLegitimateInterests.set(id);
+			}
+		});
+
+		this.updateCmp({
+			tcModel,
+			shouldShowSave: true,
+		});
+	}
+
+	togglePurposeObjection(ids, shouldObject) {
+		const tcModel = this.tcModel.clone();
+		const { purposeLegitimateInterests } = tcModel;
+
+		ids.forEach((id) => {
+			if (!shouldObject && (purposeLegitimateInterests.has(id) || shouldObject === false)) {
+				purposeLegitimateInterests.unset(id);
+			} else {
+				purposeLegitimateInterests.set(id);
+			}
+		});
+
+		this.updateCmp({
+			tcModel,
+			shouldShowSave: true,
+		});
 	}
 
 	toggleConsentScreen(consentScreen) {

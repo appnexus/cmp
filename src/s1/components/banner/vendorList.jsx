@@ -23,6 +23,7 @@ export default class VendorList extends Component {
 	};
 
 	expandRow(id) {
+		const { store } = this.props;
 		const { expanded } = this.state;
 		if (expanded.has(id)) {
 			expanded.delete(id);
@@ -33,6 +34,8 @@ export default class VendorList extends Component {
 		this.setState({
 			expanded,
 		});
+
+		store.toggleAutoResizeModal(false);
 	}
 
 	handleConsent(props, state, { id }) {
@@ -46,7 +49,22 @@ export default class VendorList extends Component {
 		});
 	}
 
-	renderRow(props, state, { headline, expanded, theme, list, displayPrefix, handleConsent, optIns }) {
+	handleObjection(props, state, { id }) {
+		const { store } = props;
+		store.toggleVendorObjection([id]);
+
+		logger(LOG_EVENTS.CMPClick, {
+			action: 'click',
+			category: 'toggleVendorObjection',
+			label: `${id}`, // force string
+		});
+	}
+
+	renderRow(
+		props,
+		state,
+		{ headline, expanded, theme, list, displayPrefix, handleConsent, handleObjection, optIns, optInsObjections }
+	) {
 		const { store } = this.props;
 		const { gvl, translations } = store;
 		const {
@@ -109,6 +127,21 @@ export default class VendorList extends Component {
 										className={[style.itemDetails, style.vendorDetails].join(' ')}
 										style={{ color: theme.textLightColor }}
 									>
+										<p>
+											<a
+												class={style.privacyPolicy}
+												href={policyUrl}
+												target="_blank"
+												title={`Privacy Policy for ${name}`}
+											>
+												<LocalLabel localizeKey="privacy" translations={translations}>
+													Privacy Policy:
+												</LocalLabel>
+												<span>{policyUrl}</span>
+												<ExternalLinkIcon color={theme.textLinkColor} />
+											</a>
+										</p>
+
 										{purposes.length > 0 && (
 											<div>
 												<h4>
@@ -126,18 +159,6 @@ export default class VendorList extends Component {
 															const { name: purposeName } = globalPurposes[key];
 															return <li>{purposeName}</li>;
 														})}
-												</ul>
-											</div>
-										)}
-
-										{legIntPurposes.length > 0 && (
-											<div>
-												<h4>Purposes (Legitimate Interest)</h4>
-												<ul>
-													{legIntPurposes.map((key) => {
-														const { name: purposeName } = globalPurposes[key];
-														return <li>{purposeName}</li>;
-													})}
 												</ul>
 											</div>
 										)}
@@ -178,19 +199,30 @@ export default class VendorList extends Component {
 											</div>
 										)}
 
-										<p>
-											<a
-												class={style.privacyPolicy}
-												href={policyUrl}
-												target="_blank"
-												title={`Privacy Policy for ${name}`}
-											>
-												<LocalLabel localizeKey="privacy" translations={translations}>
-													Privacy Policy:
-												</LocalLabel>{' '}
-												{policyUrl} <ExternalLinkIcon color={theme.textLinkColor} />
-											</a>
-										</p>
+										{legIntPurposes.length > 0 && (
+											<div>
+												<h4>Purposes (Service-Specific Legitimate Interests)</h4>
+												<ul>
+													{legIntPurposes.map((key) => {
+														const { name: purposeName } = globalPurposes[key];
+														return <li>{purposeName}</li>;
+													})}
+												</ul>
+												<div className={style.objectLegitInterest}>
+													<Switch
+														color={theme.primaryColor}
+														class={style.switch}
+														dataId={displayId}
+														isSelected={!optInsObjections.has(id)}
+														onClick={handleObjection.bind(this, props, state, { id })}
+													>
+														<label className={style.legitInterestLabel}>
+															Add objection to legitimate interest processing.
+														</label>
+													</Switch>
+												</div>
+											</div>
+										)}
 									</div>
 								)}
 							</li>
@@ -210,7 +242,7 @@ export default class VendorList extends Component {
 			translations,
 		} = store;
 
-		const { vendorConsents } = tcModel;
+		const { vendorConsents, vendorLegitimateInterests } = tcModel;
 
 		const { vendors } = gvl;
 
@@ -227,8 +259,22 @@ export default class VendorList extends Component {
 			theme,
 			expanded,
 			handleConsent: this.handleConsent,
+			handleObjection: this.handleObjection,
 			optIns: vendorConsents,
+			optInsObjections: vendorLegitimateInterests,
 			list: Object.keys(vendors).map((key) => vendors[key]),
+			// .sort((a, b) => {
+			// 	var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+			// 	var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+			// 	if (nameA < nameB) {
+			// 		return -1;
+			// 	}
+			// 	if (nameA > nameB) {
+			// 		return 1;
+			// 	}
+			// 	// names must be equal
+			// 	return 0;
+			// }),
 			displayPrefix: 'vendors-',
 		});
 

@@ -11,7 +11,8 @@
 		"stacksTitle": "Vi og <a>våre partnere</a> behandler personopplysninger som IP-adresse, unik ID, surfedata for:",
 		"specialFeaturesTitle": "For noen av formålene ovenfor er vi og <a>våre partnere</a>:",
 		"specialPurposesTitle": "Vi trenger ditt samtykke til alle formålene ovenfor, men vi har en legitim interesse for disse formålene:",
-		"featuresTitle": "For noen av formålene ovenfor er vi og <a>våre partnere</a>:"
+		"featuresTitle": "For noen av formålene ovenfor er vi og <a>våre partnere</a>:",
+		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
 	},
 	"layer3Vendors": {
 		"title": "Hvem bruker denne informasjonen?",

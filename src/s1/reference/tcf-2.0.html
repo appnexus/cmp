@@ -97,12 +97,25 @@
 			generated: <%= date %>
 		//-->
 		<div class="reference">
-			<h1 class="p">System1 CMP TCF2.0 Reference Page</h1>
+			<h1 class="p">System1 CMP TCF 2.0 Reference Page</h1>
+			<ul>
+				<li>
+					Current Live Version:
+					<strong>
+						<a
+							href="https://github.com/Openmail/system1-cmp/releases/tag/<%= version %>"
+							title="system1 CMP release notes"
+						>
+							<%= version %>
+						</a>
+					</strong>
+				</li>
+				<li>Last generated <strong><%= date %></strong></li>
+			</ul>
 			<p class="p">
-				This page is a CMP TCF 2.0 reference implementation. For instructions and more detail please see the
-				<a href="https://github.com/Openmail/system1-cmp/tree/potench/tcf-2.0-v.0" target="_github"
-					>openmail/system1-cmp</a
-				>
+				Consent Management Platform (CMP) TCF 2.0 reference implementation. For instructions and more detail please see
+				the
+				<a href="https://github.com/Openmail/system1-cmp" target="_github">openmail/system1-cmp</a>
 				project repository.
 			</p>
 			<ul>
@@ -116,7 +129,7 @@
 				</li>
 				<li>
 					<ul class="horizontal">
-						<li><button id="btnShowConsentTool">Show Consent Tool</button></li>
+						<li><button id="btnShowConsentTool">Manage Consent Preferences</button></li>
 						<li>
 							Language:
 							<select id="selectLanguage">
@@ -124,13 +137,15 @@
 							</select>
 						</li>
 						<li>
-							<a href="https://github.com/Openmail/system1-cmp/tree/potench/tcf-2.0-v.0" target="_github"
-								>System1 CMP Github</a
-							>
+							<a href="https://github.com/Openmail/system1-cmp" target="_github">System1 CMP Github</a>
 						</li>
 						<li>
 							Autoresize:
 							<input id="domShouldAutoResize" type="checkbox" />
+						</li>
+						<li>
+							Use Stacks:
+							<input id="domShouldUseStacks" type="checkbox" />
 						</li>
 					</ul>
 				</li>
@@ -148,6 +163,7 @@
 			const selectLanguage = document.querySelector('#selectLanguage');
 			const selectVendors = document.querySelector('#selectVendors');
 			const domShouldAutoResize = document.querySelector('#domShouldAutoResize');
+			const domShouldUseStacks = document.querySelector('#domShouldUseStacks');
 
 			const setupQaTools = function (store) {
 				const LANGUAGES = store.LANGUAGES;
@@ -167,26 +183,34 @@
 			};
 
 			const shouldAutoResize = function () {
-				return window.location.search.indexOf('resize') >= 0 ? true : false;
+				let params = new URLSearchParams(window.location.search);
+				return params.get('resize') === 'true';
+			};
+
+			const shouldUseStacks = function () {
+				let params = new URLSearchParams(window.location.search);
+				return params.get('stacks') === 'true';
 			};
 
 			const config = {
 				theme: {
 					shouldAutoResizeModal: shouldAutoResize(),
-					maxHeightModal: '40vh',
+					maxHeightModal: '65vh',
 				},
 				business: 'reference',
 				gdprApplies: true,
 				ccpaApplies: false,
 				canLog: true,
 				canDebug: true,
-				// baseUrl: './config/2.0',
-				baseUrl: 'https://s.flocdn.com/cmp/test/config/2.0', // base url
+				isServiceSpecific: true,
+				baseUrl: './config/2.0',
+				// baseUrl: 'https://s.flocdn.com/cmp/test/config/2.0', // base url
 				// versionedFilename: 'vendor-list.json', // vendor list json
 				scriptSrc: './tcf-2.0-cmp.js', // cmp SDK
 				// polyfillSrc: './polyfills.js',
 				publisherCountryCode: 'US',
 				language: 'en', // default
+				shouldUseStacks: shouldUseStacks(),
 				// narrowedVendors: [1, 2, 3, 4, 5, 6],
 			};
 
@@ -200,6 +224,9 @@
 				function (store, error) {
 					setupQaTools(store);
 					console.log('cmp: onInitComplete', store, error);
+					if (!store.isModalShowing) {
+						__tcfapi('showConsentTool', 2, function () {});
+					}
 				},
 				config
 			);
@@ -234,7 +261,16 @@
 
 			domShouldAutoResize.checked = shouldAutoResize();
 			domShouldAutoResize.addEventListener('change', function () {
-				window.location.search = domShouldAutoResize.checked ? '?resize=true' : '';
+				let params = new URLSearchParams(window.location.search);
+				params.set('resize', domShouldAutoResize.checked);
+				window.location.search = params.toString();
+			});
+
+			domShouldUseStacks.checked = shouldUseStacks();
+			domShouldUseStacks.addEventListener('change', function () {
+				let params = new URLSearchParams(window.location.search);
+				params.set('stacks', domShouldUseStacks.checked);
+				window.location.search = params.toString();
 			});
 		</script>
 	</body>

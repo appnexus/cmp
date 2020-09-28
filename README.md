@@ -2,9 +2,13 @@
 
 # system1-cmp
 
-TCF 2.0 Consent Management Platform (CMP) UI tool. We are in the process of validating this CMP, we will update this repo once it passes TCF 2.0 validation.
+System1's implementation of IAB's Transparency and Consent 2.0 Consent Management Platform. A TCF 2.0 compliant CMP that passes all IAB compliance checks and has been validated to participate as a CMP for private use as CMP 38.
 
-[Reference Page and Demo](https://s.flocdn.com/cmp/2.0.4/tcf-2.0.html)
+This CMP passes technical and policy compliance checks, but that does not necessarily guarantee legal compliance. Each organisation must make their own assessment of whether they are compliant with the law.
+
+Feel free to fork this CMP and submit to IAB for private use.
+
+[Reference Page and Demo](https://s.flocdn.com/cmp/test/tcf-2.0.html)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -27,12 +31,18 @@ TCF 2.0 Consent Management Platform (CMP) UI tool. We are in the process of vali
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## SDK / Package Details
+
+- `tcf-2.0-loader.js` is < 1kb. It loads the CMP sdk and dynamically checks compatibility and loads the polyfill if necessary.
+- `tcf-2.0-cmp.js` is < 50kb. It contains the TCF 2.0 framework (core/api), UI layer for interacting with the CMP, and custom store for persisting choices.
+- `polyfills.js` is < 15kb. It contains polyfills required for the CMP to function in IE11.
+
 ## Installation / Use
 
-API signatures have changed from the CMP TCF 1.1, but we've tried to keep the configuration process very similar. See a [working example in codepen](https://codepen.io/potench/pen/GRZZprw).
+See a [working example in codepen](https://codepen.io/potench/pen/GRZZprw).
 
 ```html
-<script src="https://s.flocdn.com/cmp/2.0.4/tcf-2.0-loader.js"></script>
+<script src="https://s.flocdn.com/cmp/2.1.0/tcf-2.0-loader.js"></script>
 <script>
 	__tcfapi('onConsentAllChanged', 2, function (store) {
 		const hasConsented = document.cookie.indexOf('gdpr_opt_in=1') >= 0;
@@ -50,12 +60,11 @@ API signatures have changed from the CMP TCF 1.1, but we've tried to keep the co
 			console.log('initialization complete', store, error);
 		},
 		{
-			gdprApplies: true,
-			debugging: true, // console logs
+			debugging: true, // console logs for debugging integration
 			logging: true, // pixel logs for monitoring
-			baseUrl: 'https://s.flocdn.com/cmp/2.0.4/config/2.0', // base url for vendor-lists and translations
-			scriptSrc: 'https://s.flocdn.com/cmp/2.0.4/tcf-2.0-cmp.js', // cmp SDK
-			publisherCountryCode: 'AA',
+			baseUrl: 'https://s.flocdn.com/cmp/2.1.0/config/2.0', // base url for vendor-lists and translations
+			scriptSrc: 'https://s.flocdn.com/cmp/2.1.0/tcf-2.0-cmp.js', // cmp SDK
+			publisherCountryCode: 'US', // country code of your business
 			narrowedVendors: [], // ex [1,2,3,4],
 			theme: {
 				primaryColor: '#0099ff',
@@ -68,7 +77,6 @@ API signatures have changed from the CMP TCF 1.1, but we've tried to keep the co
 			},
 			ccpaApplies: true,
 			gdprApplies: true,
-			consentRequired: true,
 		}
 	);
 </script>
@@ -202,20 +210,24 @@ __tcfapi('init', 2, () => {}, {
 | `business`             | optional string  | `dev`                                   | used to correlate CMP events for monitoring across a businessline.                                             |
 | `theme`                | optional object  | [details below](#theme)                 | Override styling choices using the following properties.                                                       |
 | `publisherCountryCode` | optional string  | `US`                                    | String representing country code of parent website business                                                    |
+| `isServiceSpecific`    | optional boolean | `true`                                  | true uses publisher consent, false uses global consent                                                         |
+| `shouldUseStacks`      | optional boolean | `true`                                  | true uses stacks on Layer1, TODO stacks need purposes/custom-features toggle to be compliant                   |
 
 ### theme
 
-Override styling choices using the following properties:
+Themeing is a bit limited right now. Pass in a `config.theme` object during initialization. Use the following to override styling choices:
 
-- `maxHeightModal`: '50vh'
-- `primaryColor`: '#0099ff'
-- `textLinkColor`: '#0099ff'
-- `secondaryColor`: '#869cc0'
-- `featuresColor`: '#d0d3d7'
-- `maxHeightModal`: '40vh' // 40vh by default; enforce a maxheight as a %,px,vh
-- `shouldAutoResizeModal`: true // false by default; auto resize modal on stacks screen to push purposes below fold. Works in conjunction with `maxHeightModal`
+| Theme Property          | Type             | Default | Detail                                                                                     |
+| ----------------------- | ---------------- | ------- | ------------------------------------------------------------------------------------------ |
+| `maxHeightModal`        | optional string  | `45vh`  | CSS style for max height of the CMP UI. Example: `45vh`, `50%`, `350px`                    |
+| `shouldAutoResizeModal` | optional boolean | true    | Auto detects Layer1 height to minimize UI. UI resizes to `maxHeightModal` upon interaction |
+| `primaryColor`          | optional string  | null    | Example: `#0099ff`                                                                         |
+| `textLinkColor`         | optional string  | null    | Example: `#0099ff`                                                                         |
+| `secondaryColor`        | optional string  | null    | Example: `#869cc0`                                                                         |
+| `featuresColor`         | optional string  | null    | Example: `#d0d3d7`                                                                         |
+| `featuresColor`         | optional string  | null    | Example: `#d0d3d7`                                                                         |
 
-## Initialize from URL Param
+## Initialize With Euconsent String from URL Param
 
 We can leverage the spec provided for [URL-based services to process the TC String when it can't execute JavaScript](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20Consent%20string%20and%20vendor%20list%20formats%20v2.md#how-does-a-url-based-service-process-the-tc-string-when-it-cant-execute-javascript) to pass along consent when domains are owned by the same entity.
 
@@ -240,15 +252,10 @@ Following Google's [Additional Consent Mode](https://support.google.com/admanage
 ## TODO
 
 - [ ] Write Unit Tests and Integration Tests
-- [ ] Docs
-- [ ] Internal Localization
-- [ ] Layer 2 Purposes
-- [ ] Layer 3 Purpose Details
-- [ ] Layer 2 Vendors
-- [ ] Theming
-- [ ] non-personalized performance and monitoring analytics
-- [ ] Validate using the [TCF 2.0 validator extension](https://cmp-validator.consensu.org/chrome-extension/latest/IAB-Europe-CMP-Validator-User-Guide.pdf)
-- [ ] Separate polyfill bundle, use babelrc instead of manually importing from core-js
+- [ ] Improve Theming
+- [ ] Implement global-scope and group-scope
+- [ ] Updated hosted iframe for TCF 2.0
+- [ ] Delete unused TCF 1.1 and reorganize
 
 ## Support Matrix
 
@@ -277,4 +284,12 @@ For now the TCF 1.1 and TCF 2.0 CMPs both live in this repository. We will depre
 yarn
 yarn dev
 # browse to http://localhost:8080/tcf-2.0.html
+```
+
+### Update Vendor List
+
+IAB updates the vendor list every Friday. Use the included to script to automatically upgrade all vendor-lists. Commit, merge, publish the changes to take effect.
+
+```
+yarn upgrade-vendor-list
 ```

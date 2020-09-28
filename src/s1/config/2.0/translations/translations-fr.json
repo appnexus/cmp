@@ -11,7 +11,8 @@
 		"stacksTitle": "Nous et <a>nos partenaires</a> traitons des données personnelles telles que l'adresse IP, l'identifiant unique, les données de navigation pour:",
 		"specialFeaturesTitle": "Pour certaines des raisons ci-dessus, nous et <a>nos partenaires</a>:",
 		"specialPurposesTitle": "Nous avons besoin de votre consentement pour toutes les fins ci-dessus, mais nous avons un intérêt légitime à ces fins:",
-		"featuresTitle": "Pour certaines des raisons ci-dessus, nous et <a>nos partenaires</a>:"
+		"featuresTitle": "Pour certaines des raisons ci-dessus, nous et <a>nos partenaires</a>:",
+		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
 	},
 	"layer3Vendors": {
 		"title": "Qui utilise ces informations?",

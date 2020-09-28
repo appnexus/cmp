@@ -8,7 +8,7 @@ import packageJson from '../package.json';
 
 const ENV = process.env.NODE_ENV || 'development';
 const CSS_MAPS = ENV !== 'production';
-const { name, version } = packageJson;
+const { name, version, cmpVersion } = packageJson;
 
 const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
 	output: {
@@ -168,4 +168,4 @@ const commonConfig = {
 	},
 };
 
-export { commonConfig, ENV, CSS_MAPS, name, version, uglifyPlugin };
+export { cmpVersion, commonConfig, ENV, CSS_MAPS, name, version, uglifyPlugin };

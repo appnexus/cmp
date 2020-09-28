@@ -1,4 +1,5 @@
 /* global __VERSION__ */
+
 export const COOKIES = {
 	VENDOR_CONSENT: 'euconsent-v2',
 	PUBLISHER_CONSENT: 'pubconsent-v2',
@@ -27,7 +28,7 @@ export const CMP_GLOBAL_NAME = 'cmp';
 export const VERSION = __VERSION__;
 
 export const LANGUAGES = [
-	{ display: 'English', code: 'en' },
+	{ display: 'English', code: 'en', shouldDisablePurposesFetch: true },
 	{ display: 'Bulgarian', code: 'bg' },
 	{ display: 'Catalan', code: 'ca' },
 	{ display: 'Czech', code: 'cs' },

@@ -1,12 +1,14 @@
 /**
  * Optional logger for monitoring/alerting
  */
-import { cmp as DPL } from '@s1/dpl';
+import DPL from '@s1/dpl/cjs/cmp';
 import debug from './debug';
 
 let isLoggerEnabled = false;
 let sessionConfig;
 let performanceMark = new Date();
+
+console.log('DPL', DPL);
 
 export const EVENTS = {
 	...DPL.events.cmp,

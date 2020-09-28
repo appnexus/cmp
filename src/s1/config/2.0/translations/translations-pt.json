@@ -11,7 +11,8 @@
 		"stacksTitle": "Nós e <a>nossos parceiros</a> processamos dados pessoais, como endereço IP, ID exclusivo, dados de navegação para:",
 		"specialFeaturesTitle": "Para alguns dos propósitos acima, nós e <a>nossos parceiros</a>:",
 		"specialPurposesTitle": "Precisamos do seu consentimento para todos os fins acima, mas temos um interesse legítimo para esses fins:",
-		"featuresTitle": "Para alguns dos propósitos acima, nós e <a>nossos parceiros</a>"
+		"featuresTitle": "Para alguns dos propósitos acima, nós e <a>nossos parceiros</a>",
+		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
 	},
 	"layer3Vendors": {
 		"title": "Quem está a usar esta informação?",

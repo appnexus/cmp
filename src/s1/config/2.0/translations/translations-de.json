@@ -11,7 +11,8 @@
 		"stacksTitle": "Wir und <a>unsere Partner</a> verarbeiten personenbezogene Daten wie IP-Adresse, eindeutige ID und Browsing-Daten:",
 		"specialFeaturesTitle": "Für einige der oben genannten Zwecke sind wir und <a>unsere Partner</a>:",
 		"specialPurposesTitle": "Wir benötigen Ihre Zustimmung für alle oben genannten Zwecke, haben jedoch ein berechtigtes Interesse für diese Zwecke:",
-		"featuresTitle": "Für einige der oben genannten Zwecke sind wir und <a>unsere Partner</a>"
+		"featuresTitle": "Für einige der oben genannten Zwecke sind wir und <a>unsere Partner</a>",
+		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
 	},
 	"layer3Vendors": {
 		"title": "Wer verwendet diese Informationen?",

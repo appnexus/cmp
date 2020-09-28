@@ -5,7 +5,7 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import path from 'path';
-import { commonConfig, uglifyPlugin, version } from './common.webpack.config.babel';
+import { cmpVersion, commonConfig, uglifyPlugin, version } from './common.webpack.config.babel';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -29,6 +29,7 @@ module.exports = [
 			new webpack.DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify(ENV),
 				__VERSION__: JSON.stringify(version),
+				__CMP_VERSION__: JSON.stringify(cmpVersion),
 			}),
 			new webpack.ProvidePlugin({
 				Promise: 'promise-polyfill',
