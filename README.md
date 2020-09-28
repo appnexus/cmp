@@ -13,6 +13,8 @@ Feel free to fork this CMP and submit to IAB for private use.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
+- [SDK / Package Details](#sdk--package-details)
 - [Installation / Use](#installation--use)
 - [API](#api)
   - [Customized API](#customized-api)
@@ -23,11 +25,12 @@ Feel free to fork this CMP and submit to IAB for private use.
   - [changeLanguage](#changelanguage)
 - [Configuration / Config](#configuration--config)
   - [theme](#theme)
-- [Initialize from URL Param](#initialize-from-url-param)
+- [Initialize With Euconsent String from URL Param](#initialize-with-euconsent-string-from-url-param)
 - [Background and Resources](#background-and-resources)
 - [TODO](#todo)
 - [Support Matrix](#support-matrix)
 - [Contributing](#contributing)
+  - [Update Vendor List](#update-vendor-list)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
