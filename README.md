@@ -13,7 +13,6 @@ Feel free to fork this CMP and submit to IAB for private use.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [SDK / Package Details](#sdk--package-details)
 - [Installation / Use](#installation--use)
 - [API](#api)
@@ -63,23 +62,27 @@ See a [working example in codepen](https://codepen.io/potench/pen/GRZZprw).
 			console.log('initialization complete', store, error);
 		},
 		{
-			debugging: true, // console logs for debugging integration
-			logging: true, // pixel logs for monitoring
-			baseUrl: 'https://s.flocdn.com/cmp/2.1.0/config/2.0', // base url for vendor-lists and translations
+			business: 'business:unit',
+			gdprApplies: true, // true for EU false for CA
+			ccpaApplies: false, // true for CA false for EU
+			canLog: true,
+			canDebug: true,
+			isServiceSpecific: true, // on service-specific use supported right now
+			baseUrl: 'https://s.flocdn.com/cmp/2.1.0/config/2.0', // base url
 			scriptSrc: 'https://s.flocdn.com/cmp/2.1.0/tcf-2.0-cmp.js', // cmp SDK
-			publisherCountryCode: 'US', // country code of your business
-			narrowedVendors: [], // ex [1,2,3,4],
+			publisherCountryCode: 'US',
+			language: 'en', // default
+			shouldUseStacks: true,
+			// narrowedVendors: [1, 2, 3, 4, 5, 6],
 			theme: {
-				primaryColor: '#0099ff',
-				textLinkColor: '#0099ff',
 				boxShadow: 'none',
-				secondaryColor: '#869cc0',
 				featuresColor: '#d0d3d7',
-				shouldAutoResizeModal: true, // resizes modal on stacks screen to push stacks below fold
 				maxHeightModal: '40vh',
+				primaryColor: '#0099ff',
+				secondaryColor: '#869cc0',
+				shouldAutoResizeModal: true, // resizes modal on stacks screen to push stacks below fold
+				textLinkColor: '#0099ff',
 			},
-			ccpaApplies: true,
-			gdprApplies: true,
 		}
 	);
 </script>
