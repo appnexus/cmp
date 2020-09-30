@@ -51,7 +51,7 @@ export const setup = (configOpt) => {
 		},
 
 		[CHANGE_LANGUAGE]: (callback, language) => {
-			store.toggleLanguage(language).finally((result) => {
+			store.toggleLanguage(language, true).finally((result) => {
 				callback(store, result);
 			});
 		},

@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/openmail/system1-cmp/compare/2.1.0...2.1.1) (2020-09-30)
+
+### Fix
+
+- [x] auto-detect `config.language` and auto-load relevant language files during CMP initialization
+- [x] configurable `config.theme.maxWidthModal`
+
 ## [2.1.0](https://github.com/openmail/system1-cmp/compare/2.0.4...2.1.0) (2020-09-23)
 
 ### Refactor

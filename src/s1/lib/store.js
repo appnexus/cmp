@@ -2,7 +2,7 @@ import { TCModel, TCString } from '@iabtcf/core';
 import cookie from './cookie';
 import config from './config';
 import debug from './debug';
-import localize from './localize';
+import { findLangage, localize } from './localize';
 import logger, { EVENTS as LOG_EVENTS } from './logger';
 import { CONSENT_SCREENS, CUSTOM_EVENTS, LANGUAGES } from '../constants';
 
@@ -40,27 +40,28 @@ export default class Store {
 			...options,
 			theme,
 			shouldAutoResizeModal: theme.shouldAutoResizeModal,
-			maxHeightModal: theme.shouldAutoResizeModal ? 0 : theme.maxHeightModal,
 		});
 
 		const { language } = this.config;
 		const { tcfApi, gvl } = options;
 		const { readyPromise } = gvl;
-		const localizePromise = localize(language);
-		localizePromise.then((translations) => {
-			this.setState({
-				translations,
-			});
-		});
 
-		Promise.all([readyPromise, localizePromise])
-			.then(this.onReady.bind(this))
+		readyPromise
+			.then(() => {
+				// synchronous localization because iabtcf-es core lib requires initialization first
+				this.toggleLanguage(language)
+					.then(this.onReady.bind(this))
+					.catch((e) => {
+						logger(LOG_EVENTS.CMPError, {
+							message: `storeReadyError: toggleLanguage: ${e}`,
+						});
+					});
+			})
 			.catch((e) => {
 				logger(LOG_EVENTS.CMPError, {
 					message: `storeReadyError: ${e}`,
 				});
 			});
-
 		tcfApi('addEventListener', 2, this.onEvent.bind(this));
 	}
 
@@ -252,7 +253,7 @@ export default class Store {
 		const isSaveShowing = shouldShowSave !== undefined ? shouldShowSave : this.isSaveShowing;
 		const encodedTCString = TCString.encode(tcModelNew);
 		const shouldAutoResizeModal = isSaveShowing ? false : this.shouldAutoResizeModal;
-		const maxHeightModal = shouldAutoResizeModal ? this.maxHeightModal : this.theme.maxHeightModal;
+		const maxHeightModal = shouldShowSave ? this.theme.maxHeightModal : this.maxHeightModal;
 
 		const { vendorConsents, purposeConsents, specialFeatureOptins } = tcModelNew;
 		const { purposes, specialFeatures, vendors } = this.gvl;
@@ -274,8 +275,8 @@ export default class Store {
 				hasConsentedAll,
 				isSaveShowing,
 				hasSession,
-				shouldAutoResizeModal,
 				maxHeightModal,
+				shouldAutoResizeModal,
 			},
 			true
 		);
@@ -361,7 +362,7 @@ export default class Store {
 
 	save() {
 		// close the cmp and persist settings
-		this.updateCmp({ shouldShowModal: false, shouldSaveCookie: true, shouldShowSave: false, maxHeightModal: 0 });
+		this.updateCmp({ shouldShowModal: false, shouldSaveCookie: true, shouldShowSave: false });
 	}
 
 	toggleAll() {
@@ -372,7 +373,6 @@ export default class Store {
 		this.updateCmp({
 			tcModel,
 			shouldShowModal: false,
-			maxHeightModal: 0,
 			shouldSaveCookie: true,
 			shouldShowSave: false,
 		});
@@ -551,16 +551,20 @@ export default class Store {
 		}
 	}
 
-	toggleLanguage(language) {
+	toggleLanguage(langOpt, shouldLog) {
 		if (!this.gvl) {
 			return;
 		}
 
-		logger(LOG_EVENTS.CMPClick, {
-			action: 'click',
-			category: 'toggleLanguage',
-			label: language,
-		});
+		const { code: language } = findLangage(langOpt);
+
+		if (shouldLog) {
+			logger(LOG_EVENTS.CMPClick, {
+				action: 'click',
+				category: 'toggleLanguage',
+				label: language,
+			});
+		}
 
 		const localizePromise = localize(language);
 		localizePromise.then((translations) => {
@@ -570,13 +574,15 @@ export default class Store {
 		});
 
 		const gvlPromise = this.gvl.changeLanguage(language).then(() => {
-			const { language } = this.gvl;
-			const tcModel = this.tcModel.clone();
-			tcModel.consentLanguage = language;
-			this.updateCmp({
-				tcModel,
-				shouldShowModal: true,
-			});
+			if (this.tcModel) {
+				const { language } = this.gvl;
+				const tcModel = this.tcModel.clone();
+				tcModel.consentLanguage = language;
+				this.updateCmp({
+					tcModel,
+					shouldShowModal: true,
+				});
+			}
 		});
 
 		return Promise.all([gvlPromise, localizePromise]);

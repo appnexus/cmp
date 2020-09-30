@@ -17,6 +17,7 @@ export const theme = {
 	// boxShadow: 'none',
 	// secondaryColor: '#869cc0',
 	// featuresColor: '#d0d3d7',
+	// maxWidthModal: '500px',
 	shouldAutoResizeModal: true,
 	maxHeightModal: '45vh',
 };
@@ -34,7 +35,7 @@ export const config = {
 	gdprApplies: false,
 	gdprConsentUrlParam,
 	isServiceSpecific: true, // whether or not this cmp is configured to be service specific
-	language: 'en',
+	language: '', // empty to detect browser navigator language
 	narrowedVendors: [],
 	publisherCountryCode: 'US',
 	shouldAutoConsent: false, // deprecated feature
