@@ -1,3 +1,9 @@
+## [2.1.2](https://github.com/openmail/system1-cmp/compare/2.1.1...2.1.2) (2020-10-20)
+
+### Refactor
+
+- [x] Upgrade DPL
+
 ## [2.1.1](https://github.com/openmail/system1-cmp/compare/2.1.0...2.1.1) (2020-09-30)
 
 ### Fix
