@@ -3,19 +3,28 @@
 .gdpr {
 	@import '../style/normalize';
 
-	font-family: 'Helvetica Neue', arial, sans-serif;
+	font-family: Helvetica Neue, Arial, sans-serif;
 	font-weight: 400;
 	font-size: 12px;
 	line-height: 1.2;
+	position: relative;
+	z-index: 214748364;
+	text-align: left;
+	color: #000;
 
+	@media @mobile {
+		font-size: 13px;
+	}
 	* {
 		box-sizing: border-box;
+		height: auto;
 	}
 
 	a {
 		text-decoration: none;
 		color: @color-linkColor;
 		cursor: pointer;
+
 		&:hover {
 			color: @color-linkColorHover;
 		}

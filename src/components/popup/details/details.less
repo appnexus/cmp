@@ -26,6 +26,10 @@
 		justify-content: flex-end;
 		flex: 0 1 80px;
 		border-top: 1px solid @color-border;
+
+		@media @mobile {
+			z-index: 214748364;
+		}
 	}
 
 	.save {
@@ -34,5 +38,25 @@
 	}
 	.cancel {
 		margin-right: 25px;
+
+		@media @tablet {
+			background: none;
+		}
+	}
+}
+
+.footer {
+	@media @mobile {
+		background: #fff;
+	}
+}
+
+.body {
+	@media @mobile {
+		max-height: 60vh;
+	}
+
+	@media @tablet {
+		-webkit-overflow-scrolling: touch;
 	}
 }

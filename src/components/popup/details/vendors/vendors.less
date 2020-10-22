@@ -7,6 +7,10 @@ div.vendors {
 	overflow: scroll;
 	-webkit-overflow-scrolling: touch;
 
+	@media @tablet {
+		max-height: 360px;
+	}
+
 	.header {
 		display: flex;
 		flex-shrink: 0;
@@ -15,6 +19,7 @@ div.vendors {
 			align-items: center;
 		}
 	}
+
 	.title {
 		flex: 1;
 		font-size: 24px;
@@ -24,6 +29,7 @@ div.vendors {
 			padding-bottom: 5px;
 		}
 	}
+
 	.button {
 		min-width: 140px;
 		padding: 8px;
@@ -37,43 +43,61 @@ div.vendors {
 			flex: 1;
 		}
 	}
+
 	.options {
 		display: flex;
 		@media @smartphone {
 			width: 100%;
 		}
 	}
+
 	.description {
 		margin: 20px 0;
 		flex-shrink: 0;
+
+		@media @tablet {
+			span {
+				display: block;
+				margin-bottom: 20px
+			}
+
+			a {
+				text-decoration: underline;
+			}
+		}
 	}
 
 	.vendorHeader {
 		display: flex;
 		flex-shrink: 0;
 	}
+
 	.vendorContent {
 		display: flex;
 	}
+
 	.vendorList {
 		border: 1px solid @color-border;
 	}
+
 	.vendorName {
-	  	height: 1em;
+		height: 1em;
 		min-height: 30px;
 		display: flex;
 		align-items: center;
 	}
+
 	.vendorDescription {
 		font-size: 10px;
-	  	text-align: left;
+		text-align: left;
 	}
-	.vendorCenterSmall {
-	  	font-size: 10px;
-	  	text-align: center;
-	  	min-width: 60px;
 
-	 	@media @smartphone {
+	.vendorCenterSmall {
+		font-size: 10px;
+		text-align: center;
+		min-width: 60px;
+
+		@media @smartphone {
 			min-width: 65px;
 
 			span:first-child {
@@ -81,14 +105,15 @@ div.vendors {
 				width: 100%;
 			}
 
-		   	& > th {
+			& > th {
 				span:first-child {
 					display: inline-block;
 					width: 100%;
 				}
 			}
-	  	}
+		}
 	}
+
 	table {
 		width: 100%;
 		border-collapse: collapse;
@@ -101,19 +126,28 @@ div.vendors {
 
 		tr {
 			min-height: 40px;
+
 			th {
 				font-weight: bold;
 
 			}
+
 			td, th {
 				text-align: center;
 				padding: 5px;
+
 				&:first-child {
 					width: 100%;
 				}
+
 				&:last-child {
 					padding-right: 25px;
 				}
+			}
+
+			td:last-child,
+			tr:last-child {
+				padding-right: 4px;
 			}
 		}
 
@@ -121,10 +155,17 @@ div.vendors {
 			background-color: @color-table-background;
 		}
 	}
+
 	.policy {
 		margin: 0 5px;
 		display: flex;
 		flex: 0 1 16px;
-	  	height: 1em;
+		height: 1em;
+	}
+}
+
+.vendors {
+	@media @tablet {
+		overflow-x: initial;
 	}
 }
