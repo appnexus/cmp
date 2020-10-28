@@ -4,15 +4,25 @@
 	display: flex;
 	flex: 1;
 
+	@media @mobile {
+		display: block;
+	}
+
 	.purposeList {
 		font-size: 12px;
 		font-weight: bold;
 		flex: 1;
-		max-width: 200px;
+		max-width: 210px;
 		border-right: 1px solid @color-border;
 		overflow-y: auto;
 		overflow-x: hidden;
+
+		@media @mobile {
+			display: flex;
+			max-width: none;
+		}
 	}
+
 	.purposeItem {
 		display: flex;
 		align-items: center;
@@ -29,14 +39,21 @@
 		&.selectedPurpose {
 			background-color: white;
 			cursor: auto;
+			border-right: 7px solid @color-primary;
+			padding-right: 3px;
+		}
+
+		@media @tablet {
+			background: #fff;
 		}
 	}
+
 	.purposeDescription {
 		flex: 1;
 		padding: 20px;
 		overflow: auto;
 
-		@media screen and (max-width: 768px) {
+		@media @mobile {
 			overflow: scroll;
 			height: 47vh;
 		}
@@ -89,18 +106,26 @@
 		height: auto;
 		margin-bottom: 3%;
 
+
+		@media @tablet {
+			-webkit-overflow-scrolling: touch;
+		}
+
 		.detailHeader {
 			display: flex;
 			flex-wrap: wrap;
 		}
 
 		.title {
-			font-size: 24px;
+			font-size: 17px;
 			font-weight: bold;
 			flex: 0 0 100%;
 			@media @smartphone {
-				font-size: 20px;
 				padding-bottom: 5px;
+			}
+			@media @mobile {
+				font-size: 15px;
+				line-height: 18px;
 			}
 		}
 
@@ -109,10 +134,10 @@
 			font-weight: bold;
 			display: flex;
 			align-items: center;
-		  	width: 100%;
-		  	justify-content: space-between;
+			width: 100%;
+			justify-content: space-between;
 
-		  	.switch {
+			.switch {
 				span {
 					display: table-cell;
 					vertical-align: middle;
@@ -122,15 +147,37 @@
 			@media @smartphone {
 				flex: 1 1 auto;
 			}
+
+			@media @tablet {
+				margin-top: 3%;
+			}
 		}
 
 		.body {
 			margin: 5% 0;
+
+			@media @tablet {
+				margin: 3% 0;
+			}
 		}
 	}
+
 	.vendorLink {
 		display: block;
 		margin-top: 30px;
 		font-size: 12px;
+
+		@media @tablet {
+			display: inline-block;
+			font-size: 16px;
+		}
+	}
+}
+
+.body {
+	@media @tablet {
+		span {
+			display: block;
+		}
 	}
 }

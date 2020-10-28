@@ -1,31 +1,111 @@
+@import '../../../style/variables.less';
+
 div.intro {
 	display: block;
-	padding: 0 5%;
+	padding: 0 6%;
 	max-height: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-moz-font-smoothing: grayscale;
+
+	@media @mobile {
+		display: block;
+		padding: 0;
+	}
 
 	.title {
-		font-size: 30px;
 		font-weight: bold;
-		text-align: center;
+		text-align: left;
+		font-size: 24px;
+		line-height: 28px;
+		padding: 10px 0 0px;
+
+		@media @mobile {
+			font-size: 18px;
+			line-height: 26px;
+			padding: 20px 4% 0
+		}
 	}
+
 	.description {
 		margin: 4% 0;
-		overflow: auto;
+		font-family: Helvetica Neue, Arial, sans-serif;
 		height: 320px;
-		font-size: 12px;
-		line-height: 1;
+		overflow: auto;
+		font-size: 16px;
+		line-height: 12px;
+		text-align: left;
+		-webkit-overflow-scrolling: touch;
+
+		p {
+			font-family: Helvetica Neue, Arial, sans-serif;
+			font-size: 12px;
+			margin: 0;
+		}
+
+		@media @tablet {
+			margin: 2% 0;
+		}
 	}
+
 	.options {
 		display: flex;
 		flex-shrink: 0;
 		width: 100%;
 		padding-bottom: 10px;
+
+		@media @mobile {
+			display: block;
+			padding: 0 10px;
+			background: #fff;
+
+			button {
+				width: 100%;
+				display: block;
+				margin: 15px 0;
+			}
+		}
+		@media @tablet {
+			display: flex;
+
+			button {
+				margin: 5px;
+			}
+		}
 	}
+
 	.rejectAll {
 		flex: 1;
 		margin-right: 10px;
 	}
+
 	.acceptAll {
 		flex: 1;
+	}
+}
+
+.intro {
+	@media @mobile {
+		padding: 0;
+		font-size: 13px;
+		padding-bottom: 50px;
+
+		.description {
+			height: 40vh;
+			padding: 0 4%;
+			text-align: left;
+		}
+
+		.description, .description p {
+			font-size: 14px;
+			line-height: 18px;
+		}
+	}
+
+	@media @tablet {
+		.description {
+			height: 17vh;
+			-webkit-overflow-scrolling: touch;
+		}
 	}
 }

@@ -10,14 +10,19 @@
 	z-index: 99999;
 	justify-content: center;
 	align-items: center;
+
+	@media @mobile {
+		align-items: flex-end;
+	}
 }
+
 .overlay {
 	position: fixed;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, .6);
 }
 
 .content {
@@ -31,5 +36,22 @@
 	@media @smartphone {
 		width: 98%;
 		height: 98%;
+	}
+
+	@media @mobile {
+		width: 100%;
+		height: auto;
+		display: block;
+		max-height: 100%;
+	}
+
+	a {
+		text-decoration: none;
+		font-weight: bold;
+		background: linear-gradient(to right, #f9b700, #f9b700);
+		background-position: 0 17px;
+		background-repeat: repeat-x;
+		background-size: 5px 5px;
+		color: #000;
 	}
 }
