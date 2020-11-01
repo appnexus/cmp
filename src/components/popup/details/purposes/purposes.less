@@ -42,10 +42,6 @@
 			border-right: 7px solid @color-primary;
 			padding-right: 3px;
 		}
-
-		@media @tablet {
-			background: #fff;
-		}
 	}
 
 	.purposeDescription {
@@ -105,11 +101,7 @@
 		overflow: auto;
 		height: auto;
 		margin-bottom: 3%;
-
-
-		@media @tablet {
-			-webkit-overflow-scrolling: touch;
-		}
+		-webkit-overflow-scrolling: touch;
 
 		.detailHeader {
 			display: flex;
@@ -144,36 +136,23 @@
 				flex: 1 1 auto;
 			}
 
-			@media @tablet {
-				margin-top: 3%;
-			}
+			margin-top: 3%;
 		}
 
 		.body {
-			margin: 5% 0;
-
-			@media @tablet {
-				margin: 3% 0;
-			}
+			margin: 3% 0;
 		}
 	}
 
 	.vendorLink {
-		display: block;
-		margin-top: 30px;
+ 		margin-top: 30px;
+		display: inline-block;
 		font-size: 12px;
-
-		@media @tablet {
-			display: inline-block;
-			font-size: 16px;
-		}
 	}
 }
 
 .body {
-	@media @tablet {
-		span {
-			display: block;
-		}
+	span {
+		display: block;
 	}
 }
