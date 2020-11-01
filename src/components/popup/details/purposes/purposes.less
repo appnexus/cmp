@@ -5,7 +5,7 @@
 	flex: 1;
 
 	@media @mobile {
-		display: block;
+		flex-direction: column;
 	}
 
 	.purposeList {
@@ -18,7 +18,7 @@
 		overflow-x: hidden;
 
 		@media @mobile {
-			display: flex;
+			flex: initial;
 			max-width: none;
 		}
 	}
@@ -117,15 +117,11 @@
 		}
 
 		.title {
-			font-size: 17px;
+			font-size: 24px;
 			font-weight: bold;
 			flex: 0 0 100%;
 			@media @smartphone {
 				padding-bottom: 5px;
-			}
-			@media @mobile {
-				font-size: 15px;
-				line-height: 18px;
 			}
 		}
 
