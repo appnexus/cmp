@@ -1,3 +1,8 @@
+## [2.1.3](https://github.com/openmail/system1-cmp/compare/2.1.2...2.1.3) (2020-11-03)
+
+### Chore
+- [x] Update to vendor list versino 62
+
 ## [2.1.2](https://github.com/openmail/system1-cmp/compare/2.1.1...2.1.2) (2020-10-20)
 
 ### Refactor
