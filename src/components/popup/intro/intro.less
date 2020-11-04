@@ -15,10 +15,8 @@ div.intro {
 
 	.title {
 		font-weight: bold;
+		font-size: 30px;
 		text-align: left;
-		font-size: 24px;
-		line-height: 28px;
-		padding: 10px 0 0px;
 
 		@media @mobile {
 			font-size: 18px;
@@ -32,16 +30,10 @@ div.intro {
 		font-family: Helvetica Neue, Arial, sans-serif;
 		height: 320px;
 		overflow: auto;
-		font-size: 16px;
-		line-height: 12px;
+		font-size: 12px;
+		line-height: 1;
 		text-align: left;
 		-webkit-overflow-scrolling: touch;
-
-		p {
-			font-family: Helvetica Neue, Arial, sans-serif;
-			font-size: 12px;
-			margin: 0;
-		}
 
 		@media @tablet {
 			margin: 2% 0;
@@ -96,16 +88,15 @@ div.intro {
 			text-align: left;
 		}
 
-		.description, .description p {
-			font-size: 14px;
-			line-height: 18px;
-		}
 	}
 
 	@media @tablet {
 		.description {
 			height: 17vh;
-			-webkit-overflow-scrolling: touch;
 		}
+	}
+
+	.description {
+		-webkit-overflow-scrolling: touch;
 	}
 }

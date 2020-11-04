@@ -5,7 +5,7 @@
 	flex: 1;
 
 	@media @mobile {
-		display: block;
+		flex-direction: column;
 	}
 
 	.purposeList {
@@ -18,7 +18,7 @@
 		overflow-x: hidden;
 
 		@media @mobile {
-			display: flex;
+			flex: initial;
 			max-width: none;
 		}
 	}
@@ -41,10 +41,6 @@
 			cursor: auto;
 			border-right: 7px solid @color-primary;
 			padding-right: 3px;
-		}
-
-		@media @tablet {
-			background: #fff;
 		}
 	}
 
@@ -105,11 +101,7 @@
 		overflow: auto;
 		height: auto;
 		margin-bottom: 3%;
-
-
-		@media @tablet {
-			-webkit-overflow-scrolling: touch;
-		}
+		-webkit-overflow-scrolling: touch;
 
 		.detailHeader {
 			display: flex;
@@ -117,15 +109,11 @@
 		}
 
 		.title {
-			font-size: 17px;
+			font-size: 24px;
 			font-weight: bold;
 			flex: 0 0 100%;
 			@media @smartphone {
 				padding-bottom: 5px;
-			}
-			@media @mobile {
-				font-size: 15px;
-				line-height: 18px;
 			}
 		}
 
@@ -148,36 +136,23 @@
 				flex: 1 1 auto;
 			}
 
-			@media @tablet {
-				margin-top: 3%;
-			}
+			margin-top: 3%;
 		}
 
 		.body {
-			margin: 5% 0;
-
-			@media @tablet {
-				margin: 3% 0;
-			}
+			margin: 3% 0;
 		}
 	}
 
 	.vendorLink {
-		display: block;
-		margin-top: 30px;
+ 		margin-top: 30px;
+		display: inline-block;
 		font-size: 12px;
-
-		@media @tablet {
-			display: inline-block;
-			font-size: 16px;
-		}
 	}
 }
 
 .body {
-	@media @tablet {
-		span {
-			display: block;
-		}
+	span {
+		display: block;
 	}
 }

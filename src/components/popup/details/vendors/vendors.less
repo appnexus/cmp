@@ -7,10 +7,6 @@ div.vendors {
 	overflow: scroll;
 	-webkit-overflow-scrolling: touch;
 
-	@media @tablet {
-		max-height: 360px;
-	}
-
 	.header {
 		display: flex;
 		flex-shrink: 0;
@@ -55,15 +51,13 @@ div.vendors {
 		margin: 20px 0;
 		flex-shrink: 0;
 
-		@media @tablet {
-			span {
-				display: block;
-				margin-bottom: 20px
-			}
+		span {
+			display: block;
+			margin-bottom: 20px
+		}
 
-			a {
-				text-decoration: underline;
-			}
+		a {
+			text-decoration: underline;
 		}
 	}
 
@@ -165,7 +159,5 @@ div.vendors {
 }
 
 .vendors {
-	@media @tablet {
-		overflow-x: initial;
-	}
+	overflow-x: initial;
 }
