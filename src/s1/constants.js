@@ -9,6 +9,7 @@ export const CONSENT_SCREENS = {
 	STACKS_LAYER1: 1,
 	PURPOSES_LAYER2: 2,
 	VENDORS_LAYER3: 3,
+	SLIM_LAYER0: 4,
 };
 
 export const CUSTOM_API = {

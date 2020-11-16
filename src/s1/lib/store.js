@@ -143,6 +143,7 @@ export default class Store {
 			gdprConsentUrlParam,
 			publisherCountryCode,
 			isServiceSpecific,
+			isSlimMode,
 		} = this.config;
 		const { vendors } = this.gvl;
 
@@ -175,7 +176,7 @@ export default class Store {
 			cmpVersion,
 			isServiceSpecific,
 			publisherCountryCode,
-			consentScreen: CONSENT_SCREENS.STACKS_LAYER1,
+			consentScreen: ( isSlimMode ? CONSENT_SCREENS.SLIM_LAYER0 : CONSENT_SCREENS.STACKS_LAYER1 ),
 		});
 
 		// Handle a new user
@@ -519,9 +520,10 @@ export default class Store {
 		if (!this.tcModel) {
 			return;
 		}
-
+		const { isSlimMode } = this.config;
 		let tcModel = this.tcModel.clone();
-		tcModel.consentScreen = CONSENT_SCREENS.STACKS_LAYER1;
+		
+		tcModel.consentScreen = ( isSlimMode ? CONSENT_SCREENS.SLIM_LAYER0 : CONSENT_SCREENS.STACKS_LAYER1 );
 
 		this.updateCmp({
 			shouldShowModal,

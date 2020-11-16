@@ -1,4 +1,12 @@
 {
+	"layer0Slim": {
+		"title": "Vi värdesätter din integritet och dina val",
+		"description": "Vi och våra partner använder cookies och annan teknik för att lagra och/eller få åtkomst till information på eller från din enhet (med eller utan din tillåtelse, beroende på vilken typ av data) när du använder denna webbplats för att anpassa annonser och innehåll, analysera eller mäta webbplatsanvändning och utveckla användarinsikter. Du kan lära dig mer om, ändra eller hantera dina inställningsinställningar via länken \"hantera preferenser\" eller besöka vår \"sekretesspolicy\".",
+		"links": {
+			"manage": "Lär Dig Mer",
+			"accept": "Ok, Jag Förstår"
+		}
+	},
 	"layer1Stacks": {
 		"title": "Integritetsval",
 		"description": "Genom att använda denna webbplats så samtycker du till vår användning av cookies för att tillhandahålla ett mer personligt skräddarsytt innehåll inklusive relaterade annonser samt i syfte att mäta och analysera användningen av webbplatsen. Klicka på \"Lär Dig Mer\" om du vill ändra dina inställningar.",

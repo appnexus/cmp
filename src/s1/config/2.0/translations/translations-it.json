@@ -1,4 +1,12 @@
 {
+	"layer0Slim": {
+		"title": "Prendiamo sul serio la tua privacy e le tue scelte",
+		"description": "Mentre utilizzi questo sito, noi e i nostri partner utilizziamo cookie e altre tecnologie per archiviare informazioni sul tuo dispositivo e/o accedere a tali informazioni (con o senza il tuo consenso, a seconda del tipo di dati), al fine di personalizzare annunci e contenuti, analizzare o misurare l'utilizzo del sito ed elaborare approfondimenti sul pubblico. Per saperne di più e modificare o gestire le tue preferenze di impostazione del consenso clicca sul link “Gestisci preferenze” o visita la nostra “Informativa sulla privacy”.",
+		"links": {
+			"manage": "Maggiori informazioni",
+			"accept": "Ok, Capito"
+		}
+	},
 	"layer1Stacks": {
 		"title": "Scelte Privacy",
 		"description": "Utilizando questo sito, acconsenti al nostro uso dei cookie e delle informazioni per fornire contenuto personalizzato e pubblicità e per misurare ed analizzare l'utilizzo del sito. Clicca su \"Maggiori inforrmazioni\" per cambiare le tue impostazioni.",

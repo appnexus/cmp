@@ -1,4 +1,12 @@
 {
+	"layer0Slim": {
+		"title": "Nous Accordons Une Grande Valeur à Vos Choix & à Votre Vie Privée",
+		"description": "Nos partenaires et nous-mêmes utilisons des cookies et d'autres technologies pour stocker et/ou accéder à des informations sur ou à partir de votre appareil (avec ou sans votre autorisation, en fonction du type de données) lors de votre accès à ce site, afin de personnaliser les publicités et le contenu, d'analyser ou de mesurer l'utilisation du site et de développer des connaissances sur l'audience. Vous pouvez en savoir plus et modifier ou gérer vos préférences de paramétrage du consentement en vous rendant sur le lien « gérer les préférences » ou en consultant notre « politique de confidentialité ».",
+		"links": {
+			"manage": "En savoir plus",
+			"accept": "OK, j’ai compris"
+		}
+	},
 	"layer1Stacks": {
 		"title": "Choix en matière de vie privée",
 		"description": "En utilisant ce site, vous acceptez l’utilisation des cookies et des informations nécessaires pour vous fournir un contenu et des publicités personnalisées, ainsi que pour mesurer et analyser l’utilisation du site. Cliquez sur \"En savoir plus\" pour modifier vos paramètres.",

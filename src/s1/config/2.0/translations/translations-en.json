@@ -1,4 +1,12 @@
 {
+	"layer0Slim": {
+		"title": "We Value Your Privacy & Choices",
+		"description": "We and our partners use cookies and other technologies to store and/or access information on or from your device (with or without your permission, depending on the type of data) while you use this site, in order to personalize ads and content, analyze or measure site usage, and develop audience insights. You can learn more and change or manage your consent setting preferences via the \"manage preferences\" link or visiting our \"privacy policy\".",
+		"links": {
+			"manage": "Learn More",
+			"accept": "Ok, Got It"
+		}
+	},
 	"layer1Stacks": {
 		"title": "Privacy Choices",
 		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and to measure and analyze site usage. You can change or manage your consent settings at any time via the \"manage preferences\" link.",

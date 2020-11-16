@@ -1,4 +1,12 @@
 {
+	"layer0Slim": {
+		"title": "Wij waarderen uw Privacy & Keuzes",
+		"description": "Wij en onze partners gebruiken cookies en andere technologieën om informatie op of vanaf uw apparaat op te slaan en/of te raadplegen (met of zonder uw toestemming, afhankelijk van het type gegevens) terwijl u deze site gebruikt, om advertenties en inhoud te personaliseren, het gebruik van de site te analyseren of te meten, en om publieksinzichten te vergaren. U kunt meer informatie krijgen en uw toestemmingsinstellingen wijzigen of beheren via de link \"voorkeuren beheren\" of via ons \"privacybeleid\".",
+		"links": {
+			"manage": "Meer Leren",
+			"accept": "Ok, Begrepen"
+		}
+	},
 	"layer1Stacks": {
 		"title": "Privacykeuzes",
 		"description": "Door deze site te gebruiken, gaat u akkoord met ons gebruik van cookies en informatie om gepersonaliseerde inhoud en advertenties te leveren en het gebruik van de site te meten en te analyseren. Klik op \"Meer informatie\" om uw instellingen te wijzigen.",

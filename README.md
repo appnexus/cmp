@@ -74,6 +74,7 @@ See a [working example in codepen](https://codepen.io/potench/pen/GRZZprw).
 			publisherCountryCode: 'US',
 			// language: '', // empty string or unset to default to browser language
 			shouldUseStacks: true,
+			isSlimMode: true,
 			// narrowedVendors: [1, 2, 3, 4, 5, 6],
 			theme: {
 				boxShadow: 'none',
@@ -83,6 +84,7 @@ See a [working example in codepen](https://codepen.io/potench/pen/GRZZprw).
 				secondaryColor: '#869cc0',
 				shouldAutoResizeModal: true, // resizes modal on stacks screen to push stacks below fold
 				textLinkColor: '#0099ff',
+				isFullWidth: false,
 			},
 		}
 	);
@@ -220,21 +222,25 @@ __tcfapi('init', 2, () => {}, {
 | `publisherCountryCode` | optional string  | `US`                                    | String representing country code of parent website business                                                       |
 | `isServiceSpecific`    | optional boolean | `true`                                  | true uses publisher consent, false uses global consent                                                            |
 | `shouldUseStacks`      | optional boolean | `true`                                  | true uses stacks on Layer1, TODO stacks need purposes/custom-features toggle to be compliant                      |
+| `isSlimMode`           | optional boolean | `false`                                 | If `true`, initial banner is low profile, full width banner <sup>v2.1.4+</sup>                                    |
+| `shouldShowCloseX`     | optional boolean | `false`                                 | If `true`, a &times; icon will appear in the upper right on layers to accept-all and close <sup>v2.1.4+</sup>     |
 
 ### theme
 
 Themeing is a bit limited right now. Pass in a `config.theme` object during initialization. Use the following to override styling choices:
 
-| Theme Property          | Type             | Default  | Detail                                                                                     |
-| ----------------------- | ---------------- | -------- | ------------------------------------------------------------------------------------------ |
-| `maxHeightModal`        | optional string  | `45vh`   | CSS style for max height of the CMP UI. Example: `45vh`, `50%`, `350px`                    |
-| `maxWidthModal`         | optional string  | `1024px` | CSS style for max width of the CMP UI. Example: `1024px`, `calc(90% - 100px)`              |
-| `shouldAutoResizeModal` | optional boolean | true     | Auto detects Layer1 height to minimize UI. UI resizes to `maxHeightModal` upon interaction |
-| `primaryColor`          | optional string  | null     | Example: `#0099ff`                                                                         |
-| `textLinkColor`         | optional string  | null     | Example: `#0099ff`                                                                         |
-| `secondaryColor`        | optional string  | null     | Example: `#869cc0`                                                                         |
-| `featuresColor`         | optional string  | null     | Example: `#d0d3d7`                                                                         |
-| `featuresColor`         | optional string  | null     | Example: `#d0d3d7`                                                                         |
+| Theme Property          | Type             | Default  | Detail                                                                                                   |
+| ----------------------- | ---------------- | -------- | -------------------------------------------------------------------------------------------------------- |
+| `maxHeightModal`        | optional string  | `45vh`   | CSS style for max height of the CMP UI. Example: `45vh`, `50%`, `350px`                                  |
+| `maxWidthModal`         | optional string  | `1024px` | CSS style for max width of the CMP UI. Example: `1024px`, `calc(90% - 100px)`                            |
+| `shouldAutoResizeModal` | optional boolean | true     | Auto detects Layer1 height to minimize UI. UI resizes to `maxHeightModal` upon interaction               |
+| `primaryColor`          | optional string  | null     | Example: `#0099ff`                                                                                       |
+| `textLinkColor`         | optional string  | null     | Example: `#0099ff`                                                                                       |
+| `secondaryColor`        | optional string  | null     | Example: `#869cc0`                                                                                       |
+| `featuresColor`         | optional string  | null     | Example: `#d0d3d7`                                                                                       |
+| `backgroundColor`       | optional string  | null     | Example: `#d0d3d7` Sets the background color of the banners.  <sup>v2.1.4+</sup>                         |
+| `isFullWidth`           | optional boolean | false    | Removes rounded corners and makes banners full width - matching style layout slimMode <sup>v2.1.4+</sup> |
+| `shouldShowDropShadow`  | optional boolean | true     | When set to `true`, displays the drop shadoq on banners <sup>v2.1.4+</sup>                               |
 
 ## Initialize With Euconsent String from URL Param
 

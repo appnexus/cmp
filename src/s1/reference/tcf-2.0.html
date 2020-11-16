@@ -147,6 +147,22 @@
 							Use Stacks:
 							<input id="domShouldUseStacks" type="checkbox" />
 						</li>
+						<li>
+							Use Slim:
+							<input id="domShouldUseSlim" type="checkbox" />
+						</li>
+						<li>
+							Full Width:
+							<input id="domFullWidth" type="checkbox" />
+						</li>
+						<li>
+							Drop Shadow:
+							<input id="domDropShadow" type="checkbox" checked />
+						</li>
+						<li>
+							Close with X:
+							<input id="domCloseWithX" type="checkbox" />
+						</li>
 					</ul>
 				</li>
 			</ul>
@@ -164,6 +180,10 @@
 			const selectVendors = document.querySelector('#selectVendors');
 			const domShouldAutoResize = document.querySelector('#domShouldAutoResize');
 			const domShouldUseStacks = document.querySelector('#domShouldUseStacks');
+			const domShouldUseSlim = document.querySelector('#domShouldUseSlim');
+			const domFullWidth = document.querySelector('#domFullWidth');
+			const domDropShadow = document.querySelector('#domDropShadow');
+			const domCloseWithX = document.querySelector('#domCloseWithX');
 
 			const setupQaTools = function (store) {
 				const LANGUAGES = store.LANGUAGES;
@@ -192,10 +212,32 @@
 				return params.get('stacks') === 'true';
 			};
 
+			const shouldUseSlim = function () {
+				let params = new URLSearchParams(window.location.search);
+				return params.get('slim') === 'true';
+			};
+
+			const isFullWidth = function () {
+				let params = new URLSearchParams(window.location.search);
+				return params.get('fullwidth') === 'true';
+			};
+
+			const shouldShowDropShadow = function () {
+				let params = new URLSearchParams(window.location.search);
+				return params.get('dropshadow') !== 'false';
+			};
+
+			const shouldShowCloseX = function () {
+				let params = new URLSearchParams(window.location.search);
+				return params.get('closewithx') === 'true';
+			};
+
 			const config = {
 				theme: {
 					shouldAutoResizeModal: shouldAutoResize(),
 					maxHeightModal: '65vh',
+					isFullWidth: isFullWidth(),
+					shouldShowDropShadow: shouldShowDropShadow(),
 				},
 				business: 'reference',
 				gdprApplies: true,
@@ -211,6 +253,8 @@
 				publisherCountryCode: 'US',
 				// language: '', // default
 				shouldUseStacks: shouldUseStacks(),
+				isSlimMode: shouldUseSlim(), 
+				shouldShowCloseX: shouldShowCloseX(),
 				// narrowedVendors: [1, 2, 3, 4, 5, 6],
 			};
 
@@ -265,11 +309,40 @@
 				params.set('resize', domShouldAutoResize.checked);
 				window.location.search = params.toString();
 			});
+			
 
 			domShouldUseStacks.checked = shouldUseStacks();
 			domShouldUseStacks.addEventListener('change', function () {
 				let params = new URLSearchParams(window.location.search);
 				params.set('stacks', domShouldUseStacks.checked);
+				window.location.search = params.toString();
+			});
+
+			domShouldUseSlim.checked = shouldUseSlim();
+			domShouldUseSlim.addEventListener('change', function () {
+				let params = new URLSearchParams(window.location.search);
+				params.set('slim', domShouldUseSlim.checked);
+				window.location.search = params.toString();
+			});
+
+			domFullWidth.checked = isFullWidth();
+			domFullWidth.addEventListener('change', function () {
+				let params = new URLSearchParams(window.location.search);
+				params.set('fullwidth', domFullWidth.checked);
+				window.location.search = params.toString();
+			});
+
+			domDropShadow.checked = shouldShowDropShadow();
+			domDropShadow.addEventListener('change', function () {
+				let params = new URLSearchParams(window.location.search);
+				params.set('dropshadow', domDropShadow.checked);
+				window.location.search = params.toString();
+			});
+
+			domCloseWithX.checked = shouldShowCloseX();
+			domCloseWithX.addEventListener('change', function () {
+				let params = new URLSearchParams(window.location.search);
+				params.set('closewithx', domCloseWithX.checked);
 				window.location.search = params.toString();
 			});
 		</script>

@@ -37,7 +37,7 @@ export default class BannerVendors extends Component {
 			category: 'back',
 			label: `screen${consentScreen}`,
 		});
-		store.toggleConsentScreen(CONSENT_SCREENS.STACKS_LAYER1);
+		store.toggleConsentScreen( CONSENT_SCREENS.STACKS_LAYER1 );
 	};
 
 	handleSave = () => {
@@ -56,7 +56,11 @@ export default class BannerVendors extends Component {
 		});
 	};
 
-	handleAcceptAll = () => {
+	handleClose = () => {
+		this.handleAcceptAll( 'acceptAllClose' );
+	}
+
+	handleAcceptAll = ( clickCategory = 'acceptAll' ) => {
 		const { store } = this.props;
 		const {
 			tcModel: { consentScreen },
@@ -64,7 +68,7 @@ export default class BannerVendors extends Component {
 
 		logger(LOG_EVENTS.CMPClick, {
 			action: 'click',
-			category: 'acceptAll',
+			category: clickCategory,
 			label: `screen${consentScreen}`,
 		});
 
@@ -74,17 +78,23 @@ export default class BannerVendors extends Component {
 	render(props) {
 		const { isShowing, store } = props;
 		const {
-			config: { theme },
+			config: { theme, shouldShowCloseX, },
 			isSaveShowing,
 			translations,
-			maxHeightModal,
+			maxHeightModal,			
 		} = store;
 
-		const { isBannerModal, isBannerInline, primaryColor, primaryTextColor, backgroundColor, textLightColor } = theme;
+		const { isBannerModal, isBannerInline, primaryColor, primaryTextColor, backgroundColor, textLightColor, isFullWidth, shouldShowDropShadow, } = theme;
 
 		const bannerClasses = [style.banner];
 		if (!isShowing) {
 			bannerClasses.push(style.hidden);
+		}
+		if( !isFullWidth ) {
+			bannerClasses.push(style.bannerRounded);
+		}		
+		if( shouldShowDropShadow ) {
+			bannerClasses.push(style.bannerShadow);
 		}
 		if (isBannerModal) {
 			bannerClasses.push(style.bannerModal);
@@ -107,6 +117,7 @@ export default class BannerVendors extends Component {
 						maxHeight: maxHeightModal,
 					}}
 				>
+					{ shouldShowCloseX && <div class={style.closeX} onClick={this.handleClose}>&times;</div>}
 					<div class={style.message} ref={(el) => (this.messageRef = el)}>
 						<div class={style.info}>
 							<div class={style.title} style={{ color: theme.textColor }}>

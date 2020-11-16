@@ -1,3 +1,13 @@
+## [2.1.4](https://github.com/openmail/system1-cmp/compare/2.1.2...2.1.3) (2020-11-05)
+
+### Feat
+
+- [x] Adds new slim banner with feature flag
+- [x] Adds full width mode with feature flag
+- [x] Adds drop shadow toggle feature flag
+- [x] Adds close with &times; buttom feature flag
+- [x] Adds default background color override 
+
 ## [2.1.3](https://github.com/openmail/system1-cmp/compare/2.1.2...2.1.3) (2020-11-03)
 
 ### Chore

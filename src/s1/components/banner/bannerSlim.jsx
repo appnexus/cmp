@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import style from './banner.less';
 
-import PurposeList from './purposeList';
 import Label from '../label/label';
 
 import logger, { EVENTS as LOG_EVENTS } from '../../lib/logger';
@@ -10,16 +9,16 @@ import { CONSENT_SCREENS } from '../../constants';
 
 class LocalLabel extends Label {
 	static defaultProps = {
-		prefix: 'layer1Stacks',
+		prefix: 'layer0Slim',
 		isShowing: false,
 	};
 }
 
-export default class BannerStacks extends Component {
+export default class BannerSlim extends Component {
 	constructor(props) {
 		super(props);
 	}
-
+	
 	state = {
 		hasScrolled: false,
 	};
@@ -87,7 +86,7 @@ export default class BannerStacks extends Component {
 			label: `screen${consentScreen}`,
 		});
 
-		store.toggleConsentScreen(CONSENT_SCREENS.VENDORS_LAYER3);
+		store.toggleConsentScreen(CONSENT_SCREENS.STACKS_LAYER1);
 	};
 
 	handleSave = () => {
@@ -135,31 +134,25 @@ export default class BannerStacks extends Component {
 		const {
 			config: { theme, shouldShowCloseX, },
 			translations,
-			displayLayer1,
-			isSaveShowing,
-			maxHeightModal,
+			maxHeightModal,			
 		} = store;
 
 		const {
 			isBannerModal,
 			isBannerInline,
 			maxWidthModal,
-			isFullWidth,
-			shouldShowDropShadow,
 			// maxHeightModal, // handled in store
 			primaryColor,
 			primaryTextColor,
 			backgroundColor,
 			textColor,
 			textLightColor,
+			shouldShowDropShadow,
 		} = theme;
 
-		const bannerClasses = [style.banner];
+		const bannerClasses = [style.banner, style.bannerSlim];
 		if (!isShowing) {
 			bannerClasses.push(style.hidden);
-		}
-		if( !isFullWidth ) {
-			bannerClasses.push(style.bannerRounded);
 		}
 		if( shouldShowDropShadow ) {
 			bannerClasses.push(style.bannerShadow);
@@ -167,7 +160,7 @@ export default class BannerStacks extends Component {
 		if (isBannerModal) {
 			bannerClasses.push(style.bannerModal);
 		} else if (isBannerInline) {
-			bannerClasses.push(style.bannerInline);			
+			bannerClasses.push(style.bannerInline);
 		}
 
 		return (
@@ -192,18 +185,14 @@ export default class BannerStacks extends Component {
 							<div ref={(el) => (this.aboveFoldRef = el)}>
 								<div class={style.title} style={{ color: textColor }}>
 									<LocalLabel localizeKey="title" translations={translations}>
-										Ads help us run this site
+										We Value Your Privacy &amp; Choices
 									</LocalLabel>
 								</div>
 								<div class={style.intro}>
 									<LocalLabel localizeKey="description" translations={translations} onClick={this.handleLearnMore}>
-										When you visit our site, <a>pre-selected companies</a> may access and use certain information on
-										your device and about this site to serve relevant ads or personalized content.
+									We and our partners use cookies and other technologies to store and/or access information on or from your device (with or without your permission, depending on the type of data) while you use this site, in order to personalize ads and content, analyze or measure site usage, and develop audience insights. You can learn more and change or manage your consent setting preferences via the "manage preferences" link or visiting our "privacy policy".
 									</LocalLabel>
 								</div>
-							</div>
-							<div class={style.optionsContainer}>
-								{!displayLayer1 ? <h1>Loading</h1> : <PurposeList store={store} />}
 							</div>
 						</div>
 					</div>
@@ -215,7 +204,7 @@ export default class BannerStacks extends Component {
 						style={{ color: primaryColor, borderColor: primaryColor }}
 					>
 						<LocalLabel localizeKey="links.manage" translations={translations}>
-							Manage Your Choices
+							Learn More
 						</LocalLabel>
 					</a>
 					<a
@@ -228,21 +217,9 @@ export default class BannerStacks extends Component {
 						}}
 					>
 						<LocalLabel localizeKey="links.accept" translations={translations}>
-							Continue to site
+							OK, Got It
 						</LocalLabel>
-					</a>
-					<a
-						class={[style.save, !isSaveShowing ? style.hidden : ''].join(' ')}
-						onClick={this.handleSave}
-						style={{
-							color: primaryColor,
-							borderColor: primaryColor,
-						}}
-					>
-						<LocalLabel localizeKey="links.save" translations={translations}>
-							Save
-						</LocalLabel>
-					</a>
+					</a>					
 				</navigation>
 			</div>
 		);
