@@ -1,5 +1,17 @@
 @import '../style/variables';
 
+:global {
+	body.cmp {
+		overflow: hidden !important;
+	}
+
+	@media @mobile {
+		#pageHeader {
+			z-index: 500 !important
+		}
+	}
+}
+
 .gdpr {
 	@import '../style/normalize';
 
@@ -15,6 +27,7 @@
 	@media @mobile {
 		font-size: 13px;
 	}
+
 	* {
 		box-sizing: border-box;
 		height: auto;
