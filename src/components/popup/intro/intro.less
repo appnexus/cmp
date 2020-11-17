@@ -77,6 +77,17 @@ div.intro {
 }
 
 .intro {
+	.title {
+		text-align: left;
+	}
+
+	.title::before {
+		content: "";
+		display: block;
+		margin-bottom: 20px;
+		background-repeat: no-repeat;
+	}
+
 	@media @mobile {
 		padding: 0;
 		font-size: 13px;
