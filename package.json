@@ -134,7 +134,7 @@
 	"bundlesize": [
 		{
 			"path": "./dist/[0-9].[0-9].[0-9]/tcf-2.0-cmp.js",
-			"maxSize": "46.0 kB"
+			"maxSize": "48.0 kB"
 		},
 		{
 			"path": "./dist/[0-9].[0-9].[0-9]/tcf-2.0-loader.js",
