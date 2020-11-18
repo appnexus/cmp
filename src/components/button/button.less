@@ -5,23 +5,29 @@ button, input[type=button] {
 		cursor: pointer;
 		outline: none;
 		padding: 1em;
-		background: @color-primary;
+		background-color: @color-primary;
 		border-radius: 4px;
 		font-size: 1em;
 		font-weight: bold;
 		text-transform: uppercase;
 		color: #000;
-		border: 2px solid @color-primary;
+		border-color: @color-primary;
+		border-width: 2px;
+		border-style: solid;
 
 		&:hover {
-			border: 2px solid #000;
+			border-width: 2px;
+			border-style: solid;
+			border-color: #000;
 			color: #000;
 		}
 
 		&.invert {
-			border: 2px solid @color-primary;
+			border-width: 2px;
+			border-style: solid;
+			border-color: @color-primary;
 			color: @color-primary;
-			background: #fff;
+			background-color: #fff;
 
 			&:hover {
 				color: lighten(@color-primary, 20%);
