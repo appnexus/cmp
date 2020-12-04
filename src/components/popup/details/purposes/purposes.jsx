@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import style from './purposes.less';
 import Label from "../../../label/label";
+import ConsentInfo from "../../../consentinfo/consentinfo";
 import config from '../../../../lib/config';
 import Feature from './feature';
 import Purpose from "./purpose";
@@ -236,7 +237,8 @@ export default class Purposes extends Component {
 								</div>
 							</div>
 							<div>
-								<LocalLabel className={style.header} prefix="purposes" localizeKey={`title`}>Purposes</LocalLabel>
+								<LocalLabel className={style.header} prefix="purposes" localizeKey={`title`}></LocalLabel>
+								<ConsentInfo fields={['consents', 'legitimateInterests']}></ConsentInfo>
 								{purposes.map((purpose, index) => <Purpose key={index}
 																		   index={index}
 																		   purpose={purpose}

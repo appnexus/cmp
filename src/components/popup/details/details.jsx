@@ -19,7 +19,8 @@ export default class Details extends Component {
 		super(props);
 		const { isCustomVendors } = this.props.store;
 		this.state = {
-			vendors: isCustomVendors ? this.getCustomVendors() : this.getGlobalVendors()
+			vendors: isCustomVendors ? this.getCustomVendors() : this.getGlobalVendors(),
+			isCustom: isCustomVendors
 		};
 	}
 
@@ -59,8 +60,10 @@ export default class Details extends Component {
 
 	handleShowVendors = (filter) => {
 		this.setState({
-			vendors: this.filterVendors(filter)
+			vendors: this.filterVendors(filter),
+			isCustom: filter.isCustom
 		});
+
 		this.props.store.updateSubsection(SECTION_VENDORS);
 	};
 
@@ -154,6 +157,7 @@ export default class Details extends Component {
 							selectVendorLegitimateInterests={selectVendorLegitimateInterests}
 							initialVendorsRejection={initialVendorsRejection}
 							vendors={state.vendors}
+							isCustom={state.isCustom}
 							purposes={Object.values(purposes)}
 							features={Object.values(features)}
 							specialFeatures={Object.values(specialFeatures)}
@@ -163,8 +167,8 @@ export default class Details extends Component {
 					</Panel>
 				</div>
 				<div class={style.footer}>
-					<a class={style.cancel} onClick={this.handleBack}><LocalLabel localizeKey='back'>Back</LocalLabel></a>
-					<Button class={style.save} onClick={onSaveOrClose}><LocalLabel localizeKey='save'>Save and Exit</LocalLabel></Button>
+					<a class={style.cancel} onClick={this.handleBack}><LocalLabel prefix={'tabs.tab' + (subsection + 1)} localizeKey='back'>Back</LocalLabel></a>
+					<Button class={style.save} onClick={onSaveOrClose}><LocalLabel prefix={'tabs.tab' + (subsection + 1)} localizeKey='save'>Save and Exit</LocalLabel></Button>
 				</div>
 			</div>
 		);

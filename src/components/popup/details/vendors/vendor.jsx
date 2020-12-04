@@ -6,7 +6,7 @@ import Label from "../../../label/label";
 
 class LocalLabel extends Label {
 	static defaultProps = {
-		prefix: 'vendors'
+		prefix: 'definitions'
 	};
 }
 

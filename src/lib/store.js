@@ -28,7 +28,6 @@ export default class Store {
 		tcModel.cmpVersion = cmpVersion;
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
-
 		// decoding to check if string is compatible
 		const decodedConsentString = decodeConsentData(consentString);
 		const isTCFv2Compatible = decodedConsentString && decodedConsentString.version > 1;

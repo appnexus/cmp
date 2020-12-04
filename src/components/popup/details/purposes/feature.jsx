@@ -31,6 +31,7 @@ const Feature = (props) => {
 				{isSpecial &&
 					<div className={style.active}>
 						<div className={style.switch}>
+							<LocalLabel className={style.caption} prefix={prefix} localizeKey='acceptButton'></LocalLabel>
 							<LocalLabel prefix={prefix} localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
 							<Switch
 								isSelected={isActive}

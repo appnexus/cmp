@@ -41,6 +41,7 @@ const Purpose = (props) => {
 				{!isTechnical &&
 					<div className={style.active}>
 						<div className={style.switch}>
+							<LocalLabel className={style.caption} prefix={prefix} localizeKey='acceptButton'></LocalLabel>
 							<LocalLabel prefix={prefix} localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
 							<Switch
 								isSelected={isActive}
@@ -50,7 +51,8 @@ const Purpose = (props) => {
 						</div>
 						{!isPublisherPurpose && canRightToObject &&
 							<div className={style.switch}>
-								<LocalLabel prefix={prefix} localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
+								<LocalLabel className={style.caption} prefix={prefix} localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
+								<LocalLabel prefix={prefix} localizeKey={isLegitimateInterestActive ? 'legIntActive' : 'legIntInactive'}></LocalLabel>
 								<Switch
 									isSelected={isLegitimateInterestActive}
 									dataId={index}
