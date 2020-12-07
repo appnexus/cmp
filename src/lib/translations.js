@@ -744,7 +744,7 @@ export default {
 
 <p>Die meisten genannten Datenbearbeitungen werden auf der Grundlage von berechtigtem Interesse vorgenommen, andere wiederum dürfen nur mit Ihrer Einwilligung erfolgen. Sie können der Bearbeitung basierend auf berechtigtem Interesse jederzeit widersprechen sowie auch Ihre Einwilligung jederzeit widerrufen. Mehr dazu finden Sie unter Einstellungen.</p>
 
-<p>Wenn Sie auf "Akzeptieren" klicken oder dieses Fenster schliessen, stimmen Sie den genannten Datenbearbeitungen durch uns und Dritte zu. Klicken Sie auf "Einstellungen" finden Sie mehr Informationen zu den Datenbearbeitungen und zu unseren <a onclick="__tcfapi('showCustomVendors', 2, function () {})">Partnern</a> bzw. <a onclick="__tcfapi('showVendors', 2, function () {})">IAB-Partnern</a> und können dort auch jederzeit Ihre Präferenzen ändern.</p>
+<p>Wenn Sie auf "Akzeptieren" klicken oder dieses Fenster schliessen, stimmen Sie den genannten Datenbearbeitungen durch uns und Dritte zu. Klicken Sie auf <a onclick="__tcfapi('showConsentDetailView', 2, function () {})">Einstellungen</a> finden Sie mehr Informationen zu den Datenbearbeitungen und zu unseren <a onclick="__tcfapi('showCustomVendors', 2, function () {})">Partnern</a> bzw. <a onclick="__tcfapi('showVendors', 2, function () {})">IAB-Partnern</a> und können dort auch jederzeit Ihre Präferenzen ändern.</p>
 
 <p><a href="https://www.blick.ch/services/datenschutzbestimmungen-id151553.html" target="_blank" rel="noopener">Datenschutz</a> | <a href="https://www.blick.ch/services/impressum/impressum-blick-gruppe-id5697115.html" target="_blank" rel="noopener">Impressum</a></p>`,
 			acceptAll: 'Akzeptieren und schliessen',
