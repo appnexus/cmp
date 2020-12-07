@@ -33,15 +33,6 @@ export default class Purposes extends Component {
 		selectedPublisherPurposeIds: new Set()
 	};
 
-	// handleSelectTab = tab => {
-	// 	return () => {
-	// 		this.props.updateTab(tab);
-	// 		this.setState({
-	// 			selectedTab: tab
-	// 		});
-	// 	};
-	// };
-
 	handleSelectPurpose = ({ isSelected, dataId }, isPublisher = false, isLegInt = false) => {
 		const {
 			selectPurpose,
@@ -105,7 +96,6 @@ export default class Purposes extends Component {
 	}
 
 	render (props, state) {
-		console.log('RENDER');
 		const {
 			selectedPurposeIds,
 			selectedPublisherPurposeIds,
@@ -128,7 +118,6 @@ export default class Purposes extends Component {
 			renderedTabIndices,
 			allPurposes
 		} = state;
-		console.log('selectedTab', selectedTab);
 		const purposeIsActive = (purpose, isPublisher = false) => purpose && (
 			(isPublisher ? selectedPublisherPurposeIds : selectedPurposeIds).has(purpose.id)
 		);
