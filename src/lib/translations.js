@@ -766,7 +766,7 @@ export default {
 	bieten zu können.</p>
 
 <p>Sie haben jederzeit die Möglichkeit, die Bearbeitung dieser Daten zu unterbinden. Wie Sie dazu vorgehen müssen,
-	erfahren Sie unter [Bearbeitung Ihrer Daten]</p>
+	erfahren Sie unter <a onclick="__tcfapi('showConsentDetailView', 2, function () {}, {tab: 1})">Bearbeitung Ihrer Daten</a></p>
 
 
 <p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">Basierend auf welcher Rechtsgrundlage tun wir dies?</p>
