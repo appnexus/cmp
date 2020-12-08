@@ -62,7 +62,7 @@ export default class Details extends Component {
 	handleShowVendors = (filter) => {
 		this.setState({
 			vendors: this.filterVendors(filter),
-			isCustom: filter.isCustom
+			isCustom: filter && filter.isCustom
 		});
 
 		this.props.store.updateSubsection(SECTION_VENDORS);
