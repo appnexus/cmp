@@ -12,6 +12,8 @@ export const SECTION_INTRO = 0;
 export const SECTION_DETAILS = 1;
 export const SECTION_PURPOSES = 0;
 export const SECTION_VENDORS = 1;
+export const TAB_PUBLISHER_INFO = 0;
+export const TAB_CONSENTS = 1;
 
 export default class Store {
 	constructor({
@@ -28,7 +30,6 @@ export default class Store {
 		tcModel.cmpVersion = cmpVersion;
 		tcModel.isServiceSpecific = true;
 		tcModel.supportOOB = false;
-
 		// decoding to check if string is compatible
 		const decodedConsentString = decodeConsentData(consentString);
 		const isTCFv2Compatible = decodedConsentString && decodedConsentString.version > 1;
@@ -52,6 +53,7 @@ export default class Store {
 		this.isFooterShowing = false;
 		this.section = SECTION_INTRO;
 		this.subsection = SECTION_PURPOSES;
+		this.selectedTab = TAB_PUBLISHER_INFO;
 		this.hasInitialVendorsRejectionOccured = false;
 	}
 
@@ -384,6 +386,10 @@ export default class Store {
 	updateSubsection = (subsection) => {
 		this.subsection = subsection;
 		this.storeUpdate();
+	};
+
+	updateSelectedTab = (tab = TAB_PUBLISHER_INFO) => {
+		this.selectedTab = tab;
 	};
 
 	updateVendorList = (vendorList) => {

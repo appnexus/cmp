@@ -244,9 +244,10 @@ const createCommands = (store, cmpManager) => {
 	/**
 	 * Trigger the consent tool UI to be shown on Detail View
 	 */
-	const showConsentDetailView = (callback = () => {}) => {
+	const showConsentDetailView = (callback = () => {}, {tab} = {}) => {
 		cmpManager.addEventListener('cmpReady', ({data}) => {
 			if (data) {
+				store.updateSelectedTab(tab);
 				store.updateSection(SECTION_DETAILS);
 				store.toggleConsentToolShowing(true);
 
