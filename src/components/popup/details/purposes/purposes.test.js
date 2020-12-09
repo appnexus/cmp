@@ -12,12 +12,17 @@ describe('Purposes and Features', () => {
 		scratch = document.createElement('div');
 	});
 
-	it('should render all standard, custom purposes for publisher and purposes and features for vendors', () => {
+	it('should render all standard, special purposes for publisher and purposes and features for vendors', () => {
 		let persistedConsentData = {};
 		const selectPurpose = jest.fn();
-		let purposesRef;
 		const purposes = render(<Purposes
-			ref = {ref => purposesRef = ref}
+			selectPurposeLegitimateInterests={jest.fn()}
+			selectPublisherPurpose ={jest.fn()}
+			initialVendorsRejection = {jest.fn()}
+			selectSpecialFeatureOptins = {jest.fn()}
+			selectedPublisherLegitimateInterests = {new Set()}
+			selectedPurposeLegitimateInterests = {new Set()}
+			specialFeatureOptins = {new Set()}
 			purposes = {[
 				{ id: 1, name: 'Purpose 1' },
 				{ id: 2, name: 'Purpose 2' }
@@ -26,19 +31,20 @@ describe('Purposes and Features', () => {
 				{ id: 1, name: 'Feature 1' },
 				{ id: 2, name: 'Feature 2' }
 			]}
-			customPurposes = {[
-				{ id: 1, name: 'Custom Purpose 1' },
+			specialPurposes = {[
+				{ id: 1, name: 'Special Purpose 1' },
+			]}
+			specialFeatures = {[
+				{ id: 1, name: 'Special Feature 1' }
 			]}
 			persistedConsentData={persistedConsentData}
 			selectPurpose={selectPurpose}
+			handleSelectTab={()=> {}}
+			selectedTab={1}
 		/>, scratch);
 
-		purposesRef.componentDidUpdate = () => {
-			const purposesAndFeatures = purposes.querySelectorAll(`.${style.purposeDetail}`);
-			expect(purposesAndFeatures.length).to.equal(7);
-		};
-
-		purposesRef.handleSelectTab(1)();
+		const purposesAndFeatures = purposes.querySelectorAll(`.${style.detailHeader}`);
+		expect(purposesAndFeatures.length).to.equal(8);
 	});
 
 	it('should select a standard purpose', () => {
@@ -55,6 +61,8 @@ describe('Purposes and Features', () => {
 			selectPurpose={selectPurpose}
 			selectCustomPurpose={selectCustomPurpose}
 			persistedConsentData={persistedConsentData}
+			handleSelectTab={()=> {}}
+			selectedTab={0}
 		/>, scratch);
 
 		purposes.handleSelectPurpose({isSelected: true, dataId: 0});
@@ -67,23 +75,25 @@ describe('Purposes and Features', () => {
 	it('after selecting group of purposes with index 1, consent for those purposes should be withdrawn', () => {
 		const selectPurpose = jest.fn();
 
-		let purposes;
-
 		render(<Purposes
-			ref={ref => purposes = ref}
+			selectPurposeLegitimateInterests={jest.fn()}
+			selectPublisherPurpose ={jest.fn()}
+			initialVendorsRejection = {jest.fn()}
+			selectedPublisherLegitimateInterests = {new Set()}
+			selectedPurposeLegitimateInterests = {new Set()}
+			specialFeatureOptins = {new Set()}
 			purposes={[
 				{ id: 1, name: 'Purpose 1' },
 				{ id: 2, name: 'Purpose 2' }
 			]}
 			selectPurpose={selectPurpose}
+			handleSelectTab={()=> {}}
+			selectedTab={1}
 
 		/>, scratch);
 
-		purposes.componentDidUpdate = () => {
-			expect(selectPurpose.mock.calls[1][0]).to.equal(2);
-			expect(selectPurpose.mock.calls[1][1]).to.equal(false);
-		};
-		purposes.handleSelectTab(1)();
+		expect(selectPurpose.mock.calls[1][0]).to.equal(2);
+		expect(selectPurpose.mock.calls[1][1]).to.equal(false);
 	});
 
 	it('should deselect default selection of legitimate interest', () => {
@@ -103,6 +113,8 @@ describe('Purposes and Features', () => {
 			onToggleLegitInterest={onToggleLegitInterest}
 			selectPurposeLegitimateInterests={selectPurposeLegitimateInterests}
 			persistedConsentData={persistedConsentData}
+			handleSelectTab={()=> {}}
+			selectedTab={0}
 
 		/>, scratch);
 
@@ -130,6 +142,8 @@ describe('Purposes and Features', () => {
 			onToggleLegitInterest={onTogglePublisherLegitInterest}
 			persistedConsentData={persistedConsentData}
 			selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
+			handleSelectTab={()=> {}}
+			selectedTab={0}
 		/>, scratch);
 
 		purposes.handleSelectPublisherLegitimateInterest({isSelected: false, dataId: 1});
@@ -159,6 +173,8 @@ describe('Purposes and Features', () => {
 			]}
 			selectSpecialFeatureOptins={selectSpecialFeatureOptins}
 			persistedConsentData={persistedConsentData}
+			handleSelectTab={()=> {}}
+			selectedTab={0}
 
 		/>, scratch);
 
