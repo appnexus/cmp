@@ -744,7 +744,7 @@ export default {
 
 <p>Die meisten genannten Datenbearbeitungen werden auf der Grundlage von berechtigtem Interesse vorgenommen, andere wiederum dürfen nur mit Ihrer Einwilligung erfolgen. Sie können der Bearbeitung basierend auf berechtigtem Interesse jederzeit widersprechen sowie auch Ihre Einwilligung jederzeit widerrufen. Mehr dazu finden Sie unter Einstellungen.</p>
 
-<p>Wenn Sie auf "Akzeptieren" klicken oder dieses Fenster schliessen, stimmen Sie den genannten Datenbearbeitungen durch uns und Dritte zu. Klicken Sie auf <a onclick="__tcfapi('showConsentDetailView', 2, function () {})">Einstellungen</a> finden Sie mehr Informationen zu den Datenbearbeitungen und zu unseren <a onclick="__tcfapi('showCustomVendors', 2, function () {})">Partnern</a> bzw. <a onclick="__tcfapi('showVendors', 2, function () {})">IAB-Partnern</a> und können dort auch jederzeit Ihre Präferenzen ändern.</p>
+<p>Wenn Sie auf "Akzeptieren" klicken oder dieses Fenster schliessen, stimmen Sie den genannten Datenbearbeitungen durch uns und Dritte zu. Klicken Sie auf <a onclick="__tcfapi('showConsentDetailView', 2, function () {})">Einstellungen</a> finden Sie mehr Informationen zu den Datenbearbeitungen und zu unseren <a onclick="__tcfapi('showVendors', 2, function () {})">IAB-Partnern</a> und können dort auch jederzeit Ihre Präferenzen ändern.</p>
 
 <p><a href="https://www.blick.ch/services/datenschutzbestimmungen-id151553.html" target="_blank" rel="noopener">Datenschutz</a> | <a href="https://www.blick.ch/services/impressum/impressum-blick-gruppe-id5697115.html" target="_blank" rel="noopener">Impressum</a></p>`,
 			acceptAll: 'Akzeptieren und schliessen',
@@ -757,7 +757,7 @@ export default {
 			tab1: {
 				back: 'Zurück',
 				save: 'Speichern und schliessen',
-				menu: 'Allgemeine Infromationen',
+				menu: 'Allgemeine Informationen',
 				title: 'Weshalb sammeln wir Ihre Daten?',
 				description: `<p>Wir und/oder unsere Partner sammeln und bearbeiten Ihre Daten, damit unsere Webseiten und Applikationen einwandfrei
 	funktionieren, damit wir unsere Produkte und Dienstleistungen stetig verbessern und Ihren Bedürfnissen anpassen,
@@ -812,8 +812,7 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 
 <p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">c) Elemente von anderen Webseiten, z.B. Plug-ins</p>
 
-<p>Auf unseren Webseiten und mobilen Applikationen können Elemente von Drittanbietern, (z.B. soziale Netzwerke wie Facebook, Apple, Twitter und Youtube) verwendet werden. Wenn Sie ein Element eines Drittanbieters (z.B. «Gefällt mir» Plug-in von Facebook) anklicken, kann automatisch eine Verbindung zu den Servern dieses Drittanbieters hergestellt werden. Dabei können dem Drittanbieter Daten über Ihren Besuch auf unserer Webseiten bzw.. auf einer mobilen Applikation übermittelt werden. Diese Daten können unter Umständen Ihrem Benutzerkonto beim Drittanbieter (z.B. Facebook oder Twitter-Konto) zugeordnet werden. Überdies kann der Drittanbieter Personendaten (Name, Vorname, Kunden ID und E-Mail-Adresse) Ihres Benutzerkontos an Ringier übermitteln, sofern Sie dieser Funktion beim Drittanbieter zugestimmt haben. Informationen zur Erhebung und Nutzung der Daten durch Drittanbieter finden Sie in den Datenschutzhinweisen der entsprechenden Drittanbieter</p>.
-
+<p>Auf unseren Webseiten und mobilen Applikationen können Elemente von Drittanbietern, (z.B. soziale Netzwerke wie Facebook, Apple, Twitter und Youtube) verwendet werden. Wenn Sie ein Element eines Drittanbieters (z.B. «Gefällt mir» Plug-in von Facebook) anklicken, kann automatisch eine Verbindung zu den Servern dieses Drittanbieters hergestellt werden. Dabei können dem Drittanbieter Daten über Ihren Besuch auf unserer Webseiten bzw.. auf einer mobilen Applikation übermittelt werden. Diese Daten können unter Umständen Ihrem Benutzerkonto beim Drittanbieter (z.B. Facebook oder Twitter-Konto) zugeordnet werden. Überdies kann der Drittanbieter Personendaten (Name, Vorname, Kunden ID und E-Mail-Adresse) Ihres Benutzerkontos an Ringier übermitteln, sofern Sie dieser Funktion beim Drittanbieter zugestimmt haben. Informationen zur Erhebung und Nutzung der Daten durch Drittanbieter finden Sie in den Datenschutzhinweisen der entsprechenden Drittanbieter.</p>
 
 <p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">d) Standort-Tracker</p>
 <p>In unserer mobilen Applikation können wir Ihnen durch die Verwendung von Standortdaten Ihres Gerätes standortbezogene Werbung anzeigen. Sie können diese Funktion jederzeit in der Applikation unter „Einstellungen“ aktivieren oder deaktivieren.</p>`
@@ -838,7 +837,6 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 			legIntActive: 'An',
 			legIntInactive: 'Aus',
 			showVendors: 'IAB-Partner zeigen',
-			showCustomVendors: 'Andere Partner zeigen',
 			purpose1: {
 				title: 'Speichern oder Zugreifen auf Informationen auf dem Gerät',
 				description: '<p>Cookies, Geräteerkennungen oder andere Informationen können auf dem Gerät des Benutzers gespeichert oder für die dem Benutzer präsentierten Zwecke darauf verfügbar gemacht werden.</p>'
@@ -883,7 +881,6 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 		specialPurposes: {
 			title: 'Particular purposes',
 			showVendors: 'IAB-Partner zeigen',
-			showCustomVendors: 'Andere Partner zeigen',
 			purpose1: {
 				title: 'Ensure security, prevent fraud, and debug',
 				description: '<p>Your data can be used to monitor for and prevent fraudulent activity, and ensure systems and processes work properly and securely.</p>'
@@ -899,7 +896,6 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 			inactive: 'Aus',
 			acceptButton: 'Einwilligung',
 			showVendors: 'IAB-Partner zeigen',
-			showCustomVendors: 'Andere Partner zeigen',
 			feature1: {
 				title: 'Alignment and connection of offline data sources',
 				description: '<p>Data from offline data sources may be aligned with user’s online activity in the performance of at least one purpose.</p>'
@@ -919,7 +915,6 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 			inactive: 'Aus',
 			acceptButton: 'Einwilligung',
 			showVendors: 'IAB-Partner zeigen',
-			showCustomVendors: 'Andere Partner zeigen',
 			feature1: {
 				title: 'Use precise geolocation data',
 				description: '<p>Your precise geolocation data can be used in support of one or more purposes. This means your location can be accurate to within several meters.</p>'
@@ -951,19 +946,6 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 			acceptButton: 'Einwilligung',
 			active: 'An',
 			inactive: 'Aus'
-		},
-		customVendors: {
-			title: 'Vertrauenswürdige Partner',
-			company: 'Partner',
-			offOn: 'Ihre Einwilligung',
-			description: 'Unten finden Sie eine Liste unserer Partner und deren Bearbeitungen, denen Sie zustimmen können, wie im vorherigen Fenster beschrieben. Dank dieser Zustimmung ist es möglich, die Inhalte und Anzeigen unserer vertrauenswürdigen Partner besser auf Ihre Interessen abzustimmen. Wenn Sie einem bestimmten vertrauenswürdigen Partner bzw. seiner Bearbeitung ihrer Daten nicht zustimmen, klicken Sie unten auf "Einstellungen folgender Partner ändern" und deaktivieren Sie die ausgewählte Option.',
-			editingDescription: 'Unten finden Sie eine Liste der Partner und deren Bearbeitungen, denen Sie zustimmen können, wie im vorherigen Fenster beschrieben. Dank dieser Zustimmung ist es möglich, die Inhalte und Anzeigen unserer vertrauenswürdigen Partner besser auf Ihre Interessen abzustimmen. Wenn Sie einem bestimmten vertrauenswürdigen Partner und seiner Bearbeitung Ihrer Daten nicht zustimmen möchten, deaktivieren Sie ihn.',
-			moreChoices: 'Einstellungen folgender Partner ändern',
-			acceptButton: 'Einwilligung',
-			legitimateInterest: 'Berechtigtes Interesse',
-			active: 'An',
-			inactive: 'Aus'
-
 		},
 		definitions: {
 			specialPurposes: 'Besondere Zwecke',
