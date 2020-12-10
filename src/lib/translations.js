@@ -758,7 +758,7 @@ export default {
 				back: 'Zurück',
 				save: 'Speichern und schliessen',
 				menu: 'Allgemeine Informationen',
-				title: 'Weshalb sammeln wir Ihre Daten?',
+				title: `<span class="cmp-translations_detailTitle">Weshalb sammeln wir Ihre Daten?</span>`,
 				description: `<p>Wir und/oder unsere Partner sammeln und bearbeiten Ihre Daten, damit unsere Webseiten und Applikationen einwandfrei
 	funktionieren, damit wir unsere Produkte und Dienstleistungen stetig verbessern und Ihren Bedürfnissen anpassen,
 	Trends erkennen, und Statistiken über die Nutzung unserer digitalen Angebote erstellen und auswerten können. Diese
