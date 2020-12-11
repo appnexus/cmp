@@ -105,6 +105,34 @@ const createCommands = (store, cmpManager) => {
 
 		callback(valid(consentData) ? encodeVendorConsentData(consentData) : undefined);
 	};
+
+	/**
+	 * Generates v1.1 compatible TC String
+	 */
+	const getConsentFieldsV1 = (callback, params) => {
+		if (!params || !params.hasOwnProperty('cookieVersion') || !params.hasOwnProperty('vendorListVersion')) {
+			return callback ({}, false);
+		}
+
+		const data = getConsentFieldsObject();
+
+		generateConsentStringV1({
+			...data,
+			...params
+		}, (metadata) => {
+			const consent = {
+				metadata,
+				gdprApplies: config.gdprApplies,
+				hasGlobalScope: config.storeConsentGlobally,
+				...data,
+				cookieVersion: params.cookieVersion,
+				vendorListVersion: params.vendorListVersion
+			};
+
+			callback(consent, true);
+		});
+	};
+
 	/**
 	 * Generates consent object based on input params: consents and vendor list
 	 */
@@ -296,6 +324,7 @@ const createCommands = (store, cmpManager) => {
 
 	return {
 		getConsentObject,
+		getConsentFieldsV1,
 		getVendorListVersion,
 		showConsentTool,
 		showConsentDetailView,
