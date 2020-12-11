@@ -18,7 +18,8 @@ const defaultConfig = {
 	autoDisplay: true,
 	shouldDisplayFooter: null,
 	publisherCountryCode: 'PL',
-	getConsentDataTimeout: 500
+	getConsentDataTimeout: 500,
+	purposeOneTreatment: false
 };
 
 class Config {
