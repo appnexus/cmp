@@ -29,17 +29,6 @@ const commands = [
 		}
 	},
 	{
-		command: 'getConsentFieldsV1',
-		parameters: [{
-			type: 'parameter (Object)',
-			description: 'Object that contains established consents'
-		}],
-		callback: {
-			resultType: 'result (Object, Boolean)',
-			resultDescription: 'Object containing consent data in TCF v1.1 format'
-		}
-	},
-	{
 		command: 'getVendorList',
 		parameters: [{
 			type: 'int or string',
