@@ -927,11 +927,11 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 		consentInfo: {
 			consents: {
 				title: 'Einwilligung',
-				description: '<p>In der nachfolgenden Liste findet sich ein Schalter zur Einwilligung. „An“ bedeutet, dass Ringier und/oder alle Partner Ihre Daten zu den genannten Zwecke bearbeiten dürfen. Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie den Regler auf “Aus” stellen.</p>'
+				description: '<p>In der nachfolgenden Liste findet sich ein Schalter zur Einwilligung. „An“ bedeutet, dass alle Partner Ihre Daten zu den genannten Zwecke bearbeiten dürfen. Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie den Regler auf “Aus” stellen.</p>'
 			},
 			legitimateInterests: {
 				title: 'Berechtigtes Interesse',
-				description: '<p>In der folgenden Liste findet sich ein Schalter “Berechtigtes Interesse”. Gewisse Datenbearbeitungen benötigen keine Einwilliung von Ihnen. Sie werden basierend auf dem berechtigten bzw. überwiegenden privaten Interesse von Ringier und/oder eines Partners von Ringier bearbeitet. Setzen Sie diesen Schalter auf „Aus“, wenn Sie nicht möchten, dass Ihre Daten zu den unten genannten Zwecken basierend auf dem berechtigten bzw. überwiegenden privaten Interesse von Ringier und/oder des Partners von Ringier bearbeitet werden.</p>'
+				description: '<p>In der folgenden Liste findet sich ein Schalter “Berechtigtes Interesse”. Gewisse Datenbearbeitungen benötigen keine Einwilliung von Ihnen. Sie werden basierend auf dem berechtigten bzw. überwiegenden privaten Interesse eines Partners von Ringier bearbeitet. Setzen Sie diesen Schalter auf „Aus“, wenn Sie nicht möchten, dass Ihre Daten zu den unten genannten Zwecken basierend auf dem berechtigten bzw. überwiegenden privaten Interesse des Partners von Ringier bearbeitet werden.</p>'
 
 			}
 		},
