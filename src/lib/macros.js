@@ -1,11 +1,11 @@
 const macros = {
 	// Blick translation
-	'de': {
+	'de_blick': {
 		'_PUBLISHER_': 'Ringier',
 		'_POLICY_URL_': 'https://www.blick.ch/services/datenschutzbestimmungen-id151553.html'
 	},
 	// RASCH translation
-	'de2': {
+	'de_rasch': {
 		'_PUBLISHER_': 'Ringer Axel Springer Schweiz',
 		'_POLICY_URL_': 'https://www.cash.ch/ueberuns/rechtliche-hinweise/datenschutzbestimmungen-detail#rechte'
 	}

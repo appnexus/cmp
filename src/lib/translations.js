@@ -972,7 +972,7 @@ export default {
 		}
 	},
 	//blick.ch
-	de: JSON.parse(replaceMacros(de, 'de')),
+	de_blick: JSON.parse(replaceMacros(de, 'de_blick')),
 	// RASCH titles
-	de2: JSON.parse(replaceMacros(de, 'de2'))
+	de_rasch: JSON.parse(replaceMacros(de, 'de_rasch'))
 };
