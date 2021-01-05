@@ -112,56 +112,56 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 		legIntInactive: 'Aus',
 		showVendors: 'IAB-Partner zeigen',
 		purpose1: {
-			title: 'Speichern oder Zugreifen auf Informationen auf dem Gerät',
-			description: '<p>Cookies, Geräteerkennungen oder andere Informationen können auf dem Gerät des Benutzers gespeichert oder für die dem Benutzer präsentierten Zwecke darauf verfügbar gemacht werden.</p>'
+			title: 'Informationen auf einem Gerät speichern und/oder abrufen',
+			description: '<p>Für die Ihnen angezeigten Verarbeitungszwecke können Cookies, Geräte-Kennungen oder andere Informationen auf Ihrem Gerät gespeichert oder abgerufen werden.</p>'
 		},
 		purpose2: {
-			title: 'Primäre Anzeigenauswahl',
-			description: '<p>Anzeigen werden möglicherweise basierend auf Ihrer Anzeige, der von Ihnen verwendeten App, Ihrem ungefähren Standort oder dem Gerätetyp geschaltet</p>'
+			title: 'Auswahl einfacher Anzeigen',
+			description: '<p>Anzeigen können Ihnen basierend auf den Inhalten, die Sie ansehen, der Anwendung, die Sie verwenden und Ihrem ungefähren Standort oder Ihrem Gerätetyp eingeblendet werden.</p>'
 		},
 		purpose3: {
-			title: 'Erstellen Sie ein personalisiertes Werbeprofil',
-			description: '<p>Um den Nutzer und seine Interessen herum kann ein Profil erstellt werden, mit dem personalisierte Anzeigen geschaltet werden können, die für den Nutzer relevant sind.</p>'
+			title: 'Ein personalisiertes Anzeigen-Profil erstellen',
+			description: '<p>Über Sie und Ihre Interessen kann ein Profil erstellt werden, um Ihnen für Sie relevante personalisierte Anzeigen einzublenden.</p>'
 		},
 		purpose4: {
-			title: 'Selection of personalized advertisements',
-			description: '<p>Personalized advertisements may be displayed to the user based on user’s profile.</p>'
+			title: 'Personalisierte Anzeigen auswählen',
+			description: '<p>Personalisierte Anzeigen können Ihnen basierend auf einem über Sie erstellten Profil eingeblendet werden.</p>'
 		},
 		purpose5: {
-			title: 'Creating a profile of personalized content',
-			description: '<p>A profile may be created for the user and user’s interests, which will allow to display personalized content relevant to the user.</p>'
+			title: 'Ein personalisiertes Inhalts-Profil erstellen',
+			description: '<p>Über Sie und Ihre Interessen kann ein Profil erstellt werden, um Ihnen für Sie relevante personalisierte Inhalte anzuzeigen.</p>'
 		},
 		purpose6: {
-			title: 'Selection of personalized content',
-			description: '<p>Personalized content may be displayed to the user based on user’s profile.</p>'
+			title: 'Personalisierte Inhalte auswählen',
+			description: '<p>Personalisierte Inhalte können Ihnen basierend auf einem über Sie erstellten Profil angezeigt werden.</p>'
 		},
 		purpose7: {
-			title: 'Advertisement performance measurement',
-			description: '<p>It is possible to measure the performance and effectiveness of advertisements shown to the user and to which the user reacts.</p>'
+			title: 'Anzeigen-Leistung messen',
+			description: '<p>Die Leistung und Wirksamkeit von Anzeigen, die Sie sehen oder mit denen Sie interagieren, kann gemessen werden.</p>'
 		},
 		purpose8: {
-			title: 'Content performance measurement',
-			description: '<p>It is possible to measure the performance and effectiveness of content shown to the user and to which the user reacts.</p>'
+			title: 'Inhalte-Leistung messen',
+			description: '<p>Marktforschung kann verwendet werden, um mehr über die Zielgruppen zu erfahren, die Dienste oder Anwendungen verwenden und sich Anzeigen ansehen.</p>'
 		},
 		purpose9: {
-			title: 'Using market research in order to generate audience opinion',
+			title: 'Marktforschung einsetzen, um Erkenntnisse über Zielgruppen zu gewinnen',
 			description: '<p>Market research may be used in order to obtain further information about the audience visiting websites/apps and viewing advertisements.</p>'
 		},
 		purpose10: {
-			title: 'Development and improvement of products',
-			description: '<p>User data may be used in order to improve current systems and software as well as to develop new products.</p>'
+			title: 'Produkte entwickeln und verbessern',
+			description: '<p>Ihre Daten können verwendet werden, um bestehende Systeme und Software zu verbessern und neue Produkte zu entwickeln.</p>'
 		}
 	},
 	specialPurposes: {
 		title: 'Particular purposes',
 		showVendors: 'IAB-Partner zeigen',
 		purpose1: {
-			title: 'Ensure security, prevent fraud, and debug',
-			description: '<p>Your data can be used to monitor for and prevent fraudulent activity, and ensure systems and processes work properly and securely.</p>'
+			title: 'Sicherheit gewährleisten, Betrug verhindern und Fehler beheben',
+			description: '<p>Ihre Daten können verwendet werden, um betrügerische Aktivitäten zu identifizieren und zu verhindern, und um sicherzustellen, dass Systeme und Prozesse ordnungsgemäß und sicher funktionieren.</p>'
 		},
 		purpose2: {
-			title: 'Technically deliver ads or content',
-			description: '<p>Your device can receive and send information that allows you to see and interact with ads and content.</p>'
+			title: 'Anzeigen oder Inhalte technisch bereitstellen',
+			description: '<p>Ihr Gerät kann Informationen empfangen und senden die notwendig sind, damit Sie Inhalte und Anzeigen sehen und nutzen können.</p>'
 		}
 	},
 	features: {
@@ -171,16 +171,16 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 		acceptButton: 'Einwilligung',
 		showVendors: 'IAB-Partner zeigen',
 		feature1: {
-			title: 'Alignment and connection of offline data sources',
-			description: '<p>Data from offline data sources may be aligned with user’s online activity in the performance of at least one purpose.</p>'
+			title: 'Mit Offline-Datenquellen zusammenführen',
+			description: '<p>Daten aus Offline-Datenquellen können mit Daten aus Ihren Online-Aktivitäten zusammengeführt werden, um sie für einen oder mehrere Verarbeitungszwecke bzw. besondere Verarbeitungszwecke nutzen zu können. * Daten aus Ihren Online-Aktivitäten können mit Offline-Daten zusammengeführt werden, um sie für einen oder mehrere Verarbeitungszwecke oder besondere Verarbeitungszwecke ergänzend zu nutzen.</p>'
 		},
 		feature2: {
-			title: 'Connection of various devices',
-			description: '<p>Various devices may be considered as belonging to the user or user’s household in the performance of at least one purpose.</p>'
+			title: 'Verschiedene Geräte verknüpfen',
+			description: '<p>Zur Nutzung für einen oder mehrere Verarbeitungszwecke kann ermittelt werden, ob unterschiedliche Geräte zu Ihnen oder Ihrem Haushalt gehören.</p>'
 		},
 		feature3: {
-			title: 'Reception and use of automatically sent device features for the purposes of identification',
-			description: '<p>A device may be distinguished from other devices on the basis of information sent automatically, such as IP address or browser type.</p>'
+			title: 'Empfangen und Verwenden automatisch gesendeter Geräteeigenschaften für die Identifikation',
+			description: '<p>Ihr Gerät kann aufgrund von Informationen, die es automatisch sendet wie z.B. IP-Adresse oder Browsertyp von anderen Geräten unterschieden werden.</p>'
 		}
 	},
 	specialFeatures: {
@@ -190,12 +190,12 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 		acceptButton: 'Einwilligung',
 		showVendors: 'IAB-Partner zeigen',
 		feature1: {
-			title: 'Use precise geolocation data',
-			description: '<p>Your precise geolocation data can be used in support of one or more purposes. This means your location can be accurate to within several meters.</p>'
+			title: 'Genaue Standortdaten verwenden',
+			description: '<p>Ihre genauen Standortdaten können für einen oder mehrere Verarbeitungszwecke genutzt werden. Das bedeutet, dass Ihr Standort bis auf wenige Meter präzise bestimmt werden kann.</p>'
 		},
 		feature2: {
-			title: 'Actively scan device characteristics for identification',
-			description: '<p>Your device can be identified based on a scan of your device\'s unique combination of characteristics.</p>'
+			title: 'Geräteeigenschaften zur Identifikation aktiv abfragen',
+			description: '<p>Ihr Gerät kann über eine Abfrage seiner spezifischen Merkmale erkannt werden.</p>'
 		}
 	},
 	consentInfo: {
