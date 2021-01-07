@@ -12,7 +12,7 @@ const de = JSON.stringify({
 
 <p>Wenn Sie auf "Akzeptieren" klicken oder dieses Fenster schliessen, stimmen Sie den genannten Datenbearbeitungen durch uns und Dritte zu. Klicken Sie auf <a onclick="__tcfapi('showConsentDetailView', 2, function () {})">Einstellungen</a> finden Sie mehr Informationen zu den Datenbearbeitungen und zu unseren <a onclick="__tcfapi('showVendors', 2, function () {})">IAB-Partnern</a> und können dort auch jederzeit Ihre Präferenzen ändern.</p>
 
-<p><a href="_POLICY_URL_" target="_blank" rel="noopener">Datenschutz</a> | <a href="https://www.blick.ch/services/impressum/impressum-blick-gruppe-id5697115.html" target="_blank" rel="noopener">Impressum</a></p>`,
+<p><a href="https://www.blick.ch/services/datenschutzbestimmungen-id151553.html" target="_blank" rel="noopener">Datenschutz</a> | <a href="https://www.blick.ch/services/impressum/impressum-blick-gruppe-id5697115.html" target="_blank" rel="noopener">Impressum</a></p>`,
 		acceptAll: 'Akzeptieren und schliessen',
 		showPurposes: 'Einstellungen'
 	},
@@ -87,18 +87,13 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 			menu: 'Bearbeitung Ihrer Daten',
 			back: 'Zurück',
 			save: 'Schliessen und speichern',
-			description: `<p>Grundsätzlich werden Ihre Daten entweder basierend auf berechtigtem Interesse von _PUBLISHER_ bearbeitet oder weil Sie
-	uns die Einwilligung zur Bearbeitung Ihrer Daten gegeben haben. Mehr Informationen dazu finden Sie hier: <a onclick="__tcfapi('showConsentDetailView', 2, function () {}, {tab: 0})">Allgemeine
-	Informationen</a></p>
+			description: `<p>Grundsätzlich werden Ihre Daten entweder basierend auf berechtigtem Interesse von _PUBLISHER_ bearbeitet oder weil Sie uns die Einwilligung zur Bearbeitung Ihrer Daten gegeben haben. Mehr Informationen dazu finden Sie hier: <a onclick="__tcfapi('showConsentDetailView', 2, function () {}, {tab: 0})">Allgemeine Informationen</a></p>
 
-<p>Wenn Sie der Datenbearbeitung basierend auf berechtigtem Interesse widersprechen oder ihre Einwilligung widerrufen
-	wollen, können Sie dies in unseren Datenschutzbestimmungen in Kapitel 4.3:
-	<a href="_POLICY_URL_" target="_blank" rel="noopener">_POLICY_URL_</a>
-</p>`
+_POLICY_`
 		}
 	},
 	publisherConsents: {
-		title: 'Rechtsgrundlagen für die Bearbeitung Ihrer Daten'
+		title: 'Rechtsgrundlagen für die Bearbeitung Ihrer Daten durch _PUBLISHER_'
 	},
 	vendorConsents: {
 		title: 'Zustimmung für Partner'
@@ -229,8 +224,8 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 		features: 'Funktionen'
 	},
 	footer: {
-		message: 'Change your privacy settings by clicking',
-		consentLink: 'here'
+		message: '',
+		consentLink: 'Einstellungen zum Datenschutz anpassen'
 	}
 });
 
