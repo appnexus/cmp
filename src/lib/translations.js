@@ -1,3 +1,235 @@
+import replaceMacros from './macros';
+
+const de = JSON.stringify({
+	intro: {
+		title: 'Wir verwenden Cookies',
+		description:
+			`<p>Wenn Sie unsere Webseiten und Applikationen benutzen, werden durch Cookies und verschiedene weitere Technologien von uns und Dritten Daten über Sie gesammelt.</p>
+
+<p>Einige dieser Technologien sind notwendig, damit unsere Webseiten und Applikationen einwandfrei funktionieren. Andere wiederum sind optional und unterstützen uns dabei, unsere Produkte und Dienstleistungen stetig zu verbessern und Ihren Bedürfnissen anzupassen, Trends zu erkennen, Statistiken über die Nutzung unserer digitalen Angebote zu erstellen und auszuwerten und um Ihnen personalisierte Werbung ausspielen zu können.</p>
+
+<p>Die meisten genannten Datenbearbeitungen werden auf der Grundlage von berechtigtem Interesse vorgenommen, andere wiederum dürfen nur mit Ihrer Einwilligung erfolgen. Sie können der Bearbeitung basierend auf berechtigtem Interesse jederzeit widersprechen sowie auch Ihre Einwilligung jederzeit widerrufen. Mehr dazu finden Sie unter Einstellungen.</p>
+
+<p>Wenn Sie auf "Akzeptieren" klicken oder dieses Fenster schliessen, stimmen Sie den genannten Datenbearbeitungen durch uns und Dritte zu. Klicken Sie auf <a onclick="__tcfapi('showConsentDetailView', 2, function () {})">Einstellungen</a> finden Sie mehr Informationen zu den Datenbearbeitungen und zu unseren <a onclick="__tcfapi('showVendors', 2, function () {})">IAB-Partnern</a> und können dort auch jederzeit Ihre Präferenzen ändern.</p>
+
+<p><a href="https://www.blick.ch/services/datenschutzbestimmungen-id151553.html" target="_blank" rel="noopener">Datenschutz</a> | <a href="https://www.blick.ch/services/impressum/impressum-blick-gruppe-id5697115.html" target="_blank" rel="noopener">Impressum</a></p>`,
+		acceptAll: 'Akzeptieren und schliessen',
+		showPurposes: 'Einstellungen'
+	},
+	details: {
+		title: 'Einstellungen'
+	},
+	tabs: {
+		tab1: {
+			back: 'Zurück',
+			save: 'Speichern und schliessen',
+			menu: 'Allgemeine Informationen',
+			title: `<span class="cmp-translations_detailTitle">Weshalb sammeln wir Ihre Daten?</span>`,
+			description: `<p>Wir und/oder unsere Partner sammeln und bearbeiten Ihre Daten, damit unsere Webseiten und Applikationen einwandfrei
+	funktionieren, damit wir unsere Produkte und Dienstleistungen stetig verbessern und Ihren Bedürfnissen anpassen,
+	Trends erkennen, und Statistiken über die Nutzung unserer digitalen Angebote erstellen und auswerten können. Diese
+	Daten werden auch dazu benutzt, um Ihnen auf Ihre Interessen zugeschnittene Inhalte sowie ein gutes Werbeerlebnis
+	bieten zu können.</p>
+
+<p>Sie haben jederzeit die Möglichkeit, die Bearbeitung dieser Daten zu unterbinden. Wie Sie dazu vorgehen müssen,
+	erfahren Sie unter <a onclick="__tcfapi('showConsentDetailView', 2, function () {}, {tab: 1})">Bearbeitung Ihrer Daten</a></p>
+
+
+<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">Basierend auf welcher Rechtsgrundlage tun wir dies?</p>
+<p>Wir und unsere Partner bearbeiten Ihre Daten entweder weil Sie in diese Bearbeitung eingewilligt haben oder weil wir
+	ein berechtigtes Interesse bzw. ein überwiegendes privates Interesse daran haben.</p>
+
+<p>Einige unserer Partner verlangen bzw. gewisse Bearbeitungen bedürfen Ihre(r) Einwilligung gemäss Art. 6 Abs. 1 a
+	DSGVO. Sie können uns diese Einwilligung in Ihren Datenschutzeinstellungen erteilen, aber auch jederzeit dort
+	widerrufen. Sie erfahren dort auch für welche Bearbeitungen Sie konkret ihre Einwilligung geben.</p>
+
+<p>Bestimmte Bearbeitungen Ihrer Daten werden basierend auf unserem oder basierend auf dem berechtigten Interesse eines
+	unseren Partners vorgenommen. Die geltende Rechtsgrundlage ist in einem solchen Fall entweder das berechtigte
+	Interesse gemäss Art. 6 Abs. 1 f DSGVO oder das überwiegende privates Interesse gemäss Art. 13 DSG. Sie haben
+	jederzeit die Möglichkeit einer Bearbeitung aufgrund von berechtigtem bzw. überwiegendem privatem Interesse zu
+	widersprechen.</p>
+
+
+<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">Welche Technologien nutzen wir?</p>
+
+<p>Wir benutzen folgende Technologien:</p>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">a) Cookies</p>
+
+<p>Auf unseren Webseiten und mobilen Applikationen werden Cookies von uns und von Dritten eingesetzt. Ein Cookie ist eine kurze Textdatei, die auf Ihrem Gerät gespeichert wird, wenn Sie eine unserer Webseiten nutzen.</p>
+
+<p>Cookies können unterteilt werden in Session-Cookies und permanente Cookies.</p>
+
+<p>Session-Cookies können zur Rückverfolgung der Webseiten verwendet werden, die Sie besuchen, sowie der von Ihnen verwendeten Optionen. Ein Session-Cookie wird nur für die Dauer Ihres Besuchs im Internet gespeichert, d.h. während einer einzigen Internetsitzung. Wenn Sie also Ihren Internetbrowser schliessen, ist die Sitzung beendet und das Cookie gelöscht.</p>
+
+<p>Permanente Cookies können nebst anderen Dingen dazu verwendet werden, um Sie bei einem anschliessenden Besuch auf einer unserer Webseiten wiederzuerkennen und z.B. Ihre Lesepräferenzen zu erkennen. Ein permanentes Cookie wird für eine längere Dauer als eine einzelne Sitzung gespeichert.</p>
+
+<p>Cookies können zudem in funktionale und nicht funktionale Cookies aufgeteilt werden.
+Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren Webseiten.</p>
+
+<p>Funktionale Cookies sind erforderlich, um die Funktionalität von unseren Webseiten oder Diensten sicherzustellen. Nicht funktionale Cookies sind für die Funktionalität der Webseiten nicht unbedingt erforderlich. Diese Art von Cookies wird dazu benutzt, um Daten über die Webseitennutzung oder die Nutzung der mobilen Applikationen (Sprachpräferenzen, Dauer einer Benutzersitzung usw.) zu erfassen und zu analysieren, damit wir Ihr Lese- und Werbeerlebnis verbessern können.</p>
+
+
+<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">b) Logfiles</p>
+
+<p>Bei der Nutzung von Webseiten oder mobilen Applikationen registrieren die Webserver unpersönliche Nutzungsdaten, sogenannte Logfile. Logfiles geben Auskunft über Ihre IP-Adresse, das verwendete Betriebssystem, Webseiten, die Sie besuchen, Browsertyp und -version, das Datum, die Uhrzeit und die angeforderte Datei. Diese Informationen sind technisch notwendig, um von Ihnen angeforderte Inhalte von Webseiten korrekt auszuliefern und fallen bei der Nutzung des Internets zwingend an. Diese Daten werden getrennt von Ihren eventuell angegebenen Personendaten gespeichert und lassen so keine Rückschlüsse auf Ihre Person zu.</p>
+
+<p>Diese Nutzungsdaten werden von uns statistisch ausgewertet, um unseren Internetauftritt und die dahinterstehende Technik zu optimieren, Trends zu erkennen sowie Angebote und Produkte zu verbessern bzw. bestmöglich auf Ihre Bedürfnisse auszurichten.</p>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">c) Elemente von anderen Webseiten, z.B. Plug-ins</p>
+
+<p>Auf unseren Webseiten und mobilen Applikationen können Elemente von Drittanbietern, (z.B. soziale Netzwerke wie Facebook, Apple, Twitter und Youtube) verwendet werden. Wenn Sie ein Element eines Drittanbieters (z.B. «Gefällt mir» Plug-in von Facebook) anklicken, kann automatisch eine Verbindung zu den Servern dieses Drittanbieters hergestellt werden. Dabei können dem Drittanbieter Daten über Ihren Besuch auf unserer Webseiten bzw.. auf einer mobilen Applikation übermittelt werden. Diese Daten können unter Umständen Ihrem Benutzerkonto beim Drittanbieter (z.B. Facebook oder Twitter-Konto) zugeordnet werden. Überdies kann der Drittanbieter Personendaten (Name, Vorname, Kunden ID und E-Mail-Adresse) Ihres Benutzerkontos an _PUBLISHER_ übermitteln, sofern Sie dieser Funktion beim Drittanbieter zugestimmt haben. Informationen zur Erhebung und Nutzung der Daten durch Drittanbieter finden Sie in den Datenschutzhinweisen der entsprechenden Drittanbieter.</p>
+
+<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">d) Standort-Tracker</p>
+<p>In unserer mobilen Applikation können wir Ihnen durch die Verwendung von Standortdaten Ihres Gerätes standortbezogene Werbung anzeigen. Sie können diese Funktion jederzeit in der Applikation unter „Einstellungen“ aktivieren oder deaktivieren.</p>`
+		},
+		tab2: {
+			menu: 'Bearbeitung Ihrer Daten',
+			back: 'Zurück',
+			save: 'Schliessen und speichern',
+			description: `<p>Grundsätzlich werden Ihre Daten entweder basierend auf berechtigtem Interesse von _PUBLISHER_ bearbeitet oder weil Sie uns die Einwilligung zur Bearbeitung Ihrer Daten gegeben haben. Mehr Informationen dazu finden Sie hier: <a onclick="__tcfapi('showConsentDetailView', 2, function () {}, {tab: 0})">Allgemeine Informationen</a></p>
+
+_POLICY_`
+		}
+	},
+	publisherConsents: {
+		title: 'Rechtsgrundlagen für die Bearbeitung Ihrer Daten durch _PUBLISHER_'
+	},
+	vendorConsents: {
+		title: 'Zustimmung für Partner'
+	},
+	purposes: {
+		active: 'An',
+		inactive: 'Aus',
+		acceptButton: 'Einwilligung',
+		legitimateInterest: 'Berechtigtes Interesse',
+		legIntActive: 'An',
+		legIntInactive: 'Aus',
+		showVendors: 'IAB-Partner zeigen',
+		purpose1: {
+			title: 'Informationen auf einem Gerät speichern und/oder abrufen',
+			description: '<p>Für die Ihnen angezeigten Verarbeitungszwecke können Cookies, Geräte-Kennungen oder andere Informationen auf Ihrem Gerät gespeichert oder abgerufen werden.</p>'
+		},
+		purpose2: {
+			title: 'Auswahl einfacher Anzeigen',
+			description: '<p>Anzeigen können Ihnen basierend auf den Inhalten, die Sie ansehen, der Anwendung, die Sie verwenden und Ihrem ungefähren Standort oder Ihrem Gerätetyp eingeblendet werden.</p>'
+		},
+		purpose3: {
+			title: 'Ein personalisiertes Anzeigen-Profil erstellen',
+			description: '<p>Über Sie und Ihre Interessen kann ein Profil erstellt werden, um Ihnen für Sie relevante personalisierte Anzeigen einzublenden.</p>'
+		},
+		purpose4: {
+			title: 'Personalisierte Anzeigen auswählen',
+			description: '<p>Personalisierte Anzeigen können Ihnen basierend auf einem über Sie erstellten Profil eingeblendet werden.</p>'
+		},
+		purpose5: {
+			title: 'Ein personalisiertes Inhalts-Profil erstellen',
+			description: '<p>Über Sie und Ihre Interessen kann ein Profil erstellt werden, um Ihnen für Sie relevante personalisierte Inhalte anzuzeigen.</p>'
+		},
+		purpose6: {
+			title: 'Personalisierte Inhalte auswählen',
+			description: '<p>Personalisierte Inhalte können Ihnen basierend auf einem über Sie erstellten Profil angezeigt werden.</p>'
+		},
+		purpose7: {
+			title: 'Anzeigen-Leistung messen',
+			description: '<p>Die Leistung und Wirksamkeit von Anzeigen, die Sie sehen oder mit denen Sie interagieren, kann gemessen werden.</p>'
+		},
+		purpose8: {
+			title: 'Inhalte-Leistung messen',
+			description: '<p>Marktforschung kann verwendet werden, um mehr über die Zielgruppen zu erfahren, die Dienste oder Anwendungen verwenden und sich Anzeigen ansehen.</p>'
+		},
+		purpose9: {
+			title: 'Marktforschung einsetzen, um Erkenntnisse über Zielgruppen zu gewinnen',
+			description: '<p>Market research may be used in order to obtain further information about the audience visiting websites/apps and viewing advertisements.</p>'
+		},
+		purpose10: {
+			title: 'Produkte entwickeln und verbessern',
+			description: '<p>Ihre Daten können verwendet werden, um bestehende Systeme und Software zu verbessern und neue Produkte zu entwickeln.</p>'
+		}
+	},
+	specialPurposes: {
+		title: 'Particular purposes',
+		showVendors: 'IAB-Partner zeigen',
+		purpose1: {
+			title: 'Sicherheit gewährleisten, Betrug verhindern und Fehler beheben',
+			description: '<p>Ihre Daten können verwendet werden, um betrügerische Aktivitäten zu identifizieren und zu verhindern, und um sicherzustellen, dass Systeme und Prozesse ordnungsgemäß und sicher funktionieren.</p>'
+		},
+		purpose2: {
+			title: 'Anzeigen oder Inhalte technisch bereitstellen',
+			description: '<p>Ihr Gerät kann Informationen empfangen und senden die notwendig sind, damit Sie Inhalte und Anzeigen sehen und nutzen können.</p>'
+		}
+	},
+	features: {
+		title: 'Functionalities',
+		active: 'An',
+		inactive: 'Aus',
+		acceptButton: 'Einwilligung',
+		showVendors: 'IAB-Partner zeigen',
+		feature1: {
+			title: 'Mit Offline-Datenquellen zusammenführen',
+			description: '<p>Daten aus Offline-Datenquellen können mit Daten aus Ihren Online-Aktivitäten zusammengeführt werden, um sie für einen oder mehrere Verarbeitungszwecke bzw. besondere Verarbeitungszwecke nutzen zu können. * Daten aus Ihren Online-Aktivitäten können mit Offline-Daten zusammengeführt werden, um sie für einen oder mehrere Verarbeitungszwecke oder besondere Verarbeitungszwecke ergänzend zu nutzen.</p>'
+		},
+		feature2: {
+			title: 'Verschiedene Geräte verknüpfen',
+			description: '<p>Zur Nutzung für einen oder mehrere Verarbeitungszwecke kann ermittelt werden, ob unterschiedliche Geräte zu Ihnen oder Ihrem Haushalt gehören.</p>'
+		},
+		feature3: {
+			title: 'Empfangen und Verwenden automatisch gesendeter Geräteeigenschaften für die Identifikation',
+			description: '<p>Ihr Gerät kann aufgrund von Informationen, die es automatisch sendet wie z.B. IP-Adresse oder Browsertyp von anderen Geräten unterschieden werden.</p>'
+		}
+	},
+	specialFeatures: {
+		title: 'Special functionalities',
+		active: 'An',
+		inactive: 'Aus',
+		acceptButton: 'Einwilligung',
+		showVendors: 'IAB-Partner zeigen',
+		feature1: {
+			title: 'Genaue Standortdaten verwenden',
+			description: '<p>Ihre genauen Standortdaten können für einen oder mehrere Verarbeitungszwecke genutzt werden. Das bedeutet, dass Ihr Standort bis auf wenige Meter präzise bestimmt werden kann.</p>'
+		},
+		feature2: {
+			title: 'Geräteeigenschaften zur Identifikation aktiv abfragen',
+			description: '<p>Ihr Gerät kann über eine Abfrage seiner spezifischen Merkmale erkannt werden.</p>'
+		}
+	},
+	consentInfo: {
+		consents: {
+			title: 'Einwilligung',
+			description: '<p>In der nachfolgenden Liste findet sich ein Schalter zur Einwilligung. „An“ bedeutet, dass alle Partner Ihre Daten zu den genannten Zwecke bearbeiten dürfen. Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie den Regler auf “Aus” stellen.</p>'
+		},
+		legitimateInterests: {
+			title: 'Berechtigtes Interesse',
+			description: '<p>In der folgenden Liste findet sich ein Schalter “Berechtigtes Interesse”. Gewisse Datenbearbeitungen benötigen keine Einwilliung von Ihnen. Sie werden basierend auf dem berechtigten bzw. überwiegenden privaten Interesse eines Partners von _PUBLISHER_ bearbeitet. Setzen Sie diesen Schalter auf „Aus“, wenn Sie nicht möchten, dass Ihre Daten zu den unten genannten Zwecken basierend auf dem berechtigten bzw. überwiegenden privaten Interesse des Partners von _PUBLISHER_ bearbeitet werden.</p>'
+
+		}
+	},
+	iabVendors: {
+		title: 'Zertifizierte IAB-Partner',
+		company: 'IAB-Partner',
+		offOn: 'Ihre Einwilligung',
+		description: 'Unten finden Sie eine Liste der zertifizierten IAB-Partner und deren Bearbeitungen, denen Sie zustimmen können, wie im vorherigen Fenster beschrieben. Dank dieser Zustimmung ist es möglich, die Inhalte und Anzeigen unserer zertifizierten IAB-Partner besser auf Ihre Interessen abzustimmen. Wenn Sie einem bestimmten zertifizierten IAB-Partner nicht zustimmen möchten, klicken Sie unten auf "Einstellungen folgender Partner ändern" und deaktivieren Sie die ausgewählte Option',
+		editingDescription: 'Unten finden Sie eine Liste der zertifizierten IAB-Partner und deren Bearbeitungen, denen Sie zustimmen können, wie im vorherigen Fenster beschrieben. Dank dieser Zustimmung ist es möglich, die Inhalte und Anzeigen unserer zertifizierten IAB-vertrauenswürdigen Partner besser auf Ihre Interessen abzustimmen. Wenn Sie einem bestimmten zertifizierten IAB-vertrauenswürdigen Partner nicht zustimmen möchten, klicken Sie unten auf "Einstellungen folgender Partner ändern" und deaktivieren Sie die ausgewählte Option.',
+		moreChoices: 'Einstellungen folgender Partner ändern',
+		legitimateInterest: 'Berechtigtes Interesse',
+		acceptButton: 'Einwilligung',
+		active: 'An',
+		inactive: 'Aus'
+	},
+	definitions: {
+		specialPurposes: 'Besondere Zwecke',
+		specialFeatures: 'Besonderheiten',
+		purposes: 'Bearbeitungszwecke',
+		legitimateInterestPurposes: 'Zweck der Bearbeitung auf der Basis eines berechtigten Interesses',
+		features: 'Funktionen'
+	},
+	footer: {
+		message: '',
+		consentLink: 'Einstellungen zum Datenschutz anpassen'
+	}
+});
+
+
 /**
  * The default set of translated pieces of text indexed by locale.
  * Values from window.__tcfConfig.localization will override these
@@ -734,229 +966,8 @@ export default {
 			consentLink: 'here'
 		}
 	},
-	de: {
-		intro: {
-			title: 'Wir verwenden Cookies',
-			description:
-				`<p>Wenn Sie unsere Webseiten und Applikationen benutzen, werden durch Cookies und verschiedene weitere Technologien von uns und Dritten Daten über Sie gesammelt.</p>
-
-<p>Einige dieser Technologien sind notwendig, damit unsere Webseiten und Applikationen einwandfrei funktionieren. Andere wiederum sind optional und unterstützen uns dabei, unsere Produkte und Dienstleistungen stetig zu verbessern und Ihren Bedürfnissen anzupassen, Trends zu erkennen, Statistiken über die Nutzung unserer digitalen Angebote zu erstellen und auszuwerten und um Ihnen personalisierte Werbung ausspielen zu können.</p>
-
-<p>Die meisten genannten Datenbearbeitungen werden auf der Grundlage von berechtigtem Interesse vorgenommen, andere wiederum dürfen nur mit Ihrer Einwilligung erfolgen. Sie können der Bearbeitung basierend auf berechtigtem Interesse jederzeit widersprechen sowie auch Ihre Einwilligung jederzeit widerrufen. Mehr dazu finden Sie unter Einstellungen.</p>
-
-<p>Wenn Sie auf "Akzeptieren" klicken oder dieses Fenster schliessen, stimmen Sie den genannten Datenbearbeitungen durch uns und Dritte zu. Klicken Sie auf <a onclick="__tcfapi('showConsentDetailView', 2, function () {})">Einstellungen</a> finden Sie mehr Informationen zu den Datenbearbeitungen und zu unseren <a onclick="__tcfapi('showVendors', 2, function () {})">IAB-Partnern</a> und können dort auch jederzeit Ihre Präferenzen ändern.</p>
-
-<p><a href="https://www.blick.ch/services/datenschutzbestimmungen-id151553.html" target="_blank" rel="noopener">Datenschutz</a> | <a href="https://www.blick.ch/services/impressum/impressum-blick-gruppe-id5697115.html" target="_blank" rel="noopener">Impressum</a></p>`,
-			acceptAll: 'Akzeptieren und schliessen',
-			showPurposes: 'Einstellungen'
-		},
-		details: {
-			title: 'Einstellungen'
-		},
-		tabs: {
-			tab1: {
-				back: 'Zurück',
-				save: 'Speichern und schliessen',
-				menu: 'Allgemeine Informationen',
-				title: `<span class="cmp-translations_detailTitle">Weshalb sammeln wir Ihre Daten?</span>`,
-				description: `<p>Wir und/oder unsere Partner sammeln und bearbeiten Ihre Daten, damit unsere Webseiten und Applikationen einwandfrei
-	funktionieren, damit wir unsere Produkte und Dienstleistungen stetig verbessern und Ihren Bedürfnissen anpassen,
-	Trends erkennen, und Statistiken über die Nutzung unserer digitalen Angebote erstellen und auswerten können. Diese
-	Daten werden auch dazu benutzt, um Ihnen auf Ihre Interessen zugeschnittene Inhalte sowie ein gutes Werbeerlebnis
-	bieten zu können.</p>
-
-<p>Sie haben jederzeit die Möglichkeit, die Bearbeitung dieser Daten zu unterbinden. Wie Sie dazu vorgehen müssen,
-	erfahren Sie unter <a onclick="__tcfapi('showConsentDetailView', 2, function () {}, {tab: 1})">Bearbeitung Ihrer Daten</a></p>
-
-
-<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">Basierend auf welcher Rechtsgrundlage tun wir dies?</p>
-<p>Wir und unsere Partner bearbeiten Ihre Daten entweder weil Sie in diese Bearbeitung eingewilligt haben oder weil wir
-	ein berechtigtes Interesse bzw. ein überwiegendes privates Interesse daran haben.</p>
-
-<p>Einige unserer Partner verlangen bzw. gewisse Bearbeitungen bedürfen Ihre(r) Einwilligung gemäss Art. 6 Abs. 1 a
-	DSGVO. Sie können uns diese Einwilligung in Ihren Datenschutzeinstellungen erteilen, aber auch jederzeit dort
-	widerrufen. Sie erfahren dort auch für welche Bearbeitungen Sie konkret ihre Einwilligung geben.</p>
-
-<p>Bestimmte Bearbeitungen Ihrer Daten werden basierend auf unserem oder basierend auf dem berechtigten Interesse eines
-	unseren Partners vorgenommen. Die geltende Rechtsgrundlage ist in einem solchen Fall entweder das berechtigte
-	Interesse gemäss Art. 6 Abs. 1 f DSGVO oder das überwiegende privates Interesse gemäss Art. 13 DSG. Sie haben
-	jederzeit die Möglichkeit einer Bearbeitung aufgrund von berechtigtem bzw. überwiegendem privatem Interesse zu
-	widersprechen.</p>
-
-
-<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">Welche Technologien nutzen wir?</p>
-
-<p>Wir benutzen folgende Technologien:</p>
-
-<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">a) Cookies</p>
-
-<p>Auf unseren Webseiten und mobilen Applikationen werden Cookies von uns und von Dritten eingesetzt. Ein Cookie ist eine kurze Textdatei, die auf Ihrem Gerät gespeichert wird, wenn Sie eine unserer Webseiten nutzen.</p>
-
-<p>Cookies können unterteilt werden in Session-Cookies und permanente Cookies.</p>
-
-<p>Session-Cookies können zur Rückverfolgung der Webseiten verwendet werden, die Sie besuchen, sowie der von Ihnen verwendeten Optionen. Ein Session-Cookie wird nur für die Dauer Ihres Besuchs im Internet gespeichert, d.h. während einer einzigen Internetsitzung. Wenn Sie also Ihren Internetbrowser schliessen, ist die Sitzung beendet und das Cookie gelöscht.</p>
-
-<p>Permanente Cookies können nebst anderen Dingen dazu verwendet werden, um Sie bei einem anschliessenden Besuch auf einer unserer Webseiten wiederzuerkennen und z.B. Ihre Lesepräferenzen zu erkennen. Ein permanentes Cookie wird für eine längere Dauer als eine einzelne Sitzung gespeichert.</p>
-
-<p>Cookies können zudem in funktionale und nicht funktionale Cookies aufgeteilt werden.
-Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren Webseiten.</p>
-
-<p>Funktionale Cookies sind erforderlich, um die Funktionalität von unseren Webseiten oder Diensten sicherzustellen. Nicht funktionale Cookies sind für die Funktionalität der Webseiten nicht unbedingt erforderlich. Diese Art von Cookies wird dazu benutzt, um Daten über die Webseitennutzung oder die Nutzung der mobilen Applikationen (Sprachpräferenzen, Dauer einer Benutzersitzung usw.) zu erfassen und zu analysieren, damit wir Ihr Lese- und Werbeerlebnis verbessern können.</p>
-
-
-<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">b) Logfiles</p>
-
-<p>Bei der Nutzung von Webseiten oder mobilen Applikationen registrieren die Webserver unpersönliche Nutzungsdaten, sogenannte Logfile. Logfiles geben Auskunft über Ihre IP-Adresse, das verwendete Betriebssystem, Webseiten, die Sie besuchen, Browsertyp und -version, das Datum, die Uhrzeit und die angeforderte Datei. Diese Informationen sind technisch notwendig, um von Ihnen angeforderte Inhalte von Webseiten korrekt auszuliefern und fallen bei der Nutzung des Internets zwingend an. Diese Daten werden getrennt von Ihren eventuell angegebenen Personendaten gespeichert und lassen so keine Rückschlüsse auf Ihre Person zu.</p>
-
-<p>Diese Nutzungsdaten werden von uns statistisch ausgewertet, um unseren Internetauftritt und die dahinterstehende Technik zu optimieren, Trends zu erkennen sowie Angebote und Produkte zu verbessern bzw. bestmöglich auf Ihre Bedürfnisse auszurichten.</p>
-
-<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">c) Elemente von anderen Webseiten, z.B. Plug-ins</p>
-
-<p>Auf unseren Webseiten und mobilen Applikationen können Elemente von Drittanbietern, (z.B. soziale Netzwerke wie Facebook, Apple, Twitter und Youtube) verwendet werden. Wenn Sie ein Element eines Drittanbieters (z.B. «Gefällt mir» Plug-in von Facebook) anklicken, kann automatisch eine Verbindung zu den Servern dieses Drittanbieters hergestellt werden. Dabei können dem Drittanbieter Daten über Ihren Besuch auf unserer Webseiten bzw.. auf einer mobilen Applikation übermittelt werden. Diese Daten können unter Umständen Ihrem Benutzerkonto beim Drittanbieter (z.B. Facebook oder Twitter-Konto) zugeordnet werden. Überdies kann der Drittanbieter Personendaten (Name, Vorname, Kunden ID und E-Mail-Adresse) Ihres Benutzerkontos an Ringier übermitteln, sofern Sie dieser Funktion beim Drittanbieter zugestimmt haben. Informationen zur Erhebung und Nutzung der Daten durch Drittanbieter finden Sie in den Datenschutzhinweisen der entsprechenden Drittanbieter.</p>
-
-<p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">d) Standort-Tracker</p>
-<p>In unserer mobilen Applikation können wir Ihnen durch die Verwendung von Standortdaten Ihres Gerätes standortbezogene Werbung anzeigen. Sie können diese Funktion jederzeit in der Applikation unter „Einstellungen“ aktivieren oder deaktivieren.</p>`
-			},
-			tab2: {
-				menu: 'Bearbeitung Ihrer Daten',
-				back: 'Zurück',
-				save: 'Schliessen und speichern'
-			}
-		},
-		publisherConsents: {
-			title: 'Rechtsgrundlagen für die Bearbeitung Ihrer Daten'
-		},
-		vendorConsents: {
-			title: 'Zustimmung für Partner'
-		},
-		purposes: {
-			active: 'An',
-			inactive: 'Aus',
-			acceptButton: 'Einwilligung',
-			legitimateInterest: 'Berechtigtes Interesse',
-			legIntActive: 'An',
-			legIntInactive: 'Aus',
-			showVendors: 'IAB-Partner zeigen',
-			purpose1: {
-				title: 'Speichern oder Zugreifen auf Informationen auf dem Gerät',
-				description: '<p>Cookies, Geräteerkennungen oder andere Informationen können auf dem Gerät des Benutzers gespeichert oder für die dem Benutzer präsentierten Zwecke darauf verfügbar gemacht werden.</p>'
-			},
-			purpose2: {
-				title: 'Primäre Anzeigenauswahl',
-				description: '<p>Anzeigen werden möglicherweise basierend auf Ihrer Anzeige, der von Ihnen verwendeten App, Ihrem ungefähren Standort oder dem Gerätetyp geschaltet</p>'
-			},
-			purpose3: {
-				title: 'Erstellen Sie ein personalisiertes Werbeprofil',
-				description: '<p>Um den Nutzer und seine Interessen herum kann ein Profil erstellt werden, mit dem personalisierte Anzeigen geschaltet werden können, die für den Nutzer relevant sind.</p>'
-			},
-			purpose4: {
-				title: 'Selection of personalized advertisements',
-				description: '<p>Personalized advertisements may be displayed to the user based on user’s profile.</p>'
-			},
-			purpose5: {
-				title: 'Creating a profile of personalized content',
-				description: '<p>A profile may be created for the user and user’s interests, which will allow to display personalized content relevant to the user.</p>'
-			},
-			purpose6: {
-				title: 'Selection of personalized content',
-				description: '<p>Personalized content may be displayed to the user based on user’s profile.</p>'
-			},
-			purpose7: {
-				title: 'Advertisement performance measurement',
-				description: '<p>It is possible to measure the performance and effectiveness of advertisements shown to the user and to which the user reacts.</p>'
-			},
-			purpose8: {
-				title: 'Content performance measurement',
-				description: '<p>It is possible to measure the performance and effectiveness of content shown to the user and to which the user reacts.</p>'
-			},
-			purpose9: {
-				title: 'Using market research in order to generate audience opinion',
-				description: '<p>Market research may be used in order to obtain further information about the audience visiting websites/apps and viewing advertisements.</p>'
-			},
-			purpose10: {
-				title: 'Development and improvement of products',
-				description: '<p>User data may be used in order to improve current systems and software as well as to develop new products.</p>'
-			}
-		},
-		specialPurposes: {
-			title: 'Particular purposes',
-			showVendors: 'IAB-Partner zeigen',
-			purpose1: {
-				title: 'Ensure security, prevent fraud, and debug',
-				description: '<p>Your data can be used to monitor for and prevent fraudulent activity, and ensure systems and processes work properly and securely.</p>'
-			},
-			purpose2: {
-				title: 'Technically deliver ads or content',
-				description: '<p>Your device can receive and send information that allows you to see and interact with ads and content.</p>'
-			}
-		},
-		features: {
-			title: 'Functionalities',
-			active: 'An',
-			inactive: 'Aus',
-			acceptButton: 'Einwilligung',
-			showVendors: 'IAB-Partner zeigen',
-			feature1: {
-				title: 'Alignment and connection of offline data sources',
-				description: '<p>Data from offline data sources may be aligned with user’s online activity in the performance of at least one purpose.</p>'
-			},
-			feature2: {
-				title: 'Connection of various devices',
-				description: '<p>Various devices may be considered as belonging to the user or user’s household in the performance of at least one purpose.</p>'
-			},
-			feature3: {
-				title: 'Reception and use of automatically sent device features for the purposes of identification',
-				description: '<p>A device may be distinguished from other devices on the basis of information sent automatically, such as IP address or browser type.</p>'
-			}
-		},
-		specialFeatures: {
-			title: 'Special functionalities',
-			active: 'An',
-			inactive: 'Aus',
-			acceptButton: 'Einwilligung',
-			showVendors: 'IAB-Partner zeigen',
-			feature1: {
-				title: 'Use precise geolocation data',
-				description: '<p>Your precise geolocation data can be used in support of one or more purposes. This means your location can be accurate to within several meters.</p>'
-			},
-			feature2: {
-				title: 'Actively scan device characteristics for identification',
-				description: '<p>Your device can be identified based on a scan of your device\'s unique combination of characteristics.</p>'
-			}
-		},
-		consentInfo: {
-			consents: {
-				title: 'Einwilligung',
-				description: '<p>In der nachfolgenden Liste findet sich ein Schalter zur Einwilligung. „An“ bedeutet, dass Ringier und/oder alle Partner Ihre Daten zu den genannten Zwecke bearbeiten dürfen. Sie können Ihre Einwilligung jederzeit widerrufen, indem Sie den Regler auf “Aus” stellen.</p>'
-			},
-			legitimateInterests: {
-				title: 'Berechtigtes Interesse',
-				description: '<p>In der folgenden Liste findet sich ein Schalter “Berechtigtes Interesse”. Gewisse Datenbearbeitungen benötigen keine Einwilliung von Ihnen. Sie werden basierend auf dem berechtigten bzw. überwiegenden privaten Interesse von Ringier und/oder eines Partners von Ringier bearbeitet. Setzen Sie diesen Schalter auf „Aus“, wenn Sie nicht möchten, dass Ihre Daten zu den unten genannten Zwecken basierend auf dem berechtigten bzw. überwiegenden privaten Interesse von Ringier und/oder des Partners von Ringier bearbeitet werden.</p>'
-
-			}
-		},
-		iabVendors: {
-			title: 'Zertifizierte IAB-Partner',
-			company: 'IAB-Partner',
-			offOn: 'Ihre Einwilligung',
-			description: 'Unten finden Sie eine Liste der zertifizierten IAB-Partner und deren Bearbeitungen, denen Sie zustimmen können, wie im vorherigen Fenster beschrieben. Dank dieser Zustimmung ist es möglich, die Inhalte und Anzeigen unserer zertifizierten IAB-Partner besser auf Ihre Interessen abzustimmen. Wenn Sie einem bestimmten zertifizierten IAB-Partner nicht zustimmen möchten, klicken Sie unten auf "Einstellungen folgender Partner ändern" und deaktivieren Sie die ausgewählte Option',
-			editingDescription: 'Unten finden Sie eine Liste der zertifizierten IAB-Partner und deren Bearbeitungen, denen Sie zustimmen können, wie im vorherigen Fenster beschrieben. Dank dieser Zustimmung ist es möglich, die Inhalte und Anzeigen unserer zertifizierten IAB-vertrauenswürdigen Partner besser auf Ihre Interessen abzustimmen. Wenn Sie einem bestimmten zertifizierten IAB-vertrauenswürdigen Partner nicht zustimmen möchten, klicken Sie unten auf "Einstellungen folgender Partner ändern" und deaktivieren Sie die ausgewählte Option.',
-			moreChoices: 'Einstellungen folgender Partner ändern',
-			legitimateInterest: 'Berechtigtes Interesse',
-			acceptButton: 'Einwilligung',
-			active: 'An',
-			inactive: 'Aus'
-		},
-		definitions: {
-			specialPurposes: 'Besondere Zwecke',
-			specialFeatures: 'Besonderheiten',
-			purposes: 'Bearbeitungszwecke',
-			legitimateInterestPurposes: 'Zweck der Bearbeitung auf der Basis eines berechtigten Interesses',
-			features: 'Funktionen'
-		},
-		footer: {
-			message: 'Change your privacy settings by clicking',
-			consentLink: 'here'
-		}
-	}
+	//blick.ch
+	de_blick: JSON.parse(replaceMacros(de, 'de_blick')),
+	// RASCH titles
+	de_rasch: JSON.parse(replaceMacros(de, 'de_rasch'))
 };

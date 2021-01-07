@@ -198,6 +198,10 @@ export default class Purposes extends Component {
 										<LocalLabel prefix="publisherConsents" localizeKey={`title`}>Publisher
 											consents</LocalLabel>
 									</div>
+									<div className={style.body}>
+										<LocalLabel prefix="tabs" localizeKey={`tab2.description`}>
+										</LocalLabel>
+									</div>
 								</div>
 							</div>
 							{allPurposes.map((purpose, index) => <Purpose key={index}
