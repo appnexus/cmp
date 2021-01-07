@@ -3,9 +3,9 @@ import replaceMacros from './macros';
 
 describe('macros', () => {
 	it('replace macros in text - macros is defined for given translation code', () => {
-		const text = 'test _PUBLISHER_ and _POLICY_URL_';
+		const text = 'test _PUBLISHER_ and _PUBLISHER_';
 
-		expect(replaceMacros(text, 'de_blick')).to.equal('test Ringier and https://www.blick.ch/services/datenschutzbestimmungen-id151553.html');
+		expect(replaceMacros(text, 'de_blick')).to.equal('test Ringier and Ringier');
 	});
 
 	it('don\'t replace macro - macro is not exist', () => {
@@ -15,7 +15,7 @@ describe('macros', () => {
 	});
 
 	it('return text without changes - macros is not defined for given translation code', () => {
-		const text = 'test _PUBLISHER_ and _POLICY_URL_';
+		const text = 'test _PUBLISHER_';
 
 		expect(replaceMacros(text, 'test')).to.equal(text);
 	});
