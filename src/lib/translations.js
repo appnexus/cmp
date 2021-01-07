@@ -78,7 +78,7 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 
 <p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">c) Elemente von anderen Webseiten, z.B. Plug-ins</p>
 
-<p>Auf unseren Webseiten und mobilen Applikationen können Elemente von Drittanbietern, (z.B. soziale Netzwerke wie Facebook, Apple, Twitter und Youtube) verwendet werden. Wenn Sie ein Element eines Drittanbieters (z.B. «Gefällt mir» Plug-in von Facebook) anklicken, kann automatisch eine Verbindung zu den Servern dieses Drittanbieters hergestellt werden. Dabei können dem Drittanbieter Daten über Ihren Besuch auf unserer Webseiten bzw.. auf einer mobilen Applikation übermittelt werden. Diese Daten können unter Umständen Ihrem Benutzerkonto beim Drittanbieter (z.B. Facebook oder Twitter-Konto) zugeordnet werden. Überdies kann der Drittanbieter Personendaten (Name, Vorname, Kunden ID und E-Mail-Adresse) Ihres Benutzerkontos an Ringier übermitteln, sofern Sie dieser Funktion beim Drittanbieter zugestimmt haben. Informationen zur Erhebung und Nutzung der Daten durch Drittanbieter finden Sie in den Datenschutzhinweisen der entsprechenden Drittanbieter.</p>
+<p>Auf unseren Webseiten und mobilen Applikationen können Elemente von Drittanbietern, (z.B. soziale Netzwerke wie Facebook, Apple, Twitter und Youtube) verwendet werden. Wenn Sie ein Element eines Drittanbieters (z.B. «Gefällt mir» Plug-in von Facebook) anklicken, kann automatisch eine Verbindung zu den Servern dieses Drittanbieters hergestellt werden. Dabei können dem Drittanbieter Daten über Ihren Besuch auf unserer Webseiten bzw.. auf einer mobilen Applikation übermittelt werden. Diese Daten können unter Umständen Ihrem Benutzerkonto beim Drittanbieter (z.B. Facebook oder Twitter-Konto) zugeordnet werden. Überdies kann der Drittanbieter Personendaten (Name, Vorname, Kunden ID und E-Mail-Adresse) Ihres Benutzerkontos an _PUBLISHER_ übermitteln, sofern Sie dieser Funktion beim Drittanbieter zugestimmt haben. Informationen zur Erhebung und Nutzung der Daten durch Drittanbieter finden Sie in den Datenschutzhinweisen der entsprechenden Drittanbieter.</p>
 
 <p style="margin: 25px 0 10px 0; font-weight: 900" class="cmp-translations_purposes_header">d) Standort-Tracker</p>
 <p>In unserer mobilen Applikation können wir Ihnen durch die Verwendung von Standortdaten Ihres Gerätes standortbezogene Werbung anzeigen. Sie können diese Funktion jederzeit in der Applikation unter „Einstellungen“ aktivieren oder deaktivieren.</p>`
@@ -87,7 +87,7 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 			menu: 'Bearbeitung Ihrer Daten',
 			back: 'Zurück',
 			save: 'Schliessen und speichern',
-			description: `<p>Grundsätzlich werden Ihre Daten entweder basierend auf berechtigtem Interesse von Ringier bearbeitet oder weil Sie
+			description: `<p>Grundsätzlich werden Ihre Daten entweder basierend auf berechtigtem Interesse von _PUBLISHER_ bearbeitet oder weil Sie
 	uns die Einwilligung zur Bearbeitung Ihrer Daten gegeben haben. Mehr Informationen dazu finden Sie hier: <a onclick="__tcfapi('showConsentDetailView', 2, function () {}, {tab: 0})">Allgemeine
 	Informationen</a></p>
 
@@ -205,7 +205,7 @@ Wir verwenden sowohl funktionale wie auch nicht funktionale Cookies auf unseren 
 		},
 		legitimateInterests: {
 			title: 'Berechtigtes Interesse',
-			description: '<p>In der folgenden Liste findet sich ein Schalter “Berechtigtes Interesse”. Gewisse Datenbearbeitungen benötigen keine Einwilliung von Ihnen. Sie werden basierend auf dem berechtigten bzw. überwiegenden privaten Interesse eines Partners von Ringier bearbeitet. Setzen Sie diesen Schalter auf „Aus“, wenn Sie nicht möchten, dass Ihre Daten zu den unten genannten Zwecken basierend auf dem berechtigten bzw. überwiegenden privaten Interesse des Partners von Ringier bearbeitet werden.</p>'
+			description: '<p>In der folgenden Liste findet sich ein Schalter “Berechtigtes Interesse”. Gewisse Datenbearbeitungen benötigen keine Einwilliung von Ihnen. Sie werden basierend auf dem berechtigten bzw. überwiegenden privaten Interesse eines Partners von _PUBLISHER_ bearbeitet. Setzen Sie diesen Schalter auf „Aus“, wenn Sie nicht möchten, dass Ihre Daten zu den unten genannten Zwecken basierend auf dem berechtigten bzw. überwiegenden privaten Interesse des Partners von _PUBLISHER_ bearbeitet werden.</p>'
 
 		}
 	},

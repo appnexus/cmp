@@ -6,7 +6,7 @@ const macros = {
 	},
 	// RASCH translation
 	'de_rasch': {
-		'_PUBLISHER_': 'Ringer Axel Springer Schweiz',
+		'_PUBLISHER_': 'Ringier Axel Springer Schweiz',
 		'_POLICY_URL_': 'https://www.cash.ch/ueberuns/rechtliche-hinweise/datenschutzbestimmungen-detail#rechte'
 	}
 };
