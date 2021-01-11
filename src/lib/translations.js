@@ -148,7 +148,7 @@ _POLICY_`
 		}
 	},
 	specialPurposes: {
-		title: 'Particular purposes',
+		title: 'Spezielle Zwecke',
 		showVendors: 'IAB-Partner zeigen',
 		purpose1: {
 			title: 'Sicherheit gewährleisten, Betrug verhindern und Fehler beheben',
@@ -160,7 +160,7 @@ _POLICY_`
 		}
 	},
 	features: {
-		title: 'Functionalities',
+		title: 'Funktionen',
 		active: 'An',
 		inactive: 'Aus',
 		acceptButton: 'Einwilligung',
@@ -179,7 +179,7 @@ _POLICY_`
 		}
 	},
 	specialFeatures: {
-		title: 'Special functionalities',
+		title: 'Spezielle Funktionen',
 		active: 'An',
 		inactive: 'Aus',
 		acceptButton: 'Einwilligung',
