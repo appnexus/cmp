@@ -12,7 +12,7 @@ const de = JSON.stringify({
 
 <p>Wenn Sie auf "Akzeptieren" klicken oder dieses Fenster schliessen, stimmen Sie den genannten Datenbearbeitungen durch uns und Dritte zu. Klicken Sie auf <a onclick="__tcfapi('showConsentDetailView', 2, function () {})">Einstellungen</a> finden Sie mehr Informationen zu den Datenbearbeitungen und zu unseren <a onclick="__tcfapi('showVendors', 2, function () {})">IAB-Partnern</a> und können dort auch jederzeit Ihre Präferenzen ändern.</p>
 
-<p><a href="https://www.blick.ch/services/datenschutzbestimmungen-id151553.html" target="_blank" rel="noopener">Datenschutz</a> | <a href="https://www.blick.ch/services/impressum/impressum-blick-gruppe-id5697115.html" target="_blank" rel="noopener">Impressum</a></p>`,
+_PRIVACY_LINKS_`,
 		acceptAll: 'Akzeptieren und schliessen',
 		showPurposes: 'Einstellungen'
 	},
@@ -148,7 +148,7 @@ _POLICY_`
 		}
 	},
 	specialPurposes: {
-		title: 'Particular purposes',
+		title: 'Spezielle Zwecke',
 		showVendors: 'IAB-Partner zeigen',
 		purpose1: {
 			title: 'Sicherheit gewährleisten, Betrug verhindern und Fehler beheben',
@@ -160,7 +160,7 @@ _POLICY_`
 		}
 	},
 	features: {
-		title: 'Functionalities',
+		title: 'Funktionen',
 		active: 'An',
 		inactive: 'Aus',
 		acceptButton: 'Einwilligung',
@@ -179,7 +179,7 @@ _POLICY_`
 		}
 	},
 	specialFeatures: {
-		title: 'Special functionalities',
+		title: 'Spezielle Funktionen',
 		active: 'An',
 		inactive: 'Aus',
 		acceptButton: 'Einwilligung',
