@@ -1,3 +1,9 @@
+## [2.1.6](https://github.com/openmail/system1-cmp/compare/2.1.5...2.1.6) (2021-02-26)
+
+### Refactor
+
+- [x] Fix Monitoring; "category" should be a string not a click event
+
 ## [2.1.5](https://github.com/openmail/system1-cmp/compare/2.1.4...2.1.5) (2021-02-26)
 
 ### Feat
