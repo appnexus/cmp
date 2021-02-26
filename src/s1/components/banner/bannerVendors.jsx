@@ -56,6 +56,10 @@ export default class BannerVendors extends Component {
 		});
 	};
 
+	handleContinue = () => {
+		this.handleAcceptAll( 'acceptAllContinue' );
+	}
+
 	handleClose = () => {
 		this.handleAcceptAll( 'acceptAllClose' );
 	}
@@ -164,7 +168,7 @@ export default class BannerVendors extends Component {
 					</a>
 					<a
 						class={style.continue}
-						onClick={this.handleAcceptAll}
+						onClick={this.handleContinue}
 						style={{
 							backgroundColor: primaryColor,
 							borderColor: primaryColor,
