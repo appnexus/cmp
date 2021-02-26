@@ -36,6 +36,15 @@
 		"purposesLegit": "Purposes (Legitimate Interest)",
 		"specialPurposes": "Special Purposes",
 		"features": "Features",
-		"specialFeatures": "Special Features"
+		"specialFeatures": "Special Features",
+		"deviceStorage": "Device Storage",
+		"deviceStorageMax": "stores cookies with a maximum duration of about",
+		"deviceStorageMin": "stores cookies for the duration of your browsing session.",
+		"deviceStorageSeconds": "seconds",
+		"deviceStorageMinutes": "minutes",
+		"deviceStorageHours": "hours",
+		"deviceStorageDays": "days",
+		"deviceStorageMonths": "months",
+		"deviceStorageYears": "years"
 	}
 }

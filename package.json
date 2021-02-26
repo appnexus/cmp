@@ -1,6 +1,6 @@
 {
 	"name": "system1-cmp",
-	"version": "2.1.4",
+	"version": "2.1.5",
 	"cmpVersion": 5,
 	"description": "System1 Consent Management Platform for TCF 1.1 GDPR Compliance",
 	"scripts": {
@@ -109,8 +109,8 @@
 		"webpack-dev-server": "^2.4.4"
 	},
 	"dependencies": {
-		"@iabtcf/cmpapi": "1.1.3",
-		"@iabtcf/core": "1.1.3",
+		"@iabtcf/cmpapi": "1.1.4",
+		"@iabtcf/core": "1.1.4",
 		"@s1/dpl": "3.2.1",
 		"classnames": "^2.2.5",
 		"codemirror": "^5.34.0",

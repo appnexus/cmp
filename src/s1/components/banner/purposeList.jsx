@@ -147,7 +147,7 @@ export default class PurposeList extends Component {
 								) : null}
 								<div className={[style.itemDetails].join(' ')} style={{ color: theme.textLightColor }}>
 									<p>{description}</p>
-									{descriptionLegal ? <p>{descriptionLegal}</p> : null}
+									{descriptionLegal ? <p>{descriptionLegal.split('\n').map(dl => <span className={style.desciptionLegalList}>{dl}</span>)}</p> : null}
 									{handleObjection ? (
 										<div className={style.objectLegitInterest}>
 											<Switch

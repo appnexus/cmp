@@ -54,4 +54,46 @@ export const lookup = ({ label, prefix, localizeKey, translations } = {}) => {
 	return translations[key] || label;
 };
 
+export const secondsToNearestInt = (seconds) => {
+	const minutes = seconds / 60;
+	if (minutes < 1) {
+		return {
+			unit: 'seconds',
+			value: seconds
+		};
+	}
+	const hours = minutes / 60;
+	if (hours < 1) {
+		return {
+			unit: 'minutes',
+			value: Math.round(minutes)
+		};
+	}
+	const days = hours / 24;
+	if (days < 1) {
+		return {
+			unit: 'hours',
+			value: Math.round(hours)
+		};
+	}
+	const months = days / 30;
+	if (months < 1) {
+		return {
+			unit: 'days',
+			value: Math.round(days)
+		};
+	}
+	const years = months / 12;
+	if (years < 1) {
+		return {
+			unit: 'months',
+			value: Math.round(months)
+		};
+	}
+
+	return {
+		unit: 'years',
+		value: Math.round(years)
+	};
+}
 export default localize;

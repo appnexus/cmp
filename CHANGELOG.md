@@ -1,4 +1,14 @@
-## [2.1.4](https://github.com/openmail/system1-cmp/compare/2.1.2...2.1.3) (2020-11-05)
+## [2.1.5](https://github.com/openmail/system1-cmp/compare/2.1.4...2.1.5) (2021-02-26)
+
+### Feat
+
+- [x] Upgrades cmpapi and cmpcore
+- [x] Updates global vendor list
+- [x] Adds Device Storage to Vendor Stack to display cookieMaxAgeSeconds 
+- [x] Splits legal-disclosure for legibility in Purpose Stack
+- [x] Refactor error logger
+
+## [2.1.4](https://github.com/openmail/system1-cmp/compare/2.1.3...2.1.4) (2020-11-05)
 
 ### Feat
 

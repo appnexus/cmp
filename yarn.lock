@@ -918,15 +918,15 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@iabtcf/cmpapi@1.1.3":
-  version "1.1.3"
-  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/@iabtcf/cmpapi/-/cmpapi-1.1.3.tgz#6b601a34fd0d5885eb15ac845a11206b3b9a82e8"
-  integrity sha1-a2AaNP0NWIXrFayEWhEgazuagug=
+"@iabtcf/cmpapi@1.1.4":
+  version "1.1.4"
+  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/@iabtcf/cmpapi/-/cmpapi-1.1.4.tgz#98e17e45caa668765eb12b16f8dd2a0263555f46"
+  integrity sha1-mOF+RcqmaHZesSsW+N0qAmNVX0Y=
 
-"@iabtcf/core@1.1.3":
-  version "1.1.3"
-  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/@iabtcf/core/-/core-1.1.3.tgz#bacf690710cdb15ee858a95c5436371df27ac4f0"
-  integrity sha1-us9pBxDNsV7oWKlcVDY3HfJ6xPA=
+"@iabtcf/core@1.1.4":
+  version "1.1.4"
+  resolved "https://system1.jfrog.io/system1/api/npm/npm-virtual/@iabtcf/core/-/core-1.1.4.tgz#5ec102123d9f22ff0458315dffb38a7cae91f752"
+  integrity sha1-XsECEj2fIv8EWDFd/7OKfK6R91I=
   dependencies:
     global "^4.4.0"
     typescript "3.7"

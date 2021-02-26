@@ -132,18 +132,16 @@ export const setup = (configOpt) => {
 
 // 2. Process Anything in the Queue
 export const processCommandQueue = (() => {
-	const onErrorCache = global.onerror;
-	global.onerror = (message, file, line) => {
+	const errorLoggerListener = (event) => {
 		// just log the first error and then release the error handler
-		debug('cmp: error', message, file, line);
+		debug('cmp: error', event.message);
 		logger(LOG_EVENTS.CMPError, {
-			message: `${message} ${file && `(file: ${file})`}`,
+			message: event.message,
 		});
-		if (onErrorCache) {
-			onErrorCache(message, file, line);
-		}
-		global.onerror = onErrorCache;
+		global.removeEventListener('error', errorLoggerListener, false);
 	};
+	global.addEventListener('error', errorLoggerListener, false);
+
 	const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
 	const initIndex = commandQueue.findIndex(({ command }) => command === INIT);
 	const initCommandFirst = initIndex >= 0 ? commandQueue.splice(initIndex, 1).concat(commandQueue) : commandQueue;

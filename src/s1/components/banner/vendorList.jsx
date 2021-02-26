@@ -5,7 +5,7 @@ import ChevronIcon from '../chevronicon/chevronicon';
 import Switch from '../switch/switch';
 import ExternalLinkIcon from '../externallinkicon/externallinkicon';
 import Label from '../label/label';
-import { lookup } from '../../lib/localize';
+import { lookup, secondsToNearestInt } from '../../lib/localize';
 
 import logger, { EVENTS as LOG_EVENTS } from '../../lib/logger';
 
@@ -80,6 +80,7 @@ export default class VendorList extends Component {
 				<ul class={[style.itemPurpose].join(' ')}>
 					{list.map((item) => {
 						const {
+							cookieMaxAgeSeconds,
 							name,
 							id,
 							policyUrl,
@@ -92,6 +93,7 @@ export default class VendorList extends Component {
 						const displayId = `${displayPrefix}-${id}`;
 						const isExpanded = expanded.has(displayId);
 						const canConsent = handleConsent && (purposes.length || specialFeatures.length);
+						const {unit: maxAgeUnit, value: maxAgeUnitVal} = secondsToNearestInt(cookieMaxAgeSeconds);
 
 						return (
 							<li
@@ -201,7 +203,11 @@ export default class VendorList extends Component {
 
 										{legIntPurposes.length > 0 && (
 											<div>
-												<h4>Purposes (Service-Specific Legitimate Interests)</h4>
+												<h4>
+													<LocalLabel localizeKey="purposesLegit" translations={translations}>
+													Purposes (Legitimate Interest)
+													</LocalLabel>
+												</h4>
 												<ul>
 													{legIntPurposes.map((key) => {
 														const { name: purposeName } = globalPurposes[key];
@@ -223,6 +229,39 @@ export default class VendorList extends Component {
 												</div>
 											</div>
 										)}
+										<div>
+											<h4>
+												<LocalLabel localizeKey="deviceStorage" translations={translations}>
+													Device Storage:
+												</LocalLabel>
+											</h4>
+											<p>
+												{` ${name} `}
+												{cookieMaxAgeSeconds > 0 ?
+													(
+														<span>
+															<LocalLabel localizeKey="deviceStorageMax" translations={translations}>
+																stores cookies with a maximum duration of about
+															</LocalLabel>
+															{` ${maxAgeUnitVal} `}
+															<LocalLabel localizeKey={`deviceStorageUnit${maxAgeUnit.replace(/^./, str => str.toUpperCase())}`} translations={translations}>
+																{maxAgeUnit}
+															</LocalLabel>
+															{` (${cookieMaxAgeSeconds.toLocaleString()} `}
+															<LocalLabel localizeKey="deviceStorageUnitSeconds" translations={translations}>
+																seconds
+															</LocalLabel>
+															)
+														</span>
+													) :
+													(
+														<LocalLabel localizeKey="deviceStorageMin" translations={translations}>
+															stores cookies for the duration of your browsing session.
+														</LocalLabel>
+													)
+												}
+											</p>
+										</div>
 									</div>
 								)}
 							</li>
