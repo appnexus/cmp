@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Možnosti ochrany osobních údajů",
+		"description": "Používáním tohoto webu souhlasíte s naším používáním souborů cookie a informací k poskytování personalizovaného obsahu a reklam a k měření a analýze využití stránek. Chcete-li změnit nastavení, klikněte na „Další informace“.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Zjistit více",
+			"accept": "OK chápu",
+			"save": "Uložení"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "My a <a>naši partneři</a>:",
+		"stacksTitle": "My a <a>naši partneři</a> zpracováváme osobní údaje, jako je IP adresa, jedinečné ID, údaje o prohlížení:",
+		"specialFeaturesTitle": "Z některých výše uvedených důvodů a <a>naši partneři</a>:",
+		"specialPurposesTitle": "Potřebujeme váš souhlas pro všechny výše uvedené účely, ale máme pro tyto účely oprávněný zájem:",
+		"featuresTitle": "Z některých výše uvedených důvodů a <a>naši partneři</a>",
+		"legintPurposesTitle": "Někteří <a>naši partneři</a> mají pro tyto účely oprávněný zájem o konkrétní službu:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Kdo používá tyto informace?",
+		"description": "Zde je kompletní seznam společností, které budou používat vaše informace. Další podrobnosti najdete v jejich zásadách ochrany osobních údajů.",
+		"partnersTitle": "Partneři, kteří jsou součástí IAB TCF",
+		"privacy": "Zásady ochrany osobních údajů:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Zpět",
+			"acceptAll": "Povolit vše",
+			"save": "Uložení"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Účely (souhlas)",
+		"purposesLegit": "Účely (oprávněný zájem)",
+		"specialPurposes": "Zvláštní účely",
+		"features": "Funkce",
+		"specialFeatures": "Speciální funkce",
+		"deviceStorage": "Úložiště zařízení",
+		"deviceStorageMax": "ukládá soubory cookie s maximální dobou trvání přibližně",
+		"deviceStorageMin": "ukládá soubory cookie po celou dobu vaší relace procházení.",
+		"deviceStorageSeconds": "sekundy",
+		"deviceStorageMinutes": "minutes",
+		"deviceStorageHours": "hodin",
+		"deviceStorageDays": "dnů",
+		"deviceStorageMonths": "měsíce",
+		"deviceStorageYears": "let"
 	}
 }

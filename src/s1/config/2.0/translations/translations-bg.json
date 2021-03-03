@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Избор на поверителност",
+		"description": "Използвайки този сайт, вие се съгласявате с използването на бисквитки и информация за предоставяне на персонализирано съдържание и реклами и измерване и анализ на използването на сайта. Щракнете върху \"Научете повече\", за да промените настройките си.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Научете повече",
+			"accept": "Добре, разбрах",
+			"save": "Запазете"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Ние и <a>нашите партньори</a>:",
+		"stacksTitle": "Ние и <a>нашите партньори</a> обработваме лични данни като IP адрес, уникален идентификатор, данни за сърфиране за:",
+		"specialFeaturesTitle": "За някои от горепосочените цели ние и <a>нашите партньори</a>:",
+		"specialPurposesTitle": "Нуждаем се от вашето съгласие за всички горепосочени цели, но имаме легитимен интерес за тези цели:",
+		"featuresTitle": "За някои от горепосочените цели ние и <a>нашите партньори</a>",
+		"legintPurposesTitle": "Някои от <a>нашите партньори</a> имат специфичен за услугите законен интерес за следните цели:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Кой използва тази информация?",
+		"description": "Ето пълния списък на компаниите, които ще използват вашата информация. Моля, вижте политиката им за поверителност за повече подробности.",
+		"partnersTitle": "Партньори, които са част от IAB TCF",
+		"privacy": "Политика за поверителност:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "обратно",
+			"acceptAll": "Разрешаване на всички",
+			"save": "Запазете"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Цели (Съгласие)",
+		"purposesLegit": "Цели (легитимен интерес)",
+		"specialPurposes": "Специални цели",
+		"features": "функции",
+		"specialFeatures": "Специални функции",
+		"deviceStorage": "Съхранение на устройство",
+		"deviceStorageMax": "съхранява бисквитки с максимална продължителност около",
+		"deviceStorageMin": "съхранява бисквитки за времето на вашата сесия на сърфиране.",
+		"deviceStorageSeconds": "секунди",
+		"deviceStorageMinutes": "минути",
+		"deviceStorageHours": "часа",
+		"deviceStorageDays": "дни",
+		"deviceStorageMonths": "месеци",
+		"deviceStorageYears": "години"
 	}
 }

@@ -36,6 +36,15 @@
 		"purposesLegit": "Purposes (Legitimate Interest)",
 		"specialPurposes": "Særlige Formål",
 		"features": "Egenskaber",
-		"specialFeatures": "Særlige Egenskaber"
+		"specialFeatures": "Særlige Egenskaber",
+		"deviceStorage": "Enhedsopbevaring",
+		"deviceStorageMax": "gemmer cookies med en maksimal varighed på ca.",
+		"deviceStorageMin": "gemmer cookies i hele din browsersession.",
+		"deviceStorageSeconds": "sekunder",
+		"deviceStorageMinutes": "minutter",
+		"deviceStorageHours": "timer",
+		"deviceStorageDays": "dage",
+		"deviceStorageMonths": "måneder",
+		"deviceStorageYears": "år"
 	}
 }
