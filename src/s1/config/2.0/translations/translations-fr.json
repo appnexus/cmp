@@ -36,6 +36,15 @@
 		"purposesLegit": "Finalités (intérêt légitime)",
 		"specialPurposes": "Fins Spéciales",
 		"features": "Caractéristiques",
-		"specialFeatures": "Caractéristiques Spéciales"
+		"specialFeatures": "Caractéristiques Spéciales",
+		"deviceStorage": "Stockage de l'appareil",
+		"deviceStorageMax": "stocke des cookies d'une durée maximale d'environ",
+		"deviceStorageMin": "stocke des cookies pour la durée de votre session de navigation.",
+		"deviceStorageSeconds": "secondes",
+		"deviceStorageMinutes": "minutes",
+		"deviceStorageHours": "heures",
+		"deviceStorageDays": "jours",
+		"deviceStorageMonths": "mois",
+		"deviceStorageYears": "ans"
 	}
 }

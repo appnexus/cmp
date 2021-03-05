@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "隐私选择",
+		"description": "使用本网站，即表示您同意我们使用cookie和信息来提供个性化的内容和广告，并评估和分析网站的使用情况。 单击“了解更多”以更改设置。",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "了解更多",
+			"accept": "好的，我知道了",
+			"save": "保存"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "我们和<a>我们的合作伙伴</a>：",
+		"stacksTitle": "我们和<a>我们的合作伙伴</a>处理以下个人数据，例如IP地址，唯一ID，浏览以下数据：",
+		"specialFeaturesTitle": "为了上述某些目的，我们和<a>我们的合作伙伴</a>：",
+		"specialPurposesTitle": "我们出于上述所有目的均需要您的同意，但出于这些目的，我们具有合法利益：",
+		"featuresTitle": "出于上述某些目的，我们和<a>我们的合作伙伴</a>",
+		"legintPurposesTitle": "为此，某些<a>我们的合作伙伴</a>具有特定于服务的合法权益："
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "谁在使用此信息？",
+		"description": "这是将使用您的信息的公司的完整列表。 请查看其隐私政策以获取更多详细信息。",
+		"partnersTitle": "属于IAB TCF的合作伙伴",
+		"privacy": "隐私政策：",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "后退",
+			"acceptAll": "允许全部",
+			"save": "保存"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "目的（同意)",
+		"purposesLegit": "目的（合法权益)",
+		"specialPurposes": "特殊用途",
+		"features": "特征",
+		"specialFeatures": "特殊功能",
+		"deviceStorage": "设备存储",
+		"deviceStorageMax": "存储Cookie的最长持续时间约为",
+		"deviceStorageMin": "在浏览会话期间存储cookie.",
+		"deviceStorageSeconds": "秒",
+		"deviceStorageMinutes": "分钟",
+		"deviceStorageHours": "小时",
+		"deviceStorageDays": "天",
+		"deviceStorageMonths": "月",
+		"deviceStorageYears": "年"
 	}
 }

@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Privātuma izvēle",
+		"description": "Izmantojot šo vietni, jūs piekrītat, ka mēs izmantojam sīkfailus un informāciju, lai nodrošinātu personalizētu saturu un reklāmas, kā arī novērtētu un analizētu vietnes lietojumu. Noklikšķiniet uz \"Uzzināt vairāk\", lai mainītu iestatījumus.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Uzzināt vairāk",
+			"accept": "Labi, sapratu",
+			"save": "Saglabāt"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Mēs un <a>mūsu partneri</a>:",
+		"stacksTitle": "Mēs un <a>mūsu partneri</a> apstrādājam personas datus, piemēram, IP adresi, unikālo ID, pārlūkošanas datus šādiem nolūkiem:",
+		"specialFeaturesTitle": "Dažiem iepriekš minētajiem mērķiem mēs un <a>mūsu partneri</a>:",
+		"specialPurposesTitle": "Mums ir nepieciešama jūsu piekrišana visiem iepriekš minētajiem mērķiem, taču mums ir likumīgas intereses šajos nolūkos:",
+		"featuresTitle": "Dažiem iepriekš minētajiem mērķiem mēs un <a>mūsu partneri</a>",
+		"legintPurposesTitle": "Dažiem <a>mūsu partneriem</a> ir leģitīmas intereses, kas saistītas ar pakalpojumu:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Kas izmanto šo informāciju?",
+		"description": "Šeit ir pilns to uzņēmumu saraksts, kuri izmantos jūsu informāciju. Lūdzu, skatiet viņu konfidencialitātes politiku, lai iegūtu sīkāku informāciju.",
+		"partnersTitle": "Partneri, kas ir daļa no IAB TCF",
+		"privacy": "Privātuma politika:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Atpakaļ",
+			"acceptAll": "Atļaut visiem",
+			"save": "Saglabāt"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Mērķi (piekrišana)",
+		"purposesLegit": "Mērķi (likumīga interese)",
+		"specialPurposes": "Īpaši mērķi",
+		"features": "Iespējas",
+		"specialFeatures": "Speciālas iespējas",
+		"deviceStorage": "Ierīces krātuve",
+		"deviceStorageMax": "uzglabā sīkdatnes, kuru maksimālais ilgums ir aptuveni",
+		"deviceStorageMin": "glabā sīkdatnes jūsu pārlūkošanas sesijas laikā.",
+		"deviceStorageSeconds": "sekundes",
+		"deviceStorageMinutes": "minūtes",
+		"deviceStorageHours": "stundas",
+		"deviceStorageDays": "dienas",
+		"deviceStorageMonths": "mēnešus",
+		"deviceStorageYears": "gadus"
 	}
 }

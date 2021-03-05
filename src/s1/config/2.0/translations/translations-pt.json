@@ -36,6 +36,15 @@
 		"purposesLegit": "Objetivos (interesse legítimo)",
 		"specialPurposes": "Propósitos Especiais",
 		"features": "Funcionalidades",
-		"specialFeatures": "Propósitos Funcionalidades"
+		"specialFeatures": "Propósitos Funcionalidades",
+		"deviceStorage": "Dispositivo de armazenamento",
+		"deviceStorageMax": "armazena cookies com uma duração máxima de cerca de",
+		"deviceStorageMin": "armazena cookies durante a sua sessão de navegação.",
+		"deviceStorageSeconds": "segundos",
+		"deviceStorageMinutes": "minutos",
+		"deviceStorageHours": "horas",
+		"deviceStorageDays": "dias",
+		"deviceStorageMonths": "meses",
+		"deviceStorageYears": "anos"
 	}
 }

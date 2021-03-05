@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Għażliet ta 'Privatezza",
+		"description": "Meta tuża dan is-sit, inti taqbel mal-użu tagħna ta 'cookies u informazzjoni biex tipprovdi kontenut personalizzat u reklami u tkejjel u tanalizza l-użu tas-sit. Ikklikkja \"Tgħallem aktar\" biex tbiddel is-settings tiegħek.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Tgħallem aktar",
+			"accept": "Ok, Ghandek",
+			"save": "Ħlief"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Aħna u <a>l-imsieħba tagħna</a>:",
+		"stacksTitle": "Aħna u <a>l-imsieħba tagħna</a> nipproċessaw dejta personali bħal indirizz IP, ID uniku, dejta ta 'browsing għal:",
+		"specialFeaturesTitle": "Għal uħud mill-għanijiet ta 'hawn fuq aħna u <a>l-imsieħba tagħna</a>:",
+		"specialPurposesTitle": "Għandna bżonn il-kunsens tiegħek għall-iskopijiet kollha ta 'hawn fuq imma għandna interess leġittimu għal dawn l-iskopijiet:",
+		"featuresTitle": "Għal uħud mill-għanijiet ta 'hawn fuq aħna u <a>l-imsieħba tagħna</a>",
+		"legintPurposesTitle": "Uħud mill-<a>imsieħba tagħna</a> għandhom interess leġittimu speċifiku għas-servizz għal dawn l-iskopijiet:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Min qed juża din l-informazzjoni?",
+		"description": "Hawn hi l-lista sħiħa tal-kumpaniji li se jużaw l-informazzjoni tiegħek. Jekk jogħġbok ara l-politika tal-privatezza tagħhom għal aktar dettalji.",
+		"partnersTitle": "Imsieħba li huma parti mill-IAB TCF",
+		"privacy": "Regoli tal-privatezza:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Lura",
+			"acceptAll": "Ħalli Kollha",
+			"save": "Ħlief"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Skopijiet (Kunsens)",
+		"purposesLegit": "Skopijiet (Interess Leġittimu)",
+		"specialPurposes": "Skopijiet Speċjali",
+		"features": "Karatteristiċi",
+		"specialFeatures": "Karatteristiċi Speċjali",
+		"deviceStorage": "Ħażna tal-Apparat",
+		"deviceStorageMax": "jaħżen cookies b'tul ta 'żmien massimu ta' madwar",
+		"deviceStorageMin": "jaħżen cookies għat-tul tas-sessjoni ta 'browsing tiegħek.",
+		"deviceStorageSeconds": "sekondi",
+		"deviceStorageMinutes": "minuti",
+		"deviceStorageHours": "sigħat",
+		"deviceStorageDays": "jiem",
+		"deviceStorageMonths": "xhur",
+		"deviceStorageYears": "snin"
 	}
 }

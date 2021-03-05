@@ -167,7 +167,11 @@ export default class VendorList extends Component {
 
 										{specialPurposes.length > 0 && (
 											<div>
-												<h4>Special Purposes</h4>
+												<h4>
+													<LocalLabel localizeKey="specialPurposes" translations={translations}>
+														Special Purposes
+													</LocalLabel>
+												</h4>
 												<ul>
 													{specialPurposes.map((key) => {
 														const { name: purposeName } = globalSpecialPurposes[key];
@@ -179,7 +183,11 @@ export default class VendorList extends Component {
 
 										{features.length > 0 && (
 											<div>
-												<h4>Features</h4>
+												<h4>
+													<LocalLabel localizeKey="features" translations={translations}>
+														Features
+													</LocalLabel>
+												</h4>
 												<ul>
 													{features.map((key) => {
 														const { name: featureName } = globalFeatures[key];
@@ -191,7 +199,11 @@ export default class VendorList extends Component {
 
 										{specialFeatures.length > 0 && (
 											<div>
-												<h4>Special Features</h4>
+												<h4>
+													<LocalLabel localizeKey="specialFeatures" translations={translations}>
+														Special Features
+													</LocalLabel>
+												</h4>
 												<ul>
 													{specialFeatures.map((key) => {
 														const { name: featureName } = globalSpecialFeatures[key];
@@ -205,7 +217,7 @@ export default class VendorList extends Component {
 											<div>
 												<h4>
 													<LocalLabel localizeKey="purposesLegit" translations={translations}>
-													Purposes (Legitimate Interest)
+														Purposes (Legitimate Interest)
 													</LocalLabel>
 												</h4>
 												<ul>
@@ -244,11 +256,11 @@ export default class VendorList extends Component {
 																stores cookies with a maximum duration of about
 															</LocalLabel>
 															{` ${maxAgeUnitVal} `}
-															<LocalLabel localizeKey={`deviceStorageUnit${maxAgeUnit.replace(/^./, str => str.toUpperCase())}`} translations={translations}>
+															<LocalLabel localizeKey={`deviceStorage${maxAgeUnit.replace(/^./, str => str.toUpperCase())}`} translations={translations}>
 																{maxAgeUnit}
 															</LocalLabel>
 															{` (${cookieMaxAgeSeconds.toLocaleString()} `}
-															<LocalLabel localizeKey="deviceStorageUnitSeconds" translations={translations}>
+															<LocalLabel localizeKey="deviceStorageSeconds" translations={translations}>
 																seconds
 															</LocalLabel>
 															)

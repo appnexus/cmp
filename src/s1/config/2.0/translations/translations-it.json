@@ -36,6 +36,15 @@
 		"purposesLegit": "Finalità (legittimo interesse)",
 		"specialPurposes": "Scopi Speciali",
 		"features": "Caratteristiche",
-		"specialFeatures": "Scopi Caratteristiche"
+		"specialFeatures": "Scopi Caratteristiche",
+		"deviceStorage": "Archiviazione dispositivo",
+		"deviceStorageMax": "memorizza i cookie con una durata massima di circa",
+		"deviceStorageMin": "memorizza i cookie per la durata della tua sessione di navigazione.",
+		"deviceStorageSeconds": "secondi",
+		"deviceStorageMinutes": "minuti",
+		"deviceStorageHours": "ore",
+		"deviceStorageDays": "giorni",
+		"deviceStorageMonths": "mesi",
+		"deviceStorageYears": "anni"
 	}
 }

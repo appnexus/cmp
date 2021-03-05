@@ -36,6 +36,15 @@
 		"purposesLegit": "Syften (legitimt intresse)",
 		"specialPurposes": "Speciella Syften",
 		"features": "Funktioner",
-		"specialFeatures": "Speciella Funktioner"
+		"specialFeatures": "Speciella Funktioner",
+		"deviceStorage": "Enhetslagring",
+		"deviceStorageMax": "lagrar kakor med en maximal varaktighet på cirka",
+		"deviceStorageMin": "lagrar cookies så länge du surfar.",
+		"deviceStorageSeconds": "sekunder",
+		"deviceStorageMinutes": "minuter",
+		"deviceStorageHours": "timmar",
+		"deviceStorageDays": "dagar",
+		"deviceStorageMonths": "månader",
+		"deviceStorageYears": "år"
 	}
 }

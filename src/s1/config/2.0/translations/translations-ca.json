@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Opcions de privadesa",
+		"description": "En utilitzar aquest lloc, accepteu el nostre ús de cookies i informació per proporcionar contingut i anuncis personalitzats i mesurar i analitzar l’ús del lloc. Feu clic a \"Més informació\" per canviar la configuració.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Aprèn més",
+			"accept": "D'acord ho tinc",
+			"save": "Guardar"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Nosaltres i <a>els nostres socis</a>:",
+		"stacksTitle": "Nosaltres i <a>els nostres socis</a> processem dades personals com ara adreça IP, identificador únic i dades de navegació per a:",
+		"specialFeaturesTitle": "Per a alguns dels propòsits anteriors, nosaltres i <a>els nostres socis</a>:",
+		"specialPurposesTitle": "Necessitem el vostre consentiment per a tots els propòsits anteriors, però tenim un interès legítim per a aquests propòsits:",
+		"featuresTitle": "Per a alguns dels propòsits anteriors, nosaltres i <a>els nostres socis</a>",
+		"legintPurposesTitle": "Alguns dels <a>nostres socis</a> tenen un interès legítim específic del servei per a aquests propòsits:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Qui fa servir aquesta informació?",
+		"description": "Aquí teniu la llista completa d’empreses que utilitzaran la vostra informació. Consulteu la seva política de privadesa per obtenir més informació.",
+		"partnersTitle": "Socis que formen part de l'IAB TCF",
+		"privacy": "Política de privacitat:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Endarrere",
+			"acceptAll": "Permet-ho tot",
+			"save": "Guardar"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Propòsits (consentiment)",
+		"purposesLegit": "Propòsits (interès legítim)",
+		"specialPurposes": "Propòsits especials",
+		"features": "Característiques",
+		"specialFeatures": "Característiques especials",
+		"deviceStorage": "Emmagatzematge de dispositius",
+		"deviceStorageMax": "emmagatzema cookies amb una durada màxima aproximada de",
+		"deviceStorageMin": "emmagatzema cookies durant la sessió de navegació.",
+		"deviceStorageSeconds": "segons",
+		"deviceStorageMinutes": "minuts",
+		"deviceStorageHours": "hores",
+		"deviceStorageDays": "dies",
+		"deviceStorageMonths": "mesos",
+		"deviceStorageYears": "anys"
 	}
 }

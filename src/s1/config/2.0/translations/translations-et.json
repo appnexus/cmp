@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Privaatsuse valikud",
+		"description": "Selle saidi kasutamisel nõustute küpsiste ja teabe kasutamisega isikupärastatud sisu ja reklaamide pakkumiseks ning saidi kasutamise mõõtmiseks ja analüüsimiseks. Seadete muutmiseks klõpsake nuppu \"Lisateave\".",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Lisateave",
+			"accept": "Ok, sain aru",
+			"save": "Salvesta"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Meie ja <a>meie partnerid</a>:",
+		"stacksTitle": "Meie ja <a>meie partnerid</a> töötleme isikuandmeid, näiteks IP-aadressi, kordumatut ID-d, sirvimisandmeid:",
+		"specialFeaturesTitle": "Mõnel ülaltoodud eesmärgil meie ja <a>meie partnerid</a>:",
+		"specialPurposesTitle": "Vajame teie nõusolekut kõigil ülaltoodud eesmärkidel, kuid meil on selleks õigustatud huvi:",
+		"featuresTitle": "Mõnel ülaltoodud eesmärgil meie ja <a>meie partnerid</a>",
+		"legintPurposesTitle": "Mõnel <a>meie partnerist</a> on neil eesmärkidel teenuspõhine õigustatud huvi:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Kes seda teavet kasutab?",
+		"description": "Siin on täielik loetelu ettevõtetest, kes teie teavet kasutavad. Lisateavet leiate nende privaatsuseeskirjadest.",
+		"partnersTitle": "Partnerid, kes kuuluvad IAB TCF-i",
+		"privacy": "Privaatsuspoliitika:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "tagasi",
+			"acceptAll": "Luba kõigil",
+			"save": "Salvesta"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Eesmärgid (nõusolek)",
+		"purposesLegit": "Eesmärgid (õigustatud huvi)",
+		"specialPurposes": "Eriotstarbed",
+		"features": "Funktsioonid",
+		"specialFeatures": "Eriomadused",
+		"deviceStorage": "Seadme salvestusruum",
+		"deviceStorageMax": "salvestab küpsiseid, mille maksimaalne kestus on umbes",
+		"deviceStorageMin": "salvestab küpsiseid kogu teie sirvimisseansi ajaks.",
+		"deviceStorageSeconds": "sekundit",
+		"deviceStorageMinutes": "minutit",
+		"deviceStorageHours": "tundi",
+		"deviceStorageDays": "päeva",
+		"deviceStorageMonths": "kuud",
+		"deviceStorageYears": "aastat"
 	}
 }

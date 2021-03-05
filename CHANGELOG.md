@@ -1,3 +1,9 @@
+## [2.1.7](https://github.com/openmail/system1-cmp/compare/2.1.6...2.1.7) (2021-03-05)
+
+### Feat
+
+- [x] Add translations for device text
+
 ## [2.1.6](https://github.com/openmail/system1-cmp/compare/2.1.5...2.1.6) (2021-02-26)
 
 ### Refactor

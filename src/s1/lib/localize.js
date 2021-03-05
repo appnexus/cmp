@@ -83,14 +83,14 @@ export const secondsToNearestInt = (seconds) => {
 			value: Math.round(days)
 		};
 	}
-	const years = months / 12;
+	const years = days / 365;
 	if (years < 1) {
 		return {
 			unit: 'months',
 			value: Math.round(months)
 		};
 	}
-
+	
 	return {
 		unit: 'years',
 		value: Math.round(years)

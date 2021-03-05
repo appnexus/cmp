@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Adatvédelmi választások",
+		"description": "A webhely használatával Ön elfogadja, hogy sütiket és információkat használunk személyre szabott tartalom és hirdetések biztosítására, valamint a webhely használatának mérésére és elemzésére. Kattintson a \"További információ\" gombra a beállítások módosításához.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "További információ",
+			"accept": "Ok értem",
+			"save": "Mentése"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Mi és <a>partnereink</a>:",
+		"stacksTitle": "Mi és <a>partnereink</a> feldolgozunk személyes adatokat, például IP-címet, egyedi azonosítót és böngészési adatokat:",
+		"specialFeaturesTitle": "Néhány fenti célból mi és <a>partnereink</a>:",
+		"specialPurposesTitle": "A fenti célok érdekében szükségünk van az Ön beleegyezésére, de jogos érdekünk fűződik ezekhez a célokhoz:",
+		"featuresTitle": "Néhány fenti célból mi és <a>partnereink</a>",
+		"legintPurposesTitle": "<a>Partnereink</a> némelyikének szolgáltatásspecifikus jogos érdeke fűződik ezekhez a célokhoz:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Ki használja ezeket az információkat?",
+		"description": "Itt található azoknak a vállalatoknak a teljes listája, amelyek felhasználják az Ön adatait. További részletekért olvassa el az adatvédelmi irányelveiket.",
+		"partnersTitle": "Partnerek, akik az IAB TCF tagjai",
+		"privacy": "Adatvédelmi irányelvek:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Vissza",
+			"acceptAll": "Engedélyezni az összeset",
+			"save": "Mentése"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Célok (hozzájárulás)",
+		"purposesLegit": "Célok (Jogos érdek)",
+		"specialPurposes": "Különleges célok",
+		"features": "Jellemzők",
+		"specialFeatures": "Különleges képességek",
+		"deviceStorage": "Eszköz tárolása",
+		"deviceStorageMax": "sütiket tárol, amelyek maximális időtartama kb",
+		"deviceStorageMin": "sütiket tárol a böngészési munkamenet időtartama alatt.",
+		"deviceStorageSeconds": "másodpercig",
+		"deviceStorageMinutes": "perc",
+		"deviceStorageHours": "két óra",
+		"deviceStorageDays": "nap",
+		"deviceStorageMonths": "hónap",
+		"deviceStorageYears": "év"
 	}
 }

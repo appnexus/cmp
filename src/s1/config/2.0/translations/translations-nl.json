@@ -36,6 +36,15 @@
 		"purposesLegit": "Doeleinden (legitiem belang)",
 		"specialPurposes": "Speciale Doeleinden",
 		"features": "Kenmerken",
-		"specialFeatures": "Speciale Kenmerken"
+		"specialFeatures": "Speciale Kenmerken",
+		"deviceStorage": "Apparaat opslag",
+		"deviceStorageMax": "slaat cookies op met een maximale duur van ongeveer",
+		"deviceStorageMin": "slaat cookies op voor de duur van uw browsesessie.",
+		"deviceStorageSeconds": "seconden",
+		"deviceStorageMinutes": "minuten",
+		"deviceStorageHours": "uren",
+		"deviceStorageDays": "dagen",
+		"deviceStorageMonths": "maanden",
+		"deviceStorageYears": "jaren"
 	}
 }

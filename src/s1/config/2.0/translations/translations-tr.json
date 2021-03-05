@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Gizlilik Seçenekleri",
+		"description": "Bu siteyi kullanarak, kişiselleştirilmiş içerik ve reklamlar sağlamak ve site kullanımını ölçmek ve analiz etmek için çerezleri ve bilgileri kullanmamızı kabul etmiş olursunuz. Ayarlarınızı değiştirmek için \"Daha Fazla Bilgi\" yi tıklayın.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Daha Fazla Bilgi",
+			"accept": "Tamam anladım",
+			"save": "Kaydet"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Biz ve <a>ortaklarımız</a>:",
+		"stacksTitle": "Biz ve <a>ortaklarımız</a>, IP adresi, benzersiz kimlik, göz atma verileri gibi kişisel verileri işleriz:",
+		"specialFeaturesTitle": "Yukarıdaki amaçlardan bazıları için biz ve <a>ortaklarımız</a>:",
+		"specialPurposesTitle": "Yukarıdaki tüm amaçlar için izninize ihtiyacımız var, ancak bu amaçlar için meşru menfaatimiz var:",
+		"featuresTitle": "Yukarıdaki amaçlardan bazıları için biz ve <a>ortaklarımız</a>",
+		"legintPurposesTitle": "<a>Ortaklarımızdan</a> bazılarının bu amaçlar doğrultusunda hizmete özel meşru menfaatleri vardır.:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Bu bilgileri kim kullanıyor?",
+		"description": "İşte bilgilerinizi kullanacak şirketlerin tam listesi. Daha fazla ayrıntı için lütfen gizlilik politikalarını inceleyin..",
+		"partnersTitle": "IAB TCF'nin parçası olan iş ortakları",
+		"privacy": "Gizlilik Politikası:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Geri",
+			"acceptAll": "Hepsine izin ver",
+			"save": "Kaydet"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Amaçlar (Onay)",
+		"purposesLegit": "Amaçlar (Meşru Menfaat)",
+		"specialPurposes": "Özel Amaçlar",
+		"features": "Özellikleri",
+		"specialFeatures": "Özel Özellikler",
+		"deviceStorage": "Cihaz Belleği",
+		"deviceStorageMax": "maksimum yaklaşık süresi olan çerezleri saklar",
+		"deviceStorageMin": "göz atma oturumunuz süresince çerezleri depolar.",
+		"deviceStorageSeconds": "saniye",
+		"deviceStorageMinutes": "dakika",
+		"deviceStorageHours": "saatler",
+		"deviceStorageDays": "günler",
+		"deviceStorageMonths": "aylar",
+		"deviceStorageYears": "yıl"
 	}
 }

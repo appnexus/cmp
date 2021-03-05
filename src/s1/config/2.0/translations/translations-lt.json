@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Privatumo pasirinkimai",
+		"description": "Naudodamiesi šia svetaine, jūs sutinkate, kad mes naudojame slapukus ir informaciją teikdami asmeninį turinį ir skelbimus bei matuodami ir analizuodami svetainės naudojimą. Spustelėkite \"Sužinokite daugiau\", kad pakeistumėte nustatymus.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Sužinokite daugiau",
+			"accept": "Gerai supratau",
+			"save": "Išsaugoti"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Mes ir <a>mūsų partneriai</a>:",
+		"stacksTitle": "Mes ir <a>mūsų partneriai</a> apdorojame tokius asmens duomenis kaip IP adresas, unikalus ID, naršymo duomenys:",
+		"specialFeaturesTitle": "Kai kuriais aukščiau nurodytais tikslais mes ir <a>mūsų partneriai</a>:",
+		"specialPurposesTitle": "Mums reikia jūsų sutikimo visais aukščiau nurodytais tikslais, tačiau šiais tikslais esame teisėtai suinteresuoti:",
+		"featuresTitle": "Kai kuriais aukščiau nurodytais tikslais mes ir <a>mūsų partneriai</a>",
+		"legintPurposesTitle": "Kai kurie <a>mūsų partneriai</a> teisėtai domisi konkrečiomis paslaugomis šiais tikslais:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Kas naudoja šią informaciją?",
+		"description": "Čia yra visas sąrašas bendrovių, kurios naudos jūsų informaciją. Norėdami sužinoti daugiau, peržiūrėkite jų privatumo politiką.",
+		"partnersTitle": "Partneriai, kurie yra IAB TCF dalis",
+		"privacy": "Privatumo politika:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Atgal",
+			"acceptAll": "Leisti visiems",
+			"save": "Išsaugoti"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Tikslai (sutikimas)",
+		"purposesLegit": "Tikslai (teisėtas interesas)",
+		"specialPurposes": "Specialieji tikslai",
+		"features": "funkcijos",
+		"specialFeatures": "Specialieji funkcijos",
+		"deviceStorage": "Įrenginio saugykla",
+		"deviceStorageMax": "saugo slapukus, kurių maksimali trukmė yra apie",
+		"deviceStorageMin": "saugo slapukus jūsų naršymo sesijos metu.",
+		"deviceStorageSeconds": "sekundes",
+		"deviceStorageMinutes": "minutės",
+		"deviceStorageHours": "valandos",
+		"deviceStorageDays": "dienas",
+		"deviceStorageMonths": "mėnesiai",
+		"deviceStorageYears": "metus"
 	}
 }

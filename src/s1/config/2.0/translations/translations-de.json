@@ -36,6 +36,15 @@
 		"purposesLegit": "Zweck (Berechtigtes Interesse)",
 		"specialPurposes": "Besondere Zwecke",
 		"features": "Eigenschaften",
-		"specialFeatures": "Besondere Eigenschaften"
+		"specialFeatures": "Besondere Eigenschaften",
+		"deviceStorage": "Gerätespeicher",
+		"deviceStorageMax": "speichert Cookies mit einer maximalen Dauer von ca.",
+		"deviceStorageMin": "speichert Cookies für die Dauer Ihrer Browsersitzung.",
+		"deviceStorageSeconds": "Sekunden",
+		"deviceStorageMinutes": "Minuten",
+		"deviceStorageHours": "Stunden",
+		"deviceStorageDays": "Tage",
+		"deviceStorageMonths": "Monate",
+		"deviceStorageYears": "Jahre"
 	}
 }

@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Варианты конфиденциальности",
+		"description": "Используя этот сайт, вы соглашаетесь на использование нами файлов cookie и информации для предоставления персонализированного контента и рекламы, а также измерения и анализа использования сайта. Нажмите \"Подробнее\", чтобы изменить настройки.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Подробнее",
+			"accept": "Хорошо понял",
+			"save": "Сохранить"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Мы и <a>наши партнеры</a>:",
+		"stacksTitle": "Мы и <a>наши партнеры</a> обрабатываем персональные данные, такие как IP-адрес, уникальный идентификатор, данные просмотра для:",
+		"specialFeaturesTitle": "Для некоторых из вышеперечисленных целей мы и <a>наши партнеры</a>:",
+		"specialPurposesTitle": "Нам необходимо ваше согласие для всех вышеперечисленных целей, но у нас есть законный интерес для следующих целей:",
+		"featuresTitle": "Для некоторых из вышеперечисленных целей мы и <a>наши партнеры</a>",
+		"legintPurposesTitle": "Некоторые из <a>наших партнеров</a> имеют законный интерес в отношении услуг в следующих целях:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Кто пользуется этой информацией?",
+		"description": "Вот полный список компаний, которые будут использовать вашу информацию. Пожалуйста, просмотрите их политику конфиденциальности для получения более подробной информации.",
+		"partnersTitle": "Партнеры, входящие в IAB TCF",
+		"privacy": "Политика конфиденциальности:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Назад",
+			"acceptAll": "Позволять все",
+			"save": "Сохранить"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Цели (согласие)",
+		"purposesLegit": "Цели (законный интерес)",
+		"specialPurposes": "Особые цели",
+		"features": "Функции",
+		"specialFeatures": "Особые возможности",
+		"deviceStorage": "Хранилище устройства",
+		"deviceStorageMax": "хранит файлы cookie с максимальной продолжительностью около",
+		"deviceStorageMin": "хранит файлы cookie на время вашего сеанса просмотра.",
+		"deviceStorageSeconds": "секунды",
+		"deviceStorageMinutes": "минут",
+		"deviceStorageHours": "часы",
+		"deviceStorageDays": "дней",
+		"deviceStorageMonths": "месяцы",
+		"deviceStorageYears": "годы"
 	}
 }

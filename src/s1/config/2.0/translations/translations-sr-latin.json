@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Izbori privatnosti",
+		"description": "Korišćenjem ove stranice pristajete na upotrebu kolačića i informacija kako bismo pružili personalizovani sadržaj i oglase i merili i analizirali upotrebu sajta. Kliknite na \"Saznajte više\" da biste promenili podešavanja.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Saznajte više",
+			"accept": "U redu, shvatio sam",
+			"save": "sačuvati"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Mi i <a>naši partneri</a>:",
+		"stacksTitle": "Mi i <a>naši partneri</a> obrađujemo lične podatke kao što su IP adresa, jedinstveni ID, podaci pregledanja za:",
+		"specialFeaturesTitle": "U neke od gore navedenih svrha mi i <a>naši partneri</a>:",
+		"specialPurposesTitle": "Potreban nam je vaš pristanak za sve gore navedene svrhe, ali imamo legitimni interes za ove svrhe:",
+		"featuresTitle": "U neke gore navedene svrhe mi i <a>naši partneri</a>",
+		"legintPurposesTitle": "Neki od <a>naših partnera</a> imaju legitimni interes specifičan za usluge u ove svrhe:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Ko koristi ove informacije?",
+		"description": "Ovde je kompletna lista kompanija koje će koristiti vaše podatke. Za više detalja pogledajte njihovu politiku privatnosti.",
+		"partnersTitle": "Partneri koji su deo IAB TCF",
+		"privacy": "Pravila o privatnosti:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Nazad",
+			"acceptAll": "Dozvoljavaju sve",
+			"save": "sačuvati"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Namene (Saglasnost)",
+		"purposesLegit": "Namene (legitimni interes)",
+		"specialPurposes": "Posebne svrhe",
+		"features": "Karakteristike",
+		"specialFeatures": "Specijalne karakteristike",
+		"deviceStorage": "Skladištenje uređaja",
+		"deviceStorageMax": "čuva kolačiće sa maksimalnim trajanjem od oko",
+		"deviceStorageMin": "čuva kolačiće za vreme trajanja vaše sesije pregledanja.",
+		"deviceStorageSeconds": "sekunde",
+		"deviceStorageMinutes": "minuta",
+		"deviceStorageHours": "sati",
+		"deviceStorageDays": "dana",
+		"deviceStorageMonths": "meseci",
+		"deviceStorageYears": "godine"
 	}
 }

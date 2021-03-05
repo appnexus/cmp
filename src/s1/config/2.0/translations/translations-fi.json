@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Tietosuojavalinnat",
+		"description": "Käyttämällä tätä sivustoa hyväksyt, että käytämme evästeitä ja tietoja henkilökohtaisen sisällön ja mainosten tarjoamiseksi sekä sivuston käytön mittaamiseksi ja analysoimiseksi. Muuta asetuksia napsauttamalla \"Lisätietoja\".",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Lisätietoja",
+			"accept": "OK tajusin",
+			"save": "Tallentaa"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Me ja <a>kumppanimme</a>:",
+		"stacksTitle": "Me ja <a>kumppanimme</a> käsittelemme henkilötietoja, kuten IP-osoitetta, yksilöllistä tunnusta ja selaustietoja:",
+		"specialFeaturesTitle": "Joissakin yllä mainituista syistä me ja <a>kumppanimme</a>:",
+		"specialPurposesTitle": "Tarvitsemme suostumuksesi kaikkiin edellä mainittuihin tarkoituksiin, mutta meillä on oikeutettu etu näihin tarkoituksiin:",
+		"featuresTitle": "Joitakin yllä mainittuja tarkoituksia varten me ja <a>kumppanimme</a>",
+		"legintPurposesTitle": "Joillakin <a>kumppaneillamme</a> on palvelukohtainen oikeutettu etu näihin tarkoituksiin:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Kuka käyttää näitä tietoja?",
+		"description": "Tässä on täydellinen luettelo yrityksistä, jotka käyttävät tietojasi. Katso lisätietoja heidän tietosuojakäytännöstään.",
+		"partnersTitle": "Kumppanit, jotka ovat osa IAB TCF",
+		"privacy": "Tietosuojakäytäntö:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Takaisin",
+			"acceptAll": "Salli kaikki",
+			"save": "Tallentaa"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Tarkoitukset (suostumus)",
+		"purposesLegit": "Tarkoitukset (perusteltu etu)",
+		"specialPurposes": "Erityistarkoitukset",
+		"features": "ominaisuudet",
+		"specialFeatures": "Lisäominaisuudet",
+		"deviceStorage": "Laitteen tallennus",
+		"deviceStorageMax": "tallentaa evästeitä, joiden enimmäiskesto on noin",
+		"deviceStorageMin": "tallentaa evästeitä selausistunnon ajaksi.",
+		"deviceStorageSeconds": "sekuntia",
+		"deviceStorageMinutes": "pöytäkirja",
+		"deviceStorageHours": "tuntia",
+		"deviceStorageDays": "päivä",
+		"deviceStorageMonths": "kuukautta",
+		"deviceStorageYears": "vuotta"
 	}
 }

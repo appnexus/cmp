@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Wybory dotyczące prywatności",
+		"description": "Korzystając z tej witryny, wyrażasz zgodę na używanie przez nas plików cookie i informacji w celu dostarczania spersonalizowanych treści i reklam oraz mierzenia i analizowania korzystania z witryny. Kliknij „Dowiedz się więcej”, aby zmienić ustawienia.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Dowiedz się więcej",
+			"accept": "Ok, rozumiem",
+			"save": "Zapisz"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "My i <a>nasi partnerzy</a>:",
+		"stacksTitle": "Wraz z <a>naszymi partnerami</a> przetwarzamy dane osobowe, takie jak adres IP, unikalny identyfikator, dane przeglądania w celu:",
+		"specialFeaturesTitle": "W przypadku niektórych z powyższych celów my i <a>nasi partnerzy</a>:",
+		"specialPurposesTitle": "Potrzebujemy Twojej zgody do wszystkich powyższych celów, ale mamy uzasadniony interes w tych celach:",
+		"featuresTitle": "W przypadku niektórych z powyższych celów my i <a>nasi partnerzy</a>",
+		"legintPurposesTitle": "Niektórzy z <a>naszych partnerów</a> mają uzasadniony interes związany z usługami w następujących celach:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Kto korzysta z tych informacji?",
+		"description": "Oto pełna lista firm, które będą wykorzystywać Twoje informacje. Aby uzyskać więcej informacji, zapoznaj się z ich polityką prywatności.",
+		"partnersTitle": "Partnerzy będący częścią IAB TCF",
+		"privacy": "Polityka prywatności:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Wróć",
+			"acceptAll": "Zezwolić wszystkim",
+			"save": "Zapisz"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Cele (zgoda)",
+		"purposesLegit": "Cele (uzasadniony interes)",
+		"specialPurposes": "Specjalne cele",
+		"features": "funkcje",
+		"specialFeatures": "Cechy szczególne",
+		"deviceStorage": "Pamięć urządzenia",
+		"deviceStorageMax": "przechowuje pliki cookie z maksymalnym czasem trwania ok",
+		"deviceStorageMin": "przechowuje pliki cookie na czas trwania Twojej sesji przeglądania.",
+		"deviceStorageSeconds": "sekundy",
+		"deviceStorageMinutes": "minuty",
+		"deviceStorageHours": "godziny",
+		"deviceStorageDays": "dni",
+		"deviceStorageMonths": "miesiące",
+		"deviceStorageYears": "lata"
 	}
 }

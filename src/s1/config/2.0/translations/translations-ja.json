@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "プライバシーの選択",
+		"description": "このサイトを使用することにより、Cookieと情報を使用して、パーソナライズされたコンテンツと広告を提供し、サイトの使用状況を測定および分析することに同意したことになります。 [詳細]をクリックして設定を変更します。",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "詳細",
+			"accept": "はい、わかった",
+			"save": "セーブ"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "私たちと<a>私たちのパートナー</a>：",
+		"stacksTitle": "私たちと<a>私たちのパートナー</a>は、IPアドレス、一意のID、閲覧データなどの個人データを次の目的で処理します。",
+		"specialFeaturesTitle": "上記の目的のいくつかについて、私たちと<a>私たちのパートナー</a>：",
+		"specialPurposesTitle": "上記のすべての目的のためにあなたの同意が必要ですが、私たちはこれらの目的のために正当な利益を持っています：",
+		"featuresTitle": "上記の目的のいくつかのために、私たちと<a>私たちのパートナー</a>",
+		"legintPurposesTitle": "<a>パートナー</a>の中には、次の目的でサービス固有の正当な利益を持っているものがあります。"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "誰がこの情報を使用していますか？",
+		"description": "これがあなたの情報を使用する会社の完全なリストです。 詳細については、プライバシーポリシーをご覧ください。",
+		"partnersTitle": "[IAB TCF]の一部であるパートナー",
+		"privacy": "個人情報保護方針:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "バック",
+			"acceptAll": "すべて許可します",
+			"save": "セーブ"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "目的（同意)",
+		"purposesLegit": "目的（正当な利益)",
+		"specialPurposes": "特別な目的",
+		"features": "機能",
+		"specialFeatures": "特別な機能",
+		"deviceStorage": "デバイスストレージ",
+		"deviceStorageMax": "最大期間が約のCookieを保存します",
+		"deviceStorageMin": "ブラウジングセッションの間、Cookieを保存します.",
+		"deviceStorageSeconds": "秒",
+		"deviceStorageMinutes": "分",
+		"deviceStorageHours": "時間",
+		"deviceStorageDays": "日",
+		"deviceStorageMonths": "月",
+		"deviceStorageYears": "年"
 	}
 }

@@ -1,33 +1,42 @@
 {
 	"layer1Stacks": {
-		"title": "Privacy Choices",
-		"description": "By using this site, you agree to our use of cookies and information to provide personalized content and ads and measure and analyze site usage. Click \"Learn More\" to change your settings.",
+		"title": "Alegeri de confidențialitate",
+		"description": "Prin utilizarea acestui site, sunteți de acord cu utilizarea noastră de cookie-uri și informații pentru a furniza conținut personalizat și reclame și pentru a măsura și analiza utilizarea site-ului. Faceți clic pe \"Aflați mai multe\" pentru a vă modifica setările.",
 		"links": {
-			"manage": "Learn More",
-			"accept": "Ok, Got It",
-			"save": "Save"
+			"manage": "Aflați mai multe",
+			"accept": "OK am inteles",
+			"save": "Salvează"
 		},
-		"purposesTitle": "We and <a>our partners</a>:",
-		"stacksTitle": "We and <a>our partners</a> process personal data such as IP address, unique ID, browsing data for:",
-		"specialFeaturesTitle": "For some of the purposes above we and <a>our partners</a>:",
-		"specialPurposesTitle": "We need your consent for all the purposes above but we have a legitimate interest for these purposes:",
-		"featuresTitle": "For some of the purposes above we and <a>our partners</a>",
-		"legintPurposesTitle": "Some of <a>our partners</a> have service-specific legitimate interest for these purposes:"
+		"purposesTitle": "Noi și <a>partenerii noștri</a>:",
+		"stacksTitle": "Noi și <a>partenerii noștri</a> procesăm date cu caracter personal, cum ar fi adresa IP, ID unic, date de navigare pentru:",
+		"specialFeaturesTitle": "Pentru unele dintre scopurile de mai sus, noi și <a>partenerii noștri</a>:",
+		"specialPurposesTitle": "Avem nevoie de consimțământul dvs. pentru toate scopurile de mai sus, dar avem un interes legitim pentru aceste scopuri:",
+		"featuresTitle": "Pentru unele dintre scopurile de mai sus, noi și <a>partenerii noștri</a>",
+		"legintPurposesTitle": "Unii dintre <a>partenerii noștri</a> au un interes legitim specific serviciilor în aceste scopuri:"
 	},
 	"layer3Vendors": {
-		"title": "Who is using this information?",
-		"description": "Here is the complete list of companies who will use your information. Please view their privacy policy for more details.",
-		"partnersTitle": "Partners who are part of the IAB TCF",
-		"privacy": "Privacy Policy:",
+		"title": "Cine folosește aceste informații?",
+		"description": "Iată lista completă a companiilor care vă vor folosi informațiile. Vă rugăm să consultați politica lor de confidențialitate pentru mai multe detalii.",
+		"partnersTitle": "Parteneri care fac parte din IAB TCF",
+		"privacy": "Politica de Confidențialitate:",
 		"links": {
-			"back": "Back",
-			"acceptAll": "Allow All",
-			"save": "Save"
+			"back": "Reveni",
+			"acceptAll": "Permiteți-le pe toate",
+			"save": "Salvează"
 		},
-		"purposesConsent": "Purposes (Consent)",
-		"purposesLegit": "Purposes (Legitimate Interest)",
-		"specialPurposes": "Special Purposes",
-		"features": "Features",
-		"specialFeatures": "Special Features"
+		"purposesConsent": "Scopuri (Consimțământ)",
+		"purposesLegit": "Scopuri (interes legitim)",
+		"specialPurposes": "Scopuri speciale",
+		"features": "Caracteristici",
+		"specialFeatures": "Caracteristici speciale",
+		"deviceStorage": "Stocare dispozitiv",
+		"deviceStorageMax": "stochează cookie-uri cu o durată maximă de aproximativ",
+		"deviceStorageMin": "stochează cookie-uri pe durata sesiunii de navigare.",
+		"deviceStorageSeconds": "secunde",
+		"deviceStorageMinutes": "minute",
+		"deviceStorageHours": "ore",
+		"deviceStorageDays": "zile",
+		"deviceStorageMonths": "luni",
+		"deviceStorageYears": "years"
 	}
 }
