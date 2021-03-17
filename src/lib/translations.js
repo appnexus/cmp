@@ -140,7 +140,7 @@ _POLICY_`
 		},
 		purpose9: {
 			title: 'Marktforschung einsetzen, um Erkenntnisse über Zielgruppen zu gewinnen',
-			description: '<p>Market research may be used in order to obtain further information about the audience visiting websites/apps and viewing advertisements.</p>'
+			description: '<p>Marktforschung kann verwendet werden, um mehr über die Zielgruppen zu erfahren, die Dienste oder Anwendungen verwenden und sich Anzeigen ansehen.</p>'
 		},
 		purpose10: {
 			title: 'Produkte entwickeln und verbessern',
