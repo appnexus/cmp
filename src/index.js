@@ -93,7 +93,7 @@ const shouldDisplay = () => {
 								} else {
 									try {
 										const tcStringDecoded = decodeConsentData(data.consent);
-										finish(timeout, vendorList, tcStringDecoded);
+										finish(timeout, vendorList, tcStringDecoded, data.customVendorsConsent);
 									} catch (e) {
 										finish(timeout, vendorList);
 									}
@@ -190,8 +190,8 @@ function start() {
 	Promise.all([
 		shouldDisplay(),
 		config.getConsentData ? readExternalConsentData(config) : readConsentCookie()
-	]).then(([displayOptions, consentString]) => {
-		initializeStore(consentString, displayOptions.display).then(() => {
+	]).then(([displayOptions, consentString, customVendorsConsent]) => {
+		initializeStore(consentString, displayOptions.display, customVendorsConsent).then(() => {
 			displayUI(window.__tcfapi, displayOptions);
 		}).catch(err => {
 			log.error('Failed to initialize CMP store', err);
