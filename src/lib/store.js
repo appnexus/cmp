@@ -20,7 +20,8 @@ export default class Store {
 		cmpId,
 		cmpVersion = 2,
 		cookieVersion = 2,
-		consentString
+		consentString,
+		customVendorsConsent
 	} = {}) {
 		// Keep track of data that has already been persisted
 		const consentLanguage = findLocale().substr(0, 2).toUpperCase();
@@ -37,6 +38,7 @@ export default class Store {
 		this.persistedConsentString = isTCFv2Compatible ? consentString : '';
 		this.persistedConsentData = isTCFv2Compatible ? decodedConsentString : {};
 		this.isCustomVendors = false;
+		this.customVendorsConsent = customVendorsConsent;
 
 		this.tcModel = Object.assign(
 			tcModel,
@@ -100,7 +102,7 @@ export default class Store {
 		if (config.setConsentData) {
 			let consentData = encodedConsent;
 			try {
-				config.setConsentData(consentData, err => {
+				config.setConsentData({consentData, customVendorsConsent: this.customVendorsConsent}, err => {
 					if (err) {
 						log.error('Failed writing external consent data', err);
 					}
@@ -170,6 +172,12 @@ export default class Store {
 			});
 		}
 		this.storeUpdate();
+	};
+
+	setCustomVendorsConsent = isSelected => {
+		this.customVendorsConsent = isSelected ? 1 : 0;
+		this.storeUpdate();
+
 	};
 
 	selectAllVendors = (isSelected) => {
