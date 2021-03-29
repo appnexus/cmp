@@ -66,6 +66,18 @@ export default class Store {
 		this.cmpApi.update(this.persistedConsentString, shouldDisplayCmpUI);
 	}
 
+	calculateCustomVendorsConsent (vendorList, tcModel) {
+		const checkConsent = (key, consent) => {
+			return Object.keys(vendorList[key]).length === tcModel[consent].size;
+		};
+
+		return Boolean(this.customVendorsConsent &&
+			checkConsent('specialFeatures', 'specialFeatureOptins') &&
+			checkConsent('purposes', 'purposeConsents') &&
+			checkConsent('purposes', 'purposeLegitimateInterests')
+		);
+	}
+
 	/**
 	 * Persist all consent data to the cookie.  This data will NOT be filtered
 	 * by the vendorList and will include global consents set no matter what
@@ -100,9 +112,10 @@ export default class Store {
 		// because, to set pubConsent cookie with `npa` value during config.setConsentData processing
 		// we use data from cmpApi to calculate `npa`
 		if (config.setConsentData) {
-			let consentData = encodedConsent;
+			let consentString = encodedConsent;
+			const customVendorsConsent = this.calculateCustomVendorsConsent(vendorList, tcModel);
 			try {
-				config.setConsentData({consentData, customVendorsConsent: this.customVendorsConsent}, err => {
+				config.setConsentData({ consentString, customVendorsConsent }, err => {
 					if (err) {
 						log.error('Failed writing external consent data', err);
 					}
@@ -183,6 +196,7 @@ export default class Store {
 	selectAllVendors = (isSelected) => {
 		const operation = isSelected ? 'setAllVendorConsents' : 'unsetAllVendorConsents';
 		this.tcModel[operation]();
+		this.setCustomVendorsConsent(isSelected);
 		this.storeUpdate();
 	};
 
@@ -229,6 +243,7 @@ export default class Store {
 		//vendors rejection can occurs only once in the lifetime of application
 		//should only be called if user vendor consent has not been created yet
 		if (!this.hasInitialVendorsRejectionOccured) {
+			this.setCustomVendorsConsent(false);
 			this.selectAllVendors(false);
 			this.hasInitialVendorsRejectionOccured = true;
 		}
