@@ -32,9 +32,8 @@ export default class Details extends Component {
 	};
 
 	getCustomVendors = () => {
-		const {vendorList: {custom_vendors}} = this.props.store;
-
-		if(this.isNewVendorList()) {
+		if (this.isNewVendorList()) {
+			const { vendorList: { custom_vendors } } = this.props.store;
 			return custom_vendors;
 		}
 
@@ -43,17 +42,16 @@ export default class Details extends Component {
 	};
 
 	getGlobalVendors = () => {
-		const {vendorList: {vendors}} = this.props.store;
-
-		if(this.isNewVendorList()) {
+		if (this.isNewVendorList()) {
+			const { vendorList: { vendors } } = this.props.store;
 			return vendors;
 		}
 
-		return this.getVendors().filter((vendor) => !!vendor.globalId)
+		return this.getVendors().filter((vendor) => !!vendor.globalId);
 	};
 
 	isNewVendorList = () => {
-		const {vendorList: {publicationVersion}} = this.props.store;
+		const { vendorList: { publicationVersion } } = this.props.store;
 
 		return publicationVersion !== undefined;
 	};
@@ -79,14 +77,12 @@ export default class Details extends Component {
 			}
 		}
 
-		const {vendorList: {vendors, custom_vendors}} = this.props.store;
-
-		if(this.isNewVendorList())  {
-			if(isCustom) {
-				return Object.values(custom_vendors)
-			} else {
-				return Object.values(vendors)
+		if (this.isNewVendorList()) {
+			if (isCustom) {
+				const { vendorList: { custom_vendors } } = this.props.store;
+				return Object.values(custom_vendors);
 			}
+			return filteredVendors;
 		}
 
 		return filteredVendors.filter(vendor => isCustom ? !vendor.globalId : !!vendor.globalId);
@@ -118,7 +114,7 @@ export default class Details extends Component {
 		};
 	};
 
-	render (props, state) {
+	render(props, state) {
 		const {
 			onSaveOrClose,
 			store

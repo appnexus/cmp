@@ -6,7 +6,7 @@ import ConsentInfo from '../../../consentinfo/consentinfo';
 import Vendor from './vendor';
 
 export default class Vendors extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			editingConsents: false
@@ -54,19 +54,20 @@ export default class Vendors extends Component {
 	isFullVendorsConsentChosen = () => {
 		const { vendors, selectedVendorIds, isNewVendorList, isCustom, customVendorsConsent } = this.props;
 
-		if(isNewVendorList && isCustom) return customVendorsConsent;
+		if (isNewVendorList && isCustom) {
+			return customVendorsConsent;
+		}
 
 		const isSelected = ({ id }) => selectedVendorIds.has(id);
 		return vendors.every(isSelected);
 	};
 
 	handleFullConsentChange = ({ isSelected }) => {
+		const { isNewVendorList, setCustomVendorsConsent, isCustom } = this.props;
 
-		const { isNewVendorList, setCustomVendorsConsent, isCustom} = this.props;
-
-		if(isNewVendorList && isCustom) {
+		if (isNewVendorList && isCustom) {
 			setCustomVendorsConsent(isSelected);
-		};
+		}
 		isSelected ? this.handleAcceptAll() : this.handleRejectAll();
 	};
 
@@ -92,7 +93,7 @@ export default class Vendors extends Component {
 
 	getPrefix = () => this.props.isCustom ? 'customVendors' : 'iabVendors';
 
-	render (props, state) {
+	render(props, state) {
 
 		const {
 			isNewVendorList,

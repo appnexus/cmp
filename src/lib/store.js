@@ -38,7 +38,7 @@ export default class Store {
 		this.persistedConsentString = isTCFv2Compatible ? consentString : '';
 		this.persistedConsentData = isTCFv2Compatible ? decodedConsentString : {};
 		this.isCustomVendors = false;
-		this.customVendorsConsent = customVendorsConsent;
+		this.customVendorsConsent = Boolean(customVendorsConsent);
 
 		this.tcModel = Object.assign(
 			tcModel,
