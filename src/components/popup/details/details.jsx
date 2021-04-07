@@ -31,9 +31,30 @@ export default class Details extends Component {
 		return Object.values(vendors);
 	};
 
-	getCustomVendors = () => this.getVendors().filter((vendor) => !vendor.globalId);
+	getCustomVendors = () => {
+		if (this.isNewVendorList()) {
+			const { vendorList: { custom_vendors } } = this.props.store;
+			return custom_vendors;
+		}
 
-	getGlobalVendors = () => this.getVendors().filter((vendor) => !!vendor.globalId);
+		return this.getVendors().filter((vendor) => !vendor.globalId);
+
+	};
+
+	getGlobalVendors = () => {
+		if (this.isNewVendorList()) {
+			const { vendorList: { vendors } } = this.props.store;
+			return vendors;
+		}
+
+		return this.getVendors().filter((vendor) => !!vendor.globalId);
+	};
+
+	isNewVendorList = () => {
+		const { vendorList: { publicationVersion } } = this.props.store;
+
+		return publicationVersion !== undefined;
+	};
 
 	filterVendors = ({ isCustom = null, purposeId, featureId, isSpecial } = {}) => {
 		const { gvl } = this.props.store.tcModel;
@@ -54,6 +75,14 @@ export default class Details extends Component {
 			} else {
 				filteredVendors = Object.values(gvl.getVendorsWithFeature(featureId));
 			}
+		}
+
+		if (this.isNewVendorList()) {
+			if (isCustom) {
+				const { vendorList: { custom_vendors } } = this.props.store;
+				return Object.values(custom_vendors);
+			}
+			return filteredVendors;
 		}
 
 		return filteredVendors.filter(vendor => isCustom ? !vendor.globalId : !!vendor.globalId);
@@ -85,7 +114,7 @@ export default class Details extends Component {
 		};
 	};
 
-	render (props, state) {
+	render(props, state) {
 		const {
 			onSaveOrClose,
 			store
@@ -101,9 +130,10 @@ export default class Details extends Component {
 			selectVendors,
 			selectVendor,
 			selectVendorLegitimateInterests,
+			setCustomVendorsConsent,
 			selectAllVendorLegitimateInterests,
 			initialVendorsRejection,
-
+			customVendorsConsent,
 			selectPublisherPurpose,
 			selectPublisherLegitimateInterests,
 			getVendorsWithLegIntsIds,
@@ -160,6 +190,8 @@ export default class Details extends Component {
 							selectedTab={selectedTab}
 						/>
 						<Vendors
+							customVendorsConsent={customVendorsConsent}
+							isNewVendorList={this.isNewVendorList()}
 							selectedVendorIds={vendorConsents}
 							selectedVendorsLegitimateInterestsIds={vendorLegitimateInterests}
 							selectAllVendorLegitimateInterests={selectAllVendorLegitimateInterests}
@@ -167,6 +199,7 @@ export default class Details extends Component {
 							selectVendors={selectVendors}
 							selectVendor={selectVendor}
 							selectVendorLegitimateInterests={selectVendorLegitimateInterests}
+							setCustomVendorsConsent={setCustomVendorsConsent}
 							initialVendorsRejection={initialVendorsRejection}
 							vendors={state.vendors}
 							isCustom={state.isCustom}

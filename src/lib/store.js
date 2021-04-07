@@ -20,7 +20,8 @@ export default class Store {
 		cmpId,
 		cmpVersion = 2,
 		cookieVersion = 2,
-		consentString
+		consentString,
+		customVendorsConsent
 	} = {}) {
 		// Keep track of data that has already been persisted
 		const consentLanguage = findLocale().substr(0, 2).toUpperCase();
@@ -37,6 +38,7 @@ export default class Store {
 		this.persistedConsentString = isTCFv2Compatible ? consentString : '';
 		this.persistedConsentData = isTCFv2Compatible ? decodedConsentString : {};
 		this.isCustomVendors = false;
+		this.customVendorsConsent = Boolean(customVendorsConsent);
 
 		this.tcModel = Object.assign(
 			tcModel,
@@ -62,6 +64,18 @@ export default class Store {
 		this.cmpApi = cmpApi;
 		this.shouldDisplayCmpUI = shouldDisplayCmpUI;
 		this.cmpApi.update(this.persistedConsentString, shouldDisplayCmpUI);
+	}
+
+	calculateCustomVendorsConsent (vendorList, tcModel) {
+		const checkConsent = (key, consent) => {
+			return Object.keys(vendorList[key]).length === tcModel[consent].size;
+		};
+
+		return Boolean(this.customVendorsConsent &&
+			checkConsent('specialFeatures', 'specialFeatureOptins') &&
+			checkConsent('purposes', 'purposeConsents') &&
+			checkConsent('purposes', 'purposeLegitimateInterests')
+		);
 	}
 
 	/**
@@ -98,9 +112,10 @@ export default class Store {
 		// because, to set pubConsent cookie with `npa` value during config.setConsentData processing
 		// we use data from cmpApi to calculate `npa`
 		if (config.setConsentData) {
-			let consentData = encodedConsent;
+			let consentString = encodedConsent;
+			const customVendorsConsent = this.calculateCustomVendorsConsent(vendorList, tcModel);
 			try {
-				config.setConsentData(consentData, err => {
+				config.setConsentData({ consentString, customVendorsConsent }, err => {
 					if (err) {
 						log.error('Failed writing external consent data', err);
 					}
@@ -172,9 +187,16 @@ export default class Store {
 		this.storeUpdate();
 	};
 
+	setCustomVendorsConsent = isSelected => {
+		this.customVendorsConsent = isSelected ? 1 : 0;
+		this.storeUpdate();
+
+	};
+
 	selectAllVendors = (isSelected) => {
 		const operation = isSelected ? 'setAllVendorConsents' : 'unsetAllVendorConsents';
 		this.tcModel[operation]();
+		this.setCustomVendorsConsent(isSelected);
 		this.storeUpdate();
 	};
 
@@ -221,6 +243,7 @@ export default class Store {
 		//vendors rejection can occurs only once in the lifetime of application
 		//should only be called if user vendor consent has not been created yet
 		if (!this.hasInitialVendorsRejectionOccured) {
+			this.setCustomVendorsConsent(false);
 			this.selectAllVendors(false);
 			this.hasInitialVendorsRejectionOccured = true;
 		}

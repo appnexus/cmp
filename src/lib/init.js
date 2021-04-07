@@ -13,13 +13,15 @@ export const CMP_VERSION = parseInt(process.env.CMP_VERSION,10);
 export const CMP_ID = parseInt(process.env.CMP_ID, 10);
 export const COOKIE_VERSION = parseInt(process.env.COOKIE_VERSION, 10);
 
-export function init (consentString, shouldDisplayCmpUI) {
+export function init (consents, shouldDisplayCmpUI) {
 	return new Promise((resolve, reject) => {
+		const {consent, customVendorsConsent } = consents;
 		const store = new Store({
 			cmpVersion: CMP_VERSION,
 			cmpId: CMP_ID,
 			cookieVersion: COOKIE_VERSION,
-			consentString,
+			consentString: consent,
+			customVendorsConsent
 		});
 
 		const cmpManager = new CmpManager();
