@@ -60,21 +60,30 @@ export default class Store {
 		this.hasInitialVendorsRejectionOccured = false;
 	}
 
-	setCmpApi (cmpApi, shouldDisplayCmpUI) {
+	setCmpApi(cmpApi, shouldDisplayCmpUI) {
 		this.cmpApi = cmpApi;
 		this.shouldDisplayCmpUI = shouldDisplayCmpUI;
 		this.cmpApi.update(this.persistedConsentString, shouldDisplayCmpUI);
 	}
 
-	calculateCustomVendorsConsent (vendorList, tcModel) {
-		const checkConsent = (key, consent) => {
-			return Object.keys(vendorList[key]).length === tcModel[consent].size;
+	calculateCustomVendorsConsent(vendorList, tcModel) {
+		const prepareIds = (key, excludedId) => {
+			let toCheck = Object.keys(vendorList[key]).map(id => parseInt(id, 10));
+			const index = toCheck.indexOf(excludedId);
+			if (index > -1) {
+				toCheck.splice(index, 1);
+			}
+			return toCheck;
+		};
+		const checkConsent = (key, consent, excludedId) => {
+			const toCheck = prepareIds(key, excludedId);
+			return toCheck.every(id => tcModel[consent].has(id));
 		};
 
 		return Boolean(this.customVendorsConsent &&
 			checkConsent('specialFeatures', 'specialFeatureOptins') &&
 			checkConsent('purposes', 'purposeConsents') &&
-			checkConsent('purposes', 'purposeLegitimateInterests')
+			checkConsent('purposes', 'purposeLegitimateInterests', 1) // 1st purpose can be never marked as legitimate interests
 		);
 	}
 
