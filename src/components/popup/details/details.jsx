@@ -212,9 +212,9 @@ export default class Details extends Component {
 					</Panel>
 				</div>
 				<div class={style.footer}>
-					<a aria-label="back" class={style.cancel} onClick={this.handleBack}><LocalLabel prefix={'tabs.tab' + (selectedTab + 1)}
+					<a aria-label='back' class={style.cancel} onClick={this.handleBack}><LocalLabel prefix={'tabs.tab' + (selectedTab + 1)}
 																				  localizeKey='back'>Back</LocalLabel></a>
-					<Button ariaLabel="save settings and close" class={style.save} onClick={onSaveOrClose}><LocalLabel
+					<Button ariaLabel='save settings and close' class={style.save} onClick={onSaveOrClose}><LocalLabel
 						prefix={'tabs.tab' + (selectedTab + 1)} localizeKey='save'>Save and Exit</LocalLabel></Button>
 				</div>
 			</div>

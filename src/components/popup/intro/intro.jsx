@@ -35,7 +35,7 @@ export default class Intro extends Component {
 				</div>
 				<div class={style.options}>
 					<Button
-						ariaLabel="go to advanced settings"
+						ariaLabel='go to advanced settings'
 						class={style.rejectAll}
 						invert={true}
 						onClick={onShowPurposes}
@@ -43,7 +43,7 @@ export default class Intro extends Component {
 						<LocalLabel localizeKey='showPurposes'>Manage your choices</LocalLabel>
 					</Button>
 					<Button
-						ariaLabel="accept and close"
+						ariaLabel='accept and close'
 						class={style.acceptAll}
 						onClick={onAcceptAll}
 					>

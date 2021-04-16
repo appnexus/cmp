@@ -20,7 +20,7 @@ export default class CloseButton extends Component {
 
 		return (
 			<span
-				aria-label="close"
+				aria-label='close'
 				class={[style.closeButton, hasBorder ? style.hasBorder : '', props.class].join(' ')}
 				onClick={onClick}>
 				<svg width={width} height={height} viewBox='0 0 16 16' preserveAspectRatio='xMidYMid meet'>
