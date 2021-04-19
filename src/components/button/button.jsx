@@ -13,11 +13,13 @@ export default class Button extends Component {
 		const {
 			children,
 			onClick,
-			invert
+			invert,
+			ariaLabel
 		} = props;
 
 		return (
 			<button
+				aria-label={ariaLabel}
 				class={[style.button, props.class, invert ? style.invert : ''].join(' ')}
 				onClick={onClick}>
 				{children}
