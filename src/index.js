@@ -19,14 +19,27 @@ import Promise from "promise-polyfill";
 
 const TCF_CONFIG = '__tcfConfig';
 
+const queryStringToObject = str => {
+	return ((str || '') + '').split('&').reduce((acc, curr) => {
+		const pair = curr.split('=');
+		if (pair.length > 1) {
+			acc[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+		}
+		return acc;
+	}, {});
+};
+
+const parsePubConsent = pubConsent => queryStringToObject(decodeURIComponent(pubConsent));
+
 const handleConsentResult = (...args) => {
 	if (args.length < 2 || !config.autoDisplay) {
 		return { display: false };
 	}
 
-	const [vendorList = {}, consentData = {}] = args;
+	const [vendorList = {}, consentData = {}, pubConsent = {}] = args;
 
 	const {
+		publicationVersion: pubVersion,
 		vendorListVersion: listVersion,
 		tcfPolicyVersion: listPolicyVersion = 1
 	} = vendorList;
@@ -37,26 +50,31 @@ const handleConsentResult = (...args) => {
 		policyVersion: consentPolicyVersion = 1
 	} = consentData;
 
-	let displayOptions;
+	const { publicationVersion } = pubConsent;
 
 	if (!created) {
 		log.debug('No consent data found. Showing consent tool');
-		displayOptions = {display: true, command: 'showConsentTool'};
-	} else if (!listVersion) {
+		return { display: true, command: 'showConsentTool' };
+	}
+	if (!listVersion && !pubVersion) {
 		log.debug('Could not determine vendor list version. Not showing consent tool');
-		displayOptions = { display: false };
-	} else if (vendorListVersion !== listVersion) {
+		return { display: false };
+	}
+	if (pubVersion && parseInt(pubVersion, 10) !== parseInt(publicationVersion, 10)) {
+		log.debug(`Consent found for publication version ${publicationVersion}, but received vendor list version ${pubVersion}. Showing consent tool`);
+		return { display: true, command: 'showConsentTool' };
+	}
+	if (vendorListVersion !== listVersion) {
 		log.debug(`Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`);
-		displayOptions = {display: true, command: 'showConsentTool'};
-	} else if (consentPolicyVersion !== listPolicyVersion) {
+		return { display: true, command: 'showConsentTool' };
+	}
+	if (consentPolicyVersion !== listPolicyVersion) {
 		log.debug(`Consent found for policy ${consentPolicyVersion}, but received vendor list with policy ${consentPolicyVersion}. Showing consent tool`);
-		displayOptions = {display: true, command: 'showConsentTool'};
-	} else {
-		log.debug('Consent found. Not showing consent tool. Show footer when not all consents set to true');
-		displayOptions = {display: false, command: 'showFooter'};
+		return { display: true, command: 'showConsentTool' };
 	}
 
-	return displayOptions;
+	log.debug('Consent found. Not showing consent tool. Show footer when not all consents set to true');
+	return { display: false, command: 'showFooter' };
 };
 
 
@@ -68,9 +86,9 @@ const shouldDisplay = () => {
 			const result = handleConsentResult();
 			resolve(result);
 		} else {
-			const finish = (timeout, vendorList, consentData) => {
+			const finish = (timeout, vendorList, consentData, pubConsent) => {
 				clearTimeout(timeout);
-				const result = handleConsentResult(vendorList, consentData);
+				const result = handleConsentResult(vendorList, consentData, pubConsent);
 				resolve(result);
 			};
 
@@ -93,7 +111,8 @@ const shouldDisplay = () => {
 								} else {
 									try {
 										const tcStringDecoded = decodeConsentData(data.consent);
-										finish(timeout, vendorList, tcStringDecoded);
+										const pubConsent = parsePubConsent(data.pubConsent);
+										finish(timeout, vendorList, tcStringDecoded, pubConsent);
 									} catch (e) {
 										finish(timeout, vendorList);
 									}
@@ -162,7 +181,11 @@ function readExternalConsentData(config) {
 					reject(err);
 				} else {
 					try {
-						resolve(data || undefined);
+						const result = {
+							consent: data && data.consent,
+							pubConsent: parsePubConsent(data && data.pubConsent)
+						};
+						resolve(result);
 					} catch (err) {
 						reject(err);
 					}
