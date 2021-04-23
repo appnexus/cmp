@@ -33,8 +33,8 @@ export default class Details extends Component {
 
 	getCustomVendors = () => {
 		if (this.isNewVendorList()) {
-			const { vendorList: { customVendors } } = this.props.store;
-			return customVendors;
+			const { vendorList: { customVendors = {} } } = this.props.store;
+			return Object.values(customVendors);
 		}
 
 		return this.getVendors().filter((vendor) => !vendor.globalId);
@@ -43,8 +43,7 @@ export default class Details extends Component {
 
 	getGlobalVendors = () => {
 		if (this.isNewVendorList()) {
-			const { vendorList: { vendors } } = this.props.store;
-			return vendors;
+			return this.getVendors();
 		}
 
 		return this.getVendors().filter((vendor) => !!vendor.globalId);
