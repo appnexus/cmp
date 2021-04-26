@@ -15,7 +15,7 @@ export const COOKIE_VERSION = parseInt(process.env.COOKIE_VERSION, 10);
 
 export function init (consents, shouldDisplayCmpUI) {
 	return new Promise((resolve, reject) => {
-		let { consent, pubConsent: { customVendorsConsent = 0 } } = consents;
+		let { consent, pubConsent: { customVendorsConsent = 1 } } = consents;
 		customVendorsConsent = parseInt(customVendorsConsent, 10);
 		const store = new Store({
 			cmpVersion: CMP_VERSION,
