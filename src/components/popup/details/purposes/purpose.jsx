@@ -41,7 +41,7 @@ const Purpose = (props) => {
 				{!isTechnical &&
 					<div className={style.active}>
 						<div className={style.switch}>
-							<LocalLabel className={style.caption} prefix={prefix} localizeKey='acceptButton'></LocalLabel>
+							<LocalLabel collapseEmpty={true} className={style.caption} prefix={prefix} localizeKey='acceptButton'></LocalLabel>
 							<LocalLabel prefix={prefix} localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
 							<Switch
 								isSelected={isActive}
@@ -52,7 +52,7 @@ const Purpose = (props) => {
 						{!isPublisherPurpose && canRightToObject &&
 							<div className={style.switch}>
 								<LocalLabel className={style.caption} prefix={prefix} localizeKey={'legitimateInterest'}>Legitimate interest</LocalLabel>
-								<LocalLabel prefix={prefix} localizeKey={isLegitimateInterestActive ? 'legIntActive' : 'legIntInactive'}></LocalLabel>
+								<LocalLabel collapseEmpty={true} prefix={prefix} localizeKey={isLegitimateInterestActive ? 'legIntActive' : 'legIntInactive'}></LocalLabel>
 								<Switch
 									isSelected={isLegitimateInterestActive}
 									dataId={index}
@@ -77,7 +77,7 @@ const Purpose = (props) => {
 						<div>
 							<a className={style.vendorLink}
 							onClick={createOnShowVendors({isCustom: true, purposeId: purpose.id, isSpecial})}>
-								<LocalLabel prefix={prefix} localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
+								<LocalLabel collapseEmpty={true} prefix={prefix} localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 							</a>
 						</div>
 					</div>

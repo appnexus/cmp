@@ -31,7 +31,7 @@ const Feature = (props) => {
 				{isSpecial &&
 					<div className={style.active}>
 						<div className={style.switch}>
-							<LocalLabel className={style.caption} prefix={prefix} localizeKey='acceptButton'></LocalLabel>
+							<LocalLabel collapseEmpty={true} className={style.caption} prefix={prefix} localizeKey='acceptButton'></LocalLabel>
 							<LocalLabel prefix={prefix} localizeKey={isActive ? 'active' : 'inactive'}>{isActive ? 'Active' : 'Inactive'}</LocalLabel>
 							<Switch
 								isSelected={isActive}
@@ -52,7 +52,7 @@ const Feature = (props) => {
 				<div>
 					<a className={style.vendorLink} onClick={createOnShowVendors({isCustom: true,
 						featureId: feature.id, isSpecial})}>
-						<LocalLabel prefix={prefix} localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
+						<LocalLabel collapseEmpty={true} prefix={prefix} localizeKey='showCustomVendors'>Show custom vendor list</LocalLabel>
 					</a>
 				</div>
 			</div>

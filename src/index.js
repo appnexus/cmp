@@ -11,11 +11,12 @@ import 'core-js/fn/number/is-integer';
 import 'core-js/fn/symbol';
 import 'core-js/fn/string/repeat';
 import { init as initializeStore } from './lib/init';
-import log from "./lib/log";
-import config from "./lib/config";
-import { decodeConsentData, readConsentCookie, applyDecodeFix } from "./lib/cookie/cookie";
-import {fetchGlobalVendorList} from "./lib/vendor";
-import Promise from "promise-polyfill";
+import log from './lib/log';
+import config from './lib/config';
+import { decodeConsentData, readConsentCookie, applyDecodeFix } from './lib/cookie/cookie';
+import { fetchGlobalVendorList } from './lib/vendor';
+import { translations } from './lib/translations';
+import Promise from 'promise-polyfill';
 
 const TCF_CONFIG = '__tcfConfig';
 
@@ -100,25 +101,39 @@ const shouldDisplay = () => {
 						const result = handleConsentResult();
 						resolve(result);
 					} else {
-						const timeout = setTimeout(() => {
-							resolve({ display: false });
-						}, getConsentDataTimeout);
+						//ToDo remove assigment below before release
+						vendorList.translation = {
+							'en': 'https://ocdn.eu/cmp/gdpr/4178463/28/1616495767660/translation.json',
+							'pl': 'https://ocdn.eu/cmp/gdpr/4178463/28/1616495767660/translation.json'
+						};
 
-						if (getConsentData) {
-							getConsentData((err, data) => {
-								if (err) {
-									finish(timeout, vendorList);
-								} else {
-									try {
-										const tcStringDecoded = decodeConsentData(data.consent);
-										const pubConsent = parsePubConsent(data.pubConsent);
-										finish(timeout, vendorList, tcStringDecoded, pubConsent);
-									} catch (e) {
-										finish(timeout, vendorList);
-									}
+						translations.initConfig(vendorList.translation);
+						translations.fetchTranslation()
+							.then(() => {
+								const timeout = setTimeout(() => {
+									resolve({ display: false });
+								}, getConsentDataTimeout);
+
+								if (getConsentData) {
+									getConsentData((err, data) => {
+										if (err) {
+											finish(timeout, vendorList);
+										} else {
+											try {
+												const tcStringDecoded = decodeConsentData(data.consent);
+												const pubConsent = parsePubConsent(data.pubConsent);
+												finish(timeout, vendorList, tcStringDecoded, pubConsent);
+											} catch (e) {
+												finish(timeout, vendorList);
+											}
+										}
+									});
 								}
+							})
+							.catch(() => {
+								const result = handleConsentResult();
+								resolve(result);
 							});
-						}
 					}
 				});
 			} else {

@@ -154,7 +154,7 @@ export default class Vendors extends Component {
 										isSelected={this.isFullLegitimateInterestChosen()}
 										onClick={this.handleFullLegIntChange}
 									/>
-								<Label className={style.state} prefix={this.getPrefix()} localizeKey={this.isFullLegitimateInterestChosen() ? 'active' : 'inactive'}></Label></th>
+								<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={this.isFullLegitimateInterestChosen() ? 'active' : 'inactive'}></Label></th>
 								}
 								<th>
 								<Label className={style.caption} prefix={this.getPrefix()} localizeKey='offOn'>Allow</Label>
@@ -162,7 +162,7 @@ export default class Vendors extends Component {
 									isSelected={this.isFullVendorsConsentChosen()}
 									onClick={this.handleFullConsentChange}
 								/>
-								<Label className={style.state} prefix={this.getPrefix()} localizeKey={this.isFullVendorsConsentChosen() ? 'active' : 'inactive'}></Label></th>
+								<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={this.isFullVendorsConsentChosen() ? 'active' : 'inactive'}></Label></th>
 							</span>
 							}
 						</tr>
@@ -196,18 +196,18 @@ export default class Vendors extends Component {
 										isSelected={selectedVendorsLegitimateInterestsIds.has(id)}
 										onClick={this.handleLegitInterest}
 									/>
-									<Label className={style.state} prefix={this.getPrefix()} localizeKey={selectedVendorsLegitimateInterestsIds.has(id) ? 'active' : 'inactive'}></Label>
+									<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={selectedVendorsLegitimateInterestsIds.has(id) ? 'active' : 'inactive'}></Label>
 								</td> || <td/>}
 								{editingConsents && (!isNewVendorList || !this.props.isCustom) &&
 									<td className={style.vendorCenterSmall}>
-									<Label className={style.caption} prefix={this.getPrefix()}
+									<Label collapseEmpty={true} className={style.caption} prefix={this.getPrefix()}
 												localizeKey='acceptButton'>Consent</Label>
 									<Switch
 										dataId={id}
 										isSelected={selectedVendorIds.has(id)}
 										onClick={this.handleSelectVendor}
 									/>
-									<Label className={style.state} prefix={this.getPrefix()} localizeKey={selectedVendorIds.has(id) ? 'active' : 'inactive'}></Label>
+									<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={selectedVendorIds.has(id) ? 'active' : 'inactive'}></Label>
 								</td>
 								}
 							</tr>

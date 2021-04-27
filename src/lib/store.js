@@ -4,7 +4,7 @@ import {
 	encodeConsentData
 } from "./cookie/cookie";
 import config from './config';
-import { findLocale } from './localize';
+import { findLocale } from './translations';
 import log from './log';
 import { GVL, TCModel } from '@iabtcf/core';
 
