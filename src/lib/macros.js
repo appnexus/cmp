@@ -23,8 +23,8 @@ const macros = {
 	},
 	'pl_gratka': {
 		'_ORGANIZATIONNAME_': 'Morizon-Gratka',
-		'_ORGANIZATION1_': 'Grupa Morizon-Gratka Sp. z o.o jako dostawca',
-		'_ORGANIZATION2_':  prepareMacro(`przez <a href="https://prywatnosc.gratka.pl/" target="_blank" rel="noopener">Grupę Morizon-Gratka Sp. z o.o.</a>`),
+		'_ORGANIZATION1_': prepareMacro(`<a href="/polityka-prywatnosci" target="_blank" rel="noopener">Grupa Morizon-Gratka Sp. z o.o</a> jako dostawca`),
+		'_ORGANIZATION2_':  prepareMacro(`przez <a href="/polityka-prywatnosci" target="_blank" rel="noopener">Grupę Morizon-Gratka Sp. z o.o.</a>`),
 		'_ORGANIZATION3_': 'Grupę Morizon-Gratka Sp. z o.o.',
 		'_ORGANIZATION4_': 'Grupa Morizon-Gratka Sp. z o.o',
 		'_ORGANIZATION5_': 'Grupę Morizon-Gratka',
