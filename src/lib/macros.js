@@ -22,9 +22,8 @@ const macros = {
 		'_PRIVACY_LINKS_': prepareMacro(`<p><a onclick="__tcfapi('showConsentDetailView', 2, function () {}, {tab: 1})">Datenschutz</a> | <a onclick="__tcfapi('showConsentDetailView', 2, function () {}, {tab: 1})">Impressum</a></p>`)
 	},
 	'pl_gratka': {
-		'_PROVIDER_': 'dostawca',
 		'_ORGANIZATIONNAME_': 'Morizon-Gratka',
-		'_ORGANIZATION_': 'Grupa Morizon-Gratka Sp. z o.o',
+		'_ORGANIZATION1_': 'Grupa Morizon-Gratka Sp. z o.o jako dostawca',
 		'_ORGANIZATION2_':  prepareMacro(`przez <a href="https://prywatnosc.gratka.pl/" target="_blank" rel="noopener">Grupę Morizon-Gratka Sp. z o.o.</a>`),
 		'_ORGANIZATION3_': 'Grupę Morizon-Gratka Sp. z o.o.',
 		'_ORGANIZATION4_': 'Grupa Morizon-Gratka Sp. z o.o',
@@ -41,9 +40,8 @@ const macros = {
 
 	},
 	pl: {
-		'_PROVIDER_': 'dostawcy',
 		'_ORGANIZATIONNAME_': 'RAS Polska',
-		'_ORGANIZATION_': 'Podmioty z Grupy RAS Polska',
+		'_ORGANIZATION1_': 'Podmioty z Grupy RAS Polska jako dostawcy',
 		'_ORGANIZATION2_':  prepareMacro(`przez podmioty z <a href="https://polityka-prywatnosci.onet.pl/grupa-rasp.html" target="_blank" rel="noopener">Grupy RAS Polska</a>`),
 		'_ORGANIZATION3_': 'podmioty z Grupy Ringier Axel Springer Polska.',
 		'_ORGANIZATION4_': 'Podmiot z Grupy RAS Polska',
