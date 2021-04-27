@@ -5,6 +5,11 @@ import log from './log';
 import config from './config';
 
 class Translations {
+	constructor () {
+		this.localizedValues = {};
+		this.detectedLang = findLocale().split('-')[0];
+		this.currentLang = null;
+	}
 	fetchTranslation = () => {
 		return new Promise((resolve, reject) => {
 			// old translation flow
@@ -18,7 +23,6 @@ class Translations {
 				return reject('Failed to load translation - missing configuration on vendor list');
 			}
 			try {
-				this.initCurrent();
 				this.fetchFile(resolve, reject, this.currentLang);
 			} catch (err) {
 				log.error(`Failed to load translation`, err);
@@ -57,6 +61,7 @@ class Translations {
 			return;
 		}
 		this.translations = configuration;
+		this.initCurrent();
 	};
 
 	isLangAvailable = language => {
@@ -72,13 +77,11 @@ class Translations {
 
 	initCurrent = () => {
 		//auto detection
-		const [langCode] = findLocale().split('-');
-		const code = this.isLangAvailable(langCode) ? langCode : Object.keys(this.translations)[0];
+		const code = this.isLangAvailable(this.detectedLang) ? this.detectedLang : Object.keys(this.translations)[0];
 		this.currentLang = code;
 	};
 	// deprecated - only for backward compatibility
 	initCurrentLang = () => {
-		console.log('bangla');
 		const currentLocal = findLocale();
 		if (this.localizedValues.hasOwnProperty(currentLocal)) {
 			this.currentLang = currentLocal;

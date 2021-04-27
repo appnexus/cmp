@@ -81,16 +81,17 @@ const handleConsentResult = (...args) => {
 
 const shouldDisplay = () => {
 	return new Promise((resolve) => {
+		let translationFetched = false;
 		if (!window.navigator.cookieEnabled) {
 			const msg = 'Cookies are disabled. Ignoring CMP consent check';
 			log.warn(msg);
 			const result = handleConsentResult();
-			resolve(result);
+			resolve({ result, translationFetched });
 		} else {
 			const finish = (timeout, vendorList, consentData, pubConsent) => {
 				clearTimeout(timeout);
 				const result = handleConsentResult(vendorList, consentData, pubConsent);
-				resolve(result);
+				resolve({ result, translationFetched });
 			};
 
 			const { getVendorList, getConsentData, getConsentDataTimeout } = config;
@@ -110,6 +111,7 @@ const shouldDisplay = () => {
 						translations.initConfig(vendorList.translation);
 						translations.fetchTranslation()
 							.then(() => {
+								translationFetched = true;
 								const timeout = setTimeout(() => {
 									resolve({ display: false });
 								}, getConsentDataTimeout);
@@ -132,7 +134,7 @@ const shouldDisplay = () => {
 							})
 							.catch(() => {
 								const result = handleConsentResult();
-								resolve(result);
+								resolve({ result, translationFetched });
 							});
 					}
 				});
@@ -229,7 +231,7 @@ function start() {
 		shouldDisplay(),
 		config.getConsentData ? readExternalConsentData(config) : readConsentCookie()
 	]).then(([displayOptions, consents]) => {
-		initializeStore(consents, displayOptions.display).then(() => {
+		initializeStore(consents, displayOptions).then(() => {
 			displayUI(window.__tcfapi, displayOptions);
 		}).catch(err => {
 			log.error('Failed to initialize CMP store', err);
