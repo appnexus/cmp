@@ -37,6 +37,7 @@ const macros = {
 		'_PROCESSING_': 'Grupę Morizon-Gratka',
 		'_MAIL_': 'rodo.zgloszenia@morizon-gratka.pl',
 		'_PRIVACYPOLICY_': '/polityka-prywatnosci',
+		'_PRIVACYPOLICY2_': '/polityka-prywatnosci',
 
 	},
 	pl: {
@@ -55,6 +56,8 @@ const macros = {
 		'_PROCESSING_': 'nas, inne podmioty z Grupy RAS Polska',
 		'_MAIL_': 'iod@ringieraxelspringer.pl',
 		'_PRIVACYPOLICY_': 'https://polityka-prywatnosci.onet.pl/index.html',
+		'_PRIVACYPOLICY2_': 'https://polityka-prywatnosci.onet.pl/grupa-rasp.html',
+
 	}
 
 };
