@@ -102,12 +102,6 @@ const shouldDisplay = () => {
 						const result = handleConsentResult();
 						resolve(result);
 					} else {
-						//ToDo remove assigment below before release
-						vendorList.translations = {
-							'en': 'https://ocdn.eu/cmp/gdpr/4178463/28/1616495767660/translation.json',
-							'pl': 'https://ocdn.eu/cmp/gdpr/4178463/28/1616495767660/translation.json'
-						};
-
 						translations.initConfig(vendorList.translations);
 						translations.fetchTranslation()
 							.then(() => {

@@ -5,12 +5,13 @@ import log from './log';
 import config from './config';
 
 class Translations {
-	constructor () {
+	constructor() {
 		this.localizedValues = {};
 		this.detectedLang = findLocale().split('-')[0];
 		this.currentLang = null;
 		this.translations = null;
 	}
+
 	fetchTranslation = () => {
 		return new Promise((resolve, reject) => {
 			// old translation flow
@@ -35,23 +36,9 @@ class Translations {
 	fetchFile = (resolve, reject, language) => {
 		return fetch(this.getUrl(language))
 			.then(result => {
-				const parsed = result.json();
-				//ToDo temporary for translations in array
-				let data = {};
-				if (Array.isArray(parsed)) {
-					parsed.forEach(el => {
-						data[language] = el.body;
-					});
-					return data;
-				}
-				data[language] = parsed;
-				return data;
-			})
-			.then(data => {
-				this.addTranslation(data);
+				this.addTranslation(result.json());
 				return resolve();
-			})
-			.catch(err => {
+			}).catch(err => {
 				log.error('Failed to load translation during fetching data', err);
 				reject();
 			});
@@ -1128,7 +1115,7 @@ const embedTransaltion = {
 	//blick.ch
 	de_blick: JSON.parse(replaceMacros(de, 'de_blick')),
 	// RASCH titles
-	de_rasch: JSON.parse(replaceMacros(de, 'de_rasch')),
+	de_rasch: JSON.parse(replaceMacros(de, 'de_rasch'))
 };
 
 export const translations = new Translations();
