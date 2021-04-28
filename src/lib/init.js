@@ -6,16 +6,17 @@ import { fetchGlobalVendorList } from './vendor';
 import log from './log';
 import pack from '../../package.json';
 import config from './config';
-import createCommands from "./commands";
-import CmpManager from "./cmpManager";
+import createCommands from './commands';
+import CmpManager from './cmpManager';
 
 export const CMP_VERSION = parseInt(process.env.CMP_VERSION, 10);
 export const CMP_ID = parseInt(process.env.CMP_ID, 10);
 export const COOKIE_VERSION = parseInt(process.env.COOKIE_VERSION, 10);
 
-export function init (consents, shouldDisplayCmpUI) {
+export function init(consents, displayOptions) {
 	return new Promise((resolve, reject) => {
 		let { consent, pubConsent: { customVendorsConsent = 1 } } = consents;
+		const { display, translationFetched = true } = displayOptions;
 		customVendorsConsent = parseInt(customVendorsConsent, 10);
 		const store = new Store({
 			cmpVersion: CMP_VERSION,
@@ -50,7 +51,7 @@ export function init (consents, shouldDisplayCmpUI) {
 			config.decoratePageCallHandler(cmpApi);
 		}
 
-		store.setCmpApi(cmpApi, shouldDisplayCmpUI);
+		store.setCmpApi(cmpApi, display);
 
 		// Notify listeners that the CMP is loaded
 		log.debug(`Successfully loaded CMP version: ${pack.version}`);
@@ -75,7 +76,7 @@ export function init (consents, shouldDisplayCmpUI) {
 			fetchGlobalVendorList().then(store.updateVendorList)
 		]).then((params) => {
 			cmpManager.cmpReady = true;
-			cmpManager.notify('cmpReady', true);
+			cmpManager.notify('cmpReady', translationFetched ? true : false);
 			resolve(params[0]);
 		}).catch(err => {
 			log.error('Failed to load lists. CMP not ready', err);

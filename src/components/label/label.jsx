@@ -1,18 +1,21 @@
 import { h, Component } from 'preact';
-import {Localize} from '../../lib/localize';
+import { translations } from '../../lib/translations';
 
-const lookup = new Localize().lookup;
+const lookup = translations.lookup;
 
 export default class Label extends Component {
 	static defaultProps = {
 		prefix: ''
 	};
 
-	render(props, state) {
-		const { prefix, localizeKey, className, children } = props;
+	render(props) {
+		const { prefix, localizeKey, className, children, collapseEmpty = false } = props;
 		const key = prefix ? `${prefix}.${localizeKey}` : localizeKey;
 		const localizedContent = lookup(key);
-		const style = localizedContent ? "" : "display:none";
+		let style = '';
+		if (!localizedContent && collapseEmpty) {
+			style = 'display: none';
+		}
 
 		return (
 			<span

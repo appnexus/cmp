@@ -1,4 +1,147 @@
 import replaceMacros from './macros';
+import { fetch } from './helpers';
+import Promise from 'promise-polyfill';
+import log from './log';
+import config from './config';
+
+class Translations {
+	constructor() {
+		this.localizedValues = {};
+		this.detectedLang = findLocale().split('-')[0];
+		this.currentLang = null;
+		this.translations = null;
+	}
+
+	fetchTranslation = () => {
+		return new Promise((resolve, reject) => {
+			// old translation flow
+			if (!config.translationFetch) {
+				this.addTranslation({ ...embedTransaltion, ...config.localization });
+				this.initCurrentLang();
+				return resolve();
+			}
+			if (!this.translations) {
+				log.error('Failed to load translation - missing configuration on vendor list');
+				return reject('Failed to load translation - missing configuration on vendor list');
+			}
+			try {
+				this.fetchFile(resolve, reject, this.currentLang);
+			} catch (err) {
+				log.error(`Failed to load translation`, err);
+				reject();
+			}
+		});
+	};
+
+	fetchFile = (resolve, reject, language) => {
+		return fetch(this.getUrl(language))
+			.then(result => {
+				this.addTranslation(result.json());
+				return resolve();
+			}).catch(err => {
+				log.error('Failed to load translation during fetching data', err);
+				reject();
+			});
+	};
+
+	initConfig = configuration => {
+		if (!configuration || !Object.keys(configuration).length) {
+			return;
+		}
+		this.translations = configuration;
+		this.initCurrent();
+	};
+
+	initCurrent = () => {
+		if (!this.translations) {
+			return;
+		}
+		const code = this.isLangAvailable(this.detectedLang) ? this.detectedLang : Object.keys(this.translations)[0];
+		this.currentLang = code;
+	};
+
+	isLangAvailable = language => {
+		return this.translations.hasOwnProperty(language);
+	};
+
+	getUrl = language => {
+		if (language && this.isLangAvailable(language)) {
+			return this.translations[language];
+		}
+		return null;
+	};
+
+	// deprecated - only for backward compatibility
+	initCurrentLang = () => {
+		const currentLocal = findLocale();
+		if (this.localizedValues.hasOwnProperty(currentLocal)) {
+			this.currentLang = currentLocal;
+			return;
+		}
+		const [language] = currentLocal.split('-');
+		if (this.localizedValues.hasOwnProperty(language)) {
+			this.currentLang = language;
+			return;
+		}
+		this.currentLang = Object.keys(this.localizedValues)[0];
+	};
+
+	addTranslation = (localizedData) => {
+		const parsed = this.processLocalized(localizedData);
+		this.localizedValues = { ...this.localizedValues, ...parsed };
+	};
+
+	lookup = key => {
+		return this.localizedValues[this.currentLang] && this.localizedValues[this.currentLang][key];
+	};
+
+	processLocalized = (data = {}) => {
+		const locales = Object.keys(data);
+		return locales.reduce((acc, locale) => {
+			const [language] = locale.toLowerCase().split('-');
+			return {
+				...acc,
+				[locale]: {
+					...acc[locale],
+					...this.flattenObject(data[language]),
+					...this.flattenObject(data[locale])
+				}
+			};
+		}, {});
+	};
+
+	flattenObject = (data) => {
+		const flattened = {};
+
+		function flatten(part, prefix) {
+			Object.keys(part).forEach(key => {
+				const prop = prefix ? `${prefix}.${key}` : key;
+				const val = part[key];
+
+				if (typeof val === 'object') {
+					return flatten(val, prop);
+				}
+
+				flattened[prop] = val;
+			});
+		}
+
+		flatten(data);
+		return flattened;
+	};
+}
+
+export function findLocale() {
+	const locale = config.forceLocale ||
+		(navigator && (
+			navigator.language ||
+			navigator.browserLanguage ||
+			navigator.userLanguage ||
+			(navigator.languages && navigator.languages[0]) ||
+			'en-us'
+		));
+	return locale.toLowerCase();
+}
 
 const de = JSON.stringify({
 	intro: {
@@ -602,7 +745,7 @@ const pl = JSON.stringify({
  * per locale.  Empty values will use the english value provided
  * inline in each component.
  */
-export default {
+const embedTransaltion = {
 	en: {
 		intro: {
 			title: 'Dear User,',
@@ -972,5 +1115,7 @@ export default {
 	//blick.ch
 	de_blick: JSON.parse(replaceMacros(de, 'de_blick')),
 	// RASCH titles
-	de_rasch: JSON.parse(replaceMacros(de, 'de_rasch')),
+	de_rasch: JSON.parse(replaceMacros(de, 'de_rasch'))
 };
+
+export const translations = new Translations();
