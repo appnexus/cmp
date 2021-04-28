@@ -9,6 +9,7 @@ class Translations {
 		this.localizedValues = {};
 		this.detectedLang = findLocale().split('-')[0];
 		this.currentLang = null;
+		this.translations = null;
 	}
 	fetchTranslation = () => {
 		return new Promise((resolve, reject) => {
@@ -64,6 +65,14 @@ class Translations {
 		this.initCurrent();
 	};
 
+	initCurrent = () => {
+		if (!this.translations) {
+			return;
+		}
+		const code = this.isLangAvailable(this.detectedLang) ? this.detectedLang : Object.keys(this.translations)[0];
+		this.currentLang = code;
+	};
+
 	isLangAvailable = language => {
 		return this.translations.hasOwnProperty(language);
 	};
@@ -75,11 +84,6 @@ class Translations {
 		return null;
 	};
 
-	initCurrent = () => {
-		//auto detection
-		const code = this.isLangAvailable(this.detectedLang) ? this.detectedLang : Object.keys(this.translations)[0];
-		this.currentLang = code;
-	};
 	// deprecated - only for backward compatibility
 	initCurrentLang = () => {
 		const currentLocal = findLocale();
