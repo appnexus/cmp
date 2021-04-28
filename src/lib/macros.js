@@ -38,7 +38,6 @@ const macros = {
 		'_MAIL_': 'rodo.zgloszenia@morizon-gratka.pl',
 		'_PRIVACYPOLICY_': '/polityka-prywatnosci',
 		'_PRIVACYPOLICY2_': '/polityka-prywatnosci',
-
 	},
 	pl: {
 		'_ORGANIZATIONNAME_': 'RAS Polska',
@@ -57,7 +56,6 @@ const macros = {
 		'_MAIL_': 'iod@ringieraxelspringer.pl',
 		'_PRIVACYPOLICY_': 'https://polityka-prywatnosci.onet.pl/index.html',
 		'_PRIVACYPOLICY2_': 'https://polityka-prywatnosci.onet.pl/grupa-rasp.html',
-
 	}
 
 };
