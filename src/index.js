@@ -86,12 +86,12 @@ const shouldDisplay = () => {
 			const msg = 'Cookies are disabled. Ignoring CMP consent check';
 			log.warn(msg);
 			const result = handleConsentResult();
-			resolve({ result, translationFetched });
+			resolve({ ...result, translationFetched });
 		} else {
 			const finish = (timeout, vendorList, consentData, pubConsent) => {
 				clearTimeout(timeout);
 				const result = handleConsentResult(vendorList, consentData, pubConsent);
-				resolve({ result, translationFetched });
+				resolve({ ...result, translationFetched });
 			};
 
 			const { getVendorList, getConsentData, getConsentDataTimeout } = config;
@@ -128,7 +128,7 @@ const shouldDisplay = () => {
 							})
 							.catch(() => {
 								const result = handleConsentResult();
-								resolve({ result, translationFetched });
+								resolve({ ...result, translationFetched });
 							});
 					}
 				});
