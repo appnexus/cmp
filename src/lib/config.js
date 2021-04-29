@@ -19,7 +19,8 @@ const defaultConfig = {
 	shouldDisplayFooter: null,
 	publisherCountryCode: 'PL',
 	getConsentDataTimeout: 500,
-	purposeOneTreatment: false
+	purposeOneTreatment: false,
+	translationFetch: false
 };
 
 class Config {

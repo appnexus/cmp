@@ -1,12 +1,10 @@
 /* eslint-disable max-nested-callbacks */
 import { expect } from 'chai';
-import {Localize} from './localize';
+import { translations } from './translations';
 
 describe('localize', () => {
-
 	it('flatten objects', () => {
-		const localize = new Localize();
-		const result = localize.flattenObject({
+		const result = translations.flattenObject({
 			one: {
 				prop1: 'prop1',
 				two: {
@@ -26,7 +24,4 @@ describe('localize', () => {
 			'prop5': 'prop5'
 		});
 	});
-
-
-
 });

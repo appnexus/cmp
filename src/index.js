@@ -11,11 +11,12 @@ import 'core-js/fn/number/is-integer';
 import 'core-js/fn/symbol';
 import 'core-js/fn/string/repeat';
 import { init as initializeStore } from './lib/init';
-import log from "./lib/log";
-import config from "./lib/config";
-import { decodeConsentData, readConsentCookie, applyDecodeFix } from "./lib/cookie/cookie";
-import {fetchGlobalVendorList} from "./lib/vendor";
-import Promise from "promise-polyfill";
+import log from './lib/log';
+import config from './lib/config';
+import { decodeConsentData, readConsentCookie, applyDecodeFix } from './lib/cookie/cookie';
+import { fetchGlobalVendorList } from './lib/vendor';
+import { translations } from './lib/translations';
+import Promise from 'promise-polyfill';
 
 const TCF_CONFIG = '__tcfConfig';
 
@@ -80,16 +81,17 @@ const handleConsentResult = (...args) => {
 
 const shouldDisplay = () => {
 	return new Promise((resolve) => {
+		let translationFetched = false;
 		if (!window.navigator.cookieEnabled) {
 			const msg = 'Cookies are disabled. Ignoring CMP consent check';
 			log.warn(msg);
 			const result = handleConsentResult();
-			resolve(result);
+			resolve({ ...result, translationFetched });
 		} else {
 			const finish = (timeout, vendorList, consentData, pubConsent) => {
 				clearTimeout(timeout);
 				const result = handleConsentResult(vendorList, consentData, pubConsent);
-				resolve(result);
+				resolve({ ...result, translationFetched });
 			};
 
 			const { getVendorList, getConsentData, getConsentDataTimeout } = config;
@@ -100,25 +102,34 @@ const shouldDisplay = () => {
 						const result = handleConsentResult();
 						resolve(result);
 					} else {
-						const timeout = setTimeout(() => {
-							resolve({ display: false });
-						}, getConsentDataTimeout);
+						translations.initConfig(vendorList.translations);
+						translations.fetchTranslation()
+							.then(() => {
+								translationFetched = true;
+								const timeout = setTimeout(() => {
+									resolve({ display: false });
+								}, getConsentDataTimeout);
 
-						if (getConsentData) {
-							getConsentData((err, data) => {
-								if (err) {
-									finish(timeout, vendorList);
-								} else {
-									try {
-										const tcStringDecoded = decodeConsentData(data.consent);
-										const pubConsent = parsePubConsent(data.pubConsent);
-										finish(timeout, vendorList, tcStringDecoded, pubConsent);
-									} catch (e) {
-										finish(timeout, vendorList);
-									}
+								if (getConsentData) {
+									getConsentData((err, data) => {
+										if (err) {
+											finish(timeout, vendorList);
+										} else {
+											try {
+												const tcStringDecoded = decodeConsentData(data.consent);
+												const pubConsent = parsePubConsent(data.pubConsent);
+												finish(timeout, vendorList, tcStringDecoded, pubConsent);
+											} catch (e) {
+												finish(timeout, vendorList);
+											}
+										}
+									});
 								}
+							})
+							.catch(() => {
+								const result = handleConsentResult();
+								resolve({ ...result, translationFetched });
 							});
-						}
 					}
 				});
 			} else {
@@ -214,7 +225,7 @@ function start() {
 		shouldDisplay(),
 		config.getConsentData ? readExternalConsentData(config) : readConsentCookie()
 	]).then(([displayOptions, consents]) => {
-		initializeStore(consents, displayOptions.display).then(() => {
+		initializeStore(consents, displayOptions).then(() => {
 			displayUI(window.__tcfapi, displayOptions);
 		}).catch(err => {
 			log.error('Failed to initialize CMP store', err);
