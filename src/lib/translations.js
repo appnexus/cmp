@@ -36,7 +36,10 @@ class Translations {
 	fetchFile = (resolve, reject, language) => {
 		return fetch(this.getUrl(language))
 			.then(result => {
-				this.addTranslation(result.json());
+				const data = {
+					[language]: result.json()
+				};
+				this.addTranslation(data);
 				return resolve();
 			}).catch(err => {
 				log.error('Failed to load translation during fetching data', err);
@@ -117,6 +120,9 @@ class Translations {
 			Object.keys(part).forEach(key => {
 				const prop = prefix ? `${prefix}.${key}` : key;
 				const val = part[key];
+				if (!val) {
+					return;
+				}
 
 				if (typeof val === 'object') {
 					return flatten(val, prop);
