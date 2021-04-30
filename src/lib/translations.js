@@ -740,7 +740,7 @@ const pl = JSON.stringify({
 });
 
 
-const fr = JSON.stringify({
+const fr = {
 	intro: {
 		title: 'Nous utilisons des cookies',
 		description:
@@ -967,7 +967,7 @@ Nous utilisons des cookies fonctionnels et non fonctionnels sur nos sites web.</
 		message: '',
 		consentLink: 'Adjust data protection settings'
 	}
-});
+};
 
 /**
  * The default set of translated pieces of text indexed by locale.
@@ -1347,7 +1347,7 @@ const embedTransaltion = {
 	// RASCH titles
 	de_rasch: JSON.parse(replaceMacros(de, 'de_rasch')),
 	//french blick CH
-	fr: JSON.parse(fr)
+	fr: fr
 };
 
 export const translations = new Translations();
