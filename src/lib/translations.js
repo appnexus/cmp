@@ -28,8 +28,28 @@ class Translations {
 				this.fetchFile(resolve, reject, this.currentLang);
 			} catch (err) {
 				log.error(`Failed to load translation`, err);
-				reject();
+				reject(err);
 			}
+		});
+	};
+
+	changeLang = language => {
+		return new Promise((resolve, reject) => {
+			const onResolve = () => {
+				this.currentLang = language;
+				resolve();
+			};
+
+			if (!this.isLangAvailable(language)) {
+				reject();
+				return;
+			}
+			if (this.isFetchedAlready(language)) {
+				onResolve();
+				return;
+			}
+
+			this.fetchFile(onResolve, reject, language);
 		});
 	};
 
@@ -43,7 +63,7 @@ class Translations {
 				return resolve();
 			}).catch(err => {
 				log.error('Failed to load translation during fetching data', err);
-				reject();
+				reject(err);
 			});
 	};
 
@@ -89,7 +109,11 @@ class Translations {
 		this.currentLang = Object.keys(this.localizedValues)[0];
 	};
 
-	addTranslation = (localizedData) => {
+	isFetchedAlready = language => {
+		return !!this.localizedValues[language];
+	};
+
+	addTranslation = localizedData => {
 		const parsed = this.processLocalized(localizedData);
 		this.localizedValues = { ...this.localizedValues, ...parsed };
 	};
