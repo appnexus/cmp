@@ -78,7 +78,7 @@ const handleConsentResult = (...args) => {
 	return { display: false, command: 'showFooter' };
 };
 
-
+console.log('ARTUR CMP');
 const shouldDisplay = () => {
 	return new Promise((resolve) => {
 		let translationFetched = false;
