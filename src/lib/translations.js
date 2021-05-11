@@ -7,7 +7,6 @@ import config from './config';
 class Translations {
 	constructor() {
 		this.localizedValues = {};
-		this.detectedLang = findLocale().split('-')[0];
 		this.currentLang = null;
 		this.translations = null;
 	}
@@ -52,6 +51,7 @@ class Translations {
 			return;
 		}
 		this.translations = configuration;
+		this.detectedLang = findLocale().split('-')[0];
 		this.initCurrent();
 	};
 
