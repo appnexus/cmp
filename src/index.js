@@ -78,7 +78,6 @@ const handleConsentResult = (...args) => {
 	return { display: false, command: 'showFooter' };
 };
 
-
 const shouldDisplay = () => {
 	return new Promise((resolve) => {
 		let translationFetched = false;
