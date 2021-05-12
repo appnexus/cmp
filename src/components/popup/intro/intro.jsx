@@ -34,11 +34,13 @@ export default class Intro extends Component {
 
 		return (
 			<div class={style.intro}>
-				<CloseButton
-					class={style.close}
-					onClick={onAcceptAll}
-				/>
-				<TranslationSelectize onChange={this.changeState}/>
+				<div class={style.closeSection}>
+					<CloseButton
+						class={style.close}
+						onClick={onAcceptAll}
+					/>
+					<TranslationSelectize onChange={this.changeState}/>
+				</div>
 				<div class={style.title}>
 					<LocalLabel localizeKey='title'>Thanks for visiting</LocalLabel>
 				</div>
