@@ -11,7 +11,7 @@ export default class Selectize extends Component {
 	render(props) {
 		const { selected, onChange, classNames } = props;
 		return (
-			<select class={classNames} onChange={event => onChange(event)} value={selected}>
+			<select class={classNames} onChange={onChange} value={selected}>
 				{this.getOptions()}
 			</select>
 		);

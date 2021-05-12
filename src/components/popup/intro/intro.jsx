@@ -4,6 +4,7 @@ import Button from '../../button/button';
 import Label from '../../label/label';
 import CloseButton from '../../closebutton/closebutton';
 import TranslationSelectize from '../../translationselectize/translationselectize';
+import { translations } from '../../../lib/translations';
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -13,7 +14,7 @@ class LocalLabel extends Label {
 
 export default class Intro extends Component {
 	state = {
-		lang: ''
+		lang: translations.currentLang
 	};
 
 	static defaultProps = {};
@@ -37,9 +38,7 @@ export default class Intro extends Component {
 					class={style.close}
 					onClick={onAcceptAll}
 				/>
-				<TranslationSelectize onChange={lang => {
-					this.changeState(lang);
-				}}/>
+				<TranslationSelectize onChange={this.changeState}/>
 				<div class={style.title}>
 					<LocalLabel localizeKey='title'>Thanks for visiting</LocalLabel>
 				</div>
