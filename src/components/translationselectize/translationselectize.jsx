@@ -18,7 +18,7 @@ export default class TranslationSelectize extends Component {
 
 	render() {
 		const options = Object.keys(translations.translations).map(el => el.toUpperCase());
-		if (options.length < 2) {
+		if (config.disableLanguageSelect || options.length < 2) {
 			return null;
 		}
 		const selected = translations.currentLang.toUpperCase();
