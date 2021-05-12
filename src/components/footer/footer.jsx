@@ -40,6 +40,7 @@ export default class Footer extends Component {
 					hasBorder={false}
 					class={style.close}
 					onClick={this.handleClose}
+					prefix={LocalLabel.defaultProps.prefix}
 				/>
 				<span>
 					<LocalLabel localizeKey='message' class={style.message}>A reminder you can control your user privacy preferences</LocalLabel>
