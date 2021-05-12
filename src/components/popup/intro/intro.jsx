@@ -3,6 +3,8 @@ import style from './intro.less';
 import Button from '../../button/button';
 import Label from '../../label/label';
 import CloseButton from '../../closebutton/closebutton';
+import TranslationSelectize from '../../translationselectize/translationselectize';
+import { translations } from '../../../lib/translations';
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -11,22 +13,34 @@ class LocalLabel extends Label {
 }
 
 export default class Intro extends Component {
+	state = {
+		lang: translations.currentLang
+	};
 
 	static defaultProps = {};
 
-	render(props, state) {
+	changeState = lang => {
+		this.setState({
+			lang
+		});
+	};
+
+	render(props) {
 
 		const {
 			onAcceptAll,
-			onShowPurposes,
+			onShowPurposes
 		} = props;
 
 		return (
 			<div class={style.intro}>
-				<CloseButton
-					class={style.close}
-					onClick={onAcceptAll}
-				/>
+				<div class={style.closeSection}>
+					<CloseButton
+						class={style.close}
+						onClick={onAcceptAll}
+					/>
+					<TranslationSelectize onChange={this.changeState}/>
+				</div>
 				<div class={style.title}>
 					<LocalLabel localizeKey='title'>Thanks for visiting</LocalLabel>
 				</div>
