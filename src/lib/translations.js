@@ -7,7 +7,6 @@ import config from './config';
 class Translations {
 	constructor() {
 		this.localizedValues = {};
-		this.detectedLang = findLocale().split('-')[0];
 		this.currentLang = null;
 		this.translations = null;
 	}
@@ -71,7 +70,14 @@ class Translations {
 		if (!configuration || !Object.keys(configuration).length) {
 			return;
 		}
-		this.translations = configuration;
+		this.translations = {};
+		this.detectedLang = findLocale().split('-')[0];
+		this.defaultLang = config.defaultLang && config.defaultLang.split('-')[0].toLowerCase();
+
+		Object.keys(configuration).forEach(key => {
+			this.translations[key.toLowerCase()] = configuration[key];
+		});
+
 		this.initCurrent();
 	};
 
@@ -79,8 +85,15 @@ class Translations {
 		if (!this.translations) {
 			return;
 		}
-		const code = this.isLangAvailable(this.detectedLang) ? this.detectedLang : Object.keys(this.translations)[0];
+		const code = this.isLangAvailable(this.detectedLang) ? this.detectedLang : this.getDefaultLang();
 		this.currentLang = code;
+	};
+
+	getDefaultLang = () => {
+		if (this.defaultLang && this.isLangAvailable(this.defaultLang)) {
+			return this.defaultLang;
+		}
+		return Object.keys(this.translations)[0];
 	};
 
 	isLangAvailable = language => {

@@ -7,6 +7,7 @@ const defaultConfig = {
 	logging: false,
 	localization: {},
 	forceLocale: null,
+	defaultLang: null,
 	gdprApplies: true,
 	getConsentData: null,
 	setConsentData: null,
