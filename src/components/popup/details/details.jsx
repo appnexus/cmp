@@ -160,6 +160,7 @@ export default class Details extends Component {
 				<CloseButton
 					class={style.close}
 					onClick={onSaveOrClose}
+					prefix={LocalLabel.defaultProps.prefix}
 				/>
 				<div class={style.header}>
 					<LocalLabel localizeKey='title'>User Privacy Preferences</LocalLabel>

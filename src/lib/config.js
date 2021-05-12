@@ -21,7 +21,8 @@ const defaultConfig = {
 	publisherCountryCode: 'PL',
 	getConsentDataTimeout: 500,
 	purposeOneTreatment: false,
-	translationFetch: false
+	translationFetch: false,
+	disableLanguageSelect: false
 };
 
 class Config {
