@@ -7,6 +7,7 @@ const defaultConfig = {
 	logging: false,
 	localization: {},
 	forceLocale: null,
+	defaultLang: null,
 	gdprApplies: true,
 	getConsentData: null,
 	setConsentData: null,
@@ -20,7 +21,8 @@ const defaultConfig = {
 	publisherCountryCode: 'PL',
 	getConsentDataTimeout: 500,
 	purposeOneTreatment: false,
-	translationFetch: false
+	translationFetch: false,
+	disableLanguageSelect: false
 };
 
 class Config {
