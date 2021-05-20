@@ -15,20 +15,6 @@ const commands = [
 		}
 	},
 	{
-		command: 'getConsentObject',
-		parameters: [{
-			type: 'parameter (Object)',
-			description: 'Object that contains established consents'
-		}, {
-			type: 'parameter (Object)',
-			description: 'Valid vendor list'
-		}],
-		callback: {
-			resultType: 'result (Object, Boolean)',
-			resultDescription: 'Object containing consent data for vendor IDs requested'
-		}
-	},
-	{
 		command: 'getVendorList',
 		parameters: [{
 			type: 'int or string',
