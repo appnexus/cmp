@@ -22,10 +22,9 @@ export default class TranslationSelectize extends Component {
 			return null;
 		}
 		const selected = translations.currentLang.toUpperCase();
-		return (
-			config.translationFetch ? (<Selectize classNames='translationSelect' selected={selected}
-												  options={options}
-												  onChange={this.onChangeLanguage}/>) : null
+		return (<Selectize classNames='translationSelect' selected={selected}
+						   options={options}
+						   onChange={this.onChangeLanguage}/>
 		);
 	}
 }
