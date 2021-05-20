@@ -1,4 +1,3 @@
-import replaceMacros from './macros';
 import { fetch } from './helpers';
 import Promise from 'promise-polyfill';
 import log from './log';
