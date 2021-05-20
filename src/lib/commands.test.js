@@ -20,10 +20,6 @@ import config from './config';
 
 use(datetime);
 
-const filter = (object) => {
-	return Object.keys(object).filter(key => object[key]);
-};
-
 describe('commands', () => {
 	let store, commands, cmpManager;
 
