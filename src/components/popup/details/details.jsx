@@ -6,7 +6,7 @@ import Purposes from './purposes/purposes';
 import Vendors from './vendors/vendors';
 import Panel from '../../panel/panel';
 import Label from '../../label/label';
-import { SECTION_PURPOSES, SECTION_VENDORS, TAB_PUBLISHER_INFO} from '../../../lib/store';
+import { SECTION_PURPOSES, SECTION_VENDORS, TAB_PUBLISHER_INFO } from '../../../lib/store';
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -15,7 +15,7 @@ class LocalLabel extends Label {
 }
 
 export default class Details extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		const { isCustomVendors } = this.props.store;
 		this.state = {
@@ -25,37 +25,23 @@ export default class Details extends Component {
 		};
 	}
 
-	getVendors = () => {
+	getCustomVendors = () => {
+		const { vendorList: { customVendors = {} } } = this.props.store;
+		return Object.values(customVendors);
+	};
+
+	getGlobalVendors = () => {
 		const { vendorList = {} } = this.props.store;
 		const { vendors = {} } = vendorList;
 		return Object.values(vendors);
 	};
 
-	getCustomVendors = () => {
-		if (this.isNewVendorList()) {
-			const { vendorList: { customVendors = {} } } = this.props.store;
+	filterVendors = ({ isCustom = null, purposeId, featureId, isSpecial } = {}) => {
+		if (isCustom) {
+			const { vendorList: { customVendors } } = this.props.store;
 			return Object.values(customVendors);
 		}
 
-		return this.getVendors().filter((vendor) => !vendor.globalId);
-
-	};
-
-	getGlobalVendors = () => {
-		if (this.isNewVendorList()) {
-			return this.getVendors();
-		}
-
-		return this.getVendors().filter((vendor) => !!vendor.globalId);
-	};
-
-	isNewVendorList = () => {
-		const { vendorList: { publicationVersion } } = this.props.store;
-
-		return publicationVersion !== undefined;
-	};
-
-	filterVendors = ({ isCustom = null, purposeId, featureId, isSpecial } = {}) => {
 		const { gvl } = this.props.store.tcModel;
 		let filteredVendors = [];
 		const idSort = (a, b) => a.id - b.id;
@@ -76,15 +62,7 @@ export default class Details extends Component {
 			}
 		}
 
-		if (this.isNewVendorList()) {
-			if (isCustom) {
-				const { vendorList: { customVendors } } = this.props.store;
-				return Object.values(customVendors);
-			}
-			return filteredVendors;
-		}
-
-		return filteredVendors.filter(vendor => isCustom ? !vendor.globalId : !!vendor.globalId);
+		return filteredVendors;
 	};
 
 	handleShowVendors = (filter) => {
@@ -191,7 +169,6 @@ export default class Details extends Component {
 						/>
 						<Vendors
 							customVendorsConsent={customVendorsConsent}
-							isNewVendorList={this.isNewVendorList()}
 							selectedVendorIds={vendorConsents}
 							selectedVendorsLegitimateInterestsIds={vendorLegitimateInterests}
 							selectAllVendorLegitimateInterests={selectAllVendorLegitimateInterests}
@@ -212,8 +189,9 @@ export default class Details extends Component {
 					</Panel>
 				</div>
 				<div class={style.footer}>
-					<a aria-label='back' class={style.cancel} onClick={this.handleBack}><LocalLabel prefix={'tabs.tab' + (selectedTab + 1)}
-																				  localizeKey='back'>Back</LocalLabel></a>
+					<a aria-label='back' class={style.cancel} onClick={this.handleBack}><LocalLabel
+						prefix={'tabs.tab' + (selectedTab + 1)}
+						localizeKey='back'>Back</LocalLabel></a>
 					<Button ariaLabel='save settings and close' class={style.save} onClick={onSaveOrClose}><LocalLabel
 						prefix={'tabs.tab' + (selectedTab + 1)} localizeKey='save'>Save and Exit</LocalLabel></Button>
 				</div>
