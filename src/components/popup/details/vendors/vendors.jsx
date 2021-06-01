@@ -52,9 +52,9 @@ export default class Vendors extends Component {
 	};
 
 	isFullVendorsConsentChosen = () => {
-		const { vendors, selectedVendorIds, isNewVendorList, isCustom, customVendorsConsent } = this.props;
+		const { vendors, selectedVendorIds, isCustom, customVendorsConsent } = this.props;
 
-		if (isNewVendorList && isCustom) {
+		if (isCustom) {
 			return customVendorsConsent;
 		}
 
@@ -63,9 +63,9 @@ export default class Vendors extends Component {
 	};
 
 	handleFullConsentChange = ({ isSelected }) => {
-		const { isNewVendorList, setCustomVendorsConsent, isCustom } = this.props;
+		const { setCustomVendorsConsent, isCustom } = this.props;
 
-		if (isNewVendorList && isCustom) {
+		if (isCustom) {
 			setCustomVendorsConsent(isSelected);
 		}
 		isSelected ? this.handleAcceptAll() : this.handleRejectAll();
@@ -96,7 +96,6 @@ export default class Vendors extends Component {
 	render(props, state) {
 
 		const {
-			isNewVendorList,
 			vendors,
 			selectedVendorIds,
 			selectedVendorsLegitimateInterestsIds,
@@ -198,7 +197,7 @@ export default class Vendors extends Component {
 									/>
 									<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={selectedVendorsLegitimateInterestsIds.has(id) ? 'active' : 'inactive'}></Label>
 								</td> || <td/>}
-								{editingConsents && (!isNewVendorList || !this.props.isCustom) &&
+								{editingConsents && !this.props.isCustom &&
 									<td className={style.vendorCenterSmall}>
 									<Label collapseEmpty={true} className={style.caption} prefix={this.getPrefix()}
 												localizeKey='acceptButton'>Consent</Label>
