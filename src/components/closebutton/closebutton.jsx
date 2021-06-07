@@ -21,11 +21,12 @@ export default class CloseButton extends Component {
 		} = props;
 
 		return (
-			<span className={style.closeButtonWrapper}>
-				<Label prefix={prefix} localizeKey='closeButton' collapseEmpty={true}>Save and Close</Label>
+			<span className={style.closeButtonWrapper} onClick={onClick}>
+				<Label prefix={prefix}
+					   localizeKey='closeButton'
+					   collapseEmpty={true}>Save and Close</Label>
 				<span
 					aria-label='close'
-					onClick={onClick}
 					class={[style.closeButton, hasBorder ? style.hasBorder : '', props.class].join(' ')}>
 					<svg width={width} height={height} viewBox='0 0 16 16' preserveAspectRatio='xMidYMid meet'>
 						<path
