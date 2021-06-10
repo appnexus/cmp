@@ -8,7 +8,7 @@ const fs = require('fs');
 const https = require('https');
 const { LANGUAGES } = require('../src/s1/constants.js');
 
-const VENDOR_LIST_URL = 'https://vendorlist.consensu.org/v2/vendor-list.json';
+const VENDOR_LIST_URL = 'https://vendor-list.consensu.org/v2/vendor-list.json';
 
 const externalFiles = [
 	{
@@ -50,7 +50,7 @@ const processFiles = () => {
 		LANGUAGES.filter(({ shouldDisablePurposesFetch = false }) => !shouldDisablePurposesFetch).forEach(
 			({ display, code }) => {
 				downloadFile(
-					`https://vendorlist.consensu.org/v2/purposes-${code}.json`,
+					`https://vendor-list.consensu.org/v2/purposes-${code}.json`,
 					`src/s1/config/2.0/purposes/purposes-${code}.json`
 				)
 					.then(() => {

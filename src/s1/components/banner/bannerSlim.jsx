@@ -111,7 +111,7 @@ export default class BannerSlim extends Component {
 
 	handleResize = debounce(() => {
 		const { store } = this.props;
-		const { maxHeightModal, shouldAutoResizeModal } = store;
+		const { maxHeightModal, shouldAutoResizeModal} = store;
 
 		let newMaxHeightModal = maxHeightModal;
 
@@ -136,16 +136,20 @@ export default class BannerSlim extends Component {
 		const { hasScrolled } = state;
 		const { isShowing, store } = props;
 		const {
-			config: { theme, shouldShowCloseX, },
+			config: { theme, shouldShowCloseX},
 			translations,
-			maxHeightModal,			
+			maxHeightModal,
+			minHeightModal
 		} = store;
 
 		const {
 			isBannerModal,
 			isBannerInline,
+			isFullWidth,
 			maxWidthModal,
+			maxHeightInline,
 			// maxHeightModal, // handled in store
+			// minHeightModal, // handled in store
 			primaryColor,
 			primaryTextColor,
 			backgroundColor,
@@ -158,7 +162,10 @@ export default class BannerSlim extends Component {
 		if (!isShowing) {
 			bannerClasses.push(style.hidden);
 		}
-		if( shouldShowDropShadow ) {
+		if (!isFullWidth) {
+			bannerClasses.push(style.bannerRounded);
+		}
+		if (shouldShowDropShadow) {
 			bannerClasses.push(style.bannerShadow);
 		}
 		if (isBannerModal) {
@@ -167,6 +174,8 @@ export default class BannerSlim extends Component {
 			bannerClasses.push(style.bannerInline);
 		}
 
+		const maxHeightStr = (isBannerInline && maxHeightInline ? `min(${maxHeightInline}, ${isNaN(maxHeightModal) ? maxHeightModal : maxHeightModal + 'px'})` : maxHeightModal);
+
 		return (
 			<div
 				class={bannerClasses.join(' ')}
@@ -174,13 +183,16 @@ export default class BannerSlim extends Component {
 					backgroundColor,
 					color: textLightColor,
 					...(maxWidthModal ? { maxWidth: maxWidthModal } : {}),
+					...( isBannerInline ? { maxHeight: (isShowing ? maxHeightModal : 0) } : {}),
+					// ...(minHeightModal ? { minHeight: minHeightModal } : {}),
 				}}
 			>
 				<div
-					class={[style.content, style.layer1, hasScrolled ? style.scrolling : ''].join(' ')}
+					class={[style.content, style.layer1, style.animated, hasScrolled ? style.scrolling : ''].join(' ')}
 					ref={(el) => (this.scrollRef = el)}
 					style={{
-						maxHeight: maxHeightModal,
+						maxHeight: maxHeightStr,
+						minHeight: minHeightModal
 					}}
 				>
 					{ shouldShowCloseX && <div class={style.closeX} onClick={this.handleClose}>&times;</div>}
@@ -193,7 +205,7 @@ export default class BannerSlim extends Component {
 									</LocalLabel>
 								</div>
 								<div class={style.intro}>
-									<LocalLabel localizeKey="description" translations={translations} onClick={this.handleLearnMore}>
+									<LocalLabel localizeKey="description" translations={translations} onClick={this.handleLearnMore} theme={theme}>
 									We and our partners use cookies and other technologies to store and/or access information on or from your device (with or without your permission, depending on the type of data) while you use this site, in order to personalize ads and content, analyze or measure site usage, and develop audience insights. You can learn more and change or manage your consent setting preferences via the "manage preferences" link or visiting our "privacy policy".
 									</LocalLabel>
 								</div>

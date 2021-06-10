@@ -9,7 +9,7 @@ export default class Label extends Component {
 	};
 
 	hookClickHandler() {
-		const { onClick } = this.props;
+		const { onClick, theme } = this.props;
 		if (onClick && this.ref.current) {
 			const a = this.ref.current.querySelector('a');
 			if (!a || a === this.hooked) {
@@ -22,6 +22,9 @@ export default class Label extends Component {
 
 			this.hooked = a;
 			this.hooked.addEventListener('click', onClick);
+			if (theme) {
+				this.hooked.style.color = theme.textLinkColor;
+			}
 		}
 	}
 

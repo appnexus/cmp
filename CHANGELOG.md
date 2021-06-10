@@ -1,3 +1,12 @@
+## [2.2.0](https://github.com/openmail/system1-cmp/compare/2.1.7...2.1.8) (2021-05-17)
+
+### Feat
+
+- [x] Upgrade vendor list and script to download vendor list 
+- [x] Add relative position modal solution
+- [x] Add `updateConfig` API to switch between relative and static position
+- [x] Pass theme colors through to anchors
+
 ## [2.1.7](https://github.com/openmail/system1-cmp/compare/2.1.6...2.1.7) (2021-03-05)
 
 ### Feat

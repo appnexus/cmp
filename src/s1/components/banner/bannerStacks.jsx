@@ -112,11 +112,11 @@ export default class BannerStacks extends Component {
 
 	handleResize = debounce(() => {
 		const { store } = this.props;
-		const { maxHeightModal, shouldAutoResizeModal } = store;
+		const { maxHeightModal, shouldAutoResizeModal, isSlimMode } = store;
 
 		let newMaxHeightModal = maxHeightModal;
 
-		if (shouldAutoResizeModal && this.aboveFoldRef && this.aboveFoldRef.clientHeight) {
+		if (!isSlimMode && shouldAutoResizeModal && this.aboveFoldRef && this.aboveFoldRef.clientHeight) {
 			newMaxHeightModal = this.aboveFoldRef.clientHeight + 100;
 		}
 
@@ -137,7 +137,7 @@ export default class BannerStacks extends Component {
 		const { hasScrolled } = state;
 		const { isShowing, store } = props;
 		const {
-			config: { theme, shouldShowCloseX, },
+			config: { theme, shouldShowCloseX},
 			translations,
 			displayLayer1,
 			isSaveShowing,
@@ -148,9 +148,11 @@ export default class BannerStacks extends Component {
 			isBannerModal,
 			isBannerInline,
 			maxWidthModal,
+			minHeightModal,
 			isFullWidth,
 			shouldShowDropShadow,
 			// maxHeightModal, // handled in store
+			maxHeightInline,
 			primaryColor,
 			primaryTextColor,
 			backgroundColor,
@@ -162,17 +164,19 @@ export default class BannerStacks extends Component {
 		if (!isShowing) {
 			bannerClasses.push(style.hidden);
 		}
-		if( !isFullWidth ) {
+		if (!isFullWidth) {
 			bannerClasses.push(style.bannerRounded);
 		}
-		if( shouldShowDropShadow ) {
+		if (shouldShowDropShadow) {
 			bannerClasses.push(style.bannerShadow);
 		}
 		if (isBannerModal) {
 			bannerClasses.push(style.bannerModal);
 		} else if (isBannerInline) {
-			bannerClasses.push(style.bannerInline);			
+			bannerClasses.push(style.bannerInline);
 		}
+
+		// const maxHeightStr = (isBannerInline && maxHeightInline ? `min(${maxHeightInline}, ${isNaN(maxHeightModal) ? maxHeightModal : maxHeightModal + 'px'})` : maxHeightModal);
 
 		return (
 			<div
@@ -181,6 +185,7 @@ export default class BannerStacks extends Component {
 					backgroundColor,
 					color: textLightColor,
 					...(maxWidthModal ? { maxWidth: maxWidthModal } : {}),
+					// ...(isBannerInline ? { maxHeight: (isShowing ? maxHeightModal : 0) } : {})
 				}}
 			>
 				<div
@@ -188,6 +193,7 @@ export default class BannerStacks extends Component {
 					ref={(el) => (this.scrollRef = el)}
 					style={{
 						maxHeight: maxHeightModal,
+						...(minHeightModal ? { minHeight: minHeightModal } : {}),
 					}}
 				>
 					{ shouldShowCloseX && <div class={style.closeX} onClick={this.handleClose}>&times;</div>}
@@ -200,7 +206,7 @@ export default class BannerStacks extends Component {
 									</LocalLabel>
 								</div>
 								<div class={style.intro}>
-									<LocalLabel localizeKey="description" translations={translations} onClick={this.handleLearnMore}>
+									<LocalLabel localizeKey="description" translations={translations} onClick={this.handleLearnMore} theme={theme}>
 										When you visit our site, <a>pre-selected companies</a> may access and use certain information on
 										your device and about this site to serve relevant ads or personalized content.
 									</LocalLabel>

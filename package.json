@@ -1,12 +1,12 @@
 {
 	"name": "system1-cmp",
-	"version": "2.1.7",
-	"cmpVersion": 5,
+	"version": "2.2.0",
+	"cmpVersion": 6,
 	"description": "System1 Consent Management Platform for TCF 1.1 GDPR Compliance",
 	"scripts": {
 		"clean": "rimraf ./dist",
 		"dev": "yarn dev:s1",
-		"dev:s1": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --config config/s1.webpack.config.babel.js",
+		"dev:s1": "cross-env PORT=3030 NODE_ENV=development webpack-dev-server --inline --hot --progress --config config/s1.webpack.config.babel.js",
 		"dev:original": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --config config/webpack.config.babel.js",
 		"start": "serve dist -c 1",
 		"prestart": "npm run build",

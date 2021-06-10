@@ -245,7 +245,7 @@ export default class PurposeList extends Component {
 		const displayPurposesDom = this.renderRow(props, state, {
 			headline: (
 				<h3 class={style.rowTitle}>
-					<LocalLabel localizeKey="purposesTitle" translations={translations} onClick={this.handleVendorsClick}>
+					<LocalLabel localizeKey="purposesTitle" translations={translations} onClick={this.handleVendorsClick} theme={theme}>
 						We and{' '}
 						<a style={{ color: theme.textLinkColor }} onClick={this.handleVendorsClick}>
 							our partners:
@@ -273,6 +273,7 @@ export default class PurposeList extends Component {
 									localizeKey="stacksPurposesTitle"
 									translations={translations}
 									onClick={this.handleVendorsClick}
+									theme={theme}
 								>
 									Purposes
 								</LocalLabel>
@@ -296,6 +297,7 @@ export default class PurposeList extends Component {
 									localizeKey="stacksSpecialFeaturesTitle"
 									translations={translations}
 									onClick={this.handleVendorsClick}
+									theme={theme}
 								>
 									Special Features
 								</LocalLabel>
@@ -314,7 +316,7 @@ export default class PurposeList extends Component {
 			displayStackDom = this.renderStack(props, state, {
 				headline: (
 					<h3 class={style.rowTitle}>
-						<LocalLabel localizeKey="stacksTitle" translations={translations} onClick={this.handleVendorsClick}>
+						<LocalLabel localizeKey="stacksTitle" translations={translations} onClick={this.handleVendorsClick} theme={theme}>
 							We and{' '}
 							<a style={{ color: theme.textLinkColor }} onClick={this.handleVendorsClick}>
 								our partners
@@ -339,7 +341,7 @@ export default class PurposeList extends Component {
 		const displaySpecialFeaturesDom = this.renderRow(props, state, {
 			headline: (
 				<h3 class={style.rowTitle}>
-					<LocalLabel localizeKey="stacksTitle" translations={translations} onClick={this.handleVendorsClick}>
+					<LocalLabel localizeKey="stacksTitle" translations={translations} onClick={this.handleVendorsClick} theme={theme}>
 						For some of the purposes above we and{' '}
 						<a style={{ color: theme.textLinkColor }} onClick={this.handleVendorsClick}>
 							our partners
@@ -359,7 +361,7 @@ export default class PurposeList extends Component {
 		const displaySpecialPurposesDom = this.renderRow(props, state, {
 			headline: (
 				<h3 class={style.rowTitle}>
-					<LocalLabel localizeKey="specialPurposesTitle" translations={translations}>
+					<LocalLabel localizeKey="specialPurposesTitle" translations={translations} theme={theme}>
 						We need your consent for all the purposes above but we have a legitimate interest for these purposes:
 					</LocalLabel>
 				</h3>
@@ -373,7 +375,7 @@ export default class PurposeList extends Component {
 		const displayFeaturesDom = this.renderRow(props, state, {
 			headline: (
 				<h3 class={style.rowTitle}>
-					<LocalLabel localizeKey="featuresTitle" translations={translations} onClick={this.handleVendorsClick}>
+					<LocalLabel localizeKey="featuresTitle" translations={translations} onClick={this.handleVendorsClick} theme={theme}>
 						For some of the purposes above we and{' '}
 						<a style={{ color: theme.textLinkColor }} onClick={this.handleVendorsClick}>
 							our partners
@@ -391,7 +393,7 @@ export default class PurposeList extends Component {
 		const displayLegitInterestPurposesDom = this.renderRow(props, state, {
 			headline: (
 				<h3 class={style.rowTitle}>
-					<LocalLabel localizeKey="legintPurposesTitle" translations={translations} onClick={this.handleVendorsClick}>
+					<LocalLabel localizeKey="legintPurposesTitle" translations={translations} onClick={this.handleVendorsClick} theme={theme}>
 						Some of{' '}
 						<a style={{ color: theme.textLinkColor }} onClick={this.handleVendorsClick}>
 							our partners

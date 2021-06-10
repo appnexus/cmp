@@ -13,6 +13,7 @@ export const CONSENT_SCREENS = {
 };
 
 export const CUSTOM_API = {
+	CHANGE_CONFIG: 'changeConfig',
 	CHANGE_LANGUAGE: 'changeLanguage',
 	INIT: 'init',
 	OFF_CONSENT_CHANGED: 'offConsentAllChanged',

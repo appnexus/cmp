@@ -17,26 +17,17 @@
 	color: @color-textLight;
 	background: #fff;
 	font-size: 16px;
-	transition: transform 350ms ease-in-out, opacity 350ms linear;		
+	transition: transform 350ms ease-in-out, opacity 350ms linear;
 	margin: auto;
+	overflow: hidden;
 
 	&.bannerShadow {
 		box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.12), 0 -2px 2px rgba(0, 0, 0, 0.12), 0 -4px 4px rgba(0, 0, 0, 0.12),
 		0 -8px 8px rgba(0, 0, 0, 0.12), 0 -16px 16px rgba(0, 0, 0, 0.12);	
 	}
 
-	&.bannerRounded {
-		border-top-left-radius: 25px;
-		border-top-right-radius: 25px;
-		border-bottom-left-radius: 10px;
-		border-bottom-right-radius: 10px;
-		width: calc(100% - 50px);
-		max-width: 1024px;
-	}
-
 	@media @smartphone {
 		padding: 15px 10px;
-		width: calc(100% - 20px);
 	}
 
 	&.hidden {
@@ -44,11 +35,6 @@
 		transform: translateY(1000px);
 		opacity: 0;
 		transition-delay: 250ms;
-	}
-
-	&.bannerInline {
-		position: relative;
-		box-shadow: none;
 	}
 
 	&.bannerModal {
@@ -104,6 +90,10 @@
 			margin-bottom: 0;
 			padding: 0 30px 30px;
 
+			.message {
+				padding-bottom: 0;
+			}
+
 			@media @smartphone {
 				padding: 12px 20px 0;
 
@@ -139,6 +129,51 @@
 		}
 	}
 
+	&.bannerInline {
+		position: relative;
+		// max-height: 680px;
+
+		&.hidden {
+			pointer-events: none;
+			transform: translateY(0px);
+			opacity: 0;
+			transition-delay: 250ms;
+			padding-top: 0;
+			max-height: 0px;
+			transition: transform 350ms ease-in-out, opacity 350ms linear, max-height 350ms ease-in-out, padding 350ms ease-in-out;
+			overflow: hidden;
+		}
+
+		.content {
+			margin-bottom: 0px;
+
+			.message {
+				padding-bottom: 60px;
+			}
+		}
+
+		&.bannerSlim {
+			.content {
+				.message {
+					padding-bottom: 0;
+				}
+			}
+		}
+	}
+
+	&.bannerRounded {
+		border-top-left-radius: 25px;
+		border-top-right-radius: 25px;
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+		width: calc(100% - 50px);
+		max-width: 1024px;
+
+		@media @smartphone {
+			width: calc(100% - 20px);
+		}
+	}
+
 	.content {
 		max-height: 60vh;
 		padding-left: 30px;
@@ -149,6 +184,14 @@
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
 		transition: max-height 350ms ease-in-out;
+
+		&.animated {
+			overflow: auto;
+			animation: hide-scroll 500ms backwards;
+			@keyframes hide-scroll {
+				from, to { overflow: hidden; } 
+			}
+		}
 
 		@media @smartphone {
 			padding-top: 0px;

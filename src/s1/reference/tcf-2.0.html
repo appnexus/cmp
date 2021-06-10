@@ -96,6 +96,7 @@
 			version: <%= version %>
 			generated: <%= date %>
 		//-->
+		<div class="insertion-node-example"></div>
 		<div class="reference">
 			<h1 class="p">System1 CMP TCF 2.0 Reference Page</h1>
 			<ul>
@@ -152,6 +153,10 @@
 							<input id="domShouldUseSlim" type="checkbox" />
 						</li>
 						<li>
+							Use Inline Mode:
+							<input id="domShouldUseInline" type="checkbox" />
+						</li>
+						<li>
 							Full Width:
 							<input id="domFullWidth" type="checkbox" />
 						</li>
@@ -162,6 +167,10 @@
 						<li>
 							Close with X:
 							<input id="domCloseWithX" type="checkbox" />
+						</li>
+						<li>
+							Insertion Node:
+							<input id="domInsertionNode" type="text" value="" />
 						</li>
 					</ul>
 				</li>
@@ -181,9 +190,11 @@
 			const domShouldAutoResize = document.querySelector('#domShouldAutoResize');
 			const domShouldUseStacks = document.querySelector('#domShouldUseStacks');
 			const domShouldUseSlim = document.querySelector('#domShouldUseSlim');
+			const domShouldUseInline = document.querySelector('#domShouldUseInline');
 			const domFullWidth = document.querySelector('#domFullWidth');
 			const domDropShadow = document.querySelector('#domDropShadow');
 			const domCloseWithX = document.querySelector('#domCloseWithX');
+			const domInsertionNode = document.querySelector('#domInsertionNode');
 
 			const setupQaTools = function (store) {
 				const LANGUAGES = store.LANGUAGES;
@@ -217,6 +228,11 @@
 				return params.get('slim') === 'true';
 			};
 
+			const shouldUseInline = function () {
+				let params = new URLSearchParams(window.location.search);
+				return params.get('inline') === 'true';
+			};
+
 			const isFullWidth = function () {
 				let params = new URLSearchParams(window.location.search);
 				return params.get('fullwidth') === 'true';
@@ -232,12 +248,22 @@
 				return params.get('closewithx') === 'true';
 			};
 
+			const getInsertionNode = function () {
+				let params = new URLSearchParams(window.location.search);
+				return params.get('insertionnode');
+			};
+
 			const config = {
 				theme: {
+					isBannerInline: shouldUseInline(),
 					shouldAutoResizeModal: shouldAutoResize(),
-					maxHeightModal: '65vh',
+					maxHeightModal: '45vh',
+					// minHeightModal: '400px',
+					maxHeightInline: '25vh',
 					isFullWidth: isFullWidth(),
 					shouldShowDropShadow: shouldShowDropShadow(),
+					primaryColor: '#0099ff',
+					textLinkColor: '#0099ff',
 				},
 				business: 'reference',
 				gdprApplies: true,
@@ -255,6 +281,7 @@
 				shouldUseStacks: shouldUseStacks(),
 				isSlimMode: shouldUseSlim(), 
 				shouldShowCloseX: shouldShowCloseX(),
+				insertionNode: getInsertionNode(),
 				// narrowedVendors: [1, 2, 3, 4, 5, 6],
 			};
 
@@ -325,6 +352,13 @@
 				window.location.search = params.toString();
 			});
 
+			domShouldUseInline.checked = shouldUseInline();
+			domShouldUseInline.addEventListener('change', function () {
+				let params = new URLSearchParams(window.location.search);
+				params.set('inline', domShouldUseInline.checked);
+				window.location.search = params.toString();
+			});
+
 			domFullWidth.checked = isFullWidth();
 			domFullWidth.addEventListener('change', function () {
 				let params = new URLSearchParams(window.location.search);
@@ -344,6 +378,19 @@
 				let params = new URLSearchParams(window.location.search);
 				params.set('closewithx', domCloseWithX.checked);
 				window.location.search = params.toString();
+			});
+
+			let timer;
+			domInsertionNode.value = getInsertionNode();
+			domInsertionNode.addEventListener('change', function () {
+				if (timer) {
+					clearTimeout(timer);
+				}
+				timer = setTimeout(function () {
+					let params = new URLSearchParams(window.location.search);
+					params.set('insertionnode', domInsertionNode.value);
+					window.location.search = params.toString();
+				}, 350)
 			});
 		</script>
 	</body>

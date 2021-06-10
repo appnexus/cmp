@@ -10,7 +10,7 @@ import logger, { EVENTS as LOG_EVENTS } from './lib/logger';
 
 import { CMP_GLOBAL_NAME, CUSTOM_API, CUSTOM_EVENTS, VERSION } from './constants';
 
-const { CHANGE_LANGUAGE, INIT, ON_CONSENT_CHANGED, OFF_CONSENT_CHANGED, SHOW_CONSENT_TOOL } = CUSTOM_API;
+const { CHANGE_CONFIG, CHANGE_LANGUAGE, INIT, ON_CONSENT_CHANGED, OFF_CONSENT_CHANGED, SHOW_CONSENT_TOOL } = CUSTOM_API;
 
 let errorMessage = '';
 
@@ -48,6 +48,11 @@ export const setup = (configOpt) => {
 		[SHOW_CONSENT_TOOL]: (callback) => {
 			store.toggleShowModal(true);
 			callback(store, true);
+		},
+
+		[CHANGE_CONFIG]: (callback, config) => {
+			store.updateConfig(config);
+			callback(store);
 		},
 
 		[CHANGE_LANGUAGE]: (callback, language) => {
@@ -119,7 +124,8 @@ export const setup = (configOpt) => {
 	});
 
 	const init = () => {
-		render(<App store={store} />, document.body);
+		const insertionNode = (config.insertionNode && document.querySelector(config.insertionNode)) || document.body;
+		render(<App store={store} />, insertionNode);
 		return store;
 	};
 

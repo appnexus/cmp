@@ -134,6 +134,7 @@ export default class VendorList extends Component {
 												class={style.privacyPolicy}
 												href={policyUrl}
 												target="_blank"
+												style={{color: theme.textLinkColor}}
 												title={`Privacy Policy for ${name}`}
 											>
 												<LocalLabel localizeKey="privacy" translations={translations}>

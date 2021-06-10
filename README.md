@@ -109,6 +109,7 @@ Read more about [\_\_tcfapi built-in API](https://github.com/InteractiveAdvertis
 - [offConsentAllChanged](#offConsentAllChanged)
 - [showConsentTool](#showConsentTool)
 - [changeLanguage](#changeLanguage)
+- [changeConfig](#changeConfig)
 
 ### init
 
@@ -185,6 +186,20 @@ Calling `__tcfapi('changeLanguage', 2, () => {}, language)` will use cached vers
 __tcfapi('changeLanguage', 2, (store) => {}, 'pt'); // changes to Portuguese
 ```
 
+### changeConfig
+
+Calling `__tcfapi('changeConfig', 2, () => {}, {isSlimMode: true, theme: {isInlineMode: false}})` will update config values and rerender CMP UI
+
+```js
+/**
+ * @param 'changeConfig' // required string command
+ * @param apiVersion // required number 2
+ * @param callback // required function, called when changeLanguage completes, called with `store` and result
+ * @param config // required object, merges with existing config object providing during `init()`
+ */
+__tcfapi('changeConfig', 2, (store) => {}, {theme: {isInlineMode: false}}); // changes config to use inline-mode
+```
+
 ## Configuration / Config
 
 Set configuration for your CMP during the `init` phase.
@@ -224,6 +239,7 @@ __tcfapi('init', 2, () => {}, {
 | `shouldUseStacks`      | optional boolean | `true`                                  | true uses stacks on Layer1, TODO stacks need purposes/custom-features toggle to be compliant                      |
 | `isSlimMode`           | optional boolean | `false`                                 | If `true`, initial banner is low profile, full width banner <sup>v2.1.4+</sup>                                    |
 | `shouldShowCloseX`     | optional boolean | `false`                                 | If `true`, a &times; icon will appear in the upper right on layers to accept-all and close <sup>v2.1.4+</sup>     |
+| `insertionNode` 	   	 | optional string  | `<body>`                                | UI will be appended to this element using `querySelector`. Default behavior appends to body <sup>v2.2.0+</sup>    |
 
 ### theme
 
@@ -233,6 +249,7 @@ Themeing is a bit limited right now. Pass in a `config.theme` object during init
 | ----------------------- | ---------------- | -------- | -------------------------------------------------------------------------------------------------------- |
 | `maxHeightModal`        | optional string  | `45vh`   | CSS style for max height of the CMP UI. Example: `45vh`, `50%`, `350px`                                  |
 | `maxWidthModal`         | optional string  | `1024px` | CSS style for max width of the CMP UI. Example: `1024px`, `calc(90% - 100px)`                            |
+| `maxHeightInline`       | optional string  | `200px`  | CSS style to force max-height of CMP UI while in `isBannerInline` mode only.                             |
 | `shouldAutoResizeModal` | optional boolean | true     | Auto detects Layer1 height to minimize UI. UI resizes to `maxHeightModal` upon interaction               |
 | `primaryColor`          | optional string  | null     | Example: `#0099ff`                                                                                       |
 | `textLinkColor`         | optional string  | null     | Example: `#0099ff`                                                                                       |
@@ -240,6 +257,7 @@ Themeing is a bit limited right now. Pass in a `config.theme` object during init
 | `featuresColor`         | optional string  | null     | Example: `#d0d3d7`                                                                                       |
 | `backgroundColor`       | optional string  | null     | Example: `#d0d3d7` Sets the background color of the banners.  <sup>v2.1.4+</sup>                         |
 | `isFullWidth`           | optional boolean | false    | Removes rounded corners and makes banners full width - matching style layout slimMode <sup>v2.1.4+</sup> |
+| `isBannerInline`        | optional boolean | false    | Renders CMP inline instead of overlaying layout. Subsequent CMP views open in modal <sup>v2.2.0+</sup>   |
 | `shouldShowDropShadow`  | optional boolean | true     | When set to `true`, displays the drop shadoq on banners <sup>v2.1.4+</sup>                               |
 
 ## Initialize With Euconsent String from URL Param
