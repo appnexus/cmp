@@ -87,6 +87,22 @@ export default class Store {
 		);
 	}
 
+	calculateCreatedTime = (created, now) => {
+		if (!created) {
+			return now;
+		}
+		const maxLifetimeMs = 12 * 30 * 24 * 60 * 60 * 1000; //12 months
+		const currrentTimestampMs = now.getTime();
+		const createdMs = new Date(created).getTime();
+
+		const diff = currrentTimestampMs - createdMs;
+
+		if (diff > maxLifetimeMs) {
+			return now;
+		}
+		return created;
+	};
+
 	/**
 	 * Persist all consent data to the cookie.  This data will NOT be filtered
 	 * by the vendorList and will include global consents set no matter what
@@ -108,7 +124,7 @@ export default class Store {
 		}
 
 		const now = new Date();
-		tcModel.created = tcModel.created || now;
+		tcModel.created = this.calculateCreatedTime(tcModel.created, now);
 		tcModel.lastUpdated = now;
 		tcModel.vendorListVersion = vendorListVersion;
 
