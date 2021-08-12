@@ -36,6 +36,10 @@ const commands = {
 		});
 		return Promise.resolve();
 	},
+	deleteCookie: () => {
+		document.cookie = `gadpconsent=;${COOKIE_DOMAIN};path=/;expires = Thu, 01 Jan 1970 00:00:00 GMT`
+		return Promise.resolve();
+	},
 	readConsent: () => {
 		return Promise.resolve({
 			adpConsent: readCookie(COOKIES.adpConsent),
