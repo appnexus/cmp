@@ -8,7 +8,6 @@ const COOKIE_PATH = '/' + (window.location.pathname.split('/')[1] || '');
 const COOKIE_MAX_AGE = 33696000; // 13 months (390 days)
 
 const COOKIES = {
-	adpConsent: 'gadpconsent',
 	pubConsent: 'gpubconsent',
 	euConsent: 'euconsent'
 };
@@ -38,7 +37,6 @@ const commands = {
 	},
 	readConsent: () => {
 		return Promise.resolve({
-			adpConsent: readCookie(COOKIES.adpConsent),
 			pubConsent: readCookie(COOKIES.pubConsent),
 			euConsent: readCookie(COOKIES.euConsent)
 		});
