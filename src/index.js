@@ -65,7 +65,8 @@ const handleConsentResult = (...args) => {
 		log.debug(`Consent found for publication version ${publicationVersion}, but received vendor list version ${pubVersion}. Showing consent tool`);
 		return { display: true, command: 'showConsentTool' };
 	}
-	if (vendorListVersion !== listVersion) {
+	// Show CMP when vendor list version is greater than vendor list version from cookie
+	if (listVersion > vendorListVersion) {
 		log.debug(`Consent found for version ${vendorListVersion}, but received vendor list version ${listVersion}. Showing consent tool`);
 		return { display: true, command: 'showConsentTool' };
 	}
