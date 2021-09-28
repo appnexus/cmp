@@ -44,7 +44,7 @@ export default class Intro extends Component {
 				</div>
 				<div class={style.portalLogo}></div>
 				<div class={style.owner}>
-					<LocalLabel localizeKey='ownerLabel'></LocalLabel>
+					<LocalLabel localizeKey='ownerLabel' collapseEmpty={true}></LocalLabel>
 				</div>
 				<div class={style.title}>
 					<LocalLabel localizeKey='title'>Thanks for visiting</LocalLabel>
