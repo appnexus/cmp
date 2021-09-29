@@ -1,4 +1,8 @@
-## [2.2.0](https://github.com/openmail/system1-cmp/compare/2.1.7...2.1.8) (2021-05-17)
+## [2.2.1](https://github.com/openmail/system1-cmp/compare/2.2.0...2.2.1) (2021-11-28)
+### Refactor
+- [x] Added `config.shouldAutoShowModal` to allow disabling auto show modal after `init`
+
+## [2.2.0](https://github.com/openmail/system1-cmp/compare/2.1.7...2.2.0) (2021-05-17)
 
 ### Feat
 

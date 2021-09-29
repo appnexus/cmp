@@ -172,6 +172,10 @@
 							Insertion Node:
 							<input id="domInsertionNode" type="text" value="" />
 						</li>
+						<li>
+							Should Auto Show Modal:
+							<input id="domAutoShowModal" type="checkbox" checked>
+						</li>
 					</ul>
 				</li>
 			</ul>
@@ -195,6 +199,7 @@
 			const domDropShadow = document.querySelector('#domDropShadow');
 			const domCloseWithX = document.querySelector('#domCloseWithX');
 			const domInsertionNode = document.querySelector('#domInsertionNode');
+			const domAutoShowModal = document.querySelector('#domAutoShowModal');
 
 			const setupQaTools = function (store) {
 				const LANGUAGES = store.LANGUAGES;
@@ -248,6 +253,11 @@
 				return params.get('closewithx') === 'true';
 			};
 
+			const shouldAutoShowModal = function () {
+				let params = new URLSearchParams(window.location.search);
+				return params.get('autoshowmodal') !== 'false';
+			};
+
 			const getInsertionNode = function () {
 				let params = new URLSearchParams(window.location.search);
 				return params.get('insertionnode');
@@ -281,6 +291,7 @@
 				shouldUseStacks: shouldUseStacks(),
 				isSlimMode: shouldUseSlim(), 
 				shouldShowCloseX: shouldShowCloseX(),
+				shouldAutoShowModal: shouldAutoShowModal(),
 				insertionNode: getInsertionNode(),
 				// narrowedVendors: [1, 2, 3, 4, 5, 6],
 			};
@@ -296,7 +307,7 @@
 					setupQaTools(store);
 					console.log('cmp: onInitComplete', store, error);
 					if (!store.isModalShowing) {
-						__tcfapi('showConsentTool', 2, function () {});
+						// __tcfapi('showConsentTool', 2, function () {});
 					}
 				},
 				config
@@ -391,6 +402,13 @@
 					params.set('insertionnode', domInsertionNode.value);
 					window.location.search = params.toString();
 				}, 350)
+			});
+
+			domAutoShowModal.checked = shouldAutoShowModal();
+			domAutoShowModal.addEventListener('change', function () {
+				let params = new URLSearchParams(window.location.search);
+				params.set('autoshowmodal', domAutoShowModal.checked);
+				window.location.search = params.toString();
 			});
 		</script>
 	</body>

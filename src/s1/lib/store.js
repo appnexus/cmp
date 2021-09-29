@@ -144,7 +144,8 @@ export default class Store {
 			gdprConsentUrlParam,
 			publisherCountryCode,
 			isServiceSpecific,
-			isSlimMode,	
+			isSlimMode,
+			shouldAutoShowModal
 		} = this.config;
 		const { vendors } = this.gvl;
 
@@ -190,7 +191,8 @@ export default class Store {
 			// tcModel.setAll();
 
 			// update internal models, show ui, dont save to cookie
-			this.updateCmp({ tcModel, shouldShowModal: true });
+
+			this.updateCmp({ tcModel, shouldShowModal: shouldAutoShowModal });
 			this.setDisplayLayer1();
 			this.hasShownModal = true;
 		} else {
@@ -589,6 +591,7 @@ export default class Store {
 				translations,
 			});
 		});
+
 
 		const gvlPromise = this.gvl.changeLanguage(language).then(() => {
 			if (this.tcModel) {

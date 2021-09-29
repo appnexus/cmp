@@ -50,6 +50,7 @@ export const config = {
 	shouldUseStacks: true, // todo: stacks need individual purposes/special-features with toggles
 	theme,
 	scriptSrc: './tcf-2.0-cmp.js',
+	shouldAutoShowModal: true,
 	languageFilename: 'purposes/purposes-[LANG].json',
 	translationFilename: 'translations/translations-[LANG].json',
 	versionedFilename: 'vendor-list.json',

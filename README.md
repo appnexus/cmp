@@ -236,6 +236,7 @@ __tcfapi('init', 2, () => {}, {
 | `theme`                | optional object  | [details below](#theme)                 | Override styling choices using the following properties.                                                          |
 | `publisherCountryCode` | optional string  | `US`                                    | String representing country code of parent website business                                                       |
 | `isServiceSpecific`    | optional boolean | `true`                                  | true uses publisher consent, false uses global consent                                                            |
+| `shouldAutoShowModal`  | optional boolean | `true`                                  | true will automatically display UI modal after init, false will not                      |
 | `shouldUseStacks`      | optional boolean | `true`                                  | true uses stacks on Layer1, TODO stacks need purposes/custom-features toggle to be compliant                      |
 | `isSlimMode`           | optional boolean | `false`                                 | If `true`, initial banner is low profile, full width banner <sup>v2.1.4+</sup>                                    |
 | `shouldShowCloseX`     | optional boolean | `false`                                 | If `true`, a &times; icon will appear in the upper right on layers to accept-all and close <sup>v2.1.4+</sup>     |
