@@ -13,7 +13,6 @@ Feel free to fork this CMP and submit to IAB for private use.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [SDK / Package Details](#sdk--package-details)
 - [Installation / Use](#installation--use)
 - [API](#api)
@@ -197,7 +196,7 @@ Calling `__tcfapi('changeConfig', 2, () => {}, {isSlimMode: true, theme: {isInli
  * @param callback // required function, called when changeLanguage completes, called with `store` and result
  * @param config // required object, merges with existing config object providing during `init()`
  */
-__tcfapi('changeConfig', 2, (store) => {}, {theme: {isInlineMode: false}}); // changes config to use inline-mode
+__tcfapi('changeConfig', 2, (store) => {}, { theme: { isInlineMode: false } }); // changes config to use inline-mode
 ```
 
 ## Configuration / Config
@@ -218,29 +217,30 @@ __tcfapi('init', 2, () => {}, {
 });
 ```
 
-| Config Property        | Type             | Default                                 | Detail                                                                                                            |
-| ---------------------- | ---------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `canLog`               | optional boolean | `false`                                 | true enables DPL logging for health monitoring. Add `#s1&debug=true` to URL for easy DPL debugging                |
-| `canDebug`             | optional boolean | `false`                                 | true enables internal console logging for debugging                                                               |
-| `baseUrl`              | optional string  | `./config/2.0`                          | relative or absolute url to load the global vendor list. Combines with `versionedFilename` to load vendorlist.    |
-| `versionedFilename`    | optional string  | `vendor-list.json`                      | file name of the global vendor list.                                                                              |
-| `narrowedVendors`      | optional array   | `[]`                                    | Only show select vendors. Example [1,4,5,19]                                                                      |
-| `language`             | optional string  | null                                    | 2-character language code to initialize CMP with. If no language matches, CMP boots with `en` Ex 'en', 'ja', 'it' |
-| `languageFilename`     | optional string  | `purposes/purposes-[LANG].json`         | file name template for gvl localized purpose json files                                                           |
-| `translationFilename`  | optional string  | `translations/translations-[LANG].json` | file name template for custom localized json files for UI layer                                                   |
-| `cookieDomain`         | optional string  | null                                    | manage consent across subdomains. Example `.mysite.com`                                                           |
-| `gdprApplies`          | optional boolean | `false`                                 | Please pass `true` if being used on EU traffic where active consent is required                                   |
-| `ccpaApplies`          | optional boolean | `false`                                 | Please pass `true` if being used on USA:CA traffic where "Do Not Sell" initiates CMP passively                    |
-| `experimentId`         | optional string  | `control`                               | use to indicate changes / upgrades in your CMP implementation for reporting / monitoring purposes.                |
-| `business`             | optional string  | `dev`                                   | used to correlate CMP events for monitoring across a businessline.                                                |
-| `theme`                | optional object  | [details below](#theme)                 | Override styling choices using the following properties.                                                          |
-| `publisherCountryCode` | optional string  | `US`                                    | String representing country code of parent website business                                                       |
-| `isServiceSpecific`    | optional boolean | `true`                                  | true uses publisher consent, false uses global consent                                                            |
-| `shouldAutoShowModal`  | optional boolean | `true`                                  | true will automatically display UI modal after init, false will not                      |
-| `shouldUseStacks`      | optional boolean | `true`                                  | true uses stacks on Layer1, TODO stacks need purposes/custom-features toggle to be compliant                      |
-| `isSlimMode`           | optional boolean | `false`                                 | If `true`, initial banner is low profile, full width banner <sup>v2.1.4+</sup>                                    |
-| `shouldShowCloseX`     | optional boolean | `false`                                 | If `true`, a &times; icon will appear in the upper right on layers to accept-all and close <sup>v2.1.4+</sup>     |
-| `insertionNode` 	   	 | optional string  | `<body>`                                | UI will be appended to this element using `querySelector`. Default behavior appends to body <sup>v2.2.0+</sup>    |
+| Config Property              | Type             | Default                                 | Detail                                                                                                            |
+| ---------------------------- | ---------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `canLog`                     | optional boolean | `false`                                 | true enables DPL logging for health monitoring. Add `#s1&debug=true` to URL for easy DPL debugging                |
+| `canDebug`                   | optional boolean | `false`                                 | true enables internal console logging for debugging                                                               |
+| `baseUrl`                    | optional string  | `./config/2.0`                          | relative or absolute url to load the global vendor list. Combines with `versionedFilename` to load vendorlist.    |
+| `versionedFilename`          | optional string  | `vendor-list.json`                      | file name of the global vendor list.                                                                              |
+| `narrowedVendors`            | optional array   | `[]`                                    | Only show select vendors. Example [1,4,5,19]                                                                      |
+| `language`                   | optional string  | null                                    | 2-character language code to initialize CMP with. If no language matches, CMP boots with `en` Ex 'en', 'ja', 'it' |
+| `languageFilename`           | optional string  | `purposes/purposes-[LANG].json`         | file name template for gvl localized purpose json files                                                           |
+| `translationFilename`        | optional string  | `translations/translations-[LANG].json` | file name template for custom localized json files for UI layer                                                   |
+| `cookieDomain`               | optional string  | null                                    | manage consent across subdomains. Example `.mysite.com`                                                           |
+| `gdprApplies`                | optional boolean | `false`                                 | Please pass `true` if being used on EU traffic where active consent is required                                   |
+| `ccpaApplies`                | optional boolean | `false`                                 | Please pass `true` if being used on USA:CA traffic where "Do Not Sell" initiates CMP passively                    |
+| `experimentId`               | optional string  | `control`                               | use to indicate changes / upgrades in your CMP implementation for reporting / monitoring purposes.                |
+| `business`                   | optional string  | `dev`                                   | used to correlate CMP events for monitoring across a businessline.                                                |
+| `theme`                      | optional object  | [details below](#theme)                 | Override styling choices using the following properties.                                                          |
+| `publisherCountryCode`       | optional string  | `US`                                    | String representing country code of parent website business                                                       |
+| `isServiceSpecific`          | optional boolean | `true`                                  | true uses publisher consent, false uses global consent                                                            |
+| `shouldAutoShowModal`        | optional boolean | `true`                                  | true will automatically display UI modal after init, false will not                                               |
+| `shouldAlwaysShowSaveButton` | optional boolean | `false`                                 | true will always show the save button on the UI. False will only display the save button when a change is made    |
+| `shouldUseStacks`            | optional boolean | `true`                                  | true uses stacks on Layer1, TODO stacks need purposes/custom-features toggle to be compliant                      |
+| `isSlimMode`                 | optional boolean | `false`                                 | If `true`, initial banner is low profile, full width banner <sup>v2.1.4+</sup>                                    |
+| `shouldShowCloseX`           | optional boolean | `false`                                 | If `true`, a &times; icon will appear in the upper right on layers to accept-all and close <sup>v2.1.4+</sup>     |
+| `insertionNode`              | optional string  | `<body>`                                | UI will be appended to this element using `querySelector`. Default behavior appends to body <sup>v2.2.0+</sup>    |
 
 ### theme
 
@@ -256,7 +256,7 @@ Themeing is a bit limited right now. Pass in a `config.theme` object during init
 | `textLinkColor`         | optional string  | null     | Example: `#0099ff`                                                                                       |
 | `secondaryColor`        | optional string  | null     | Example: `#869cc0`                                                                                       |
 | `featuresColor`         | optional string  | null     | Example: `#d0d3d7`                                                                                       |
-| `backgroundColor`       | optional string  | null     | Example: `#d0d3d7` Sets the background color of the banners.  <sup>v2.1.4+</sup>                         |
+| `backgroundColor`       | optional string  | null     | Example: `#d0d3d7` Sets the background color of the banners. <sup>v2.1.4+</sup>                          |
 | `isFullWidth`           | optional boolean | false    | Removes rounded corners and makes banners full width - matching style layout slimMode <sup>v2.1.4+</sup> |
 | `isBannerInline`        | optional boolean | false    | Renders CMP inline instead of overlaying layout. Subsequent CMP views open in modal <sup>v2.2.0+</sup>   |
 | `shouldShowDropShadow`  | optional boolean | true     | When set to `true`, displays the drop shadoq on banners <sup>v2.1.4+</sup>                               |

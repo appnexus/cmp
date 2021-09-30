@@ -176,6 +176,10 @@
 							Should Auto Show Modal:
 							<input id="domAutoShowModal" type="checkbox" checked>
 						</li>
+						<li>
+							Should Always Show the Save Button:
+							<input id="domAlwaysShowSaveButton" type="checkbox">
+						</li>
 					</ul>
 				</li>
 			</ul>
@@ -200,6 +204,7 @@
 			const domCloseWithX = document.querySelector('#domCloseWithX');
 			const domInsertionNode = document.querySelector('#domInsertionNode');
 			const domAutoShowModal = document.querySelector('#domAutoShowModal');
+			const domAlwaysShowSaveButton = document.querySelector('#domAlwaysShowSaveButton');
 
 			const setupQaTools = function (store) {
 				const LANGUAGES = store.LANGUAGES;
@@ -258,6 +263,11 @@
 				return params.get('autoshowmodal') !== 'false';
 			};
 
+			const shouldAlwaysShowSaveButton = function () {
+				let params = new URLSearchParams(window.location.search);
+				return params.get('alwaysshowsavebutton') === 'true';
+			};
+
 			const getInsertionNode = function () {
 				let params = new URLSearchParams(window.location.search);
 				return params.get('insertionnode');
@@ -292,6 +302,7 @@
 				isSlimMode: shouldUseSlim(), 
 				shouldShowCloseX: shouldShowCloseX(),
 				shouldAutoShowModal: shouldAutoShowModal(),
+				shouldAlwaysShowSaveButton: shouldAlwaysShowSaveButton(),
 				insertionNode: getInsertionNode(),
 				// narrowedVendors: [1, 2, 3, 4, 5, 6],
 			};
@@ -408,6 +419,13 @@
 			domAutoShowModal.addEventListener('change', function () {
 				let params = new URLSearchParams(window.location.search);
 				params.set('autoshowmodal', domAutoShowModal.checked);
+				window.location.search = params.toString();
+			});
+
+			domAlwaysShowSaveButton.checked = shouldAlwaysShowSaveButton();
+			domAlwaysShowSaveButton.addEventListener('change', function () {
+				let params = new URLSearchParams(window.location.search);
+				params.set('alwaysshowsavebutton', domAlwaysShowSaveButton.checked);
 				window.location.search = params.toString();
 			});
 		</script>

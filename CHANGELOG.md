@@ -1,12 +1,20 @@
-## [2.2.1](https://github.com/openmail/system1-cmp/compare/2.2.0...2.2.1) (2021-11-28)
+## [2.2.2](https://github.com/openmail/system1-cmp/compare/2.2.1...2.2.2) (2021-09-29)
+
 ### Refactor
+
+- [x] Show the `save` button by default on the banner
+
+## [2.2.1](https://github.com/openmail/system1-cmp/compare/2.2.0...2.2.1) (2021-09-28)
+
+### Refactor
+
 - [x] Added `config.shouldAutoShowModal` to allow disabling auto show modal after `init`
 
 ## [2.2.0](https://github.com/openmail/system1-cmp/compare/2.1.7...2.2.0) (2021-05-17)
 
 ### Feat
 
-- [x] Upgrade vendor list and script to download vendor list 
+- [x] Upgrade vendor list and script to download vendor list
 - [x] Add relative position modal solution
 - [x] Add `updateConfig` API to switch between relative and static position
 - [x] Pass theme colors through to anchors
@@ -29,7 +37,7 @@
 
 - [x] Upgrades cmpapi and cmpcore
 - [x] Updates global vendor list
-- [x] Adds Device Storage to Vendor Stack to display cookieMaxAgeSeconds 
+- [x] Adds Device Storage to Vendor Stack to display cookieMaxAgeSeconds
 - [x] Splits legal-disclosure for legibility in Purpose Stack
 - [x] Refactor error logger
 
@@ -41,11 +49,12 @@
 - [x] Adds full width mode with feature flag
 - [x] Adds drop shadow toggle feature flag
 - [x] Adds close with &times; buttom feature flag
-- [x] Adds default background color override 
+- [x] Adds default background color override
 
 ## [2.1.3](https://github.com/openmail/system1-cmp/compare/2.1.2...2.1.3) (2020-11-03)
 
 ### Chore
+
 - [x] Update to vendor list versino 62
 
 ## [2.1.2](https://github.com/openmail/system1-cmp/compare/2.1.1...2.1.2) (2020-10-20)

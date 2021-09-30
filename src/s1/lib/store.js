@@ -145,7 +145,7 @@ export default class Store {
 			publisherCountryCode,
 			isServiceSpecific,
 			isSlimMode,
-			shouldAutoShowModal
+			shouldAutoShowModal,
 		} = this.config;
 		const { vendors } = this.gvl;
 
@@ -178,7 +178,7 @@ export default class Store {
 			cmpVersion,
 			isServiceSpecific,
 			publisherCountryCode,
-			consentScreen: ( isSlimMode ? CONSENT_SCREENS.SLIM_LAYER0 : CONSENT_SCREENS.STACKS_LAYER1 ),
+			consentScreen: isSlimMode ? CONSENT_SCREENS.SLIM_LAYER0 : CONSENT_SCREENS.STACKS_LAYER1,
 		});
 
 		// Handle a new user
@@ -255,7 +255,9 @@ export default class Store {
 	updateCmp = ({ tcModel, shouldShowModal, shouldSaveCookie, shouldShowSave, isConsentByUrl = false }) => {
 		const tcModelNew = this.autoToggleVendorConsents(tcModel);
 		const isModalShowing = shouldShowModal !== undefined ? shouldShowModal : this.isModalShowing;
-		const isSaveShowing = shouldShowSave !== undefined ? shouldShowSave : this.isSaveShowing;
+		const alwaysShowSave = this.config.shouldAlwaysShowSaveButton;
+		const isSaveShowing =
+			alwaysShowSave || shouldShowSave !== undefined ? alwaysShowSave || shouldShowSave : this.isSaveShowing;
 		const encodedTCString = TCString.encode(tcModelNew);
 		const shouldAutoResizeModal = isSaveShowing ? false : this.shouldAutoResizeModal;
 		const maxHeightModal = shouldShowSave ? this.theme.maxHeightModal : this.maxHeightModal;
@@ -332,7 +334,7 @@ export default class Store {
 		const { theme } = this;
 		const maxHeightModal =
 			shouldAutoResizeModal && dynamicMaxHeightModal ? dynamicMaxHeightModal : theme.maxHeightModal;
-		const minHeightModal = shouldAutoResizeModal && dynamicMaxHeightModal ? 0 : (theme.minHeightModal || 0);
+		const minHeightModal = shouldAutoResizeModal && dynamicMaxHeightModal ? 0 : theme.minHeightModal || 0;
 		// only set if there's a change
 		if (shouldAutoResizeModal !== this.shouldAutoResizeModal || maxHeightModal !== this.maxHeightModal) {
 			this.setState({
@@ -528,19 +530,20 @@ export default class Store {
 		if (!this.tcModel) {
 			return;
 		}
-		if (this.hasShownModal) { // reset on subsequent display
+		if (this.hasShownModal) {
+			// reset on subsequent display
 			this.updateConfig({
 				isSlimMode: false,
 				theme: {
-					isBannerInline: false
-				}
+					isBannerInline: false,
+				},
 			});
 		}
 		const { isSlimMode } = this.config;
 		this.hasShownModal = true;
 		let tcModel = this.tcModel.clone();
-		
-		tcModel.consentScreen = ( isSlimMode ? CONSENT_SCREENS.SLIM_LAYER0 : CONSENT_SCREENS.STACKS_LAYER1 );
+
+		tcModel.consentScreen = isSlimMode ? CONSENT_SCREENS.SLIM_LAYER0 : CONSENT_SCREENS.STACKS_LAYER1;
 
 		this.updateCmp({
 			shouldShowModal,
@@ -592,7 +595,6 @@ export default class Store {
 			});
 		});
 
-
 		const gvlPromise = this.gvl.changeLanguage(language).then(() => {
 			if (this.tcModel) {
 				const { language } = this.gvl;
@@ -609,13 +611,13 @@ export default class Store {
 	}
 
 	updateConfig(newConfig) {
-		const {theme = config.theme } = newConfig;
+		const { theme = config.theme } = newConfig;
 		Object.assign(this.config, {
 			...newConfig,
 			theme: {
 				...this.config.theme,
-				...theme
-			}
+				...theme,
+			},
 		});
 	}
 }

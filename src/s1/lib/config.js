@@ -51,6 +51,7 @@ export const config = {
 	theme,
 	scriptSrc: './tcf-2.0-cmp.js',
 	shouldAutoShowModal: true,
+	shouldAlwaysShowSaveButton: false,
 	languageFilename: 'purposes/purposes-[LANG].json',
 	translationFilename: 'translations/translations-[LANG].json',
 	versionedFilename: 'vendor-list.json',
