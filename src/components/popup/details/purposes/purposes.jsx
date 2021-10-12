@@ -14,13 +14,13 @@ class LocalLabel extends Label {
 }
 
 export default class Purposes extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			renderedTabIndices: new Set(),
 			allPurposes: this.getAllPurposes()
 		};
-	};
+	}
 
 	static defaultProps = {
 		onShowVendors: () => {
@@ -33,7 +33,7 @@ export default class Purposes extends Component {
 		selectedPublisherPurposeIds: new Set()
 	};
 
-	handleSelectPurpose = ({ isSelected, dataId }, isPublisher = false, isLegInt = false) => {
+	handleSelectPurpose = ({isSelected, dataId}, isPublisher = false, isLegInt = false) => {
 		const {
 			selectPurpose,
 			selectPurposeLegitimateInterests,
@@ -49,17 +49,15 @@ export default class Purposes extends Component {
 		if (selectedPurpose) {
 			if (isPublisher) {
 				selectPublisherPurpose(selectedPurpose.id, isSelected);
+			} else if (isLegInt) {
+				selectPurposeLegitimateInterests(selectedPurpose.id, isSelected);
 			} else {
-				if (isLegInt) {
-					selectPurposeLegitimateInterests(selectedPurpose.id, isSelected);
-				} else {
-					selectPurpose(selectedPurpose.id, isSelected);
-				}
+				selectPurpose(selectedPurpose.id, isSelected);
 			}
 		}
 	};
 
-	handleSelectSpecialFeatureOptins = ({ isSelected, dataId }) => {
+	handleSelectSpecialFeatureOptins = ({isSelected, dataId}) => {
 		this.props.selectSpecialFeatureOptins(dataId + 1, isSelected);
 	};
 
@@ -67,16 +65,16 @@ export default class Purposes extends Component {
 		return (data) => this.handleSelectPurpose(data, isPublisher);
 	};
 
-	handleSelectLegitInterest = ({ dataId, isSelected }) => {
+	handleSelectLegitInterest = ({dataId, isSelected}) => {
 		this.props.selectPurposeLegitimateInterests(dataId + 1, isSelected);
 	};
 
-	handleSelectPublisherLegitimateInterest = ({ dataId, isSelected }) => {
+	handleSelectPublisherLegitimateInterest = ({dataId, isSelected}) => {
 		this.props.selectPublisherLegitimateInterests(dataId + 1, isSelected);
 	};
 
 	getAllPurposes = () => {
-		const { purposes } = this.props;
+		const {purposes} = this.props;
 		let allPurposes = [];
 
 		(purposes || []).forEach(purpose => {
@@ -91,11 +89,11 @@ export default class Purposes extends Component {
 		return allPurposes;
 	};
 
-	createOnShowVendors (filter = {}) {
+	createOnShowVendors(filter = {}) {
 		return () => this.props.onShowVendors(filter);
 	}
 
-	render (props, state) {
+	render(props, state) {
 		const {
 			selectedPurposeIds,
 			selectedPublisherPurposeIds,
@@ -109,10 +107,10 @@ export default class Purposes extends Component {
 			specialFeatureOptins,
 			selectedPublisherLegitimateInterests,
 			handleSelectTab,
-			selectedTab
+			selectedTab,
+			disableTabs
 		} = props;
-
-		const { created: consentCreated } = persistedConsentData;
+		const {created: consentCreated} = persistedConsentData;
 
 		const {
 			renderedTabIndices,
@@ -140,37 +138,40 @@ export default class Purposes extends Component {
 			if (!consentCreated) {
 				purposes.forEach((purpose, index) => {
 					// iab purposes
-					this.handleSelectPurpose({ isSelected: false, dataId: index });
+					this.handleSelectPurpose({isSelected: false, dataId: index});
 
 					// iab leg ints
-					this.handleSelectPurpose({ isSelected: true, dataId: index }, false, true);
+					this.handleSelectPurpose({isSelected: true, dataId: index}, false, true);
 
 					// publisher purposes
-					this.handleSelectPurpose({ isSelected: false, dataId: index }, true, false);
+					this.handleSelectPurpose({isSelected: false, dataId: index}, true, false);
 				});
 				specialFeatures.forEach((specialFeature, index) => {
-					this.handleSelectSpecialFeatureOptins({ isSelected: false, dataId: index });
+					this.handleSelectSpecialFeatureOptins({isSelected: false, dataId: index});
 				});
 				initialVendorsRejection();
 			}
 		}
 
 		return (
+
 			<div class={style.purposes}>
-				<div class={style.purposeList}>
-					<div
-						class={[style.purposeItem, selectedTab === TAB_PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
-						onClick={handleSelectTab(TAB_PUBLISHER_INFO)}
-					>
-						<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}>General information</LocalLabel>
+				{disableTabs || (
+					<div class={style.purposeList}>
+						<div
+							class={[style.purposeItem, selectedTab === TAB_PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
+							onClick={handleSelectTab(TAB_PUBLISHER_INFO)}
+						>
+							<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}>General information</LocalLabel>
+						</div>
+						<div
+							className={[style.purposeItem, selectedTab === TAB_CONSENTS ? style.selectedPurpose : ''].join(' ')}
+							onClick={handleSelectTab(TAB_CONSENTS)}
+						>
+							<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}>Personal data processing</LocalLabel>
+						</div>
 					</div>
-					<div
-						className={[style.purposeItem, selectedTab === TAB_CONSENTS ? style.selectedPurpose : ''].join(' ')}
-						onClick={handleSelectTab(TAB_CONSENTS)}
-					>
-						<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}>Personal data processing</LocalLabel>
-					</div>
-				</div>
+				)}
 				{!selectedTab ? (
 					<div className={style.purposeDescription}>
 						<div className={style.purposeDetail}>
@@ -199,8 +200,7 @@ export default class Purposes extends Component {
 											consents</LocalLabel>
 									</div>
 									<div className={style.body}>
-										<LocalLabel prefix="tabs" localizeKey={`tab2.description`}>
-										</LocalLabel>
+										<LocalLabel prefix="tabs" localizeKey={`tab2.description`}/>
 									</div>
 								</div>
 							</div>
@@ -237,8 +237,8 @@ export default class Purposes extends Component {
 							</div>
 							<div>
 								<LocalLabel className={style.header} prefix="purposes"
-											localizeKey={`title`}></LocalLabel>
-								<ConsentInfo fields={['consents', 'legitimateInterests']}></ConsentInfo>
+									localizeKey={`title`}/>
+								<ConsentInfo fields={['consents', 'legitimateInterests']}/>
 								{purposes.map((purpose, index) => <Purpose key={index}
 																		   index={index}
 																		   purpose={purpose}
@@ -264,7 +264,7 @@ export default class Purposes extends Component {
 							</div>}
 							<div>
 								<LocalLabel className={style.header} prefix="features"
-											localizeKey={`title`}>Features</LocalLabel>
+									localizeKey={`title`}>Features</LocalLabel>
 								{features.map((feature, index) => <Feature key={index}
 																		   feature={feature}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>
