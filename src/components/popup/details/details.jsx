@@ -6,7 +6,8 @@ import Purposes from './purposes/purposes';
 import Vendors from './vendors/vendors';
 import Panel from '../../panel/panel';
 import Label from '../../label/label';
-import { SECTION_PURPOSES, SECTION_VENDORS, TAB_PUBLISHER_INFO } from '../../../lib/store';
+import config from '../../../lib/config';
+import { SECTION_PURPOSES, SECTION_VENDORS, TAB_PUBLISHER_INFO, TAB_CONSENTS } from '../../../lib/store';
 
 class LocalLabel extends Label {
 	static defaultProps = {
@@ -21,7 +22,8 @@ export default class Details extends Component {
 		this.state = {
 			vendors: isCustomVendors ? this.getCustomVendors() : this.getGlobalVendors(),
 			isCustom: isCustomVendors,
-			selectedTab: props.tab || TAB_PUBLISHER_INFO
+			selectedTab: props.tab || TAB_PUBLISHER_INFO,
+			disableTabs: false
 		};
 	}
 
@@ -90,6 +92,15 @@ export default class Details extends Component {
 			});
 		};
 	};
+	componentWillMount() {
+		if (config.disableTabs){
+			this.props.store.updateSelectedTab(TAB_CONSENTS);
+			this.setState({
+				selectedTab: TAB_CONSENTS,
+				disableTabs: true
+			});
+		}
+	}
 
 	render(props, state) {
 		const {
@@ -166,6 +177,7 @@ export default class Details extends Component {
 							persistedConsentData={persistedConsentData}
 							handleSelectTab={this.handleSelectTab}
 							selectedTab={selectedTab}
+							disableTabs={this.state.disableTabs}
 						/>
 						<Vendors
 							customVendorsConsent={customVendorsConsent}

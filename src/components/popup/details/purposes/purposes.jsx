@@ -20,7 +20,7 @@ export default class Purposes extends Component {
 			renderedTabIndices: new Set(),
 			allPurposes: this.getAllPurposes()
 		};
-	};
+	}
 
 	static defaultProps = {
 		onShowVendors: () => {
@@ -49,12 +49,10 @@ export default class Purposes extends Component {
 		if (selectedPurpose) {
 			if (isPublisher) {
 				selectPublisherPurpose(selectedPurpose.id, isSelected);
+			} else if (isLegInt) {
+				selectPurposeLegitimateInterests(selectedPurpose.id, isSelected);
 			} else {
-				if (isLegInt) {
-					selectPurposeLegitimateInterests(selectedPurpose.id, isSelected);
-				} else {
-					selectPurpose(selectedPurpose.id, isSelected);
-				}
+				selectPurpose(selectedPurpose.id, isSelected);
 			}
 		}
 	};
@@ -109,9 +107,9 @@ export default class Purposes extends Component {
 			specialFeatureOptins,
 			selectedPublisherLegitimateInterests,
 			handleSelectTab,
-			selectedTab
+			selectedTab,
+			disableTabs
 		} = props;
-
 		const { created: consentCreated } = persistedConsentData;
 
 		const {
@@ -156,21 +154,24 @@ export default class Purposes extends Component {
 		}
 
 		return (
+
 			<div class={style.purposes}>
-				<div class={style.purposeList}>
-					<div
-						class={[style.purposeItem, selectedTab === TAB_PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
-						onClick={handleSelectTab(TAB_PUBLISHER_INFO)}
-					>
-						<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}>General information</LocalLabel>
+				{disableTabs || (
+					<div class={style.purposeList}>
+						<div
+							class={[style.purposeItem, selectedTab === TAB_PUBLISHER_INFO ? style.selectedPurpose : ''].join(' ')}
+							onClick={handleSelectTab(TAB_PUBLISHER_INFO)}
+						>
+							<LocalLabel prefix="tabs" localizeKey={`tab1.menu`}>General information</LocalLabel>
+						</div>
+						<div
+							className={[style.purposeItem, selectedTab === TAB_CONSENTS ? style.selectedPurpose : ''].join(' ')}
+							onClick={handleSelectTab(TAB_CONSENTS)}
+						>
+							<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}>Personal data processing</LocalLabel>
+						</div>
 					</div>
-					<div
-						className={[style.purposeItem, selectedTab === TAB_CONSENTS ? style.selectedPurpose : ''].join(' ')}
-						onClick={handleSelectTab(TAB_CONSENTS)}
-					>
-						<LocalLabel prefix="tabs" localizeKey={`tab2.menu`}>Personal data processing</LocalLabel>
-					</div>
-				</div>
+				)}
 				{!selectedTab ? (
 					<div className={style.purposeDescription}>
 						<div className={style.purposeDetail}>
@@ -199,8 +200,7 @@ export default class Purposes extends Component {
 											consents</LocalLabel>
 									</div>
 									<div className={style.body}>
-										<LocalLabel prefix="tabs" localizeKey={`tab2.description`}>
-										</LocalLabel>
+										<LocalLabel prefix="tabs" localizeKey={`tab2.description`}/>
 									</div>
 								</div>
 							</div>
@@ -237,8 +237,8 @@ export default class Purposes extends Component {
 							</div>
 							<div>
 								<LocalLabel className={style.header} prefix="purposes"
-											localizeKey={`title`}></LocalLabel>
-								<ConsentInfo fields={['consents', 'legitimateInterests']}></ConsentInfo>
+											localizeKey={`title`}/>
+								<ConsentInfo fields={['consents', 'legitimateInterests']}/>
 								{purposes.map((purpose, index) => <Purpose key={index}
 																		   index={index}
 																		   purpose={purpose}

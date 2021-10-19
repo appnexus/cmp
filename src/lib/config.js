@@ -21,7 +21,8 @@ const defaultConfig = {
 	publisherCountryCode: 'PL',
 	getConsentDataTimeout: 500,
 	purposeOneTreatment: false,
-	disableLanguageSelect: false
+	disableLanguageSelect: false,
+	disableTabs: false
 };
 
 class Config {
