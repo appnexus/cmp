@@ -170,6 +170,7 @@ module.exports = [
 	{
 		entry: {
 			cmp: './index.js',
+			cmpAmp: './amp/amp.index.js',
 			portal: './docs/assets/portal.js'
 		},
 
@@ -194,6 +195,12 @@ module.exports = [
 				filename: 'index.html',
 				template: 'index.html',
 				chunks: ['cmp']
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'amp.index.html',
+				template: 'amp/amp.index.html',
+				chunks: ['cmpAmp'],
+				inlineSource: '\\.js$'
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'portal.html',
