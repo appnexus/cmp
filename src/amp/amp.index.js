@@ -25,9 +25,6 @@ window.dlApi = {
 				let payload = {
 					action: 'reject',
 					type: 'consent-response',
-					consentMetadata: {
-						test: 'RAFAL test metadata 1'
-					}
 				};
 
 				if (!err) {
@@ -66,7 +63,7 @@ window.dlApi.cmd.push(dlApi => {
 	}
 });
 
-const initialHeight = queryParams['test_amp_height'] || '60vh';
+const initialHeight = queryParams['amp_modal_height'] || '60vh';
 window.dlApi.cmd.push(dlApi => {
 	dlApi.showConsentTool();
 	window.parent.postMessage({
