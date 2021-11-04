@@ -122,7 +122,7 @@ export default class Details extends Component {
 			selectAllVendorLegitimateInterests,
 			initialVendorsRejection,
 			customVendorsConsent,
-			selectPublisherPurpose,
+			selectPublisherConsent,
 			selectPublisherLegitimateInterests,
 			getVendorsWithLegIntsIds,
 			persistedConsentData = {},
@@ -171,7 +171,7 @@ export default class Details extends Component {
 							selectSpecialFeatureOptins={selectSpecialFeatureOptins}
 							specialFeatureOptins={specialFeatureOptins}
 							initialVendorsRejection={initialVendorsRejection}
-							selectPublisherPurpose={selectPublisherPurpose}
+							selectPublisherConsent={selectPublisherConsent}
 							selectPublisherLegitimateInterests={selectPublisherLegitimateInterests}
 							onShowVendors={this.handleShowVendors}
 							persistedConsentData={persistedConsentData}

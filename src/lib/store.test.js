@@ -466,8 +466,8 @@ describe('store', () => {
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
 
-		store.selectPublisherPurpose(1, false);
-		store.selectPublisherPurpose(3, false);
+		store.selectPublisherConsent(1, false);
+		store.selectPublisherConsent(3, false);
 
 		store.persist();
 
@@ -484,7 +484,7 @@ describe('store', () => {
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
 
-		store.selectAllPublisherPurposes(true);
+		store.selectAllPublisherPurposes();
 		store.persist();
 
 		expect(store.persistedConsentData.publisherConsents.size).to.equal(Object.keys(VENDOR_LIST.purposes).length);
@@ -533,7 +533,7 @@ describe('store', () => {
 		store.updateVendorList(VENDOR_LIST);
 
 		store.selectAllPurposes(false, true);
-		config.contractPurposeIds.concat(config.legIntPurposeIds).forEach(id => store.selectPublisherPurpose(id, false));
+		config.contractPurposeIds.concat(config.legIntPurposeIds).forEach(id => store.selectPublisherConsent(id, false));
 
 		expect(Array.from(store.tcModel.publisherConsents)).to.deep.equal([[1, true], [2, true]]);
 	});
