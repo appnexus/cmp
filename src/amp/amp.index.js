@@ -11,29 +11,30 @@ function getQueryParams() {
 
 const queryParams = getQueryParams();
 
-const target = queryParams['test_site'] || 'NATIVE_APP';
+const target = queryParams['test_site'] || 'AMP_WEBSITE';
 
 window.dlApi = {
 	target: target + '/CMP',
 	no_gemius: 1,
 	async: 1,
 	cmd: [dlApi => {
-		dlApi.uaEvent(dlApi.appUserId || '', 'consent_start');
+		let payload = {
+			action: 'reject',
+			type: 'consent-response',
+		};
 
-		window.__tcfapi('registerEventListener', 2, () => {
-			dlApi.getConsents((err, consent) => {
-				let payload = {
-					action: 'reject',
-					type: 'consent-response',
-				};
+		if (typeof window.__tcfapi !== 'function') {
+			window.parent.postMessage(payload, '*');
+			return
+		}
 
-				if (!err) {
-					payload.action = 'accept';
-					payload.info = consent.euConsent;
-				}
+		window.__tcfapi('addEventListener', 2, (tcData, success) => {
+			if (success && tcData.eventStatus === 'useractioncomplete') {
+				payload.action = 'accept';
+				payload.info = tcData.tcString;
 				window.parent.postMessage(payload, '*');
-			});
-		}, {event: 'onSubmit'});
+			}
+		});
 	}],
 	noDot: 1,
 	perfSent: 1,
@@ -44,34 +45,20 @@ window.dlApi = {
 
 const m = location.pathname.match(/^\/(\d+)\//);
 if (m) {
-	const nid = m[1];
-	window.dlApi.tid = 'EA-' + nid;
+	window.dlApi.tid = `EA-${m[1]}`;
+	window.dlApi.cmpTid = `EA-${m[1]}`;
 }
 
-const tcfV1Api = function (dlApi, command, params, callback) {
-	if (command !== 'addEventListener') {
-		window.dlApi.logError('__cmp Api does not support the ' + command + ' command', 'tcfv1-api');
-		return;
-	}
-
-	window.__tcfapi('registerEventListener', 2, callback, {event: params});
-};
-
 window.dlApi.cmd.push(dlApi => {
-	if (!window.__cmp) {
-		window.__cmp = tcfV1Api.bind(null, dlApi);
-	}
-});
-
-const initialHeight = queryParams['amp_modal_height'] || '60vh';
-window.dlApi.cmd.push(dlApi => {
-	dlApi.showConsentTool();
-	window.parent.postMessage({
-		type: 'consent-ui',
-		action: 'ready',
-		initialHeight,
-		border: false
-	}, '*');
+	const initialHeight = queryParams['amp_modal_height'] || '60vh';
+	dlApi.showConsentTool('', () => {
+		window.parent.postMessage({
+			type: 'consent-ui',
+			action: 'ready',
+			initialHeight,
+			border: false
+		}, '*');
+	});
 });
 
 const script = document.createElement('script');
