@@ -48,7 +48,7 @@ describe('Popup', () => {
 		store.selectAllPurposesLegitimateInterests = jest.fn();
 		store.selectAllSpecialFeatureOptins = jest.fn();
 		store.selectAllPublisherPurposes = jest.fn();
-
+		store.selectAllPublisherLegitimateInterests = jest.fn();
 
 		let popup;
 		render(<Popup
@@ -61,6 +61,7 @@ describe('Popup', () => {
 				expect(store.selectAllPurposesLegitimateInterests.mock.calls[0][0]).to.equal(true);
 				expect(store.selectAllSpecialFeatureOptins.mock.calls[0][0]).to.equal(true);
 				expect(store.selectAllPublisherPurposes.mock.calls[0][0]).to.equal(true);
+				expect(store.selectAllPublisherLegitimateInterests.mock.calls[0][0]).to.equal(true);
 				done();
 			}}
 		/>, scratch);

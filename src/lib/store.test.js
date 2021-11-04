@@ -532,6 +532,8 @@ describe('store', () => {
 		store.setCmpApi(cmpApi);
 		store.updateVendorList(VENDOR_LIST);
 
+		store.selectAllPublisherPurposes(false, true);
+		store.selectAllPublisherLegitimateInterests(false, true);
 		store.selectAllPurposes(false, true);
 		config.contractPurposeIds.concat(config.legIntPurposeIds).forEach(id => store.selectPublisherPurpose(id, false));
 
