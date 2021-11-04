@@ -14,7 +14,6 @@ export default class Popup extends Component {
 		store.selectAllPurposesLegitimateInterests(true);
 		store.selectAllSpecialFeatureOptins(true);
 		store.selectAllPublisherPurposes(true);
-		store.selectAllPublisherLegitimateInterests(true);
 		store.setAllContractPurposes(false);
 		onSave();
 	};
