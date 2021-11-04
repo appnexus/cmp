@@ -37,7 +37,7 @@ export default class Purposes extends Component {
 		const {
 			selectPurpose,
 			selectPurposeLegitimateInterests,
-			selectPublisherConsent
+			selectPublisherPurpose
 		} = this.props;
 
 		const {
@@ -48,7 +48,7 @@ export default class Purposes extends Component {
 
 		if (selectedPurpose) {
 			if (isPublisher) {
-				selectPublisherConsent(selectedPurpose.id, isSelected);
+				selectPublisherPurpose(selectedPurpose.id, isSelected);
 			} else if (isLegInt) {
 				selectPurposeLegitimateInterests(selectedPurpose.id, isSelected);
 			} else {

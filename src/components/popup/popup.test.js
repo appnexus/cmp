@@ -60,7 +60,7 @@ describe('Popup', () => {
 				expect(store.selectAllPurposes.mock.calls[0][0]).to.equal(true);
 				expect(store.selectAllPurposesLegitimateInterests.mock.calls[0][0]).to.equal(true);
 				expect(store.selectAllSpecialFeatureOptins.mock.calls[0][0]).to.equal(true);
-				expect(store.selectAllPublisherPurposes.mock.calls[0].length).to.equal(0);
+				expect(store.selectAllPublisherPurposes.mock.calls[0][0]).to.equal(true);
 				done();
 			}}
 		/>, scratch);

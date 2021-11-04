@@ -312,7 +312,7 @@ export default class Store {
 		this.storeUpdate();
 	};
 
-	selectPublisherConsent = (purposeId, isSelected) => {
+	selectPublisherPurpose = (purposeId, isSelected) => {
 		const {contractPurposeIds} = config;
 		const {publisherConsents} = this.tcModel;
 
@@ -329,6 +329,29 @@ export default class Store {
 
 	};
 
+	selectAllPublisherPurposes = (update) => {
+		const {purposes = {}} = this.vendorList || {};
+		const {legIntPurposeIds} = config;
+		Object.values(purposes).forEach(({id}) => {
+			if (legIntPurposeIds.includes(id)) {
+
+				//selectAllPublisherLegitimateInterests
+				this.tcModel.publisherLegitimateInterests.set(id);
+				this.tcModel.publisherConsents.unset(id);
+			} else {
+
+				//selectAllPublisherConsents
+				this.tcModel.publisherConsents.set(id);
+				this.tcModel.publisherLegitimateInterests.unset(id);
+			}
+
+		});
+
+		if (update) {
+			this.storeUpdate();
+		}
+	}
+
 	selectPublisherLegitimateInterests = (purposeId, isSelected) => {
 		const {publisherLegitimateInterests} = this.tcModel;
 		if (isSelected) {
@@ -338,18 +361,6 @@ export default class Store {
 		}
 		this.storeUpdate();
 	};
-
-	selectAllPublisherPurposes = () => {
-		const {purposes = {}} = this.vendorList || {};
-		const {legIntPurposeIds} = config;
-
-		Object.values(purposes).forEach(({id}) => {
-			const isLegitimateInterest = legIntPurposeIds.includes(id);
-			this.selectPublisherLegitimateInterests(id, isLegitimateInterest);
-			this.selectPublisherConsent(id, !isLegitimateInterest);
-
-		});
-	}
 
 	setAllContractPurposes = (update) => {
 		const {purposes = {}} = this.vendorList || {};
@@ -432,7 +443,7 @@ export default class Store {
 			this.tcModel.vendorConsents.set(vendorsIds);
 			this.selectAllVendorLegitimateInterests(true, false);
 			this.tcModel.specialFeatureOptins.set(specialFeatureIds);
-			this.selectAllPublisherPurposes();
+			this.selectAllPublisherPurposes(false);
 			this.setAllContractPurposes(false);
 		}
 		// If vendor consent data has already been persisted set default selected status only for new vendors

@@ -17,7 +17,7 @@ describe('Purposes and Features', () => {
 		const selectPurpose = jest.fn();
 		const purposes = render(<Purposes
 			selectPurposeLegitimateInterests={jest.fn()}
-			selectPublisherConsent ={jest.fn()}
+			selectPublisherPurpose ={jest.fn()}
 			initialVendorsRejection = {jest.fn()}
 			selectSpecialFeatureOptins = {jest.fn()}
 			selectedPublisherLegitimateInterests = {new Set()}
@@ -77,7 +77,7 @@ describe('Purposes and Features', () => {
 
 		render(<Purposes
 			selectPurposeLegitimateInterests={jest.fn()}
-			selectPublisherConsent ={jest.fn()}
+			selectPublisherPurpose ={jest.fn()}
 			initialVendorsRejection = {jest.fn()}
 			selectedPublisherLegitimateInterests = {new Set()}
 			selectedPurposeLegitimateInterests = {new Set()}
