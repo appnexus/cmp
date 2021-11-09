@@ -45,7 +45,7 @@ window.dlApi = {
 
 const m = location.pathname.match(/^\/(\d+)\//);
 if (m) {
-	window.dlApi.tid = `EA-${m[1]}`;
+	window.dlApi.tid = `EA-${queryParams['test_tid'] || m[1]}`;
 	window.dlApi.cmpTid = `EA-${m[1]}`;
 }
 
