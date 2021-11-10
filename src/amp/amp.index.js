@@ -17,7 +17,7 @@ window.dlApi = {
 	target: target + '/CMP',
 	no_gemius: 1,
 	async: 1,
-	cmd: [dlApi => {
+	cmd: [() => {
 		let payload = {
 			action: 'reject',
 			type: 'consent-response',
@@ -25,7 +25,7 @@ window.dlApi = {
 
 		if (typeof window.__tcfapi !== 'function') {
 			window.parent.postMessage(payload, '*');
-			return
+			return;
 		}
 
 		window.__tcfapi('addEventListener', 2, (tcData, success) => {
