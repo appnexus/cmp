@@ -111,7 +111,6 @@ export default class Purposes extends Component {
 			disableTabs
 		} = props;
 		const { created: consentCreated } = persistedConsentData;
-
 		const {
 			renderedTabIndices,
 			allPurposes
@@ -237,7 +236,7 @@ export default class Purposes extends Component {
 							</div>
 							<div>
 								<LocalLabel className={style.header} prefix="purposes"
-											localizeKey={`title`}/>
+									localizeKey={`title`}/>
 								<ConsentInfo fields={['consents', 'legitimateInterests']}/>
 								{purposes.map((purpose, index) => <Purpose key={index}
 																		   index={index}
@@ -264,7 +263,7 @@ export default class Purposes extends Component {
 							</div>}
 							<div>
 								<LocalLabel className={style.header} prefix="features"
-											localizeKey={`title`}>Features</LocalLabel>
+									localizeKey={`title`}>Features</LocalLabel>
 								{features.map((feature, index) => <Feature key={index}
 																		   feature={feature}
 																		   createOnShowVendors={this.createOnShowVendors.bind(this)}/>

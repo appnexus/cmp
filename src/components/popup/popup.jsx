@@ -30,7 +30,7 @@ export default class Popup extends Component {
 	handleCloseOrSave = () => {
 		const { onSave } = this.props;
 		onSave();
-		this.onCancel()
+		this.onCancel();
 	};
 
 	render(props) {
@@ -55,6 +55,7 @@ export default class Popup extends Component {
 							onSaveOrClose={this.handleCloseOrSave}
 							onCancel={this.onCancel}
 							store={store}
+							onAcceptAll={this.onAcceptAll}
 						/>
 					</Panel>
 				</div>

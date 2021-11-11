@@ -22,7 +22,8 @@ const defaultConfig = {
 	getConsentDataTimeout: 500,
 	purposeOneTreatment: false,
 	disableLanguageSelect: false,
-	disableTabs: false
+	reduceStepsToConfigureConsent: false,
+	expandedControls: false
 };
 
 class Config {

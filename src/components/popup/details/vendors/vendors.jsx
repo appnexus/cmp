@@ -9,7 +9,7 @@ export default class Vendors extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			editingConsents: false
+			editingConsents: props.defaultEditingConsentsState
 		};
 	}
 
@@ -41,11 +41,6 @@ export default class Vendors extends Component {
 	};
 
 	handleMoreChoices = () => {
-		const { consentCreated, initialVendorsRejection } = this.props;
-		if (!consentCreated) {
-			initialVendorsRejection();
-		}
-
 		this.setState({
 			editingConsents: true
 		});
@@ -135,82 +130,82 @@ export default class Vendors extends Component {
 							information from your browser across the web to provide you with website content, deliver
 							relevant advertising and understand web audiences.
 						</Label>
-						<ConsentInfo fields={isLegIntSwitchVisible ? ['consents', 'legitimateInterests'] : ['consents']}></ConsentInfo>
+						<ConsentInfo fields={isLegIntSwitchVisible ? ['consents', 'legitimateInterests'] : ['consents']} />
 					</div>
 					}
 				</div>
 				<div class={style.vendorHeader}>
 					<table class={style.vendorList}>
 						<thead>
-						<tr>
-							<th><Label prefix={this.getPrefix()} localizeKey='company'>Company</Label></th>
-							{editingConsents &&
+							<tr>
+								<th><Label prefix={this.getPrefix()} localizeKey='company'>Company</Label></th>
+								{editingConsents &&
 							<span class={style.vendorCenterSmall}>
 								{isLegIntSwitchVisible &&
 								<th><Label className={style.caption} prefix={this.getPrefix()}
-												localizeKey='legitimateInterest'>LegInt</Label>
-									<Switch
-										isSelected={this.isFullLegitimateInterestChosen()}
-										onClick={this.handleFullLegIntChange}
-									/>
-								<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={this.isFullLegitimateInterestChosen() ? 'active' : 'inactive'}></Label></th>
+									localizeKey='legitimateInterest'>LegInt</Label>
+								<Switch
+									isSelected={this.isFullLegitimateInterestChosen()}
+									onClick={this.handleFullLegIntChange}
+								/>
+								<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={this.isFullLegitimateInterestChosen() ? 'active' : 'inactive'} /></th>
 								}
 								<th>
-								<Label className={style.caption} prefix={this.getPrefix()} localizeKey='offOn'>Allow</Label>
-								<Switch
-									isSelected={this.isFullVendorsConsentChosen()}
-									onClick={this.handleFullConsentChange}
-								/>
-								<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={this.isFullVendorsConsentChosen() ? 'active' : 'inactive'}></Label></th>
+									<Label className={style.caption} prefix={this.getPrefix()} localizeKey='offOn'>Allow</Label>
+									<Switch
+										isSelected={this.isFullVendorsConsentChosen()}
+										onClick={this.handleFullConsentChange}
+									/>
+									<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={this.isFullVendorsConsentChosen() ? 'active' : 'inactive'} /></th>
 							</span>
-							}
-						</tr>
+								}
+							</tr>
 						</thead>
 					</table>
 				</div>
 				<div class={style.vendorContent}>
 					<table class={style.vendorList}>
 						<tbody>
-						{vendors.map(({
+							{vendors.map(({
 										  id, name, policyUrl, purposes: purposeIds = [], legIntPurposes = [],
 										  features: featureIds = [], specialPurposes: specialPurposeIds = [],
 										  specialFeatures: specialFeatureIds = []
 									  }, index) => (
-							<tr key={id} class={index % 2 === 1 ? style.even : ''}>
-								<td>
-									<Vendor name={name}
+								<tr key={id} class={index % 2 === 1 ? style.even : ''}>
+									<td>
+										<Vendor name={name}
 											policyUrl={policyUrl}
 											purposes={this.getActiveAttributesNameElements(purposes, purposeIds, 'purposes.purpose')}
 											legIntPurposes={this.getActiveAttributesNameElements(purposes, legIntPurposes, 'purposes.purpose')}
 											features={this.getActiveAttributesNameElements(features, featureIds, 'features.feature')}
 											specialPurposes={this.getActiveAttributesNameElements(specialPurposes, specialPurposeIds, 'specialPurposes.purpose')}
 											specialFeatures={this.getActiveAttributesNameElements(specialFeatures, specialFeatureIds, 'specialFeatures.feature')}/>
-								</td>
-								{editingConsents && legIntPurposes.length &&
+									</td>
+									{editingConsents && legIntPurposes.length &&
 								<td class={style.vendorCenterSmall}>
 									<Label className={style.caption} prefix={this.getPrefix()}
-												localizeKey='legitimateInterest'>LegInt</Label>
+										localizeKey='legitimateInterest'>LegInt</Label>
 									<Switch
 										dataId={id}
 										isSelected={selectedVendorsLegitimateInterestsIds.has(id)}
 										onClick={this.handleLegitInterest}
 									/>
-									<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={selectedVendorsLegitimateInterestsIds.has(id) ? 'active' : 'inactive'}></Label>
+									<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={selectedVendorsLegitimateInterestsIds.has(id) ? 'active' : 'inactive'} />
 								</td> || <td/>}
-								{editingConsents && !this.props.isCustom &&
+									{editingConsents && !this.props.isCustom &&
 									<td className={style.vendorCenterSmall}>
-									<Label collapseEmpty={true} className={style.caption} prefix={this.getPrefix()}
-												localizeKey='acceptButton'>Consent</Label>
-									<Switch
-										dataId={id}
-										isSelected={selectedVendorIds.has(id)}
-										onClick={this.handleSelectVendor}
-									/>
-									<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={selectedVendorIds.has(id) ? 'active' : 'inactive'}></Label>
-								</td>
-								}
-							</tr>
-						))}
+										<Label collapseEmpty={true} className={style.caption} prefix={this.getPrefix()}
+											localizeKey='acceptButton'>Consent</Label>
+										<Switch
+											dataId={id}
+											isSelected={selectedVendorIds.has(id)}
+											onClick={this.handleSelectVendor}
+										/>
+										<Label collapseEmpty={true} className={style.state} prefix={this.getPrefix()} localizeKey={selectedVendorIds.has(id) ? 'active' : 'inactive'} />
+									</td>
+									}
+								</tr>
+							))}
 						</tbody>
 					</table>
 				</div>
